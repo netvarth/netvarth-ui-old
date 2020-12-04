@@ -12,7 +12,7 @@ import { PagerModule } from '../../modules/pager/pager.module';
 import { FooterModule } from '../../modules/footer/footer.module';
 import { ProviderDetailComponent } from '../provider-detail/provider-detail.component';
 import { ConsumerWaitlistHistoryComponent } from '../consumer-waitlist-history/consumer-waitlist-history.component';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { ConsumerCheckinHistoryListModule } from '../../modules/consumer-checkin-history-list/consumer-checkin-history-list.module';
 import { SearchProviderModule } from '../search-provider/search-provider.module';
@@ -30,7 +30,7 @@ import { TruncateModule } from '../../pipes/limitTo.module';
         CapitalizeFirstPipeModule,
         PagerModule,
         FooterModule,
-        ModalGalleryModule.forRoot(),
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         Nl2BrPipeModule,
         ConsumerCheckinHistoryListModule,
         SearchDetailRoutingModule,

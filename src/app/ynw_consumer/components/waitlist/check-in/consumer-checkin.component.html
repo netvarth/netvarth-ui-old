@@ -36,7 +36,8 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                            {{showCheckinButtonCaption()}} For <a *ngIf="type !== 'waitlistreschedule' && servicesjson.length > 1"
+                                            {{showCheckinButtonCaption()}} For <a
+                                                *ngIf="type !== 'waitlistreschedule' && servicesjson.length > 1"
                                                 class="changeitem  pointer-cursor mgn-lt-10 pull-right"
                                                 (click)="changeService()">Change
                                                 Service</a></div>
@@ -136,14 +137,14 @@
                                                         </div>
                                                     </div>
                                                     <div *ngIf="sel_ser_det.preInfoEnabled">
-                                                        <div class="lnk">{{sel_ser_det.preInfoTitle}}</div>
-                                                        <div class="preinfo-text mgn-up-5">
+                                                        <a class="lnk" (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                        <!-- <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
                                                         <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()"
                                                             class="pull-right pointer-cursor mgn-up-5">
                                                             See more
-                                                        </a>
+                                                        </a> -->
                                                     </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>
@@ -359,7 +360,9 @@
                                                 {{selected_coupons.toString()}}</div>
                                             <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                 <mat-chip-list class="btns">
-                                                    <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'" (click)="handleSideScreen('note')"><a
+                                                    <mat-chip
+                                                        [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'"
+                                                        (click)="handleSideScreen('note')"><a
                                                             class="lnk action pointer-cursor"><i
                                                                 class="fa fa-file-text-o mgn-rt-5"
                                                                 aria-hidden="true"></i>
@@ -372,19 +375,22 @@
                                                                 aria-hidden="true"></i>Upload Files<span
                                                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
                                                         </a></mat-chip> -->
-                                                
 
-                                                        <mat-chip><a class="lnk action pointer-cursor" (click)="imagefile1.click()"><input
-                                                            #imagefile1 type="file" accept="/*;capture=camera"
-                                                            style="display:none;" multiple (change)="filesSelected($event)"><i
-                                                            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
-                                                        File
-                                                        <span *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-                                                    </a></mat-chip>
-                                                
-                                                
-                                                    </mat-chip-list>
-                                            </div> 
+
+                                                    <mat-chip><a class="lnk action pointer-cursor"
+                                                            (click)="imagefile1.click()"><input #imagefile1 type="file"
+                                                                accept="/*;capture=camera" style="display:none;"
+                                                                multiple (change)="filesSelected($event)"><i
+                                                                class="fa fa-paperclip mgn-rt-5"
+                                                                aria-hidden="true"></i>Upload
+                                                            File
+                                                            <span
+                                                                *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+                                                        </a></mat-chip>
+
+
+                                                </mat-chip-list>
+                                            </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
@@ -404,7 +410,8 @@
                                                         (click)="handleCheckinClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             {{showCheckinButtonCaption()}}</span>
-                                                        <span *ngIf="sel_ser_det.isPrePayment">Proceed to Payment</span>
+                                                        <span *ngIf="sel_ser_det.isPrePayment">Confirm
+                                                            {{showCheckinButtonCaption()}}</span>
                                                         <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                     </div>
                                                     <div class="checkin-btn-bp pointer-cursor"
@@ -810,41 +817,40 @@
                                     <div class="mgn-bt-20">
                                         <table class="fm-contact-table">
                                             <tr>
-                                                <td class="td1">Phone : </td>
-                                                <td> &nbsp;&nbsp;<input type="text" maxlength="10"
-                                                        placeholder="Contact number" class=""
-                                                        [(ngModel)]="selected_phone" /></td>
-                                                <td>
+                                                <td class="td1" [class.pad-bt-15]="phoneerror != null">Phone :&nbsp;&nbsp; </td>
+                                                <td> 
+                                                    <input type="text" maxlength="10"
+                                                        placeholder="Phone number" class=""
+                                                        [(ngModel)]="selected_phone" />
                                                     <app-field-error-display class="red" [displayError]="true"
                                                         *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                     </app-field-error-display>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="td1">Email : </td>
+                                                <td class="td1" [class.pad-bt-15]="emailerror != null">Email :&nbsp;&nbsp; </td>
                                                 <td>
-                                                    &nbsp;&nbsp;<input class="" id="email"
+                                                    <input class="" id="email"
                                                         placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
                                                         autocomplete="off" (keyup)="showConfrmEmail($event)"
                                                         onpaste="return false;" oncopy="return false"
                                                         oncut="return false" ondrag="return false"
                                                         ondrop="return false">
-                                                </td>
-                                                <td>
                                                     <app-field-error-display class="red" [displayError]="true"
                                                         *ngIf="emailerror != null" errorMsg={{emailerror}}>
                                                     </app-field-error-display>
                                                 </td>
                                             </tr>
-                                            
+
                                             <tr class="mgn-bt-20"
-                                            *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                <td class="td1"><i class="fa wtsapaud-icon wtsap-cal"
-                                                        style="top : 10px !important"></i>WhatsApp Number : </td>
-                                                <td> &nbsp;&nbsp;<input type="text" maxlength="10"
-                                                        placeholder="WhatsApp number" class=""
-                                                        [(ngModel)]="callingModes" /></td>
+                                                *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <td class="td1" [class.pad-bt-15]="callingmodePhoneerror != null">
+                                                    <i class="fa wtsapaud-icon wtsap-cal"
+                                                        style="top : 10px !important"></i>WhatsApp Number : &nbsp;&nbsp;</td>
                                                 <td>
+                                                    <input type="text" maxlength="10"
+                                                        placeholder="WhatsApp number" class=""
+                                                        [(ngModel)]="callingModes" />
                                                     <app-field-error-display class="red" [displayError]="true"
                                                         *ngIf="callingmodePhoneerror != null"
                                                         errorMsg={{callingmodePhoneerror}}>

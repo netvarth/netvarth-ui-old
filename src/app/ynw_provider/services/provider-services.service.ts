@@ -1668,64 +1668,39 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
       return this.servicemeta.httpGet(url);
    }
-   uploadItemImages(id, data) {
-      const url = 'provider/items/' + id + '/image';
+   addLabeltoCustomer(data) {
+      const url = 'provider/customers/label';
       return this.servicemeta.httpPost(url, data);
    }
-   getProviderOrders() {
-      const url = 'provider/orders';
+   deleteLabelFromCustomer(id, label) {
+      const url = 'provider/customers/' + id + '/label/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
+   uploadCoverFoto(data) {
+      return this.servicemeta.httpPost('provider/coverPicture', data);
+   }
+   getCoverFoto() {
+      const url = 'provider/cover';
       return this.servicemeta.httpGet(url);
    }
-   getProviderOrdersCount() {
-      const url = 'provider/orders/count';
-      return this.servicemeta.httpGet(url);
+   deleteCoverFoto(name) {
+      const path = 'provider/coverPicture/' + name;
+      return this.servicemeta.httpDelete(path);
    }
-   getProviderOrderById(id) {
-      const url = 'provider/orders/' + id;
-      return this.servicemeta.httpGet(url);
+   paymentRefund(data) {
+      return this.servicemeta.httpPost('provider/payment/refund', data);
    }
-   getProviderHistoryOrders() {
-      const url = 'provider/orders/history/count';
-      return this.servicemeta.httpGet(url);
-   }
-   getProviderHistoryOrdersCount() {
-      const url = 'provider/orders/history';
-      return this.servicemeta.httpGet(url);
-   }
-   getProviderOrderStates(uuid) {
-      const url = 'provider/orders/states/' + uuid;
-      return this.servicemeta.httpGet(url);
-   }
-   changeOrderStatus(uuid, action) {
-      const url = 'provider/orders/' + uuid + '/' + action;
-      return this.servicemeta.httpGet(url);
-   }
-   addCatalog(data) {
-      return this.servicemeta.httpPost('provider/catalog', data);
-   }
-   editCatalog(data) {
-      return this.servicemeta.httpPut('provider/catalog', data);
-   }
-   getProviderCatalogs(id?) {
-      if (id) {
-         return this.servicemeta.httpGet('provider/catalog/' + id);
-      } else {
-         return this.servicemeta.httpGet('provider/catalog');
-      }
-   }
-   stateChangeCatalog(id, status) {
-      const url = 'provider/catalog/' + id + '/' + status;
-      return this.servicemeta.httpPut(url);
-   }
-   deleteUplodeditemImage(name, id) {
-      return this.servicemeta.httpDelete('provider/items/' + id + '/image/' + name);
-   }
-   uploadCatalogImages(id, data) {
-      const url = 'provider/catalog/' + id + '/image';
+   saveReportCriteria(reportName, data) {
+      const url = 'provider/report/' + reportName;
       return this.servicemeta.httpPost(url, data);
    }
-   deleteUplodedCatalogImage(name, id) {
-      return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
+   getCriteriaList() {
+      const url = 'provider/report/criteria';
+      return this.servicemeta.httpGet(url);
+   }
+   deleteCriteria(reportName, reportType) {
+      const path = 'provider/report/' + reportName + '/' + reportType;
+      return this.servicemeta.httpDelete(path);
    }
 }
 

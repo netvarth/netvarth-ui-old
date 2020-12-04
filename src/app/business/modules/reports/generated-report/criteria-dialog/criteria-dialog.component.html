@@ -1,0 +1,50 @@
+<div *ngIf="!for_view" class="dialog-pad">
+    <h1 mat-dialog-title class="head-t">Save this report as</h1>
+    <div mat-dialog-content class="txt-center">
+        <mat-form-field class="example-full-width width100pc">
+            <input type="text" [(ngModel)]="criteria_name" placeholder="Type here...">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <div class="width100pc">
+            <div class="fl-right">
+                <button mat-flat-button mat-dialog-close class="btn-cancel">Cancel</button>
+                <button mat-flat-button (click)="saveCriteria()" class="btn-save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="for_view" class="view-pad">
+    <h1 mat-dialog-title class="head-t">Criteria Details</h1>
+    <hr>
+    <div mat-dialog-content>
+        <table>
+            <tr>
+                <td>Report Name : </td>
+                <td>{{data.content.reportName}}</td>
+            </tr>
+            <tr>
+                <td>Report Type : </td>
+                <td>{{data.content.reportType}}</td>
+            </tr>
+            <tr>
+                <td>Date Category : </td>
+                <td>{{data.content.reportDateCategory}}</td>
+            </tr>
+            <!-- <tr>
+                <td>Criterias :</td>
+                <td>{{JSON.parse(JSON.stringify(data.content.reportCriteria))}}</td>
+            </tr> -->
+        </table>
+    </div>
+    <div mat-dialog-actions>
+        <div class="width100pc">
+            <div class="fl-right">
+                <button mat-flat-button mat-dialog-close class="btn-cancel">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="api_succes_msg"  *ngIf="api_success">
+    Report saved successfully
+</div>

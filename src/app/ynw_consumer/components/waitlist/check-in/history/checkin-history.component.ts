@@ -13,6 +13,7 @@ import { ConsumerRateServicePopupComponent } from '../../../../../shared/compone
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ViewRxComponent } from '../../../home/view-rx/view-rx.component';
+import { Location } from '@angular/common';
 // import * as moment from 'moment';
 
 
@@ -58,14 +59,20 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   small_device_display = false;
   screenWidth;
   viewrxdialogRef;
+  accountId;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
-    public router: Router,
+    public router: Router, public location: Location,
     public route: ActivatedRoute,
-    public dialog: MatDialog,
+    public dialog: MatDialog, public activateroute: ActivatedRoute,
     private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.activateroute.queryParams.subscribe(params => {
+      if (params.accountId) {
+        this.accountId = params.accountId;
+      }
+    });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -77,7 +84,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.getHistoryCount();
+    // this.getHistoryCount();
     this.getHistroy();
     // this.getAppointmentHistoryCount();
   }
@@ -85,14 +92,18 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   // Getting Checking History
   getHistroy() {
     this.loadcomplete.history = false;
+    const api_filter = {};
+    if (this.accountId) {
+      api_filter['account-eq'] = this.accountId;
+    }
     // const params = this.setPaginationFilter();
-    this.consumer_services.getWaitlistHistory()
+    this.consumer_services.getWaitlistHistory(api_filter)
       .subscribe(
         data => {
           this.history = data;
           this.loadcomplete.history = true;
           this.loading = false;
-          this.getAppointmentHistory();
+          this.getAppointmentHistory(api_filter);
         },
         error => {
           this.loading = false;
@@ -102,9 +113,9 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
 
   // Getting Appointment History
-  getAppointmentHistory() {
+  getAppointmentHistory(api_filter) {
     //  const params = this.setPaginationFilter();
-    this.consumer_services.getAppointmentHistory()
+    this.consumer_services.getAppointmentHistory(api_filter)
       .subscribe(
         data => {
           console.log(data);
@@ -158,7 +169,6 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.getHistroy();
-    this.getAppointmentHistory();
   }
 
   setPaginationFilter(params = {}) {
@@ -234,7 +244,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     });
 
     this.paydialogRef.afterClosed().subscribe(() => {
-      this.getHistoryCount();
+      this.getHistroy();
     });
   }
 
@@ -342,5 +352,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         accencUid: checkin.prescUrl
       }
     });
+  }
+  goback() {
+    this.location.back();
   }
 }

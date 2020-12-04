@@ -12,7 +12,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
@@ -228,6 +228,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
+    { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
+    { pk: 'FullyRefunded', value: 'Fully Refunded' },
     { pk: 'Refund', value: 'Refund' }
   ];
   appointmentModes = [
@@ -1613,8 +1615,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
-      } else {
-        return label;
       }
     }
   }
@@ -2171,7 +2171,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
   }
   scrollToTop() {
-    this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // this.apptSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
   getVirtualMode(virtualService) {
     return Object.keys(virtualService)[0];
@@ -2493,8 +2498,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     event.stopPropagation();
   }
   addCustomerDetails(appt) {
+    let virtualServicemode;
+    let virtualServicenumber;
+    if (appt.virtualService) {
+      Object.keys(appt.virtualService).forEach(key => {
+        virtualServicemode = key;
+        virtualServicenumber = appt.virtualService[key];
+      });
+    }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: appt.uid } });
-    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid } });
+    this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
   }
   selectAllStarted() {
     this.startedAppointmentsChecked = {};
@@ -2567,6 +2580,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getSlotBYScheduleandDate(scheduleid, date) {
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
+        this.scheduleSlots = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {

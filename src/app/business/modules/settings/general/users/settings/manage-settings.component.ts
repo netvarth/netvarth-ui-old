@@ -4,7 +4,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 // import { MatDialogRef } from '@angular/material';
 import { UserDataStorageService } from './user-datastorage.service';

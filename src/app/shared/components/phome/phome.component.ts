@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { SignUpComponent } from '../signup/signup.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
@@ -10,6 +10,8 @@ import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scrol
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
+
 @Component({
   selector: 'app-phome',
   templateUrl: './phome.component.html'
@@ -36,6 +38,8 @@ export class PhomeComponent implements OnInit {
   activePrice = '';
   showMoreList: any = {};
   windowScrolled: boolean;
+  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  selectedCountryCode;
   images = {
     special_offers: 'assets/images/special offer-01-01.png',
     jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -66,7 +70,7 @@ export class PhomeComponent implements OnInit {
   };
   phOrem_error = '';
   qParams;
-
+  @ViewChild('mobPrefix') mobPrefix: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -121,6 +125,9 @@ export class PhomeComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
+    if (this.countryCodes.length !== 0) {
+      this.selectedCountryCode =this.countryCodes[0].value;
+    }
     this.carouselOne = {
       dots: false,
       autoplay: true,
@@ -255,7 +262,7 @@ export class PhomeComponent implements OnInit {
     // }
     // const ob = this;
     const post_data = {
-      'countryCode': '+91',
+      'countryCode': this.selectedCountryCode,
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
@@ -326,11 +333,19 @@ export class PhomeComponent implements OnInit {
     this.api_error = null;
   }
   handlekeyup(ev) {
+    console.log(ev.target.value);
+      if (/^\d+$/.test(ev.target.value)) {
+        console.log('Contain numbers only');
+        this.mobPrefix.nativeElement.style.display = 'flex';
+        this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
+        // margin-left: -40px;
+    } else {
+        this.mobPrefix.nativeElement.style.display = 'none';
+    }
     if (ev.keyCode !== 13) {
       this.resetApiErrors();
     }
   }
-
   onChangePassword() {
     this.step = 1;
   }

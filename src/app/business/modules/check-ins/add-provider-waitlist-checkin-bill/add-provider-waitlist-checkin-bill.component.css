@@ -30,3 +30,12 @@
         padding-right: 10px !important;
     }
 }
+.amountSaved {
+    text-align: left;
+    color: limegreen;
+    font-weight: 700;
+}
+.hint {
+    line-height: 1.75;
+    font-size: .775rem;
+}

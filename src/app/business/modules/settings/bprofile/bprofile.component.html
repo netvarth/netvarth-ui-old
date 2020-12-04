@@ -19,22 +19,39 @@
             <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
               <div class="card p0">
                 <div class="pubs card w-dta active bprof">
-                  <!-- Cover Photo and Profile Pic -->
-                  <div class="coverFotoBorder">
-                    <!-- <span class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
-                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;Edit Cover
-                        Photo</span>
-                    </span> -->
-                    <div class="cd-t">
-                      <div class="basic-i">
-                        <div class="bi-l mgn-center mgn-up-20" *ngIf="blogo">
-                          <div class="pro-pic" [class.yes]="profimg_exists">
-                            <div class="pro-pic-img">
-                              <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
-                              <div class="camera-outline custId-cursor" (click)="changeProPic()"
-                                style="overflow: visible !important;">
-                                <i class="fa propic-cam-icon" aria-hidden="true"></i>
-                              </div>
+                  <!-- Cover Photo -->
+                  <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
+                    <!--Camera icon(cover) For large device -->
+                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;{{imageToShow ? 'Edit' : 'Upload'}} Cover
+                        Photo
+                      </span>
+                    </span>
+                    <!-- Camera icon(cover) for small device -->
+                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover-small">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span>
+                    </span>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="changeProPic('cover')">
+                        <i class="fa fa-upload"></i>
+                        Upload Photo
+                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
+                      </button>
+                      <button *ngIf="cover_url" mat-menu-item (click)="deleteCover()">
+                        <i class="fa fa-trash"></i>
+                        Remove Photo</button>
+                    </mat-menu>
+                  </div>
+                  <!-- Profile pic -->
+                  <div class="cd-t pro-pic-div">
+                    <div class="basic-i">
+                      <div class="bi-l mgn-center mgn-up-100" *ngIf="blogo">
+                        <div class="pro-pic pro-pic-bdr" [class.yes]="profimg_exists">
+                          <div class="pro-pic-img">
+                            <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url" class="crop-img-fit">
+                            <div class="camera-outline custId-cursor" (click)="changeProPic('propic')"
+                              style="overflow: visible !important;">
+                              <i class="fa propic-cam-icon" aria-hidden="true"></i>
                             </div>
                           </div>
                         </div>
@@ -43,33 +60,124 @@
                   </div>
 
                   <!-- Progress Bar -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-50">
+                    <h6 style="margin-top: 0 !important;" *ngIf="normal_basicinfo_show!=1" class="bus-prof-strength">
+                      Profile Strength-
+                      <span [className]="'text-' + weightageClass">{{getBusinessProfileWeightageText()}} </span>
+                    </h6>
                     <div class="warning" *ngIf="normal_basicinfo_show==1">
                       <app-innerloading-spinner spinnerParams="loadingParams">
                       </app-innerloading-spinner>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 bus-bprof-strength no-padding"
                       *ngIf="normal_basicinfo_show!=1">
-                      <div class="progress bar-wdth mgn-center mt-2 no-padding" style="height:16px;">
+                      <div class="col-md-6 col-xs-6 col-sm-6 progress bar-wdth  mt-2 no-padding" style="height:16px;">
                         <div class="progress-bar progress-bar-animated active" role="progressbar"
                           [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
-                          aria-valuemax="100" data-toggle="popover">{{getBusinessProfileWeightageText()}}</div>
+                          aria-valuemax="100" data-toggle="popover"></div>
+                      </div>
+                      <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
+                        <button (click)="scroll(basicInfoSection)" type="button"
+                        [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
                     </div>
                   </div>
 
                   <!-- About You -->
-                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-10 abt-you-box">
-                    <div class="pad-10"><span class="sub-heads">About You</span><span class="edit-txt custId-cursor"
+                  <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
+                    <div class="pad-10"><span class="sub-heads">About Us</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
-                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Fill your profile</span>
+                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Complete your profile</span>
                     </div>
                     <div class="busns-name">
                       {{bProfile.businessName}}
                     </div>
                     <div class="bus-desc pad-10">
                       {{bProfile.businessDesc}}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- QR code -->
+                <div class="pubs card w-dta bprof no-shadow no-padding-up">
+                  <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0" class="incomplete-msg">
+                    <div>
+                      Please complete your profile to activate your Jaldee Link and QR Code
+                    </div>
+                  </div>
+                  <div [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                    <div>
+                      <h6 class="sub-heads">Here is your QR code and Link
+                        <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
+                          <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
+                        <span class="edit-txt custId-cursor"
+                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'Manage' : 'Enable'}}</span></h6>
+                      <div class="clearfix"></div>
+                      <div class="bus-prof-qr-sec">
+                        <div class="mgn-up-10">
+                          <!-- If there is NO Custom ID -->
+                          <div *ngIf="!bProfile.customId">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" #qrCodeOnlineId>
+                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
+                                </ngx-qrcode>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
+                                <div class="mgn-up-10 prof-url">
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{wndw_path}}{{bProfile.accEncUid}}
+                                </div>
+                                <div class="mgn-up-10">
+                                  <div class="disp-flex smal-device-wt">
+                                    <div class="trackSlide bprof-icons share-ico">
+                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
+                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
+                                      </share-buttons>
+                                    </div>
+                                    <div class="dwnld-bdr custId-cursor">
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                        <i class="fa fa-cloud-download dwnld-icon"></i>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- If there is Custom ID -->
+                          <div *ngIf="bProfile.customId">
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
+                              #qrCodeOnlineId>
+                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
+                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value"
+                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
+                                </ngx-qrcode>
+                              </div>
+                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
+                                <div class="mgn-up-10 prof-url">
+                                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{wndw_path}}{{bProfile.customId}}
+                                </div>
+                                <div class="mgn-up-10">
+                                  <div class="disp-flex smal-device-wt">
+                                    <div class="trackSlide bprof-icons share-ico">
+                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
+                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
+                                      </share-buttons>
+                                    </div>
+                                    <div class="dwnld-bdr custId-cursor">
+                                      <a class="ngx-qr-btn" [href]="qrCodePath" download>
+                                        <i class="fa fa-cloud-download dwnld-icon"></i>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -92,86 +200,7 @@
         <div class="row">
           <div class="copy one col-xs-12 col-sm-12 no-padding">
             <div class="col-a col-b pl0 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-              <div class="card p0">
-                <div class="pubs card w-dta bprof">
-                  <div *ngIf="showIncompleteButton" class="incomplete-msg">
-                    <div>
-                      Please fill your profile to activate your Jaldee Link and QR Code
-                    </div>
-                  </div>
-                  <div [class.all_disabled]="showIncompleteButton">
-                    <div>
-                      <h6>Here is your QR code and Link
-                        <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
-                          <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
-                        <span class="edit-txt custId-cursor"
-                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'Manage' : 'Enable'}}</span></h6>
-                      <div class="clearfix"></div>
-                      <div class="bus-prof-qr-sec">
-                        <div class="mgn-up-10">
-                          <!-- If there is NO Custom ID -->
-                          <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
-                                </ngx-qrcode>
-                              </div>
-                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
-                                <div class="mgn-up-10">
-                                  {{wndw_path}}{{bProfile.accEncUid}}
-                                </div>
-                                <div class="disp-flex mgn-up-10">
-                                  <div class="trackSlide bprof-icons share-ico">
-                                    <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
-                                      [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
-                                    </share-buttons>
-                                  </div>
-                                  <div class="dwnld-bdr custId-cursor">
-                                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
-                                      <i class="fa fa-cloud-download dwnld-icon"></i>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <!-- If there is Custom ID -->
-                          <div *ngIf="bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12"
-                              #qrCodeOnlineId>
-                              <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
-                                <ngx-qrcode #custQR [elementType]="elementType" [value]="qr_value"
-                                  (click)="qrCodegeneraterOnlineID(bProfile.customId)" class="custId-cursor">
-                                </ngx-qrcode>
-                              </div>
-                              <div class="col-sm-9 col-md-9 col-lg-9 col-xs-12">
-                                <div class="mgn-up-10">
-                                  {{wndw_path}}{{bProfile.customId}}
-                                </div>
-                                <div class="disp-flex mgn-up-10">
-                                  <div class="trackSlide bprof-icons share-ico">
-                                    <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
-                                      [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [size]="-4">
-                                    </share-buttons>
-                                  </div>
-                                  <div class="dwnld-bdr custId-cursor">
-                                    <a class="ngx-qr-btn" [href]="qrCodePath" download>
-                                      <i class="fa fa-cloud-download dwnld-icon"></i>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card p0 w-dta active" #basicInfoSection>
+              <div class="card p0 w-dta active">
                 <div class="mgn-bt-20">
 
                   <!-- Location -->
@@ -286,7 +315,7 @@
                 <div class="row">
                   <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
                     <div class="card p0 w-dta active add-extra">
-                      <mat-accordion>
+                      <mat-accordion class="mgn-up-5">
                         <mat-expansion-panel [expanded]="true">
                           <mat-expansion-panel-header class="min90">
                             <mat-panel-title class="block-level">
@@ -653,4 +682,4 @@
     </div>
     <div class="clearfix"></div>
   </div>
-</section>
+</section> 

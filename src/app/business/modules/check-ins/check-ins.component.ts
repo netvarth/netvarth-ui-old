@@ -16,7 +16,7 @@ import { LocateCustomerComponent } from './locate-customer/locate-customer.compo
 import { ProviderWaitlistCheckInConsumerNoteComponent } from './provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { ApplyLabelComponent } from './apply-label/apply-label.component';
 import { CheckinDetailsSendComponent } from './checkin-details-send/checkin-details-send.component';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
@@ -373,6 +373,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
+    { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
+    { pk: 'FullyRefunded', value: 'Fully Refunded' },
     { pk: 'Refund', value: 'Refund' }
   ];
   waitlistModes = [
@@ -2052,8 +2054,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
-      } else {
-        return label;
       }
     }
   }
@@ -2458,7 +2458,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (checkin.token) {
       tokenNo = checkin.token;
     }
-    this.speech.setLanguage('hi-IN');
+    this.speech.setLanguage('en-IN');
     // Speech.setVoice(voice);
     this.speech.speak({
       text: 'Token Number ' + tokenNo + checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName,
@@ -2742,7 +2742,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   scrollToTop() {
-    this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // this.chekinSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
   getVirtualMode(virtualService) {
     // Object.keys(virtualService)[0];
@@ -3112,8 +3117,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   addCustomerDetails(checkin) {
+    let virtualServicemode;
+    let virtualServicenumber;
+    if (checkin.virtualService) {
+      Object.keys(checkin.virtualService).forEach(key => {
+        virtualServicemode = key;
+        virtualServicenumber = checkin.virtualService[key];
+      });
+    }
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
-    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid } });
+    this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
   }
   showSelectAll() {
     if (this.check_in_filtered_list.length > 1) {

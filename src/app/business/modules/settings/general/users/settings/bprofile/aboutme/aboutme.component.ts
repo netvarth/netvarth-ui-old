@@ -502,9 +502,9 @@ export class AboutmeComponent implements OnInit, OnDestroy {
           const today = new Date();
           const tday = today.toString().replace(/\s/g, '');
           const blogo = this.blogo.url + '?' + tday;
-          const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+          // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
           this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+            || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
           const pdata = { 'ttype': 'updateuserdetails' };
           this.user_datastorage.updateProfilePicWeightage(true);
           this.sharedfunctionobj.sendMessage(pdata);
@@ -688,14 +688,15 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       return this.sharedfunctionobj.showlogoicon(logourl);
     }
   }
-  changeProPic() {
+  changeProPic(image) {
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'userId': this.userId,
-        'userdata': this.user_arr
+        'userdata': this.user_arr,
+        img_type : image
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

@@ -25,22 +25,17 @@
                     <div class="login"><strong>Service Provider Login</strong></div>
                     <div class="wrap-input100 validate-input">
                       <div class="form-group">
-                        <!-- <div class="form-group mob-prefx mobile-field ">
-                              <div style="display: flex;">
-                                      <div class="input-group-prepend mob-prefix"  style="margin-bottom:6px;" >
-                                          <span class="input-group-text" style="margin-top:auto;" id="">+91</span>
-                                        </div>
-                                     <mat-form-field >
-                           <input type="text"   matInput class="form-control" id="emailId" placeholder="Mobile/Email"
-                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                           </mat-form-field>
-                              </div>
-                          </div> -->
-                        <mat-form-field>
-                          <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
-                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
-                        </mat-form-field>
-
+                        <div class="form-group mob-prefx mobile-field" style="display: flex;">
+                          <!-- <div style="display: flex;"> -->
+                            <div class="input-group-prepend mob-prefix" style="margin-bottom:6px;" #mobPrefix>
+                              <span class="input-group-text" style="margin-top:auto;">+91</span>
+                            </div>
+                            <mat-form-field  style="width: 100%;">
+                              <input type="text" matInput class="form-control" id="emailId" placeholder="Mobile/Email"
+                                formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+                            </mat-form-field>
+                          <!-- </div> -->
+                        </div>
                         <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                           errorMsg="please enter your Mobile/Email">
                         </app-field-error-display>

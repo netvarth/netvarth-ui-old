@@ -252,8 +252,9 @@ export const projectConstantsLocal = {
     { key: 'twitter', iconClass: 'fa fa-twitter-square tw', iconImg: 'twitter.png', displayName: 'Twitter' },
     { key: 'youtube', iconClass: 'fa fa-youtube-square ytb', iconImg: 'youtube.png', displayName: 'Youtube' },
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
-    { key: 'googleplus', iconClass: 'fa fa-google-plus-square gpl', iconImg: 'googleplus.png', displayName: 'Google+' },
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
+    { key: 'instagram', iconClass: 'fa fa-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'bizyGlobe', iconClass: 'BizyGlobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
@@ -811,7 +812,9 @@ export const projectConstantsLocal = {
     MANDATORY_INFO: { 'name': 'MANDATORY_INFO', 'value': 15 },
     PROFILE_PIC: { 'name': 'PROFILE_PIC', 'value': 5 }
   },
-
+  COUNTRY_CODES: [    
+    { displayName: '+91', value: '+91' }  
+  ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },

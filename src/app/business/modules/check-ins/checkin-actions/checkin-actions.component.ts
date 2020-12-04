@@ -12,6 +12,7 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider
 import { ApplyLabelComponent } from '../apply-label/apply-label.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import * as moment from 'moment';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 
 @Component({
@@ -81,6 +82,7 @@ export class CheckinActionsComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     pastDate;
     subdomain;
+    availableDates: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -179,15 +181,18 @@ export class CheckinActionsComponent implements OnInit {
         // this.selectedTime = '';
         this.activeDate = this.checkin_date;
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+        this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+        this.loading = true;
         this.queuejson = [];
         this.queueQryExecuted = false;
         if (locid && servid) {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    this.loading = false;
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -240,6 +245,7 @@ export class CheckinActionsComponent implements OnInit {
         }
         this.handleFuturetoggle();
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+        this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
     handleFuturetoggle() {
         // this.showfuturediv = !this.showfuturediv;
@@ -685,7 +691,16 @@ export class CheckinActionsComponent implements OnInit {
     }
     addCustomerDetails() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
+        let virtualServicemode;
+        let virtualServicenumber;
+        if (this.checkin.virtualService) {
+          Object.keys(this.checkin.virtualService).forEach(key => {
+            virtualServicemode = key;
+            virtualServicenumber = this.checkin.virtualService[key];
+          });
+        }
+        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
+        // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
     }
     unBlockWaitlist() {
         this.provider_services.deleteWaitlistBlock(this.checkin.ynwUuid)
@@ -697,5 +712,19 @@ export class CheckinActionsComponent implements OnInit {
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+    }
+    getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+            .subscribe((data: any) => {
+                const availables = data.filter(obj => obj.isAvailable);
+                const availDates = availables.map(function (a) { return a.date; });
+                _this.availableDates = availDates.filter(function (elem, index, self) {
+                    return index === self.indexOf(elem);
+                });
+            });
+    }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }

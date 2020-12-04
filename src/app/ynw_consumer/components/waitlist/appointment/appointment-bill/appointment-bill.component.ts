@@ -5,7 +5,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
-import {  ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -107,6 +107,7 @@ export class ConsumerAppointmentBillComponent implements OnInit {
     razorpay_order_id: any;
     razorpay_payment_id: any;
     razorpayDetails: any = [];
+    refundedAmount;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -167,15 +168,15 @@ export class ConsumerAppointmentBillComponent implements OnInit {
                 if (this.source === 'history') {
                     this.checkIn_type = 'appt_historybill';
                 }
-                   if (params.details) {
+                if (params.details) {
                     this.razorpayDetails = JSON.parse(params.details);
                     this.razorpay_order_id = this.razorpayDetails.razorpay_order_id;
                     this.razorpay_payment_id = this.razorpayDetails.razorpay_payment_id;
                     this.cdRef.detectChanges();
-              }
+                }
             });
     }
-    goBack () {
+    goBack() {
         this.location.back();
     }
     ngOnInit() {
@@ -279,6 +280,14 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             .subscribe(
                 data => {
                     this.pre_payment_log = data;
+                    this.refundedAmount = 0;
+                    for (let i = 0; i < this.pre_payment_log.length; i++) {
+                        if (this.pre_payment_log[i].refundDetails.length > 0) {
+                            for (const payment of this.pre_payment_log[i].refundDetails) {
+                                this.refundedAmount = this.refundedAmount + payment.amount;
+                            }
+                        }
+                    }
                 },
                 () => {
 
@@ -628,6 +637,17 @@ export class ConsumerAppointmentBillComponent implements OnInit {
             bill_html += '	<tr style="font-weight: bold;"> ';
             bill_html += '<td width="70%" style="text-align:right">Refundable Amount</td>';
             bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refund_value).toFixed(2) + '</td>';
+            bill_html += '	</tr>                                                                           ';
+            bill_html += '</table>';
+            bill_html += '	</td></tr>';
+        }
+        if (this.refundedAmount > 0) {
+            bill_html += '	<tr><td>';
+            bill_html += '<table width="100%"';
+            bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
+            bill_html += '	<tr style="font-weight: bold;"> ';
+            bill_html += '<td width="70%" style="text-align:right">Amount refunded</td>';
+            bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refundedAmount).toFixed(2) + '</td>';
             bill_html += '	</tr>                                                                           ';
             bill_html += '</table>';
             bill_html += '	</td></tr>';

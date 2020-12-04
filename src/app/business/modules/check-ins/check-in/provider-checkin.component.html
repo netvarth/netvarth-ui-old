@@ -30,10 +30,12 @@
                             type="text" class="form-control" formControlName="search_input"
                             (keypress)="findCustomer(searchForm.value, $event)" autocomplete="off">
                         </mat-form-field>
+                        <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
+                          {{customer_label | capitalizeFirst}} Phone# or ID or Email</span>
                       </div>
                       <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                    searchCustomer(searchForm.value)">Find</button>
+                        <button *ngIf="!showBlockHint" class="create_new_button cs-btn bt3"
+                          (click)="searchCustomer(searchForm.value)">Find</button>
                         <button *ngIf="showBlockHint" class="create_new_button cs-btn bt3"
                           (click)="confirmWaitlistBlock()">Confirm</button>
                       </div>
@@ -42,6 +44,29 @@
                 </div>
               </form>
               <div class="clearfix"></div>
+              <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
+                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.jaldeeId">
+                  <div><b>{{customer_label | capitalizeFirst}} Id:</b></div>
+                  <div>{{customer_data.jaldeeId}}</div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
+                  *ngIf="customer_data.firstName || customer_data.lastName">
+                  <div><b>Name:</b></div>
+                  <div>{{customer_data.firstName}} {{customer_data.lastName}}</div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.email">
+                  <div><b>Email:</b></div>
+                  <div>{{customer_data.email}}</div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.phoneNo">
+                  <div><b>PhoneNo:</b></div>
+                  <div>{{customer_data.phoneNo}}</div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.dob">
+                  <div><b>DOB</b></div>
+                  <div>{{customer_data.dob}}</div>
+                </div>
+              </div>
               <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
                 <div class="or-style">OR</div>
                 <a class="underline" (click)="createNew()" *ngIf="source !== 'waitlist-block'"> Create a new
@@ -446,7 +471,9 @@
                                 <mat-radio-button *ngIf="memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
                                   [value]="memb.id" [checked]="isChecked(memb.id)">
-                                  {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}}
+                                  <!-- {{memb.firstName + ' ' + memb.lastName | capitalizeFirst}} -->
+                                  {{memb.firstName | capitalizeFirst}}
+                                  {{(memb.lastName) ? memb.lastName : ''}}
                                 </mat-radio-button>
                                 <mat-radio-button *ngIf="!memb.firstName"
                                   (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"

@@ -260,8 +260,9 @@ ul.bus-actions-horiz li {
 
 .question-header {
   color: #999 !important;
-  font-size: 0.8rem !important;
+  /* font-size: 0.8rem !important; */
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
 }
 
 .question-main-outer {
@@ -279,7 +280,8 @@ ul.bus-actions-horiz li {
 .question-value1, .question-valuearr li {
   font-weight: 600 !important;
   color: #3a3030;
-  font-size: 0.8rem;
+  font-size: 0.9rem !important;
+  /* font-size: 0.8rem; */
   /* line-height: 25px; */
 }
 
@@ -357,7 +359,7 @@ ul.bus-actions-horiz li {
   margin-left: 0 !important;
 }
 
-/*
+/* 
 .location-accord ul.badges li {
   margin-right: 10px !important;
   font-size: 1.5rem !important;
@@ -384,7 +386,7 @@ ul.details.badges li {
   }
   .bus-title-content h3 {
     text-align: center;
-    margin-bottom: 0px !important;
+    margin-bottom: 0px !important; 
   }
   .single-loc {
     text-align: center;
@@ -418,21 +420,6 @@ ul.details.badges li {
 }
 
 .bus-item .card.card-item-n {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-}
-.bus-item .card.card-order-item-n {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
-  transition: 0.3s;
-  border-radius: 5px;
-  width: 150px !important;
-  height: 200px;
-  margin: auto;
-  padding: 0px !important;
-  border: 1px solid #106e76 !important;
-}
-
-.bus-item .card.card-order-item-n {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
@@ -492,8 +479,6 @@ ul.details.badges li {
   width: 70px !important;
   border: 1px solid #106e76 !important;
 }
-
-
 
 .bus-item .card.card-item-n .card-item-title a {
   /* height: 100%; */
@@ -933,17 +918,116 @@ ul.details.badges li {
   background: rgba(0, 0, 0, 0.04);
   padding: 10px 0 3px 10px !important;
 }
-.shopping-cart-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: lightgray;
-  color: black;
-  font-weight:bold;
-  text-align: center;
+
+/* Social media icon colors */
+.bus-page .socialmedia li i.fb:before {
+  color: #627aac;
 }
-.card-img-top {
-  flex-grow: 1;
-  object-fit:contain;
+.bus-page .socialmedia li i.tw:before {
+  color: #5eb0fb;
+}
+.bus-page .socialmedia li i.lkd:before {
+  color: #02a2c2;
+}
+.bus-page .socialmedia li i.ytb:before {
+  color: #ef452f !important;
+}
+.bus-page .socialmedia li i.gpl:before {
+  color: #ef452f;
+}
+.bus-page .socialmedia li i.pntr:before {
+  color: #ef452f;
+}
+
+/* Cover Photo */
+.bus-page .cvr-ht {
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: 100% 300px;
+}
+@media(max-width: 575px) {
+  .bus-page .cvr-ht {
+    height: 225px;
+    background-repeat: no-repeat;
+    background-size: 100% 225px;
+  }
+}
+.bus-page .cvr-dp-mgn {
+  margin-top: -80px;
+}
+@media (min-width: 992px) {
+  .bus-page .cvr-dp-mgn {
+    margin-top: -110px !important;
+  }
+}
+.bus-page .cvr-dp-bdr {
+  border: 5px solid #ffffff !important;
+}
+
+.bus-item-N {
+  width: 16.6%;
+  float: left !important;
+  margin-bottom: 10px !important;
+  /* margin-top: 10px !important; */
+}
+@media(max-width: 1200px) {
+  .bus-item-N {
+    width: 20%;
+  }
+}
+@media(max-width: 991px) {
+  .bus-item-N {
+    width: 25%;
+    float: left !important;
+    
+  }
+}
+@media(max-width: 767px) {
+  .bus-item-N {
+    width: 33.3%;
+  }
+}
+@media(max-width: 550px) {
+  .bus-item-N {
+    width: 50%;
+  }
+}
+.sp-head {
+  color: #191d96 !important;
+}
+.pad-top-20 {
+  padding-top: 20px !important;
+}
+
+.locations .bg-col {
+  background-color: #191d96 !important;
+}
+.locations .bg-col h4 a {
+  color: #fff !important;
+}
+
+.locations .loc-chg-action {
+  color:#fff !important;
+}
+.locations .dropdown-menu a {
+  font-size: 1rem !important;
+}
+.locations .dropdown-menu a.active {
+  color: #191d96 !important;
+  font-weight: bold !important;
+}
+
+.module {
+  margin: 0 0 1em 0;
+  overflow: hidden !important;
+}
+
+.line-clamp-1 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  color:#fff !important;
+}
+ul.bus-actions li.more_less a.lnk {
+  font-size: 1rem !important;
 }

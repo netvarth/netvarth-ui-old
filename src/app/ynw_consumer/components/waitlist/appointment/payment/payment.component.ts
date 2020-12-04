@@ -12,7 +12,8 @@ import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpa
 
 @Component({
     selector: 'app-consumer-payment',
-    templateUrl: './payment.component.html'
+    templateUrl: './payment.component.html',
+    styleUrls: ['./payment.component.css'],
 })
 export class ConsumerAppointmentPaymentComponent implements OnInit {
     uuid: any;

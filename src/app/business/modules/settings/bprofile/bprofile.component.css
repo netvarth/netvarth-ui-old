@@ -4,6 +4,8 @@
 .yourProfile .coverFotoBorder {
     width:100%;
     background: #3f51b50d;
+    border-radius: 5px;
+    height: 290px;
 }
 .yourProfile .mgn-center {
     margin-left: auto !important;
@@ -16,11 +18,11 @@
     font-weight: 600;
 }
 .yourProfile .sub-heads {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
 }
 .yourProfile .busns-name {
-    font-size: 1.4rem;
+    font-size: 2rem;
     color: #337ab7;
     text-align: center;
     font-weight: 600;
@@ -30,16 +32,18 @@
 }
 .yourProfile .bus-desc {
     font-size: 0.9rem;
-    text-align: center;
+    text-align: justify;
 }
 .yourProfile .abt-you-box {
     /* background: #3c8dbc0d; */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
+    /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.5) !important; */
+    border-top: 1px solid #80808059;
+    border-bottom: 1px solid #80808059;
 }
 .yourProfile share-button button {
     font-size: 12px !important;
 }
-.yourProfile .coverFotoBorder .camera-outline {
+.yourProfile .camera-outline {
     bottom: 35px;
     right: 36px;
     transform: translate(50%, 50%);
@@ -52,16 +56,30 @@
 }
 .yourProfile .coverFotoBorder .edit-cover {
     border: 2px solid white;
-    border-radius: 6px;
+    border-radius: 9px;
     position: absolute;
     z-index: 2;
     padding-left: 10px;
     background: rgb(228 230 235);
     box-sizing: border-box;
     right: 30px;
-    margin-top: 160px;
+    margin-top: 230px;
     height: 35px;
     color: black;
+}
+.yourProfile .coverFotoBorder .edit-cover-small {
+    border: 2px solid white;
+    border-radius: 50px;
+    position: absolute;
+    z-index: 2;
+    padding-left: 6px;
+    background: rgb(228 230 235);
+    right: 30px;
+    margin-top: 230px;
+    height: 35px;
+}
+.yourProfile .edit-cover-small .propic-cam-icon {
+    width: 14px !important;
 }
 .yourProfile .mgn-top-m3{
     margin-top: -3px;
@@ -91,15 +109,29 @@
     text-align: center;
 }
 @media (max-width: 595px) {
-    .yourProfile .coverFotoBorder .camera-outline {
+    .yourProfile  .camera-outline {
         bottom: 20px !important;
         right: 35px !important;
+    }
+}
+@media (max-width: 575px) {
+    .yourProfile .content .col-a .card.w-dta.active .cd-t .basic-i .bi-l .pro-pic .pro-pic-img img {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .yourProfile .pro-pic-bdr {
+        margin-top: 60px !important;
+    }
+    .yourProfile .cover-bg {
+        background-position: center !important;
+        background-size: 100% 220px;
     }
 }
 .yourProfile .all_disabled {
     background: #9e9e9e6e !important;
     cursor: not-allowed !important;
     opacity: 0.2;
+    pointer-events: none !important;
 }
 .yourProfile .incomplete-msg {
     position: absolute;
@@ -114,4 +146,54 @@
 }
 .yourProfile .bar-wdth {
     width: 50%;
+}
+.yourProfile .no-shadow {
+    box-shadow: none !important;
+}
+
+@media (min-width: 360px) and (max-width: 770px) {
+  .smal-device-wt {
+        margin-left: auto !important;
+        margin-right: auto !important; 
+        inline-size: fit-content;
+    }
+}
+@media screen and (max-width: 770px) {
+    .yourProfile .prof-url {
+        text-align: center !important;
+    }
+}
+@media (min-width: 461px) {
+    .yourProfile .coverFotoBorder .edit-cover-small {
+        display: none !important;
+    }
+}
+.yourProfile .no-padding-up {
+    padding-top: 0 !important;
+}
+.yourProfile .cover-bg {
+    background-size: 100% 290px;
+    background-repeat: no-repeat;
+}
+@media screen and (max-width: 330px) {
+    /* .yourProfile .cover-bg {
+        background-size: cover !important;
+    } */
+}
+.yourProfile .pro-pic-bdr {
+    border: 4px solid white;
+}
+.yourProfile .pro-pic-div {
+    position: absolute;
+    width: 90%;
+    border-bottom: none;
+    margin-top: 60px;
+}
+@media (max-width: 460px) {
+    .yourProfile .coverFotoBorder .edit-cover {
+        display: none !important;
+    }
+}
+.yourProfile .mgn-up-100 {
+    margin-top: 100px !important;
 }

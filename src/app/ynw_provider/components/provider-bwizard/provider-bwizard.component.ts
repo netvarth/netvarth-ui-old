@@ -336,8 +336,8 @@ export class ProviderbWizardComponent implements OnInit {
               this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
               this.loading_active = false;
               // calling function which saves the business related details to show in the header
-              const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
-              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
+              // const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
+              this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
               const pdata = { 'ttype': 'updateuserdetails' };
               this.shared_functions.sendMessage(pdata);
             },
@@ -652,8 +652,8 @@ export class ProviderbWizardComponent implements OnInit {
         this.setBprofile_to_object(data);
         this.tbprof = data;
         this.name_placeholder = projectConstants.PROFILE_ERROR_STACK[this.tbprof.serviceSector.domain];
-        const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
-        this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], subsectorname, '');
+        // const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
+        this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
         const pdata = { 'ttype': 'updateuserdetails' };
         this.shared_functions.sendMessage(pdata);
         for (let i = 0; i < this.businessConfig.length; i++) {

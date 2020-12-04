@@ -9,12 +9,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 export class TeleServiceConfirmBoxComponent implements OnInit {
-
+  callingModes;
   iconClass: string;
+  starting_url: any;
+  serviceMode ;
   constructor(public dialogRef: MatDialogRef<TeleServiceConfirmBoxComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.serviceMode = data.serviceDetail.virtualServiceType;
+      console.log(this.serviceMode)
+     }
 
   ngOnInit() {
+    this.callingModes = this.data.app;
+    if(this.data.meetingLink) {
+      this.starting_url = this.data.meetingLink;
+    }
     switch (this.data.app) {
       case 'Zoom': {
         this.iconClass = 'fa zoom-icon';

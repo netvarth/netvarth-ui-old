@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/teleservice-confirm-box.component';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { TeleServiceShareComponent } from './teleservice-share/teleservice-share.component';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class TeleServiceComponent implements OnInit {
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public shared_services: SharedServices,
-        private router: Router,
+        private router: Router, public _location: Location,
         private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
     ) {
@@ -153,7 +154,7 @@ export class TeleServiceComponent implements OnInit {
                     } else {
                         this.busnes_name = this.data.providerAccount.businessName;
                     }
-                  //  this.busnes_name = this.data.providerAccount.businessName;
+                    //  this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
                     console.log(this.servDetails);
@@ -169,26 +170,26 @@ export class TeleServiceComponent implements OnInit {
     // Back btn navigation
     redirecToPreviousPage() {
         // if (this.step === 1) {
-        //     this._location.back();
+        this._location.back();
         // }
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                servStatus: this.servStarted
-            }
-        };
-        if (this.waiting_type === 'checkin') {
-            if (this.servStarted) {
-                this.router.navigate(['provider', 'check-ins'], navigationExtras);
-            } else {
-                this.router.navigate(['provider', 'check-ins']);
-            }
-        } else {
-            if (this.servStarted) {
-                this.router.navigate(['provider', 'appointments'], navigationExtras);
-            } else {
-                this.router.navigate(['provider', 'appointments']);
-            }
-        }
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: {
+        //         servStatus: this.servStarted
+        //     }
+        // };
+        // if (this.waiting_type === 'checkin') {
+        //     if (this.servStarted) {
+        //         this.router.navigate(['provider', 'check-ins'], navigationExtras);
+        //     } else {
+        //         this.router.navigate(['provider', 'check-ins']);
+        //     }
+        // } else {
+        //     if (this.servStarted) {
+        //         this.router.navigate(['provider', 'appointments'], navigationExtras);
+        //     } else {
+        //         this.router.navigate(['provider', 'appointments']);
+        //     }
+        // }
     }
 
     // Asking to start the meeting
@@ -198,7 +199,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Are you ready to start ?',
+                message: 'Are you ready to start',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,
@@ -217,7 +218,7 @@ export class TeleServiceComponent implements OnInit {
                             this.shared_functions.openSnackBar('Service already started!');
                             this.servStarted = true;
                         }
-                       // this.chkinTeleserviceJoinLink();
+                        // this.chkinTeleserviceJoinLink();
                     } else {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
@@ -225,7 +226,7 @@ export class TeleServiceComponent implements OnInit {
                             this.shared_functions.openSnackBar('Service already started!');
                             this.servStarted = true;
                         }
-                      //  this.apptTeleserviceJoinLink();
+                        //  this.apptTeleserviceJoinLink();
                     }
                 }
             }
@@ -264,17 +265,19 @@ export class TeleServiceComponent implements OnInit {
             this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data, true)
                 .then(result => {
                     if (result) {
-                       // this.servStarted = true;
+                        // this.servStarted = true;
                         if (action === 'DONE') {
                             this.shared_functions.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'check-ins']);
                         } else {
-                            console.log(this.starting_url);
+                            // console.log(this.starting_url);
                             this.chkinTeleserviceJoinLink();
-                            if (this.callingModes !== 'VideoCall') {
-                                const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
-                                window.open(path, '_blank');
-                            } else {
+                            // if (this.callingModes !== 'VideoCall') {
+                            // const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                            // window.open(path, '_blank');
+                            // this.shared_functions.openWindow(path);
+                            // } else {
+                            if (this.callingModes === 'VideoCall') {
                                 const startIndex = this.starting_url.lastIndexOf('/');
                                 const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
                                 this.router.navigate(['video', videoId]);
@@ -294,10 +297,12 @@ export class TeleServiceComponent implements OnInit {
                             this.router.navigate(['provider', 'appointments']);
                         } else {
                             this.apptTeleserviceJoinLink();
+                            // if (this.callingModes !== 'VideoCall') {
+                            // const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
+                            // window.open(path, '_blank');
+                            // this.shared_functions.openWindow(path);
+                            // } else 
                             if (this.callingModes !== 'VideoCall') {
-                                const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
-                                window.open(path, '_blank');
-                            } else {
                                 const startIndex = this.starting_url.lastIndexOf('/');
                                 const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
                                 this.router.navigate(['video', videoId]);
@@ -321,7 +326,7 @@ export class TeleServiceComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                message: 'Have you completed the service?',
+                message: 'Have you completed the',
                 serviceDetail: this.servDetails,
                 consumerName: this.consumer_fname,
                 custmerLabel: this.customer_label,
@@ -333,17 +338,17 @@ export class TeleServiceComponent implements OnInit {
             if (result) {
                 if (result === 'completed') {
                     if (this.waiting_type === 'checkin') {
-                            this.changeWaitlistStatus(this.data, 'DONE');
+                        this.changeWaitlistStatus(this.data, 'DONE');
                         this.redirecToPreviousPage();
                     } else {
-                            this.changeWaitlistStatus(this.data, 'Completed');
+                        this.changeWaitlistStatus(this.data, 'Completed');
                         this.redirecToPreviousPage();
                     }
                 }
             }
         });
     }
-    relauchMeeting (startingUrl) {
+    relauchMeeting(startingUrl) {
         const startIndex = startingUrl.lastIndexOf('/');
         const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
         this.router.navigate(['video', videoId]);

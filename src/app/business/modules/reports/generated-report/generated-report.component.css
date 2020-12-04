@@ -35,3 +35,15 @@ table th {
   }
 
 }
+
+#reportGenerated .criteria-btn-dv {
+  width: fit-content;
+  float: right;
+}
+.criteria-btn-dv button {
+  line-height: 15px;
+}
+.criteria-btn-dv .btn-save {
+  background: #3c8dbcdb;
+    color: white;
+}

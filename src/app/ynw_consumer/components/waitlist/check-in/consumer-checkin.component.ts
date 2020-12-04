@@ -1668,7 +1668,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.userData = data;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
+                        if (this.type !== 'waitlistreschedule') {
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        }
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
                         this.consumerPhoneNo = this.userPhone;
                     }
@@ -2071,6 +2073,10 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
+        } else if(this.userEmail && this.payEmail.trim() == '') {
+            this.emailerror = 'Please enter a valid email.';
+            this.noEmailError = false;
+
         }
         if (this.noPhoneError && this.noEmailError && this.noCallingError) {
             this.action = '';
@@ -2092,7 +2098,7 @@ export class ConsumerCheckinComponent implements OnInit {
         // this.dialogRef.close();
         const checkinconfirmdialogRef = this.dialog.open(CheckinConfirmPopupComponent, {
             width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
+            panelClass: ['popup-class', 'commonpopupmainclass','confirmpopup'],
             disableClose: true,
             data: {
                 service_details: this.sel_ser_det,

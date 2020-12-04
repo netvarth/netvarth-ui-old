@@ -35,6 +35,7 @@ export class ProPicPopupComponent implements OnInit {
     canvasRotation = 0;
     transform: ImageTransform = {};
     scale = 1;
+    imgType: any;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -46,12 +47,14 @@ export class ProPicPopupComponent implements OnInit {
     }
     ngOnInit() {
         this.bProfile = this.data.userdata;
+        this.imgType = this.data.img_type;
     }
 
     imageSelect(event: any): void {
         this.imageChangedEvent = event;
     }
     imageCropped(event: ImageCroppedEvent) {
+        this.fileToReturn = '';
         this.croppedImage = event.base64; // preview
         this.fileToReturn = this.base64ToFile(
             event.base64,
@@ -162,10 +165,14 @@ export class ProPicPopupComponent implements OnInit {
                     };
                     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
                     submit_data.append('properties', blobPropdata);
-                    if (this.data.userId) {
-                        this.uploadUserLogo(submit_data);
+                    if (this.imgType === 'cover') {
+                        this.uploadCoverPic(submit_data);
                     } else {
-                        this.uploadLogo(submit_data);
+                        if (this.data.userId) {
+                            this.uploadUserLogo(submit_data);
+                        } else {
+                            this.uploadLogo(submit_data);
+                        }
                     }
                 }
             } else {
@@ -193,9 +200,9 @@ export class ProPicPopupComponent implements OnInit {
                     const today = new Date();
                     const tday = today.toString().replace(/\s/g, '');
                     const blogo = this.blogo[0].url + '?' + tday;
-                    const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+                    // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
                     this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-                        || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+                        || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.provider_datastorage.updateProfilePicWeightage(true);
                     this.sharedfunctionobj.sendMessage(pdata);
@@ -240,4 +247,18 @@ export class ProPicPopupComponent implements OnInit {
             }
           );
       }
+
+    uploadCoverPic(passdata) {
+    this.provider_services.uploadCoverFoto(passdata).subscribe(
+      data => {
+        console.log(data);
+          if (data) {
+            this.api_success = Messages.BPROFILE_COVER_ADD;
+            this.img_save_caption = 'Uploaded';
+                    setTimeout(() => {
+                        this.dialogRef.close('cover');
+                    }, projectConstantsLocal.TIMEOUT_DELAY);
+          }
+      });
+  }
 }

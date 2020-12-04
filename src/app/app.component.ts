@@ -19,8 +19,10 @@ export class AppComponent implements OnInit {
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     const pVersion = this.shared_functions.getitemfromLocalStorage('version');
-    if (!pVersion || pVersion !== cVersion) {
+    if (pVersion && pVersion !== cVersion) {
       this.shared_functions.clearLocalstorage();
+      this.shared_functions.setitemonLocalStorage('version', cVersion);
+    } else {
       this.shared_functions.setitemonLocalStorage('version', cVersion);
     }
   }

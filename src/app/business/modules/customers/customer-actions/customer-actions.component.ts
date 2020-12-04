@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 
 @Component({
     selector: 'app-customer-actions',
@@ -14,14 +16,20 @@ export class CustomerActionsComponent implements OnInit {
     domain;
     customerDetails: any = [];
     subdomain;
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    action = '';
+    providerLabels: any = [];
+    loading = false;
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private shared_functions: SharedFunctions, private router: Router,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
     ngOnInit() {
+        this.getLabel();
         this.customerDetails = this.data.customer;
-        console.log(this.customerDetails);
+        if (this.data.type && this.data.type === 'label') {
+            this.action = 'label';
+        }
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.subdomain = user.subSector;
@@ -33,7 +41,7 @@ export class CustomerActionsComponent implements OnInit {
         const mrId = 0;
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
-        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'],{ queryParams: { 'calledfrom': 'patient' } });
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'patient' } });
         // const navigationExtras: NavigationExtras = {
         //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
         // };
@@ -41,16 +49,16 @@ export class CustomerActionsComponent implements OnInit {
         // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     medicalRecord() {
-    this.closeDialog();
-    console.log(this.customerDetails);
-    const customerDetails = this.customerDetails;
-    const customerId = customerDetails[0].id;
-    const mrId = 0;
-    const bookingType = 'FOLLOWUP';
-    const bookingId = 0;
+        this.closeDialog();
+        console.log(this.customerDetails);
+        const customerDetails = this.customerDetails;
+        const customerId = customerDetails[0].id;
+        const mrId = 0;
+        const bookingType = 'FOLLOWUP';
+        const bookingId = 0;
 
-    this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
-       // this.closeDialog();
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
+        // this.closeDialog();
         // const navigationExtras: NavigationExtras = {
         //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
         // };
@@ -90,10 +98,10 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
-    //     const navigationExtras: NavigationExtras = {
-    //         queryParams: { 'id': this.customerDetails[0].id }
-    //     };
-    //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
+        //     const navigationExtras: NavigationExtras = {
+        //         queryParams: { 'id': this.customerDetails[0].id }
+        //     };
+        //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
     }
     editCustomer() {
         this.dialogRef.close('edit');
@@ -108,5 +116,91 @@ export class CustomerActionsComponent implements OnInit {
                 () => { },
                 () => { }
             );
+    }
+    getLabel() {
+        this.loading = true;
+        this.providerLabels = [];
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            this.providerLabels = data.filter(label => label.status === 'ENABLED');
+            this.loading = false;
+            if (this.customerDetails.length === 1) {
+                this.labelSelection();
+            }
+        });
+    }
+    gotoLabel() {
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], { queryParams: { source: 'customer' } });
+        this.dialogRef.close();
+    }
+    addLabelvalue(source) {
+        const labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+            disableClose: true,
+            autoFocus: true,
+            data: {
+                source: source,
+            }
+        });
+        labeldialogRef.afterClosed().subscribe(data => {
+            if (data) {
+                const ids = [];
+                for (const customer of this.customerDetails) {
+                    ids.push(customer.id);
+                }
+                this.addLabel(data.label, ids);
+            }
+            this.getLabel();
+        });
+    }
+    addLabeltoPatient(label, event) {
+        if (event.checked) {
+            const ids = [];
+            for (const customer of this.customerDetails) {
+                ids.push(customer.id);
+            }
+            this.addLabel(label, ids);
+        } else {
+            this.deleteLabel(label, this.customerDetails[0].id);
+        }
+    }
+    addLabel(label, ids) {
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'proConIds': ids
+        };
+        this.provider_services.addLabeltoCustomer(postData).subscribe(data => {
+            this.dialogRef.close();
+        },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+    deleteLabel(label, id) {
+        this.provider_services.deleteLabelFromCustomer(id, label).subscribe(data => {
+            this.dialogRef.close();
+        },
+            error => {
+                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+    }
+    showLabelSection() {
+        this.action = 'label';
+    }
+    labelSelection() {
+        const values = [];
+        if (this.customerDetails[0].label) {
+            Object.keys(this.customerDetails[0].label).forEach(key => {
+                values.push(key);
+            });
+            for (let i = 0; i < this.providerLabels.length; i++) {
+                for (let k = 0; k < values.length; k++) {
+                    if (this.providerLabels[i].label === values[k]) {
+                        this.providerLabels[i].selected = true;
+                    }
+                }
+            }
+        }
     }
 }

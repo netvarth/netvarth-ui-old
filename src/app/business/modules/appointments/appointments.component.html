@@ -342,8 +342,8 @@
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                          <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -384,6 +384,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -491,7 +495,8 @@
                   </a>
                 </div>
                 <table class="table tbl-qboard childDetails singleDash">
-                  <thead id="childActionBar" *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
+                  <thead id="childActionBar"
+                    *ngIf="showSelectAll() && selected_type != 'free' && activeSchedules.length > 0">
                     <tr>
                       <th class="chkWth check-table-head" colspan="3">
                         <input type="checkbox" class="ckbx pull-left" [checked]="chkSelectAppointments"
@@ -580,8 +585,8 @@
                           </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                             class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                            <span class="checkin-label mgn-rt-10"
-                              *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue">{{getDisplayname(label.key)}}</span>
+                            <span class="mgn-rt-10" *ngFor="let label of apptByTimeSlot[appt.time][0].label | keyvalue"
+                              [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                           </div>
                         </td>
                         <td class="td-three">
@@ -630,6 +635,12 @@
                                 <span class="paid-f icon-btn"
                                   *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'FullyPaid'"><span
                                     class="text">{{paid_cap}}</span></span>
+                                <span class="paid-h icon-btn"
+                                  *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'PartiallyRefunded'"><span
+                                    class="text">Partially Refunded</span></span>
+                                <span class="paid-f icon-btn"
+                                  *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'FullyRefunded'"><span
+                                    class="text">Refunded</span></span>
                                 <span class="paid-f icon-btn" style="color: red;"
                                   *ngIf="apptByTimeSlot[appt.time][0].paymentStatus == 'Refund'"><span
                                     class="text">Refund</span></span>
@@ -773,8 +784,8 @@
                         </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                          <span class="checkin-label mgn-rt-10"
-                            *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                          <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                            [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                         </div>
                       </td>
                       <td class="td-three">
@@ -815,6 +826,10 @@
                                   class="text">{{partially_paid_cap}}</span></span>
                               <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                   class="text">{{paid_cap}}</span></span>
+                              <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                  class="text">Partially Refunded</span></span>
+                              <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                  class="text">Refunded</span></span>
                               <span class="paid-f icon-btn" style="color: red;"
                                 *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                             </ng-container>
@@ -1088,8 +1103,8 @@
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                        <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -1130,6 +1145,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>
@@ -1180,6 +1199,12 @@
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
                           {{done_cap}}</span>
+                      </a>
+                      <a class="statusText btn-play pointer-cursor start-btn"
+                        (click)="stopprop($event);addCustomerDetails(appt)" *ngIf="appt.apptStatus == 'blocked'"
+                        [matTooltipClass]="tooltipcls" [matTooltip]="addCustomerTooltip">
+                        <i class="dashboardadd-customer-icon"></i>
+                        <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor act-btn single-action" *ngIf="!small_device_display"
                         (click)="stopprop($event);showCheckinActions(statusAction, appt)" [matTooltipClass]="tooltipcls"
@@ -1445,8 +1470,8 @@
                       </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                        <span class="checkin-label mgn-rt-10"
-                          *ngFor="let label of appt.label | keyvalue">{{getDisplayname(label.key)}}</span>
+                        <span class="mgn-rt-10" *ngFor="let label of appt.label | keyvalue"
+                          [class.checkin-label]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                       </div>
                     </td>
                     <td class="td-three">
@@ -1490,6 +1515,10 @@
                                 class="text">{{partially_paid_cap}}</span></span>
                             <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyPaid'"><span
                                 class="text">{{paid_cap}}</span></span>
+                            <span class="paid-h icon-btn" *ngIf="appt.paymentStatus == 'PartiallyRefunded'"><span
+                                class="text">Partially Refunded</span></span>
+                            <span class="paid-f icon-btn" *ngIf="appt.paymentStatus == 'FullyRefunded'"><span
+                                class="text">Refunded</span></span>
                             <span class="paid-f icon-btn" style="color: red;"
                               *ngIf="appt.paymentStatus == 'Refund'"><span class="text">Refund</span></span>
                           </ng-container>
@@ -1575,13 +1604,13 @@
       </div>
     </div>
   </div>
-  <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+  <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
   <div class="clearfix"></div>
   <div class="scroll-to-top-appt" [ngClass]="{'show-scrollTop': windowScrolled}">
-    <button>
-      <i (click)="scrollToTop()" class="fa fa-chevron-up"></i>
+    <button (click)="scrollToTop()">
+      <i class="fa fa-chevron-up"></i>
     </button>
   </div>
 </section>

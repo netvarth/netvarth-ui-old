@@ -180,6 +180,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     provider_id: any;
     isfirstCheckinOffer: any;
     s3CouponsList: any = [];
+    appointmentSettings: any = [];
     subscription: Subscription;
     showCouponWB: boolean;
     change_date: any;
@@ -1476,7 +1477,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.userData = data;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
-                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        if (this.type !== 'reschedule') {
+                            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                             }
                         // this.currentPhone = this.userPhone;
                     }
                     if (this.userEmail) {
@@ -1496,6 +1499,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('departmentProviders', true);
                     this.getbusinessprofiledetails_json('coupon', true);
+                    this.getbusinessprofiledetails_json('appointmentsettings', true);
                     if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
                     } else {
@@ -1524,6 +1528,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 switch (section) {
                     case 'settings':
                         this.settingsjson = res;
+                        console.log(this.settingsjson)
                         this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
                         /*this.maxsize = this.settingsjson.maxPartySize;
                         if (this.maxsize === undefined) {
@@ -1559,6 +1564,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                         if (this.s3CouponsList.length > 0) {
                             this.showCouponWB = true;
                         }
+                        break;
+                    case 'appointmentsettings':
+                        this.appointmentSettings = res;
+                        console.log(this.appointmentSettings)
                         break;
                     case 'departmentProviders': {
                         let deptProviders: any = [];
@@ -1901,6 +1910,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
+        } else if(this.userEmail && this.payEmail.trim() == '') {
+            this.emailerror = 'Please enter a valid email.';
+            this.noEmailError = false;
+
         }
         if (this.noPhoneError && this.noEmailError && this.noCallingError) {
             this.action = '';
@@ -1914,7 +1927,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass','confirmpopup'],
                 disableClose: true,
                 data: {
                     service_details: this.sel_ser_det,

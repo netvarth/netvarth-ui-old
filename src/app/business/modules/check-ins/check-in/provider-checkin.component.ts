@@ -214,6 +214,9 @@ export class ProviderCheckinComponent implements OnInit {
     showBlockHint = false;
     uid;
     source;
+    virtualServicemode;
+    virtualServicenumber;
+    emptyFielderror = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -229,6 +232,12 @@ export class ProviderCheckinComponent implements OnInit {
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
+            }
+            if (qparams.virtualServicemode) {
+                this.virtualServicemode = qparams.virtualServicemode;
+            }
+            if (qparams.uid) {
+                this.virtualServicenumber = qparams.virtualServicenumber;
             }
             if (qparams.checkin_type) {
                 this.checkinType = qparams.checkin_type;
@@ -277,7 +286,8 @@ export class ProviderCheckinComponent implements OnInit {
                 this.heading = 'Create a Check-in';
             }
             if (this.source === 'waitlist-block') {
-                this.heading = 'Find a ' + this.customer_label;
+                // this.heading = 'Find a ' + this.customer_label;
+                this.heading = 'Create a ' + this.customer_label;
             }
             if (qparams.ph || qparams.id) {
                 const filter = {};
@@ -374,6 +384,11 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.source === 'waitlist-block') {
             this.qParams['source'] = this.source;
             this.qParams['uid'] = this.uid;
+            this.qParams['showtoken'] = this.showtoken;
+            if (this.virtualServicemode && this.virtualServicenumber) {
+                this.qParams['virtualServicemode'] = this.virtualServicemode;
+                this.qParams['virtualServicenumber'] = this.virtualServicenumber;
+            }
         } else {
             this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
         }
@@ -388,88 +403,94 @@ export class ProviderCheckinComponent implements OnInit {
         this.selectedMode = type;
     }
     findCustomer(form_data, event) {
+        this.showBlockHint = false;
         if (event.key === 'Enter') {
             this.searchCustomer(form_data);
         }
     }
     searchCustomer(form_data) {
-        this.qParams = {};
-        let mode = 'id';
-        this.form_data = null;
-        this.create_new = false;
-        let post_data = {};
-        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-        const isEmail = emailPattern.test(form_data.search_input);
-        if (isEmail) {
-            mode = 'email';
+        this.emptyFielderror = false;
+        if (form_data && form_data.search_input === '') {
+            this.emptyFielderror = true;
         } else {
-            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-            const isNumber = phonepattern.test(form_data.search_input);
-            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-            const isCount10 = phonecntpattern.test(form_data.search_input);
-            if (isNumber && isCount10) {
-                mode = 'phone';
+            this.qParams = {};
+            let mode = 'id';
+            this.form_data = null;
+            this.create_new = false;
+            let post_data = {};
+            const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+            const isEmail = emailPattern.test(form_data.search_input);
+            if (isEmail) {
+                mode = 'email';
             } else {
-                mode = 'id';
-            }
-        }
-        // this.qParams['source'] = 'checkin';
-        switch (mode) {
-            case 'phone':
-                post_data = {
-                    'phoneNo-eq': form_data.search_input
-                };
-                this.qParams['phone'] = form_data.search_input;
-                break;
-            case 'email':
-                this.qParams['email'] = form_data.search_input;
-                post_data = {
-                    'email-eq': form_data.search_input
-                };
-                break;
-            case 'id':
-                post_data = {
-                    'jaldeeId-eq': form_data.search_input
-                };
-                break;
-        }
-        this.provider_services.getCustomer(post_data)
-            .subscribe(
-                (data: any) => {
-                    if (data.length === 0) {
-                        // if (mode === 'phone') {
-                        //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
-                        //     this.getJaldeeCustomer(filter);
-                        // } else {
-                        //     this.form_data = data;
-                        //     this.create_new = true;
-                        // }
-                        this.createNew('create');
-                    } else {
-                        if (data.length > 1) {
-                            const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
-                        } else {
-                            this.customer_data = data[0];
-                        }
-                        this.jaldeeId = this.customer_data.jaldeeId;
-                        if (this.source === 'waitlist-block') {
-                            this.showBlockHint = true;
-                            if (this.showtoken) {
-                                this.heading = 'Confirm your token';
-                            } else {
-                                this.heading = 'Confirm your check-in';
-                            }
-                        } else {
-                            this.getFamilyMembers();
-                            this.initCheckIn();
-                        }
-                    }
-                },
-                error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+                const isNumber = phonepattern.test(form_data.search_input);
+                const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+                const isCount10 = phonecntpattern.test(form_data.search_input);
+                if (isNumber && isCount10) {
+                    mode = 'phone';
+                } else {
+                    mode = 'id';
                 }
-            );
+            }
+            // this.qParams['source'] = 'checkin';
+            switch (mode) {
+                case 'phone':
+                    post_data = {
+                        'phoneNo-eq': form_data.search_input
+                    };
+                    this.qParams['phone'] = form_data.search_input;
+                    break;
+                case 'email':
+                    this.qParams['email'] = form_data.search_input;
+                    post_data = {
+                        'email-eq': form_data.search_input
+                    };
+                    break;
+                case 'id':
+                    post_data = {
+                        'jaldeeId-eq': form_data.search_input
+                    };
+                    break;
+            }
+            this.provider_services.getCustomer(post_data)
+                .subscribe(
+                    (data: any) => {
+                        if (data.length === 0) {
+                            // if (mode === 'phone') {
+                            //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
+                            //     this.getJaldeeCustomer(filter);
+                            // } else {
+                            //     this.form_data = data;
+                            //     this.create_new = true;
+                            // }
+                            this.createNew('create');
+                        } else {
+                            if (data.length > 1) {
+                                const customer = data.filter(member => !member.parent);
+                                this.customer_data = customer[0];
+                            } else {
+                                this.customer_data = data[0];
+                            }
+                            this.jaldeeId = this.customer_data.jaldeeId;
+                            if (this.source === 'waitlist-block') {
+                                this.showBlockHint = true;
+                                if (this.showtoken) {
+                                    this.heading = 'Confirm your Token';
+                                } else {
+                                    this.heading = 'Confirm your Check-in';
+                                }
+                            } else {
+                                this.getFamilyMembers();
+                                this.initCheckIn();
+                            }
+                        }
+                    },
+                    error => {
+                        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    }
+                );
+        }
     }
     confirmWaitlistBlock() {
         const post_data = {
@@ -481,6 +502,11 @@ export class ProviderCheckinComponent implements OnInit {
                 'id': this.customer_data.id
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {
@@ -562,7 +588,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 (services: any) => {
                                     // _this.servicesjson = services;
                                     // _this.serviceslist = services;
-                                    if (!_this.customer_data.phoneNo) {
+                                    if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
                                         _this.servicesjson = [];
                                         for (let i = 0; i < services.length; i++) {
                                             if (services[i].serviceType !== 'virtualService') {
@@ -1537,7 +1563,7 @@ export class ProviderCheckinComponent implements OnInit {
                                     }
                                 }
                             }
-                            if (!this.customer_data.phoneNo) {
+                            if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
                                 this.servicesjson = [];
                                 for (let i = 0; i < newserviceArray.length; i++) {
                                     if (newserviceArray[i].serviceType !== 'virtualService') {
@@ -1631,7 +1657,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        if (!this.customer_data.phoneNo) {
+        if (this.thirdParty === '' && !this.customer_data.phoneNo && !this.customer_data.email) {
             this.servicesjson = [];
             for (let i = 0; i < newserviceArray.length; i++) {
                 if (newserviceArray[i].serviceType !== 'virtualService') {

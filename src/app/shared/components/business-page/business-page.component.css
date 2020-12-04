@@ -86,11 +86,13 @@ ul.bus-actions li a.lnk {
   font-weight: 500 !important;
   font-size: 0.80rem !important;
 }
+
 ul.bus-actions-horiz li {
   display: inline-block;
-  margin:0 !important;
+  margin: 0 !important;
   margin-right: 5px !important;
 }
+
 .socialmedia li a i.fa {
   font-size: 20px !important;
 }
@@ -260,8 +262,9 @@ ul.bus-actions-horiz li {
 
 .question-header {
   color: #999 !important;
-  font-size: 0.8rem !important;
+  /* font-size: 0.8rem !important; */
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
 }
 
 .question-main-outer {
@@ -279,7 +282,8 @@ ul.bus-actions-horiz li {
 .question-value1, .question-valuearr li {
   font-weight: 600 !important;
   color: #3a3030;
-  font-size: 0.8rem;
+  font-size: 0.9rem !important;
+  /* font-size: 0.8rem; */
   /* line-height: 25px; */
 }
 
@@ -387,6 +391,7 @@ ul.details.badges li {
     text-align: center;
   }
 }
+
 .bus-item-long .card.card-item-n {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
   transition: 0.3s;
@@ -601,7 +606,6 @@ ul.details.badges li {
   cursor: pointer; */
 }
 
-
 @media (min-width: 320px) and (max-width: 500px) {
   .bus-item .card.card-item-n {
     width: 95% !important;
@@ -652,16 +656,19 @@ ul.details.badges li {
     width: 50% !important;
   }
 }
+
 @media (min-width: 450px) and (max-width: 600px) {
   .bus-item {
     width: 33% !important;
   }
 }
+
 @media (min-width: 620px) and (max-width: 991px) {
   .bus-item {
     width: 25% !important;
   }
 }
+
 @media (min-width: 992px) and (max-width: 1200px) {
   .bus-item {
     width: 20% !important;
@@ -670,7 +677,6 @@ ul.details.badges li {
     width: 50% !important;
   }
 }
-
 
 @media (max-width: 374px) {
   .bus-item {
@@ -830,12 +836,14 @@ ul.details.badges li {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon,  .service-icon .phon-icon{
+.service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
+
 .service-icon .zoom-icon {
   width: 35px !important;
 }
+
 .service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
   width: 36px !important;
 }
@@ -889,29 +897,290 @@ ul.details.badges li {
   padding-top: 15px !important;
   background: floralwhite !important;
 }
+
 .loc-card a.lnk {
   font-size: 0.75rem !important;
 }
+
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
+
 .verify {
   width: 100%;
   float: right;
 }
-.verify span{
+
+.verify span {
   float: right;
 }
+
 @media (max-width: 993px) {
-  .verify span{
+  .verify span {
     float: none;
   }
 }
+
 .badge-smalldv {
-    position: absolute !important;
-    right: 0 !important;
+  position: absolute !important;
+  right: 0 !important;
 }
+
 .serv-head {
   background: rgba(0, 0, 0, 0.04);
   padding: 10px 0 3px 10px !important;
+}
+
+/* Social media icon colors */
+
+.bus-page .socialmedia li i.fb:before {
+  color: #627aac;
+}
+
+.bus-page .socialmedia li i.tw:before {
+  color: #5eb0fb;
+}
+
+.bus-page .socialmedia li i.lkd:before {
+  color: #02a2c2;
+}
+
+.bus-page .socialmedia li i.ytb:before {
+  color: #ef452f !important;
+}
+
+.bus-page .socialmedia li i.gpl:before {
+  color: #ef452f;
+}
+
+.bus-page .socialmedia li i.pntr:before {
+  color: #ef452f;
+}
+
+/* cover foto */
+
+.bus-page .cvr-ht {
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: 100% 300px;
+}
+
+@media(max-width: 575px) {
+  .bus-page .cvr-ht {
+    height: 250px;
+    background-repeat: no-repeat;
+    background-size: 100% 250px;
+  }
+}
+
+.bus-page .cvr-dp-mgn {
+  margin-top: -80px;
+}
+
+@media (min-width: 992px) {
+  .bus-page .cvr-dp-mgn {
+    margin-top: -110px !important;
+  }
+}
+
+.bus-page .cvr-dp-bdr {
+  border: 5px solid #ffffff !important;
+}
+
+.bus-item-N {
+  width: 16.6%;
+  float: left !important;
+  margin-bottom: 10px !important;
+  /* margin-top: 10px !important; */
+}
+
+@media(max-width: 1200px) {
+  .bus-item-N {
+    width: 20%;
+  }
+}
+
+@media(max-width: 991px) {
+  .bus-item-N {
+    width: 25%;
+    float: left !important;
+  }
+}
+
+@media(max-width: 767px) {
+  .bus-item-N {
+    width: 33.3%;
+  }
+}
+
+@media(max-width: 550px) {
+  .bus-item-N {
+    width: 50%;
+  }
+}
+
+.sp-head {
+  color: #191d96 !important;
+}
+
+.pad-top-20 {
+  padding-top: 20px !important;
+}
+
+.locations .bg-col {
+  background-color: #191d96 !important;
+}
+
+.locations .bg-col h4 a {
+  color: #fff !important;
+}
+
+.locations .loc-chg-action {
+  color: #fff !important;
+}
+
+.locations .dropdown-menu a {
+  font-size: 1rem !important;
+}
+
+.locations .dropdown-menu a.active {
+  color: #191d96 !important;
+  font-weight: bold !important;
+}
+
+/* [class~=modal] {
+  display: none;
+} */
+
+[class~=modal-content], [class~=modal] {
+  position: fixed;
+}
+
+[class~=modal] {
+  z-index: 1;
+}
+
+[class~=modal] {
+  left: 0;
+}
+
+[class~=modal] {
+  top: 0;
+}
+
+[class~=modal-content], [class~=modal] {
+  width: 100%;
+}
+
+[class~=modal] {
+  height: 100%;
+}
+
+[class~=modal] {
+  overflow: auto;
+}
+
+[class~=modal] {
+  -webkit-animation-name: fadeIn;
+}
+
+[class~=close]:focus, [class~=close]:hover {
+  text-decoration: none;
+}
+
+[class~=close]:focus, [class~=close]:hover {
+  cursor: pointer;
+}
+
+[class~=modal-content], [class~=modal] {
+  -webkit-animation-duration: .4s;
+}
+
+[class~=modal] {
+  animation-name: fadeIn;
+}
+
+[class~=modal] {
+  animation-duration: .4s;
+}
+
+[class~=modal-content] {
+  bottom: 0;
+}
+
+[class~=modal-content] {
+  background-color: #fefefe;
+}
+
+[class~=modal-content] {
+  -webkit-animation-name: slideIn;
+}
+
+[class~=modal-content] {
+  animation-name: slideIn;
+}
+
+[class~=modal-content] {
+  animation-duration: .4;
+}
+
+[class~=close] {
+  float: right;
+}
+
+[class~=close] {
+  font-size: 28px;
+}
+
+[class~=close] {
+  font-weight: bold;
+}
+
+@-webkit-keyframes slideIn {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    bottom: -300px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media(min-width:992px){
+.bus-actions .more_less {
+  width: 100%;
+}
+}
+
+ul.bus-actions li.more_less a.lnk {
+  font-size: 1rem !important;
 }

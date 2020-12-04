@@ -304,7 +304,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
             if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified) || (this.ccenabled && !this.razorpayVerified)) {
                 showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN')
-                           + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_EMAIL')  + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_MOBILE');
+                    + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_EMAIL') + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_MOBILE');
                 panelclass = 'snackbarnormal'; // 'snackbarerror';
                 params = { 'duration': duration, 'panelClass': panelclass };
             } else {
@@ -556,100 +556,111 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     }
     panCardBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
+        // const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.pannumber)) {
             this.errorExist = true;
             this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PAN') };
-        } else if (!alphanumericpattern.test(this.pannumber)) {
-            this.errorExist = true;
-            this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANPHANUMERIC') };
-        } else if (this.pannumber.length > this.maxcnt15) {
-            this.errorExist = true;
-            this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANMAXLEN15') };
         }
+        //  else if (!alphanumericpattern.test(this.pannumber)) {
+        //     this.errorExist = true;
+        //     this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANPHANUMERIC') };
+        // } else if (this.pannumber.length > this.maxcnt15) {
+        //     this.errorExist = true;
+        //     this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANMAXLEN15') };
+        // }
     }
     ifscBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
+        // const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.bankifsc)) {
             this.errorExist = true;
             this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSC') };
-        } else if (!alphanumericpattern.test(this.bankifsc)) {
-            this.errorExist = true;
-            this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC') };
-        } else if (this.bankifsc.length > this.maxcnt11) {
-            this.errorExist = true;
-            this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCMAXLEN11') };
         }
+        //  else if (!alphanumericpattern.test(this.bankifsc)) {
+        //     this.errorExist = true;
+        //     this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC') };
+        // } else if (this.bankifsc.length > this.maxcnt11) {
+        //     this.errorExist = true;
+        //     this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCMAXLEN11') };
+        // }
     }
     panNameBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
-        if (this.panname.length > this.maxcnt100) {
-            this.errorExist = true;
-            this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
-        } else if (blankpattern.test(this.panname)) {
+        // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
+        // if (this.panname.length > this.maxcnt100) {
+        //     this.errorExist = true;
+        //     this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        // } else 
+        if (blankpattern.test(this.panname)) {
             this.errorExist = true;
             this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANNAME') };
-        } else if (!charonly.test(this.panname)) {
-            this.errorExist = true;
-            this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
+        //  else if (!charonly.test(this.panname)) {
+        //     this.errorExist = true;
+        //     this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        // }
     }
     acholderNameBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
-        if (this.bankacname.length > this.maxcnt100) {
-            this.errorExist = true;
-            this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
-        } else if (blankpattern.test(this.bankacname)) {
+        // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
+        // if (this.bankacname.length > this.maxcnt100) {
+        //     this.errorExist = true;
+        //     this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        // } else 
+        if (blankpattern.test(this.bankacname)) {
             this.errorExist = true;
             this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACMNAME') };
-        } else if (!charonly.test(this.bankacname)) {
-            this.errorExist = true;
-            this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
+        //  else if (!charonly.test(this.bankacname)) {
+        //     this.errorExist = true;
+        //     this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        // }
     }
     bankAcnumberBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+        // const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
         if (blankpattern.test(this.bankacnumber)) {
             this.errorExist = true;
             this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO') };
-        } else {
-            if (!numberpattern.test(this.bankacnumber)) {
-                this.errorExist = true;
-                this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY') };
-            }
         }
+        //  else {
+        //     if (!numberpattern.test(this.bankacnumber)) {
+        //         this.errorExist = true;
+        //         this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY') };
+        //     }
+        // }
     }
     bankNameBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
-        if (this.bankname.length > this.maxcnt100) {
-            this.errorExist = true;
-            this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
-        } else if (blankpattern.test(this.bankname)) {
+        // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
+        // if (this.bankname.length > this.maxcnt100) {
+        //     this.errorExist = true;
+        //     this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        // } else 
+        if (blankpattern.test(this.bankname)) {
             this.errorExist = true;
             this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BANKNAME') };
-        } else if (!charonly.test(this.bankname)) {
-            this.errorExist = true;
-            this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
+        //  else if (!charonly.test(this.bankname)) {
+        //     this.errorExist = true;
+        //     this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        // }
     }
     bankBranchBlur() {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
-        const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
-        if (this.bankbranch.length > this.maxcnt100) {
-            this.errorExist = true;
-            this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
-        } else if (blankpattern.test(this.bankbranch)) {
+        // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
+        // if (this.bankbranch.length > this.maxcnt100) {
+        //     this.errorExist = true;
+        //     this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        // } else 
+        if (blankpattern.test(this.bankbranch)) {
             this.errorExist = true;
             this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BRANCH') };
-        } else if (!charonly.test(this.bankbranch)) {
-            this.errorExist = true;
-            this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
         }
+        //  else if (!charonly.test(this.bankbranch)) {
+        //     this.errorExist = true;
+        //     this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        // }
     }
     removSpace(evt) {
         return this.shared_functions.removSpace(evt);
@@ -688,7 +699,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }, 1000);
     }
     redirecToJaldeepay() {
-        this.router.navigate(['provider', 'settings' , 'payments']);
+        this.router.navigate(['provider', 'settings', 'payments']);
     }
     redirecToHelp() {
         this.router.navigate(['/provider/' + this.domain + '/payments->payment-settings']);

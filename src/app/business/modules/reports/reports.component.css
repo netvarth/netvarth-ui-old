@@ -1,0 +1,15 @@
+.create_nw_rept {
+    float: right;
+    font-weight: 600;
+    font-size: small;
+    margin-right: 20px;
+}
+table { 
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+.savd-report {
+    color: #3c8dbc;
+    font-weight: 600;
+    width: 100%;
+}

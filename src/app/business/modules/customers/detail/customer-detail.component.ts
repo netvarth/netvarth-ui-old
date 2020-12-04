@@ -113,6 +113,9 @@ export class CustomerDetailComponent implements OnInit {
     uid;
     customernotes = '';
     subdomain;
+    showToken;
+    virtualServicemode;
+    virtualServicenumber;
     constructor(
         // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
         // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -132,22 +135,39 @@ export class CustomerDetailComponent implements OnInit {
             this.domain = user.sector;
             this.subdomain = user.subSector;
             this.source = qparams.source;
+            this.showToken = qparams.showtoken;
             if (qparams.uid) {
                 this.uid = qparams.uid;
             }
             if (qparams.type) {
                 this.type = qparams.type;
             }
+            if (qparams.virtualServicemode) {
+                this.virtualServicemode = qparams.virtualServicemode;
+            }
+            if (qparams.virtualServicenumber) {
+                this.virtualServicenumber = qparams.virtualServicenumber;
+            }
             if (qparams.phone) {
                 this.phoneNo = qparams.phone;
-                if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment') {
+                if (this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'clist') {
                     this.getJaldeeIntegrationSettings();
                     this.save_btn = 'Proceed';
                 }
             } else {
                 if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block')) {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    if (this.source === 'waitlist-block') {
+                        if (this.showToken) {
+                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create token';
+                        } else {
+                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create check-in';
+                        }
+                    } else if (this.source === 'appt-block') {
+                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create appointment';
+                    } else {
+                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    }
                     this.save_btn = 'Proceed';
                 }
             }
@@ -292,7 +312,7 @@ export class CustomerDetailComponent implements OnInit {
                         }
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
                         this.customerErrorMsg1 = 'The system found the record details in Jaldee.com';
-                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block' || this.source === 'clist') {
                             this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + '?';
                         } else {
                             this.customerErrorMsg2 = 'Do you want to add the ' + this.customer_label + ' to create ' + this.source + '?';
@@ -300,7 +320,7 @@ export class CustomerDetailComponent implements OnInit {
                         this.loading = false;
                     } else {
                         this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                        if (this.source === 'waitlist-block' || this.source === 'appt-block') {
+                        if (this.source === 'waitlist-block' || this.source === 'appt-block' || this.source === 'clist') {
                             this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details';
                         } else {
                             this.customerErrorMsg = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
@@ -322,7 +342,17 @@ export class CustomerDetailComponent implements OnInit {
                     this.getJaldeeCustomer();
                 } else {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
-                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    if (this.source === 'waitlist-block') {
+                        if (this.showToken) {
+                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create token';
+                        } else {
+                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create check-in';
+                        }
+                    } else if (this.source === 'appt-block') {
+                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create appointment';
+                    } else {
+                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                    }
                     this.loading = false;
                 }
             }
@@ -556,6 +586,11 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id,
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmAppointmentBlock(post_data)
             .subscribe(
                 data => {
@@ -572,6 +607,11 @@ export class CustomerDetailComponent implements OnInit {
                 'id': id
             }],
         };
+        if (this.virtualServicemode && this.virtualServicenumber) {
+            const virtualArray = {};
+            virtualArray[this.virtualServicemode] = this.virtualServicenumber;
+            post_data['virtualService'] = virtualArray;
+        }
         this.provider_services.confirmWaitlistBlock(post_data)
             .subscribe(
                 data => {

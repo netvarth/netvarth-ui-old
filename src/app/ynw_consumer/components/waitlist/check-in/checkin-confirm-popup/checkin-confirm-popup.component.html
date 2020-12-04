@@ -1,11 +1,11 @@
-<h1 class="mat-dialog-title">Confirm Your {{showCheckinButtonCaption()}}<button mat-dialog-close class="modal_close" tabindex="-1"><i
+<h1 class="mat-dialog-title popup-title">Your {{showCheckinButtonCaption()}} Details<button mat-dialog-close class="modal_close" tabindex="-1"><i
     class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<mat-dialog-content class="ynw-common-form apply-label">
-<div class="form-group col-md-12">
-    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5">
+<mat-dialog-content class="ynw-common-form apply-label confirmcontent">
+<div class="form-group col-md-12 no-padding">
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk no-padding apptFor">
         {{showCheckinButtonCaption()}} For
     </div>
-    <div class="col-sm-12 col-xs-12 col-md-12">
+    <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
         <div class="service-icon pull-left"
         *ngIf="service_det.serviceType == 'virtualService'">
         <i class="fa phon-icon"
@@ -23,8 +23,8 @@
             {{service_det.name}}
         </h6>
     </div>
-    <div class="col-sm-12 col-xs-12 col-md-12">
-        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+    <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10 apptFor">
             Date/Time
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -32,38 +32,25 @@
             <span *ngIf="!isFuturedate">Today, </span>
             <span *ngIf="!isFuturedate">
                 {{selectedQsTime}} - {{selectedQeTime}}
-                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
             <span *ngIf="isFuturedate">{{post_Data.date | date: dateFormat}},
             </span>
             <span *ngIf="isFuturedate">
                 {{selectedQsTime}} - {{selectedQeTime}}
-                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
         </h6>
-        </div>
-        <div class="col-md126 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-            Waiting in line
+        </div> -->
+        <!-- <div class="col-md126 col-xs-12 col-sm-12 no-padding lnk mgn-up-5 apptFor">
+           
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-        <h6 class="card-title serv-time border-style waitinginLine">
-            <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
-            <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
-            <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
-            People</span>
-            </span><span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
-                <span class="color-grey">\</span>
-                <span>{{sel_queue_waitingmins}}</span>
-
-            </span>
-            
-        </h6>
-        </div>
+        
+        </div> -->
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-10">
+    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding apptFor">
         Booking For
     </div>
-    <div class="col-sm-12 col-xs-12 col-md-12">
+    <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
         <h6 class="card-title service bookingFor"
             *ngFor="let member of waitlist_for">
             {{member.firstName | capitalizeFirst}}
@@ -110,6 +97,23 @@
              <i class="fa fa-envelope-o "></i>
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>
+        <div class="" *ngIf="eMail == '' && action !== 'addEmail'">
+                <a class="lnk pointer-cursor action" (click)="addConsumeremail()">Add Email</a>
+        </div>
+        <div *ngIf="action == 'addEmail'" class="form-group mgn-up-5">
+            <input class="" id="email"
+            placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+            autocomplete="off" (keyup)="showConfrmEmail($event)"
+            onpaste="return false;" oncopy="return false"
+            oncut="return false" ondrag="return false"
+            ondrop="return false">
+            <span><button *ngIf="action == 'addEmail'" class="btn bt3 btn-default mgn-lt-5" (click)="addEmail()"
+                type="button">Add</button></span>
+        </div>
+        <app-field-error-display class="red" [displayError]="true"
+            *ngIf="emailerror != null" errorMsg={{emailerror}}>
+        </app-field-error-display>
+        
     </div>
     <div *ngIf="service_det.isPrePayment" class="col-sm-12 col-xs-12 col-md-12 mgn-bt-20">
         This service requires an advance payment of
@@ -117,13 +121,46 @@
         </span>{{prepaymentAmount}}</span>
     </div>
 </div>
+<div class = "clearfix"></div>
+<div class="coupon mgn-up-15">
+    <div class="containerAppt textcenter" style="background-color:white">
+        <h5 class="mgn-up-10 no-mgn-bt"><b>Date/Time</b></h5> 
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="!isFuturedate">Today, </span>
+            <span *ngIf="!isFuturedate">
+                {{selectedQsTime}} - {{selectedQeTime}}
+                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
+            </span>
+            <span *ngIf="isFuturedate">{{post_Data.date | date: dateFormat}},
+            </span>
+            <span *ngIf="isFuturedate">
+                {{selectedQsTime}} - {{selectedQeTime}}
+                <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
+            </span>
+        </h6>
+        <h5 class="mgn-up-15 no-mgn-bt"><b> Waiting in line</b></h5>
+        <h6 class="card-title serv-time border-style waitinginLine">
+            <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
+            <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
+            <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+            People</span>
+            </span><span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                <span class="color-grey">\</span>
+                <span>{{sel_queue_waitingmins}}</span>
+
+            </span>
+            
+        </h6>
+    </div>
+</div>
+
 
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button *ngIf = "!service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Confirm</button>
-    <button *ngIf = "service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Proceed to payment</button>
+<div class="textcenter mgn-bt-20 mgn-up-5">
 
-</mat-dialog-actions>
+    <button *ngIf = "!service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Ok</button>
+    <button *ngIf = "service_det.isPrePayment" (click)="addCheckInConsumer()" type="button" mat-button class="cs-btn bt1">Ok & proceed to payment</button>
+</div>
 <!-- <div class="ticket">
     <div class="ticket__content">
       <p class="ticket__text"></p>

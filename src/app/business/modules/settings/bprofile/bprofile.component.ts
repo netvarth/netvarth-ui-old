@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { ButtonsConfig, ButtonsStrategy, ButtonType } from 'angular-modal-gallery';
+import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -86,9 +86,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     files: [],
     base64: null
   };
+  item_pic1 = {
+    files: [],
+    base64: null
+  };
   profimg_exists = false;
   success_error = null;
   selitem_pic = '';
+  selitem_pic1 = '';
   image_remaining_cnt = 0;
 
   // languages
@@ -182,6 +187,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
+  show_cover_options = false;
+  coverfile: any;
+  success_error1: any;
+  imageToShow: string | ArrayBuffer;
+  cover_url: string;
+  clogo: ArrayBuffer;
+  cvrimg_exists = false;
+  cacheavoider_cover: string;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -420,7 +433,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
-    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     this.profile_enabled_msg = Messages.PROFILE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.profile_disabled_msg = Messages.PROFILE_DISABLED_MSG.replace('[customer]', this.customer_label);
 
@@ -429,6 +442,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.getJaldeeIntegrationSettings();
     this.getGalleryImages();
     this.getProviderLogo();
+    this.getCoverPhoto();
 
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -541,7 +555,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.progress_bar_three = 0;
       this.progress_bar_four = 0;
       this.showIncompleteButton = true;
-      return weightage + '%';
+      return businessProfileWeightageText;
 
     }
     if (weightage > 25 && weightage < 50) {
@@ -736,10 +750,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.normal_profile_active = 2;
           }
           if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
-            const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+            // const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
             // calling function which saves the business related details to show in the header
             this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-              || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
+              || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', '');
             const pdata = { 'ttype': 'updateuserdetails' };
             this.sharedfunctionobj.sendMessage(pdata);
           }
@@ -1285,7 +1299,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.profimg_exists = false;
     if (this.item_pic.base64) {
       this.profimg_exists = true;
-
+      console.log(this.item_pic);
+      console.log(this.item_pic.base64);
       return this.item_pic.base64;
     } else {
       if (this.blogo[0]) {
@@ -1297,15 +1312,25 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   // Change pro pic
-  changeProPic() {
+  changeProPic(image) {
+    console.log(image);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { 'userdata': this.bProfile }
+      data: {
+        'userdata': this.bProfile,
+        img_type : image
+     }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
-      this.getProviderLogo();
+      if (result) {
+        setTimeout(() => {
+          this.getCoverPhoto();
+      }, 2000);
+      } else {
+        this.getProviderLogo();
+      }
     });
   }
 
@@ -1406,4 +1431,34 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       ]);
     }, 50);
   }
+
+  getCoverPhoto() {
+    this.cover_url = '';
+    this.provider_services.getCoverFoto().subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          const cnow = new Date();
+          const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+          this.cacheavoider_cover = dd;
+          this.imageToShow = '';
+          this.clogo = data;
+          // this.cover_url = data[0].url;
+          this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
+        //  this.imageToShow = this.cover_url;
+          this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
+        }
+      });
+  }
+
+  deleteCover() {
+    const del_pic = this.clogo[0].keyName;
+    this.provider_services.deleteCoverFoto(del_pic).subscribe(
+      data => {
+          this.getCoverPhoto();
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+      });
+  }
+
+
 }

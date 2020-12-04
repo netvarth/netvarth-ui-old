@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, ButtonType } from 'angular-modal-gallery';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonEvent, ButtonType } from '@ks89/angular-modal-gallery';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../ynw_provider/services/provider-datastorage.service';
@@ -229,7 +229,8 @@ export class MediaComponent implements OnInit, OnDestroy {
         // if (event.button.type === ButtonType.DELETE) {
         if (event.button.type === ButtonType.DELETE) {
             // remove the current image and reassign all other to the array of images
-            const knamearr = event.image.modal.img.split('/');
+            let name = event.image.modal.img.toString();
+            const knamearr = name.split('/');
             const kname = knamearr[(knamearr.length - 1)];
             const file = {
                 id: event.image.id,

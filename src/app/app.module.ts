@@ -11,7 +11,7 @@ import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { SearchModule } from './shared/modules/search/search.module';
 import { RatingStarModule } from './shared/modules/ratingstar/ratingstart.module';
 import { PagerModule } from './shared/modules/pager/pager.module';
@@ -83,6 +83,8 @@ import { TruncateModule } from './shared/pipes/limitTo.module';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { CardModule } from './shared/components/card/card.module';
+
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -150,7 +152,7 @@ export function init_app(globalService: GlobalService) {
     RatingStarModule,
     HeaderModule,
     // CheckInModule,
-    ModalGalleryModule.forRoot(),
+    ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ConsumerCheckinHistoryListModule,
     Nl2BrPipeModule,
     AboutJaldeeModule,
@@ -170,7 +172,8 @@ export function init_app(globalService: GlobalService) {
     JoyrideModule.forRoot(),
     ConsumerFooterModule,
     TruncateModule,
-    SignaturePadModule
+    SignaturePadModule,
+    CardModule
   ],
   providers: [
     AuthGuardConsumer,

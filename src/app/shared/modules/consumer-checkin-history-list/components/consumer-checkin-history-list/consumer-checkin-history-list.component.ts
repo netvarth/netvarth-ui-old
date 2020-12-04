@@ -217,8 +217,8 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
     switch (status) {
       case 'cancelled': label_status = 'Cancelled'; break;
       case 'arrived': label_status = 'Arrived'; break;
-      case 'done': label_status = 'Done'; break;
-      case 'checkedIn': label_status = 'checked in'; break;
+      case 'done': label_status = 'Completed'; break;
+      case 'checkedIn': label_status = 'Checked in'; break;
       case 'started': label_status = 'Started'; break;
     }
     return label_status;
