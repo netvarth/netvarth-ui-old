@@ -691,7 +691,16 @@ export class CheckinActionsComponent implements OnInit {
     }
     addCustomerDetails() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
+        let virtualServicemode;
+        let virtualServicenumber;
+        if (this.checkin.virtualService) {
+          Object.keys(this.checkin.virtualService).forEach(key => {
+            virtualServicemode = key;
+            virtualServicenumber = this.checkin.virtualService[key];
+          });
+        }
+        this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
+        // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });
     }
     unBlockWaitlist() {
         this.provider_services.deleteWaitlistBlock(this.checkin.ynwUuid)

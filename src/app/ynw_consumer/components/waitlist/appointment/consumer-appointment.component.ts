@@ -1477,7 +1477,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.userData = data;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
-                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        if (this.type !== 'reschedule') {
+                            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                             }
                         // this.currentPhone = this.userPhone;
                     }
                     if (this.userEmail) {
