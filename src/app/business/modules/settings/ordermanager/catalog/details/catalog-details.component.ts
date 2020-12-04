@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { MatDialog } from '@angular/material/dialog';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import * as moment from 'moment';
-import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy , Image , ButtonType} from 'angular-modal-gallery';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy , Image , ButtonType} from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
