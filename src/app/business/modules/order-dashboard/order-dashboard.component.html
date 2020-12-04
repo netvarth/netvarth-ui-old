@@ -125,8 +125,8 @@
               <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                 [checked]="orderSelected[i]"></mat-checkbox>
               <span class="pull-right"> #{{order.orderNumber}}
-                <i *ngIf="order.homeDelivery" class="fa fa-home"></i>
-                <i *ngIf="order.storePickup" class="fa fa-home"></i>
+                <!-- <i *ngIf="order.homeDelivery" class="fa fa-home"></i>
+                <i *ngIf="order.storePickup" class="fa fa-home"></i> -->
               </span>
             </div>
             <div class="main-sec">
@@ -153,5 +153,5 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="clear-fix"></div>
+  <div class="clearfix"></div>
 </div>
