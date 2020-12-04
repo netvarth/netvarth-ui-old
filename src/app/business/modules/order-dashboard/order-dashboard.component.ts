@@ -45,7 +45,7 @@ export class OrderDashboardComponent implements OnInit {
   };
   customerIdTooltip = '';
   customer_label = '';
-  selected_type = 'homeDelivery';
+  selected_type = 'all';
   orderStatusFilter = projectConstantsLocal.ORDER_STATUSES_FILTER;
   orderModesList = projectConstantsLocal.ORDER_MODES;
   paymentStatusList = projectConstantsLocal.PAYMENT_STATUSES;
@@ -82,7 +82,7 @@ export class OrderDashboardComponent implements OnInit {
   setTabSelection(type) {
     this.selectedTab = type;
     this.shared_functions.setitemToGroupStorage('orderTab', this.selectedTab);
-    switch(type) {
+    switch (type) {
       case 1: {
         this.getProviderOrders();
         break;
@@ -98,8 +98,7 @@ export class OrderDashboardComponent implements OnInit {
     }
   }
   tabChange(event) {
-    console.log(event);
-    this.hideFilterSidebar(); 
+    this.hideFilterSidebar();
     this.resetFilter();
     this.resetFilterValues();
     this.filterapplied = false;
@@ -129,7 +128,6 @@ export class OrderDashboardComponent implements OnInit {
   }
   getTodayDate() {
     const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    console.log(server);
     return this.dateformat.transformTofilterDate(server)
   }
   getProviderOrders() {
@@ -149,7 +147,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   getProviderFutureOrdersCount() {
     const filter = {};
-      filter['orderDate-gt'] = this.getTodayDate();
+    filter['orderDate-gt'] = this.getTodayDate();
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
       console.log(data);
       this.todayOrdersCount = data;
@@ -157,7 +155,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   getProviderTodayOrdersCount() {
     const filter = {};
-      filter['orderDate-eq'] = this.getTodayDate();
+    filter['orderDate-eq'] = this.getTodayDate();
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
       console.log(data);
       this.futureOrdersCount = data;
@@ -255,7 +253,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   setFilterDataCheckbox(type, value?) {
     if (type === 'homeDelivery' || 'storePickup') {
-this.historyOrdertype = type;
+      this.historyOrdertype = type;
     }
     if (type === 'orderStatus') {
       const indx = this.orderStatuses.indexOf(value);
@@ -290,13 +288,13 @@ this.historyOrdertype = type;
         api_filter['storePickup-eq'] = true;
       }
     } else {
-    if (this.selected_type === 'homeDelivery') {
-      api_filter['homeDelivery-eq'] = true;
+      if (this.selected_type === 'homeDelivery') {
+        api_filter['homeDelivery-eq'] = true;
+      }
+      if (this.selected_type === 'storePickup') {
+        api_filter['storePickup-eq'] = true;
+      }
     }
-    if (this.selected_type === 'storePickup') {
-      api_filter['storePickup-eq'] = true;
-    }
-  }
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
