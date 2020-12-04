@@ -1668,29 +1668,64 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
       return this.servicemeta.httpGet(url);
    }
+      addLabeltoCustomer(data) {
+      const url = 'provider/customers/label';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelFromCustomer(id, label) {
+      const url = 'provider/customers/' + id + '/label/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
+   uploadCoverFoto(data) {
+      return this.servicemeta.httpPost('provider/coverPicture', data);
+   }
+   getCoverFoto() {
+      const url = 'provider/cover';
+      return this.servicemeta.httpGet(url);
+   }
+   deleteCoverFoto(name) {
+      const path = 'provider/coverPicture/' + name;
+      return this.servicemeta.httpDelete(path);
+   }
+   paymentRefund(data) {
+      return this.servicemeta.httpPost('provider/payment/refund', data);
+   }
+   saveReportCriteria(reportName, data) {
+      const url = 'provider/report/' + reportName;
+      return this.servicemeta.httpPost(url, data);
+   }
+   getCriteriaList() {
+      const url = 'provider/report/criteria';
+      return this.servicemeta.httpGet(url);
+   }
+   deleteCriteria(reportName, reportType) {
+      const path = 'provider/report/' + reportName + '/' + reportType;
+      return this.servicemeta.httpDelete(path);
+   }
+}
    uploadItemImages(id, data) {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
-   getProviderOrders(filter = {}) {
+   getProviderOrders() {
       const url = 'provider/orders';
-      return this.servicemeta.httpGet(url, null, filter);
+      return this.servicemeta.httpGet(url);
    }
-   getProviderOrdersCount(filter = {}) {
+   getProviderOrdersCount() {
       const url = 'provider/orders/count';
-      return this.servicemeta.httpGet(url, null, filter);
+      return this.servicemeta.httpGet(url);
    }
    getProviderOrderById(id) {
       const url = 'provider/orders/' + id;
       return this.servicemeta.httpGet(url);
    }
-   getProviderHistoryOrders(filter = {}) {
+   getProviderHistoryOrders() {
       const url = 'provider/orders/history/count';
-      return this.servicemeta.httpGet(url, null, filter);
+      return this.servicemeta.httpGet(url);
    }
-   getProviderHistoryOrdersCount(filter = {}) {
+   getProviderHistoryOrdersCount() {
       const url = 'provider/orders/history';
-      return this.servicemeta.httpGet(url, null, filter);
+      return this.servicemeta.httpGet(url);
    }
    getProviderOrderStates(uuid) {
       const url = 'provider/orders/states/' + uuid;
