@@ -211,7 +211,7 @@ export class ItemDetailsComponent implements OnInit {
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [true],
                 stockAvailable: [true],
-                taxable: [false, Validators.compose([Validators.required])],
+                taxable: [false],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],

@@ -55,7 +55,7 @@
                                         </div>
                                     </div>
                                 <div class="bus-item" *ngFor="let item of item_list;let i=index;">
-                                        <div class="card card-item-n no-padding" (click)="editViewedItem(item.itemId)">
+                                        <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
                                                 <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
                                                     <!-- <span class="actionbtn">
                                                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
@@ -76,7 +76,7 @@
                                                       </span> -->
                                                 
                                                     <div class="card-item-title">
-                                                <a class="pointer-cursor"><b>
+                                                <a><b>
                                                         {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
                                                     </b>
                                                     <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p> </a>
