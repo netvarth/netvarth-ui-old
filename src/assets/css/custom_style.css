@@ -12102,7 +12102,7 @@ img.busN-logo {
 }
 
 .pad-10 {
-  padding: 10px !important;
+  padding: 10px;
 }
 
 .inpro .inprogress {
@@ -12134,7 +12134,8 @@ img.busN-logo {
   border-radius: 20px;
 }
 
-.checkinlist .mat-tab-label .mat-tab-label-content {
+.checkinlist .mat-tab-label .mat-tab-label-content,
+.orderlist .mat-tab-label .mat-tab-label-content {
   font-size: 1.1rem;
 }
 

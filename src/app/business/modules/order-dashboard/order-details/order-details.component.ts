@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -141,7 +142,8 @@ export class OrderDetailsComponent implements OnInit {
     'active': false
   }];
   constructor(public activaterouter: ActivatedRoute,
-    public providerservice: ProviderServices) {
+    public providerservice: ProviderServices,
+    public location: Location) {
     this.activaterouter.params.subscribe(param => {
       console.log(param);
       this.orderDetails = this.orderDetails[0];
@@ -160,5 +162,8 @@ export class OrderDetailsComponent implements OnInit {
       this.loading = false;
       console.log(data);
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

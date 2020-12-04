@@ -84,7 +84,7 @@
                                                             accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add more</label>
                                                             <p class="addmoreorderitemp1">   <img style="width: 65%;" src="assets/images/add.svg" /></p>
                                                         </div>
-                                                <ks-modal-gallery [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                <ks-modal-gallery [id]="0" [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
                                                     [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                                                     (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                                             </div>  

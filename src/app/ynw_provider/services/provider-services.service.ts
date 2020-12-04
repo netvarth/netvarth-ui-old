@@ -1707,25 +1707,25 @@ export class ProviderServices {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
-   getProviderOrders() {
+   getProviderOrders(filter = {}) {
       const url = 'provider/orders';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
    }
-   getProviderOrdersCount() {
+   getProviderOrdersCount(filter = {}) {
       const url = 'provider/orders/count';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
    }
    getProviderOrderById(id) {
       const url = 'provider/orders/' + id;
       return this.servicemeta.httpGet(url);
    }
-   getProviderHistoryOrders() {
+   getProviderHistoryOrders(filter = {}) {
       const url = 'provider/orders/history/count';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
    }
-   getProviderHistoryOrdersCount() {
+   getProviderHistoryOrdersCount(filter = {}) {
       const url = 'provider/orders/history';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
    }
    getProviderOrderStates(uuid) {
       const url = 'provider/orders/states/' + uuid;

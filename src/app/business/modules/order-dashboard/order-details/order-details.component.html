@@ -1,12 +1,23 @@
-<div class="card">
-    <div *ngIf="!loading && orderDetails && orderDetails.orderItem">
-        <div class="order-item mgn-bt-30" *ngFor="let item of orderDetails.orderItem">
-            <h4>{{item.name}}</h4>
-            <div> Quantity - {{item.quantity}}</div>
-            <div> Price - {{item.price}}</div>
-            <div> Total Price - {{item.totalPrice}}</div>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Order
+        </h5>
+    </div>
+</section>
+
+<section>
+    <div class="card">
+        <div *ngIf="!loading && orderDetails && orderDetails.orderItem">
+            <div class="order-item mgn-bt-30" *ngFor="let item of orderDetails.orderItem">
+                <h4>{{item.name}}</h4>
+                <div> Quantity - {{item.quantity}}</div>
+                <div> Price - {{item.price}}</div>
+                <div> Total Price - {{item.totalPrice}}</div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 <div class="clearfix"></div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

@@ -808,7 +808,6 @@ export class OrderDashboardComponent implements OnInit {
     });
   }
   getProviderOrdersCount(filter) {
-    ;
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
       console.log(data);
       this.ordersCount = data;

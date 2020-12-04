@@ -10,7 +10,7 @@ import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.mod
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { OrderModule } from 'ngx-order-pipe';
-import { ModalGalleryModule } from 'angular-modal-gallery';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
 
@@ -30,7 +30,7 @@ import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
         FormMessageDisplayModule,
         ReactiveFormsModule,
         OrderModule,
-        ModalGalleryModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         TruncateModule,
         CapitalizeFirstPipeModule,
     ],
