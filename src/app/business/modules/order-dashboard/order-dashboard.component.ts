@@ -768,8 +768,6 @@ export class OrderDashboardComponent implements OnInit {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' id';
     // this.getProviderOrders();
-    // this.getProviderOrdersCount();
-    // this.getProviderHistoryOrdersCount();
     // this.getProviderHistoryOrders();
     console.log(this.orders);
   }
@@ -779,16 +777,20 @@ export class OrderDashboardComponent implements OnInit {
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
   }
-  showActionPopup() {
+  showActionPopup(order?) {
+    if (order) {
+      this.selectedOrders = order;
+    }
     const actiondialogRef = this.dialog.open(OrderActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
       disableClose: true,
       data: {
-selectedOrder: this.selectedOrders
+        selectedOrder: this.selectedOrders
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      this.selectedOrders = [];
     });
   }
   stopprop(event) {
@@ -796,28 +798,35 @@ selectedOrder: this.selectedOrders
   }
   getProviderOrders() {
     this.loading = true;
-    this.providerservices.getProviderOrders().subscribe(data => {
+    let filter = {};
+    filter = this.setFilterForApi();
+    this.getProviderOrdersCount(filter);
+    this.providerservices.getProviderOrders(filter).subscribe(data => {
       console.log(data);
       this.orders = data;
       this.loading = false;
     });
   }
-  getProviderOrdersCount() {
-    this.providerservices.getProviderOrdersCount().subscribe(data => {
+  getProviderOrdersCount(filter) {
+    ;
+    this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
       console.log(data);
       this.ordersCount = data;
     });
   }
   getProviderHistoryOrders() {
     this.loading = true;
-    this.providerservices.getProviderHistoryOrders().subscribe(data => {
+    let filter = {};
+    filter = this.setFilterForApi();
+    this.getProviderHistoryOrdersCount(filter);
+    this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       console.log(data);
       this.historyOrders = data;
       this.loading = false;
     });
   }
-  getProviderHistoryOrdersCount() {
-    this.providerservices.getProviderHistoryOrdersCount().subscribe(data => {
+  getProviderHistoryOrdersCount(filter) {
+    this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       console.log(data);
       this.historyOrdersCount = data;
     });
@@ -830,7 +839,6 @@ selectedOrder: this.selectedOrders
       this.orderSelected[index] = false;
       const indx = this.selectedOrders.indexOf(order);
       this.selectedOrders.splice(indx, 1);
-      // delete this.selectedOrders[index];
     }
     console.log(this.selectedOrders);
     console.log(this.orderSelected);
@@ -922,7 +930,7 @@ selectedOrder: this.selectedOrders
       api_filter['homeDelivery-eq'] = true;
     }
     if (this.selected_type === 'storePickup') {
-      api_filter['homeDelivery-eq'] = true;
+      api_filter['storePickup-eq'] = true;
     }
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();

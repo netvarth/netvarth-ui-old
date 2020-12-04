@@ -3,7 +3,7 @@
     <h2>Order Manager</h2>
     Welcome back {{businessName}}!
   </div>
-  <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+  <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12" *ngIf="!loading">
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
         <div>Total orders</div>
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="!loading">
     <mat-tab-group (selectedTabChange)="tabChange($event)">
       <mat-tab label="Active Orders">
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
@@ -37,7 +37,7 @@
               </mat-select>
             </div>
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
-            <span *ngIf="selectedOrders.length > 1" class="main-act-btn" (click)="showActionPopup()"> Actions</span>
+            <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()"> Actions</span>
           </div>
             <div class="pull-right mgn-up-5">
               <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
@@ -141,7 +141,7 @@
               <div class="mgn-up-15 mgn-bt-10">
                 <span> {{order.orderItem.length}}</span> <span
                   class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
-                <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup()"> Actions</span>
+                <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
               </div>
             </div>
           </div>
@@ -154,4 +154,5 @@
     </mat-tab-group>
   </div>
   <div class="clearfix"></div>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 </div>
