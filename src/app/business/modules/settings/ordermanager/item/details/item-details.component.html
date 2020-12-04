@@ -237,9 +237,9 @@
                                 <div class="form-group" *ngIf="showPromotionalPrice">
                                         <label class="col-form-label" for="PromotionalPricelabel">Promotional Label</label>
                                         <mat-radio-group formControlName="promotionallabel">
-                                          <mat-radio-button (click)="handleLabelchange('Sale')" value="Sale">Sale</mat-radio-button>&nbsp;&nbsp;
-                                          <mat-radio-button (click)="handleLabelchange('Clearence')" value="Clearence">Clearence</mat-radio-button>&nbsp;&nbsp;
-                                          <mat-radio-button (click)="handleLabelchange('Other')" value="Other">Other</mat-radio-button>
+                                          <mat-radio-button (click)="handleLabelchange('Sale')" value="ONSALE">Sale</mat-radio-button>&nbsp;&nbsp;
+                                          <mat-radio-button (click)="handleLabelchange('Clearence')" value="CLEARANCE">Clearence</mat-radio-button>&nbsp;&nbsp;
+                                          <mat-radio-button (click)="handleLabelchange('Other')" value="CUSTOM">Other</mat-radio-button>
                                         </mat-radio-group>
                                  </div>
                                  <div class="form-group" *ngIf="showPromotionalPrice && showCustomlabel">
@@ -264,6 +264,12 @@
                                 <div class="form-group">
                                     <label class="col-form-label" for="showOnLandingpage">Visibility in landing page</label>
                                     <mat-slide-toggle formControlName="showOnLandingpage">
+                                    </mat-slide-toggle>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="stockAvailable">Stock Available</label>
+                                    <mat-slide-toggle formControlName="stockAvailable">
                                     </mat-slide-toggle>
                                     
                                 </div>

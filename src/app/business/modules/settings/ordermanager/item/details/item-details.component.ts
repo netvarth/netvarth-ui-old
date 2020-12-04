@@ -209,12 +209,14 @@ export class ItemDetailsComponent implements OnInit {
                 shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [false],
+                showOnLandingpage: [true],
+                stockAvailable: [true],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
-                promotionallabel: []
+                promotionallabel: [],
+                customlabel: []
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
             this.amForm.get('promotionallabel').setValue('Sale');
@@ -228,16 +230,18 @@ export class ItemDetailsComponent implements OnInit {
                 note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [false],
+                stockAvailable: [false],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
-                promotionallabel: []
+                promotionallabel: [],
+                customlabel: []
             });
         }
         if (this.action === 'edit') {
             this.itemcaption = 'Edit Item';
-            this.updateForm();
+                this.updateForm();
         }
     }
     setDescFocus() {
@@ -262,11 +266,12 @@ export class ItemDetailsComponent implements OnInit {
     }
     updateForm() {
         console.log(this.item);
-        if (this.item.taxable === true) {
+        if (this.item.taxable) {
             // taxable = '1';
             this.holdtaxable = true;
         }
-        this.amForm.setValue({
+        // this.amForm.get('itemName').setValue(this.item.itemName);
+        this.amForm.patchValue({
             'itemCode': this.item.itemCode || null,
             'itemName': this.item.itemName || null,
             'displayName': this.item.displayName || null,
@@ -275,12 +280,14 @@ export class ItemDetailsComponent implements OnInit {
             'note': this.item.note || null,
             'price': this.item.price || null,
             'taxable': this.holdtaxable,
-            'showOnLandingpage': this.item.showOnLandingpage,
+            'showOnLandingpage': this.item.isShowOnLandingpage,
+            'stockAvailable': this.item.isStockAvailable,
             'showPromotionalPrice': this.item.showPromotionalPrice,
-            'promotionalPrice': this.item.promotionalPrice || null,
+            'promotionalPrice': this.item.promotionalPrice || 0,
             'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
-            'promotionallabel': this.item.promotionallabel || 'Sale'
+            'promotionallabel': this.item.promotionLabelType || 'ONSALE'
         });
+        console.log(this.amForm);
         this.curtype = this.item.promotionalPriceType || 'FIXED';
     }
     handleTypechange(typ) {
@@ -352,37 +359,58 @@ export class ItemDetailsComponent implements OnInit {
             }
         }
       //  this.saveImagesForPostinstructions();
+      console.log(form_data);
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
-                'shortDec': form_data.shortDec,
-                'itemDesc': form_data.displayDesc,
-                'note': form_data.note,
-                'taxable': form_data.taxable,
-                'price': form_data.price,
+                'shortDec': form_data.shortDec || '',
+                'itemDesc': form_data.displayDesc || '',
+                'note': form_data.note || '',
+                'taxable': form_data.taxable || false,
+                'price': form_data.price || 0,
                 'showPromotionalPrice': this.showPromotionalPrice,
-                'showOnLandingpage': form_data.showOnLandingpage,
-                'promotionalPrice': form_data.promotionalPrice,
-                'promotionalPriceType': form_data.promotionalPriceType
+                'isShowOnLandingpage': form_data.showOnLandingpage || false,
+                'isStockAvailable': form_data.stockAvailable || false,
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPriceType': form_data.promotionalPriceType,
+                'promotionLabelType': form_data.promotionallabel,
+                'promotionLabel': form_data.customlabel || '',
+                'promotionalPrcnt': form_data.promotionalPrice || 0,
+                'status': this.item.status
             };
+            if (!this.showPromotionalPrice) {
+                post_itemdata['promotionalPriceType'] = 'NONE';
+                post_itemdata['promotionLabelType'] = 'NONE';
+            }
+            console.log(post_itemdata);
             this.addItem(post_itemdata, isfrom);
         } else if (this.action === 'edit') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
-                'shortDec': form_data.shortDec,
-                'itemDesc': form_data.displayDesc,
-                'note': form_data.note,
-                'taxable': form_data.taxable,
-                'price': form_data.price,
+                'shortDec': form_data.shortDec || '',
+                'itemDesc': form_data.displayDesc || '',
+                'note': form_data.note || '',
+                'taxable': form_data.taxable || false,
+                'price': form_data.price || 0,
                 'showPromotionalPrice': this.showPromotionalPrice,
-                'showOnLandingpage': form_data.showOnLandingpage,
-                'promotionalPrice': form_data.promotionalPrice,
-                'promotionalPriceType': form_data.promotionalPriceType
+                'isShowOnLandingpage': form_data.showOnLandingpage || false,
+                'isStockAvailable': form_data.stockAvailable || false,
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPriceType': form_data.promotionalPriceType,
+                'promotionLabelType': form_data.promotionallabel,
+                'promotionLabel': form_data.customlabel || '',
+                'promotionalPrcnt': form_data.promotionalPrice || 0,
+                'status': this.item.status
             };
+            console.log(this.showPromotionalPrice);
+            if (!this.showPromotionalPrice) {
+                post_itemdata['promotionalPriceType'] = 'NONE';
+                post_itemdata['promotionLabelType'] = 'NONE';
+            }
             this.editItem(post_itemdata);
         }
     }

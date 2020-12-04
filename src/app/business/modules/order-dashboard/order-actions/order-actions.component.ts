@@ -21,6 +21,7 @@ export class OrderActionsComponent implements OnInit {
   showSendDetails = false;
   pos = false;
   customer_label = '';
+  loading = false;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -28,6 +29,7 @@ export class OrderActionsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
+    this.loading = true;
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
     if (this.orderDetails.length > 1) {
@@ -37,6 +39,7 @@ export class OrderActionsComponent implements OnInit {
   }
   setActions() {
     console.log(this.mulipleSelection);
+    this.loading = false;
     if (!this.mulipleSelection) {
       this.showCancel = true;
       this.showSendDetails = true;

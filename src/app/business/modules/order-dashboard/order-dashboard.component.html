@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="!loading">
-    <mat-tab-group (selectedTabChange)="tabChange($event)">
+    <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Active Orders">
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
@@ -119,6 +119,10 @@
               </div>
             </div>
           </div>
+          <div *ngIf="orders.length == 0">
+No active orders
+          </div>
+          <ng-container *ngIf="orders.length > 0">
           <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
             (click)="gotoDetails(order)">
             <div class="top-sec">
@@ -145,11 +149,270 @@
               </div>
             </div>
           </div>
+        </ng-container>
         </div>
       </mat-tab>
       <mat-tab label="Future">
+         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
+          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
+            <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
+              <mat-select class="selecttype" [(ngModel)]="selected_type">
+                <mat-option [value]="'homeDelivery'" (click)="handleOrderType('homeDelivery')">
+                  Home Delivery
+                </mat-option>
+                <mat-option [value]="'storePickup'" (click)="handleOrderType('storePickup')">
+                  Store pickup
+                </mat-option>
+              </mat-select>
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
+            <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()"> Actions</span>
+          </div>
+            <div class="pull-right mgn-up-5">
+              <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                <i class="icon-filter-one" (click)="showFilter()">
+                </i>
+              </a>
+              <div>
+                <aside class="filterSidebar" *ngIf="showFilterSection">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
+                      <span *ngIf="filterapplied" class="clearFilter" (click)="clearFilter()"
+                        [matTooltip]="'Reset filter'"> Clear All</span>
+                    </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox"
+                            placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
+                        </li>
+                      </div>
+
+                      <div>
+                        <label class="filterHeaders"> Order Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let status of orderStatusFilter">
+                          <mat-checkbox [checked]="orderStatuses.indexOf(status.value) !== -1"
+                            (change)="setFilterDataCheckbox('orderStatus', status.value)">
+                            {{status.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Order Mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of orderModesList">
+                          <mat-checkbox [checked]="orderModes.indexOf(mode.value) !== -1"
+                            (change)="setFilterDataCheckbox('orderMode', mode.value)">
+                            {{mode.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Payment Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of paymentStatusList">
+                          <mat-checkbox [checked]="paymentStatuses.indexOf(mode.value) !== -1"
+                            (change)="setFilterDataCheckbox('payment', mode.value)">
+                            {{mode.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                    </ul>
+                  </section>
+                </aside>
+              </div>
+            </div>
+          </div> <div *ngIf="orders.length == 0">
+            No future orders
+                      </div>
+                      <ng-container *ngIf="orders.length > 0">
+          <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
+            (click)="gotoDetails(order)">
+            <div class="top-sec">
+              <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
+                [checked]="orderSelected[i]"></mat-checkbox>
+              <span class="pull-right"> #{{order.orderNumber}}
+                <!-- <i *ngIf="order.homeDelivery" class="fa fa-home"></i>
+                <i *ngIf="order.storePickup" class="fa fa-home"></i> -->
+              </span>
+            </div>
+            <div class="main-sec">
+              <div class="bold"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+              <div class="mgn-up-15 datetime">
+                {{order.orderDate | date: display_dateFormat}},
+                {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+              </div>
+              <div class="red">
+                {{order.orderStatus}}
+              </div>
+              <div class="mgn-up-15 mgn-bt-10">
+                <span> {{order.orderItem.length}}</span> <span
+                  class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
+                <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+              </div>
+            </div>
+          </div>
+          </ng-container>
+        </div>
       </mat-tab>
       <mat-tab label="History">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
+          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
+            <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
+            <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()"> Actions</span>
+          </div>
+            <div class="pull-right mgn-up-5">
+              <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+                <i class="icon-filter-one" (click)="showFilter()">
+                </i>
+              </a>
+              <div>
+                <aside class="filterSidebar" *ngIf="showFilterSection">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                    <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
+                      <span *ngIf="filterapplied" class="clearFilter" (click)="clearFilter()"
+                        [matTooltip]="'Reset filter'"> Clear All</span>
+                    </div>
+                    <ul class="sidebar-menu">
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Ffname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" #Flname (blur)="doSearch()" (keyup)="keyPressed($event)"
+                            class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" autocomplete="off" [(ngModel)]="filter.patientId" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox"
+                            placeholder="{{customerIdTooltip | capitalizeFirst}}">
+                        </li>
+                      </div>
+                      <div class="filterTextinput">
+                        <li class="filterli">
+                          <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
+                        </li>
+                      </div>
+
+                      <div>
+                        <label class="filterHeaders"> Order Type</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="historyOrdertype === 'homeDelivery'"
+                            (change)="setFilterDataCheckbox('homeDelivery')">
+                            Home Delivery</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="historyOrdertype === 'storePickup'"
+                            (change)="setFilterDataCheckbox('storePickup')">
+                           Store Pickup</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Order Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let status of orderStatusFilter">
+                          <mat-checkbox [checked]="orderStatuses.indexOf(status.value) !== -1"
+                            (change)="setFilterDataCheckbox('orderStatus', status.value)">
+                            {{status.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Order Mode</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of orderModesList">
+                          <mat-checkbox [checked]="orderModes.indexOf(mode.value) !== -1"
+                            (change)="setFilterDataCheckbox('orderMode', mode.value)">
+                            {{mode.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
+                        <label class="filterHeaders"> Payment Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let mode of paymentStatusList">
+                          <mat-checkbox [checked]="paymentStatuses.indexOf(mode.value) !== -1"
+                            (change)="setFilterDataCheckbox('payment', mode.value)">
+                            {{mode.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
+                    </ul>
+                  </section>
+                </aside>
+              </div>
+            </div>
+          </div> 
+          <div *ngIf="historyOrders.length == 0">
+            No history orders
+                      </div>
+                      <ng-container *ngIf="historyOrders.length > 0">
+          <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of historyOrders;let i=index"
+            (click)="gotoDetails(order)">
+            <div class="top-sec">
+              <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
+                [checked]="orderSelected[i]"></mat-checkbox>
+              <span class="pull-right"> #{{order.orderNumber}}
+                <!-- <i *ngIf="order.homeDelivery" class="fa fa-home"></i>
+                <i *ngIf="order.storePickup" class="fa fa-home"></i> -->
+              </span>
+            </div>
+            <div class="main-sec">
+              <div class="bold"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+              <div class="mgn-up-15 datetime">
+                {{order.orderDate | date: display_dateFormat}},
+                {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+              </div>
+              <div class="red">
+                {{order.orderStatus}}
+              </div>
+              <div class="mgn-up-15 mgn-bt-10">
+                <span> {{order.orderItem.length}}</span> <span
+                  class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
+                <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+              </div>
+            </div>
+          </div>
+          </ng-container>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -14,712 +14,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 export class OrderDashboardComponent implements OnInit {
   businessName;
   historyOrders: any = [];
-  orders: any = [{
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'Thayattuparambil h,Kaipamangalam',
-    'consumer': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550002028',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 100.00,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  },
-  {
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'chakaakal h,irinjalakuda po',
-    'consumer': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      },
-      {
-        'id': 2,
-        'name': 'Hamlet2',
-        'quantity': 1,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 100.22
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550001023',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 300.66,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  }, {
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'Thayattuparambil h,Kaipamangalam',
-    'consumer': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550002028',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 100.00,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  },
-  {
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'chakaakal h,irinjalakuda po',
-    'consumer': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      },
-      {
-        'id': 2,
-        'name': 'Hamlet2',
-        'quantity': 1,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 100.22
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550001023',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 300.66,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  }, {
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'Thayattuparambil h,Kaipamangalam',
-    'consumer': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'Layana',
-      'lastName': 'T S',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550002028',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 100.00,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  },
-  {
-    'uid': '6cd37128-4593-4b92-9bc7-22e130d8f576_or',
-    'orderNumber': 'o-32525t4-2',
-    'homeDelivery': true,
-    'storePickup': false,
-    'homeDeliveryAddress': 'chakaakal h,irinjalakuda po',
-    'consumer': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': true,
-      'jaldeeConsumer': 4,
-      'jaldeeId': '1'
-    },
-    'jaldeeConsumer': {
-      'id': 4,
-      'favourite': false,
-      'SignedUp': false
-    },
-    'catalog': {
-      'id': 2,
-      'catalogName': 'Lunchs',
-      'catalogSchedule': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-20',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'advanceAmount': 0,
-      'autoConfirm': false
-    },
-    'orderFor': {
-      'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
-      'favourite': false,
-      'phone_verified': false,
-      'email_verified': false,
-      'jaldeeConsumer': 0,
-      'jaldeeId': '1'
-    },
-    'orderItem': [
-      {
-        'id': 1,
-        'name': 'Hamlet1',
-        'quantity': 2,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 200.44
-      },
-      {
-        'id': 2,
-        'name': 'Hamlet2',
-        'quantity': 1,
-        'price': 100.22,
-        'status': 'FULFILLED',
-        'totalPrice': 100.22
-      }
-    ],
-    'orderStatus': 'Accepted',
-    'orderDate': '2020-12-03',
-    'orderTimeWindow': {
-      'recurringType': 'Weekly',
-      'repeatIntervals': [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7'
-      ],
-      'startDate': '2020-11-20',
-      'terminator': {
-        'endDate': '2022-01-01',
-        'noOfOccurance': 0
-      },
-      'timeSlots': [
-        {
-          'sTime': '09:00 AM',
-          'eTime': '08:00 PM'
-        }
-      ]
-    },
-    'lastStatusUpdatedDate': '2020-12-01',
-    'isAsap': false,
-    'isFirstOrder': true,
-    'coupons': [],
-    'orderMode': 'ONLINE_ORDER',
-    'phoneNumber': '5550001023',
-    'email': 'asd@netvarth.com',
-    'advanceAmount': 0,
-    'advanceAmountToPay': 2,
-    'amount': 0,
-    'totalAmount': 0,
-    'cartAmount': 300.66,
-    'accesScope': 1,
-    'account': 0,
-    'onlineRequest': false,
-    'kioskRequest': false,
-    'firstCheckIn': false,
-    'active': false
-  }];
+  orders: any = [];
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   ordersCount;
   historyOrdersCount;
@@ -757,22 +52,50 @@ export class OrderDashboardComponent implements OnInit {
   orderModes: any = [];
   paymentStatuses: any = [];
   selectedOrders: any = [];
+  selectedTab;
+  historyOrdertype = '';
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
     public shared_functions: SharedFunctions) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const businessdetails = this.sharedFunctions.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' id';
-    // this.getProviderOrders();
-    // this.getProviderHistoryOrders();
-    console.log(this.orders);
+    if (this.sharedFunctions.getitemFromGroupStorage('orderTab')) {
+      this.selectedTab = this.sharedFunctions.getitemFromGroupStorage('orderTab');
+    } else {
+      this.selectedTab = 1;
+    }
+    this.doSearch();
+  }
+  setTabSelection(type) {
+    this.selectedTab = type;
+    this.shared_functions.setitemToGroupStorage('orderTab', this.selectedTab);
+    switch(type) {
+      case 1: {
+        this.getProviderOrders();
+        break;
+      }
+      case 2: {
+        this.getProviderOrders();
+        break;
+      }
+      case 3: {
+        // this.getProviderHistoryOrders();
+        break;
+      }
+    }
   }
   tabChange(event) {
     console.log(event);
+    this.hideFilterSidebar(); 
+    this.resetFilter();
+    this.resetFilterValues();
+    this.filterapplied = false;
+    this.setTabSelection(event.index + 1);
   }
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
@@ -790,7 +113,7 @@ export class OrderDashboardComponent implements OnInit {
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
-      this.selectedOrders = [];
+      this.resetList();
     });
   }
   stopprop(event) {
@@ -854,6 +177,10 @@ export class OrderDashboardComponent implements OnInit {
     this.filterapplied = false;
     this.doSearch();
   }
+  resetList() {
+    this.selectedOrders = [];
+    this.orderSelected = [];
+  }
   resetFilter() {
     this.filters = {
       first_name: false,
@@ -883,7 +210,7 @@ export class OrderDashboardComponent implements OnInit {
     } else {
       this.filterapplied = false;
     }
-    this.setFilterForApi();
+    this.setTabSelection(this.selectedTab);
   }
   keyPressed(event) {
     if (event.keyCode === 13) {
@@ -899,7 +226,10 @@ export class OrderDashboardComponent implements OnInit {
     this.orderModes = [];
     this.paymentStatuses = [];
   }
-  setFilterDataCheckbox(type, value) {
+  setFilterDataCheckbox(type, value?) {
+    if (type === 'homeDelivery' || 'storePickup') {
+this.historyOrdertype = type;
+    }
     if (type === 'orderStatus') {
       const indx = this.orderStatuses.indexOf(value);
       this.orderStatuses = [];
@@ -925,12 +255,21 @@ export class OrderDashboardComponent implements OnInit {
   }
   setFilterForApi() {
     const api_filter = {};
+    if (this.selectedTab === 3) {
+      if (this.historyOrdertype === 'homeDelivery') {
+        api_filter['homeDelivery-eq'] = true;
+      }
+      if (this.historyOrdertype === 'storePickup') {
+        api_filter['storePickup-eq'] = true;
+      }
+    } else {
     if (this.selected_type === 'homeDelivery') {
       api_filter['homeDelivery-eq'] = true;
     }
     if (this.selected_type === 'storePickup') {
       api_filter['storePickup-eq'] = true;
     }
+  }
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
