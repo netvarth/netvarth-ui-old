@@ -5,6 +5,8 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { projectConstants } from '../../../app.component';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -16,7 +18,6 @@ export class OrderDashboardComponent implements OnInit {
   historyOrders: any = [];
   orders: any = [];
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
-  ordersCount;
   historyOrdersCount;
   loading = false;
   orderSelected: any = [];
@@ -54,10 +55,14 @@ export class OrderDashboardComponent implements OnInit {
   selectedOrders: any = [];
   selectedTab;
   historyOrdertype = '';
+  server_date;
+  todayOrdersCount;
+  futureOrdersCount;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    public dateformat: DateFormatPipe) { }
 
   ngOnInit() {
     const businessdetails = this.sharedFunctions.getitemFromGroupStorage('ynwbp');
@@ -69,7 +74,10 @@ export class OrderDashboardComponent implements OnInit {
     } else {
       this.selectedTab = 1;
     }
+    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.doSearch();
+    this.getProviderTodayOrdersCount();
+    this.getProviderFutureOrdersCount();
   }
   setTabSelection(type) {
     this.selectedTab = type;
@@ -119,28 +127,47 @@ export class OrderDashboardComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
+  getTodayDate() {
+    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    console.log(server);
+    return this.dateformat.transformTofilterDate(server)
+  }
   getProviderOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    this.getProviderOrdersCount(filter);
+    if (this.selectedTab === 1) {
+      filter['orderDate-eq'] = this.getTodayDate();
+    } else {
+      filter['orderDate-gt'] = this.getTodayDate();
+    }
     this.providerservices.getProviderOrders(filter).subscribe(data => {
       console.log(data);
       this.orders = data;
       this.loading = false;
     });
   }
-  getProviderOrdersCount(filter) {
+  getProviderFutureOrdersCount() {
+    const filter = {};
+      filter['orderDate-gt'] = this.getTodayDate();
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
       console.log(data);
-      this.ordersCount = data;
+      this.todayOrdersCount = data;
+    });
+  }
+  getProviderTodayOrdersCount() {
+    const filter = {};
+      filter['orderDate-eq'] = this.getTodayDate();
+    this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
+      console.log(data);
+      this.futureOrdersCount = data;
     });
   }
   getProviderHistoryOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    this.getProviderHistoryOrdersCount(filter);
+    // this.getProviderHistoryOrdersCount(filter);
     this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       console.log(data);
       this.historyOrders = data;

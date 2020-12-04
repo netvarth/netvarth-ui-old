@@ -7,15 +7,15 @@
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
         <div>Total orders</div>
-        <div class="order-count"> 210</div>
+        <div class="order-count"> {{todayOrdersCount + futureOrdersCount}}</div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
           <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
             <div> Today</div>
-            <div class="order-count red"> 110</div>
+            <div class="order-count red"> {{todayOrdersCount}}</div>
           </div>
           <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
             <div> Future</div>
-            <div class="order-count red"> 100</div>
+            <div class="order-count red"> {{futureOrdersCount}}</div>
           </div>
         </div>
       </div>
@@ -28,6 +28,9 @@
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
+                <mat-option [value]="'all'" (click)="handleOrderType('all')">
+                  All
+                </mat-option>
                 <mat-option [value]="'homeDelivery'" (click)="handleOrderType('homeDelivery')">
                   Home Delivery
                 </mat-option>
@@ -157,6 +160,9 @@ No active orders
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
+                <mat-option [value]="'all'" (click)="handleOrderType('all')">
+                  All
+                </mat-option>
                 <mat-option [value]="'homeDelivery'" (click)="handleOrderType('homeDelivery')">
                   Home Delivery
                 </mat-option>
