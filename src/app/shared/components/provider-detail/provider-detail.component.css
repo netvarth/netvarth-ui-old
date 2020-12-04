@@ -359,7 +359,7 @@ ul.bus-actions-horiz li {
   margin-left: 0 !important;
 }
 
-/* 
+/*
 .location-accord ul.badges li {
   margin-right: 10px !important;
   font-size: 1.5rem !important;
@@ -386,7 +386,7 @@ ul.details.badges li {
   }
   .bus-title-content h3 {
     text-align: center;
-    margin-bottom: 0px !important; 
+    margin-bottom: 0px !important;
   }
   .single-loc {
     text-align: center;
@@ -420,6 +420,21 @@ ul.details.badges li {
 }
 
 .bus-item .card.card-item-n {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+.bus-item .card.card-order-item-n {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  transition: 0.3s;
+  border-radius: 5px;
+  width: 150px !important;
+  height: 200px;
+  margin: auto;
+  padding: 0px !important;
+  border: 1px solid #106e76 !important;
+}
+
+.bus-item .card.card-order-item-n {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
@@ -979,7 +994,7 @@ ul.details.badges li {
   .bus-item-N {
     width: 25%;
     float: left !important;
-    
+
   }
 }
 @media(max-width: 767px) {
@@ -1030,4 +1045,18 @@ ul.details.badges li {
 }
 ul.bus-actions li.more_less a.lnk {
   font-size: 1rem !important;
+}
+.shopping-cart-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgray;
+  color: black;
+  font-weight:bold;
+  text-align: center;
+}
+.card-img-top {
+  flex-grow: 1;
+  object-fit:contain;
 }

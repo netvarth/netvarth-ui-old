@@ -197,12 +197,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
-                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' || 
-                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') ||
+                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' ||
+                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true' || locationjson[0]?.locationVirtualFields?.firstaid=='true'
                                 || locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'">
                                     <div class="question-header">Amenities</div>
@@ -223,10 +223,10 @@
                                                     [matTooltip]="'Ambulance Services'"><span
                                                         class="icon-ambulance"></span>
                                                 </li>
-                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
                                                     <span class="icon-emergency"></span></li>
                                                 <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
@@ -306,7 +306,7 @@
                                 <span class="count">{{loc.checkins.length}}
                                     booking(s)</span>
                                 {{at_this_loc_cap}}</span></a>
-                    </div>                    
+                    </div>
                     <div class="clearfix"></div> -->
 
         <!-- </div> -->
@@ -355,6 +355,58 @@
                 </ng-container>
             </div>
         </div>
+ <!-- order starts-->
+        <div>
+          <ng-container *ngIf="onlinePresence && catalogItem.length >= 1">
+            <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
+             <div class="card card-order-item-n no-padding" >
+
+
+                      <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
+
+                <div class="card-item-content">
+
+                  <div class="card-item-content-info">
+                      <div class="card-item-title">
+                          <a class="pointer-cursor" (click)="itemDetails(item)">
+                            <b>
+                              {{item.itemName | capitalizeFirst | limitTo: [35, '...']}}
+                            </b>
+                          </a>
+
+                        </div>
+                    <div class="card-item-content-action">
+                      <div class="" style="padding-bottom: 10px">
+
+                        <p class="title-style mgn-bt-5 mgn-up-5">
+                          <span class="rupee-font">{{item.price| currency:'&#8377;'}}</span>
+                        </p>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                          <button class="m2" (click)="decrement(item)">-</button>
+                          <span>{{getItemQty(item)}}</span>
+                          <button class="m2" (click)="increment(item)">+</button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+              </div>
+              </div>
+
+            </div>
+
+          </ng-container>
+          <div class="shopping-cart-footer" *ngIf="order_count>0">
+            <div>Your Order ({{ order_count }})
+              <span>SubTotal :Rs {{ price }}&nbsp;</span>
+              <button class="btn btn-primary" (click)="checkout();">Checkout</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- order ends-->
     </div>
 </section>
 <!-- <app-consumer-footer></app-consumer-footer> -->

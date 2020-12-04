@@ -1702,7 +1702,7 @@ export class ProviderServices {
       const path = 'provider/report/' + reportName + '/' + reportType;
       return this.servicemeta.httpDelete(path);
    }
-}
+
    uploadItemImages(id, data) {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);

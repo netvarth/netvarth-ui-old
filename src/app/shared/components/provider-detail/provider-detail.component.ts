@@ -20,6 +20,7 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import * as itemjson from '../../../../assets/json/item.json';
 
 @Component({
   selector: 'app-provider-detail',
@@ -231,6 +232,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   servicesAndProviders: any[];
   userCount: any;
   selectedLocation: any;
+  catlog: any;
+  catalogItem: any;
+  order_count: number;
+  price: number;
+  orderList: any = [];
+  counter = 0;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -380,7 +387,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           );
         }
       });
+      this.catlogArry();
   }
+  catlogArry() {
+    this.catlog = itemjson;
+    this.catalogItem = this.catlog.default.catalogItem;
+    if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
+    }
+    this.getTotalItemAndPrice();
+
+
+
+    }
+
   ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
@@ -662,7 +682,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               // if (this.userType === 'consumer') {
               //   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               // }
-             
+
               // locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               // if (this.businessjson.id && this.userId) {
               //   appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
@@ -1392,7 +1412,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   redirectToHistory() {
     if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['consumer', 'checkin', 'history'], {queryParams: { accountId: this.businessjson.id}});
+      this.routerobj.navigate(['consumer', 'checkin', 'history'], { queryParams: { accountId: this.businessjson.id } });
     } else { // show consumer login
       const passParam = { callback: 'history' };
       this.doLogin('consumer', passParam);
@@ -2188,13 +2208,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2223,7 +2243,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] })
                       this.userCount++;
                     }
-                  }                  
+                  }
                   servicesAndProviders.push(deptItem);
                 }
               }
@@ -2234,13 +2254,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2274,13 +2294,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
-        if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1){
-          for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-            this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-            this.serviceCount++;
-          }
-        }
-        
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
+    }
+
   }
   changeLocation(loc) {
     console.log(loc);
@@ -2309,8 +2329,66 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
-    }else {
+    } else {
       this.providerDetClicked(actionObj['userId']);
     }
+  }
+  //OrderItem add to cart
+  addToCart(Item) {
+
+    this.orderList.push(Item);
+
+
+    this.getTotalItemAndPrice();
+    this.getItemQty(Item);
+
+  }
+  removeFromCart(Item) {
+    console.log(this.orderList);
+    for (const i in this.orderList) {
+      if (this.orderList[i].itemId === Item.itemId) {
+        this.orderList.splice(i, 1);
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+    this.getItemQty(Item);
+  }
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const item of this.orderList) {
+      this.price = this.price + item.price;
+      this.order_count = this.order_count + 1;
+    }
+  }
+  checkout() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.router.navigate(['consumer', 'order', 'cart']);
+  }
+  itemDetails(item) {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.router.navigate(['consumer', 'order', 'item-details']);
+  }
+  increment(item) {
+
+    this.addToCart(item);
+  }
+
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+  getItemQty(item) {
+    console.log(this.counter++);
+    console.log(this.orderList);
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.itemId === item.itemId)) {
+      qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    }
+    return qty;
+  }
+
+  reset() {
+
   }
 }
