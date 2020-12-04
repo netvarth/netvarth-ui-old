@@ -1668,7 +1668,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.userData = data;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
+                        if (this.type !== 'waitlistreschedule') {
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        }
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
                         this.consumerPhoneNo = this.userPhone;
                     }
