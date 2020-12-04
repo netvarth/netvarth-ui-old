@@ -20,6 +20,7 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { SearchFormModule } from '../search-form/search-form.module';
 import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/footer.module';
 import { TruncateModule } from '../../pipes/limitTo.module';
+import { CardModule } from '../card/card.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -39,7 +40,8 @@ import { TruncateModule } from '../../pipes/limitTo.module';
         LoadingSpinnerModule,
         SearchFormModule,
         ConsumerFooterModule,
-        TruncateModule
+        TruncateModule,
+        CardModule
     ],
     declarations: [
         SearchDetailComponent,
