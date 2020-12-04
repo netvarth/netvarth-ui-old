@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 
 @Component({
   selector: 'app-checkout',
@@ -24,12 +25,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   selectedQeTime;
   order_date;
   customer_data: any = [];
+  added_address: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
     public router: Router,
     public route: ActivatedRoute,
-    private dialog: MatDialog) { 
+    private dialog: MatDialog,
+    private consumer_services: ConsumerServices) {
       this.route.queryParams.subscribe(
         params => {
             this.delivery_type = params.delivery_type;
@@ -65,6 +68,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.customer_data = activeUser;
     }
     console.log(this.customer_data);
+    this.getaddress();
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -91,20 +95,33 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log(this.catlog.default);
     console.log(this.catalogItem);
   }
-  AddAddress() {
+  getaddress() {
+    console.log('hi');
+    this.consumer_services.getConsumeraddress()
+      .subscribe(
+        data => {
+        this.added_address = data;
+        console.log(this.added_address);
+        },
+        error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  addAddress() {
     this.addressdialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
       // width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        type: 'Add'
-        // type: 'edit',
-
+        type: 'Add',
+        address: this.added_address
       }
     });
-    // this.addressdialogRef.afterClosed().subscribe(result => {
-    // });
+    this.addressdialogRef.afterClosed().subscribe(result => {
+      this.getaddress();
+    });
   }
   updateAddress() {
     this.addressdialogRef = this.dialog.open(AddAddressComponent, {

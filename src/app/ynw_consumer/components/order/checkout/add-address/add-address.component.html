@@ -11,8 +11,8 @@
 
                                       <div class="form-group">
                                         
-                                          <input matInput type="text" class="form-control"  placeholder="Phone number" formControlName="pnone_number">
-                                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'pnone_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'pnone_number',
+                                          <input matInput type="text" class="form-control"  placeholder="Phone number" formControlName="phoneNumber">
+                                      <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
                                       {
                                         'required' : 'Mobile number is required',
                                         'minlength' : 'Enter a 10 digit mobile number',
@@ -23,8 +23,8 @@
                                       </div>
 
                                       <div class="form-group">
-                                        <input matInput type="text" class="form-control"  placeholder="First name" formControlName="first_name">
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+                                        <input matInput type="text" class="form-control"  placeholder="First name" formControlName="firstName">
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                     {
                                       'required' : 'First name is required',
                                       'pattern' : 'Only alphabets are allowed'
@@ -33,8 +33,8 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                      <input matInput type="text" class="form-control"    placeholder="Last name" formControlName="last_name">
-                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+                                      <input matInput type="text" class="form-control"    placeholder="Last name" formControlName="lastName">
+                                  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                   {
                                     'required' : 'First name is required',
                                     'pattern' : 'Only alphabets are allowed'
@@ -42,8 +42,8 @@
                                    </app-field-error-display>
                                   </div>
                                   <div class="form-group">
-                                    <input matInput type="text" class="form-control"    placeholder="Email(user@xyz.com)" formControlName="email_id">
-                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email_id',
+                                    <input matInput type="text" class="form-control"    placeholder="Email(user@xyz.com)" formControlName="email">
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                 {
                                   'required' : 'Email is required',
                                   'pattern' : 'Please enter valid email'
@@ -75,8 +75,8 @@
       </div>
       
       <div class="form-group">
-        <input matInput type="text" class="form-control"    placeholder="Postal Code /ZIP" formControlName="postal_code">
-    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postal_code')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postal_code',
+        <input matInput type="text" class="form-control"    placeholder="Postal Code /ZIP" formControlName="postalCode">
+    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
     {
       'required' : 'Please enter Postal Code ',
       'pattern' : 'Only numbers are allowed'
@@ -84,8 +84,8 @@
      </app-field-error-display>
     </div>
     <div class="form-group">
-      <input matInput type="text" class="form-control"    placeholder="Landmark" formControlName="landmark">
-  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landmark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landmark',
+      <input matInput type="text" class="form-control"    placeholder="Landmark" formControlName="landMark">
+  <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
   {
     'required' : 'Please enter landmark'
   })">

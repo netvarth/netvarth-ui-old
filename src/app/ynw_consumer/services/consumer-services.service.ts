@@ -183,4 +183,12 @@ export class ConsumerServices {
   getConsumerOrders(params) {
     return this.servicemeta.httpGet('consumer/orders', null, params);
   }
+  getConsumeraddress() {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpGet(url);
+  }
+  updateConsumeraddress(data) {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpPut(url , data);
+  }
 }
