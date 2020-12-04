@@ -19,7 +19,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     taxable_cap = Messages.TAXABLE_CAP;
     edit_btn = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
-    add_item_cap = Messages.ADD_ITEM_CAP;
+    add_item_cap = 'ADD CATALOG';
     item_enable_btn = Messages.ITEM_ENABLE_CAP;
     catalog_list: any = [];
     query_executed = false;
@@ -56,14 +56,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
         private sharedfunctionObj: SharedFunctions) {
-        this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
+        this.emptyMsg = 'No Catalogs found';
     }
 
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.getitems();
+        this.getCatalog();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
         this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
@@ -89,8 +89,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
         }
     }
 
-    getitems() {
-        this.provider_servicesobj.getProviderItems()
+    getCatalog() {
+        this.provider_servicesobj.getProviderCatalogs()
             .subscribe(data => {
                 this.catalog_list = data;
                 this.query_executed = true;
@@ -117,7 +117,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             const stat = 'InActive';
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
-                    this.getitems();
+                    this.getCatalog();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -127,7 +127,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             const stat = 'Active';
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
-                    this.getitems();
+                    this.getCatalog();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -139,7 +139,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.enableItem(catalogid)
             .subscribe(
                 () => {
-                    this.getitems();
+                    this.getCatalog();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -181,7 +181,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.deleteItem(id)
             .subscribe(
                 () => {
-                    this.getitems();
+                    this.getCatalog();
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });

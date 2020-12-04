@@ -26506,3 +26506,17 @@ hr {
 hr {
   border-top: 1px solid #ddd !important;
 }
+.createcatalogupper {  
+  border: 1px solid gainsboro;  
+  padding: 10px;  
+  margin-bottom: 10px;  
+  margin-top: 10px;  
+  border-radius: 10px;  
+  box-shadow: 5px 5px gainsboro;
+}
+.ordercatalogcrete .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {  
+  border: 1px solid gainsboro !important;    
+  border-radius: 20px !important;    
+  height: 50px !important;
+}
+
