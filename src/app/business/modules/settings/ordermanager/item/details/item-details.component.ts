@@ -219,7 +219,7 @@ export class ItemDetailsComponent implements OnInit {
                 customlabel: []
             });
             this.amForm.get('promotionalPriceType').setValue('FIXED');
-            this.amForm.get('promotionallabel').setValue('Sale');
+            this.amForm.get('promotionallabel').setValue('ONSALE');
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
@@ -365,25 +365,30 @@ export class ItemDetailsComponent implements OnInit {
                 'itemCode': form_data.itemCode,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
-                'shortDec': form_data.shortDec || '',
-                'itemDesc': form_data.displayDesc || '',
-                'note': form_data.note || '',
-                'taxable': form_data.taxable || false,
-                'price': form_data.price || 0,
+                'shortDec': form_data.shortDec,
+                'itemDesc': form_data.displayDesc,
+                'note': form_data.note,
+                'taxable': form_data.taxable,
+                'price': form_data.price,
                 'showPromotionalPrice': this.showPromotionalPrice,
-                'isShowOnLandingpage': form_data.showOnLandingpage || false,
-                'isStockAvailable': form_data.stockAvailable || false,
-                'promotionalPrice': form_data.promotionalPrice || 0,
+                'isShowOnLandingpage': form_data.showOnLandingpage,
+                'isStockAvailable': form_data.stockAvailable,
                 'promotionalPriceType': form_data.promotionalPriceType,
                 'promotionLabelType': form_data.promotionallabel,
                 'promotionLabel': form_data.customlabel || '',
-                'promotionalPrcnt': form_data.promotionalPrice || 0,
-                'status': this.item.status
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPrcnt': form_data.promotionalPrice || 0
             };
             if (!this.showPromotionalPrice) {
                 post_itemdata['promotionalPriceType'] = 'NONE';
                 post_itemdata['promotionLabelType'] = 'NONE';
             }
+            // if (form_data.promotionalPriceType === 'FIXED') {
+            //     post_itemdata['promotionalPrice'] = form_data.promotionalPrice || 0;
+            // }
+            // if (form_data.promotionalPriceType === 'PCT') {
+            //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
+            // }
             console.log(post_itemdata);
             this.addItem(post_itemdata, isfrom);
         } else if (this.action === 'edit') {
@@ -431,6 +436,9 @@ export class ItemDetailsComponent implements OnInit {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
                     if (isFrom === 'saveadd') {
+                        this.disableButton = false;
+                        this.showPromotionalPrice = false;
+                        this.showCustomlabel = false;
                         this.amForm.reset();
                         this.selectedMessage = {
                             files: [],

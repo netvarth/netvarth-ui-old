@@ -154,7 +154,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
         };
         this.router.navigate(['provider', 'settings', 'ordermanager', 'items', id], navigationExtras);
     }
-
+    editViewedItem(id) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'items', id], navigationExtras);
+    }
     doRemoveItem(item) {
         const id = item.itemId;
         if (!id) {
@@ -195,5 +200,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
+    }
+    stopprop(event) {
+        event.stopPropagation();
     }
 }

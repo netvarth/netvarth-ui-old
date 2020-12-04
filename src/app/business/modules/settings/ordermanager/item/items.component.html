@@ -55,16 +55,52 @@
                                         </div>
                                     </div>
                                 <div class="bus-item" *ngFor="let item of item_list;let i=index;">
-                                        <div class="card card-item-n no-padding" (click)="showDetails(item.itemId)">
+                                        <div class="card card-item-n no-padding" (click)="editViewedItem(item.itemId)">
                                                 <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
-                                            <div class="card-item-title">
+                                                    <!-- <span class="actionbtn">
+                                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                                                          <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                          <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
+                                                            <span>Delete</span>
+                                                          </button>
+                                                          <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
+                                                            <i *ngIf="item.status=='INACTIVE' || !item.status"
+                                                                    class="icon-enable"></i>
+                                                                <i *ngIf="item.status=='ACTIVE'"
+                                                                    class="icon-disable"></i>
+                                                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                            </button>
+                                                        </mat-menu>
+                                                      </span> -->
+                                                
+                                                    <div class="card-item-title">
                                                 <a class="pointer-cursor"><b>
                                                         {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
                                                     </b>
                                                     <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p> </a>
-                                                   
-                             
+                                                   <!-- <a class="btn btn-flat deep-purple-text p-1 pointer-cursor mx-0 mb-0 pull-right more-act">
+                                                    <div class="dropdown-content">
+                                                        <p>Hello World!</p>
+                                                        </div>
+                                                   </a> -->
                                             </div>
+                                            <div class="pull-right">
+                                                <button [matMenuTriggerFor]="menu" (click)="stopprop($event)">... </button>
+                                                <mat-menu #menu="matMenu">
+                                                  <!-- <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
+                                                    <span>Delete</span>
+                                                  </button> -->
+                                                  <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
+                                                    <i *ngIf="item.status=='INACTIVE' || !item.status"
+                                                            class="icon-enable"></i>
+                                                        <i *ngIf="item.status=='ACTIVE'"
+                                                            class="icon-disable"></i>
+                                                        {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                    </button>
+                                                </mat-menu>
+                                           </div>
                                            
                                         </div>
                                     </div>
