@@ -1393,7 +1393,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
-    } else if (type === 'waitlist') {
+    } else if (type === 'checkin') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.ynwUuid,
@@ -1407,7 +1407,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       console.log('oder');
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          uuid: checkin.ynwUuid,
+          uuid: checkin.uid,
           accountId: checkin.providerAccount.id,
           type: 'order',
           'paidStatus': false
