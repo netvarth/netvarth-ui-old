@@ -115,6 +115,8 @@ export class AppointmentActionsComponent implements OnInit {
         if (bdetails) {
             bname = bdetails.bn || '';
         }
+        const fname = (this.appt.appmtFo[0].firstName) ? this.appt.appmtFo[0].firstName : '';
+        const lname = (this.appt.appmtFo[0].lastName) ? this.appt.appmtFo[0].lastName : '';
         const _this = this;
         _this.qrCodegeneration(this.appt);
         setTimeout(() => {
@@ -137,7 +139,9 @@ export class AppointmentActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
-            checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + this.appt.appmtFor[0].firstName + ' ' + this.appt.appmtFor[0].lastName + '</td></tr>';
+            if (fname !== '' || lname !== '') {
+                checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+            }
             if (this.appt.service && this.appt.service.deptName) {
                 checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.appt.service.deptName + '</td></tr>';
             }
@@ -441,7 +445,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.action = 'label';
     }
     gotoLabel() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels'], {queryParams: {source : 'appt'}});
+        this.router.navigate(['provider', 'settings', 'general', 'labels'], { queryParams: { source: 'appt' } });
         this.dialogRef.close();
     }
     goBack() {
@@ -622,33 +626,33 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     medicalRecord() {
-      this.dialogRef.close();
+        this.dialogRef.close();
 
-      let mrId = 0;
-      if (this.appt.mrId) {
-        mrId = this.appt.mrId;
-      }
+        let mrId = 0;
+        if (this.appt.mrId) {
+            mrId = this.appt.mrId;
+        }
 
-      const customerDetails = this.appt.appmtFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = this.appt.uid;
-      const bookingType = 'APPT';
-      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'appt' } });
+        const customerDetails = this.appt.appmtFor[0];
+        const customerId = customerDetails.id;
+        const bookingId = this.appt.uid;
+        const bookingType = 'APPT';
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'appt' } });
 
     }
     prescription() {
-      this.dialogRef.close();
+        this.dialogRef.close();
 
-      let mrId = 0;
-      if (this.appt.mrId) {
-        mrId = this.appt.mrId;
-      }
+        let mrId = 0;
+        if (this.appt.mrId) {
+            mrId = this.appt.mrId;
+        }
 
-      const customerDetails = this.appt.appmtFor[0];
-      const customerId = customerDetails.id;
-      const bookingId = this.appt.uid;
-      const bookingType = 'APPT';
-      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'appt' } });
+        const customerDetails = this.appt.appmtFor[0];
+        const customerId = customerDetails.id;
+        const bookingId = this.appt.uid;
+        const bookingType = 'APPT';
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'appt' } });
     }
     gotoCustomerDetails() {
         this.dialogRef.close();
@@ -662,10 +666,10 @@ export class AppointmentActionsComponent implements OnInit {
         let virtualServicemode;
         let virtualServicenumber;
         if (this.appt.virtualService) {
-          Object.keys(this.appt.virtualService).forEach(key => {
-            virtualServicemode = key;
-            virtualServicenumber = this.appt.virtualService[key];
-          });
+            Object.keys(this.appt.virtualService).forEach(key => {
+                virtualServicemode = key;
+                virtualServicenumber = this.appt.virtualService[key];
+            });
         }
         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], { queryParams: { source: 'appt-block', uid: this.appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
         // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'appt-block', uid: this.appt.uid } });
@@ -696,4 +700,3 @@ export class AppointmentActionsComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }
-
