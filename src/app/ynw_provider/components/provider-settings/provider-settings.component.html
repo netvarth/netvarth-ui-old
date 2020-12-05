@@ -468,11 +468,11 @@
                     <a class="pointer-cursor">
                         <span class="lnk setings">Order Manager
                             <span class="pull-right">
-                                {{createappointment_statusstr}} </span></span>
-                        <p class="settings_info" *ngIf="createappointment_status">
+                                {{orderstatusstr}} </span></span>
+                        <p class="settings_info" *ngIf="orderstatus">
                             {{custs_name|capitalizeFirst}}<strong> can</strong> take orders for
                             your services.</p>
-                        <p class="settings_info" *ngIf="!createappointment_status">
+                        <p class="settings_info" *ngIf="!orderstatus">
                             {{custs_name|capitalizeFirst}}<strong> cannot</strong> take orders for
                             your services.
                         </p>

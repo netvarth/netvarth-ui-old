@@ -163,6 +163,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showTakeaTour = false;
   profile: any = [];
   contactInfo: any = [];
+  orderstatus;
+  orderstatusstr;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -290,7 +292,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-
+this.getOrderStatus();
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -1441,5 +1443,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
         }
       );
+  }
+  getOrderStatus() {
+    this.provider_services.getProviderOrderStatus().subscribe(data => {
+      this.orderstatus = data;
+      this.orderstatusstr = (this.orderstatus) ? 'On' : 'Off';
+    });
   }
 }
