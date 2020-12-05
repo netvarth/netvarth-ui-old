@@ -26519,4 +26519,15 @@ hr {
   border-radius: 20px !important;
   height: 50px !important;
 }
-
+.delivery-icon {
+  content: url(../images/order/Delivery.svg) !important;
+  width: 30px;
+}
+.storepickup-icon {
+  content: url(../images/order/Storepickup.svg) !important;
+  width: 30px;
+}
+.shoppingcart-icon {
+  content: url(../images/order/shopping-cart.svg) !important;
+  width: 30px;
+}

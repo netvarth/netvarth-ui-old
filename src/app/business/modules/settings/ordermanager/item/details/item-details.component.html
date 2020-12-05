@@ -19,13 +19,13 @@
                     <div class="copy locd">
                         <div class="lbr col-sm-12 col-md-4 col-lg-5">
                             <div class="cr1">
-                                <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
+                                <div class="no-dta" *ngIf="!haveMainImg">
                                     <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="addorderitem" (click)="imagefile.click()">
-                                            <p class="addorderitemp1"><a class="pointer-cursor"><input multiple
+                                            <p class="addorderitemp1"><a class="pointer-cursor"><input
                                                         #imagefile type="file" accept="/*;capture=camera"
-                                                        style="display:none;" (change)="imageSelect($event)">Add item
+                                                        style="display:none;" (change)="imageSelect($event, 'main')">Add item
                                                     image
                                                 </a></p>
                                             <p class="addorderitemp2"> <img style="width: 65%;"
@@ -86,19 +86,25 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <div class="addmoreorderitem" (click)="imagefile.click()">
-                                        <label class="pointer-cursor"><input multiple #imagefile type="file"
-                                                accept="/*;capture=camera" style="display:none;"
-                                                (change)="imageSelect($event)">Add more</label>
-                                        <p class="addmoreorderitemp1"> <img style="width: 65%;"
-                                                src="assets/images/add.svg" /></p>
-                                    </div>
                                     <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                                         [plainGalleryConfig]="customPlainGalleryRowConfig"
                                         [buttonsConfig]="customButtonsFontAwesomeConfig"
                                         (buttonBeforeHook)="onButtonBeforeHook()"
                                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                                 </div>
+
+                                <div class="no-dta">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="addmoreorderitem" (click)="imagefile.click()">
+                                    <label class="pointer-cursor"><input multiple #imagefile type="file"
+                                            accept="/*;capture=camera" style="display:none;"
+                                            (change)="imageSelect($event)">Add more</label>
+                                    <p class="addmoreorderitemp1"> <img style="width: 65%;"
+                                            src="assets/images/add.svg" /></p>
+                                </div>
+</div>
+</div>
+
                             </div>
 
                         </div>

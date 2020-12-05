@@ -115,6 +115,8 @@ export class ItemDetailsComponent implements OnInit {
       };
       itmId;
       data:any;
+      haveMainImg = false;
+      imageList: any = [];
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -146,6 +148,8 @@ export class ItemDetailsComponent implements OnInit {
                                 this.getItem(this.item_id).then(
                                     (item) => {
                                         this.item = item;
+                                        console.log(this.item.itemImages);
+                                       
                                         this.itemname = this.item.displayName;
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
@@ -178,6 +182,25 @@ export class ItemDetailsComponent implements OnInit {
             }
         );
     }
+    loadImages(imagelist) {
+        this.image_list_popup = [];
+        if (imagelist.length > 0) {
+            for (let i = 0; i < imagelist.length; i++) {
+                if (imagelist.displayImage && !this.haveMainImg) {
+                    this.haveMainImg = true;
+                }
+                console.log(this.haveMainImg);
+                const imgobj = new Image(
+                    i,
+                    { // modal
+                        img: imagelist[i].url,
+                        description: imagelist[i].caption || ''
+                    });
+                this.image_list_popup.push(imgobj);
+            }
+        }
+        console.log(this.image_list_popup);
+    }
     ngOnInit() {
        // this.getTaxpercentage();
     }
@@ -186,7 +209,9 @@ export class ItemDetailsComponent implements OnInit {
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderItems(itemId)
                 .subscribe(
-                    data => {
+                    (data: any) => {
+                        this.imageList = data.itemImages;
+                        this.loadImages(data.itemImages);
                         resolve(data);
                     },
                     () => {
@@ -505,26 +530,39 @@ export class ItemDetailsComponent implements OnInit {
     redirecToJaldeeOrdermanager() {
         this.router.navigate(['provider', 'settings', 'ordermanager' , 'items']);
     }
-    saveImages(id) {
+    saveImages(id, type?) {
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
         for (const pic of this.selectedMessage.files) {
           console.log(pic);
           submit_data.append('files', pic, pic['name']);
-          const properties = {
-            'caption': this.selectedMessage.caption[i] || ''
+          console.log(i);
+          let properties = {};
+          if (type) {
+          properties = {
+            'caption': this.selectedMessage.caption[i] || '',
+            'displayImage': true
           };
+        } else {
+            properties = {
+                'caption': this.selectedMessage.caption[i] || '',
+                'displayImage': false
+              };
+        }
+          console.log(properties);
           propertiesDetob[i] = properties;
           i++;
         }
         const propertiesDet = {
           'propertiesMap': propertiesDetob
         };
+        console.log(propertiesDet);
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
         this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+        this.getItem(this.item_id);
          },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -568,7 +606,7 @@ export class ItemDetailsComponent implements OnInit {
       }
       onButtonAfterHook() { }
 
-      imageSelect(event) {
+      imageSelect(event, type?) {
           console.log('sel');
         const input = event.target.files;
         if (input) {
@@ -596,7 +634,7 @@ export class ItemDetailsComponent implements OnInit {
             }
           }
           if (this.itmId && this.selectedMessage.files.length > 0) {
-            this.saveImages(this.itmId);
+            this.saveImages(this.itmId, type);
           }
         }
       }
@@ -612,19 +650,22 @@ export class ItemDetailsComponent implements OnInit {
         });
         this.removeimgdialogRef.afterClosed().subscribe(result => {
           if (result) {
-            if (img.view && img.view === true) {
-              this.provider_services.deleteUplodeditemImage(img.keyName, this.item_id)
+            // if (img.view && img.view === true) {
+                console.log(img);
+                const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
+                console.log(imgDetails);
+              this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                 .subscribe((data) => {
                   this.selectedMessage.files.splice(index, 1);
                 },
                   error => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                   });
-            } else {
-              this.selectedMessage.files.splice(index, 1);
-              this.selectedMessage.base64.splice(index, 1);
-              this.image_list_popup.splice(index, 1);
-            }
+            // } else {
+            //   this.selectedMessage.files.splice(index, 1);
+            //   this.selectedMessage.base64.splice(index, 1);
+            //   this.image_list_popup.splice(index, 1);
+            // }
           }
         });
       }
