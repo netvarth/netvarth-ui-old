@@ -26521,13 +26521,13 @@ hr {
 }
 .delivery-icon {
   content: url(../images/order/Delivery.svg) !important;
-  width: 30px;
+  width: 20px;
 }
 .storepickup-icon {
   content: url(../images/order/Storepickup.svg) !important;
-  width: 30px;
+  width: 20px;
 }
 .shoppingcart-icon {
   content: url(../images/order/shopping-cart.svg) !important;
-  width: 30px;
+  width: 20px;
 }
