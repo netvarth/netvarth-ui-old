@@ -1,7 +1,7 @@
 {
   "id": 31,
   "catalogName": "Lunch",
-  "catalogDesc": "tasty food",
+  "catalogDesc": "Lunch, an abbreviation for luncheon, is a meal eaten around midday. During the 20th century, the meaning gradually narrowed to a meal eaten midday. Lunch is commonly the second meal of the day, after breakfast.Lunch is commonly the second meal of the day, after breakfast.Lunch is commonly the second meal of the day, after breakfast.Lunch is commonly the second meal of the day, after breakfast.",
   "catalogSchedule": {
     "recurringType": "Weekly",
     "repeatIntervals": [
@@ -123,8 +123,8 @@
   "catalogItem": [
     {
       "itemId": 11,
-      "displayName": "Book",
-      "shortDesc": "Book-tragedy ",
+      "displayName": "Brocolli on White",
+      "shortDesc": "Brocolli is very good for health.",
       "itemDesc": "tragedy ",
       "price": 200.0,
       "taxable": false,
@@ -144,8 +144,8 @@
       "itemImages": [{
         "keyName": "1606273732586.png",
         "prefix": "item/3",
-        "url": "http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)",
-        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "url": "https://s3.amazonaws.com/img.mynetdiary.com/blog/broccoli-on-white.jpeg",
+        "thumbUrl": "https://s3.amazonaws.com/img.mynetdiary.com/blog/broccoli-on-white.jpeg",
         "type": ".png",
         "imageSize": 0,
         "displayImage": true
@@ -156,8 +156,8 @@
     },
     {
       "itemId": 12,
-      "displayName": "Book",
-      "shortDesc": "Book-tragedy ",
+      "displayName": "Orange",
+      "shortDesc": "Source of Vitamin C",
       "itemDesc": "tragedy ",
       "price": 100.0,
       "taxable": false,
@@ -177,8 +177,8 @@
       "itemImages": [{
         "keyName": "1606273732586.png",
         "prefix": "item/3",
-        "url": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/1606273732586.png",
-        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "url": "https://www.austinchronicle.com/binary/71dd/orange.jpg",
+        "thumbUrl": "https://www.austinchronicle.com/binary/71dd/orange.jpg",
         "type": ".png",
         "imageSize": 0,
         "displayImage": true
@@ -189,8 +189,8 @@
     },
     {
       "itemId": 13,
-      "displayName": "Book",
-      "shortDesc": "Book-tragedy ",
+      "displayName": "Masala Dosa",
+      "shortDesc": "Super duper Masala Dosa.",
       "itemDesc": "tragedy ",
       "price": 300.0,
       "taxable": false,
@@ -210,8 +210,8 @@
       "itemImages": [{
         "keyName": "1606273732586.png",
         "prefix": "item/3",
-        "url": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/1606273732586.png",
-        "thumbUrl": "http://jaldeelocal.s3-website-us-west-1.amazonaws.com/100001/item/3/thumbnail/1606273732586.png",
+        "url": "https://www.holidify.com/images/cmsuploads/compressed/indian-1768906_1920_20180322173733.jpg",
+        "thumbUrl": "https://www.holidify.com/images/cmsuploads/compressed/indian-1768906_1920_20180322173733.jpg",
         "type": ".png",
         "imageSize": 0,
         "displayImage": true

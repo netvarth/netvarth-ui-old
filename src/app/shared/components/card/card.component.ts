@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
@@ -7,10 +7,11 @@ import { Messages } from '../../constants/project-messages';
     'templateUrl': './card.component.html',
     'styleUrls': ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() item;
     @Input() terminology;
     @Input() loc;
+    @Input() extras;
     @Output() actionPerformed = new EventEmitter<any>();
     service: any;
     user: any;
@@ -20,41 +21,75 @@ export class CardComponent implements OnInit {
     buttonCaption = Messages.GET_TOKEN;
     waitinglineCap = Messages.WAITINGLINE;
     personsAheadText = '';
-    constructor(private sharedFunctons: SharedFunctions) {
+    itemQty = 0;
+    constructor(private sharedFunctons: SharedFunctions,
+        private cdref: ChangeDetectorRef) {
         this.server_date = this.sharedFunctons.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
-        console.log(this.item.type);
-        if (this.item.type === 'waitlist') {
-            this.service = this.item.item;
-            this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
-            if (this.service.serviceAvailability['showToken']) {
-            } else {
-                this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist')
-            }
-            if (this.service.serviceAvailability['calculationMode'] != 'NoCalc') {
-                if (this.service.serviceAvailability['serviceTime']) {
-                    this.timingCaption = 'Next Available Time';
-                    this.timings = this.getAvailibilityForCheckin(this.service.serviceAvailability['availableDate'], this.service.serviceAvailability['serviceTime'])
+
+        switch (this.item.type) {
+            case 'waitlist':
+                this.service = this.item.item;
+                this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
+                if (this.service.serviceAvailability['showToken']) {
                 } else {
-                    this.timingCaption = 'Est Wait Time';
-                    this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
+                    this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist')
                 }
-            }
-        } else if (this.item.type === 'appt') {
-            this.service = this.item.item;
-            this.timingCaption = 'Next Available Time';
-            this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
-            this.buttonCaption = 'Get Appointment';
-        } else if (this.item.type === 'donation') {
-            this.service = this.item.item;
-            console.log(this.service);
-            this.buttonCaption = 'Donate'
-        }else {
-            this.user = this.item.item;
+                if (this.service.serviceAvailability['calculationMode'] != 'NoCalc') {
+                    if (this.service.serviceAvailability['serviceTime']) {
+                        this.timingCaption = 'Next Available Time';
+                        this.timings = this.getAvailibilityForCheckin(this.service.serviceAvailability['availableDate'], this.service.serviceAvailability['serviceTime'])
+                    } else {
+                        this.timingCaption = 'Est Wait Time';
+                        this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
+                    }
+                }
+                break;
+            case 'appt':
+                this.service = this.item.item;
+                this.timingCaption = 'Next Available Time';
+                this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
+                this.buttonCaption = 'Get Appointment';
+                break;
+            case 'donation':
+                this.service = this.item.item;
+                console.log(this.service);
+                this.buttonCaption = 'Donate'
+                break;
+            case 'catalog':
+                this.service = this.item.item;
+                console.log(this.service);
+                break;
+            case 'item':
+                this.service = this.item.item;
+                console.log(this.service);
+                break;
+            default:
+                this.user = this.item.item;
+                break;
         }
     }
+    ngOnChanges() {
+        // this.itemQty = this.quantity;
+        // this.cdref.detectChanges();
+        // console.log(this.extras);
+    }
+    ngAfterViewChecked() {
+        this.cdref.detectChanges();
+    }
+    getItemQty(itemObj) {
+        const item = itemObj.item;
+        console.log(item);
+        console.log(this.extras);
+        const orderList = this.extras;
+        let qty = 0;
+        if (orderList !== null && orderList.filter(i => i.itemId === item.itemId)) {
+          qty = orderList.filter(i => i.itemId === item.itemId).length;
+        }
+        return qty;
+      }
     cardActionPerformed(type, action, service, location, userId, event) {
         console.log(location);
         event.stopPropagation();

@@ -139,6 +139,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   playstore = true;
   appstore = true;
   selectedLocation;
+  catlog: any;
+  catalogItem: any;
+  order_count: number;
+  price: number;
+  orderList: any = [];
+  counter = 0;
+  itemCount: any;
+  orderItems: any[];
+  itemQty: number;
+  activeCatalog: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -381,7 +391,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.popUp.nativeElement.style.display = 'block';
   }
   closeModal() {
@@ -771,7 +781,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(loc);
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-
+    this.getCatalogs(this.selectedLocation.id);
   }
   // private getUserWaitingTime(provids_locid) {
   //   if (provids_locid.length > 0) {
@@ -2193,7 +2203,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
-    }else {
+    } else if (actionObj['type']==='item') {
+      if (actionObj['action'] === 'view') {
+        this.itemDetails(actionObj['service']);
+      } else if (actionObj['action'] === 'add') {
+        this.increment(actionObj['service']);
+      } else if (actionObj['action'] === 'remove') {
+        this.decrement(actionObj['service']);
+      }
+    } else {
       this.providerDetClicked(actionObj['userId']);
     }
   }
@@ -2304,13 +2322,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2339,7 +2357,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] })
                       this.userCount++;
                     }
-                  }                  
+                  }
                   servicesAndProviders.push(deptItem);
                 }
               }
@@ -2349,13 +2367,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2388,11 +2406,102 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
-        if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1){
-          for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-            this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-            this.serviceCount++;
-          }
-        }
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
+    }
   }
+ /**
+   * Order Related Code
+   */
+
+  getCatalogs(locationId) {
+    console.log(locationId);
+    this.orderItems = [];
+    const orderItems = [];
+     this.shared_services.getConsumerCatalogs().subscribe(
+       (catalogs: any) => {
+         this.activeCatalog = catalogs;
+         // console.log(cat)
+         // if(catalogs.length > 1) {
+         //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
+         //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
+         //     this.itemCount++;
+         //   }
+         // } else if (catalogs.length === 1) {
+           for (let itemIndex = 0; itemIndex < catalogs.catalogItem.length; itemIndex++){
+             orderItems.push({ 'type': 'item', 'item': catalogs.catalogItem[itemIndex] });
+             this.itemCount++;
+           }
+         // }
+         this.orderItems = orderItems;
+       }
+     );
+  }
+
+  //OrderItem add to cart
+  addToCart(itemObj) {
+    const item = itemObj.item;
+    this.orderList.push(item);
+    this.getTotalItemAndPrice();
+    this.getItemQty(item);
+  }
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
+    console.log(this.orderList);
+    for (const i in this.orderList) {
+      if (this.orderList[i].itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+  }
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const item of this.orderList) {
+      this.price = this.price + item.price;
+      this.order_count = this.order_count + 1;
+    }
+  }
+  checkout() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.router.navigate(['consumer', 'order', 'cart']);
+  }
+  itemDetails(item) {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.router.navigate(['consumer', 'order', 'item-details']);
+  }
+  increment(item) {
+    this.addToCart(item);
+  }
+
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+  getItemQty(item) {
+    console.log(this.counter++);
+    console.log(this.orderList);
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.itemId === item.itemId)) {
+      qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    }
+    return qty;
+  }
+  catlogArry(catalog) {
+    // this.catlog = itemjson;
+    this.catalogItem = catalog.default.catalogItem;
+    if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
+    }
+    this.getTotalItemAndPrice();
+    }
+
+  reset() {
+
+  }
+
 }

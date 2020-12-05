@@ -285,7 +285,7 @@
             </div>
         </div>
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0" [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> Services and Consultations 
                     </h5>
@@ -342,6 +342,34 @@
                     <div class="bus-item-N" *ngFor="let sp of donationServices">
                         <app-card [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
                             (actionPerformed)="cardClicked($event)"></app-card>
+                    </div>
+                </ng-container>
+
+                <!-- Order Catalog-->
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems.length > 0">
+                    <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
+                        <h5 class="mgn-bt-5 primary-color">{{activeCatalog.catalogName}}</h5>
+                        <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
+                        <span class="pull-left">
+                            <span class="mgn-rt-10"><img class="ordericon home"
+                                    src="../../../../assets/images/home.png" />&nbsp;Home Delivery</span>
+                            <span class=""><img class="ordericon pickup"
+                                    src="../../../../assets/images/pickup.png" />&nbsp;Store Pickup</span>
+                        </span>
+                    </div>
+                </div>
+                <ng-container *ngIf="orderItems.length >0">
+                    <div class="bus-item-N" *ngFor="let item of orderItems">
+                        <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
+                            [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
+                    </div>
+                    <div class="shopping-cart-footer" *ngIf="order_count>0">
+                        <div>Your Order ({{ order_count }})
+                            <span class="rupee-font">SubTotal :&#8377;{{ price }}&nbsp;</span>
+                            <button class="btn btn-primary" (click)="checkout();">Checkout</button>
+                        </div>
                     </div>
                 </ng-container>
             </div>

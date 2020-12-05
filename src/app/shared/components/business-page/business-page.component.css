@@ -1181,6 +1181,52 @@ ul.details.badges li {
 }
 }
 
+.module {
+  margin: 0 0 1em 0;
+  overflow: hidden !important;
+}
+
+.line-clamp-1 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  color:#fff !important;
+}
 ul.bus-actions li.more_less a.lnk {
   font-size: 1rem !important;
+}
+.shopping-cart-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5c84d !important;
+  color: black;
+  font-weight:bold;
+  text-align: center;
+  padding: 15px;
+}
+.card-img-top {
+  flex-grow: 1;
+  object-fit:contain;
+}
+.catalog-icons {
+  font-size: 0.9rem !important;
+}
+img.ordericon.pickup {
+  width: 35px;
+  height: 35px;
+}
+img.ordericon.home {
+  width: 30px;
+  height: 30px;
+}
+.line-clamp {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+.module-nomargin {
+  /* margin: 0 0 1em 0; */
+  overflow: hidden !important;
 }

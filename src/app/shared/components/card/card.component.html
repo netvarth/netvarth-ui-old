@@ -1,14 +1,6 @@
 <!-- Card -->
 <div class="card booking-card pointer-cursor" *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
-    <!-- Card image -->
-    <!-- <div class="view overlay">
-              <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" alt="Card image cap">
-              <a href="#!">
-                <div class="mask rgba-white-slight"></div>
-              </a>
-            </div> -->
-
     <!-- Card content -->
     <div class="card-body">
         <!-- Title -->
@@ -51,13 +43,36 @@
         </div>
     </div>
 </div>
+<div class="card booking-card pointer-cursor order" *ngIf="item.type=='catalog' || item.type=='item'">
+    <div class="card-item-head">
+        <img class="card-img img-responsive" [src]="service.itemImages[0].thumbUrl" alt="Profile Pic" />
+    </div>
+    <div class="card-item-content">
+        <h4 class="card-title font-weight-bold d-block">
+            <a class="d-block name line-clamp">{{service.displayName}}</a>
+            <p class="module1 line-clamp1">{{service.shortDesc}}</p>
+            <a class="price rupee-font"><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> <span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span></a>
+        </h4>
+        <div class="col-md-12 pad-lt-25">
+            <div class="btn-lt pull-left">
+                <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
+            </div>
+            <div class="count-o pull-left">
+                {{getItemQty(item)}}
+            </div>
+            <div class="btn-rt pull-left">
+                <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="card booking-card booking-card-user pointer-cursor" *ngIf="item.type==='provider'"
     (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
     <div class="card-item-head">
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
     </div>
     <div class="card-item-content">
-        <h4 class="card-title font-weight-bold">
+        <h4 class="card-title font-weight-bold module line-clamp">
             <a *ngIf="user.businessName">{{user.businessName}}</a>
             <a
                 *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName | capitalizeFirst}}</a>

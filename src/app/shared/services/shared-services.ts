@@ -837,4 +837,8 @@ export class SharedServices {
     const url = 'consumer/orders/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getConsumerCatalogs() {
+    const url = 'http://localhost:4200/assets/json/item.json';
+    return this.servicemeta.httpGet(url);
+  }
 }
