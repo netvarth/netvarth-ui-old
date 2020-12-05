@@ -255,6 +255,7 @@
 .strikeMe {
     text-decoration: line-through !important;
     color: #aaa !important;
+    font-size: 0.85rem !important;
 }
 
 .booking-card.card.order .card-item-content {

@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-<div class="card booking-card pointer-cursor order" *ngIf="item.type=='catalog' || item.type=='item'">
+<div class="card booking-card pointer-cursor order" *ngIf="item.type=='catalog' || item.type=='item'" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
     <div class="card-item-head">
         <img class="card-img img-responsive" [src]="service.itemImages[0].thumbUrl" alt="Profile Pic" />
     </div>
