@@ -44,9 +44,9 @@
                     <div class="pull-right">
                         <button [matMenuTriggerFor]="menu" (click)="stopprop($event)">... </button>
                         <mat-menu #menu="matMenu">
-                            <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
+                            <!-- <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
                                 <span>Delete</span>
-                            </button>
+                            </button> -->
                             <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
                                 <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
                                 <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
