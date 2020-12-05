@@ -14,13 +14,19 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { AddAddressComponent } from './checkout/add-address/add-address.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { OwlModule } from 'ngx-owl-carousel';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { OrderBillComponent } from './order-bill/order-bill.component';
+import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
 
 @NgModule({
     declarations: [
         ShoppingCartComponent,
         CheckoutComponent,
         AddAddressComponent,
-        ItemDetailsComponent
+        ItemDetailsComponent,
+        OrderHistoryComponent,
+        OrderBillComponent,
+        OrderPaymentDetailsComponent
 
     ],
     imports: [
