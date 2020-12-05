@@ -31,6 +31,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   showToken = false;
   donationstatus: any;
   count = 0;
+  orderstatus;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -100,6 +101,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'donationStatus':
           this.donationstatus = message.donationStatus;
+          break;
+        case 'orderStatus':
+          this.orderstatus = message.orderStatus;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -177,6 +181,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getBusinessdetFromLocalstorage();
     this.isAvailableNow();
     this.getProviderSettings();
+    this.getOrderStatus();
   }
 
   ngOnDestroy() {
@@ -223,5 +228,10 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.donationstatus = data.donationFundRaising;
         });
     }
+  }
+  getOrderStatus() {
+    this.provider_services.getProviderOrderStatus().subscribe(data => {
+      this.orderstatus = data;
+    });
   }
 }
