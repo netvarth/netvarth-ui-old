@@ -1,194 +1,61 @@
-
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Items 
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Items
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
     </div>
 </section>
-<!-- <section>
-    <div class="center1">
-        <div class="property-card">
-          <a href="#">
-            <div class="property-image">
-              <div class="property-image-title"> -->
-                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
-              <!-- </div>
-            </div></a>
-          
-          
-        </div>
-      </div>
-</section> -->
 <section>
-    <!-- <div class="content comn-cls">
-        <div class="col-md-12 no-padding-small">
-            <div class="row"> -->
-                
-                    <p class="form-level-settings">{{frm_items_cap}}</p>
-                    <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
-                            <div class="property-card" (click)="addItem()">
-                              <a href="#">
-                                <div class="property-image">
-                                  <div class="property-image-title"> 
-                                    <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
-                                  </div>
-                                </div></a>
-                              
-                              
-                            </div>
-                          </div>
-                    <!-- <div class="no-dta" *ngIf="item_list.length ==0 && query_executed == true">
-                        <p>{{emptyMsg}}</p>
-                        <span class="cs-btn bt3" (click)="addItem()">{{add_item_cap}}</span>
-                    </div> -->
-                    <div>
-                        <ng-container *ngIf="item_list.length >= 1">
-                                <div class="bus-item" >
-                                        <div class="card card-item-n no-padding" (click)="addItem()">
-                                                <img src="assets/images/add.svg" >
-                                            <div class="card-item-title">
-                                                    <a class="pointer-cursor"><b>Add Item</b>  </a>
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
-                                <div class="bus-item" *ngFor="let item of item_list;let i=index;">
-                                        <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
-                                                <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
-                                                    <!-- <span class="actionbtn">
-                                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
-                                                          <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                          <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
-                                                            <span>Delete</span>
-                                                          </button>
-                                                          <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
-                                                            <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                                    class="icon-enable"></i>
-                                                                <i *ngIf="item.status=='ACTIVE'"
-                                                                    class="icon-disable"></i>
-                                                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                                            </button>
-                                                        </mat-menu>
-                                                      </span> -->
-                                                
-                                                    <div class="card-item-title">
-                                                <a><b>
-                                                        {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
-                                                    </b>
-                                                    <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p> </a>
-                                                   <!-- <a class="btn btn-flat deep-purple-text p-1 pointer-cursor mx-0 mb-0 pull-right more-act">
-                                                    <div class="dropdown-content">
-                                                        <p>Hello World!</p>
-                                                        </div>
-                                                   </a> -->
-                                            </div>
-                                            <div class="pull-right">
-                                                <button [matMenuTriggerFor]="menu" (click)="stopprop($event)">... </button>
-                                                <mat-menu #menu="matMenu">
-                                                  <!-- <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
-                                                    <span>Delete</span>
-                                                  </button> -->
-                                                  <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
-                                                    <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                            class="icon-enable"></i>
-                                                        <i *ngIf="item.status=='ACTIVE'"
-                                                            class="icon-disable"></i>
-                                                        {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                                    </button>
-                                                </mat-menu>
-                                           </div>
-                                           
-                                        </div>
-                                    </div>
-                         
-                
-                          </ng-container>
+    <p class="form-level-settings">{{frm_items_cap}}</p>
+    <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
+        <div class="property-card" (click)="addItem()">
+            <a href="#">
+                <div class="property-image">
+                    <div class="property-image-title">
+                        <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
                     </div>
-                    <!-- <div class="w-dta" *ngIf="item_list.length>0">
-                        <div class="row">
-                            <div class="copy">
-                                <div class="table-outer q-itm">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>{{name_cap}}</th>
-                                                <th>{{price_cap}}</th>
-                                                <th>{{taxable_cap}}</th>
-                                                <th>Status</th>
-                                                <th>  <span class="addbt" (click)="addItem()"></span></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let item of item_list | orderBy: order"
-                                                [class.disabled-row]="item.status=='INACTIVE'">                                       
-                                                <td data-title="Name" class="td2" class="pointer-cursor"
-                                                    (click)="showDetails(item.itemId)"
-                                                    [class.itemdisabled]="item.status=='INACTIVE'"><span
-                                                        [matTooltipClass]="tooltipcls"
-                                                        [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
-                                                </td>
-                                                <td data-title="Price" class="td4 rupee-font">{{item.price |
-                                                currency:'&#8377;'}}</td>
-                                                <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}
-                                                </td>
-                                                <td data-title="Status"
-                                                    [ngClass]="{'green-text' : item.status=='ACTIVE'}">
-                                                    {{item_status[item.status]}}</td>
-                                                <td class="action">
-                                                    <span class="mbt">
-                                                        <button type="button" mat-icon-button
-                                                            [matMenuTriggerFor]="menu">
-                                                            <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button" (click)="editItem(item)" mat-menu-item
-                                                                *ngIf="item.status=='ACTIVE'">
-                                                                <i class="icon-edit"></i>
-                                                                {{edit_btn}}
-                                                            </button>
-                                                            <button type="button" (click)="dochangeStatus(item)"
-                                                                mat-menu-item>
-                                                                <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                                    class="icon-enable"></i>
-                                                                <i *ngIf="item.status=='ACTIVE'"
-                                                                    class="icon-disable"></i>
-                                                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                                                            </button>
-                                                            <button type="button" (click)="doRemoveItem(item)"
-                                                                mat-menu-item>
-                                                                <i class="icon-delete"></i>
-                                                                {{delete_btn}}
-                                                            </button>
-                                                        </mat-menu>
-                                                    </span>
-                                                    <span class="mbt-mobile-show">
-                                                        <button class="editcls" type="button"
-                                                            (click)="editItem(item)">{{edit_btn}}</button>
-                                                        <button class="status tel-serv-flex" type="button"
-                                                            (click)="dochangeStatus(item)">
-                                                            <i *ngIf="item.status=='INACTIVE' || !item.status"
-                                                                class="icon-enable icon-disable1"></i>
-                                                            <i *ngIf="item.status=='ACTIVE'" class="icon-disable icon-disable1"></i>
-                                                            {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
-                                                        <button class="deletecls" type="button"
-                                                            (click)="doRemoveItem(item)">{{delete_btn}}</button>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <span class="addbt d-block d-md-none" (click)="addItem()"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                <!-- </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div>
+        <ng-container *ngIf="item_list.length >= 1">
+            <div class="bus-item">
+                <div class="card card-item-n no-padding" (click)="addItem()">
+                    <img src="assets/images/add.svg">
+                    <div class="card-item-title">
+                        <a class="pointer-cursor"><b>Add Item</b> </a>
+                    </div>
+                </div>
             </div>
-        </div> -->
-  
+            <div class="bus-item" *ngFor="let item of item_list;let i=index;">
+                <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
+                    <img
+                        src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)">
+                    <div class="card-item-title">
+                        <a><b>
+                                {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
+                            </b>
+                            <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p>
+                        </a>
+                    </div>
+                    <div class="pull-right">
+                        <button [matMenuTriggerFor]="menu" (click)="stopprop($event)">... </button>
+                        <mat-menu #menu="matMenu">
+                            <button type="button" (click)="doRemoveItem(item)" mat-menu-item>
+                                <span>Delete</span>
+                            </button>
+                            <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
+                                <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
+                                <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
+                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </section>

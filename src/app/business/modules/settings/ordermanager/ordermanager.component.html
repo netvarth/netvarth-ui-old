@@ -1,19 +1,12 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"  (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
-
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Jaldee Order Management
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
     </div>
 </section>
-
 <section>
     <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
@@ -23,7 +16,6 @@
                         <label>Order Management
                             <mat-slide-toggle [(ngModel)]="orderstatus" (change)="handleOrderStatus($event)">
                             </mat-slide-toggle>&nbsp;{{pos_statusstr}}
-                            <!-- <div class="onoff">{{pos_statusstr}}</div> -->
                         </label>
                         <div class="form-level-settings"> Create items, discounts and coupons here.<a
                                 class="learnmore-pointer" id="customer-help"
@@ -32,7 +24,6 @@
                     </div>
                 </div>
             </div>
-           
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoStoredetails()">
@@ -66,7 +57,6 @@
                     </span>
                 </div>
             </div>
-           
         </div>
         <div class="clearfix"></div>
     </div>

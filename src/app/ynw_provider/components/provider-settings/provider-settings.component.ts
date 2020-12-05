@@ -290,7 +290,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-  
+
     this.getSchedulesCount();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
@@ -308,13 +308,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
-  
+
   getProviderLocations() {
-   this.provider_services.getProviderLocations()
-        .subscribe(data => {
-            console.log(data);
-            this.loc_list = data; });
-        }
+    this.provider_services.getProviderLocations()
+      .subscribe(data => {
+        console.log(data);
+        this.loc_list = data;
+      });
+  }
   getAccountContactInfo() {
     this.provider_services.getAccountContactInfo().subscribe(
       data => {
@@ -947,15 +948,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'ordermanager':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
-      break;
+        break;
       case 'catalogs':
-        this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'catalogs']);
-      break;
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
+        break;
       case 'storedetails':
-        this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'storedetails']);
-      break;
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
+        break;
       case 'orderitems':
-          this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'items']);
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'items']);
         break;
     }
   }
@@ -1010,7 +1011,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
-        this.queues_count = data;
+          this.queues_count = data;
         });
   }
   getDiscounts() {

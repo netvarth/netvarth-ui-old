@@ -22,7 +22,7 @@ export class OrdermanagerComponent implements OnInit {
       url: '/provider/settings/pos'
     }
   ];
-  
+
   breadcrumbs = this.breadcrumbs_init;
   orderstatus;
   pos_statusstr = 'Off';
@@ -37,6 +37,7 @@ export class OrdermanagerComponent implements OnInit {
   item_list;
   item_count = 0;
   breadcrumb_moreoptions: any = [];
+  pos;
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
@@ -52,6 +53,7 @@ export class OrdermanagerComponent implements OnInit {
     this.getOrderStatus();
     this.getDiscounts();
     this.getitems();
+    this.getPOSSettings();
   }
 
   getDiscounts() {
@@ -88,16 +90,10 @@ export class OrdermanagerComponent implements OnInit {
     }
   }
   gotoStoredetails() {
-    this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'storedetails']);
-    // if (this.nodiscountError) {
-    //   this.router.navigate(['provider', 'settings', 'pos', 'discount']);
-    // } else {
-    //   this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
-    // }
+    this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
   }
   gotoCatalogs() {
-    this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'catalogs']);
-    // this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
+    this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
   }
   handleOrderStatus(event) {
     const status = (event.checked) ? 'enabled' : 'disabled';
@@ -115,6 +111,11 @@ export class OrdermanagerComponent implements OnInit {
       this.pos_statusstr = (this.orderstatus) ? 'On' : 'Off';
     });
   }
+  getPOSSettings() {
+    this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
+    });
+  }
   performActions(action) {
     if (action === 'learnmore') {
       this.routerobj.navigate(['/provider/' + this.domain + '/billing']);
@@ -129,6 +130,5 @@ export class OrdermanagerComponent implements OnInit {
   }
   redirecToHelp() {
     this.routerobj.navigate(['/provider/' + this.domain + '/billing']);
-}
-
+  }
 }
