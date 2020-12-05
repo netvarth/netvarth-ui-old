@@ -198,6 +198,7 @@ export class ConsumerCheckinComponent implements OnInit {
     virtualServiceArray;
     callingModes: any = [];
     showInputSection = false;
+    countryCode;
     selectedUser;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     breadcrumbs = [
@@ -894,6 +895,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
             },
+            'countryCode': this.countryCode,
             'consumerNote': this.consumerNote,
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
@@ -1666,6 +1668,7 @@ export class ConsumerCheckinComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
+                    this.countryCode = this.userData.userProfile.countryCode;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'waitlistreschedule') {
@@ -2103,6 +2106,7 @@ export class ConsumerCheckinComponent implements OnInit {
             data: {
                 service_details: this.sel_ser_det,
                 waitlist_for: this.waitlist_for,
+                countryCode: this.countryCode,
                 userPhone: this.userPhone,
                 post_Data: post_Data,
                 account_id: this.account_id,
