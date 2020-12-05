@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerServices } from '../../../services/consumer-services.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
@@ -28,12 +29,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   order_date;
   customer_data: any = [];
   added_address: any = [];
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  linear: boolean;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
     public router: Router,
     public route: ActivatedRoute,
     private dialog: MatDialog,
+    private _formBuilder: FormBuilder,
     private consumer_services: ConsumerServices) {
     this.route.queryParams.subscribe(
       params => {
@@ -61,6 +67,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+   this.linear = false;
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     console.log(this.orders);
@@ -103,8 +117,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.consumer_services.getConsumeraddress()
       .subscribe(
         data => {
-        this.added_address = data;
-        console.log(this.added_address);
+          this.added_address = data;
+
         },
         error => {
           this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -126,6 +140,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.getaddress();
     });
   }
+
+
+
   updateAddress() {
     this.addressdialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
@@ -145,7 +162,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   getTotalItemPrice() {
     this.orderAmount = 0;
     for (const item of this.orders) {
-      this.orderAmount = this.orderAmount + item.ItemPrice * this.getItemQty(item);
+      this.orderAmount = this.orderAmount + item.promotionalPrice * this.getItemQty(item);
 
     }
     console.log(this.orderAmount);

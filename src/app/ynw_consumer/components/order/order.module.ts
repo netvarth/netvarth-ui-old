@@ -17,6 +17,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderBillComponent } from './order-bill/order-bill.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { OrderPaymentDetailsComponent } from './order-payment-details/order-paym
         LoadingSpinnerModule,
         HeaderModule,
         MaterialModule,
-        OwlModule
+        OwlModule,
+        MatStepperModule
     ],
     entryComponents: [
       AddAddressComponent
