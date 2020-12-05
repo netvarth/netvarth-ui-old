@@ -29,7 +29,7 @@
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="imgType === 'propic'">
   <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]= "canceldisabled" [proPicCancelBtn]="canceldisabled">Cancel</button>
+    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]= "canceldisabled" [class.proPicCancelBtn]= "canceldisabled">Cancel</button>
     <button (click)="saveImages()" *ngIf="imageChangedEvent && imageChangedEvent.target.files" mat-button
       class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
   </div>
@@ -62,7 +62,7 @@
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="imgType === 'cover'">
   <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
-    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled" [proPicCancelBtn]="canceldisabled">Cancel</button>
+    <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="canceldisabled" [class.proPicCancelBtn]= "canceldisabled">Cancel</button>
     <button (click)="saveImages()" *ngIf="imageChangedEvent && imageChangedEvent.target.files" mat-button
       class="cs-btn bt1" [disabled]="savedisabled">{{img_save_caption}}</button>
   </div>
