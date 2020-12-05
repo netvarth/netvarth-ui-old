@@ -22,7 +22,7 @@
   <div *ngIf="!imageChangedEvent" class="upload-doc" (click)="filed.click()">
     <label class="col-form-label">Select a photo</label>
     <span class="select-wrapper ">
-      <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
+      <input type="file" name="image_src" id="image_src" accept="image/*" #filed
         (change)="imageSelect($event)">
     </span>
   </div>
@@ -55,7 +55,7 @@
   <div *ngIf="!imageChangedEvent" class="upload-doc" (click)="filed.click()">
     <label class="col-form-label">Select a photo</label>
     <span class="select-wrapper ">
-      <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
+      <input type="file" name="image_src" id="image_src" accept="image/*" #filed
         (change)="imageSelect($event)">
     </span>
   </div>

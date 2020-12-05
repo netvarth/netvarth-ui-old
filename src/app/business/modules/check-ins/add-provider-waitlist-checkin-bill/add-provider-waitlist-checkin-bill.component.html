@@ -886,10 +886,8 @@
 															*ngFor="let payment of pre_payment_log; let i = index">
 															<div class="wrap">
 																<div class="td one">
-																	<span class="date">{{stringtoDate(payment.paymentOn,
-													'date')}}</span>
-																		<span class="time">{{stringtoDate(payment.paymentOn,
-													'time')}}</span>
+																	<span class="date">{{payment.paymentOn | date: dateFormat}}</span>
+																		<span class="time">{{payment.paymentTime}}</span>
 																</div>
 																<div class="td two">
 																	<span class="amt rupee-font">{{payment.amount |

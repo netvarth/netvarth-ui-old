@@ -535,10 +535,7 @@
                                         <div class="clearfix"></div>
                                         <div class="bottom-sect pdetail"
                                             *ngIf="showButton(search_result) === 'bookservice'">
-                                            <div class="bt-l">
-                                                <!-- <div class="wt-tme notallowed" *ngIf="search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det']['message']">
-                                                    {{search_result.fields['estimatedtime_det']['message']}}
-                                                 </div> -->
+                                            <!-- <div class="bt-l">
                                                 <div class="wt-tme"
                                                     *ngIf="!search_result.fields.departments && search_result.fields.allServices && search_result.fields.allServices.length > 0">
                                                     <div class="search-services">
@@ -553,11 +550,11 @@
                                                             class="question-value1">{{search_result.fields.departments.length}}</span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
                                                 <div class="checkin-est nrm"
-                                                    *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                                    *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' && search_result.fields['estimatedtime_det']['caption'] && search_result.fields['estimatedtime_det']['time']">
                                                     <span class="est-time"
                                                         *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                                     <span class="time-data"
@@ -612,22 +609,22 @@
                                                                 *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                                 the first in line</span>
                                                         </div>
-                                                        <div class="search-services"
+                                                        <!-- <div class="search-services"
                                                             *ngIf="!search_result.fields.departments && search_result.fields.serviceList && search_result.fields.serviceList.length > 0">
                                                             <span class="question-header checkin-service-group">Services
                                                                 Count: </span>
                                                             <span
                                                                 class="question-value1">{{search_result.fields.serviceList.length}}</span>
-                                                        </div>
+                                                        </div> -->
 
-                                                        <div class="search-services"
+                                                        <!-- <div class="search-services"
                                                             *ngIf="search_result.fields.departments">
                                                             <span
                                                                 class="question-header checkin-service-group">Departments
                                                                 Count: </span>
                                                             <span
                                                                 class="question-value1">{{search_result.fields.departments.length}}</span>
-                                                        </div>
+                                                        </div> -->
 
                                                         <div class="search-services"
                                                             *ngIf="!search_result.fields.departments && !search_result.fields.serviceList && search_result.fields.services">
@@ -681,7 +678,7 @@
                                             </div>
                                         </div>
                                         <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'appt'">
-                                            <div class="bt-l">
+                                            <!-- <div class="bt-l">
                                                 <div class="wt-tme">
                                                     <div class="search-services"
                                                         *ngIf="!search_result.fields.departments">
@@ -698,7 +695,7 @@
                                                             class="question-value1">{{search_result.fields.departments.length}}</span>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div style="flex-grow:1"></div>
                                             <div class="bottom-actions-root">
                                                 <div class="checkin-est"

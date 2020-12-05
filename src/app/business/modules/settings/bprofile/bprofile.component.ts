@@ -22,6 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
+import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-bprofile',
@@ -1320,14 +1321,14 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       disableClose: true,
       data: {
         'userdata': this.bProfile,
-        img_type : image
-     }
+        img_type: image
+      }
     });
     this.notedialogRef.afterClosed().subscribe(result => {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-      }, 2000);
+        }, 2000);
       } else {
         this.getProviderLogo();
       }
@@ -1445,20 +1446,30 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.clogo = data;
           // this.cover_url = data[0].url;
           this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
-        //  this.imageToShow = this.cover_url;
+          //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
         }
       });
   }
 
   deleteCover() {
-    const del_pic = this.clogo[0].keyName;
-    this.provider_services.deleteCoverFoto(del_pic).subscribe(
-      data => {
-          this.getCoverPhoto();
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
-      });
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to delete this cover photo?'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        const del_pic = this.clogo[0].keyName;
+        this.provider_services.deleteCoverFoto(del_pic).subscribe(
+          data => {
+            this.getCoverPhoto();
+            this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+          });
+      }
+    });
   }
-
-
 }
