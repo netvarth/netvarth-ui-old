@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,6 +12,8 @@ import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-ser
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  taxAmount: any;
+  orderAmount: number;
   catlog: any;
   catalogItem: any;
   addressdialogRef: any;
@@ -33,30 +34,30 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private dialog: MatDialog,
     private consumer_services: ConsumerServices) {
-      this.route.queryParams.subscribe(
-        params => {
-            this.delivery_type = params.delivery_type;
-            console.log(this.delivery_type);
-            if( this.delivery_type === 'home') {
-              console.log(this.delivery_type);
-            }
-            if ( this.delivery_type === 'store') {
-              console.log(this.delivery_type);
-            }
-             this.catlog_id = params.catlog_id;
-             console.log(this.catlog_id);
-            this.selectedQsTime = params.selectedQsTime;
-            console.log(this.selectedQsTime);
-            this.selectedQeTime = params.selectedQeTime;
-            console.log(this.selectedQeTime);
-            this.order_date = params.order_date;
-            console.log(this.order_date);
+    this.route.queryParams.subscribe(
+      params => {
+        this.delivery_type = params.delivery_type;
+        console.log(this.delivery_type);
+        if (this.delivery_type === 'home') {
+          console.log(this.delivery_type);
+        }
+        if (this.delivery_type === 'store') {
+          console.log(this.delivery_type);
+        }
+        this.catlog_id = params.catlog_id;
+        console.log(this.catlog_id);
+        this.selectedQsTime = params.selectedQsTime;
+        console.log(this.selectedQsTime);
+        this.selectedQeTime = params.selectedQeTime;
+        console.log(this.selectedQeTime);
+        this.order_date = params.order_date;
+        console.log(this.order_date);
 
-            // this.pid = params.pid;
-            // this.members = params.members;
-            // this.prepayment = params.prepayment;
-        });
-    }
+        // this.pid = params.pid;
+        // this.members = params.members;
+        // this.prepayment = params.prepayment;
+      });
+  }
 
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
@@ -65,7 +66,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-        this.customer_data = activeUser;
+      this.customer_data = activeUser;
     }
     console.log(this.customer_data);
     this.getaddress();
@@ -77,13 +78,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
   }
-  getItemCharges(item) {
+  getTaxCharges() {
     // const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    return item.promotionalPrice;
+    this.taxAmount = 100;
+    return this.taxAmount;
   }
-  getItemPay(item) {
-    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    return item.price * qty + item.promotionalPrice;
+  getOrderFinalAmountToPay() {
+
+    return this.orderAmount + this.taxAmount;
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -130,7 +132,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-         type: 'edit',
+        type: 'edit',
 
       }
     });
@@ -139,13 +141,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
+  getTotalItemPrice() {
+    this.orderAmount = 0;
+    for (const item of this.orders) {
+      this.orderAmount = this.orderAmount + item.ItemPrice * this.getItemQty(item);
+
+    }
+    console.log(this.orderAmount);
+    return this.orderAmount;
+  }
   confirm() {
 
-    if( this.delivery_type === 'home') {
+    if (this.delivery_type === 'home') {
       console.log(this.delivery_type);
       const post_Data = {
-        "homeDelivery": true,
-        "homeDeliveryAddress": "madathiparambil house po kozhukully tcr",
+        'homeDelivery': true,
+        'homeDeliveryAddress': 'madathiparambil house po kozhukully tcr',
         'catalog': {
           'id': this.catlog_id
         },
@@ -165,42 +176,42 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'quantity': 1
         }
         ],
-        'orderDate': "2020-11-26",
-        'phoneNumber': "8129630960",
-        'email': "aneesh.mg@jaldee.com"
+        'orderDate': '2020-11-26',
+        'phoneNumber': '8129630960',
+        'email': 'aneesh.mg@jaldee.com'
       };
       console.log(post_Data);
     }
-    if ( this.delivery_type === 'store') {
-    const post_Data = {
-      'storePickup': true,
-      'catalog': {
-        'id': this.catlog_id
-      },
-      'orderFor': {
-        'id': 0
-      },
-      'timeSlot': {
-        'sTime': this.selectedQsTime,
-        'eTime': this.selectedQeTime
-      },
-      'orderItem': [{
-        'id': 1,
-        'quantity': 2
-      },
-      {
-        'id': 2,
-        'quantity': 1
-      }
-      ],
-      'orderDate': "2020-11-26",
-      'phoneNumber': "8129630960",
-      'email': "aneesh.mg@jaldee.com"
+    if (this.delivery_type === 'store') {
+      const post_Data = {
+        'storePickup': true,
+        'catalog': {
+          'id': this.catlog_id
+        },
+        'orderFor': {
+          'id': 0
+        },
+        'timeSlot': {
+          'sTime': this.selectedQsTime,
+          'eTime': this.selectedQeTime
+        },
+        'orderItem': [{
+          'id': 1,
+          'quantity': 2
+        },
+        {
+          'id': 2,
+          'quantity': 1
+        }
+        ],
+        'orderDate': '2020-11-26',
+        'phoneNumber': '8129630960',
+        'email': 'aneesh.mg@jaldee.com'
 
-    };
-    console.log(post_Data);
-  }
+      };
+      console.log(post_Data);
+    }
   }
 
 
-  }
+}
