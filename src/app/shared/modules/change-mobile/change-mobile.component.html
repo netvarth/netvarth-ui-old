@@ -20,15 +20,19 @@
                 <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
                   (keyup)="resetApiErrors()" class="ynw-common-form-nm change-mob-style">
                   <div class="form-group phonenumber">
-                    <label for="phonenumber">{{your_curmob_msg}} <b>+91 {{prev_phonenumber}}</b> </label>
+                    <label for="phonenumber">{{your_curmob_msg}} <b>{{countryCode}} {{prev_phonenumber}}</b> </label>
                   </div>
                   <div class="form-group col-sm-6 col-md-4 no-padding mobile-field" style="width: 100%">
                     <mat-form-field>
-                      <div class="input-group">
-                        <div class="input-group-prepend mob-prefix">
-                          <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+                      <div class="input-group mobileNo">
+                        <div class="input-group-prepend">
+                          <!-- <span style="width: 75px">
+                            <mat-select>
+                            <mat-option>+91</mat-option>
+                          </mat-select>
+                        </span> -->
                         </div>
-                        <input type="text" (keypress)="isNumeric($event)" matInput class="form-control text-width"
+                        <input style="margin-left: 15px"type="text" (keypress)="isNumeric($event)" matInput class="form-control text-width"
                           id="phonenumber" placeholder="Enter New Mobile #" formControlName="phonenumber"
                           autocomplete="off" ngModel maxlength="10">
                       </div>

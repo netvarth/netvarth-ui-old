@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   is_provider = 'true';
   step = 1;
   moreParams = [];
-  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
   selectedCountryCode;
   api_loading = true;
   show_error = false;

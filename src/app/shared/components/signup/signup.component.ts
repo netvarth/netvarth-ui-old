@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
   activeSubDomainIndex;
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   subDomainList = [];
-  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
   selectedCountryCode;
   dropdownSettings = {
     singleSelection: false,

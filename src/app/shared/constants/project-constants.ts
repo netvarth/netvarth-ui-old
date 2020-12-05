@@ -814,6 +814,12 @@ export const projectConstantsLocal = {
   COUNTRY_CODES: [    
     { displayName: '+91', value: '+91' }  
   ],
+  CONSUMER_COUNTRY_CODES: [
+    { displayName: '+91', value: '+91' },
+    { displayName: '+49', value: '+49' },
+    { displayName: '+44', value: '+44' },
+    { displayName: '+1', value: '+1' }
+  ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
   { title: 'Blocked', value: 'blocked', reasonkey: 'blockedCancel' },
