@@ -1,4 +1,4 @@
-<section #chekinSection>
+<section #chekinSection *ngIf="!apiloading && showDashbard">
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5" *ngIf="!apiloading">
     <div class="dash-head">{{(showToken) ? 'Tokens' : 'Check-ins'}} </div>
   </div>
