@@ -191,4 +191,7 @@ export class ConsumerServices {
     const url = 'consumer/deliveryAddress';
     return this.servicemeta.httpPut(url , data);
   }
+  getOrderHistory() {
+     return this.servicemeta.httpGet('consumer/orders/history');
+   }
 }

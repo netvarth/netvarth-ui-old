@@ -447,6 +447,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   paymentsClicked() {
     this.router.navigate(['consumer', 'payments']);
   }
+  orderpaymentsClicked() {
+    this.router.navigate(['consumer', 'order', 'order-payments']);
+  }
   showcheckindetails(waitlist) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -1379,22 +1382,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewBill(checkin, type, event) {
-    // if (!this.billdialogRef) {
-    //   this.billdialogRef = this.dialog.open(ViewConsumerWaitlistCheckInBillComponent, {
-    //     width: '40%',
-    //     panelClass: ['commonpopupmainclass', 'popup-class', 'billpopup'],
-    //     disableClose: true,
-    //     data: {
-    //       checkin: checkin,
-    //       isFrom: type
-    //     }
-    //   });
-    //   this.billdialogRef.afterClosed().subscribe(result => {
-    //     if (this.billdialogRef) {
-    //       this.billdialogRef = null;
-    //     }
-    //   });
-    // }
     event.stopPropagation();
     if (type === 'appointment') {
       const navigationExtras: NavigationExtras = {
@@ -1406,7 +1393,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
-    } else {
+    } else if (type === 'waitlist') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.ynwUuid,
@@ -1416,6 +1403,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
+    } else {
+      console.log('oder');
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: checkin.ynwUuid,
+          accountId: checkin.providerAccount.id,
+          type: 'order',
+          'paidStatus': false
+        }
+      };
+      this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
     }
   }
   getMapUrl(latitude, longitude) {
@@ -1810,6 +1808,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   gotoApptmentHistory() {
     this.router.navigate(['consumer', 'appointment', 'history']);
+  }
+  gotoOrderHistory() {
+    this.router.navigate(['consumer', 'order', 'order-history']);
   }
 
   getAppointmentToday() {

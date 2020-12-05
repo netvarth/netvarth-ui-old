@@ -4,6 +4,9 @@ import { OrderComponent } from './order.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
+import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
+import { OrderBillComponent } from './order-bill/order-bill.component';
 
 const routes: Routes = [
   {
@@ -17,6 +20,15 @@ const routes: Routes = [
   },
   {
     path: 'item-details', component: ItemDetailsComponent
+  },
+  {
+    path: 'order-history', component: OrderHistoryComponent
+  },
+  {
+    path: 'order-payments', component: OrderPaymentDetailsComponent
+  },
+  {
+    path: 'order-bill', component: OrderBillComponent
   }
 ];
 @NgModule({

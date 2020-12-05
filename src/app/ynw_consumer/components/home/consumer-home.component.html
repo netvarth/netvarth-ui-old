@@ -1315,20 +1315,19 @@
 
                             <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6">
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn full-wdth odr-top-btns"
+                                    <button (click)="orderpaymentsClicked()" class="flat-btn full-wdth odr-top-btns"
                                         mat-flat-button>My
                                         Payments</button>
                                     <button class="flat-icon-btn odr-top-btns" mat-flat-button
-                                        (click)="paymentsClicked()" [matTooltip]="'My Payments'">
+                                        (click)="orderpaymentsClicked()" [matTooltip]="'My Payments'">
                                         <i class="fa myjld-payment"></i>
                                     </button>
                                 </div>
                                 <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
-                                    <button (click)="paymentsClicked()" class="flat-btn full-wdth odr-top-btns"
-                                        mat-flat-button>My
-                                        History</button>
+                                    <button (click)="gotoOrderHistory()" class="flat-btn full-wdth odr-top-btns"
+                                        mat-flat-button>History</button>
                                     <button class="flat-icon-btn odr-top-btns" mat-flat-button
-                                        (click)="paymentsClicked()" [matTooltip]="'History'">
+                                        (click)="gotoOrderHistory()" [matTooltip]="'History'">
                                         <i class="fa myjld-histry"></i>
                                     </button>
                                 </div>
@@ -1360,14 +1359,15 @@
                                      </h4>
                                  </td>
                                  <td class="tdisplay-block">
-                                     <h4>Order For</h4>
+                                    <h4 (click)="providerDetail(oder.providerAccount,$event)">
+                                        {{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                    </span>
                                      <div class="userName">
                                          <i class="fa fa-user for"></i>
                                          {{oder.orderFor.firstName}}
                                          {{oder.orderFor.lastName}}
                                      </div>
-                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                     </span>
                                  </td>
                                  <td>
                                      <h6>
@@ -1376,7 +1376,7 @@
                                  </td>
                                  <td class="pay-wdth">
                                      <span>
-                                         <button class="bt3 cust-btn">Pay
+                                         <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
                                              &#8377;{{oder.cartAmount}}</button>
                                      </span>
                                  </td>

@@ -46,11 +46,11 @@ export class OrderDetailComponent implements OnInit {
         'branchId': 0,
         'businessName': 'Lavanya Hospital',
         'corpId': 0,
-        'id': 125976,
+        'id': 78976,
         'licensePkgID': 0,
         'minimumCompleteness': false,
         'profileId': 0,
-        'uniqueId': 152210,
+        'uniqueId': 101002,
         'userSubdomain': 0,
         'location': {
         'address': 'Thrissur, Kuruppam, Thekkinkadu Maidan, Thrissur, Kerala 680020, India',
@@ -204,10 +204,8 @@ export class OrderDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('inside ngonint');
     this.getCommunicationHistory();
-    console.log(this.dummyData);
-    this.waitlist = this.dummyData;
+    this.waitlist = this.dummyData[0]; // should be deleted
     console.log(this.waitlist);
     this.generateQR(); // Should be deleted
     // this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
@@ -227,7 +225,7 @@ export class OrderDetailComponent implements OnInit {
     this.qr_value = this.path + 'status/' + this.waitlist.orderNumber;
   }
   getCommunicationHistory() {
-    throw new Error('Method not implemented.');
+   // throw new Error('Method not implemented.');
   }
   gotoPrev() {
     this.locationobj.back();
