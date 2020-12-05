@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConsumerServices } from '../../../services/consumer-services.service';
 
 @Component({
   selector: 'app-checkout',
@@ -62,7 +63,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    console.log(this.orders)
+    console.log(this.orders);
     this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
