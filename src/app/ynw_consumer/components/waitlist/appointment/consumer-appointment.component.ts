@@ -148,6 +148,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     userData: any = [];
     userEmail;
     userPhone;
+    countryCode;
     currentPhone;
     users: any = [];
     emailExist = false;
@@ -320,6 +321,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+        console.log(this.customer_data)
         if (this.type !== 'reschedule') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
@@ -773,6 +775,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'countryCode' : this.countryCode,
             'phoneNumber': phNumber,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
@@ -1475,6 +1478,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
+                    this.countryCode = this.userData.userProfile.countryCode;
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'reschedule') {
@@ -1932,6 +1936,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 data: {
                     service_details: this.sel_ser_det,
                     waitlist_for: this.waitlist_for,
+                    countryCode: this.countryCode,
                     userPhone: this.userPhone,
                     post_Data: post_Data,
                     account_id: this.account_id,

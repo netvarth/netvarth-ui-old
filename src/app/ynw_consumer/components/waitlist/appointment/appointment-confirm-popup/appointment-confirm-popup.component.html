@@ -53,9 +53,9 @@
                     {{waitlist_for[0].phoneNo}}
                 </span> -->
                 <span class="mgn-lt-10 phonevallabel"
-                    *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                    *ngIf="userPhone && !changePhno">{{countryCode}} {{userPhone}}</span>
                 <span class="mgn-lt-10 phonevallabel"
-                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                    *ngIf="currentPhone && changePhno">{{countryCode}} {{currentPhone}}</span><a
                     class="mgn-lt-5 lnk pointer-cursor">
                     <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                         (click)="editPhone()"></i> -->
@@ -69,7 +69,7 @@
             <div class="contact-section"
                 *ngIf="changePhno && currentPhone != callingModes && service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 <i class="fa wtsapaud-icon wtsap-cal"></i>
-                <span class="mgn-lt-10 phonevallabel">{{callingModes}}</span><a
+                <span class="mgn-lt-10 phonevallabel">{{countryCode}} {{callingModes}}</span><a
                     class="mgn-lt-5 lnk pointer-cursor">
                 </a>
                 <div class="mode-hint mgn-bt-5">
