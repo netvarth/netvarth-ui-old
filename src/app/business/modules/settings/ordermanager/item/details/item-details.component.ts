@@ -265,7 +265,7 @@ export class ItemDetailsComponent implements OnInit {
             });
         }
         if (this.action === 'edit') {
-            this.itemcaption = 'Edit Item';
+            this.itemcaption = this.item.displayName;
             this.updateForm();
         }
     }

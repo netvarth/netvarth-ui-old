@@ -204,4 +204,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
     stopprop(event) {
         event.stopPropagation();
     }
+    getItemImg(item) {
+        if (item.itemImages) {
+            const img = item.itemImages.filter(image => image.displayImage);
+            if (img[0]) {
+                return img[0].url;
+            }
+        }
+    }
 }

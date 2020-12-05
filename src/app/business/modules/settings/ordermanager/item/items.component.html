@@ -30,8 +30,6 @@
                     </div>
                 </div>
             </div>
-
-
             <!-- <div class="bus-item card" *ngFor="let item of item_list;let i=index;" (click)="editViewedItem(item.itemId)"
                 style="margin-right: 10px !important;">
                 <img style="width: 100%;"
@@ -50,8 +48,7 @@
             </div> -->
             <div class="bus-item" *ngFor="let item of item_list;let i=index;">
                 <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
-                    <img
-                        src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)">
+                    <img [src]="getItemImg(item)">
                     <div class="card-item-title">
                         <a><b>
                                 {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
