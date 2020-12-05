@@ -24,7 +24,7 @@ export class OrdermanagerComponent implements OnInit {
   ];
   
   breadcrumbs = this.breadcrumbs_init;
-  pos_status = false;
+  orderstatus;
   pos_statusstr = 'Off';
   frm_public_self_cap = '';
   domain;
@@ -49,7 +49,7 @@ export class OrdermanagerComponent implements OnInit {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.getPOSSettings();
+    this.getOrderStatus();
     this.getDiscounts();
     this.getitems();
   }
@@ -99,21 +99,20 @@ export class OrdermanagerComponent implements OnInit {
     this.routerobj.navigate(['provider', 'settings', 'ordermanager' , 'catalogs']);
     // this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
-  handle_posStatus(event) {
-    const value = (event.checked) ? true : false;
-    const status = (value) ? 'enabled' : 'disabled';
-    this.provider_services.setProviderPOSStatus(value).subscribe(data => {
-      this.shared_functions.openSnackBar('Billing settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-      this.getPOSSettings();
+  handleOrderStatus(event) {
+    const status = (event.checked) ? 'enabled' : 'disabled';
+    this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
+      this.shared_functions.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.getOrderStatus();
     }, (error) => {
       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      this.getPOSSettings();
+      this.getOrderStatus();
     });
   }
-  getPOSSettings() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
-      this.pos_status = data['enablepos'];
-      this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
+  getOrderStatus() {
+    this.provider_services.getProviderOrderStatus().subscribe(data => {
+      this.orderstatus = data;
+      this.pos_statusstr = (this.orderstatus) ? 'On' : 'Off';
     });
   }
   performActions(action) {

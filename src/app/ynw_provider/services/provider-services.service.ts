@@ -1668,7 +1668,7 @@ export class ProviderServices {
       const url = 'provider/appointment/schedule/' + ids + '/date/' + date;
       return this.servicemeta.httpGet(url);
    }
-      addLabeltoCustomer(data) {
+   addLabeltoCustomer(data) {
       const url = 'provider/customers/label';
       return this.servicemeta.httpPost(url, data);
    }
@@ -1761,6 +1761,14 @@ export class ProviderServices {
    }
    deleteUplodedCatalogImage(name, id) {
       return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
+   }
+   getProviderOrderStatus() {
+      const url = 'provider/order/settings/status';
+      return this.servicemeta.httpGet(url);
+   }
+   setProviderOrderSStatus(status) {
+      const url = 'provider/order/settings/' + status;
+      return this.servicemeta.httpPut(url);
    }
 }
 

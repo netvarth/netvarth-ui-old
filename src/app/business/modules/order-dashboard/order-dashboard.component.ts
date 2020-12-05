@@ -58,6 +58,7 @@ export class OrderDashboardComponent implements OnInit {
   server_date;
   todayOrdersCount;
   futureOrdersCount;
+  orderstatus;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -75,9 +76,7 @@ export class OrderDashboardComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    this.doSearch();
-    this.getProviderTodayOrdersCount();
-    this.getProviderFutureOrdersCount();
+    this.getOrderStatus();
   }
   setTabSelection(type) {
     this.selectedTab = type;
@@ -321,5 +320,16 @@ export class OrderDashboardComponent implements OnInit {
     }
     console.log(api_filter);
     return api_filter;
+  }
+  getOrderStatus() {
+    this.providerservices.getProviderOrderStatus().subscribe(data => {
+      this.orderstatus = data;
+      console.log(this.orderstatus);
+      if (this.orderstatus) {
+        this.doSearch();
+        this.getProviderTodayOrdersCount();
+        this.getProviderFutureOrdersCount();
+      }
+    });
   }
 }
