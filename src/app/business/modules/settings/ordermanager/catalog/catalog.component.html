@@ -24,29 +24,28 @@
                                   <table class="table">
                                       <thead>
                                           <tr>
-                                              <th>{{name_cap}}</th>
-                                              <th>{{price_cap}}</th>
-                                              <th>{{taxable_cap}}</th>
+                                              <th>Catalog Name</th>
+                                              <th>Order Type</th>
+                                              <th>Payment Type</th>
                                               <th>Status</th>
                                               <th>  <span class="addbt" (click)="addCatalog()"></span></th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          <tr *ngFor="let item of catalog_list | orderBy: order"
-                                              [class.disabled-row]="item.status=='INACTIVE'">                                       
+                                          <tr *ngFor="let catalog of catalog_list | orderBy: order"
+                                              [class.disabled-row]="catalog.catalogStatus=='INACTIVE'">                                       
                                               <td data-title="Name" class="td2" class="pointer-cursor"
-                                                  (click)="showDetails(item.itemId)"
-                                                  [class.itemdisabled]="item.status=='INACTIVE'"><span
+                                                  (click)="showDetails(catalog.itemId)"
+                                                  [class.itemdisabled]="catalog.catalogStatus=='INACTIVE'"><span
                                                       [matTooltipClass]="tooltipcls"
-                                                      [matTooltip]="itemnameTooltip">{{item.displayName}}</span>
+                                                      [matTooltip]="itemnameTooltip">{{catalog.catalogName}}</span>
                                               </td>
-                                              <td data-title="Price" class="td4 rupee-font">{{item.price |
-                                              currency:'&#8377;'}}</td>
-                                              <td data-title="Taxable" clas="td3">{{(item.taxable===true)?'Yes':'No'}}
+                                              <td data-title="Order Type" class="td4 ">{{catalog.orderType}}</td>
+                                              <td data-title="Payment Type" class="td3">{{catalog.paymentType}}
                                               </td>
                                               <td data-title="Status"
-                                                  [ngClass]="{'green-text' : item.status=='ACTIVE'}">
-                                                  {{item_status[item.status]}}</td>
+                                                  [ngClass]="{'green-text' : catalog.catalogStatus=='ACTIVE'}">
+                                                  {{catalog.catalogStatus}}</td>
                                               <td class="action">
                                                   <span class="mbt">
                                                       <button type="button" mat-icon-button
@@ -54,20 +53,20 @@
                                                           <mat-icon>more_vert</mat-icon>
                                                       </button>
                                                       <mat-menu #menu="matMenu">
-                                                          <button type="button" (click)="editItem(item)" mat-menu-item
-                                                              *ngIf="item.status=='ACTIVE'">
+                                                          <button type="button" (click)="editCatalog(catalog)" mat-menu-item
+                                                              *ngIf="catalog.catalogStatus=='ACTIVE'">
                                                               <i class="icon-edit"></i>
                                                               {{edit_btn}}
                                                           </button>
-                                                          <button type="button" (click)="dochangeStatus(item)"
+                                                          <button type="button" (click)="dochangeStatus(catalog)"
                                                               mat-menu-item>
-                                                              <i *ngIf="item.status=='INACTIVE' || !item.status"
+                                                              <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
                                                                   class="icon-enable"></i>
-                                                              <i *ngIf="item.status=='ACTIVE'"
+                                                              <i *ngIf="catalog.catalogStatus=='ACTIVE'"
                                                                   class="icon-disable"></i>
-                                                              {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                              {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}
                                                           </button>
-                                                          <button type="button" (click)="doRemoveItem(item)"
+                                                          <button type="button" (click)="doRemoveCatalog(catalog)"
                                                               mat-menu-item>
                                                               <i class="icon-delete"></i>
                                                               {{delete_btn}}
@@ -76,21 +75,21 @@
                                                   </span>
                                                   <span class="mbt-mobile-show">
                                                       <button class="editcls" type="button"
-                                                          (click)="editItem(item)">{{edit_btn}}</button>
+                                                          (click)="editCatalog(catalog)">{{edit_btn}}</button>
                                                       <button class="status tel-serv-flex" type="button"
-                                                          (click)="dochangeStatus(item)">
-                                                          <i *ngIf="item.status=='INACTIVE' || !item.status"
+                                                          (click)="dochangeStatus(catalog)">
+                                                          <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
                                                               class="icon-enable icon-disable1"></i>
-                                                          <i *ngIf="item.status=='ACTIVE'" class="icon-disable icon-disable1"></i>
-                                                          {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}</button>
+                                                          <i *ngIf="catalog.catalogStatus=='ACTIVE'" class="icon-disable icon-disable1"></i>
+                                                          {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}</button>
                                                       <button class="deletecls" type="button"
-                                                          (click)="doRemoveItem(item)">{{delete_btn}}</button>
+                                                          (click)="doRemoveCatalog(catalog)">{{delete_btn}}</button>
                                                   </span>
                                               </td>
                                           </tr>
                                       </tbody>
                                   </table>
-                                  <span class="addbt d-block d-md-none" (click)="addCatalog()"></span>
+                                  <!-- <span class="addbt d-block d-md-none" (click)="addCatalog()"></span> -->
                               </div>
                           </div>
                       </div>

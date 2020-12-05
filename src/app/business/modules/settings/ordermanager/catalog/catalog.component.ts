@@ -106,7 +106,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     addCatalog() {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
     }
-    editItem(catalog) {
+    editCatalog(catalog) {
         const navigationExtras: NavigationExtras = {
             queryParams: { action: 'edit' }
         };
@@ -114,7 +114,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     }
     dochangeStatus(catalog) {
         if (catalog.catalogStatus === 'ACTIVE') {
-            const stat = 'InActive';
+            const stat = 'INACTIVE';
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
@@ -124,7 +124,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 }
             );
         } else {
-            const stat = 'Active';
+            const stat = 'ACTIVE';
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
@@ -157,7 +157,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', id], navigationExtras);
     }
 
-    doRemoveItem(catalog) {
+    doRemoveCatalog(catalog) {
         const id = catalog.id;
         if (!id) {
             return false;

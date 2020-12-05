@@ -154,7 +154,21 @@ export class CatalogdetailComponent implements OnInit {
  ]
  };
  showadditems = true;
-
+ status: any = ['Order received',
+ 'Order Acknowledged',
+ 'Order Confirmed',
+ 'Preparing',
+ 'Packing',
+ 'Payment Required',
+ 'Ready For Pickup',
+ 'Ready For Shipment',
+ 'Ready For Delivery',
+ 'Completed',
+ 'In Transit',
+ 'Shipped',
+ 'Canceled'
+];
+selectedStatus;
  constructor(private provider_services: ProviderServices,
  private sharedfunctionObj: SharedFunctions,
  private router: Router,
@@ -234,7 +248,6 @@ createForm() {
  if (this.action === 'add') {
  this.amForm = this.fb.group({
  catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
- catalogshortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
  catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
  catalogdays: [],
  startdate: [''],
@@ -242,6 +255,7 @@ createForm() {
  qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
  qendtime: [this.dend_time, Validators.compose([Validators.required])],
  orderType: [],
+ orderStatuses: [''],
  itemPriceInfo: [true],
  advancePaymentStatus: [false],
  advancePayment: [''],
@@ -269,7 +283,6 @@ createForm() {
  } else {
  this.amForm = this.fb.group({
  catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
- catalogshortDesc: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
  catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
  catalogdays: [],
  startdate: [''],
@@ -277,6 +290,7 @@ createForm() {
  qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
  qendtime: [this.dend_time, Validators.compose([Validators.required])],
  orderType: [],
+ orderStatuses: [''],
  itemPriceInfo: [true],
  advancePaymentStatus: [false],
  advancePayment: [''],
@@ -307,13 +321,13 @@ createForm() {
 }
 setDescFocus() {
  this.isfocused = true;
- this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
+ this.char_count = this.max_char_count - this.amForm.get('catalogDesc').value.length;
 }
 lostDescFocus() {
  this.isfocused = false;
 }
 setCharCount() {
- this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
+ this.char_count = this.max_char_count - this.amForm.get('catalogDesc').value.length;
 }
 handleadvancePayment(event) {
  if (event.checked) {
@@ -415,17 +429,17 @@ compareDatehome(dateValue, startOrend) {
 updateForm() {
  console.log(this.catalog);
  const sttime = {
- hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
- ['h:mm A']).format('HH'), 10),
- minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
- ['h:mm A']).format('mm'), 10)
- };
+        hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('HH'), 10),
+        minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        ['h:mm A']).format('mm'), 10)
+        };
  const edtime = {
- hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
- ['h:mm A']).format('HH'), 10),
- minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
- ['h:mm A']).format('mm'), 10)
- };
+        hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('HH'), 10),
+        minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        ['h:mm A']).format('mm'), 10)
+        };
  this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
  this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
  this.selday_arr = [];
@@ -439,6 +453,7 @@ updateForm() {
  } else {
  this.Selall = false;
  }
+ 
  const sttimestore = {
  hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
  ['h:mm A']).format('HH'), 10),
@@ -490,10 +505,20 @@ updateForm() {
  } else {
  this.Selallhomedelivery = false;
  }
- 
+//  for (let j = 0; j < this.catalog.orderStatuses.length; j++) {
+//     for (let i = 0; i < this.status.length; i++) {
+//         if (this.catalog.orderStatuses[j] === this.status[i]) {
+//             if (this.selectedStatus.indexOf(this.status[i]) === -1) {
+//                 this.selectedDepartments.push(this.status[i]);
+//             }
+            
+//         }
+//     }
+
+// }
 
 
-
+ console.log(this.catalog.catalogName);
  let status;
  if (this.catalog.paymentType === 'FIXED') {
  status = true;
@@ -501,33 +526,33 @@ updateForm() {
  status = false;
  }
  this.amForm.setValue({
- 'catalogName': this.catalog.catalogName || '',
- 'catalogshortDesc': this.catalog.catalogshortDesc || '',
- 'catalogDesc': this.catalog.catalogDesc || '',
- 'startdate': this.catalog.catalogSchedule.startDate || '',
- 'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
- 'qstarttime': sttime,
- 'qendtime': edtime,
- 'orderType': this.catalog.orderType,
- 'itemPriceInfo': this.catalog.showPrice,
- 'advancePaymentStatus': status,
- 'advancePayment': this.catalog.advanceAmount || '',
- 'cancelationPolicy': this.catalog.cancellationPolicy,
- 'storepickup': this.catalog.pickUp.orderPickUp,
- 'startdatestore': this.catalog.pickUp.orderPickUp.startDate || '',
- 'enddatestore': this.catalog.pickUp.orderPickUp.terminator.endDate || '',
- 'qstarttimestore': sttimestore,
- 'qendtimestore': edtimestore,
- 'storeotpverify': this.catalog.pickUp.pickUpOtpVerification,
- 'homedelivery': this.catalog.homeDelivery.homeDelivery,
- 'startdatehome': this.catalog.homeDelivery.deliverySchedule.startDate || '',
- 'enddatehome': this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '',
- 'qstarttimehome': sttimehome,
- 'qendtimehome': edtimehome,
- 'homeotpverify': this.catalog.homeDelivery.deliveryOtpVerification || '',
- 'deliverykms': this.catalog.homeDelivery.deliveryRadius || '',
- 'deliverycharge': this.catalog.homeDelivery.deliveryCharge || ''
- });
+        'catalogName': this.catalog.catalogName || '',
+        'catalogDesc': this.catalog.catalogDesc || '',
+        'startdate': this.catalog.catalogSchedule.startDate || '',
+        'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
+        'qstarttime': sttime,
+        'qendtime': edtime,
+        'orderType': this.catalog.orderType,
+        'orderStatuses': this.catalog.orderStatuses,
+        'itemPriceInfo': this.catalog.showPrice,
+        'advancePaymentStatus': status,
+        'advancePayment': this.catalog.advanceAmount || '',
+        'cancelationPolicy': this.catalog.cancellationPolicy,
+        'storepickup': this.catalog.pickUp.orderPickUp,
+        'startdatestore': this.catalog.pickUp.orderPickUp.startDate || '',
+        'enddatestore': this.catalog.pickUp.orderPickUp.terminator.endDate || '',
+        'qstarttimestore': sttimestore,
+        'qendtimestore': edtimestore,
+        'storeotpverify': this.catalog.pickUp.pickUpOtpVerification,
+        'homedelivery': this.catalog.homeDelivery.homeDelivery,
+        'startdatehome': this.catalog.homeDelivery.deliverySchedule.startDate || '',
+        'enddatehome': this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '',
+        'qstarttimehome': sttimehome,
+        'qendtimehome': edtimehome,
+        'homeotpverify': this.catalog.homeDelivery.deliveryOtpVerification || '',
+        'deliverykms': this.catalog.homeDelivery.deliveryRadius || '',
+        'deliverycharge': this.catalog.homeDelivery.deliveryCharge || ''
+        });
 }
 
 showimg() {
@@ -703,215 +728,223 @@ addcancelpolicy() {
 
 }
 onSubmit(form_data) {
- console.log(this.selday_arr);
- console.log(this.selday_arrstorepickup);
- console.log(this.selday_arrhomedelivery);
- const daystr: any = [];
- for (const cday of this.selday_arr) {
- daystr.push(cday);
- }
- if (this.selday_arr.length === 0) {
- const error = 'Please select the days';
- this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
- return;
- }
- let endDate;
- const startDate = this.convertDate(form_data.startdate);
- if (form_data.enddate) {
- endDate = this.convertDate(form_data.enddate);
- } else {
- endDate = '';
- }
- // check whether the start and end times are selected
- if (!this.dstart_time || !this.dend_time) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
- return;
- }
- // today
- if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
- return;
- }
- const curdate = new Date();
- curdate.setHours(this.dstart_time.hour);
- curdate.setMinutes(this.dstart_time.minute);
- const enddate = new Date();
- enddate.setHours(this.dend_time.hour);
- enddate.setMinutes(this.dend_time.minute);
- const starttime_format = moment(curdate).format('hh:mm A') || null;
- const endtime_format = moment(enddate).format('hh:mm A') || null;
+    console.log(form_data.orderStatuses);
+         console.log(this.selday_arr);
+         console.log(this.selday_arrstorepickup);
+         console.log(this.selday_arrhomedelivery);
+         const daystr: any = [];
+         for (const cday of this.selday_arr) {
+         daystr.push(cday);
+         }
+         if (this.selday_arr.length === 0) {
+         const error = 'Please select the days';
+         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+         return;
+         }
+         let endDate;
+         const startDate = this.convertDate(form_data.startdate);
+         if (form_data.enddate) {
+         endDate = this.convertDate(form_data.enddate);
+         } else {
+         endDate = '';
+         }
+         // check whether the start and end times are selected
+         if (!this.dstart_time || !this.dend_time) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         // today
+         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         const curdate = new Date();
+         curdate.setHours(this.dstart_time.hour);
+         curdate.setMinutes(this.dstart_time.minute);
+         const enddate = new Date();
+         enddate.setHours(this.dend_time.hour);
+         enddate.setMinutes(this.dend_time.minute);
+         const starttime_format = moment(curdate).format('hh:mm A') || null;
+         const endtime_format = moment(enddate).format('hh:mm A') || null;
 
- //store pickup
- console.log(this.selday_arrstorepickup);
- const storedaystr: any = [];
- for (const cday of this.selday_arrstorepickup) {
- storedaystr.push(cday);
- }
- console.log(this.selday_arrstorepickup);
- if (this.selday_arrstorepickup.length === 0) {
- const error = 'Please select the storepickup days';
- this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
- return;
- }
- let storeendDate;
- const storestartDate = this.convertDate(form_data.startdatestore);
- if (form_data.enddatestore) {
- storeendDate = this.convertDate(form_data.enddatestore);
- } else {
- storeendDate = '';
- }
+         //store pickup
+         console.log(this.selday_arrstorepickup);
+         const storedaystr: any = [];
+         for (const cday of this.selday_arrstorepickup) {
+         storedaystr.push(cday);
+         }
+         console.log(this.selday_arrstorepickup.length);
+         if (this.storepickupStat && this.selday_arrstorepickup.length === 0) {
+         const error = 'Please select the storepickup days';
+         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+         return;
+         }
+         let storeendDate;
+         const storestartDate = this.convertDate(form_data.startdatestore);
+         if (form_data.enddatestore) {
+         storeendDate = this.convertDate(form_data.enddatestore);
+         } else {
+         storeendDate = '';
+         }
 
- // check whether the start and end times are selected
- if (!this.dstart_timestore || !this.dend_timestore) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
- return;
- }
- // today
- if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
- return;
- }
- const curdatestore = new Date();
- curdatestore.setHours(this.dstart_timestore.hour);
- curdatestore.setMinutes(this.dstart_timestore.minute);
- const enddatestore = new Date();
- enddatestore.setHours(this.dend_timestore.hour);
- enddatestore.setMinutes(this.dend_timestore.minute);
- const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
- const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
+         // check whether the start and end times are selected
+         if (!this.dstart_timestore || !this.dend_timestore) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         // today
+         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         const curdatestore = new Date();
+         curdatestore.setHours(this.dstart_timestore.hour);
+         curdatestore.setMinutes(this.dstart_timestore.minute);
+         const enddatestore = new Date();
+         enddatestore.setHours(this.dend_timestore.hour);
+         enddatestore.setMinutes(this.dend_timestore.minute);
+         const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
+         const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
 
- //home delivery
- const homedaystr: any = [];
- for (const cday of this.selday_arrhomedelivery) {
- homedaystr.push(cday);
- }
- if (this.selday_arrhomedelivery.length === 0) {
- const error = 'Please select the storepickup days';
- this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
- return;
- }
- let homeendDate;
- const homestartDate = this.convertDate(form_data.startdatehome);
- if (form_data.enddatehome) {
- homeendDate = this.convertDate(form_data.enddatehome);
- } else {
- homeendDate = '';
- }
- // check whether the start and end times are selected
- if (!this.dstart_timehome || !this.dend_timehome) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
- return;
- }
- // today
- if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
- this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
- return;
- }
- const curdatehome = new Date();
- curdatehome.setHours(this.dstart_timehome.hour);
- curdatehome.setMinutes(this.dstart_timehome.minute);
- const enddatehome= new Date();
- enddatehome.setHours(this.dend_timehome.hour);
- enddatehome.setMinutes(this.dend_timehome.minute);
- const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
- const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
- let payAdvance;
- if (form_data.advancePaymentStatus === 'true') {
- payAdvance = 'FIXED';
- } else {
- payAdvance = 'NONE';
- }
- 
- 
- const postdata = {
- 'catalogName': form_data.catalogName,
- 'catalogDesc': form_data.catalogDesc,
- 'catalogSchedule': {
- 'recurringType': 'Weekly',
- 'repeatIntervals': daystr,
- 'startDate': startDate,
- 'terminator': {
- 'endDate': endDate,
- 'noOfOccurance': 0
- },
- 'timeSlots': [
- {
- 'sTime': starttime_format,
- 'eTime': endtime_format
- }
- ]
- },
- 'catalogStatus': 'ACTIVE',
- 'orderType': form_data.orderType,
- 'pickUp': {
- 'orderPickUp': true,
- 'pickUpSchedule': {
- 'recurringType': 'Weekly',
- 'repeatIntervals': storedaystr,
- 'startDate': storestartDate,
- 'terminator': {
- 'endDate': storeendDate,
- 'noOfOccurance': 0
- },
- 'timeSlots': [
- {
- 'sTime': starttime_formatstore,
- 'eTime': endtime_formatstore
- }
- ]
- },
- 'pickUpOtpVerification': form_data.storeotpverify,
- 'pickUpScheduledAllowed': true,
- 'pickUpAsapAllowed': false
- },
- 'homeDelivery': {
- 'homeDelivery': true,
- 'deliverySchedule': {
- 'recurringType': 'Weekly',
- 'repeatIntervals': homedaystr,
- 'startDate': homestartDate,
- 'terminator': {
- 'endDate': homeendDate,
- 'noOfOccurance': 0
- },
- 'timeSlots': [
- {
- 'sTime': starttime_formathome,
- 'eTime': endtime_formathome
- }
- ]
- },
- 'deliveryOtpVerification': form_data.homeotpverify,
- 'deliveryRadius': form_data.deliverykms,
- 'scheduledHomeDeliveryAllowed': true,
- 'asapHomeDeliveryAllowed': false,
- 'deliveryCharge': form_data.deliverycharge
- },
- 'showPrice': form_data.itemPriceInfo,
- 'paymentType': payAdvance,
- 'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
- 'preInfo': {
- 'preInfoEnabled': this.preInfoEnabled,
- 'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',
- 'preInfoText': this.preInfoEnabled ? this.preInfoText : ''
- },
- 'postInfo': {
- 'postInfoEnabled': this.postInfoEnabled,
- 'postInfoTitle': this.postInfoEnabled ? this.postInfoTitle.trim() : '',
- 'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
- },
- 'catalogItem': this.seletedCatalogItems,
- 'location': {
- 'id': this.selected_locationId
- },
- 'cancellationPolicy': form_data.cancelationPolicy
- };
- if (this.action === 'add') {
- this.addCatalog(postdata);
- console.log(postdata);
- } else if (this.action === 'edit') {
- this.editCatalog(postdata);
- }
+         //home delivery
+         const homedaystr: any = [];
+         for (const cday of this.selday_arrhomedelivery) {
+         homedaystr.push(cday);
+         }
+         if (this.homedeliveryStat && this.selday_arrhomedelivery.length === 0) {
+         const error = 'Please select the homedelivery days';
+         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+         return;
+         }
+         let homeendDate;
+         const homestartDate = this.convertDate(form_data.startdatehome);
+         if (form_data.enddatehome) {
+         homeendDate = this.convertDate(form_data.enddatehome);
+         } else {
+         homeendDate = '';
+         }
+         // check whether the start and end times are selected
+         if (!this.dstart_timehome || !this.dend_timehome) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         // today
+         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
+         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+         return;
+         }
+         const curdatehome = new Date();
+         curdatehome.setHours(this.dstart_timehome.hour);
+         curdatehome.setMinutes(this.dstart_timehome.minute);
+         const enddatehome= new Date();
+         enddatehome.setHours(this.dend_timehome.hour);
+         enddatehome.setMinutes(this.dend_timehome.minute);
+         const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
+         const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
+         let payAdvance;
+         if (form_data.advancePaymentStatus === 'true') {
+            payAdvance = 'FIXED';
+            if (form_data.advancePayment === '') {
+                this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelclass': 'snackbarerror' });
+                return;
+            }
+         } else {
+         payAdvance = 'NONE';
+         }
+        
+        
+         const postdata = {
+         'catalogName': form_data.catalogName,
+         'catalogDesc': form_data.catalogDesc,
+         'catalogSchedule': {
+         'recurringType': 'Weekly',
+         'repeatIntervals': daystr,
+         'startDate': startDate,
+         'terminator': {
+         'endDate': endDate,
+         'noOfOccurance': 0
+         },
+         'timeSlots': [
+         {
+         'sTime': starttime_format,
+         'eTime': endtime_format
+         }
+         ]
+         },
+         'catalogStatus': 'ACTIVE',
+         'orderType': form_data.orderType,
+         'orderStatuses': form_data.orderStatuses,
+         'pickUp': {
+         'orderPickUp': form_data.storepickup,
+         'pickUpSchedule': {
+         'recurringType': 'Weekly',
+         'repeatIntervals': storedaystr,
+         'startDate': storestartDate,
+         'terminator': {
+         'endDate': storeendDate,
+         'noOfOccurance': 0
+         },
+         'timeSlots': [
+         {
+         'sTime': starttime_formatstore,
+         'eTime': endtime_formatstore
+         }
+         ]
+         },
+         'pickUpOtpVerification': form_data.storeotpverify,
+         'pickUpScheduledAllowed': true,
+         'pickUpAsapAllowed': false
+         },
+         'homeDelivery': {
+         'homeDelivery': form_data.homedelivery,
+         'deliverySchedule': {
+         'recurringType': 'Weekly',
+         'repeatIntervals': homedaystr,
+         'startDate': homestartDate,
+         'terminator': {
+         'endDate': homeendDate,
+         'noOfOccurance': 0
+         },
+         'timeSlots': [
+         {
+         'sTime': starttime_formathome,
+         'eTime': endtime_formathome
+         }
+         ]
+         },
+         'deliveryOtpVerification': form_data.homeotpverify,
+         'deliveryRadius': form_data.deliverykms,
+         'scheduledHomeDeliveryAllowed': true,
+         'asapHomeDeliveryAllowed': false,
+         'deliveryCharge': form_data.deliverycharge
+         },
+         'showPrice': form_data.itemPriceInfo,
+         'paymentType': payAdvance,
+         'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
+         'preInfo': {
+         'preInfoEnabled': this.preInfoEnabled,
+         'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',
+         'preInfoText': this.preInfoEnabled ? this.preInfoText : ''
+         },
+         'postInfo': {
+         'postInfoEnabled': this.postInfoEnabled,
+         'postInfoTitle': this.postInfoEnabled ? this.postInfoTitle.trim() : '',
+         'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
+         },
+         'catalogItem': this.seletedCatalogItems,
+         'location': {
+         'id': this.selected_locationId
+         },
+         'minNumberItem': 1,
+         'maxNumberItem': 100,
+         'cancellationPolicy': form_data.cancelationPolicy
+         };
+         if (this.action === 'add') {
+         console.log(postdata);
+         this.addCatalog(postdata);
+         } else if (this.action === 'edit') {
+         this.editCatalog(postdata);
+         }
 }
 addCatalog(post_data) {
  this.disableButton = true;
@@ -1125,31 +1158,31 @@ imageSelect(event) {
 }
 
 deleteTempImage(img, index) {
- this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
- width: '50%',
- panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
- disableClose: true,
- data: {
- 'message': 'Do you really want to remove the catalog image?'
- }
- });
- this.removeimgdialogRef.afterClosed().subscribe(result => {
- if (result) {
- if (img.view && img.view === true) {
- this.provider_services.deleteUplodedCatalogImage(img.keyName, this.catalog_id)
- .subscribe((data) => {
- this.selectedMessage.files.splice(index, 1);
- },
- error => {
- this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
- });
- } else {
- this.selectedMessage.files.splice(index, 1);
- this.selectedMessage.base64.splice(index, 1);
- this.image_list_popup.splice(index, 1);
- }
- }
- });
-}
+        this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+        'message': 'Do you really want to remove the catalog image?'
+        }
+        });
+        this.removeimgdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (img.view && img.view === true) {
+                    this.provider_services.deleteUplodedCatalogImage(img.keyName, this.catalog_id)
+                    .subscribe((data) => {
+                    this.selectedMessage.files.splice(index, 1);
+                    },
+                    error => {
+                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    });
+                } else {
+                    this.selectedMessage.files.splice(index, 1);
+                    this.selectedMessage.base64.splice(index, 1);
+                    this.image_list_popup.splice(index, 1);
+                }
+            }
+        });
+        }
 
 }

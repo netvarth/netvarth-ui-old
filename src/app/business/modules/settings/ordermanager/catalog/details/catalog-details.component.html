@@ -97,20 +97,6 @@
        
         <div class="form-group">
         <mat-form-field>
-        <input matInput type="text" class="form-control" id="catalogshortDesc"
-        placeholder="Enter catalog short description " formControlName="catalogshortDesc"
-        autocomplete="off" maxlength="50">
-        </mat-form-field>
-        <app-field-error-display
-        [displayError]="fed_service.isFieldValid(amForm,'catalogshortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogshortDesc',
-        {
-        'required' : 'Please enter the short description',
-        'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
-        })">
-        </app-field-error-display>
-        </div>
-        <div class="form-group">
-        <mat-form-field>
         <textarea matInput class="form-control" id="catalogDesc"
         placeholder="Enter catalog description " formControlName="catalogDesc"
         (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
@@ -134,6 +120,18 @@
         <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
         </mat-radio-group>
         </div>
+        <div class="form-group">
+                <mat-form-field>
+                  <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
+                    <!-- <ngx-mat-select-search [formControl]="statMultiFilterCtrl" placeholderLabel="Search departments"
+                      noEntriesFoundLabel="no matching department found"></ngx-mat-select-search> -->
+                    <mat-option *ngFor=" let stat of status" [value]="stat"
+                      >
+                      {{stat}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
        
         </div>
         <div class="createcatalogupper col-lg-12 col-md-12 col-sm-12 col-xs-12">
