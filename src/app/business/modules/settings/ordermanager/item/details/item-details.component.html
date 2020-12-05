@@ -1,7 +1,6 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToJaldeeOrdermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{itemcaption}}
@@ -19,13 +18,13 @@
                     <div class="copy locd">
                         <div class="lbr col-sm-12 col-md-4 col-lg-5">
                             <div class="cr1">
-                                <div class="no-dta" *ngIf="!haveMainImg">
+                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
                                     <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
                                     <div class="col-sm-12 col-md-12 col-lg-12">
                                         <div class="addorderitem" (click)="imagefile.click()">
-                                            <p class="addorderitemp1"><a class="pointer-cursor"><input
-                                                        #imagefile type="file" accept="/*;capture=camera"
-                                                        style="display:none;" (change)="imageSelect($event, 'main')">Add item
+                                            <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
+                                                        type="file" accept="/*;capture=camera" style="display:none;"
+                                                        (change)="imageSelect($event, 'main')">Add item
                                                     image
                                                 </a></p>
                                             <p class="addorderitemp2"> <img style="width: 65%;"
@@ -92,21 +91,18 @@
                                         (buttonBeforeHook)="onButtonBeforeHook()"
                                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                                 </div>
-
-                                <div class="no-dta">
+                                <div class="no-dta" *ngIf="action === 'edit'">
                                     <div class="col-sm-12 col-md-12 col-lg-12">
-                                <div class="addmoreorderitem" (click)="imagefile.click()">
-                                    <label class="pointer-cursor"><input multiple #imagefile type="file"
-                                            accept="/*;capture=camera" style="display:none;"
-                                            (change)="imageSelect($event)">Add more</label>
-                                    <p class="addmoreorderitemp1"> <img style="width: 65%;"
-                                            src="assets/images/add.svg" /></p>
+                                        <div class="addmoreorderitem" (click)="imagefile.click()">
+                                            <label class="pointer-cursor"><input multiple #imagefile type="file"
+                                                    accept="/*;capture=camera" style="display:none;"
+                                                    (change)="imageSelect($event)">Add more</label>
+                                            <p class="addmoreorderitemp1"> <img style="width: 65%;"
+                                                    src="assets/images/add.svg" /></p>
+                                        </div>
+                                    </div>
                                 </div>
-</div>
-</div>
-
                             </div>
-
                         </div>
                         <div class="lbl col-sm-12 col-md-8 col-lg-7">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate

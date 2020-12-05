@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import {  ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy , Image , ButtonType} from '@ks89/angular-modal-gallery';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -95,28 +95,29 @@ export class ItemDetailsComponent implements OnInit {
         files: [],
         base64: [],
         caption: []
-      };
-      customPlainGalleryRowConfig: PlainGalleryConfig = {
+    };
+    customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
-      };
-      customButtonsFontAwesomeConfig: ButtonsConfig = {
+    };
+    customButtonsFontAwesomeConfig: ButtonsConfig = {
         visible: true,
         strategy: ButtonsStrategy.CUSTOM,
         buttons: [
-          {
-            className: 'inside close-image',
-            type: ButtonType.CLOSE,
-            ariaLabel: 'custom close aria label',
-            title: 'Close',
-            fontSize: '20px'
-          }
+            {
+                className: 'inside close-image',
+                type: ButtonType.CLOSE,
+                ariaLabel: 'custom close aria label',
+                title: 'Close',
+                fontSize: '20px'
+            }
         ]
-      };
-      itmId;
-      data:any;
-      haveMainImg = false;
-      imageList: any = [];
+    };
+    itmId;
+    data: any;
+    haveMainImg = false;
+    imageList: any = [];
+    mainImage = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -140,6 +141,7 @@ export class ItemDetailsComponent implements OnInit {
                         this.breadcrumbs = breadcrumbs;
                         this.action = 'add';
                         this.createForm();
+                        this.api_loading = false;
                     } else {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
@@ -148,8 +150,11 @@ export class ItemDetailsComponent implements OnInit {
                                 this.getItem(this.item_id).then(
                                     (item) => {
                                         this.item = item;
-                                        console.log(this.item.itemImages);
-                                       
+                                        this.api_loading = false;
+                                        if (this.item.itemImages) {
+                                            this.imageList = this.item.itemImages;
+                                            this.loadImages(this.item.itemImages);
+                                        }
                                         this.itemname = this.item.displayName;
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
@@ -177,7 +182,6 @@ export class ItemDetailsComponent implements OnInit {
                             }
                         );
                     }
-                    this.api_loading = false;
                 }
             }
         );
@@ -186,10 +190,9 @@ export class ItemDetailsComponent implements OnInit {
         this.image_list_popup = [];
         if (imagelist.length > 0) {
             for (let i = 0; i < imagelist.length; i++) {
-                if (imagelist.displayImage && !this.haveMainImg) {
+                if (imagelist[i].displayImage) {
                     this.haveMainImg = true;
                 }
-                console.log(this.haveMainImg);
                 const imgobj = new Image(
                     i,
                     { // modal
@@ -199,19 +202,16 @@ export class ItemDetailsComponent implements OnInit {
                 this.image_list_popup.push(imgobj);
             }
         }
-        console.log(this.image_list_popup);
     }
     ngOnInit() {
-       // this.getTaxpercentage();
+        // this.getTaxpercentage();
     }
     getItem(itemId) {
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderItems(itemId)
                 .subscribe(
-                    (data: any) => {
-                        this.imageList = data.itemImages;
-                        this.loadImages(data.itemImages);
+                    (data) => {
                         resolve(data);
                     },
                     () => {
@@ -238,7 +238,7 @@ export class ItemDetailsComponent implements OnInit {
                 stockAvailable: [true],
                 taxable: [false],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
                 customlabel: []
@@ -258,7 +258,7 @@ export class ItemDetailsComponent implements OnInit {
                 stockAvailable: [false],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([ Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPriceType: [],
                 promotionallabel: [],
                 customlabel: []
@@ -266,7 +266,7 @@ export class ItemDetailsComponent implements OnInit {
         }
         if (this.action === 'edit') {
             this.itemcaption = 'Edit Item';
-                this.updateForm();
+            this.updateForm();
         }
     }
     setDescFocus() {
@@ -290,7 +290,6 @@ export class ItemDetailsComponent implements OnInit {
         this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
     }
     updateForm() {
-        console.log(this.item);
         if (this.item.taxable) {
             // taxable = '1';
             this.holdtaxable = true;
@@ -312,25 +311,24 @@ export class ItemDetailsComponent implements OnInit {
             'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
             'promotionallabel': this.item.promotionLabelType || 'ONSALE'
         });
-        console.log(this.amForm);
         this.curtype = this.item.promotionalPriceType || 'FIXED';
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
-          this.valueCaption = 'Enter value';
-          this.curtype = typ;
+            this.valueCaption = 'Enter value';
+            this.curtype = typ;
         } else {
-          this.curtype = typ;
-          this.valueCaption = 'Enter percentage value';
+            this.curtype = typ;
+            this.valueCaption = 'Enter percentage value';
         }
-      }
-      handleLabelchange(type) {
+    }
+    handleLabelchange(type) {
         if (type === 'Other') {
             this.showCustomlabel = true;
-          } else {
+        } else {
             this.showCustomlabel = false;
-          }
-      }
+        }
+    }
     handleTaxablechange() {
         this.resetApiErrors();
         if (this.taxpercentage <= 0) {
@@ -383,8 +381,7 @@ export class ItemDetailsComponent implements OnInit {
                 return;
             }
         }
-      //  this.saveImagesForPostinstructions();
-      console.log(form_data);
+        //  this.saveImagesForPostinstructions();
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
@@ -414,7 +411,6 @@ export class ItemDetailsComponent implements OnInit {
             // if (form_data.promotionalPriceType === 'PCT') {
             //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
             // }
-            console.log(post_itemdata);
             this.addItem(post_itemdata, isfrom);
         } else if (this.action === 'edit') {
             const post_itemdata = {
@@ -436,7 +432,6 @@ export class ItemDetailsComponent implements OnInit {
                 'promotionalPrcnt': form_data.promotionalPrice || 0,
                 'status': this.item.status
             };
-            console.log(this.showPromotionalPrice);
             if (!this.showPromotionalPrice) {
                 post_itemdata['promotionalPriceType'] = 'NONE';
                 post_itemdata['promotionLabelType'] = 'NONE';
@@ -448,7 +443,6 @@ export class ItemDetailsComponent implements OnInit {
 
     // }
     addItem(post_data, isFrom?) {
-        console.log(isFrom);
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
@@ -456,8 +450,8 @@ export class ItemDetailsComponent implements OnInit {
             .subscribe(
                 (data) => {
                     if (this.selectedMessage.files.length > 0) {
-                        this.saveImages(data);
-                      }
+                        this.saveImages(data, 'main');
+                    }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
                     if (isFrom === 'saveadd') {
@@ -465,12 +459,14 @@ export class ItemDetailsComponent implements OnInit {
                         this.showPromotionalPrice = false;
                         this.showCustomlabel = false;
                         this.amForm.reset();
+                        this.haveMainImg = false;
+                        this.mainImage = false;
                         this.selectedMessage = {
                             files: [],
                             base64: [],
                             caption: []
-                          };
-                          this.image_list_popup = [];
+                        };
+                        this.image_list_popup = [];
                     } else {
                         this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
                     }
@@ -528,145 +524,161 @@ export class ItemDetailsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'items', item.itemId], navigationExtras);
     }
     redirecToJaldeeOrdermanager() {
-        this.router.navigate(['provider', 'settings', 'ordermanager' , 'items']);
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
     }
     saveImages(id, type?) {
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
         for (const pic of this.selectedMessage.files) {
-          console.log(pic);
-          submit_data.append('files', pic, pic['name']);
-          console.log(i);
-          let properties = {};
-          if (type) {
-          properties = {
-            'caption': this.selectedMessage.caption[i] || '',
-            'displayImage': true
-          };
-        } else {
-            properties = {
-                'caption': this.selectedMessage.caption[i] || '',
-                'displayImage': false
-              };
-        }
-          console.log(properties);
-          propertiesDetob[i] = properties;
-          i++;
+            submit_data.append('files', pic, pic['name']);
+            let properties = {};
+            if (type) {
+                properties = {
+                    'caption': this.selectedMessage.caption[i] || '',
+                    'displayImage': true
+                };
+            } else {
+                properties = {
+                    'caption': this.selectedMessage.caption[i] || '',
+                    'displayImage': false
+                };
+            }
+            propertiesDetob[i] = properties;
+            i++;
         }
         const propertiesDet = {
-          'propertiesMap': propertiesDetob
-        };
-        console.log(propertiesDet);
+            'propertiesMap': propertiesDetob
+        };;
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
-        this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
-        this.getItem(this.item_id);
-         },
-        error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        });
+            // if (this.action === 'edit') {
+            // this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+            // }
+            this.getItem(this.item_id).then(
+                (item) => {
+                    this.item = item;
+                    if (this.item.itemImages) {
+                        this.imageList = this.item.itemImages;
+                        this.loadImages(this.item.itemImages);
+                    }
+                });
+            this.api_loading = false;
+        },
+            error => {
+                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.getItem(this.item_id).then(
+                    (item) => {
+                        this.item = item;
+                        if (this.item.itemImages) {
+                            this.imageList = this.item.itemImages;
+                            this.loadImages(this.item.itemImages);
+                        }
+                        this.api_loading = false;
+                    });
+            });
     }
     saveImagesForPostinstructions() {
         const files = this.selectedMessage.files;
         const propertiesDetob = {};
-    
+
         for (let pic of this.selectedMessage.files) {
-    
-          const properties = {
-            'caption': this.selectedMessage.caption[pic] || '',
-    
-          };
-          propertiesDetob[pic] = properties;
-          pic++;
+
+            const properties = {
+                'caption': this.selectedMessage.caption[pic] || '',
+
+            };
+            propertiesDetob[pic] = properties;
+            pic++;
         }
         const propertiesDet = {
-          'propertiesMap': propertiesDetob
+            'propertiesMap': propertiesDetob
         };
         const preInstructionGallery = {
-          'files': files,
-          'information': propertiesDet
+            'files': files,
+            'information': propertiesDet
         };
-    
+
         this.data = preInstructionGallery;
-        console.log(this.data);
-      }
+    }
 
     openImageModalRow(image: Image) {
-        console.log(image);
-        console.log(this.image_list_popup[0]);
         const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
         this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-      }
-      private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    }
+    private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
         return image ? images.indexOf(image) : -1;
-      }
-      onButtonBeforeHook() {
-      }
-      onButtonAfterHook() { }
+    }
+    onButtonBeforeHook() {
+    }
+    onButtonAfterHook() { }
 
-      imageSelect(event, type?) {
-          console.log('sel');
+    imageSelect(event, type?) {
+        this.api_loading = true;
         const input = event.target.files;
         if (input) {
-          for (const file of input) {
-            if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
-              this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-            } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-              this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-            } else {
-              this.selectedMessage.files.push(file);
-              console.log(this.selectedMessage.files);
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                this.selectedMessage.base64.push(e.target['result']);
-                this.image_list_popup = [];
-                for (let i = 0; i < this.selectedMessage.files.length; i++) {
-                const imgobj = new Image(i,
-                  { img: this.selectedMessage.base64[i],
-                    description: ''
-                  });
-                this.image_list_popup.push(imgobj);
+            for (const file of input) {
+                if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+                    this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+                    this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                } else {
+                    this.selectedMessage.files.push(file);
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.selectedMessage.base64.push(e.target['result']);
+                        this.image_list_popup = [];
+                        for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                            const imgobj = new Image(i,
+                                {
+                                    img: this.selectedMessage.base64[i],
+                                    description: ''
+                                });
+                            this.image_list_popup.push(imgobj);
+                        }
+                    };
+                    reader.readAsDataURL(file);
                 }
-              };
-              reader.readAsDataURL(file);
             }
-          }
-          if (this.itmId && this.selectedMessage.files.length > 0) {
-            this.saveImages(this.itmId, type);
-          }
+            if (this.itmId && this.selectedMessage.files.length > 0) {
+                this.saveImages(this.itmId, type);
+            } else {
+                this.api_loading = false;
+                if (type) {
+                    this.mainImage = true;
+                }
+            }
         }
-      }
+    }
 
-      deleteTempImage(img, index) {
-        this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': 'Do you really want to remove the item image?'
-          }
-        });
-        this.removeimgdialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            // if (img.view && img.view === true) {
-                console.log(img);
-                const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
-                console.log(imgDetails);
-              this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
-                .subscribe((data) => {
-                  this.selectedMessage.files.splice(index, 1);
-                },
-                  error => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                  });
-            // } else {
-            //   this.selectedMessage.files.splice(index, 1);
-            //   this.selectedMessage.base64.splice(index, 1);
-            //   this.image_list_popup.splice(index, 1);
-            // }
-          }
-        });
-      }
+    deleteTempImage(img, index) {
+        if (this.action === 'edit') {
+            this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Do you really want to remove the item image?'
+                }
+            });
+            this.removeimgdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
+                    this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
+                        .subscribe((data) => {
+                            this.selectedMessage.files.splice(index, 1);
+                        },
+                            error => {
+                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            });
+                }
+            });
+        } else {
+            this.mainImage = false;
+            this.selectedMessage.files.splice(index, 1);
+            this.selectedMessage.base64.splice(index, 1);
+            this.image_list_popup.splice(index, 1);
+        }
+    }
 }
