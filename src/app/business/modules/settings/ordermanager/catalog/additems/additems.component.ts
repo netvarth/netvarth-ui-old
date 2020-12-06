@@ -57,6 +57,9 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   api_loading = true;
   seletedCatalogItems = [];
   tempcatalog = [];
+  minquantity;
+  maxquantity;
+
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
     private location: Location,
@@ -126,7 +129,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selectedItems() {
     this.seletedCatalogItems = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
+      console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
+        this.catalogItem[ia].minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+        this.catalogItem[ia].maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
         this.seletedCatalogItems.push(this.catalogItem[ia]);
       }
     }

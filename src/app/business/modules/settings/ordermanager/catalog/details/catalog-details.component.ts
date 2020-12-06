@@ -249,7 +249,6 @@ createForm() {
  this.amForm = this.fb.group({
  catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
  catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
- catalogdays: [],
  startdate: [''],
  enddate: [''],
  qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
@@ -262,14 +261,12 @@ createForm() {
  cancelationPolicyStatus: [true],
  cancelationPolicy: [''],
  storepickup: [false],
- storepickupdays: [],
  startdatestore: [''],
  enddatestore: [''],
  qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
  storeotpverify: [false],
  homedelivery: [false],
- homedeliverydays: [],
  startdatehome: [''],
  enddatehome: [''],
  qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
@@ -284,7 +281,6 @@ createForm() {
  this.amForm = this.fb.group({
  catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
  catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
- catalogdays: [],
  startdate: [''],
  enddate: [''],
  qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
@@ -297,14 +293,12 @@ createForm() {
  cancelationPolicyStatus: [true],
  cancelationPolicy: [''],
  storepickup: [false],
- storepickupdays: [],
  startdatestore: [''],
  enddatestore: [''],
  qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
  storeotpverify: [false],
  homedelivery: [false],
- homedeliverydays: [],
  startdatehome: [''],
  enddatehome: [''],
  qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
@@ -505,26 +499,14 @@ updateForm() {
  } else {
  this.Selallhomedelivery = false;
  }
-//  for (let j = 0; j < this.catalog.orderStatuses.length; j++) {
-//     for (let i = 0; i < this.status.length; i++) {
-//         if (this.catalog.orderStatuses[j] === this.status[i]) {
-//             if (this.selectedStatus.indexOf(this.status[i]) === -1) {
-//                 this.selectedDepartments.push(this.status[i]);
-//             }
-            
-//         }
-//     }
-
-// }
-
-
- console.log(this.catalog.catalogName);
+ 
  let status;
  if (this.catalog.paymentType === 'FIXED') {
  status = true;
  } else {
  status = false;
  }
+
  this.amForm.setValue({
         'catalogName': this.catalog.catalogName || '',
         'catalogDesc': this.catalog.catalogDesc || '',
@@ -537,10 +519,11 @@ updateForm() {
         'itemPriceInfo': this.catalog.showPrice,
         'advancePaymentStatus': status,
         'advancePayment': this.catalog.advanceAmount || '',
+        'cancelationPolicyStatus': true,
         'cancelationPolicy': this.catalog.cancellationPolicy,
         'storepickup': this.catalog.pickUp.orderPickUp,
-        'startdatestore': this.catalog.pickUp.orderPickUp.startDate || '',
-        'enddatestore': this.catalog.pickUp.orderPickUp.terminator.endDate || '',
+        'startdatestore': this.catalog.pickUp.pickUpSchedule.startDate || '',
+        'enddatestore': this.catalog.pickUp.pickUpSchedule.terminator.endDate || '',
         'qstarttimestore': sttimestore,
         'qendtimestore': edtimestore,
         'storeotpverify': this.catalog.pickUp.pickUpOtpVerification,
@@ -553,8 +536,15 @@ updateForm() {
         'deliverykms': this.catalog.homeDelivery.deliveryRadius || '',
         'deliverycharge': this.catalog.homeDelivery.deliveryCharge || ''
         });
+        if (this.catalog.pickUp.orderPickUp) {
+            this.storepickupStat = true;
+        }
+        if (this.catalog.homeDelivery.homeDelivery) {
+            this.homedeliveryStat = true;
+        }
 }
 
+ 
 showimg() {
  if (this.item_pic.base64) {
  return this.item_pic.base64;
