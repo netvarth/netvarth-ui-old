@@ -69,7 +69,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
    this.linear = false;
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      // firstCtrl: ['', Validators.required]
+      firstCtrl: ['', Validators.compose([ Validators.required, Validators.maxLength(10), Validators.minLength(10) ])],
+
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
@@ -143,7 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
 
 
-  updateAddress() {
+  updateAddress(address) {
     this.addressdialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
       // width: '800px;',
@@ -151,6 +153,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: {
         type: 'edit',
+        address: this.added_address,
+        update_address: address
 
       }
     });

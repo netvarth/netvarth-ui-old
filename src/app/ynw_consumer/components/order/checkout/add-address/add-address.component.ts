@@ -21,6 +21,7 @@ export class AddAddressComponent implements OnInit {
   address_add: any =  [];
   formMode: any;
   exist_add: any;
+  edit_address: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddAddressComponent>,
@@ -33,10 +34,12 @@ export class AddAddressComponent implements OnInit {
     private consumer_services: ConsumerServices,
   ) {
     this.formMode = data.type;
+    if (this.formMode === 'edit') {
+      this.edit_address = data.update_address;
+    }
     this.exist_add = data.address;
-    console.log(this.address_add);
+    this.edit_address = data.update_address;
     this.address_add = this.exist_add;
-    console.log(this.address_add);
    }
 
   ngOnInit() {
@@ -53,18 +56,24 @@ export class AddAddressComponent implements OnInit {
       address:  ['', Validators.compose([ Validators.required ])],
       city:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       postalCode:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-      landMark:  ['', Validators.compose([ Validators.required ])]
-
-
+      landMark:  ['', Validators.compose([ Validators.required ])] ,
     });
-
-
-   
-
-  // if (this.formMode === 'edit') {
-  //   this.updateForm();
-  // }
-}
+    if (this.formMode === 'edit') {
+      this.updateForm();
+    }
+ }
+  updateForm() {
+    this.amForm.setValue({
+      'phoneNumber': this.edit_address.phoneNumber || null,
+      'firstName': this.edit_address.firstName || null,
+      'lastName': this.edit_address.lastName || null,
+      'email': this.edit_address.email || null,
+      'address': this.edit_address.address || null,
+      'city': this.edit_address.city || null,
+      'postalCode': this.edit_address.postalCode || null,
+      'landMark': this.edit_address.landMark || null,
+    });
+  }
 close() {
     this.dialogRef.close();
 }

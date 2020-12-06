@@ -8,7 +8,7 @@
 
         <!-- <a class="pull-left back-btn mgn-up-5"><i class="fa fa-arrow-left"></i></a> -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <!-- <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header> -->
+          <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
         </div>
         <!-- </div> -->
       </div>
@@ -44,8 +44,7 @@
                     <ng-template matStepLabel>Fill out your address</ng-template>
 
                       <div class="div-outline custId-cursor" *ngFor="let address of added_address; let i = index">
-
-                        <button type="button" mat-button style="float: right;" class="cs-btn bt1 pull-right" (click)="updateAddress()"> edit </button>
+                          <button type="button" mat-button style="float: right;" class="cs-btn bt1 pull-right" (click)="updateAddress(address)"> edit </button>
                         <div>
                         <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
                           <div>{{address.address}}</div>
@@ -53,6 +52,7 @@
                           <div> {{address.phoneNumber}}</div>
                           <div> {{address.email}}</div>
                         </div>
+
 
 
 
