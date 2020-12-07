@@ -26537,3 +26537,13 @@ hr {
 .main-img li .galbx {
   height: 200px;
 }
+#carousel-container > .current-figure > #current-image{
+  height: 400px !important;
+  padding-bottom: 20px!important;
+}
+
+#carousel-container > .current-figure {
+  -webkit-animation: none !important;
+    animation: none !important;
+
+}

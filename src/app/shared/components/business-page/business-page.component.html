@@ -353,9 +353,9 @@
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
                         <span class="pull-left">
-                            <span class="mgn-rt-10"><img class="ordericon home"
+                            <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery"><img class="ordericon home"
                                     src="../../../../assets/images/home.png" />&nbsp;Home Delivery</span>
-                            <span class=""><img class="ordericon pickup"
+                            <span class=""  *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp"><img class="ordericon pickup"
                                     src="../../../../assets/images/pickup.png" />&nbsp;Store Pickup</span>
                         </span>
                     </div>

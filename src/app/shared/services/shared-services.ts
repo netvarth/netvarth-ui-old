@@ -841,4 +841,9 @@ export class SharedServices {
     const url = 'http://localhost:4200/assets/json/item.json';
     return this.servicemeta.httpGet(url);
   }
+  getItemDetails(itemId?) {
+    console.log(itemId);
+    const url = 'http://localhost:4200/assets/json/item-details.json';
+    return this.servicemeta.httpGet(url);
+  }
 }

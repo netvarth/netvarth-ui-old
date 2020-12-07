@@ -301,6 +301,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
+
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -2203,7 +2204,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
-    } else if (actionObj['type']==='item') {
+    } else if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);
       } else if (actionObj['action'] === 'add') {
@@ -2413,38 +2414,40 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
- /**
-   * Order Related Code
-   */
+  /**
+    * Order Related Code
+    */
 
   getCatalogs(locationId) {
     console.log(locationId);
     this.orderItems = [];
     const orderItems = [];
-     this.shared_services.getConsumerCatalogs().subscribe(
-       (catalogs: any) => {
-         this.activeCatalog = catalogs;
-         // console.log(cat)
-         // if(catalogs.length > 1) {
-         //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
-         //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
-         //     this.itemCount++;
-         //   }
-         // } else if (catalogs.length === 1) {
-           for (let itemIndex = 0; itemIndex < catalogs.catalogItem.length; itemIndex++){
-             orderItems.push({ 'type': 'item', 'item': catalogs.catalogItem[itemIndex] });
-             this.itemCount++;
-           }
-         // }
-         this.orderItems = orderItems;
-       }
-     );
+    this.shared_services.getConsumerCatalogs().subscribe(
+      (catalogs: any) => {
+        this.activeCatalog = catalogs[0];
+        this.catlogArry();
+        // console.log(cat)
+        // if(catalogs.length > 1) {
+        //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
+        //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
+        //     this.itemCount++;
+        //   }
+        // } else if (catalogs.length === 1) {
+        for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+          orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex] });
+          this.itemCount++;
+        }
+        // }
+        this.orderItems = orderItems;
+      }
+    );
   }
 
   //OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
     this.orderList.push(item);
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.getTotalItemAndPrice();
     this.getItemQty(item);
   }
@@ -2454,6 +2457,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     for (const i in this.orderList) {
       if (this.orderList[i].itemId === item.itemId) {
         this.orderList.splice(i, 1);
+        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }
@@ -2491,15 +2495,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return qty;
   }
-  catlogArry(catalog) {
+  catlogArry() {
     // this.catlog = itemjson;
-    this.catalogItem = catalog.default.catalogItem;
+    // this.catalogItem = catalog.default.catalogItem;
     if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
     }
     this.getTotalItemAndPrice();
-    }
-
+  }
   reset() {
 
   }

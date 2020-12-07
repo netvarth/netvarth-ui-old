@@ -19,7 +19,7 @@ import { OrderBillComponent } from './order-bill/order-bill.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PaymentComponent } from './payment/payment.component';
-
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 @NgModule({
     declarations: [
         ShoppingCartComponent,
@@ -42,7 +42,8 @@ import { PaymentComponent } from './payment/payment.component';
         HeaderModule,
         MaterialModule,
         OwlModule,
-        MatStepperModule
+        MatStepperModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     entryComponents: [
       AddAddressComponent

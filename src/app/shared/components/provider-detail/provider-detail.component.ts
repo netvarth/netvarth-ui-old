@@ -1934,7 +1934,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
      const orderItems = [];
       this.shared_services.getConsumerCatalogs().subscribe(
         (catalogs: any) => {
-          this.activeCatalog = catalogs;
+          this.activeCatalog = catalogs[0];
+          this.catlogArry();
+          console.log(this.activeCatalog);
           // console.log(cat)
           // if(catalogs.length > 1) {
           //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
@@ -1942,12 +1944,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           //     this.itemCount++;
           //   }
           // } else if (catalogs.length === 1) {
-            for (let itemIndex = 0; itemIndex < catalogs.catalogItem.length; itemIndex++){
-              orderItems.push({ 'type': 'item', 'item': catalogs.catalogItem[itemIndex] });
+            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++){
+              orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex] });
               this.itemCount++;
             }
           // }
           this.orderItems = orderItems;
+          console.log(this.orderItems);
         }
       );
    }
@@ -1958,6 +1961,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 addToCart(itemObj) {
   const item = itemObj.item;
   this.orderList.push(item);
+  this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   this.getTotalItemAndPrice();
   this.getItemQty(item);
 }
@@ -1967,6 +1971,7 @@ removeFromCart(itemObj) {
   for (const i in this.orderList) {
     if (this.orderList[i].itemId === item.itemId) {
       this.orderList.splice(i, 1);
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
       break;
     }
   }
@@ -2004,9 +2009,9 @@ getItemQty(item) {
   }
   return qty;
 }
-catlogArry(catalog) {
+catlogArry() {
   // this.catlog = itemjson;
-  this.catalogItem = catalog.default.catalogItem;
+  // this.catalogItem = catalog.default.catalogItem;
   if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
     this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
   }
