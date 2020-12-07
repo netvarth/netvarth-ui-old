@@ -31,6 +31,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   added_address: any = [];
   advance_amount: any;
   account_id: any;
+   choose_type;
 
   linear: boolean;
   constructor(
@@ -266,6 +267,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
 
     }
+  }
+  changeTime() {
+console.log('chnage time');
   }
 
 
