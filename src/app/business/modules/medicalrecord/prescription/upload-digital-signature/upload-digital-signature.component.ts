@@ -159,7 +159,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you really want to remove the signature?'
+        'message': 'Do you really want to remove the digital signature?',
+        'type': 'digitalSignature'
       }
     });
     this.removedsigndialogRef.afterClosed().subscribe(result => {

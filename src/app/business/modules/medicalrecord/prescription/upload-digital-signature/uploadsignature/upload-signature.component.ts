@@ -114,7 +114,8 @@ export class UploadSignatureComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you really want to remove the signature?'
+        'message': 'Do you really want to remove the digital signature?',
+        'type': 'digitalSignture'
       }
     });
     this.removesignuploadeddialogRef.afterClosed().subscribe(result => {
