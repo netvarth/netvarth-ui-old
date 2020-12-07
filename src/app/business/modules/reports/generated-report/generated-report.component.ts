@@ -3,12 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-<<<<<<< HEAD
-declare let cordova: any;
-=======
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
->>>>>>> refs/remotes/origin/1.6.x
+declare let cordova: any;
 
 @Component({
   selector: 'app-generated-report',
@@ -36,8 +33,8 @@ export class GeneratedReportComponent implements OnInit {
   reprtdialogRef: any;
   hide_criteria_save = false;
 
-
   constructor(
+
     private report_data_service: ReportDataService,
     private router: Router,
     public dateformat: DateFormatPipe,
@@ -93,8 +90,6 @@ export class GeneratedReportComponent implements OnInit {
     printsection += '</body></html>';
     cordova.plugins.printer.print(printsection);
   }
-<<<<<<< HEAD
-=======
   saveCriteria() {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
       width: '400px',
@@ -107,6 +102,4 @@ export class GeneratedReportComponent implements OnInit {
     this.reprtdialogRef.afterClosed().subscribe(result => {
     });
   }
-
->>>>>>> refs/remotes/origin/1.6.x
 }

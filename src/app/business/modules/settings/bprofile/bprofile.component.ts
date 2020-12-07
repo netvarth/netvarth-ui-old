@@ -22,11 +22,8 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
-<<<<<<< HEAD
-declare let cordova: any;
-=======
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
->>>>>>> refs/remotes/origin/1.6.x
+declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
@@ -1332,11 +1329,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       if (result) {
         setTimeout(() => {
           this.getCoverPhoto();
-<<<<<<< HEAD
-         }, 2000);
-=======
         }, 2000);
->>>>>>> refs/remotes/origin/1.6.x
       } else {
         this.getProviderLogo();
       }
@@ -1410,8 +1403,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       data => {
         console.log(data);
         if (data) {
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' }); 
-            this.getCoverPhoto();
+          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+          this.getCoverPhoto();
         }
       });
   }
@@ -1524,7 +1517,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.cacheavoider_cover = dd;
           this.imageToShow = '';
           this.clogo = data;
-           // this.cover_url = data[0].url;
+          // this.cover_url = data[0].url;
           this.cover_url = (data[0].url) ? data[0].url + '?' + this.cacheavoider_cover : '';
           //  this.imageToShow = this.cover_url;
           this.imageToShow = this.sharedfunctionobj.showlogoicon(this.cover_url);
@@ -1533,14 +1526,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   deleteCover() {
-<<<<<<< HEAD
-    const del_pic = this.clogo[0].keyName;
-    this.provider_services.deleteCoverFoto(del_pic).subscribe(
-      data => {
-        this.getCoverPhoto();
-        this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
-      });
-=======
     const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -1559,9 +1544,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           });
       }
     });
->>>>>>> refs/remotes/origin/1.6.x
   }
-<<<<<<< HEAD
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     setTimeout(() => {
@@ -1583,7 +1566,4 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       // printWindow.document.close();
     });
   }
-=======
->>>>>>> refs/remotes/origin/1.6.x
 }
-
