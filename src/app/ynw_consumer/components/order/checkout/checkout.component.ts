@@ -29,6 +29,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   order_date;
   customer_data: any = [];
   added_address: any = [];
+  advance_amount: any;
+  account_id: any;
 
   linear: boolean;
   constructor(
@@ -58,6 +60,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.order_date = params.order_date;
         console.log(this.order_date);
 
+        this.advance_amount = params.advance_amount;
+        console.log(this.advance_amount);
+        this.account_id = params.account_id;
+        console.log(this.account_id);
+
         // this.pid = params.pid;
         // this.members = params.members;
         // this.prepayment = params.prepayment;
@@ -78,7 +85,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     console.log(this.customer_data);
     this.getaddress();
+    // this.getcatlog();
   }
+  // getcatlog() {
+  //   console.log('hi');
+  //   this.consumer_services.AddGetConsumerCatalogs(this.account_id)
+  //     .subscribe(
+  //       data => {
+  //         const history: any = data;
+  //         console.log(history);
+
+  //       },
+  //       error => {
+  //         this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       }
+  //     );
+  // }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   }
@@ -222,12 +244,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'quantity': 1
         }
         ],
-        'orderDate': '2020-11-26',
+        'orderDate': '2020-12-26',
         'phoneNumber': '8129630960',
         'email': 'aneesh.mg@jaldee.com'
 
       };
       console.log(post_Data);
+      // this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
+      // .subscribe(
+      //   data => {
+      //     const history: any = data;
+      //   console.log(history);
+      //   },
+      //   error => {
+      //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   }
+      // );
+      this.router.navigate(['consumer', 'order', 'payment'] );
+
+
+
+
     }
   }
 

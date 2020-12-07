@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import * as catalogdetails from '../../../../../assets/json/getcatlog.json';
@@ -34,12 +34,21 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   ddate;
   hold_sel_checkindate;
   choose_type = 'store';
+  advance_amount: any;
+  account_id: any;
 
 
   constructor(
     public router: Router,
+    public route: ActivatedRoute,
     private location: Location,
-    public sharedFunctionobj: SharedFunctions) { }
+    public sharedFunctionobj: SharedFunctions) {
+      this.route.queryParams.subscribe(
+        params => {
+          this.account_id = params.account_id;
+          console.log(this.account_id);
+        });
+    }
 
   ngOnInit() {
     console.log(this.choose_type);
@@ -51,6 +60,8 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     this.currentcatlog = this.catalogJSON.default[0];
     this.sel_checkindate = this.currentcatlog.nextAvailablePickUpDetails.availableDate;
     this.hold_sel_checkindate = this.sel_checkindate;
+    this.advance_amount = this.currentcatlog.advanceAmount;
+    
     console.log(this.currentcatlog);
 
     
@@ -141,6 +152,8 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
         selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
         selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
         order_date: this.sel_checkindate,
+        advance_amount: this.advance_amount,
+        account_id: this.account_id
 
       }
 
