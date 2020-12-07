@@ -346,4 +346,3 @@ export class CheckYourStatusComponent implements OnInit {
     return appx_ret;
   }
 }
-
