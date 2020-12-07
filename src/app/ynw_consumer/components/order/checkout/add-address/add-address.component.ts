@@ -18,10 +18,12 @@ export class AddAddressComponent implements OnInit {
   amForm: FormGroup;
   api_error = null;
   api_success = null;
-  address_add: any =  [];
+  address_add: any = [];
   formMode: any;
-  exist_add: any;
+  exist_add: any = [];
   edit_address: any;
+  address_title;
+  index: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddAddressComponent>,
@@ -33,14 +35,20 @@ export class AddAddressComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private consumer_services: ConsumerServices,
   ) {
+    this.address_title = 'Add New Address';
     this.formMode = data.type;
     if (this.formMode === 'edit') {
       this.edit_address = data.update_address;
+      this.address_title = 'Edit Address';
     }
-    this.exist_add = data.address;
+    if (data.address !== null) {
+      this.exist_add = data.address;
+    }
+
     this.edit_address = data.update_address;
-    this.address_add = this.exist_add;
-   }
+    this.index = data.edit_index;
+
+  }
 
   ngOnInit() {
     this.createForm();
@@ -48,20 +56,20 @@ export class AddAddressComponent implements OnInit {
   createForm() {
 
     this.amForm = this.fb.group({
-      phoneNumber: ['', Validators.compose([ Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       firstName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       lastName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-      email:  ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+      email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
 
-      address:  ['', Validators.compose([ Validators.required ])],
-      city:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-      postalCode:  ['', Validators.compose([ Validators.required,  Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-      landMark:  ['', Validators.compose([ Validators.required ])] ,
+      address: ['', Validators.compose([Validators.required])],
+      city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      postalCode: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      landMark: ['', Validators.compose([Validators.required])],
     });
     if (this.formMode === 'edit') {
       this.updateForm();
     }
- }
+  }
   updateForm() {
     this.amForm.setValue({
       'phoneNumber': this.edit_address.phoneNumber || null,
@@ -74,24 +82,42 @@ export class AddAddressComponent implements OnInit {
       'landMark': this.edit_address.landMark || null,
     });
   }
-close() {
+  close() {
     this.dialogRef.close();
-}
-onSubmit(form_data) {
-  console.log(form_data);
-  this.address_add.push(form_data);
-  console.log(this.address_add);
-  this.consumer_services.updateConsumeraddress(this.address_add)
+  }
+  onSubmit(form_data) {
+    console.log(form_data);
+    console.log(JSON.stringify(form_data));
+    console.log(JSON.stringify(this.exist_add));
+
+    if (this.formMode === 'edit') {
+      this.exist_add.splice(this.index, 1);
+    }
+    this.exist_add.push(form_data);
+
+    console.log(JSON.stringify(this.exist_add));
+
+    this.consumer_services.updateConsumeraddress(this.exist_add)
       .subscribe(
         data => {
-          const history: any = data;
-        console.log(history);
+          if (this.formMode === 'edit'){
+            this.sharedfunctionObj.openSnackBar('Address Updated successfully');
+          } else {
+            this.sharedfunctionObj.openSnackBar('Address Added successfully');
+          }
+
+          this.dialogRef.close();
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+
+
+
+
 
 }
 
-}
+

@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerServices } from '../../../services/consumer-services.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-checkout',
@@ -18,7 +18,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   orderAmount: number;
   catlog: any;
   catalogItem: any;
-  addressdialogRef: any;
+  addressDialogRef: any;
   orderList: any = [];
   price: number;
   orders: any[];
@@ -29,9 +29,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   order_date;
   customer_data: any = [];
   added_address: any = [];
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
+
   linear: boolean;
   constructor(
     public sharedFunctionobj: SharedFunctions,
@@ -39,7 +37,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private dialog: MatDialog,
-    private _formBuilder: FormBuilder,
+
     private consumer_services: ConsumerServices) {
     this.route.queryParams.subscribe(
       params => {
@@ -67,15 +65,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-   this.linear = false;
-    this.firstFormGroup = this._formBuilder.group({
-      // firstCtrl: ['', Validators.required]
-      firstCtrl: ['', Validators.compose([ Validators.required, Validators.maxLength(10), Validators.minLength(10) ])],
+    this.linear = false;
 
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
 
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
@@ -128,7 +119,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       );
   }
   addAddress() {
-    this.addressdialogRef = this.dialog.open(AddAddressComponent, {
+    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
       // width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -138,15 +129,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         address: this.added_address
       }
     });
-    this.addressdialogRef.afterClosed().subscribe(result => {
+    this.addressDialogRef.afterClosed().subscribe(result => {
       this.getaddress();
     });
   }
 
 
 
-  updateAddress(address) {
-    this.addressdialogRef = this.dialog.open(AddAddressComponent, {
+  updateAddress(address, index) {
+    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
       // width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -154,9 +145,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data: {
         type: 'edit',
         address: this.added_address,
-        update_address: address
+        update_address: address,
+        edit_index: index
 
       }
+    });
+    this.addressDialogRef.afterClosed().subscribe(result => {
+    this.getaddress();
+
     });
 
   }

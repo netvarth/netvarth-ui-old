@@ -28,43 +28,53 @@
             <div class="col-md-12 no-padding-small">
 
               <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
-                <mat-step [stepControl]="firstFormGroup">
-                  <form [formGroup]="firstFormGroup">
+                <mat-step  label="Step1">
+
                     <ng-template matStepLabel>Enter your Registered Mobile Number</ng-template>
                     <mat-form-field>
-                      <input matInput placeholder="Mobile Number" formControlName="firstCtrl" required>
+                      <input matInput placeholder="Mobile Number"  required>
                     </mat-form-field>
                     <div>
                       <button mat-button matStepperNext>Next</button>
                     </div>
-                  </form>
+
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup">
-                  <form [formGroup]="secondFormGroup">
+                <mat-step label="Step 2">
+
                     <ng-template matStepLabel>Fill out your address</ng-template>
 
-                      <div class="div-outline custId-cursor" *ngFor="let address of added_address; let i = index">
-                          <button type="button" mat-button style="float: right;" class="cs-btn bt1 pull-right" (click)="updateAddress(address)"> edit </button>
-                        <div>
-                        <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                          <div>{{address.address}}</div>
-                          <div>{{address.city}} , {{address.postalCode}}</div>
-                          <div> {{address.phoneNumber}}</div>
-                          <div> {{address.email}}</div>
-                        </div>
+                      <div class="div-outline custId-cursor col-md-6 mt-1" *ngFor="let address of added_address; let i = index">
+                        <mat-card class="card">
+                          <mat-card-header>Address {{i+1}}</mat-card-header>
+                          <mat-card-content>
+                              <div>
+                                  <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                    <div>{{address.address}}</div>
+                                    <div>{{address.city}} , {{address.postalCode}}</div>
+                                    <div> {{address.phoneNumber}}</div>
+                                    <div> {{address.email}}</div>
+                                  </div>
+                          </mat-card-content>
+                          <mat-card-actions>
+                              <button type="button"  class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
+
+
+                          </mat-card-actions>
+                        </mat-card>
 
 
 
 
                         <div class="clearfix"></div>
                       </div>
+                      <div (click)="addAddress();"> <button type="button"  class="btn btn-link" > Add New Address </button> </div>
                     <div>
                       <button mat-button matStepperPrevious>Back</button>
                       <button mat-button matStepperNext>Next</button>
                     </div>
-                  </form>
+
                 </mat-step>
-                <mat-step>
+                <mat-step label="Step 3">
                   <ng-template matStepLabel>Delivery options</ng-template>
                   Items will be delivered to your home
                   <div>
