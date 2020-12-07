@@ -79,7 +79,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_started_checkin_msg = '';
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
-  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
+  check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   locations: any = [];
@@ -1674,9 +1674,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1944,7 +1944,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all') {
+    if (this.filter.waitlist_status === 'all' && this.time_type !== 3) {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.labelFilterData !== '') {

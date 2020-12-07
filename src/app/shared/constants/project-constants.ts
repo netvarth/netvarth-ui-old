@@ -447,7 +447,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
-    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' },
+    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_APPT_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'Confirmed' },
@@ -458,7 +460,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },
-    { displayName: 'Cancelled', value: 'cancelled' }
+    { displayName: 'Cancelled', value: 'cancelled' },
+    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
