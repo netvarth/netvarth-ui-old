@@ -106,8 +106,8 @@ export class OrdermanagerComponent implements OnInit {
     });
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderStatus().subscribe(data => {
-      this.orderstatus = data;
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.orderstatus = data.enableOrder;
       this.pos_statusstr = (this.orderstatus) ? 'On' : 'Off';
       this.shared_functions.sendMessage({ 'ttype': 'orderStatus', orderStatus: this.orderstatus });
     });

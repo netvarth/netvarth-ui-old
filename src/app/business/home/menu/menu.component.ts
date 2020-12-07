@@ -230,8 +230,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderStatus().subscribe(data => {
-      this.orderstatus = data;
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.orderstatus = data.enableOrder;
     });
   }
 }

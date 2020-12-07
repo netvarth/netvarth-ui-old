@@ -194,4 +194,12 @@ export class ConsumerServices {
   getOrderHistory() {
      return this.servicemeta.httpGet('consumer/orders/history');
    }
+  CreateConsumerOrder(accountid, postData) {
+    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
+  }
+  GetConsumerCatalogs(accountid) {
+    const url = 'consumer/orders/catalogs/'   + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+
 }

@@ -1175,8 +1175,8 @@ export class OrderDashboardComponent implements OnInit {
     return api_filter;
   }
   getOrderStatus() {
-    this.providerservices.getProviderOrderStatus().subscribe(data => {
-      this.orderstatus = data;
+    this.providerservices.getProviderOrderSettings().subscribe((data: any) => {
+      this.orderstatus = data.enableOrder;
       if (this.orderstatus) {
         this.doSearch();
         this.getProviderTodayOrdersCount();

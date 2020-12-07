@@ -7,6 +7,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
 import { OrderBillComponent } from './order-bill/order-bill.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,9 @@ const routes: Routes = [
   },
   {
     path: 'order-bill', component: OrderBillComponent
+  },
+  {
+    path: 'payment' , component: PaymentComponent
   }
 ];
 @NgModule({

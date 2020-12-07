@@ -1445,8 +1445,8 @@ this.getOrderStatus();
       );
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderStatus().subscribe(data => {
-      this.orderstatus = data;
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.orderstatus = data.enableOrder;
       this.orderstatusstr = (this.orderstatus) ? 'On' : 'Off';
     });
   }
