@@ -311,8 +311,9 @@
 .itemstatus {
   margin-right: 5px;
   font-size: small;
-  color: #3c8dbc;
 }
-  
+.additem .card{
+  background: #ffa50021 !important;
+}  
   
   

@@ -20,9 +20,9 @@
         </div>
     </div> -->
 
-    <div class="bus-item">
+    <div class="bus-item additem">
         <div class="card card-item-n no-padding pointer-cursor" (click)="addItem()">
-            <img src="assets/images/add.svg">
+            <img src="assets/images/add.svg" class="mgn-up-30">
             <div class="card-item-title">
                 <a class="pointer-cursor"><b>Add Item</b> </a>
             </div>
@@ -48,7 +48,7 @@
             </div> -->
             <div class="bus-item" *ngFor="let item of item_list;let i=index;">
                 <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
-                    <img [src]="getItemImg(item)">
+                    <img [src]="getItemImg(item)" class="mgn-up-5">
                     <div class="card-item-title">
                         <a><b>
                                 {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
@@ -56,10 +56,11 @@
                             <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p>
                         </a>
                     </div>
-                    <div class="pull-right itemstatus" (click)="stopprop($event);dochangeStatus(item)">
-                            <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
-                            <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
-                            {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
+                    <div class="pull-right itemstatus" [class.red]="item.status=='ACTIVE'"
+                        [class.greenc]="item.status=='INACTIVE'" (click)="stopprop($event);dochangeStatus(item)">
+                        <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
+                        <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
+                        {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
                     </div>
                 </div>
             </div>
