@@ -529,6 +529,7 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            console.log(this.waitlist_for)
         }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -695,7 +696,9 @@ export class AppointmentComponent implements OnInit {
             // };
             fn.subscribe(data => {
                 this.familymembers = [];
+                console.log(this.familymembers)
                 this.familymembers.push(this.customer_data);
+                console.log(this.familymembers)
                 for (const mem of data) {
                     if (mem.id !== this.customer_data.id) {
                         this.familymembers.push(mem);
@@ -1020,6 +1023,7 @@ export class AppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'countryCode': '+91',
             'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
