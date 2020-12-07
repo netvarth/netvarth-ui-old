@@ -1,8 +1,8 @@
 <section class="">
         <div class="card title-gb">
         <h5 class="mgn-up-10"> 
-        
-        <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeOrdrmnagrCatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <span class="fa fa-arrow-left pointer-cursor" *ngIf="showInfo" (click)="backToCatalog()"></span>
+        <span class="fa fa-arrow-left pointer-cursor" *ngIf="!showInfo" (click)="redirecToJaldeeOrdrmnagrCatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         Catalog creation
         </h5>
         </div>
@@ -26,7 +26,7 @@
         <mat-form-field>
         <input matInput type="text" class="form-control" id="catalogName"
         placeholder="Catalog Name " formControlName="catalogName"
-        autocomplete="off" maxlength="50">
+        maxlength="50">
         </mat-form-field>
         <app-field-error-display
         [displayError]="fed_service.isFieldValid(amForm,'catalogName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogName',
@@ -170,7 +170,7 @@
         <label>Advance payment &nbsp;
         <mat-checkbox formControlName="advancePaymentStatus" (change)="handleadvancePayment($event)">
         </mat-checkbox></label>
-        <div *ngIf="advancePaymentStat">
+        <div *ngIf="payAdvance === 'FIXED'">
         <mat-form-field>
         <input matInput type="text" class="form-control number-ip-sm" id="advancePayment"
         placeholder="Advance Amount " formControlName="advancePayment" 

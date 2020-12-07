@@ -169,6 +169,8 @@ export class CatalogdetailComponent implements OnInit {
  'Canceled'
 ];
 selectedStatus;
+uploadcatalogImages: any = [];
+payAdvance = 'NONE';
  constructor(private provider_services: ProviderServices,
  private sharedfunctionObj: SharedFunctions,
  private router: Router,
@@ -325,11 +327,11 @@ setCharCount() {
 }
 handleadvancePayment(event) {
  if (event.checked) {
- this.advancePaymentStat = true;
+ this.payAdvance = 'FIXED';
  } else {
- this.advancePaymentStat = false;
+    this.payAdvance = 'NONE';
  }
- console.log(event);
+ console.log(this.payAdvance);
 
 }
 handlestorepickup(event) {
@@ -503,12 +505,13 @@ updateForm() {
  let status;
  if (this.catalog.paymentType === 'FIXED') {
  status = true;
+ this.payAdvance = 'FIXED';
  } else {
  status = false;
  }
 
  this.amForm.setValue({
-        'catalogName': this.catalog.catalogName || '',
+        'catalogName': this.catalog.catalogName,
         'catalogDesc': this.catalog.catalogDesc || '',
         'startdate': this.catalog.catalogSchedule.startDate || '',
         'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
@@ -542,9 +545,28 @@ updateForm() {
         if (this.catalog.homeDelivery.homeDelivery) {
             this.homedeliveryStat = true;
         }
+        this.preInfoEnabled = this.catalog.preInfo.preInfoEnabled;
+        this.postInfoEnabled = this.catalog.postInfo.postInfoEnabled;
+        this.preInfoTitle = this.catalog.preInfo.preInfoTitle || '';
+        this.preInfoText = this.catalog.preInfo.preInfoText || '';
+        this.postInfoTitle = this.catalog.postInfo.postInfoTitle || '';
+        this.postInfoText = this.catalog.postInfo.postInfoText || '';
+        if (this.catalog.catalogImages) {
+            this.uploadcatalogImages = this.catalog.catalogImages;
+        this.image_list_popup = [];
+        for (const pic of this.uploadcatalogImages) {
+          this.selectedMessage.files.push(pic);
+          const imgobj = new Image(0,
+            { // modal
+              img: pic.url,
+              description: ''
+            });
+          this.image_list_popup.push(imgobj);
+        }
+    }
 }
 
- 
+
 showimg() {
  if (this.item_pic.base64) {
  return this.item_pic.base64;
@@ -831,15 +853,11 @@ onSubmit(form_data) {
          enddatehome.setMinutes(this.dend_timehome.minute);
          const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
          const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
-         let payAdvance;
-         if (form_data.advancePaymentStatus === 'true') {
-            payAdvance = 'FIXED';
+         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
                 this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelclass': 'snackbarerror' });
                 return;
             }
-         } else {
-         payAdvance = 'NONE';
          }
         
         
@@ -909,7 +927,7 @@ onSubmit(form_data) {
          'deliveryCharge': form_data.deliverycharge
          },
          'showPrice': form_data.itemPriceInfo,
-         'paymentType': payAdvance,
+         'paymentType': this.payAdvance,
          'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
          'preInfo': {
          'preInfoEnabled': this.preInfoEnabled,
@@ -961,7 +979,7 @@ editCatalog(post_itemdata) {
  this.disableButton = true;
  this.resetApiErrors();
  this.api_loading = true;
- post_itemdata.itemId = this.catalog.itemId;
+ post_itemdata.id = this.catalog.id;
  this.provider_services.editCatalog(post_itemdata)
  .subscribe(
  () => {
@@ -1073,6 +1091,9 @@ public onReady(editor) {
  editor.getData();
 
 }
+backToCatalog() {
+    this.showInfo = false;
+}
 
 saveImages(id) {
  const submit_data: FormData = new FormData();
@@ -1093,6 +1114,24 @@ saveImages(id) {
  const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
  submit_data.append('properties', blobPropdata);
  this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
+    this.getCatalog(this.catalog_id).then(
+        (catalog) => {
+        this.catalog = catalog;
+        if (this.catalog.catalogImages) {
+            this.uploadcatalogImages = this.catalog.catalogImages;
+        this.image_list_popup = [];
+        for (const pic of this.uploadcatalogImages) {
+          this.selectedMessage.files.push(pic);
+          const imgobj = new Image(0,
+            { // modal
+              img: pic.url,
+              description: ''
+            });
+          this.image_list_popup.push(imgobj);
+        }
+    }
+        }
+        );
  this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
  },
  error => {
@@ -1158,10 +1197,16 @@ deleteTempImage(img, index) {
         });
         this.removeimgdialogRef.afterClosed().subscribe(result => {
             if (result) {
-                if (img.view && img.view === true) {
-                    this.provider_services.deleteUplodedCatalogImage(img.keyName, this.catalog_id)
+                console.log(result);
+                console.log(img);
+                if (this.action === 'edit') {
+                    console.log(this.uploadcatalogImages);
+                    const imgDetails = this.uploadcatalogImages.filter(image => image.url === img.modal.img);
+                    console.log(imgDetails);
+                    this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
                     .subscribe((data) => {
                     this.selectedMessage.files.splice(index, 1);
+                    this.image_list_popup.splice(index, 1);
                     },
                     error => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
