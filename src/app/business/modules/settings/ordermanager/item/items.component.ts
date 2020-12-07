@@ -209,7 +209,11 @@ export class ItemsComponent implements OnInit, OnDestroy {
             const img = item.itemImages.filter(image => image.displayImage);
             if (img[0]) {
                 return img[0].url;
+            } else {
+                return '../../../../assets/images/order/Items.svg';
             }
+        } else {
+            return '../../../../assets/images/order/Items.svg';
         }
     }
 }
