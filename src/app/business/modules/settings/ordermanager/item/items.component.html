@@ -9,27 +9,27 @@
 </section>
 <section>
     <p class="form-level-settings">{{frm_items_cap}}</p>
-    <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
+    <!-- <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
         <div class="property-card" (click)="addItem()">
             <a>
                 <div class="property-image">
                     <div class="property-image-title">
-                        <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
                     </div>
                 </div>
             </a>
         </div>
+    </div> -->
+
+    <div class="bus-item">
+        <div class="card card-item-n no-padding pointer-cursor" (click)="addItem()">
+            <img src="assets/images/add.svg">
+            <div class="card-item-title">
+                <a class="pointer-cursor"><b>Add Item</b> </a>
+            </div>
+        </div>
     </div>
     <div>
         <ng-container *ngIf="item_list.length >= 1">
-            <div class="bus-item">
-                <div class="card card-item-n no-padding" (click)="addItem()">
-                    <img src="assets/images/add.svg">
-                    <div class="card-item-title">
-                        <a class="pointer-cursor"><b>Add Item</b> </a>
-                    </div>
-                </div>
-            </div>
             <!-- <div class="bus-item card" *ngFor="let item of item_list;let i=index;" (click)="editViewedItem(item.itemId)"
                 style="margin-right: 10px !important;">
                 <img style="width: 100%;"
@@ -56,15 +56,10 @@
                             <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p>
                         </a>
                     </div>
-                    <div class="pull-right">
-                        <button [matMenuTriggerFor]="menu" (click)="stopprop($event)">... </button>
-                        <mat-menu #menu="matMenu">
-                            <button type="button" (click)="dochangeStatus(item)" mat-menu-item>
-                                <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
-                                <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
-                                {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
-                            </button>
-                        </mat-menu>
+                    <div class="pull-right itemstatus" (click)="stopprop($event);dochangeStatus(item)">
+                            <i *ngIf="item.status=='INACTIVE' || !item.status" class="icon-enable"></i>
+                            <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
+                            {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
                     </div>
                 </div>
             </div>

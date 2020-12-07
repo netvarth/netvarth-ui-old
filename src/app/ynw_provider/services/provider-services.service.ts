@@ -1762,8 +1762,8 @@ export class ProviderServices {
    deleteUplodedCatalogImage(name, id) {
       return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
    }
-   getProviderOrderStatus() {
-      const url = 'provider/order/settings/status';
+   getProviderOrderSettings() {
+      const url = 'provider/order/settings';
       return this.servicemeta.httpGet(url);
    }
    setProviderOrderSStatus(status) {
