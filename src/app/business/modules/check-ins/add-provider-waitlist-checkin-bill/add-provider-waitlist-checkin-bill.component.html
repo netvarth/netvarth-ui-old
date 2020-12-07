@@ -913,11 +913,11 @@
 																</div>
 																<div class="td three">
 																	<span class="amt rupee-font"
-																		*ngIf="payment.refundableAmount > 0">{{payment.refundableAmount |
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount |
 													currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
-																		*ngIf="payment.refundableAmount > 0">Refund</button>
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">Refund</button>
 																</div>
 															</div>
 															<div class="refunds-table"
