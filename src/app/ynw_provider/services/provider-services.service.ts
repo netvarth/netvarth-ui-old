@@ -1690,5 +1690,17 @@ export class ProviderServices {
    paymentRefund(data) {
       return this.servicemeta.httpPost('provider/payment/refund', data);
    }
+   saveReportCriteria(reportName, data) {
+      const url = 'provider/report/' + reportName;
+      return this.servicemeta.httpPost(url, data);
+   }
+   getCriteriaList() {
+      const url = 'provider/report/criteria';
+      return this.servicemeta.httpGet(url);
+   }
+   deleteCriteria(reportName, reportType) {
+      const path = 'provider/report/' + reportName + '/' + reportType;
+      return this.servicemeta.httpDelete(path);
+   }
 }
 

@@ -16,6 +16,7 @@ export class ConfirmBoxComponent implements OnInit {
   cancel_btn_cap = Messages.NO_BTN;
   deptName;
   showError = false;
+  okCancelBtn = false
   constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -23,6 +24,10 @@ export class ConfirmBoxComponent implements OnInit {
     if (this.data.type) {
       this.ok_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;
+    }
+    if (this.data.buttons == 'okCancel') {
+      this.ok_btn_cap = Messages.OK_BTN;
+      this.cancel_btn_cap = Messages.CANCEL_BTN;
     }
   }
 

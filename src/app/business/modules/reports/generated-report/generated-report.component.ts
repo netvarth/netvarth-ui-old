@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ReportDataService } from '../reports-data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+<<<<<<< HEAD
 declare let cordova: any;
+=======
+import { MatDialog } from '@angular/material/dialog';
+import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
+>>>>>>> refs/remotes/origin/1.6.x
 
 @Component({
   selector: 'app-generated-report',
@@ -28,17 +33,18 @@ export class GeneratedReportComponent implements OnInit {
 
 
   public report_dataSource = new MatTableDataSource<any>([]);
+  reprtdialogRef: any;
+  hide_criteria_save = false;
 
 
   constructor(
-
     private report_data_service: ReportDataService,
     private router: Router,
     public dateformat: DateFormatPipe,
-
+    private dialog: MatDialog,
+    private activated_route: ActivatedRoute,
   ) {
     this.report = this.report_data_service.getReport();
-    console.log(JSON.stringify(this.report));
     this.report_type = this.report.reportType.toLowerCase();
     this.tableColums = this.report.reportContent.columns;
     this.objectKeys = Object.keys;
@@ -47,19 +53,21 @@ export class GeneratedReportComponent implements OnInit {
       this.reportConsolidatedInfo = this.report.reportContent.dataHeader;
     }
     this.reportHeader = this.report.reportContent;
-    console.log(this.tableColums);
     Object.entries(this.tableColums).forEach(
       ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
     );
     this.displayedColumns = this.table_header.map(column => column.order);
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams.reportRecreate) {
+        this.hide_criteria_save = true;
+      }
+    });
 
   }
 
 
 
   ngOnInit() {
-
-    // console.log(this.table_header);
     this.report_dataSource = this.report.reportContent.data;
     if (this.report.reportContent.data.length === 0) {
       this.showReport = false;
@@ -85,4 +93,20 @@ export class GeneratedReportComponent implements OnInit {
     printsection += '</body></html>';
     cordova.plugins.printer.print(printsection);
   }
+<<<<<<< HEAD
+=======
+  saveCriteria() {
+    this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
+      width: '400px',
+      // panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        purpose : 'save'
+      }
+    });
+    this.reprtdialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+>>>>>>> refs/remotes/origin/1.6.x
 }

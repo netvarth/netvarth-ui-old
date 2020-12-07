@@ -12860,36 +12860,6 @@ input[type=number]::-webkit-outer-spin-button {
 .mr-clinic-notes-n p {
   font-size: 1rem !important;
 }
-.heading1 {
-  font-size: 1.25rem !important;
-  font-weight: 500;
-}
-.heading1b {
-  font-size: 1.25rem !important;
-  font-weight: 600;
-}
-.heading2 {
-  font-size: 1.20rem !important;
-  font-weight: 500;
-}
-.heading2b {
-  font-size: 1.20rem !important;
-  font-weight: 600;
-}
-.heading3 {
-  font-size: 1.10rem !important;
-  font-weight: 500;
-}
-.heading3b {
-  font-size: 1.10rem !important;
-  font-weight: 600;
-}
-.normal-sz {
-  font-size: 1rem !important;
-}
-hr {
-  border-top: 1px solid #ddd !important;
-}
 .join_phone_label{
   color: #5f75bc;
   font-size: 1rem !important;
@@ -13132,4 +13102,51 @@ hr {
 }
 .fa-instagram, .fa-globe {
   font-size: 1.25rem;
+}
+.BizyGlobe {
+  background: url(../images/BG_icon_sqr.jpg) no-repeat scroll 0 0/20px 20px !important;
+}
+.bizyGlobe {
+  content: url(../images/BG_icon_sqr.jpg) !important;
+  width: 20px;
+}
+.primary-color{
+  color: #191d96 !important;
+}
+.heading1 {
+  font-size: 1.25rem !important;
+  font-weight: 500;
+}
+.heading1b {
+  font-size: 1.25rem !important;
+  font-weight: 600;
+}
+.heading2 {
+  font-size: 1.20rem !important;
+  font-weight: 500;
+}
+.heading2b {
+  font-size: 1.20rem !important;
+  font-weight: 600;
+}
+.heading3 {
+  font-size: 1.10rem !important;
+  font-weight: 500;
+}
+.heading3b {
+  font-size: 1.10rem !important;
+  font-weight: 600;
+}
+.normal-sz {
+  font-size: 1rem !important;
+}
+.mobileNo{
+  width:280px !important;
+}
+hr {
+  border-top: 1px solid #ddd !important;
+}
+.proPicCancelBtn {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }

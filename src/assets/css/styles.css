@@ -59,7 +59,7 @@
     font-weight: normal !important;
     font-variant: normal !important;
     text-transform: none !important;
-    speak: none;
+    speak-as: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -71,7 +71,7 @@
     font-weight: normal !important;
     font-variant: normal !important;
     text-transform: none !important;
-    speak: none;
+    speak-as: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -10262,7 +10262,7 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
     border: none !important;
     width: 100%;
 }
-.progress-bar {
+/* .progress-bar { */
    /* background: -webkit-linear-gradient(left, #0276FD 0%, #003F87 100%); /* Chrome10-25,Safari5.1-6 */
     /* background:
    -webkit-linear-gradient(-45deg, 
@@ -10279,7 +10279,7 @@ p.bus-name {margin-bottom: 0 !important; margin-top:5px !important}
                         transparent,transparent 33%,rgba(0,0,0,.1) 33%,rgba(0,0,0,.1) 66%,transparent 66%),
     -webkit-linear-gradient( top, rgba(255, 255, 255, .25),rgba(0,0,0,.2)),
      -webkit-linear-gradient( left, #09c, #228B22); */
-    }
+    /* } */
 
       .progress-bar:last-child {
         border: none; 

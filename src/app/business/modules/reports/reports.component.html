@@ -7,7 +7,7 @@
 </section>
 <section>
   <div class="content w-manager settings comn-cls">
-      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-6 no-padding-small">
 
 
         <!--Appointments-->
@@ -18,14 +18,27 @@
                       <mat-expansion-panel-header>
                           <mat-panel-title class="report_title">
                              Appointments
+                             <div class="width100pc" *ngIf="appt_criteria.length > 0">
+                              <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
+                             </div>
                           </mat-panel-title>
                       </mat-expansion-panel-header>
                       <ng-container *ngIf="appointmentReports.length===0">
-                        <div>
+                        <div *ngIf="appt_criteria.length === 0">
                           <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                          <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('appointment');">New Report</button> -->
                           <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
                         </div>
+                        <table style="width:300px" *ngIf="appt_criteria.length > 0">
+                          <div class="savd-report">Saved Reports
+                            <i class="fa fa-chevron-circle-down"></i>
+                          </div>
+                           <tr *ngFor="let apt_cr of appt_criteria">
+                            <td>{{apt_cr.reportName}}</td>
+                            <td><a (click)="recreateReport(apt_cr)">Generate</a></td>
+                            <td><a (click)="viewCriteria(apt_cr)">View</a></td>
+                            <td><a (click)="deletCriteria(apt_cr)">Delete</a></td>
+                          </tr>
+                        </table>
                     </ng-container>
                   </mat-expansion-panel>
               </mat-accordion>
@@ -40,14 +53,27 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title class="report_title">
                            Payments
+                           <div class="width100pc" *ngIf="payment_criteria.length > 0">
+                            <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
+                           </div>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <ng-container *ngIf="paymentReports.length===0">
-                      <div>
+                      <div *ngIf="payment_criteria.length === 0">
                         <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                        <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('payment');">New Report</button> -->
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
                       </div>
+                      <table style="width:300px" *ngIf="payment_criteria.length > 0">
+                        <div class="savd-report">Saved Reports
+                          <i class="fa fa-chevron-circle-down"></i>
+                        </div>
+                        <tr *ngFor="let pay_cr of payment_criteria">
+                          <td>{{pay_cr.reportName}}</td>
+                          <td><a>Generate</a></td>
+                          <td><a (click)="viewCriteria(pay_cr)">View</a></td>
+                          <td><a (click)="deletCriteria(pay_cr)">Delete</a></td>
+                        </tr>
+                      </table>
                   </ng-container>
                 </mat-expansion-panel>
             </mat-accordion>
@@ -62,14 +88,27 @@
                       <mat-panel-title class="report_title">
                           <span *ngIf="showToken">Token</span>
                           <span *ngIf="!showToken">Check-in</span>
+                          <div class="width100pc" *ngIf="token_criteria.length > 0">
+                            <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
+                           </div>
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="checkinReports.length===0">
-                    <div>
+                    <div *ngIf="token_criteria.length === 0">
                       <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                        <!-- <button type="button"  class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('token');">New Report</button> -->
                         <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
                     </div>
+                    <table style="width:300px" *ngIf="token_criteria.length > 0">
+                      <div class="savd-report">Saved Reports
+                        <i class="fa fa-chevron-circle-down"></i>
+                      </div>
+                      <tr *ngFor="let tkn_cr of token_criteria">
+                        <td>{{tkn_cr.reportName}}</td>
+                        <td><a>Generate</a></td>
+                        <td><a (click)="viewCriteria(tkn_cr)">View</a></td>
+                        <td><a (click)="deletCriteria(tkn_cr)">Delete</a></td>
+                      </tr>
+                    </table>
                 </ng-container>
               </mat-expansion-panel>
           </mat-accordion>
@@ -83,14 +122,27 @@
                   <mat-expansion-panel-header>
                       <mat-panel-title class="report_title">
                          Donations
+                         <div class="width100pc" *ngIf="donation_criteria.length > 0">
+                          <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
+                         </div>
                       </mat-panel-title>
                   </mat-expansion-panel-header>
                   <ng-container *ngIf="donationReports.length===0">
-                    <div>
+                    <div *ngIf="donation_criteria.length === 0">
                       <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
-                      <!-- <button type="button" class="btn btn-primary pull-left col-lg-3 col-md-3 col-sm-5 col-xs-6 " (click)="newReport('donation');">New Report</button> -->
                       <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
                     </div>
+                    <table style="width:300px" *ngIf="donation_criteria.length > 0">
+                      <div class="savd-report">Saved Reports
+                        <i class="fa fa-chevron-circle-down"></i>
+                      </div>
+                      <tr *ngFor="let don_cr of donation_criteria">
+                        <td>{{don_cr.reportName}}</td>
+                        <td><a>Generate</a></td>
+                        <td><a (click)="viewCriteria(don_cr)">View</a></td>
+                        <td><a (click)="deletCriteria(don_cr)">Delete</a></td>
+                      </tr>
+                    </table>
                 </ng-container>
               </mat-expansion-panel>
           </mat-accordion>

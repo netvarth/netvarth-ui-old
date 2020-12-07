@@ -32,6 +32,7 @@ export class ChangeMobileComponent implements OnInit {
   is_verified = false;
   user_details;
   prev_phonenumber;
+  countryCode;
   step = 1;
   curtype;
   usertype;
@@ -77,6 +78,7 @@ export class ChangeMobileComponent implements OnInit {
             this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
             this.prev_phonenumber = success['userProfile']['primaryMobileNo'];
+            this.countryCode = success['userProfile']['countryCode'];
             // this.spForm.setValue({
             //   'phonenumber': success['userProfile']['primaryMobileNo'] || null
             // });

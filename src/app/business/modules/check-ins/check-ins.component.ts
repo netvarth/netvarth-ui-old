@@ -80,7 +80,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_started_checkin_msg = '';
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
-  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
+  check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   locations: any = [];
@@ -374,9 +374,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { pk: 'NotPaid', value: 'Not Paid' },
     { pk: 'PartiallyPaid', value: 'Partially Paid' },
     { pk: 'FullyPaid', value: 'Fully Paid' },
-    // { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
-    // { pk: 'FullyRefunded', value: 'Fully Refunded' },
-    // { pk: 'Refund', value: 'Refund' }
+    { pk: 'PartiallyRefunded', value: 'Partially Refunded' },
+    { pk: 'FullyRefunded', value: 'Fully Refunded' },
+    { pk: 'Refund', value: 'Refund' }
   ];
   waitlistModes = [
     { mode: 'WALK_IN_CHECKIN', value: 'Walk in Check-in' },
@@ -1675,9 +1675,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1945,7 +1945,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all') {
+    if (this.filter.waitlist_status === 'all' && this.time_type !== 3) {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.labelFilterData !== '') {
@@ -2540,7 +2540,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">xcxcxcxccxcx' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
@@ -2588,6 +2588,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   printBill(checkinlist) {
     // const _this = this;
     this.qrCodegeneration(checkinlist);
+    const fname = (checkinlist.waitlistingFor[0].firstName) ? checkinlist.waitlistingFor[0].firstName : '';
+    const lname = (checkinlist.waitlistingFor[0].lastName) ? checkinlist.waitlistingFor[0].lastName : '';
     const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     setTimeout(() => {
@@ -2608,7 +2610,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + checkinlist.queue.location.place + '</td></tr>';
       checkin_html += '</thead><tbody>';
-      checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName + '</td></tr>';
+      if (fname !== '' || lname !== '') {
+      checkin_html += '<tr><td width="48%" align="right">Customerccc</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+      }
       if (checkinlist.service && checkinlist.service.deptName) {
         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + checkinlist.service.deptName + '</td></tr>';
       }

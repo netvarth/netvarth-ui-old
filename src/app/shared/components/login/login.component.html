@@ -29,8 +29,13 @@ onSubmit(loginForm.value)" *ngIf="step==1">
         <div class="form-group">
                 <div class="form-group mob-prefx mobile-field">
                     <div style="display: flex;">
-                            <div class="input-group-prepend mob-prefix">
-                                <span class="input-group-text" id="">+91</span>
+                            <div class="input-group-prepend">
+                                <span style="width: 65px">
+                                    <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
+                                  </mat-select>
+                                </span>
+                                <!-- <span class="input-group-text" id="">+91</span> -->
                                 </div>
             <mat-form-field>
                 <input *ngIf="heading == 'Service Provider Login'" type="text" matInput class="form-control" id="emailId" maxlength="50"

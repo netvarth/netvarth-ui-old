@@ -1,5 +1,5 @@
 
-import { NgModule, OnInit } from '@angular/core';
+import { NgModule, OnInit,  NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
@@ -18,6 +18,7 @@ import { ScheduleSelectionComponent } from './schedule-selection/schedule-select
 import { QueueSelectionComponent } from './queue-selection/queue-selection.component';
 import { GeneratedReportComponent } from './generated-report/generated-report.component';
 import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
+import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 
 @NgModule({
   imports: [
@@ -42,9 +43,10 @@ import { CustomerSelectionComponent } from './customer-selection/customer-select
     QueueSelectionComponent,
     GeneratedReportComponent,
     CustomerSelectionComponent,
+    CriteriaDialogComponent,
   ],
   entryComponents: [
-
+    CriteriaDialogComponent
   ],
   exports: [
     MatFormFieldModule,
@@ -53,6 +55,10 @@ import { CustomerSelectionComponent } from './customer-selection/customer-select
   ],
   providers: [
     ReportDataService
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 

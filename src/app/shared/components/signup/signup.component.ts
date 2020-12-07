@@ -41,7 +41,8 @@ export class SignUpComponent implements OnInit {
   activeSubDomainIndex;
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   subDomainList = [];
-
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+  selectedCountryCode;
   dropdownSettings = {
     singleSelection: false,
     text: 'Select Sub Sector',
@@ -93,6 +94,9 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.countryCodes.length !== 0) {
+      this.selectedCountryCode =this.countryCodes[0].value;
+    }
     this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
@@ -294,14 +298,14 @@ export class SignUpComponent implements OnInit {
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
     let userProfile = {
-      countryCode: '+91',
+      countryCode: this.selectedCountryCode,
       primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
       firstName: null,
       lastName: null
     };
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
-        countryCode: '+91',
+        countryCode: this.selectedCountryCode,
         primaryMobileNo: this.data.moreOptions.dataCreateProv.ph || null, // this.signupForm.get('phonenumber').value || null,
         firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
         lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
@@ -309,7 +313,7 @@ export class SignUpComponent implements OnInit {
     } else {
 
       userProfile = {
-        countryCode: '+91',
+        countryCode: this.selectedCountryCode,
         primaryMobileNo: this.signupForm.get('phonenumber').value || null,
         firstName: this.toCamelCase(fname) || null,
         lastName: this.toCamelCase(lname) || null,
@@ -493,14 +497,16 @@ export class SignUpComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
-    const post_data = { password: submit_data.new_password };
+    const post_data = { 
+      countryCode : this.selectedCountryCode,
+      password: submit_data.new_password };
     if (this.is_provider === 'true') {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
         .subscribe(
           () => {
             this.actionstarted = false;
             const login_data = {
-              'countryCode': '+91',
+              'countryCode': this.selectedCountryCode,
               'loginId': this.user_details.userProfile.primaryMobileNo,
               'password': post_data.password
             };
@@ -528,7 +534,7 @@ export class SignUpComponent implements OnInit {
           () => {
             this.actionstarted = false;
             const login_data = {
-              'countryCode': '+91',
+              'countryCode': this.selectedCountryCode,
               'loginId': this.user_details.userProfile.primaryMobileNo,
               'password': post_data.password
             };

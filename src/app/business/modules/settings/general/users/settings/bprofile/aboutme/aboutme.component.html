@@ -20,6 +20,7 @@
                                     <div class="cd-t">
                                         <div class="basic-i">
                                             <div class="bi-l" *ngIf="blogo">
+<<<<<<< HEAD
                                               <div class="pro-pic" [class.yes]="profimg_exists">
                                                 <div class="pro-pic-img"><img [src]="showimg()" alt=""
                                                         *ngIf="blogo[0] && blogo[0].url"></div>
@@ -35,6 +36,24 @@
                                                         <br /> {{pic_cap}}</span>
                                                     <!-- <span class="del-pic"
                                                         (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span> -->
+=======
+                                                <div class="pro-pic" [class.yes]="profimg_exists">
+                                                    <div class="pro-pic-img">
+                                                        <img [src]="showimg()" alt="" *ngIf="blogo[0] && blogo[0].url"
+                                                            class="crop-img-fit">
+                                                    </div>
+                                                    <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
+                                                    <div class="add">
+                                                        <span (click)="changeProPic('propic')">{{add_cap}}
+                                                            <br /> {{profile_pic_cap}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="change">
+                                                        <span class="change-pic" (click)="changeProPic('propic')">{{change_cap}}
+                                                            <br /> {{pic_cap}}</span>
+                                                        <!--<span class="del-pic" (click)="confirmLogoremove(blogo[0].keyName)">{{delete_pic}}</span>-->
+                                                    </div>
+>>>>>>> refs/remotes/origin/1.6.x
                                                 </div>
                                             </div>
                                             </div>

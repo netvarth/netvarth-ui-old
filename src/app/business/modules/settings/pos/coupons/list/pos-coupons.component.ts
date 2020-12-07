@@ -115,7 +115,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
           this.coupon_info[index] = ' ';
           if (this.jaldeeCoupons[index].couponRules.maxReimbursePercentage) {
-            this.coupon_info[index] = this.coupon_info[index] + 'Reimbursable,';
+            this.coupon_info[index] = this.coupon_info[index] + 'Reimbursable';
           }
           if (this.jaldeeCoupons[index].couponRules.firstCheckinOnly) {
             this.coupon_info[index] = this.coupon_info[index] + ' First checkin only,';

@@ -100,7 +100,7 @@ export const Messages = {
   'BPROFILE_SOCIAL_URL_VALID': 'Please enter a valid URL',
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   'BPROFILE_COVER_ADD': 'Cover photo uploaded successfully',
-  'BPROFILE_COVER_DEL': 'Cover photo deleted',
+  'BPROFILE_COVER_DEL': 'Cover photo has been removed',
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',

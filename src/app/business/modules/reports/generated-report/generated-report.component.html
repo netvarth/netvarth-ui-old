@@ -6,7 +6,7 @@
       </button>&nbsp;&nbsp;&nbsp; -->
       <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Report
-      <button type="button" class="btn default" style="float:right;line-height: 15px;" (click)="printReport()"> Print </button>
+      <!-- <button type="button" class="btn default" style="float:right;line-height: 15px;" (click)="printReport()"> Print </button> -->
       </h5>
   </div>
 </section>
@@ -15,7 +15,15 @@
   <div class="content w-manager">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
 
+
       <div class="card p20" id="reportGenerated">
+        <div>
+          <div class="criteria-btn-dv">
+            <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save"  (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn default" (click)="printReport()"> Print </button>
+          </div>
+        </div>
+        <hr width="100%">
 
           <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
 

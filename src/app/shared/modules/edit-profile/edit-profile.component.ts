@@ -34,6 +34,7 @@ export class EditProfileComponent implements OnInit {
   change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
   dashboard_cap = Messages.DASHBOARD_TITLE;
+  country_code = Messages.MOB_NO_PREFIX_CAP;
   editProfileForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -43,6 +44,7 @@ export class EditProfileComponent implements OnInit {
   minday = new Date(1900, 0, 1);
   emailHolder = '';
   phonenoHolder = '';
+  countryCode = '';
   fnameerror = null;
   lnameerror = null;
   emailerror = null;
@@ -105,6 +107,7 @@ export class EditProfileComponent implements OnInit {
               email1: data['userProfile']['email'] || ''
             });
             this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
+            this.countryCode = data['userProfile']['countryCode'] || '';
           } else if (typ === 'provider') {
             this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
             this.editProfileForm.setValue({
@@ -116,6 +119,8 @@ export class EditProfileComponent implements OnInit {
               email1: data['basicInfo']['email'] || ''
             });
             this.phonenoHolder = data['basicInfo']['mobile'] || '';
+            console.log(this.phonenoHolder)
+
           }
         },
         error => {

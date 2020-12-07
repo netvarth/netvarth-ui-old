@@ -10,8 +10,13 @@ onSubmit()" (keyup)="resetApiErrors()">
       <div class="form-group mob-prefx mobile-field">
         
         <div style="display: flex;">
-            <div class="input-group-prepend mob-prefix">
-                <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
+            <div class="input-group-prepend">
+              <span style="width: 65px">
+                <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                  <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
+                </mat-select>
+            </span>
+                <!-- <span class="input-group-text" id="">{{mob_prefix_cap}}</span> -->
                 </div>
         <mat-form-field> 
             <div>     
@@ -20,7 +25,7 @@ onSubmit()" (keyup)="resetApiErrors()">
             </div>
         </mat-form-field>
     </div>
-
+<div class="clearfix"></div>
 
         <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'phonenumber')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'phonenumber',
   {
