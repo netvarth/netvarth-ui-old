@@ -18,6 +18,7 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderBillComponent } from './order-bill/order-bill.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { MatStepperModule } from '@angular/material/stepper';
         ItemDetailsComponent,
         OrderHistoryComponent,
         OrderBillComponent,
-        OrderPaymentDetailsComponent
+        OrderPaymentDetailsComponent,
+        PaymentComponent
 
     ],
     imports: [
