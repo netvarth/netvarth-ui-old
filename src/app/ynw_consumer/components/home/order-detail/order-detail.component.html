@@ -52,11 +52,11 @@
                                                     {{waitlist.provider.lastName | capitalizeFirst}}
                                                 </span>
                                             </div>
-                                            <div class="mgn-up-10">
+                                            <!-- <div class="mgn-up-10">
                                                 <span class="serv-name">
                                                  Order name
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
 
@@ -73,10 +73,10 @@
                                                 <span class="item-head">Order No</span>
                                                 <span class="item-label-val">{{waitlist.orderNumber}}</span>
                                             </div>
-                                            <div class="each-item" *ngIf="waitlist.phoneNumber">
+                                            <!-- <div class="each-item" *ngIf="waitlist.phoneNumber">
                                                 <span class="item-head">Phone No</span>
                                                 <span class="item-label-val">{{waitlist.phoneNumber}}</span>
-                                            </div>
+                                            </div> -->
                                             <div class="each-item" *ngIf="waitlist.cartAmount">
                                                 <span class="item-head">Cart Amount</span>
                                                 <span class="item-label-val price rupee-font">
@@ -92,6 +92,19 @@
                                                 </ngx-qrcode>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
+                                        <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
+                                            <mat-grid-tile *ngFor="let item of waitlist.orderItem">
+                                                <mat-grid-tile-header>
+                                                </mat-grid-tile-header>
+                                                <div style="display: grid;">
+                                                    <div>{{item.name}}</div>
+                                                    <div>qty - {{item.quantity}}</div>
+                                                    <div>{{item.totalPrice}}</div>
+                                                </div>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
                                     </div>
 
                                     <!-- Status and Date, Queue -->

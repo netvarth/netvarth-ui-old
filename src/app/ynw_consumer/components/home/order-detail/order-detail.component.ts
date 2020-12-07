@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -122,6 +122,62 @@ export class OrderDetailComponent implements OnInit {
           'price': 100,
           'status': 'FULFILLED',
           'totalPrice': 100
+        },
+        {
+          'id': 3,
+          'name': 'Chicken Biriyani',
+          'quantity': 5,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 500
+        },
+        {
+          'id': 4,
+          'name': 'Ice cream',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 100
+        },
+        {
+          'id': 5,
+          'name': 'Meals',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 600
+        },
+        {
+          'id': 6,
+          'name': 'Fried Rice',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 70
+        },
+        {
+          'id': 7,
+          'name': 'Beef Biriyani1',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 100
+        },
+        {
+          'id': 8,
+          'name': 'Gheer',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 100
+        },
+        {
+          'id': 9,
+          'name': 'Ketchup',
+          'quantity': 1,
+          'price': 100,
+          'status': 'FULFILLED',
+          'totalPrice': 10
         }
       ],
       'orderStatus': 'Accepted',
@@ -181,6 +237,8 @@ export class OrderDetailComponent implements OnInit {
   actiondialogRef: any;
   elementType = 'url';
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  screenWidth: number;
+  no_of_grids: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -201,6 +259,27 @@ export class OrderDetailComponent implements OnInit {
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.checkin_label = 'order';
     this.cust_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+    this.onResize();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    console.log(this.screenWidth);
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+       divider = divident / 6;
+    } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
+      divider = divident / 4;
+    } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+      divider = divident / 3;
+    } else if (this.screenWidth < 375) {
+      divider = divident / 2;
+    }
+    console.log(divident);
+    console.log(divider);
+    this.no_of_grids = Math.round(divident / divider);
+    console.log(this.no_of_grids);
   }
 
   ngOnInit() {

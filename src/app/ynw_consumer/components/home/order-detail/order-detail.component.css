@@ -1,0 +1,16 @@
+.orderedItems mat-grid-tile {
+    background-color: #fff !important;
+    border-radius: .25rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+    overflow: hidden !important;
+}
+.orderedItems mat-grid-list {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.orderedItems mat-grid-tile-header {
+    background-image: url('https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2015/11/10/0/CI_Costa-Farms-Ballad-aster.jpg.rend.hgtvcom.966.644.suffix/1447169929799.jpeg');
+    background-repeat: round;
+    height: 45%;
+}
