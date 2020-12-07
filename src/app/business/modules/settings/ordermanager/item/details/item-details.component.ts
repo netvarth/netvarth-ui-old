@@ -81,6 +81,7 @@ export class ItemDetailsComponent implements OnInit {
     itemcaption = 'Add Item';
     showPromotionalPrice = false;
     image_list_popup: Image[];
+    mainimage_list_popup: Image[];
     galleryDialog;
     gallery_view_caption = Messages.GALLERY_CAP;
     havent_added_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
@@ -188,18 +189,27 @@ export class ItemDetailsComponent implements OnInit {
     }
     loadImages(imagelist) {
         this.image_list_popup = [];
+        this.mainimage_list_popup = [];
         if (imagelist.length > 0) {
             for (let i = 0; i < imagelist.length; i++) {
                 if (imagelist[i].displayImage) {
                     this.haveMainImg = true;
+                    const imgobj = new Image(
+                        i,
+                        { // modal
+                            img: imagelist[i].url,
+                            description: imagelist[i].caption || ''
+                        });
+                    this.mainimage_list_popup.push(imgobj);
+                } else {
+                    const imgobj = new Image(
+                        i,
+                        { // modal
+                            img: imagelist[i].url,
+                            description: imagelist[i].caption || ''
+                        });
+                    this.image_list_popup.push(imgobj);
                 }
-                const imgobj = new Image(
-                    i,
-                    { // modal
-                        img: imagelist[i].url,
-                        description: imagelist[i].caption || ''
-                    });
-                this.image_list_popup.push(imgobj);
             }
         }
     }
@@ -467,6 +477,7 @@ export class ItemDetailsComponent implements OnInit {
                             caption: []
                         };
                         this.image_list_popup = [];
+                        this.mainimage_list_popup = [];
                     } else {
                         this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
                     }
@@ -607,6 +618,10 @@ export class ItemDetailsComponent implements OnInit {
         const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
         this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     }
+    openmainImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.mainimage_list_popup);
+        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    }
     private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
         return image ? images.indexOf(image) : -1;
     }
@@ -628,14 +643,26 @@ export class ItemDetailsComponent implements OnInit {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         this.selectedMessage.base64.push(e.target['result']);
-                        this.image_list_popup = [];
-                        for (let i = 0; i < this.selectedMessage.files.length; i++) {
-                            const imgobj = new Image(i,
-                                {
-                                    img: this.selectedMessage.base64[i],
-                                    description: ''
-                                });
-                            this.image_list_popup.push(imgobj);
+                        if (type) {
+                            this.mainimage_list_popup = [];
+                            for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessage.base64[i],
+                                        description: ''
+                                    });
+                                this.mainimage_list_popup.push(imgobj);
+                            }
+                        } else {
+                            this.image_list_popup = [];
+                            for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessage.base64[i],
+                                        description: ''
+                                    });
+                                this.image_list_popup.push(imgobj);
+                            }
                         }
                     };
                     reader.readAsDataURL(file);
@@ -652,7 +679,7 @@ export class ItemDetailsComponent implements OnInit {
         }
     }
 
-    deleteTempImage(img, index) {
+    deleteTempImage(img, index, type?) {
         if (this.action === 'edit') {
             this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
                 width: '50%',
@@ -678,7 +705,11 @@ export class ItemDetailsComponent implements OnInit {
             this.mainImage = false;
             this.selectedMessage.files.splice(index, 1);
             this.selectedMessage.base64.splice(index, 1);
-            this.image_list_popup.splice(index, 1);
+            if (type) {
+                this.mainimage_list_popup = [];
+            } else {
+                this.image_list_popup.splice(index, 1);
+            }
         }
     }
 }

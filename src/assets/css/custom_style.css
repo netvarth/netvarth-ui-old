@@ -26531,3 +26531,9 @@ hr {
   content: url(../images/order/shopping-cart.svg) !important;
   width: 20px;
 }
+.main-img li {
+  width: 100%;
+}
+.main-img li .galbx {
+  height: 200px;
+}

@@ -32,6 +32,34 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="ph-gal-bx main-img"
+                                    *ngIf="mainimage_list_popup && mainimage_list_popup.length > 0">
+                                    <ul class="ph-gal">
+                                        <ng-container *ngFor="let file of mainimage_list_popup;let i = index">
+                                            <li>
+                                                <div class="galbx">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" mat-menu-item
+                                                                (click)="deleteTempImage(file, i, 'main')">
+                                                                <i class="icon-delete"></i>
+                                                                <span>{{delete_btn}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <div class="img-h" (click)="openmainImageModalRow(file)">
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                            *ngIf="file.modal.img" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                </div>
                                 <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
                                     <ul class="ph-gal">
                                         <ng-container *ngFor="let file of image_list_popup;let i = index">
