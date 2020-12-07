@@ -51,7 +51,7 @@
         <h4 class="card-title font-weight-bold d-block">
             <a class="d-block name line-clamp">{{service.displayName}}</a>
             <p class="module1 line-clamp1">{{service.shortDesc}}</p>
-            <a class="price rupee-font"><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> <span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span></a>
+            <a class="price rupee-font"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>
         </h4>
         <div class="col-md-12 pad-lt-25">
             <div class="btn-lt pull-left">

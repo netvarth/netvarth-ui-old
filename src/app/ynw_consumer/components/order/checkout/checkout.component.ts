@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   order_date;
   customer_data: any = [];
   added_address: any = [];
+  choose_type;
 
   linear: boolean;
   constructor(
@@ -230,6 +231,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       console.log(post_Data);
     }
   }
-
+  changeTime() {
+console.log('chnage time');
+  }
 
 }

@@ -29,7 +29,9 @@
 
               <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
                 <mat-step  label="Step1">
-
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon>VpnKey</mat-icon>
+                      </ng-template>
                     <ng-template matStepLabel>Enter your Registered Mobile Number</ng-template>
                     <mat-form-field>
                       <input matInput placeholder="Mobile Number"  required>
@@ -40,47 +42,91 @@
 
                 </mat-step>
                 <mat-step label="Step 2">
+                    <ng-template matStepLabel>Delivery options</ng-template>
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon>LocalShipping</mat-icon>
+                      </ng-template>
 
-                    <ng-template matStepLabel>Fill out your address</ng-template>
-
-                      <div class="div-outline custId-cursor col-md-6 mt-1" *ngFor="let address of added_address; let i = index">
-                        <mat-card class="card">
-                          <mat-card-header>Address {{i+1}}</mat-card-header>
-                          <mat-card-content>
-                              <div>
-                                  <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                                    <div>{{address.address}}</div>
-                                    <div>{{address.city}} , {{address.postalCode}}</div>
-                                    <div> {{address.phoneNumber}}</div>
-                                    <div> {{address.email}}</div>
-                                  </div>
-                          </mat-card-content>
-                          <mat-card-actions>
-                              <button type="button"  class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
-
-
-                          </mat-card-actions>
-                        </mat-card>
-
-
-
-
-                        <div class="clearfix"></div>
-                      </div>
-                      <div (click)="addAddress();"> <button type="button"  class="btn btn-link" > Add New Address </button> </div>
                     <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                        <p>Choose delivery type</p>
+                         <mat-radio-group [(ngModel)]="choose_type">
+                            <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'">
+                                Store pick up
+                            </mat-radio-button>
+                            <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'">
+                                Home delivery
+                            </mat-radio-button>&nbsp;
+                        </mat-radio-group>
+
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                          Date/Time
+                          <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
+                            (click)="changeTime()" >Change
+                              </a></span>
+                      </div>
+                      <!-- <div>
+                          <h4>
+                              <span *ngIf="!isFuturedate">Today, </span>
+                              <span *ngIf="!isFuturedate">
+                                  {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
+                              </span>
+                              <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                              </span>
+                              <span *ngIf="isFuturedate">
+                                  {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
+                              </span>
+
+                          </h4>
+                      </div> -->
                     </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+
+                    </div>
+
 
                 </mat-step>
                 <mat-step label="Step 3">
-                  <ng-template matStepLabel>Delivery options</ng-template>
-                  Items will be delivered to your home
+                    <ng-template matStepLabel>Fill out your address</ng-template>
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon>ContactMail</mat-icon>
+                      </ng-template>
+
+                    <div class="div-outline custId-cursor col-md-6 mt-1" *ngFor="let address of added_address; let i = index">
+                      <mat-card class="card">
+                        <mat-card-header>Address {{i+1}}</mat-card-header>
+                        <mat-card-content>
+                            <div>
+                                <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                  <div>{{address.address}}</div>
+                                  <div>{{address.city}} , {{address.postalCode}}</div>
+                                  <div> {{address.phoneNumber}}</div>
+                                  <div> {{address.email}}</div>
+                                </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button type="button"  class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
+
+
+                        </mat-card-actions>
+                      </mat-card>
+
+
+
+
+                      <div class="clearfix"></div>
+                    </div>
+                    <div (click)="addAddress();"> <button type="button"  class="btn btn-link" > Add New Address </button> </div>
                   <div>
                     <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
+                    <button mat-button matStepperNext>Next</button>
                   </div>
+
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Confirm Order</ng-template>
+                    <button mat-button matStepperPrevious>Back</button>
                 </mat-step>
               </mat-vertical-stepper>
 
@@ -94,7 +140,7 @@
                   <div class="bill-section-content">
                     <div class="bill-wrapper ">
                       <div style="text-align: center;">
-                        Order summary
+                        Order Summary
                       </div>
 
                       <div class="bill-content">
