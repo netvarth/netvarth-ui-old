@@ -154,7 +154,7 @@ export class OrderDetailsComponent implements OnInit {
     this.activaterouter.params.subscribe(param => {
       console.log(param);
       this.uid = param.id;
-      this.getOrderDetails(this.uid);
+      // this.getOrderDetails(this.uid);
     });
   }
 
