@@ -880,7 +880,7 @@
 														<div class="table-th">
 															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
-															<!-- <div class="th three">{{refundable_cap}}</div> -->
+															<div class="th three" *ngIf="bill_data.billStatus!='Settled'">{{refundable_cap}}</div>
 														</div>
 														<div class="listing"
 															*ngFor="let payment of pre_payment_log; let i = index">
@@ -911,7 +911,7 @@
 																		</span>
 																	</span>
 																</div>
-																<div class="td three">
+																<div class="td three" *ngIf="bill_data.billStatus!='Settled'">
 																	<span class="amt rupee-font"
 																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount |
 													currency:'&#8377; '}}</span>

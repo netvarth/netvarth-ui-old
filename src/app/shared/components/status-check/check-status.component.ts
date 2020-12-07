@@ -36,6 +36,7 @@ export class CheckYourStatusComponent implements OnInit {
   provider_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   source = '';
+  history = false;
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
     private shared_functions: SharedFunctions) {
@@ -202,11 +203,15 @@ export class CheckYourStatusComponent implements OnInit {
   }
   getWLDetails(encId) {
     this.foundDetails = false;
+    this.history = false;
     this.shared_services.getCheckinbyEncId(encId)
       .subscribe(
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
+          if (this.statusInfo.ynwUuid.startsWith('h_')) {
+            this.history = true;
+          }
           this.foundDetails = true;
           this.type = 'wl';
           this.api_loading = false;
