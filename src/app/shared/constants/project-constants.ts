@@ -734,7 +734,9 @@ export const projectConstantsLocal = {
     { value: 'NotPaid', displayName: 'Not Paid' },
     { value: 'PartiallyPaid', displayName: 'Partially Paid' },
     { value: 'FullyPaid', displayName: 'Fully Paid' },
-    { value: 'Refund', displayName: 'Refund' }
+    { value: 'Refund', displayName: 'Refund' },
+    { value: 'PartiallyRefunded', displayName: 'Partially Refunded' },
+    { value: 'FullyRefunded', displayName: 'Fully Refunded' }
   ],
 
   REPORT_TYPE: [
