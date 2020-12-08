@@ -76,6 +76,7 @@ export class AppointmentComponent implements OnInit {
     checkindisablemsg = '';
     pass_loc;
     sel_queue_id;
+    countryCode;
     // sel_queue_waitingmins;
     // sel_queue_servicetime = '';
     // sel_queue_name;
@@ -471,6 +472,8 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
+                            this.countryCode = this.customer_data.countryCode;
+                            console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;
                                 this.heading = 'Confirm your Appointment';
@@ -1023,7 +1026,7 @@ export class AppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'countryCode': '+91',
+            'countryCode': this.countryCode,
             'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
