@@ -144,7 +144,8 @@ export class ConsumerAppointmentComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-
+    countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+    selectedCountryCode;
     userData: any = [];
     userEmail;
     userPhone;
@@ -271,6 +272,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             });
     }
     ngOnInit() {
+        console.log(this.countryCodes)
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -765,6 +767,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             phNumber = this.userPhone;
         }
+        let selCountryCode;
+        if(this.countryCode != this.selectedCountryCode){
+            selCountryCode = this.selectedCountryCode;
+        } else {
+            selCountryCode = this.countryCode;
+        }
         const post_Data = {
             'schedule': {
                 'id': this.apptTime['scheduleId']
@@ -775,7 +783,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'countryCode' : this.countryCode,
+            'countryCode' : selCountryCode,
             'phoneNumber': phNumber,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
@@ -1479,6 +1487,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                 data => {
                     this.userData = data;
                     this.countryCode = this.userData.userProfile.countryCode;
+                    if (this.countryCode != this.selectedCountryCode) {
+                        this.countryCode = this.selectedCountryCode;
+                        console.log(this.countryCode)
+                    }
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'reschedule') {
@@ -1858,6 +1870,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
+        if (this.countryCode != this.selectedCountryCode) {
+            this.countryCode = this.selectedCountryCode;
+            console.log(this.countryCode)
+        }
         if (this.callingModes === '') {
             this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
             this.noCallingError = false;
