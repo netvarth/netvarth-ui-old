@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
  import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -229,10 +229,16 @@ payAdvance = 'NONE';
  }
 
  ngOnInit() {
- 
  }
- addItemstoCart() {
- this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs' , 'add', 'items']);
+ setCatalogfields() {
+
+ }
+ addItemstoCart(type) {
+    const navigationExtras: NavigationExtras = {
+        queryParams: { action: type,
+                       id: this.catalog_id || 0  }
+    };
+ this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs' , 'add', 'items'], navigationExtras);
  }
  getCatalog(cataId) {
  const _this = this;

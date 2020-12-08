@@ -14,7 +14,7 @@
    
     <ng-container *ngIf="catalogItem && catalogItem.length > 0">
        <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
-           <div class="card card-item-n no-padding" (click)="selectItem(item,i)" [class.itemselected]="catalogItem[i].selected">
+           <div class="card card-item-n no-padding" (click)="selectItem(item,i)" [class.itemselected]="item.selected">
                 <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
                <div class="card-item-title">
                    <a class="pointer-cursor"><b>

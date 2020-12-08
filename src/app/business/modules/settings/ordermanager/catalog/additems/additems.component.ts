@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Location } from '@angular/common';
 
@@ -56,15 +56,28 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selectedCount = 0;
   api_loading = true;
   seletedCatalogItems = [];
+  seletedCatalogItems1 = [];
   tempcatalog = [];
   minquantity;
   maxquantity;
+  action = '';
+  cataId;
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
     private location: Location,
+    private activated_route: ActivatedRoute,
     private provider_servicesobj: ProviderServices) {
     this.emptyMsg = this.shared_functions.getProjectMesssages('ITEM_LISTEMPTY');
+    this.activated_route.queryParams.subscribe(
+      (qParams) => {
+      this.action = qParams.action;
+      this.cataId = qParams.id;
+      console.log(this.action);
+      console.log(this.cataId);
+     
+      }
+      );
   }
 
   ngOnInit() {
@@ -93,7 +106,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             if (this.seletedCatalogItems.includes(item.itemId)) {
               item.selected = true;
             }
-           return item;
+          // return item;
           });
           console.log('cataloITem' + JSON.stringify(this.catalogItem));
 
@@ -118,27 +131,41 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
       this.catalogItem[index].selected = true;
       this.selectedCount++;
-       //this.seletedCatalogItems.push(item);
+       
     } else {
       this.catalogItem[index].selected = false;
       this.selectedCount--;
-      //this.seletedCatalogItems.splice(index, 1);
+      
     }
     console.log(this.seletedCatalogItems);
   }
   selectedItems() {
-    this.seletedCatalogItems = [];
+    this.seletedCatalogItems1 = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
         this.catalogItem[ia].minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
         this.catalogItem[ia].maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
-        this.seletedCatalogItems.push(this.catalogItem[ia]);
+        this.seletedCatalogItems1.push(this.catalogItem[ia]);
       }
     }
-    console.log(this.seletedCatalogItems);
-    this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
-    this.location.back();
+    console.log(this.seletedCatalogItems1);
+    if (this.action === 'edit') {
+      this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems).subscribe(
+      (data) => {
+        this.shared_functions.openSnackBar('Items updated');
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+        this.location.back();
+      },
+        error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+        );
+      } else {
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+        this.location.back();
+      }
+    
 
     // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
   }
