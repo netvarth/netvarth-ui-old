@@ -51,8 +51,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit() {
-    console.log(this.choose_type);
-
+    console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     this.catalogJSON = catalogdetails;

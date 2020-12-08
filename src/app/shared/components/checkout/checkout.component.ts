@@ -4,9 +4,9 @@ import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
+import { AddAddressComponent } from './add-address/add-address.component';
 
 
 @Component({
@@ -74,9 +74,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('checkout shared');
     this.linear = false;
-
-
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     console.log(this.orders);

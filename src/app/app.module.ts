@@ -87,6 +87,7 @@ import { CardModule } from './shared/components/card/card.module';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -122,7 +123,8 @@ export function init_app(globalService: GlobalService) {
     LiveChatComponent,
     JaldeeBlogComponent,
     CheckoutSharedComponent,
-    ShoppingCartSharedComponent
+    ShoppingCartSharedComponent,
+    AddAddressComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -138,7 +140,8 @@ export function init_app(globalService: GlobalService) {
     ConsumerPaymentmodeComponent,
     ForceDialogComponent,
     JdnComponent,
-    UpdateProfilePopupComponent
+    UpdateProfilePopupComponent,
+    AddAddressComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,
