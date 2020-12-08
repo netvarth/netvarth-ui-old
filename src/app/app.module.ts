@@ -86,6 +86,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { CardModule } from './shared/components/card/card.module';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -176,7 +177,8 @@ export function init_app(globalService: GlobalService) {
     ConsumerFooterModule,
     TruncateModule,
     SignaturePadModule,
-    CardModule
+    CardModule,
+    MatStepperModule
   ],
   providers: [
     AuthGuardConsumer,

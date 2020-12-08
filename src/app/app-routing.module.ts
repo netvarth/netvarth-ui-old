@@ -52,7 +52,7 @@ const routes: Routes = [
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
     { path: 'pay/:id', component: PaymentLinkComponent },
-    { path: 'order/shoppingcart/checkouts', component: CheckoutSharedComponent },
+    { path: 'order/checkout', component: CheckoutSharedComponent },
     { path: 'order/shoppingcart', component: ShoppingCartSharedComponent }
     // { path: '**', redirectTo: 'not-found' }
 ];
