@@ -84,6 +84,8 @@ import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { CardModule } from './shared/components/card/card.module';
+import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
+import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -117,8 +119,9 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
-    JaldeeBlogComponent
-    // PhomeComponent,
+    JaldeeBlogComponent,
+    CheckoutSharedComponent,
+    ShoppingCartSharedComponent
   ],
   entryComponents: [
     SignUpComponent,

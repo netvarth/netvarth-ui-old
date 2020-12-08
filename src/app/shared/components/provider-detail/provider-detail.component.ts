@@ -1987,7 +1987,8 @@ getTotalItemAndPrice() {
 }
 checkout() {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-  this.router.navigate(['consumer', 'order', 'cart']);
+ // this.router.navigate(['consumer', 'order', 'cart']);
+  this.router.navigate(['order/shoppingcart']);
 }
 itemDetails(item) {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);

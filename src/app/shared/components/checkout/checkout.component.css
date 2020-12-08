@@ -1,0 +1,15 @@
+.border {
+    border-bottom: 0px solid #dbdbdb !important;
+}
+.cart-flex { 
+
+flex-basis: 50% !important;
+}
+.shopcart-cancel {
+    position: absolute;
+    right: 0;
+    top: 15px !important;
+    left: 10px !important;
+    padding-right: 10px;
+
+}

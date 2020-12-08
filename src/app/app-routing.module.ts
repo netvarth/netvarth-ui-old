@@ -16,6 +16,8 @@ import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.c
 import { TwilioService } from './shared/services/twilio-service';
 // import { LiveChatClientComponent } from './shared/components/twilio/twilio-live-client.component';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
+import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
+import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -49,7 +51,9 @@ const routes: Routes = [
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
-    { path: 'pay/:id', component: PaymentLinkComponent }
+    { path: 'pay/:id', component: PaymentLinkComponent },
+    { path: 'order/shoppingcart/checkouts', component: CheckoutSharedComponent },
+    { path: 'order/shoppingcart', component: ShoppingCartSharedComponent }
     // { path: '**', redirectTo: 'not-found' }
 ];
 
