@@ -142,8 +142,9 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
     // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
   }
-  redirecToJaldeecatalogcreation() {
-    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
+  redirecToJaldeecatalog() {
+    this.location.back();
+   // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
   }
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/billing->items']);
