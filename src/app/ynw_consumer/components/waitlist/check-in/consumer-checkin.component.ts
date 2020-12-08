@@ -887,11 +887,11 @@ export class ConsumerCheckinComponent implements OnInit {
             phNumber = this.userPhone;
         }
         let selCountryCode;
-        if(this.countryCode != this.selectedCountryCode){
+        if (this.countryCode != this.selectedCountryCode) {
             selCountryCode = this.selectedCountryCode;
             console.log(selCountryCode);
         }
-        
+
         // }
         const post_Data = {
             'queue': {
@@ -1676,14 +1676,18 @@ export class ConsumerCheckinComponent implements OnInit {
                 data => {
                     this.userData = data;
                     this.countryCode = this.userData.userProfile.countryCode;
-                    if (this.countryCode != this.selectedCountryCode) {
-                        this.countryCode = this.selectedCountryCode;
-                        console.log(this.countryCode)
+                    if (this.selectedCountryCode) {
+                        if (this.countryCode != this.selectedCountryCode) {
+                            this.countryCode = this.selectedCountryCode;
+                            console.log(this.countryCode)
+                        }
+                    } else {
+                        this.selectedCountryCode = this.countryCode;
                     }
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'waitlistreschedule') {
-                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
                         }
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
                         this.consumerPhoneNo = this.userPhone;
@@ -2031,7 +2035,7 @@ export class ConsumerCheckinComponent implements OnInit {
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
-        if (this.countryCode != this.selectedCountryCode) {
+        if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
             this.countryCode = this.selectedCountryCode;
             console.log(this.countryCode)
         }
@@ -2091,7 +2095,7 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
-        } else if(this.userEmail && this.payEmail.trim() == '') {
+        } else if (this.userEmail && this.payEmail.trim() == '') {
             this.emailerror = 'Please enter a valid email.';
             this.noEmailError = false;
 
@@ -2108,43 +2112,43 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     showConfirmPopup(post_Data) {
-        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == ''){
-            
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+
             this.sharedFunctionobj.openSnackBar('Please provide your notes here', { 'panelClass': 'snackbarerror' });
             this.checkinenable = false
         } else {
-        // this.dialogRef.close();
-        const checkinconfirmdialogRef = this.dialog.open(CheckinConfirmPopupComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass','confirmpopup'],
-            disableClose: true,
-            data: {
-                service_details: this.sel_ser_det,
-                waitlist_for: this.waitlist_for,
-                countryCode: this.countryCode,
-                userPhone: this.userPhone,
-                post_Data: post_Data,
-                account_id: this.account_id,
-                sel_queue_personaahead: this.sel_queue_personaahead,
-                isFuturedate: this.isFuturedate,
-                eMail: this.userData.userProfile.email || '',
-                settingsjson: this.settingsjson,
-                selectedQsTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'],
-                selectedQeTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'],
-                prepaymentAmount: this.prepaymentAmount,
-                sel_queue_servicetime: this.sel_queue_servicetime,
-                calc_mode: this.calc_mode,
-                sel_queue_waitingmins: this.sel_queue_waitingmins,
-                changePhno: this.changePhno,
-                currentPhone: this.currentPhone,
-                callingModes: this.callingModes,
-                selectedMessage: this.selectedMessage
-            }
-        });
-        checkinconfirmdialogRef.afterClosed().subscribe(result => {
-            if (result === 'reloadlist') {
-            }
-        });
+            // this.dialogRef.close();
+            const checkinconfirmdialogRef = this.dialog.open(CheckinConfirmPopupComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmpopup'],
+                disableClose: true,
+                data: {
+                    service_details: this.sel_ser_det,
+                    waitlist_for: this.waitlist_for,
+                    countryCode: this.countryCode,
+                    userPhone: this.userPhone,
+                    post_Data: post_Data,
+                    account_id: this.account_id,
+                    sel_queue_personaahead: this.sel_queue_personaahead,
+                    isFuturedate: this.isFuturedate,
+                    eMail: this.userData.userProfile.email || '',
+                    settingsjson: this.settingsjson,
+                    selectedQsTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'],
+                    selectedQeTime: this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'],
+                    prepaymentAmount: this.prepaymentAmount,
+                    sel_queue_servicetime: this.sel_queue_servicetime,
+                    calc_mode: this.calc_mode,
+                    sel_queue_waitingmins: this.sel_queue_waitingmins,
+                    changePhno: this.changePhno,
+                    currentPhone: this.currentPhone,
+                    callingModes: this.callingModes,
+                    selectedMessage: this.selectedMessage
+                }
+            });
+            checkinconfirmdialogRef.afterClosed().subscribe(result => {
+                if (result === 'reloadlist') {
+                }
+            });
+        }
     }
-}
 }
