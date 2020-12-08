@@ -7,31 +7,31 @@
         <p>Order details</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <div class="action-box pointer-cursor" *ngIf="showAccept">
+        <div class="action-box pointer-cursor" *ngIf="showAccept" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Accept</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showPreparing">
+        <div class="action-box pointer-cursor" *ngIf="showPreparing" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Preparing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showOntheWay">
+        <div class="action-box pointer-cursor" *ngIf="showOntheWay" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">On the Way</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showDelivered">
+        <div class="action-box pointer-cursor" *ngIf="showDelivered" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
                 <div class="icon-text">Delivered</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel">
+        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Reject</div>
@@ -55,24 +55,24 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor">
+        <!-- <div class="action-box pointer-cursor">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
                 <div class="icon-text">Send Message</div>
             </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
+        </div> -->
+        <!-- <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
                 <div class="icon-text">Share Booking Info</div>
             </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="!mulipleSelection" (click)="addProviderNote()">
+        </div> -->
+        <!-- <div class="action-box pointer-cursor" *ngIf="!mulipleSelection" (click)="addProviderNote()">
             <div class="action-box-sub">
                 <span class="notes-icon"></span>
                 <div class="icon-text">Private Notes</div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

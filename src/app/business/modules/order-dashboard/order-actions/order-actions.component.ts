@@ -77,10 +77,12 @@ export class OrderActionsComponent implements OnInit {
     };
     this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id], navigationExtras);
   }
-  smsCheckin() {
-
-  }
-  addProviderNote() {
-
+  changeOrderStatus(status) {
+    this.dialogRef.close();
+    this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {
+    },
+      error => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
 }
