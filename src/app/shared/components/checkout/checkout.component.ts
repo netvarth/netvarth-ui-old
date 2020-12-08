@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
+// import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 
 
@@ -41,8 +41,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private dialog: MatDialog,
-
-    private consumer_services: ConsumerServices) {
+    // private consumer_services: ConsumerServices
+    ) {
     this.route.queryParams.subscribe(
       params => {
         this.delivery_type = params.delivery_type;
@@ -130,16 +130,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   getaddress() {
     console.log('hi');
-    this.consumer_services.getConsumeraddress()
-      .subscribe(
-        data => {
-          this.added_address = data;
+    // this.consumer_services.getConsumeraddress()
+    //   .subscribe(
+    //     data => {
+    //       this.added_address = data;
 
-        },
-        error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+    //     },
+    //     error => {
+    //       this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //   );
   }
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {

@@ -155,7 +155,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   };
    // this.router.navigate(['consumer', 'order', 'checkout'] , navigationExtras);
-   this.router.navigate(['order/shoppingcart/checkouts'] , navigationExtras);
+   this.router.navigate(['order/checkout'] , navigationExtras);
 
   }
   goBack() {
