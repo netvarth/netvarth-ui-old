@@ -146,7 +146,8 @@ export class ConsumerCheckinComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-
+    countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+    selectedCountryCode;
     providerlabel = '';
     userData: any = [];
     userEmail;
@@ -885,6 +886,12 @@ export class ConsumerCheckinComponent implements OnInit {
         } else {
             phNumber = this.userPhone;
         }
+        let selCountryCode;
+        if(this.countryCode != this.selectedCountryCode){
+            selCountryCode = this.selectedCountryCode;
+            console.log(selCountryCode);
+        }
+        
         // }
         const post_Data = {
             'queue': {
@@ -895,8 +902,8 @@ export class ConsumerCheckinComponent implements OnInit {
                 'id': this.sel_ser,
                 'serviceType': this.sel_ser_det.serviceType
             },
-            'countryCode': this.countryCode,
             'consumerNote': this.consumerNote,
+            'countryCode': selCountryCode,
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
@@ -1669,6 +1676,10 @@ export class ConsumerCheckinComponent implements OnInit {
                 data => {
                     this.userData = data;
                     this.countryCode = this.userData.userProfile.countryCode;
+                    if (this.countryCode != this.selectedCountryCode) {
+                        this.countryCode = this.selectedCountryCode;
+                        console.log(this.countryCode)
+                    }
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'waitlistreschedule') {
@@ -2020,6 +2031,10 @@ export class ConsumerCheckinComponent implements OnInit {
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
+        if (this.countryCode != this.selectedCountryCode) {
+            this.countryCode = this.selectedCountryCode;
+            console.log(this.countryCode)
+        }
         if (this.callingModes === '') {
             this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
             this.noCallingError = false;

@@ -819,6 +819,11 @@
                                             <tr>
                                                 <td class="td1" [class.pad-bt-15]="phoneerror != null">Phone :&nbsp;&nbsp; </td>
                                                 <td> 
+                                                    <span style="width: 65px">
+                                                        <select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                                                        <option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</option>
+                                                      </select>
+                                                    </span>
                                                     <input type="text" maxlength="10"
                                                         placeholder="Phone number" class=""
                                                         [(ngModel)]="selected_phone" />
