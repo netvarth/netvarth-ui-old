@@ -1458,7 +1458,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to delete this cover photo?'
+        'message': 'Do you want to remove this cover photo?'
       }
     });
     dialogrefd.afterClosed().subscribe(result => {
