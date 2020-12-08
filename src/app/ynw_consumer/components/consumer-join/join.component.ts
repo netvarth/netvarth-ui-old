@@ -39,6 +39,8 @@ export class ConsumerJoinComponent implements OnInit {
   actionstarted: boolean;
   consumerjoin = 'consumerjoin';
   user_details;
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+  selectedCountryCode;
   cancel_btn_cap = Messages.CANCEL_BTN;
   ok_btn_cap = Messages.OK_BTN;
   resendemailotpsuccess = true;
@@ -67,6 +69,8 @@ export class ConsumerJoinComponent implements OnInit {
     this.test_provider = data.test_account;
   }
   ngOnInit() {
+    console.log(this.selectedCountryCode)
+    this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
@@ -122,7 +126,8 @@ export class ConsumerJoinComponent implements OnInit {
     const loginId = pN;
     const ob = this;
     const post_data = {
-      'countryCode': '+91',
+      'countryCode': this.selectedCountryCode,
+      // 'countryCode': '+91',
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
@@ -188,7 +193,8 @@ export class ConsumerJoinComponent implements OnInit {
     //   lastName: null
     // };
     const userProfile = {
-      countryCode: '+91',
+      // countryCode: '+91',
+      countryCode: this.selectedCountryCode,
       primaryMobileNo: this.loginForm.get('emailId').value || null,
       firstName: this.loginForm.get('first_name').value || null,
       lastName: this.loginForm.get('last_name').value || null,
@@ -283,7 +289,8 @@ export class ConsumerJoinComponent implements OnInit {
         () => {
           this.actionstarted = false;
           const login_data = {
-            'countryCode': '+91',
+            // 'countryCode': '+91',
+            'countryCode': this.selectedCountryCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };

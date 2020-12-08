@@ -7,16 +7,20 @@ onSubmit(loginForm.value)">
     <!-- step 1 for mobile number entering  -->
     <div *ngIf="step==1" class="cust-loginpge-color">
         <div class="mat-dialog-content">
+
             <div class="form-group">
                 <h6 class="join_phone_label">Please enter your phone number</h6>
-                <mat-form-field>
-                    <input type="text" matInput class="form-control" id="emailId" maxlength="10"
-                         formControlName="emailId" autocomplete="off"
-                        (keyup)="handlekeyup($event)">
-                </mat-form-field>
-                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
-                    [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',{'pattern' : phOrem_error})">
-                </app-field-error-display> -->
+                <div class="input-group-prepend">
+                    <span class="input-group-text countryCodeSelect" style="width: 65px" id="">                            
+                        <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                            <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
+                          </mat-select>
+        
+                        </span>
+                        <input style="margin-left: 15px" type="text" matInput class="form-control" id="emailId" maxlength="10"
+                        formControlName="emailId" autocomplete="off"
+                       (keyup)="handlekeyup($event)">
+                </div>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
                 {
                   'required' : 'Mobile number is required',
@@ -24,9 +28,32 @@ onSubmit(loginForm.value)">
                 })">
                 </app-field-error-display>
             </div>
+
+
+            <!-- <div class="form-group">
+                <h6 class="join_phone_label">Please enter your phone number</h6>
+                <mat-form-field >
+                    <span style="width: 65px">
+                        <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                        <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
+                      </mat-select>
+                    </span>
+                    <input type="text" matInput class="form-control" id="emailId" maxlength="10"
+                         formControlName="emailId" autocomplete="off"
+                        (keyup)="handlekeyup($event)">
+                </mat-form-field>
+               
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
+                {
+                  'required' : 'Mobile number is required',
+                  'pattern' : 'Invalid mobile number'
+                })">
+                </app-field-error-display>
+            </div> -->
             <!-- Signin Password -->
             <div class="form-group" *ngIf="phoneExists">
                 <mat-form-field>
+                    
                     <input type="password" matInput class="form-control" id="password" placeholder="Password"
                         formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
                 </mat-form-field>
