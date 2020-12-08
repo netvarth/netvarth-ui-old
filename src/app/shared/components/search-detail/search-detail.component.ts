@@ -2222,19 +2222,25 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   showButton(searchData) {
     if (searchData.fields.online_profile === '1') {
       if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
-        && searchData.fields.donation_status === '0') {
+        && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '0') {
         return false;
       } else if (searchData.fields.waitlist && !searchData.fields.apptAllowed
-        && searchData.fields.donation_status === '0') {
+        && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '0') {
         return 'waitlist';
       } else if (!searchData.fields.waitlist && searchData.fields.apptAllowed
-        && searchData.fields.donation_status === '0') {
+        && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '0') {
         return 'appt';
       } else if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
-        && searchData.fields.donation_status === '1') {
+        && searchData.fields.donation_status === '1' && searchData.fields.order_enabled === '0') {
         return 'donation';
-      } else {
+      } else if (!searchData.fields.waitlist && !searchData.fields.apptAllowed
+        && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '1') {
+        return 'order';
+      } else if (searchData.fields.waitlist && searchData.fields.apptAllowed
+        && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '0') {
         return 'bookservice';
+      } else {
+        return 'book';
       }
     } else {
       return false;

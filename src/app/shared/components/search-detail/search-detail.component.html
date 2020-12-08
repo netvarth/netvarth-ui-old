@@ -534,7 +534,7 @@
                                         <!-- Book Service button start -->
                                         <div class="clearfix"></div>
                                         <div class="bottom-sect pdetail"
-                                            *ngIf="showButton(search_result) === 'bookservice'">
+                                            *ngIf="showButton(search_result) === 'book'">
                                             <div class="bt-l">
                                                 <!-- <div class="wt-tme notallowed" *ngIf="search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det']['message']">
                                                     {{search_result.fields['estimatedtime_det']['message']}}
@@ -583,12 +583,70 @@
                                                     </span>
                                                 </div>
                                                 <span (click)="providerDetClicked(search_result)"
-                                                    class="checkin-btn">Book
-                                                    Service</span>
+                                                    class="checkin-btn">Book</span>
 
                                             </div>
                                         </div>
-                                        <!-- Book service butoon ends -->
+                                        <!-- Book  butoon ends -->
+
+                                        <!-- book service button start -->
+
+                                        <div class="bottom-sect pdetail"
+                                        *ngIf="showButton(search_result) === 'bookservice'">
+                                        <div class="bt-l">
+                                            <!-- <div class="wt-tme notallowed" *ngIf="search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det']['message']">
+                                                {{search_result.fields['estimatedtime_det']['message']}}
+                                             </div> -->
+                                            <div class="wt-tme"
+                                                *ngIf="!search_result.fields.departments && search_result.fields.allServices && search_result.fields.allServices.length > 0">
+                                                <div class="search-services">
+                                                    <span class="question-header">Services Count: </span>
+                                                    <span
+                                                        class="question-value1">{{search_result.fields.allServices.length}}</span>
+                                                </div>
+                                                <div class="search-services"
+                                                    *ngIf="search_result.fields.departments">
+                                                    <span class="question-header">Departments Count: </span>
+                                                    <span
+                                                        class="question-value1">{{search_result.fields.departments.length}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="flex-grow:1"></div>
+                                        <div class="bottom-actions-root">
+                                            <div class="checkin-est nrm"
+                                                *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                                <span class="est-time"
+                                                    *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
+                                                <span class="time-data"
+                                                    *ngIf="search_result.fields['estimatedtime_det']['time']">{{search_result.fields['estimatedtime_det']['time']}}
+                                                </span>
+                                            </div>
+                                            <div class="checkin-est"
+                                                *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                                <span class=""
+                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
+                                                <span class=""
+                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
+                                                <span class=""
+                                                    *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
+                                                    the first in line</span>
+                                            </div>
+                                            <div class="checkin-est"
+                                                *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed">
+                                                <span
+                                                    class="est-time">{{search_result.fields['appttime_det']['caption']}}</span>
+                                                <span
+                                                    class="time-data">{{search_result.fields['appttime_det']['date']}}
+                                                </span>
+                                            </div>
+                                            <span (click)="providerDetClicked(search_result)"
+                                                class="checkin-btn">Book service</span>
+
+                                        </div>
+                                    </div>
+                                        <!-- book service button end -->
+
 
                                         <div class="bottom-sect" *ngIf="showButton(search_result) === 'waitlist'">
                                             <div class="bt-l">
@@ -763,6 +821,40 @@
                                                     class="checkin-btn">Donate</span>
                                             </div>
                                         </div>
+                                        <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'order'">
+                                            <!-- <div class="bt-l">
+                                                <div class="wt-tme">
+                                                    <div class="search-services"
+                                                        *ngIf="!search_result.fields.departments">
+                                                        <span class="question-header">Services Count: </span>
+                                                        <span class="question-value1"
+                                                            *ngIf="!search_result.fields.appointmentServiceList">{{search_result.fields.appt_services.length}}</span>
+                                                        <span class="question-value1"
+                                                            *ngIf="search_result.fields.appointmentServiceList">{{search_result.fields.appointmentServiceList.length}}</span>
+                                                    </div>
+                                                    <div class="search-services"
+                                                        *ngIf="search_result.fields.departments">
+                                                        <span class="question-header">Departments Count: </span>
+                                                        <span
+                                                            class="question-value1">{{search_result.fields.departments.length}}</span>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div style="flex-grow:1"></div>
+                                            <div class="bottom-actions-root">
+                                                <!-- <div class="checkin-est"
+                                                    *ngIf="search_result.fields['appttime_det']['caption'] || search_result.fields['appttime_det']['date']">
+                                                    <span
+                                                        class="est-time">{{search_result.fields['appttime_det']['caption']}}</span>
+                                                    <span
+                                                        class="time-data">{{search_result.fields['appttime_det']['date']}}
+                                                    </span>
+                                                </div> -->
+                                                <span (click)="providerDetClicked(search_result)"
+                                                    class="checkin-btn">Order</span>
+                                            </div>
+                                        </div>
+
                                         <div class="bottom-sect pad-bt-0"
                                             *ngIf="!showButton(search_result) && search_result.fields['estimatedtime_det'] && (search_result.fields['estimatedtime_det']['message'] || search_result.fields['apptMessage'])">
                                             <div class="bt-l">

@@ -37,7 +37,7 @@
                                           <tr *ngFor="let catalog of catalog_list | orderBy: order"
                                               [class.disabled-row]="catalog.catalogStatus=='INACTIVE'">                                       
                                               <td data-title="Name" class="td2" class="pointer-cursor"
-                                                  (click)="showDetails(catalog.itemId)"
+                                                  (click)="editCatalog(catalog)"
                                                   [class.itemdisabled]="catalog.catalogStatus=='INACTIVE'"><span
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="itemnameTooltip">{{catalog.catalogName}}</span>
