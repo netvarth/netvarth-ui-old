@@ -26545,5 +26545,20 @@ hr {
 #carousel-container > .current-figure {
   -webkit-animation: none !important;
     animation: none !important;
-
+}
+.ordermgmt-icon {
+  content: url(../images/order/orderManagement.svg) !important;
+  width: 40px;
+}
+.catalog-icon {
+  content: url(../images/order/catalogueimg.svg) !important;
+  width: 40px;
+}
+.storecontact-icon {
+  content: url(../images/order/StoreContactInfo.svg) !important;
+  width: 40px;
+}
+.items-icon {
+  content: url(../images/order/Items.svg) !important;
+  width: 40px;
 }
