@@ -9189,7 +9189,7 @@ owl-carousel .bt3.active {
 
 .board-box {
   border: 1px solid #eee !important;
-  overflow: scroll !important;
+  overflow-y: scroll !important;
 }
 
 .qset-name th {

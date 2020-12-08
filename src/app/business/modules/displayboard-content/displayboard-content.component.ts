@@ -60,10 +60,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     qBoardFooter;
     qBoardGroupFooter: any;
     qBoardGroupTitle: any;
-    bLogoWidth: string;
-    bLogoHeight: string;
-    gLogoWidth: string;
-    gLogoHeight: string;
+    bLogoWidth = '';
+    bLogoHeight = '';
+    gLogoWidth = '';
+    gLogoHeight = '';
     glogo = '';
     gPosition;
     constructor(private activated_route: ActivatedRoute,
@@ -92,6 +92,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         if (this.isContainer) {
             hgt_reduced = 320;
             fullhgt_reduced = 270;
+        }
+        if (this.bLogoHeight === '') {
+            hgt_reduced = 136;
+            fullhgt_reduced = 86;
         }
         this.fullHeight = screenHeight - fullhgt_reduced;
         if (this.boardRows > 1) {
