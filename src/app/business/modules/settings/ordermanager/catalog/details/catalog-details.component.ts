@@ -101,7 +101,7 @@ export class CatalogdetailComponent implements OnInit {
  tempPreInfoTitle = '';
  tempPostInfoTitle = '';
  public Editor = DecoupledEditor;
- seletedCatalogItems = [];
+ seletedCatalogItems: any;
  Selall = false;
  selday_arr: any = [];
  Selallstorepickup = false;
@@ -184,6 +184,8 @@ payAdvance = 'NONE';
  this.dend_timestore = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
  this.dstart_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
  this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
+ this.seletedCatalogItems = this.sharedfunctionObj.getitemfromLocalStorage('selecteditems');
+ console.log(this.seletedCatalogItems);
  this.activated_route.params.subscribe(
  (params) => {
  this.catalog_id = params.id;
@@ -192,6 +194,7 @@ payAdvance = 'NONE';
  if (this.catalog_id === 'add') {
  this.action = 'add';
  this.createForm();
+ this.api_loading = false;
  } else {
  this.activated_route.queryParams.subscribe(
  (qParams) => {
@@ -206,12 +209,19 @@ payAdvance = 'NONE';
  } else if (this.action === 'view') {
  this.catalogcaption = 'Catalog Details';
  }
+ if (!this.seletedCatalogItems) {
+     if (this.catalog.catalogItem) {
+    this.seletedCatalogItems = this.catalog.catalogItem;
+    this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
  }
- );
- }
- );
- }
+}
+
  this.api_loading = false;
+ }
+ );
+ }
+ );
+ }
  this.getProviderLocations();
  }
  }
@@ -219,10 +229,7 @@ payAdvance = 'NONE';
  }
 
  ngOnInit() {
- this.seletedCatalogItems = this.sharedfunctionObj.getitemfromLocalStorage('selecteditems');
- console.log(this.seletedCatalogItems);
- // this.createForm();
- // this.api_loading = false;
+ 
  }
  addItemstoCart() {
  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs' , 'add', 'items']);
@@ -965,6 +972,7 @@ addCatalog(post_data) {
  this.saveImages(data);
  }
  this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
+ this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
  this.api_loading = false;
  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
  },
@@ -984,6 +992,7 @@ editCatalog(post_itemdata) {
  .subscribe(
  () => {
  this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_UPDATED'));
+ this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
  this.api_loading = false;
  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
  },
@@ -1096,6 +1105,7 @@ backToCatalog() {
 }
 
 saveImages(id) {
+this.api_loading = true;
  const submit_data: FormData = new FormData();
  const propertiesDetob = {};
  let i = 0;
@@ -1132,9 +1142,11 @@ saveImages(id) {
     }
         }
         );
+        this.api_loading = false;
  this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
  },
  error => {
+ this.api_loading = false;
  this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
  });
 }
@@ -1155,6 +1167,7 @@ onButtonAfterHook() { }
 
 imageSelect(event) {
  console.log('sel');
+ this.api_loading = true;
  const input = event.target.files;
  if (input) {
  for (const file of input) {
@@ -1180,6 +1193,7 @@ imageSelect(event) {
  reader.readAsDataURL(file);
  }
  }
+ this.api_loading = false;
  if (this.cataId && this.selectedMessage.files.length > 0) {
  this.saveImages(this.cataId);
  }
