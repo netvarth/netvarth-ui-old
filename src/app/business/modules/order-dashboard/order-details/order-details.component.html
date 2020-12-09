@@ -24,7 +24,7 @@
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
                 <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
-                <div class="mgn-up-70"> <span class="customer-action-btn pointer-cursor"
+                <div class="" [class.mgn-up-70]="!small_device_display"> <span class="customer-action-btn pointer-cursor"
                         (click)="showOrderActions()">Actions</span>
                 </div>
             </div>
