@@ -1,9 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { OrderActionsComponent } from '../order-actions/order-actions.component';
 
 @Component({
   selector: 'app-order-details',
@@ -35,7 +37,7 @@ export class OrderDetailsComponent implements OnInit {
       'SignedUp': false
     },
     'catalog': {
-      'id': 2,
+      'id': 17,
       'catalogName': 'Lunchs',
       'catalogSchedule': {
         'recurringType': 'Weekly',
@@ -139,7 +141,7 @@ export class OrderDetailsComponent implements OnInit {
   customerLabel = '';
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   constructor(public activaterouter: ActivatedRoute,
-    public providerservice: ProviderServices,
+    public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions) {
     this.activaterouter.params.subscribe(param => {
       console.log(param);
@@ -166,5 +168,18 @@ export class OrderDetailsComponent implements OnInit {
   }
   selectViewType(type) {
     this.selectedType = type;
+  }
+  showOrderActions() {
+    const actiondialogRef = this.dialog.open(OrderActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        selectedOrder: this.orderDetails
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+
+    });
   }
 }

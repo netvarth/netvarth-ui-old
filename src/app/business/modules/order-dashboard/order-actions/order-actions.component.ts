@@ -22,6 +22,8 @@ export class OrderActionsComponent implements OnInit {
   pos = false;
   customer_label = '';
   loading = false;
+  catalog_list: any = [];
+  catalogStatuses: any = [];
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -39,7 +41,6 @@ export class OrderActionsComponent implements OnInit {
   }
   setActions() {
     console.log(this.mulipleSelection);
-    this.loading = false;
     if (!this.mulipleSelection) {
       this.showCancel = true;
       this.showSendDetails = true;
@@ -51,6 +52,9 @@ export class OrderActionsComponent implements OnInit {
       if (this.pos) {
         this.showBill = true;
       }
+      this.getCatalog();
+    } else {
+      this.loading = false;
     }
   }
   gotoDetails() {
@@ -58,8 +62,16 @@ export class OrderActionsComponent implements OnInit {
     this.router.navigate(['provider', 'orders', this.orderDetails.uid]);
   }
   gotoBill() {
-    this.dialogRef.close();
-
+    this.provider_services.getWaitlistBill(this.orderDetails.uid)
+      .subscribe(
+        data => {
+          this.router.navigate(['provider', 'bill', this.orderDetails.uid]);
+          this.dialogRef.close();
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
@@ -83,6 +95,20 @@ export class OrderActionsComponent implements OnInit {
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  getCatalog() {
+    this.provider_services.getProviderCatalogs()
+      .subscribe(data => {
+        this.catalog_list = data;
+        console.log(this.catalog_list);
+        console.log(this.orderDetails.catalog.id);
+        const catalog = this.catalog_list.filter(cata => cata.id === this.orderDetails.catalog.id);
+        console.log(catalog);
+        if (catalog[0]) {
+          this.catalogStatuses = catalog[0].orderStatuses;
+        }
+        this.loading = false;
       });
   }
 }

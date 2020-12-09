@@ -15,13 +15,15 @@
                 <div> {{orderDetails.orderNumber}}</div>
                 <div> <i class="fa fa-phone" aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
                 <div> <i class="fa fa-map-marker" aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
-                <div class="bold font11"> {{orderDetails.orderDate | date: display_dateFormat}}, {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
+                <div class="bold font11"> {{orderDetails.orderDate | date: display_dateFormat}},
+                    {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
-                <div class="pull-right"> <i class="delivery-icon mgn-bt-20" *ngIf="orderDetails.homeDelivery"></i>
-                    <i class="storepickup-icon mgn-bt-20" *ngIf="orderDetails.storePickup"></i></div>
-                <div class="mgn-up-70"> <span class="customer-action-btn">Actions</span></div>
+                <div class=""> <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
+                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
+                <div class="mgn-up-70"> <span class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
+                </div>
             </div>
         </div>
         <div *ngIf="orderDetails && orderDetails.orderItem">

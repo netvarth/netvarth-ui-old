@@ -3,11 +3,15 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button></h1>
 <div class="action-section col-md-12 no-padding">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <p>Order details</p>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!mulipleSelection">
+        <p *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
+            Order For : {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</p>
+        <p *ngIf="!orderDetails.orderFor.firstName && !orderDetails.orderFor.lastName">
+            {{customer_label | capitalizeFirst}} id : {{orderDetails.orderFor.jaldeeId}}</p>
+        <p>Order No: {{orderDetails.orderNumber}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <div class="action-box pointer-cursor" *ngIf="showAccept" (click)="changeOrderStatus('accepted')">
+        <!-- <div class="action-box pointer-cursor" *ngIf="showAccept" (click)="changeOrderStatus('accepted')">
             <div class="action-box-sub">
                 <span class="start-icon"></span>
                 <div class="icon-text">Accept</div>
@@ -36,7 +40,15 @@
                 <span class="cancel-icon"></span>
                 <div class="icon-text">Reject</div>
             </div>
-        </div>
+        </div> -->
+        <ng-container *ngIf="catalogStatuses.length > 0">
+            <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)" *ngFor="let status of catalogStatuses">
+                <div class="action-box-sub">
+                    <span class="viewdetails-icon"></span>
+                    <div class="icon-text">{{status}}</div>
+                </div>
+            </div>
+        </ng-container>
         <div class="action-box pointer-cursor" (click)="gotoDetails()" *ngIf="!mulipleSelection">
             <div class="action-box-sub">
                 <span class="viewdetails-icon"></span>
