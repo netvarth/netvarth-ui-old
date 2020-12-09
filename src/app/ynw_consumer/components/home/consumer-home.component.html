@@ -135,6 +135,12 @@
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -335,6 +341,12 @@
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -480,6 +492,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">
@@ -682,6 +700,12 @@
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
+                                                </span>
                                             </td>
                                             <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
@@ -832,6 +856,12 @@
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -968,6 +998,12 @@
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -1090,6 +1126,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">
@@ -1227,6 +1269,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">

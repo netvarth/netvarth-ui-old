@@ -6781,3 +6781,6 @@
     position: relative;
     width: 20px;
 }
+.cursor-auto {
+    cursor: auto !important;
+}
