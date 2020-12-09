@@ -1,3 +1,54 @@
-.order-item {
-    
+.viewtypes i {
+    color: #334b99;
+    padding: 5px;
+    background: white;
+    border-radius: 5px;
+}
+.selectedView {
+    background: #334b99 !important;
+    color: white !important;
+}
+.itemlist th {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+.itemlist {
+    background: white;
+    margin: 20px;
+    padding: 10px;
+}
+.itemlist td {
+    padding: 5px;
+}
+.orderdetails {
+    margin: 20px;
+    background: white;
+    padding: 30px;
+}
+.fa-phone, .fa-map-marker {
+    color: #334b99;
+    margin-right: 10px;
+}
+/* .gridlist {
+    margin: 20px;
+    padding: 10px;
+} */
+.gridlist .order-item {
+    float: left;
+    margin: auto;
+    background: white;
+    padding: 10px;
+    margin: 20px;
+    width: 250px;
+    text-align: center;
+    height: 200px;
+}
+.orderdetails .storepickup-icon,
+.orderdetails .delivery-icon {
+    width: 50px;
+}
+@media (max-width: 768px) {
+    .itemlist, .orderdetails {
+        margin: 20px 0 !important;
+    }
 }
