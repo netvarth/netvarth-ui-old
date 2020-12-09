@@ -1550,6 +1550,9 @@ export const Messages = {
 
   // SMS credits warning
   'NO_SMS_CREDIT': 'You dont have enough credits to send SMS.',
-  'LOW_SMS_CREDIT': 'Your SMS credits are running low.'
+  'LOW_SMS_CREDIT': 'Your SMS credits are running low.',
+
+  // Store details
+  'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
 };
 

@@ -13,7 +13,6 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { FormsModule } from '@angular/forms';
 import { OrdermanagerComponent } from './ordermanager.component';
-import { StoreDetailsComponent } from './store-details/store-details.component';
 
 
 
@@ -36,7 +35,6 @@ import { StoreDetailsComponent } from './store-details/store-details.component';
   ],
   declarations: [
     OrdermanagerComponent,
-    StoreDetailsComponent,
   ],
   entryComponents: [
      // AddProviderNonworkingdaysComponent
