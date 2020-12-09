@@ -1,7 +1,7 @@
 <!-- <p>checkout works!</p> -->
 
 
-<section class="container no-padding cons-donate no-padding-small">
+<section class="container no-padding cons-donate no-padding-small order-checkout">
   <div class="content p0 loc-list p-checkin ynw-common-form-nm">
     <div class="panel panel-default">
       <div class="panel-heading top-row">
@@ -24,45 +24,45 @@
               </h5>
             </div>
 
-            <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8">
-            <div class="col-md-12 no-padding-small">
+            <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey">
+              <div class="col-md-12 no-padding-small mgn-up-30">
 
-              <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
-                <mat-step  label="Step1">
+                <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
+                  <mat-step label="Step1">
                     <ng-template matStepperIcon="edit">
-                        <mat-icon>VpnKey</mat-icon>
-                      </ng-template>
+                      <mat-icon></mat-icon>
+                    </ng-template>
                     <ng-template matStepLabel>Enter your Registered Mobile Number</ng-template>
                     <mat-form-field>
-                      <input matInput placeholder="Mobile Number"  required>
+                      <input matInput placeholder="Mobile Number" required>
                     </mat-form-field>
                     <div>
                       <button mat-button matStepperNext>Next</button>
                     </div>
 
-                </mat-step>
-                <mat-step label="Step 2">
+                  </mat-step>
+                  <mat-step label="Step 2">
                     <ng-template matStepLabel>Delivery options</ng-template>
                     <ng-template matStepperIcon="edit">
-                        <mat-icon>LocalShipping</mat-icon>
-                      </ng-template>
+                      <mat-icon>LocalShipping</mat-icon>
+                    </ng-template>
 
                     <div>
-                        <p>Choose delivery type</p>
-                         <mat-radio-group [(ngModel)]="choose_type">
-                            <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'">
-                                Store pick up
-                            </mat-radio-button>
-                            <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'">
-                                Home delivery
-                            </mat-radio-button>&nbsp;
-                        </mat-radio-group>
+                      <p>Choose delivery type</p>
+                      <mat-radio-group [(ngModel)]="choose_type">
+                        <mat-radio-button class="mgn-lt-5 mgn-bt-5" [value]="'store'">
+                          Store pick up
+                        </mat-radio-button>
+                        <mat-radio-button class="mgn-lt-5   mgn-rt-10" [value]="'home'">
+                          Home delivery
+                        </mat-radio-button>&nbsp;
+                      </mat-radio-group>
 
-                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                          Date/Time
-                          <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
-                            (click)="changeTime()" >Change
-                              </a></span>
+                      <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                        Date/Time
+                        <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
+                            (click)="changeTime()">Change
+                          </a></span>
                       </div>
                       <!-- <div>
                           <h4>
@@ -80,33 +80,34 @@
                       </div> -->
                     </div>
                     <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button matStepperNext>Next</button>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
 
                     </div>
 
 
-                </mat-step>
-                <mat-step label="Step 3">
+                  </mat-step>
+                  <mat-step label="Step 3">
                     <ng-template matStepLabel>Fill out your address</ng-template>
                     <ng-template matStepperIcon="edit">
-                        <mat-icon>ContactMail</mat-icon>
-                      </ng-template>
+                      <mat-icon>ContactMail</mat-icon>
+                    </ng-template>
 
-                    <div class="div-outline custId-cursor col-md-6 mt-1" *ngFor="let address of added_address; let i = index">
+                    <div class="div-outline custId-cursor col-md-6 mt-1"
+                      *ngFor="let address of added_address; let i = index">
                       <mat-card class="card">
                         <mat-card-header>Address {{i+1}}</mat-card-header>
                         <mat-card-content>
-                            <div>
-                                <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                                  <div>{{address.address}}</div>
-                                  <div>{{address.city}} , {{address.postalCode}}</div>
-                                  <div> {{address.phoneNumber}}</div>
-                                  <div> {{address.email}}</div>
-                                </div>
+                          <div>
+                            <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                            <div>{{address.address}}</div>
+                            <div>{{address.city}} , {{address.postalCode}}</div>
+                            <div> {{address.phoneNumber}}</div>
+                            <div> {{address.email}}</div>
+                          </div>
                         </mat-card-content>
                         <mat-card-actions>
-                            <button type="button"  class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
+                          <button type="button" class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
 
 
                         </mat-card-actions>
@@ -117,51 +118,62 @@
 
                       <div class="clearfix"></div>
                     </div>
-                    <div (click)="addAddress();"> <button type="button"  class="btn btn-link" > Add New Address </button> </div>
-                  <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
-                  </div>
+                    <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
+                    </div>
+                    <div>
+                      <button mat-button matStepperPrevious>Back</button>
+                      <button mat-button matStepperNext>Next</button>
+                    </div>
 
-                </mat-step>
-                <mat-step>
+                  </mat-step>
+                  <mat-step>
                     <ng-template matStepLabel>Confirm Order</ng-template>
                     <button mat-button matStepperPrevious>Back</button>
-                </mat-step>
-              </mat-vertical-stepper>
+                  </mat-step>
+                </mat-vertical-stepper>
 
-
+              </div>
             </div>
-            </div>
-            <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+            <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey">
 
-             <div class="card">
+              <div class="card mgn-up-30">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                  <div class="prov-dp"></div>
+                  <div class="prov-name">
+                    <div class="prov-name-txt">
+                      AKSHAYA HOTEL
+                    </div>
+                    <div class="prov-loc">
+                      Poothole
+                    </div>
+                  </div>
+                </div>
                 <div class="bill-section">
                   <div class="bill-section-content">
                     <div class="bill-wrapper ">
-                      <div style="text-align: center;">
+                      <!-- <div style="text-align: center;">
                         Order Summary
-                      </div>
+                      </div> -->
 
                       <div class="bill-content">
                         <div class="section-three">
                           <div class="bill-breakup">
                             <div class="list border">
 
-
-                              <div class="list-content" style="text-align: left;" *ngFor="let item of orders; let i = index">
+                              <div class="list-content" style="text-align: left;"
+                                *ngFor="let item of orders; let i = index">
 
                                 <div class="copy one">
                                   <div class="col-a col-b cd-b">
                                     <div class="mgn-up-10">
-                                      <div class="div-outline custId-cursor">
-                                        <div class="c-row one">
-
-                                          <div class="name cart-flex"> {{item.itemName}}</div>
-                                          <div class="quantity">{{getItemQty(item)}}</div>
-                                          <div class="price">{{item.price}}</div>
-
-
+                                      <div class="">
+                                        <div class="c-row one width-100">
+                                          <div class="name cart-flex">
+                                            <i class="fa fa-stop-circle"></i> 
+                                            <span class="item-name">{{item.itemName}}</span>
+                                            </div>
+                                          <div class="quantity item-qty">{{getItemQty(item)}}</div>
+                                          <div class="price rupee-font">&#8377;{{item.price}}</div>
                                         </div>
                                       </div>
 
@@ -171,77 +183,46 @@
 
                               </div>
 
-
-
-
-
-
-
                             </div>
 
                           </div>
 
-                          <div class="copy one">
-                            <div class="col-a col-b cd-b">
-                              <div class="mgn-up-10">
-                                <div class="div-outline custId-cursor">
+                                <div class="">
+                                  <div class="bill-details-txt">
+                                    Bill Details
+                                  </div>
                                   <div class="amount-table">
-                                    <div class="amt-content">
-                                      <table class="amt-content">
-                                        <tbody>
-
-                                          <tr>
-                                            <td>Item Total: </td>
-                                            <td style="text-align: end;" class="price rupee-font">
-                                              {{getTotalItemPrice()}}
-                                            </td>
-                                          </tr>
-
-
-
-
-
-                                          <tr>
-                                            <td>Taxes and Charges: </td>
-                                            <td style="text-align: end;" class="price  rupee-font"> {{getTaxCharges()}}</td>
-                                          </tr>
-
-                                          <tr>
-                                            <td>TO PAY:</td>
-                                            <td style="text-align: end;" class="price rupee-font">{{getOrderFinalAmountToPay()}}</td>
-                                          </tr>
-
-
-
-                                        </tbody>
-                                      </table>
+                                    <div class="">
+                                      <div class="disp-flex width-100 amount-details">
+                                        <div class="bill-labels">Item Total</div>
+                                        <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div>
+                                      </div>
+                                      <div class="hr-line"></div>
+                                      <div class="disp-flex width-100 amount-details">
+                                        <div class="bill-labels">Taxes and Charges</div>
+                                        <div class="price rupee-font">&#8377;{{getTaxCharges()}}</div>
+                                      </div>
+                                      <div class="hr-line-pitch-blk mgn-up-20"></div>
+                                      <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
+                                        <div class="bill-labels">TO PAY</div>
+                                        <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
-
-
 
                         </div>
                       </div>
 
                       <div>
-                        <button (click)="confirm()">checkout</button>
+                        <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
-
-
-
-
 
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-
 
           </div>
         </div>

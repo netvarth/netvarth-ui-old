@@ -12,7 +12,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
   taxAmount: any;
@@ -46,26 +46,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(
       params => {
         this.delivery_type = params.delivery_type;
-        console.log(this.delivery_type);
         if (this.delivery_type === 'home') {
-          console.log(this.delivery_type);
         }
         if (this.delivery_type === 'store') {
-          console.log(this.delivery_type);
         }
         this.catlog_id = params.catlog_id;
-        console.log(this.catlog_id);
         this.selectedQsTime = params.selectedQsTime;
-        console.log(this.selectedQsTime);
         this.selectedQeTime = params.selectedQeTime;
-        console.log(this.selectedQeTime);
         this.order_date = params.order_date;
-        console.log(this.order_date);
-
         this.advance_amount = params.advance_amount;
-        console.log(this.advance_amount);
         this.account_id = params.account_id;
-        console.log(this.account_id);
 
         // this.pid = params.pid;
         // this.members = params.members;
