@@ -151,18 +151,17 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     }
     console.log(this.seletedCatalogItems1);
     if (this.action === 'edit') {
-      this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems).subscribe(
+      this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems1).subscribe(
       (data) => {
         this.shared_functions.openSnackBar('Items updated');
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
         this.location.back();
-      },
-        error => {
+      }, error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         );
       } else {
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
         this.location.back();
       }
     
