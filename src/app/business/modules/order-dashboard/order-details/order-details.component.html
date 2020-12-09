@@ -44,7 +44,7 @@
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
                 *ngIf="selectedType==='grid'">
                 <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
-                    <img src="assets/images/order/Items.svg" style="width: 50px;" class="mgn-up-10 mgn-bt-10">
+                    <img [src]="getItemImg(item)" style="width: 50px;" class="mgn-up-10 mgn-bt-10">
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}</div>

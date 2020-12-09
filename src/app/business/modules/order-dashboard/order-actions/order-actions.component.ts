@@ -65,7 +65,7 @@ export class OrderActionsComponent implements OnInit {
     this.provider_services.getWaitlistBill(this.orderDetails.uid)
       .subscribe(
         data => {
-          this.router.navigate(['provider', 'bill', this.orderDetails.uid]);
+          this.router.navigate(['provider', 'bill', this.orderDetails.uid], { queryParams: { source: 'order' } });
           this.dialogRef.close();
         },
         error => {

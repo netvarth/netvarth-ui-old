@@ -133,7 +133,6 @@
 																					*ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
 																					<ng-container
 																						*ngFor="let group of ItemServiceGroupOptions | async">
-																						<!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
 																						<ng-container
 																							*ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
 																							<mat-option
@@ -145,7 +144,7 @@
 																							</mat-option>
 																						</ng-container>
 																						<mat-option
-																							*ngIf="group.values.length==0"
+																							*ngIf="group.values.length==0 && source !== 'order'"
 																							[disabled]="true">
 																							<span
 																								class="no-data"></span>{{no_cap}}

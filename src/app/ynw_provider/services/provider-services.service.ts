@@ -1734,7 +1734,7 @@ export class ProviderServices {
    }
    changeOrderStatus(uuid, action) {
       const url = 'provider/orders/' + uuid + '/' + action;
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpPut(url);
    }
    addCatalog(data) {
       return this.servicemeta.httpPost('provider/catalog', data);

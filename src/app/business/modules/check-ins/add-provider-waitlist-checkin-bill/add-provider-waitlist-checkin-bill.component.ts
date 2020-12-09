@@ -231,7 +231,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.source = qparams.source;
-      if (this.source) {
+      if (this.source === 'appt') {
         this.breadcrumbs = [
           {
             title: 'Appointments',
@@ -242,6 +242,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         ];
         this.getApptDetails();
+      } else if (this.source === 'order') {
+        this.ad_ser_item_cap = 'Add Item';
+        this.getOrderDetails();
       } else {
         this.breadcrumbs = [
           {
@@ -284,7 +287,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        if (this.source) {
+        if (this.source === 'appt') {
           this.breadcrumbs = [
             {
               title: 'Appointments',
@@ -295,6 +298,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           ];
           this.getApptDetails();
+        } else if (this.source === 'order') {
+          this.getOrderDetails();
         } else {
           if (this.showToken) {
             this.breadcrumbs = [
@@ -339,6 +344,30 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           }
         });
+  }
+
+  getOrderDetails() {
+    this.provider_services.getProviderOrderById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
+          this.emailId = this.checkin.email;
+          this.mobilenumber = this.checkin.phoneNumber;
+          this.getWaitlistBill();
+          this.getPrePaymentDetails()
+            .then(
+              () => {
+                this.bill_load_complete = 1;
+              },
+              () => {
+                this.bill_load_complete = 0;
+              }
+            );
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
 
   getApptDetails() {
@@ -457,6 +486,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          console.log(this.bill_data);
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
@@ -547,7 +577,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           }
           const services = this.services.map((ob) => ob.name);
+          console.log(this.source);
+          if (this.source !== 'order') {
           this.itemServicesGroup[0]['values'] = services;
+          }
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -610,7 +643,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       let uid;
-      if (this.source) {
+      if (this.source === 'appt' || this.source === 'order') {
         uid = this.checkin.uid;
       } else {
         uid = this.checkin.ynwUuid;
@@ -620,6 +653,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           data => {
             this.pre_payment_log = data;
             this.refundedAmount = 0;
+            console.log(this.pre_payment_log);
             for (let i = 0; i < this.pre_payment_log.length; i++) {
               if (this.pre_payment_log[i].refundDetails.length > 0) {
                 for (const payment of this.pre_payment_log[i].refundDetails) {
@@ -884,6 +918,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.actiontype = null;
             this.curSelItm.typ = 'Services';
             this.curSelItm.qty = 1;
+            console.log(this.curSelItm);
             this.getWaitlistBill();
             resolve();
           },
@@ -1262,7 +1297,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPayWorkBench = false;
   }
   makePayment(mode, amount, paynot?, status?) {
-    if (this.source) {
+    if (this.source === 'appt' || this.source === 'order') {
       this.pay_data.uuid = this.checkin.uid;
     } else {
       this.pay_data.uuid = this.checkin.ynwUuid;
@@ -1278,8 +1313,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
             if (status === 2) {
-              if (this.source) {
+              if (this.source === 'appt') {
                 this.getApptDetails();
+              } else if (this.source === 'order') {
+                this.getOrderDetails();
               } else {
                 this.getCheckinDetails();
               }
@@ -1398,8 +1435,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '	<tr style="line-height:20px">';
     if (!this.source) {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-    } else {
+    } else if (this.source === 'appt') {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
+    } else {
+      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName + '</td>';
     }
     bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
     bill_html += '	</tr>';

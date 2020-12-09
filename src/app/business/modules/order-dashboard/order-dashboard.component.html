@@ -26,7 +26,7 @@
       <mat-tab label="Active Orders">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
-          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30" *ngIf="orders.length > 0">
+          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
                 <mat-option [value]="'all'" (click)="handleOrderType('all')">
@@ -96,7 +96,7 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
-                      <div>
+                      <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -106,8 +106,8 @@
                             (change)="setFilterDataCheckbox('orderMode', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
-                      <div>
+                      </div> -->
+                      <!-- <div>
                         <label class="filterHeaders"> Payment Status</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -117,7 +117,7 @@
                             (change)="setFilterDataCheckbox('payment', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
+                      </div> -->
                     </ul>
                   </section>
                 </aside>
@@ -230,7 +230,7 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
-                      <div>
+                      <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -240,8 +240,8 @@
                             (change)="setFilterDataCheckbox('orderMode', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
-                      <div>
+                      </div> -->
+                      <!-- <div>
                         <label class="filterHeaders"> Payment Status</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -251,7 +251,7 @@
                             (change)="setFilterDataCheckbox('payment', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
+                      </div> -->
                     </ul>
                   </section>
                 </aside>
@@ -366,7 +366,7 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
-                      <div>
+                      <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -376,8 +376,8 @@
                             (change)="setFilterDataCheckbox('orderMode', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
-                      <div>
+                      </div> -->
+                      <!-- <div>
                         <label class="filterHeaders"> Payment Status</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li>
@@ -387,7 +387,7 @@
                             (change)="setFilterDataCheckbox('payment', mode.value)">
                             {{mode.displayName}}</mat-checkbox>
                         </li>
-                      </div>
+                      </div> -->
                     </ul>
                   </section>
                 </aside>
