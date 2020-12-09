@@ -896,7 +896,7 @@ export class OrderDashboardComponent implements OnInit {
   customerIdTooltip = '';
   customer_label = '';
   selected_type = 'all';
-  orderStatusFilter = projectConstantsLocal.ORDER_STATUSES_FILTER;
+  orderStatusFilter: any = [];
   orderModesList = projectConstantsLocal.ORDER_MODES;
   paymentStatusList = projectConstantsLocal.PAYMENT_STATUSES;
   orderStatuses: any = [];
@@ -926,7 +926,7 @@ export class OrderDashboardComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    // this.getOrderStatus();
+    this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
@@ -1174,14 +1174,9 @@ export class OrderDashboardComponent implements OnInit {
     console.log(api_filter);
     return api_filter;
   }
-  getOrderStatus() {
-    this.providerservices.getProviderOrderSettings().subscribe((data: any) => {
-      this.orderstatus = data.enableOrder;
-      if (this.orderstatus) {
-        this.doSearch();
-        this.getProviderTodayOrdersCount();
-        this.getProviderFutureOrdersCount();
-      }
+  getDefaultCatalogStatus() {
+    this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
+      this.orderStatusFilter = data;
     });
   }
 }

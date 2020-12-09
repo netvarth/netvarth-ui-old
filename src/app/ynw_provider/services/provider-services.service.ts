@@ -1774,5 +1774,9 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpPost(url, data);
    }
+   getDefaultCatalogStatuses() {
+      const url = 'provider/catalog/statuses';
+      return this.servicemeta.httpGet(url);
+   }
 }
 
