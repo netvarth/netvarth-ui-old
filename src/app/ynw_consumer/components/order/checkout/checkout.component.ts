@@ -16,6 +16,7 @@ import { OrderService } from '../order.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  orderSummary: any[];
   taxAmount: any;
   orderAmount: number;
   catlog: any;
@@ -33,7 +34,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   added_address: any = [];
   advance_amount: any;
   account_id: any;
-   choose_type;
+  choose_type;
 
   linear: boolean;
   catalog_details: any;
@@ -44,7 +45,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private dialog: MatDialog,
 
-    private consumer_services: ConsumerServices ,
+    private consumer_services: ConsumerServices,
     private orderService: OrderService) {
     this.catalog_details = this.orderService.getOrderDetails();
     this.account_id = this.orderService.getaccountId();
@@ -167,7 +168,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-    this.getaddress();
+      this.getaddress();
 
     });
 
@@ -185,7 +186,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return this.orderAmount;
   }
   confirm() {
-    console.log('hi');
+    console.log(this.getOrderItems());
+
     console.log(this.delivery_type);
 
 
@@ -244,15 +246,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       };
       console.log(post_Data);
       this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
-      .subscribe(
-        data => {
-          const history: any = data;
-        console.log(history);
-        },
-        error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+        .subscribe(
+          data => {
+            const history: any = data;
+            console.log(history);
+          },
+          error => {
+            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
       // this.router.navigate(['consumer', 'order', 'payment'] );
 
 
@@ -261,8 +263,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
   changeTime() {
-console.log('chnage time');
+    console.log('chnage time');
   }
 
-
+  getOrderItems() {
+    this.orderSummary = [];
+    this.orders.forEach(item => {
+      const itemId = item.itemId;
+      const qty = this.getItemQty(item);
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty });
+    });
+    return this.orderSummary;
+  }
 }
