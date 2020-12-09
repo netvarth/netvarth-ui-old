@@ -387,6 +387,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'apptStatus': this.selectedWtlstList,
             'providers': userIds
         };
+        console.log(this.qboardConditions);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': name,
@@ -838,15 +839,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.labelsList.splice(index, 1);
     }
-    // providerLabelSelection(value, label) {
-    //     this.labelList[label] = value;
-    // }
     providerLabelSelection(label) {
-        this.labelList = {};
-        if (this.labelMultiCtrl.length > 0) {
-            for (let i = 0; i < this.labelMultiCtrl.length; i++) {
-                this.labelList[this.labelMultiCtrl[i].label] = true;
-            }
-        }
+        this.labelList[label.label] = true;
     }
+    // providerLabelSelection(label) {
+    //     this.labelList = {};
+    //     if (this.labelMultiCtrl.length > 0) {
+    //         for (let i = 0; i < this.labelMultiCtrl.length; i++) {
+    //             this.labelList[this.labelMultiCtrl[i].label] = true;
+    //         }
+    //     }
+    // }
 }
