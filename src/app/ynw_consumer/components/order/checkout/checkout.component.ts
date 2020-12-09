@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerServices } from '../../../services/consumer-services.service';
+import { OrderService } from '../order.service';
+
 
 
 @Component({
@@ -34,6 +36,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
    choose_type;
 
   linear: boolean;
+  catalog_details: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -41,7 +44,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private dialog: MatDialog,
 
-    private consumer_services: ConsumerServices) {
+    private consumer_services: ConsumerServices ,
+    private orderService: OrderService) {
+    this.catalog_details = this.orderService.getOrderDetails();
+    this.account_id = this.orderService.getaccountId();
+    console.log(this.account_id);
+    console.log(this.catalog_details);
     this.route.queryParams.subscribe(
       params => {
         this.delivery_type = params.delivery_type;
@@ -63,8 +71,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
         this.advance_amount = params.advance_amount;
         console.log(this.advance_amount);
-        this.account_id = params.account_id;
-        console.log(this.account_id);
+        // this.account_id = params.account_id;
+        // console.log(this.account_id);
 
         // this.pid = params.pid;
         // this.members = params.members;
@@ -86,22 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     console.log(this.customer_data);
     this.getaddress();
-    // this.getcatlog();
   }
-  // getcatlog() {
-  //   console.log('hi');
-  //   this.consumer_services.AddGetConsumerCatalogs(this.account_id)
-  //     .subscribe(
-  //       data => {
-  //         const history: any = data;
-  //         console.log(history);
-
-  //       },
-  //       error => {
-  //         this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       }
-  //     );
-  // }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   }
@@ -192,6 +185,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return this.orderAmount;
   }
   confirm() {
+    console.log('hi');
+    console.log(this.delivery_type);
+
 
     if (this.delivery_type === 'home') {
       console.log(this.delivery_type);
@@ -199,7 +195,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         'homeDelivery': true,
         'homeDeliveryAddress': 'madathiparambil house po kozhukully tcr',
         'catalog': {
-          'id': this.catlog_id
+          'id': this.catalog_details.id
         },
         'orderFor': {
           'id': 0
@@ -209,7 +205,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'eTime': this.selectedQeTime
         },
         'orderItem': [{
-          'id': 1,
+          'id': 805,
           'quantity': 2
         },
         {
@@ -227,41 +223,37 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       const post_Data = {
         'storePickup': true,
         'catalog': {
-          'id': this.catlog_id
+          'id': this.catalog_details.id
         },
         'orderFor': {
           'id': 0
         },
         'timeSlot': {
-          'sTime': this.selectedQsTime,
-          'eTime': this.selectedQeTime
+          'sTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+          'eTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']
         },
         'orderItem': [{
-          'id': 1,
+          'id': 805,
           'quantity': 2
-        },
-        {
-          'id': 2,
-          'quantity': 1
         }
         ],
-        'orderDate': '2020-12-26',
-        'phoneNumber': '8129630960',
-        'email': 'aneesh.mg@jaldee.com'
+        'orderDate': '2020-12-09',
+        'phoneNumber': '6303603789',
+        'email': 'shiva.kumar@gmai.com'
 
       };
       console.log(post_Data);
-      // this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
-      // .subscribe(
-      //   data => {
-      //     const history: any = data;
-      //   console.log(history);
-      //   },
-      //   error => {
-      //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   }
-      // );
-      this.router.navigate(['consumer', 'order', 'payment'] );
+      this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
+      .subscribe(
+        data => {
+          const history: any = data;
+        console.log(history);
+        },
+        error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+      // this.router.navigate(['consumer', 'order', 'payment'] );
 
 
 

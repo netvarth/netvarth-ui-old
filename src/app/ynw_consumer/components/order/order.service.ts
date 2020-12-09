@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class OrderService {
   orderdata: any;
+  accountId: any;
 
   constructor() { }
     setOrderDetails(data) {
@@ -13,5 +14,12 @@ export class OrderService {
     }
     getOrderDetails() {
       return this.orderdata;  
+    }
+    setaccountId(data) {
+      this.accountId = data;
+      console.log(this.accountId);
+    }
+    getaccountId() {
+      return this.accountId;  
     }
 }

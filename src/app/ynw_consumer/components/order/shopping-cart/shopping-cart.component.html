@@ -86,7 +86,7 @@
                               </mat-radio-button>
                               <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'">
                                   Home delivery 
-                              </mat-radio-button>&nbsp;
+                              </mat-radio-button>
                           </mat-radio-group>
 
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
@@ -109,6 +109,20 @@
                           
                             </h4>
                         </div>
+                        <!-- <div *ngIf= "choose_type === 'home'" >
+                          <h4>
+                              <span *ngIf="!isFuturedate">yesterday, </span>
+                              <span *ngIf="!isFuturedate">
+                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}
+                              </span>
+                              <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                              </span>
+                              <span *ngIf="isFuturedate">
+                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}     
+                              </span>
+                        
+                          </h4>
+                      </div> -->
                       </div>
 
                         <div class="copy one">

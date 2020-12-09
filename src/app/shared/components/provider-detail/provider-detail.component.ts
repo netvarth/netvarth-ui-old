@@ -1934,6 +1934,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
    getCatalogs(locationId) {
      const account_Id = this.provider_bussiness_id;
+     this.orderService.setaccountId(account_Id);
      console.log(locationId);
       this.orderItems = [];
      const orderItems = [];

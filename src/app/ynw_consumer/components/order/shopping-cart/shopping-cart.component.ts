@@ -33,7 +33,8 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   hold_sel_checkindate;
   advance_amount: any;
   catalog_details: any;
-  choose_type: any;
+  // choose_type: any;
+  choose_type = 'store';
  
 
 
@@ -44,8 +45,13 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     public sharedFunctionobj: SharedFunctions,
     private orderService: OrderService) {
       this.catalog_details = this.orderService.getOrderDetails();
-      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+      // if(this.catalog_details.homeDelivery.homeDelivery){
 
+      // }
+      // if(this.catalog_details.pickUp.orderPickUp){
+        
+      // }
+      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       console.log(this.sel_checkindate);
     }
 
@@ -137,13 +143,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         delivery_type: this.choose_type ,
-        catlog_id: this.catalog_details.id ,
-        selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
-        order_date: this.sel_checkindate,
-        advance_amount: this.catalog_details.advanceAmount,
-        // account_id: this.account_id
-
+        order_date: this.sel_checkindate
       }
 
   };
