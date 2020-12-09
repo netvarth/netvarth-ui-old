@@ -298,6 +298,12 @@
     font-size: .8rem !important;
 }
 
+.booking-card.card.order .card-img, .booking-card.card.order .card-img-top {
+    border-top-left-radius: calc(0.25rem - 1px) !important;
+    border-top-right-radius: calc(0.25rem - 1px) !important;
+    height: 120px !important;
+    object-fit: scale-down !important;
+}
 .booking-card .card-item-content h4 {
     display: table-cell;
     vertical-align: middle

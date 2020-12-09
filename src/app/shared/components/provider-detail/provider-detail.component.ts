@@ -1952,7 +1952,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           // } else if (catalogs.length === 1) {
             this.orderService.setOrderDetails(this.activeCatalog);
             for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++){
-              orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex] });
+              orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex].item });
               this.itemCount++;
             }
           // }

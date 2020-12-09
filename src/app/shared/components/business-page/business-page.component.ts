@@ -2435,7 +2435,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         //   }
         // } else if (catalogs.length === 1) {
         for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-          orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex] });
+          orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex].item });
           this.itemCount++;
         }
         // }
