@@ -1,5 +1,5 @@
 <section class="container no-padding-small cust-book-details">
-    <div class="content p0 comn-cls checkin-details">
+    <div class="content p0 comn-cls checkin-details order-det">
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
@@ -36,145 +36,67 @@
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
                                                 {{waitlist.providerAccount.businessName | capitalizeFirst}} 
-                                                &nbsp;<div *ngIf="checkIfFav(waitlist.providerAccount.id)" class="icon-favourite-filled" (click)="doDeleteFavProvider(waitlist.providerAccount, $event)"></div>
-                                                <div *ngIf="!checkIfFav(waitlist.providerAccount.id)" class="icon-favourite"
-                                                (click)="addFavProvider(waitlist.providerAccount.id, $event)"></div>
                                             </h3>
                                             <a class="loc-cls" [href]="waitlist.providerAccount.location.googleMapUrl"
                                             target="_blank">
                                                 <i class="fa fa-map-marker"></i>
                                                 {{waitlist.providerAccount.location.place | capitalizeFirst}} 
                                             </a>
-                                            <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
-                                                <span>{{provider_label | capitalizeFirst}} : </span>
-                                                <span>
-                                                    {{waitlist.provider.firstName | capitalizeFirst}}
-                                                    {{waitlist.provider.lastName | capitalizeFirst}}
-                                                </span>
-                                            </div>
-                                            <!-- <div class="mgn-up-10">
-                                                <span class="serv-name">
-                                                 Order name
-                                                </span>
-                                            </div> -->
                                         </div>
                                     </div>
 
-                                    <!-- Content -->
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
-                                            <div class="each-item">
-                                                <span class="item-head">Order for</span>
-                                                <span
-                                                    class="item-label-val">{{waitlist.orderFor.firstName | capitalizeFirst}}
-                                                    {{waitlist.orderFor.lastName | capitalizeFirst}}</span>
+                                    <!-- Consumer Details -->
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
+                                        <div class="col-sm-12 col-md-12 col-lg-12  col-xl-12 col-xs-12 cust-det-outline">
+                                            <div class="col-sm-7 col-md-7 col-lg-7  col-xl-7 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
+                                                <div class="txt-custdet">Customer Details</div>
+                                                <div class="txt-cust-name">Krishnadas PS</div>
+                                                <div class="txt-addrs">
+                                                    <i class="fa fa-phone"></i>
+                                                    985568475</div>
+                                                <div class="txt-addrs">
+                                                    <i class="fa fa-map-marker"></i>
+                                                    107, Teachers colony HSR Layout, Bangalore</div>
                                             </div>
-                                            <div class="each-item">
-                                                <span class="item-head">Order No</span>
-                                                <span class="item-label-val">{{waitlist.orderNumber}}</span>
+                                            <div class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
+                                                <div class="txt-custdet">Delivery Type</div>
+                                                <div class="txt-cust-name">Store PickUp</div>
+                                                <div><button mat-raised-button class="action-btn">ACTIONS</button></div>
+                                                <!-- <div class="mgn-up-10"><button mat-raised-button class="cancel-btn">CANCEL</button></div> -->
                                             </div>
-                                            <!-- <div class="each-item" *ngIf="waitlist.phoneNumber">
-                                                <span class="item-head">Phone No</span>
-                                                <span class="item-label-val">{{waitlist.phoneNumber}}</span>
-                                            </div> -->
-                                            <div class="each-item" *ngIf="waitlist.cartAmount">
-                                                <span class="item-head">Cart Amount</span>
-                                                <span class="item-label-val price rupee-font">
-                                                    &#8377;{{waitlist.cartAmount}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
-                                            <span class="item-head chk-stats">Check order status <i
-                                                    class="fa fa-hand-o-down"></i></span>
-                                            <div class="mgn-up-10">
-                                                <ngx-qrcode id="print-section" [elementType]="elementType"
-                                                    [value]="qr_value">
-                                                </ngx-qrcode>
-                                            </div>
+
                                         </div>
                                     </div>
+
+                                    <!-- Toggle -->
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
+                                        <span>ORDERED ITEMS</span>
+                                            <mat-button-toggle-group #group="matButtonToggleGroup" class="fl-right">
+                                                <mat-button-toggle value="left" aria-label="Text align left">
+                                                  <mat-icon class="l-ht-0 fa fa-list mgn-bt-5"></mat-icon>
+                                                </mat-button-toggle>
+                                                <mat-button-toggle value="center" aria-label="Text align center">
+                                                  <mat-icon class="l-ht-0 fa fa-th-large mgn-bt-5"></mat-icon>
+                                                </mat-button-toggle>
+                                              </mat-button-toggle-group>
+                                    </div>
+
+                                    <!-- Item list -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
                                         <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
                                             <mat-grid-tile *ngFor="let item of waitlist.orderItem">
                                                 <mat-grid-tile-header>
                                                 </mat-grid-tile-header>
-                                                <div style="display: grid;">
-                                                    <div>{{item.name}}</div>
-                                                    <div>qty - {{item.quantity}}</div>
-                                                    <div>{{item.totalPrice}}</div>
+                                                <div class="item-contnt">
+                                                    <div class="itm-nme">{{item.name}}</div>
+                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}</div>
+                                                    <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
                                             </mat-grid-tile>
                                         </mat-grid-list>
                                     </div>
-
-                                    <!-- Status and Date, Queue -->
-                                    <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
-                                            <span class="status-label">STATUS</span>
-                                            <span>
-                                                <div class="item-label-val">
-                                                    {{waitlist.orderStatus}}
-                                                </div>
-                                            </span>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
-                                            <span class="status-label">DATE & TIME-WINDOW</span>
-                                            <span class="item-label-val">{{waitlist.orderDate | date:dateFormatSp}}</span>
-                                            <span class="item-label-val">{{waitlist.timeSlot.sTime}} -
-                                                {{waitlist.timeSlot.eTime}}</span>
-                                        </div>
-                                        <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center">
-                                            <span class="status-label">ORDER NO</span>
-                                            <span class="item-label-val"
-                                                *ngIf="waitlist.orderNumber">{{waitlist.orderNumber}}</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Show more -->
-                                    <div class="more_view">
-                                        <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a
-                                                class="fl-left">View more</a></span>
-                                        <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
-                                                class="fl-left">View less</a></span>
-                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>Actions</a></span>
-                                    </div>
-
-                                    <!-- Instructions,messages,notes -->
-                                    <div class="more_view" *ngIf="view_more" class="mgn-up-30">
-                                        <!-- <mat-tab-group animationDuration="10ms">
-
-                                            <mat-tab label="Instructions">
-                                                <span *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
-                                                    <h6> {{waitlist.service.postInfoTitle}} </h6>
-                                                    <span [innerHTML]="waitlist.service.postInfoText">
-                                                    </span>
-                                                </span>
-                                                <span *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
-                                                    Instructions</span>
-                                            </mat-tab>
-
-                                            <mat-tab label="Messages">
-                                                <app-inbox-list [messages]="communication_history"
-                                                    [fromsource]="'consumer-waitlist'"
-                                                    (reloadApi)="getCommunicationHistory()"></app-inbox-list>
-                                            </mat-tab>
-
-                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
-                                                <span
-                                                    *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</span>
-                                                <span
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">{{no_cus_notes_cap}}</span>
-                                            </mat-tab>
-
-                                        </mat-tab-group> -->
-                                    </div>
                                 </div>
                             </div>
-
-
-                            
-
-
 
                         </div>
                     </div>
