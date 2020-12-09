@@ -106,7 +106,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             if (this.seletedCatalogItems.includes(item.itemId)) {
               item.selected = true;
             }
-          // return item;
+          return item;
           });
           console.log('cataloITem' + JSON.stringify(this.catalogItem));
 
@@ -141,6 +141,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   }
   selectedItems() {
     console.log(this.action);
+    console.log(this.cataId);
     this.seletedCatalogItems1 = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
@@ -151,7 +152,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       }
     }
     console.log(this.seletedCatalogItems1);
-    if (this.action === 'edit') {
+    if (this.action === 'edit' && this.cataId !== 'add') {
       this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems1).subscribe(
       (data) => {
         this.shared_functions.openSnackBar('Items updated');
