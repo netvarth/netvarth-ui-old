@@ -4,7 +4,6 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { Location } from '@angular/common';
 
 
 @Component({
