@@ -5,19 +5,20 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
+// import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
-import { OrderService } from '../../../ynw_consumer/components/order/order.service.js';
+import { SharedServices } from '../../services/shared-services';
+// import { OrderService } from '../../../ynw_consumer/components/order/order.service';
 
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.css']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
   taxAmount: any;
-  orderAmount: number;
+  orderAmount: any;
   catlog: any;
   catalogItem: any;
   addressDialogRef: any;
@@ -33,7 +34,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   added_address: any = [];
   advance_amount: any;
   account_id: any;
-   choose_type;
+  choose_type;
 
   linear: boolean;
   catalog_details: any;
@@ -43,10 +44,12 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private dialog: MatDialog,
-    private consumer_services: ConsumerServices,
-    private orderService: OrderService) {
-        this.catalog_details = this.orderService.getOrderDetails();
-        this.account_id = this.orderService.getaccountId();
+    private shared_services: SharedServices
+    // private consumer_services: ConsumerServices,
+    // private orderService: OrderService
+  ) {
+    this.catalog_details = this.shared_services.getOrderDetails();
+    this.account_id = this.shared_services.getaccountId();
     this.route.queryParams.subscribe(
       params => {
         this.delivery_type = params.delivery_type;
@@ -79,7 +82,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.customer_data = activeUser;
     }
     console.log(this.customer_data);
-    this.getaddress();
+    // this.getaddress();
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -95,7 +98,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   getOrderFinalAmountToPay() {
 
-    return this.orderAmount + this.taxAmount;
+    return parseInt(this.orderAmount , 0) + parseInt(this.getTaxCharges(), 0);
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -109,16 +112,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   getaddress() {
     console.log('hi');
-    this.consumer_services.getConsumeraddress()
-      .subscribe(
-        data => {
-          this.added_address = data;
+    // this.consumer_services.getConsumeraddress()
+    //   .subscribe(
+    //     data => {
+    //       this.added_address = data;
 
-        },
-        error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+    //     },
+    //     error => {
+    //       this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //   );
   }
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
@@ -132,7 +135,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-      this.getaddress();
+      // this.getaddress();
     });
   }
 
@@ -153,7 +156,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-    this.getaddress();
+      // this.getaddress();
 
     });
 
@@ -162,13 +165,14 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.location.back();
   }
   getTotalItemPrice() {
-    this.orderAmount = 0;
+   let total = 0;
     for (const item of this.orders) {
-      this.orderAmount = this.orderAmount + item.promotionalPrice * this.getItemQty(item);
+     total = total + parseInt(item.promotionalPrice, 0) * parseInt(this.getItemQty(item), 0 );
 
     }
-    console.log(this.orderAmount);
-    return this.orderAmount;
+    this.orderAmount = total;
+    return total;
+
   }
   confirm() {
     console.log('hi');
@@ -229,16 +233,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
       };
       console.log(post_Data);
-      this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
-      .subscribe(
-        data => {
-          const history: any = data;
-        console.log(history);
-        },
-        error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+      // this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
+      // .subscribe(
+      //   data => {
+      //     const history: any = data;
+      //   console.log(history);
+      //   },
+      //   error => {
+      //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   }
+      // );
       // this.router.navigate(['consumer', 'order', 'payment'] );
 
 
@@ -247,7 +251,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     }
   }
   changeTime() {
-console.log('chnage time');
+    console.log('chnage time');
   }
 
 

@@ -5,6 +5,8 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 export class SharedServices {
 
+  accountId: any;
+  orderdata: any;
   licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta) {
   }
@@ -849,5 +851,19 @@ export class SharedServices {
     console.log(itemId);
     const url = 'http://localhost:4200/assets/json/item-details.json';
     return this.servicemeta.httpGet(url);
+  }
+  setOrderDetails(data) {
+    this.orderdata = data;
+    console.log(this.orderdata);
+  }
+  getOrderDetails() {
+    return this.orderdata;
+  }
+  setaccountId(data) {
+    this.accountId = data;
+    console.log(this.accountId);
+  }
+  getaccountId() {
+    return this.accountId;
   }
 }

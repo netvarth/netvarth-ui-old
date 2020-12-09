@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerServices } from '../../../services/consumer-services.service';
-import { OrderService } from '../order.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
+
 
 
 
@@ -46,9 +47,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
 
     private consumer_services: ConsumerServices,
-    private orderService: OrderService) {
-    this.catalog_details = this.orderService.getOrderDetails();
-    this.account_id = this.orderService.getaccountId();
+    private shared_services: SharedServices) {
+    this.catalog_details = this.shared_services.getOrderDetails();
+    this.account_id = this.shared_services.getaccountId();
     console.log(this.account_id);
     console.log(this.catalog_details);
     this.route.queryParams.subscribe(

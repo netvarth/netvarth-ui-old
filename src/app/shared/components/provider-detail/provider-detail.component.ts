@@ -20,7 +20,7 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { OrderService } from '../../../ynw_consumer/components/order/order.service';
+
 
 @Component({
   selector: 'app-provider-detail',
@@ -251,8 +251,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
-    private locationobj: Location,
-    private orderService: OrderService
+    private locationobj: Location
+
   ) {
     this.getDomainList();
     // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
@@ -469,7 +469,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
-          
+
             console.log(this.businessjson);
             if (this.businessjson.cover) {
               this.bgCover = this.businessjson.cover.url;
@@ -1926,7 +1926,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.providerDetClicked(actionObj['userId']);
     }
   }
-  
+
 
   /**
    * Order Related Code
@@ -1934,7 +1934,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
    getCatalogs(locationId) {
      const account_Id = this.provider_bussiness_id;
-     this.orderService.setaccountId(account_Id);
+     this.shared_services.setaccountId(account_Id);
      console.log(locationId);
       this.orderItems = [];
      const orderItems = [];
@@ -1950,7 +1950,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           //     this.itemCount++;
           //   }
           // } else if (catalogs.length === 1) {
-            this.orderService.setOrderDetails(this.activeCatalog);
+            this.shared_services.setOrderDetails(this.activeCatalog);
             for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++){
               orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex].item });
               this.itemCount++;
@@ -1994,7 +1994,7 @@ getTotalItemAndPrice() {
 }
 checkout() {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-// this.router.navigate(['consumer', 'order', 'cart']);
+//  this.router.navigate(['consumer', 'order', 'cart']);
    this.router.navigate(['order/shoppingcart']);
 }
 itemDetails(item) {

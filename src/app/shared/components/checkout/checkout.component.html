@@ -8,7 +8,7 @@
 
         <!-- <a class="pull-left back-btn mgn-up-5"><i class="fa fa-arrow-left"></i></a> -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+          <!-- <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header> -->
         </div>
         <!-- </div> -->
       </div>
@@ -29,9 +29,9 @@
 
                 <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
                   <mat-step label="Step1">
-                    <ng-template matStepperIcon="edit">
+                    <!-- <ng-template matStepperIcon="edit">
                       <mat-icon></mat-icon>
-                    </ng-template>
+                    </ng-template> -->
                     <ng-template matStepLabel>Enter your Registered Mobile Number</ng-template>
                     <mat-form-field>
                       <input matInput placeholder="Mobile Number" required>
@@ -43,9 +43,9 @@
                   </mat-step>
                   <mat-step label="Step 2">
                     <ng-template matStepLabel>Delivery options</ng-template>
-                    <ng-template matStepperIcon="edit">
+                    <!-- <ng-template matStepperIcon="edit">
                       <mat-icon>LocalShipping</mat-icon>
-                    </ng-template>
+                    </ng-template> -->
 
                     <div>
                       <p>Choose delivery type</p>
@@ -89,9 +89,9 @@
                   </mat-step>
                   <mat-step label="Step 3">
                     <ng-template matStepLabel>Fill out your address</ng-template>
-                    <ng-template matStepperIcon="edit">
+                    <!-- <ng-template matStepperIcon="edit">
                       <mat-icon>ContactMail</mat-icon>
-                    </ng-template>
+                    </ng-template> -->
 
                     <div class="div-outline custId-cursor col-md-6 mt-1"
                       *ngFor="let address of added_address; let i = index">
@@ -169,7 +169,7 @@
                                       <div class="">
                                         <div class="c-row one width-100">
                                           <div class="name cart-flex">
-                                            <i class="fa fa-stop-circle"></i> 
+                                            <i class="fa fa-stop-circle"></i>
                                             <span class="item-name">{{item.itemName}}</span>
                                             </div>
                                           <div class="quantity item-qty">{{getItemQty(item)}}</div>

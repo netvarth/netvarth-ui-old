@@ -4,7 +4,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
 import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
-import { OrderService } from '../order.service';
+import { SharedServices } from '../../../../shared/services/shared-services';
+
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,6 +14,8 @@ import { OrderService } from '../order.service';
 
 })
 export class ShoppingCartComponent implements OnInit,OnDestroy {
+  home_delivery = false;
+  store_pickup = false;
   order_count: number;
   price: number;
   orders: any[];
@@ -35,7 +38,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   catalog_details: any;
   // choose_type: any;
   choose_type = 'store';
- 
+
 
 
   constructor(
@@ -43,13 +46,14 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     public route: ActivatedRoute,
     private location: Location,
     public sharedFunctionobj: SharedFunctions,
-    private orderService: OrderService) {
-      this.catalog_details = this.orderService.getOrderDetails();
+    private shared_services: SharedServices) {
+      this.catalog_details = this.shared_services.getOrderDetails();
+      console.log(JSON.stringify(this.catalog_details));
       // if(this.catalog_details.homeDelivery.homeDelivery){
-
+      //   this.home_delivery = true;
       // }
       // if(this.catalog_details.pickUp.orderPickUp){
-        
+      //  this.store_pickup = true;
       // }
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       console.log(this.sel_checkindate);
@@ -59,7 +63,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
     console.log(this.sel_checkindate);
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];   
+    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     this.showfuturediv = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -79,7 +83,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     if (mm < 10) {
         cmon = '0' + mm;
     } else {
-        cmon = '' + mm; 
+        cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;

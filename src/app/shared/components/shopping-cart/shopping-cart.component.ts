@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import * as catalogdetails from '../../../../assets/json/getcatlog.json';
 import * as moment from 'moment';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,6 +13,9 @@ import { projectConstants } from '../../../app.component';
 
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
+  store_pickup: boolean;
+  home_delivery: boolean;
+  catalog_details: any;
   order_count: number;
   price: number;
   orders: any[];
@@ -42,22 +45,30 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
+    private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions) {
-      this.route.queryParams.subscribe(
-        params => {
-          this.account_id = params.account_id;
-          console.log(this.account_id);
-        });
-    }
+    this.route.queryParams.subscribe(
+      params => {
+        this.account_id = params.account_id;
+        console.log(this.account_id);
+      });
+  }
 
   ngOnInit() {
     console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    this.catalogJSON = catalogdetails;
+    this.catalog_details = this.shared_services.getOrderDetails();
+    console.log(JSON.stringify(this.catalog_details));
+    if (this.catalog_details.homeDelivery.homeDelivery) {
+      this.home_delivery = true;
+    }
+    if (this.catalog_details.pickUp.orderPickUp) {
+      this.store_pickup = true;
+    }
+    this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+    console.log(this.sel_checkindate);
 
-    this.currentcatlog = this.catalogJSON.default[0];
-    this.sel_checkindate = this.currentcatlog.nextAvailablePickUpDetails.availableDate;
     this.hold_sel_checkindate = this.sel_checkindate;
     this.advance_amount = this.currentcatlog.advanceAmount;
     this.showfuturediv = false;
@@ -71,15 +82,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const yyyy = this.today.getFullYear();
     let cday = '';
     if (dd < 10) {
-        cday = '0' + dd;
+      cday = '0' + dd;
     } else {
-        cday = '' + dd;
+      cday = '' + dd;
     }
     let cmon;
     if (mm < 10) {
-        cmon = '0' + mm;
+      cmon = '0' + mm;
     } else {
-        cmon = '' + mm;
+      cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;
@@ -143,19 +154,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        delivery_type: this.choose_type ,
-        catlog_id: this.currentcatlog.id ,
-        selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
-        order_date: this.sel_checkindate,
-        advance_amount: this.advance_amount,
-        account_id: this.account_id
+        delivery_type: 'homedelivery',
+        // catlog_id: this.currentcatlog.id ,
+        // selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+        // selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
+        // order_date: this.sel_checkindate,
+        // advance_amount: this.advance_amount,
+        // account_id: this.account_id
 
       }
 
-  };
-   // this.router.navigate(['consumer', 'order', 'checkout'] , navigationExtras);
-   this.router.navigate(['order/checkout'] , navigationExtras);
+    };
+    // this.router.navigate(['consumer', 'order', 'checkout'] , navigationExtras);
+    this.router.navigate(['order/checkout'], navigationExtras);
 
   }
   goBack() {
@@ -184,8 +195,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
     if (nDt.getTime() >= strtDt.getTime()) {
-        this.sel_checkindate = ndate;
-        // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+      this.sel_checkindate = ndate;
+      // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
@@ -195,9 +206,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const date2 = new Date(dt2);
     // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
     if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        this.isFuturedate = true;
+      this.isFuturedate = true;
     } else {
-        this.isFuturedate = false;
+      this.isFuturedate = false;
     }
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
@@ -214,9 +225,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const strtDt = new Date(strtDt2);
     const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
     if (startdate >= selecttdate) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
   }
   handleFutureDateChange(e) {
@@ -226,7 +237,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const obtmonth = (futrDte.getMonth() + 1);
     let cmonth = '' + obtmonth;
     if (obtmonth < 10) {
-        cmonth = '0' + obtmonth;
+      cmonth = '0' + obtmonth;
     }
     const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
     this.sel_checkindate = seldate;
@@ -237,9 +248,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
     const datee2 = new Date(dte2);
     if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-        this.isFuturedate = true;
+      this.isFuturedate = true;
     } else {
-        this.isFuturedate = false;
+      this.isFuturedate = false;
     }
     this.handleFuturetoggle();
     // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
@@ -247,4 +258,4 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
   }
-  }
+}

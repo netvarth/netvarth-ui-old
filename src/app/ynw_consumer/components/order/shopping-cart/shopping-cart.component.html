@@ -22,7 +22,7 @@
                     <span class=" mgn-lt-10 amount">Continue shopping</span>
                   </h5>
                 </div>
-            <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12" *ngIf="action==''">  
+            <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12" *ngIf="action==''">
               <div class="bill-section">
                 <div class="bill-section-content">
                   <div class="bill-wrapper ">
@@ -85,7 +85,7 @@
                                   Store pick up
                               </mat-radio-button>
                               <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'">
-                                  Home delivery 
+                                  Home delivery
                               </mat-radio-button>
                           </mat-radio-group>
 
@@ -104,9 +104,9 @@
                                 <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
                                 </span>
                                 <span *ngIf="isFuturedate">
-                                    {{catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}     
+                                    {{catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
                                 </span>
-                          
+
                             </h4>
                         </div>
                         <!-- <div *ngIf= "choose_type === 'home'" >
@@ -118,9 +118,9 @@
                               <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
                               </span>
                               <span *ngIf="isFuturedate">
-                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}     
+                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}
                               </span>
-                        
+
                           </h4>
                       </div> -->
                       </div>
@@ -186,8 +186,8 @@
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                   <div class="card p0">
                       <div class="copy locd">
-  
-  
+
+
           <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                   *ngIf="action=='timeChange'">
                                   <!-- <p>shiva Reddy</p> -->
@@ -199,13 +199,13 @@
                                           <div class="icon-minus pull-left" [class.disable]="disableMinus()"
                                               (click)="calculateDate(-1)">
                                           </div>
-                                     
+
                                           <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                          <div class="icon-add pull-left" 
+                                          <div class="icon-add pull-left"
                                               (click)="calculateDate(1)"></div>
                                       </div>
-  
-  
+
+
                                       <div class="pickerouter caldiv pull-left mgn-up-20">
                                       <mat-datepicker-toggle matSuffix [for]="picker">
                                       </mat-datepicker-toggle>
@@ -213,36 +213,36 @@
                                       <input class="" style="visibility: hidden; width:1px" type="text"
                                           [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
                                           (dateChange)="handleFutureDateChange($event)">
-  
+
                                   </div>
-  
+
                                  </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Choose
                                           Timings</div>
                                       <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
                                           <mat-chip-list >
-                                              <mat-chip 
+                                              <mat-chip
                                                  >
                                                  09:00 AM - 10:00 PM
-  
+
                                               </mat-chip>
                                           </mat-chip-list>
-                                        
+
                                       </div>
-                                     
+
                                   </div>
                                   <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
                                       <button (click)="goBackCart()" class="btn bt3 btn-default coupon-apply-btn"
                                           type="button">Ok</button>
                                   </div>
                               </div>
-  
+
                             </div>
                           </div>
                         </div>
                       </div>
-  
+
 
 
 
