@@ -76,6 +76,8 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 1;
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
             this.prev_phonenumber = success['basicInfo']['mobile'];
+            this.countryCode = success['basicInfo']['countryCode'];
+
             // this.spForm.setValue({
             //   'phonenumber': success['basicInfo']['mobile'] || null
             // });

@@ -124,6 +124,8 @@ export class EditProfileComponent implements OnInit {
             });
             this.phonenoHolder = data['basicInfo']['mobile'] || '';
             console.log(this.phonenoHolder)
+            this.countryCode = data['basicInfo']['countryCode'] || '';
+
 
           }
         },
