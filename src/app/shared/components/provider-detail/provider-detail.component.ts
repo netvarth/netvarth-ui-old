@@ -260,6 +260,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       return false;
     };
   }
+
   getDomainList() {
     const bconfig = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;

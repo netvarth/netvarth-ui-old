@@ -59,6 +59,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
       console.log(this.sel_checkindate);
     }
 
+
   ngOnInit() {
     this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
     console.log(this.sel_checkindate);
