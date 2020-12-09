@@ -154,7 +154,7 @@ export class CatalogdetailComponent implements OnInit {
  ]
  };
  showadditems = true;
- status: any = ['Order received',
+ status: any = ['Order Received',
  'Order Acknowledged',
  'Order Confirmed',
  'Preparing',
@@ -206,8 +206,10 @@ payAdvance = 'NONE';
  this.catalogname = this.catalog.displayName;
  if (this.action === 'edit') {
  this.createForm();
+ this.api_loading = false;
  } else if (this.action === 'view') {
  this.catalogcaption = 'Catalog Details';
+ this.api_loading = false;
  }
  if (!this.seletedCatalogItems) {
      if (this.catalog.catalogItem) {
@@ -216,7 +218,7 @@ payAdvance = 'NONE';
  }
 }
 
- this.api_loading = false;
+ 
  }
  );
  }
@@ -537,18 +539,18 @@ updateForm() {
         'advancePayment': this.catalog.advanceAmount || '',
         'cancelationPolicyStatus': true,
         'cancelationPolicy': this.catalog.cancellationPolicy,
-        'storepickup': this.catalog.pickUp.orderPickUp,
+        'storepickup': this.catalog.pickUp.orderPickUp || false,
         'startdatestore': this.catalog.pickUp.pickUpSchedule.startDate || '',
         'enddatestore': this.catalog.pickUp.pickUpSchedule.terminator.endDate || '',
         'qstarttimestore': sttimestore,
         'qendtimestore': edtimestore,
-        'storeotpverify': this.catalog.pickUp.pickUpOtpVerification,
-        'homedelivery': this.catalog.homeDelivery.homeDelivery,
+        'storeotpverify': this.catalog.pickUp.pickUpOtpVerification || false,
+        'homedelivery': this.catalog.homeDelivery.homeDelivery || false,
         'startdatehome': this.catalog.homeDelivery.deliverySchedule.startDate || '',
         'enddatehome': this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '',
         'qstarttimehome': sttimehome,
         'qendtimehome': edtimehome,
-        'homeotpverify': this.catalog.homeDelivery.deliveryOtpVerification || '',
+        'homeotpverify': this.catalog.homeDelivery.deliveryOtpVerification || false,
         'deliverykms': this.catalog.homeDelivery.deliveryRadius || '',
         'deliverycharge': this.catalog.homeDelivery.deliveryCharge || ''
         });
