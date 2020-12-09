@@ -1,7 +1,9 @@
+.order {
+    background: white;
+}
 .viewtypes i {
     color: #334b99;
     padding: 5px;
-    background: white;
     border-radius: 5px;
 }
 .selectedView {
@@ -9,39 +11,51 @@
     color: white !important;
 }
 .itemlist th {
-    border-bottom: 1px solid #ccc;
+    /* border-bottom: 1px solid #ccc; */
     padding: 5px;
 }
 .itemlist {
-    background: white;
-    margin: 20px;
+    margin: 20px 20px 50px;
     padding: 10px;
+    border: 1px solid #cccc !important
 }
 .itemlist td {
     padding: 5px;
 }
 .orderdetails {
     margin: 20px;
-    background: white;
     padding: 30px;
+    box-shadow: 10px 10px 15px 0px #cccccc9c;
 }
 .fa-phone, .fa-map-marker {
     color: #334b99;
     margin-right: 10px;
 }
-/* .gridlist {
-    margin: 20px;
-    padding: 10px;
-} */
 .gridlist .order-item {
     float: left;
     margin: auto;
-    background: white;
     padding: 10px;
-    margin: 20px;
-    width: 250px;
+    margin: 5px;
     text-align: center;
     height: 200px;
+    width: 20%;
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccc !important;
+}
+@media(max-width: 550px) {
+    .gridlist .order-item {
+        width: 45%;
+    }
+}
+@media (min-width: 1200px) {
+    .gridlist .order-item {
+        width: 20%;
+    }
+}
+@media (min-width: 992px) {
+    .gridlist .order-item {
+        width: 25%;
+    }
 }
 .orderdetails .storepickup-icon,
 .orderdetails .delivery-icon {

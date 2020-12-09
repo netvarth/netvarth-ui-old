@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -23,8 +23,8 @@ export class OrderDetailsComponent implements OnInit {
     'homeDeliveryAddress': 'chakaakal h,irinjalakuda po',
     'consumer': {
       'id': 1,
-      'firstName': 'AAA',
-      'lastName': 'AAA',
+      'firstName': 'Layana',
+      'lastName': 'T S',
       'favourite': false,
       'phone_verified': false,
       'email_verified': true,
@@ -140,6 +140,8 @@ export class OrderDetailsComponent implements OnInit {
   selectedType = 'list';
   customerLabel = '';
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
+  screenWidth;
+  small_device_display = false;
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions) {
@@ -154,6 +156,15 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
   getOrderDetails(uid) {
     this.loading = true;

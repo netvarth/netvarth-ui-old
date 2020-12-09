@@ -8,6 +8,7 @@ import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { CardModule } from '../../../shared/components/card/card.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
     OrderDashboardRoutingModule,
     MatTabsModule,
     LoadingSpinnerModule,
-    CapitalizeFirstPipeModule
+    CapitalizeFirstPipeModule,
+    CardModule
   ],
   exports: [
     OrderDashboardComponent

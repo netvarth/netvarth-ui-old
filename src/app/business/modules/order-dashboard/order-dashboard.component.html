@@ -21,10 +21,11 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="!loading">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Active Orders">
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30" *ngIf="orders.length > 0">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
@@ -90,9 +91,9 @@
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let status of orderStatusFilter">
-                          <mat-checkbox [checked]="orderStatuses.indexOf(status.value) !== -1"
-                            (change)="setFilterDataCheckbox('orderStatus', status.value)">
-                            {{status.displayName}}</mat-checkbox>
+                          <mat-checkbox [checked]="orderStatuses.indexOf(status) !== -1"
+                            (change)="setFilterDataCheckbox('orderStatus', status)">
+                            {{status}}</mat-checkbox>
                         </li>
                       </div>
                       <div>
@@ -157,7 +158,8 @@
         </div>
       </mat-tab>
       <mat-tab label="Future">
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30" *ngIf="orders.length > 0">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
@@ -290,7 +292,8 @@
         </div>
       </mat-tab>
       <mat-tab label="History">
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-5" *ngIf="historyOrders.length > 0">
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-5">
               <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
@@ -358,9 +361,9 @@
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let status of orderStatusFilter">
-                          <mat-checkbox [checked]="orderStatuses.indexOf(status.value) !== -1"
-                            (change)="setFilterDataCheckbox('orderStatus', status.value)">
-                            {{status.displayName}}</mat-checkbox>
+                          <mat-checkbox [checked]="orderStatuses.indexOf(status) !== -1"
+                            (change)="setFilterDataCheckbox('orderStatus', status)">
+                            {{status}}</mat-checkbox>
                         </li>
                       </div>
                       <div>
@@ -427,5 +430,4 @@
     </mat-tab-group>
     <div class="clearfix"></div>
   </div>
-  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 </div>

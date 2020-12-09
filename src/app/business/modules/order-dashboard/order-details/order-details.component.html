@@ -8,9 +8,11 @@
 </section>
 
 <section>
-    <div class="" *ngIf="!loading">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding order" *ngIf="!loading">
         <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding">
+                <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
+                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
                 <div class="bold font11"> {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
                 <div> <i class="fa fa-phone" aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
@@ -20,15 +22,16 @@
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
-                <div class=""> <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
+                <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
-                <div class="mgn-up-70"> <span class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
+                <div class="mgn-up-70"> <span class="customer-action-btn pointer-cursor"
+                        (click)="showOrderActions()">Actions</span>
                 </div>
             </div>
         </div>
-        <div *ngIf="orderDetails && orderDetails.orderItem">
-            <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
-                <div class="pull-left mgn-lt-20">
+        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem">
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
+                <div class="pull-left bold font11">
                     Order Items
                 </div>
                 <div class="pull-right viewtypes">
@@ -38,15 +41,16 @@
                         (click)="selectViewType('grid')"></i>
                 </div>
             </div>
-            <div class="gridlist col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="selectedType==='grid'">
-                <div class="order-item mgn-bt-30" *ngFor="let item of orderDetails.orderItem">
+            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
+                *ngIf="selectedType==='grid'">
+                <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
                     <img src="assets/images/order/Items.svg" style="width: 50px;" class="mgn-up-10 mgn-bt-10">
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}</div>
                 </div>
             </div>
-            <div class="itemlist col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="selectedType==='list'">
+            <div class="itemlist col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="selectedType==='list'">
                 <table style="width: 100%;">
                     <thead>
                         <tr>
