@@ -286,7 +286,6 @@ export class OrderDetailComponent implements OnInit {
     this.getCommunicationHistory();
     this.waitlist = this.dummyData[0]; // should be deleted
     console.log(this.waitlist);
-    this.generateQR(); // Should be deleted
     // this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
     //   (data) => {
     //     this.waitlist = data;
@@ -299,10 +298,7 @@ export class OrderDetailComponent implements OnInit {
 
     this.getFavouriteProvider();
   }
-  generateQR() {
-    console.log('qr');
-    this.qr_value = this.path + 'status/' + this.waitlist.orderNumber;
-  }
+
   getCommunicationHistory() {
    // throw new Error('Method not implemented.');
   }
