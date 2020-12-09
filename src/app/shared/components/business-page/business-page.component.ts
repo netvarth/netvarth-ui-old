@@ -2420,9 +2420,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getCatalogs(locationId) {
     console.log(locationId);
+    const account_Id = this.provider_bussiness_id;
     this.orderItems = [];
     const orderItems = [];
-    this.shared_services.getConsumerCatalogs().subscribe(
+    this.shared_services.getConsumerCatalogs(account_Id).subscribe(
       (catalogs: any) => {
         this.activeCatalog = catalogs[0];
         this.catlogArry();

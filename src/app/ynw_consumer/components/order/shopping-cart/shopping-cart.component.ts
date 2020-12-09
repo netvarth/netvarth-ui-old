@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
-import * as catalogdetails from '../../../../../assets/json/getcatlog.json';
 import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,8 +20,6 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   catlog: any;
   catalogItem: any;
   action: any = '';
-  catalogJSON: any;
-  currentcatlog: any;
   isFuturedate = false;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   sel_checkindate;
@@ -33,38 +31,29 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   todaydate;
   ddate;
   hold_sel_checkindate;
-  choose_type = 'store';
   advance_amount: any;
-  account_id: any;
+  catalog_details: any;
+  choose_type: any;
+ 
 
 
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
-    public sharedFunctionobj: SharedFunctions) {
-      this.route.queryParams.subscribe(
-        params => {
-          this.account_id = params.account_id;
-          console.log(this.account_id);
-        });
+    public sharedFunctionobj: SharedFunctions,
+    private orderService: OrderService) {
+      this.catalog_details = this.orderService.getOrderDetails();
+      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+
+      console.log(this.sel_checkindate);
     }
 
   ngOnInit() {
-    console.log(this.choose_type);
-
+    this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+    console.log(this.sel_checkindate);
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    this.catalogJSON = catalogdetails;
-
-    this.currentcatlog = this.catalogJSON.default[0];
-    this.sel_checkindate = this.currentcatlog.nextAvailablePickUpDetails.availableDate;
-    this.hold_sel_checkindate = this.sel_checkindate;
-    this.advance_amount = this.currentcatlog.advanceAmount;
-    
-    console.log(this.currentcatlog);
-
-    
+    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];   
     this.showfuturediv = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -84,7 +73,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     if (mm < 10) {
         cmon = '0' + mm;
     } else {
-        cmon = '' + mm;
+        cmon = '' + mm; 
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;
@@ -148,12 +137,12 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         delivery_type: this.choose_type ,
-        catlog_id: this.currentcatlog.id ,
-        selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
+        catlog_id: this.catalog_details.id ,
+        selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+        selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
         order_date: this.sel_checkindate,
-        advance_amount: this.advance_amount,
-        account_id: this.account_id
+        advance_amount: this.catalog_details.advanceAmount,
+        // account_id: this.account_id
 
       }
 
@@ -171,6 +160,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   }
   changeTime() {
     this.action = 'timeChange';
+    console.log(this.sel_checkindate);
   }
   calculateDate(days) {
     // this.resetApi();

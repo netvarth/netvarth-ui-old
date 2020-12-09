@@ -4,6 +4,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class OrderService {
+  orderdata: any;
 
   constructor() { }
+    setOrderDetails(data) {
+      this.orderdata = data;
+      console.log(this.orderdata);
+    }
+    getOrderDetails() {
+      return this.orderdata;  
+    }
 }
