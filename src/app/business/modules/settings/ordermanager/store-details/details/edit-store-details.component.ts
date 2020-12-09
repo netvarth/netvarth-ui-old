@@ -31,19 +31,21 @@ export class EditStoreDetailsComponent implements OnInit {
         private shared_Functionsobj: SharedFunctions,
         private provider_services: ProviderServices,
         ) {
-            
+            this.route.queryParams.subscribe(params => {
+                if (this.router.getCurrentNavigation().extras.state) {
+                  this.data = this.router.getCurrentNavigation().extras.state.contact_info;
+                }
+              });
          }
     ngOnInit() {
-        this.data = this.route.snapshot.paramMap.get('contact_info');
-        this.updateInfo = JSON.parse(this.data)
-        this.firstName = this.updateInfo.firstName;
-        this.lastName = this.updateInfo.lastName;
-        this.phone = this.updateInfo.phone;
-        this.email = this.updateInfo.email;
-        this.address = this.updateInfo.address;
-        this.alternatePhone = this.updateInfo.alternatePhone;
-        this.alternateEmail = this.updateInfo.alternateEmail;
-        this.whatsappNo = this.updateInfo.whatsappNo;
+        this.firstName = this.data.firstName;
+        this.lastName = this.data.lastName;
+        this.phone = this.data.phone;
+        this.email = this.data.email;
+        this.address = this.data.address;
+        this.alternatePhone = this.data.alternatePhone;
+        this.alternateEmail = this.data.alternateEmail;
+        this.whatsappNo = this.data.whatsappNo;
     }
     
      onSubmit() {

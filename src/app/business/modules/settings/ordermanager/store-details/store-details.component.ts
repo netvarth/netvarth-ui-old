@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Router } from '@angular/router';
+import { Router,NavigationExtras } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../../src/app/ynw_provider/services/provider-services.service';
@@ -68,7 +68,12 @@ export class StoreDetailsComponent implements OnInit {
     this.api_success = null;
   }
   editInfo() {
-    this.router.navigate(['provider/settings/ordermanager/storedetails/edit', { contact_info: JSON.stringify(this.info_list) }]);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        contact_info: this.info_list
+      }
+    };
+    this.router.navigate(['provider/settings/ordermanager/storedetails/edit'],navigationExtras);
   }
   learnmore_clicked(mod, e) {
   }
