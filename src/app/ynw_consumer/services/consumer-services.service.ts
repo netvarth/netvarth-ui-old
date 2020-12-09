@@ -180,8 +180,10 @@ export class ConsumerServices {
     const path = 'consumer/waitlist/states/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(path);
   }
-  getConsumerOrders(params) {
-    return this.servicemeta.httpGet('consumer/orders', null, params);
+  getConsumerOrders() {
+    const url = 'consumer/orders';
+    return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet('consumer/orders', null, params);
   }
   getConsumeraddress() {
     const url = 'consumer/deliveryAddress';

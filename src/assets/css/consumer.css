@@ -6806,3 +6806,17 @@
 .consumer-dash .order-dash  tbody tr {
    cursor: pointer;
 }
+.store_pick_ico {
+    content: url(../images/order/Storepickup.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}
+.hom_deliver_ico {
+    content: url(../images/order/Delivery.svg);
+    position: relative;
+    padding-right: 1px;
+    width: 25px;
+    margin-top: 7px;
+}

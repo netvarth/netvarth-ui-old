@@ -1351,7 +1351,8 @@
                                  <td>
                                      <h4 class="disp-flex">
                                          <div class="circle-tokens">
-                                             <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                             <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
+                                             <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
                                          </div>
                                          <span class="mgn-up-10">
                                              Order :<br> #{{oder.orderNumber}}

@@ -34,149 +34,6 @@ import { ViewRxComponent } from './view-rx/view-rx.component';
   ]
 })
 export class ConsumerHomeComponent implements OnInit, OnDestroy {
-  // order
-  dummyData: any = [
-    {
-      'uid': 'd55a9fd3-56a8-45a2-9997-eb34965c3a3c_or',
-      'orderNumber': 'o-hmp-a',
-      'homeDelivery': true,
-      'storePickup': false,
-      'homeDeliveryAddress': 'madathiparambil house po kozhukully tcr',
-      'consumer': {
-        'id': 260,
-        'firstName': 'Aneesh',
-        'lastName': 'mg',
-        'gender': 'male',
-        'favourite': false,
-        'phone_verified': false,
-        'email_verified': false,
-        'jaldeeConsumer': 70,
-        'jaldeeId': '1'
-      },
-      'providerAccount': {
-      'branchId': 0,
-      'businessName': 'Lavanya Hospital',
-      'corpId': 0,
-      'id': 125976,
-      'licensePkgID': 0,
-      'minimumCompleteness': false,
-      'profileId': 0,
-      'uniqueId': 152210,
-      'userSubdomain': 0
-      },
-      'jaldeeConsumer': {
-        'id': 70,
-        'favourite': false,
-        'SignedUp': false
-      },
-      'catalog': {
-        'id': 3,
-        'catalogName': 'Lunch',
-        'catalogSchedule': {
-          'recurringType': 'Weekly',
-          'repeatIntervals': [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7'
-          ],
-          'startDate': '2020-11-26',
-          'terminator': {
-            'endDate': '2022-01-01',
-            'noOfOccurance': 0
-          },
-          'timeSlots': [
-            {
-              'sTime': '09:00 AM',
-              'eTime': '08:00 PM'
-            }
-          ]
-        },
-        'advanceAmount': 0,
-        'autoConfirm': false
-      },
-      'orderFor': {
-        'id': 260,
-        'firstName': 'Aneesh',
-        'lastName': 'mg',
-        'gender': 'male',
-        'favourite': false,
-        'phone_verified': false,
-        'email_verified': false,
-        'jaldeeConsumer': 0,
-        'jaldeeId': '1'
-      },
-      'orderItem': [
-        {
-          'id': 1,
-          'name': 'Biriyani',
-          'quantity': 2,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 200
-        },
-        {
-          'id': 2,
-          'name': 'Beef Biriyani',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 100
-        }
-      ],
-      'orderStatus': 'Accepted',
-      'orderDate': '2020-12-01',
-      'orderTimeWindow': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-26',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'lastStatusUpdatedDate': '2020-12-01',
-      'timeSlot': {
-        'sTime': '09:00 AM',
-        'eTime': '08:00 PM'
-      },
-      'isAsap': false,
-      'isFirstOrder': false,
-      'coupons': [],
-      'orderMode': 'ONLINE_ORDER',
-      'phoneNumber': '8129630960',
-      'email': 'aneesh.mg@jaldee.com',
-      'advanceAmount': 0,
-      'advanceAmountToPay': 2,
-      'amount': 0,
-      'totalAmount': 0,
-      'cartAmount': 300,
-      'accesScope': 1,
-      'account': 0,
-      'onlineRequest': false,
-      'kioskRequest': false,
-      'firstCheckIn': false,
-      'active': false
-    }
-  ];
-
   active_cap = Messages.ACTIVE_CHECKINS_CAP;
   no_checkins_cap = Messages.NO_CHECKINS_CAP;
   send_msg_cap = Messages.SEND_MSG_CAP;
@@ -357,9 +214,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselAppointments;
 
   ngOnInit() {
-    console.log(this.dummyData);
-    this.total_tdy_order = this.dummyData;
-    this.todayOrderslst = this.dummyData;
     this.usr_details = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.shared_functions.getTerminologyTerm('provider');
     this.locationholder = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
@@ -421,7 +275,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.gets3curl();
     this.getAppointmentToday();
     this.getAppointmentFuture();
-   // this.getTdyOrder();
+    this.getTdyOrder();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -1989,11 +1843,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const params = {
       'date-eq': this.tDate
     };
-    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+    this.consumer_services.getConsumerOrders().subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
       if (data) {
-        this.getFutureOrder();
+       // this.getFutureOrder();
       }
       // show more
       for (let i = 0; i < this.total_tdy_order.length; i++) {
@@ -2017,7 +1871,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const params = {
       'date-ge': this.tomorrowDate
     };
-    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+    this.consumer_services.getConsumerOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       // show more
