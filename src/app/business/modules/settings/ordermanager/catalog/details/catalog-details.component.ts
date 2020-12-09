@@ -543,7 +543,6 @@ handleshoppingChange(event) {
  } else {
  this.showadditems = true;
  }
- 
  console.log(event);
 }
 compareDate(dateValue, startOrend) {
