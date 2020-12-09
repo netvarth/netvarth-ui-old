@@ -171,6 +171,8 @@ export class CatalogdetailComponent implements OnInit {
 selectedStatus;
 uploadcatalogImages: any = [];
 payAdvance = 'NONE';
+isFromadd = false;
+prefillData: any = [];
  constructor(private provider_services: ProviderServices,
  private sharedfunctionObj: SharedFunctions,
  private router: Router,
@@ -186,6 +188,14 @@ payAdvance = 'NONE';
  this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
  this.seletedCatalogItems = this.sharedfunctionObj.getitemfromLocalStorage('selecteditems');
  console.log(this.seletedCatalogItems);
+ this.activated_route.queryParams.subscribe(
+    (qParams) => {
+        this.isFromadd = qParams.isFrom;
+        if (this.isFromadd) {
+            this.prefillData = this.provider_services.getCatalogPrefiledDetails();
+            console.log(this.prefillData);
+        }
+ });
  this.activated_route.params.subscribe(
  (params) => {
  this.catalog_id = params.id;
@@ -217,8 +227,6 @@ payAdvance = 'NONE';
     this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
  }
 }
-
- 
  }
  );
  }
@@ -232,10 +240,172 @@ payAdvance = 'NONE';
 
  ngOnInit() {
  }
- setCatalogfields() {
+ setCatalogPrefillfields(form_data) {
+    console.log(form_data.orderStatuses);
+    console.log(this.selday_arr);
+    console.log(this.selday_arrstorepickup);
+    console.log(this.selday_arrhomedelivery);
+    const daystr: any = [];
+    for (const cday of this.selday_arr) {
+    daystr.push(cday);
+    }
+    let endDate;
+    const startDate = this.convertDate(form_data.startdate);
+    if (form_data.enddate) {
+    endDate = this.convertDate(form_data.enddate);
+    } else {
+    endDate = '';
+    }
+    const curdate = new Date();
+    curdate.setHours(this.dstart_time.hour);
+    curdate.setMinutes(this.dstart_time.minute);
+    const enddate = new Date();
+    enddate.setHours(this.dend_time.hour);
+    enddate.setMinutes(this.dend_time.minute);
+    const starttime_format = moment(curdate).format('hh:mm A') || null;
+    const endtime_format = moment(enddate).format('hh:mm A') || null;
 
+    //store pickup
+    console.log(this.selday_arrstorepickup);
+    const storedaystr: any = [];
+    for (const cday of this.selday_arrstorepickup) {
+    storedaystr.push(cday);
+    }
+    console.log(this.selday_arrstorepickup.length);
+    let storeendDate;
+    const storestartDate = this.convertDate(form_data.startdatestore);
+    if (form_data.enddatestore) {
+    storeendDate = this.convertDate(form_data.enddatestore);
+    } else {
+    storeendDate = '';
+    }
+
+    const curdatestore = new Date();
+    curdatestore.setHours(this.dstart_timestore.hour);
+    curdatestore.setMinutes(this.dstart_timestore.minute);
+    const enddatestore = new Date();
+    enddatestore.setHours(this.dend_timestore.hour);
+    enddatestore.setMinutes(this.dend_timestore.minute);
+    const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
+    const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
+
+    //home delivery
+    const homedaystr: any = [];
+    for (const cday of this.selday_arrhomedelivery) {
+    homedaystr.push(cday);
+    }
+    if (this.homedeliveryStat && this.selday_arrhomedelivery.length === 0) {
+    const error = 'Please select the homedelivery days';
+    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    return;
+    }
+    let homeendDate;
+    const homestartDate = this.convertDate(form_data.startdatehome);
+    if (form_data.enddatehome) {
+    homeendDate = this.convertDate(form_data.enddatehome);
+    } else {
+    homeendDate = '';
+    }
+    // check whether the start and end times are selected
+    if (!this.dstart_timehome || !this.dend_timehome) {
+    this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+    return;
+    }
+    // today
+    if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
+    this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+    return;
+    }
+    const curdatehome = new Date();
+    curdatehome.setHours(this.dstart_timehome.hour);
+    curdatehome.setMinutes(this.dstart_timehome.minute);
+    const enddatehome= new Date();
+    enddatehome.setHours(this.dend_timehome.hour);
+    enddatehome.setMinutes(this.dend_timehome.minute);
+    const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
+    const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
+    if (this.payAdvance === 'FIXED') {
+       if (form_data.advancePayment === '') {
+           this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelclass': 'snackbarerror' });
+           return;
+       }
+    }
+    const postdata = {
+    'catalogName': form_data.catalogName,
+    'catalogDesc': form_data.catalogDesc,
+    'catalogSchedule': {
+    'repeatIntervals': daystr || null,
+    'startDate': startDate || '',
+    'terminator': {
+    'endDate': endDate || ''
+    },
+    'timeSlots': [
+    {
+    'sTime': starttime_format,
+    'eTime': endtime_format
+    }
+    ]
+    },
+    'orderType': form_data.orderType,
+    'orderStatuses': form_data.orderStatuses,
+    'pickUp': {
+    'orderPickUp': form_data.storepickup,
+    'pickUpSchedule': {
+    'repeatIntervals': storedaystr || null,
+    'startDate': storestartDate || '',
+    'terminator': {
+    'endDate': storeendDate || ''
+    },
+    'timeSlots': [
+    {
+    'sTime': starttime_formatstore,
+    'eTime': endtime_formatstore
+    }
+    ]
+    },
+    'pickUpOtpVerification': form_data.storeotpverify,
+    },
+    'homeDelivery': {
+    'homeDelivery': form_data.homedelivery,
+    'deliverySchedule': {
+    'repeatIntervals': homedaystr || null,
+    'startDate': homestartDate || '',
+    'terminator': {
+    'endDate': homeendDate || ''
+    },
+    'timeSlots': [
+    {
+    'sTime': starttime_formathome,
+    'eTime': endtime_formathome
+    }
+    ]
+    },
+    'deliveryOtpVerification': form_data.homeotpverify,
+    'deliveryRadius': form_data.deliverykms,
+    'deliveryCharge': form_data.deliverycharge
+    },
+    'showPrice': form_data.itemPriceInfo,
+    'paymentType': this.payAdvance,
+    'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
+    'preInfo': {
+    'preInfoEnabled': this.preInfoEnabled,
+    'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',
+    'preInfoText': this.preInfoEnabled ? this.preInfoText : ''
+    },
+    'postInfo': {
+    'postInfoEnabled': this.postInfoEnabled,
+    'postInfoTitle': this.postInfoEnabled ? this.postInfoTitle.trim() : '',
+    'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
+    },
+    'catalogItem': this.seletedCatalogItems,
+    'cancellationPolicy': form_data.cancelationPolicy
+    };
+
+    this.provider_services.setCatalogPrefilledDetails(postdata);
  }
- addItemstoCart(type) {
+
+ addItemstoCart(type, data) {
+    this.setCatalogPrefillfields(data);
     const navigationExtras: NavigationExtras = {
         queryParams: { action: type,
                        id: this.catalog_id || 0  }
@@ -243,18 +413,18 @@ payAdvance = 'NONE';
  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs' , 'add', 'items'], navigationExtras);
  }
  getCatalog(cataId) {
- const _this = this;
- return new Promise(function (resolve, reject) {
- _this.provider_services.getProviderCatalogs(cataId)
- .subscribe(
- data => {
- resolve(data);
- },
- () => {
- reject();
- }
- );
- });
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+        _this.provider_services.getProviderCatalogs(cataId)
+        .subscribe(
+        data => {
+        resolve(data);
+        },
+        () => {
+        reject();
+        }
+        );
+        });
 }
 goBack() {
  this.router.navigate(['provider', 'settings', 'ordermanager',

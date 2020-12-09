@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Location } from '@angular/common';
 
@@ -65,7 +65,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
-    private location: Location,
     private activated_route: ActivatedRoute,
     private provider_servicesobj: ProviderServices) {
     this.emptyMsg = this.shared_functions.getProjectMesssages('ITEM_LISTEMPTY');
@@ -152,27 +151,46 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       }
     }
     console.log(this.seletedCatalogItems1);
+
     if (this.action === 'edit' && this.cataId !== 'add') {
       this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems1).subscribe(
       (data) => {
         this.shared_functions.openSnackBar('Items updated');
         this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
-        this.location.back();
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'edit',
+                          isFrom: true }
+    };
+    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
       }, error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         );
       } else {
         this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
-        this.location.back();
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'add',
+                          isFrom: true }
+    };
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
       }
-    
-
-    // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
   }
+
   redirecToJaldeecatalog() {
-    this.location.back();
-   // this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add']);
+    if (this.action === 'edit' && this.cataId !== 'add') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: { action: 'edit',
+                          isFrom: true }
+    };
+    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'add',
+                        isFrom: true }
+  };
+      this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
+    }
+   
   }
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/billing->items']);

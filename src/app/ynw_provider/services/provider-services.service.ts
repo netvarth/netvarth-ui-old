@@ -5,6 +5,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
 export class ProviderServices {
+   catalogPrefilledInput: any = [];
    constructor(private servicemeta: ServiceMeta) { }
    getProviderConfig() {
       return this.servicemeta.httpGet('accounts/conf');
@@ -1774,6 +1775,13 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpPost(url, data);
    }
+   setCatalogPrefilledDetails(data) {
+      this.catalogPrefilledInput = data;
+      console.log(this.catalogPrefilledInput);
+    }
+    getCatalogPrefiledDetails() {
+      return this.catalogPrefilledInput;
+    }
    getDefaultCatalogStatuses() {
       const url = 'provider/catalog/statuses';
       return this.servicemeta.httpGet(url);

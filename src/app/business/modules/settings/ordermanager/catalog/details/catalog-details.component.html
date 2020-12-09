@@ -147,13 +147,13 @@
         <div class="createcatalogupper col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="showadditems">
         <div *ngIf="!seletedCatalogItems">
         <h4>Add items to your cart</h4>
-        <span class="cs-btn bt3" (click)="addItemstoCart('add')" >
+        <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)" >
         Add items</span>
         </div>
         
         <div *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
         <h4>{{seletedCatalogItems.length}} items are selected</h4>
-        <span class="cs-btn bt3" (click)="addItemstoCart('edit')" > Edit items</span>
+        <span class="cs-btn bt3" (click)="addItemstoCart('edit',amForm.value)" > Edit items</span>
         </div>
         </div>
        
