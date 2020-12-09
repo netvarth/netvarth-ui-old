@@ -1786,5 +1786,11 @@ export class ProviderServices {
       const url = 'provider/catalog/statuses';
       return this.servicemeta.httpGet(url);
    }
+   getContactInfo() {
+      return this.servicemeta.httpGet('provider/order/settings/contact/info');
+   }
+   editContactInfo(data) {
+      return this.servicemeta.httpPut('provider/order/settings/contact/info', data);
+   }
 }
 
