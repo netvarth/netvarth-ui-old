@@ -167,15 +167,24 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
+  // getTotalItemPrice() {
+  //  let total = 0;
+  //   for (const item of this.orders) {
+  //    total = total + parseInt(item.promotionalPrice, 0) * parseInt(this.getItemQty(item), 0 );
+
+  //   }
+  //   this.orderAmount = total;
+  //   return total;
+
+  // }
   getTotalItemPrice() {
-   let total = 0;
-    for (const item of this.orders) {
-     total = total + parseInt(item.promotionalPrice, 0) * parseInt(this.getItemQty(item), 0 );
-
+    this.price = 0;
+    for (const item of this.orderList) {
+      this.price = this.price + item.price;
     }
-    this.orderAmount = total;
-    return total;
-
+    this.orderAmount = this.price;
+    console.log(this.orderAmount);
+      return this.orderAmount;
   }
   confirm() {
     console.log(this.getOrderItems());
