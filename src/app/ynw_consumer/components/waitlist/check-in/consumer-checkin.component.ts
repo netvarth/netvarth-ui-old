@@ -237,6 +237,7 @@ export class ConsumerCheckinComponent implements OnInit {
     noPhoneError = true;
     noEmailError = true;
     noCallingError = true;
+    serviceCost;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -626,6 +627,7 @@ export class ConsumerCheckinComponent implements OnInit {
             consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+        this.serviceCost = this.sel_ser_det.price;
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;

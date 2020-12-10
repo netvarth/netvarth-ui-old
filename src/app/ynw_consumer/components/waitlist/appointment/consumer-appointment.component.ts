@@ -227,6 +227,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     noPhoneError = false;
     noEmailError = false;
     noCallingError = false;
+    serviceCost;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -568,6 +569,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+        this.serviceCost = this.sel_ser_det.price;
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;

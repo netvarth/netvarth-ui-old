@@ -59,6 +59,20 @@
                                                 <h6 class="card-title service">
                                                     {{sel_ser_det.name}}
                                                 </h6>
+                                                <!-- <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
+                                                       >
+                                                        Booking Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{prepaymentAmount}}</span>
+                                                    </div> -->
+                                                    <div *ngIf="sel_ser_det.price && type != 'reschedule'"
+                                                        class="mgn-bt-20">
+                                                        Service Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{serviceCost}}</span>
+                                                    </div>
                                                 <div class="">
 
                                                     <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
@@ -394,8 +408,14 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
+                                                       class="mgn-bt-20">
+                                                        Booking Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{prepaymentAmount}}</span>
+                                                    </div>
+                                                    <!-- <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
                                                         class=" mgn-bt-20">
-                                                        <!-- <span class="bold mgn-lt-5 red">{{sel_ser_det.name}}</span> -->
                                                         This service
                                                         requires
                                                         an advance
@@ -403,7 +423,7 @@
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{prepaymentAmount}}</span>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="checkin-btn-bp pointer-cursor"
                                                         *ngIf="type !== 'waitlistreschedule'"
                                                         [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
