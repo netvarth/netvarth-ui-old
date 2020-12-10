@@ -5,7 +5,8 @@ import { FormMessageDisplayService } from '../../../modules/form-message-display
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../constants/project-constants';
-import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
+import { SharedServices } from '../../../services/shared-services';
+// import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 // import { projectConstantsLocal } from 'src/app/shared/constants/project-constants';
 
 
@@ -33,7 +34,8 @@ export class AddAddressComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private consumer_services: ConsumerServices,
+    private shared_services:SharedServices,
+    // private consumer_services: ConsumerServices,
   ) {
     this.address_title = 'Add New Address';
     this.formMode = data.type;
@@ -97,7 +99,7 @@ export class AddAddressComponent implements OnInit {
 
     console.log(JSON.stringify(this.exist_add));
 
-    this.consumer_services.updateConsumeraddress(this.exist_add)
+    this.shared_services.updateConsumeraddress(this.exist_add)
       .subscribe(
         data => {
           if (this.formMode === 'edit') {

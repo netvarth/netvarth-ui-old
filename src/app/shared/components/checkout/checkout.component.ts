@@ -5,7 +5,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
+//  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../services/shared-services';
 // import { OrderService } from '../../../ynw_consumer/components/order/order.service';
@@ -17,6 +17,7 @@ import { SharedServices } from '../../services/shared-services';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
+  orderSummary: any[];
   taxAmount: any;
   orderAmount: any;
   catlog: any;
@@ -44,14 +45,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     private dialog: MatDialog,
-    private shared_services: SharedServices
-    // private consumer_services: ConsumerServices,
+    private shared_services: SharedServices,
+    //  private consumer_services: ConsumerServices,
     // private orderService: OrderService
   ) {
     this.catalog_details = this.shared_services.getOrderDetails();
     this.account_id = this.shared_services.getaccountId();
     this.route.queryParams.subscribe(
       params => {
+        console.log(params);
+        console.log(JSON.stringify(params));
         this.delivery_type = params.delivery_type;
         if (this.delivery_type === 'home') {
         }
@@ -112,16 +115,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   getaddress() {
     console.log('hi');
-    // this.consumer_services.getConsumeraddress()
-    //   .subscribe(
-    //     data => {
-    //       this.added_address = data;
+    this.shared_services.getConsumeraddress()
+      .subscribe(
+        data => {
+          this.added_address = data;
 
-    //     },
-    //     error => {
-    //       this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }
-    //   );
+        },
+        error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
@@ -135,7 +138,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-      // this.getaddress();
+       this.getaddress();
     });
   }
 
@@ -156,7 +159,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-      // this.getaddress();
+      this.getaddress();
 
     });
 
@@ -175,11 +178,12 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
   }
   confirm() {
-    console.log('hi');
+    console.log(this.getOrderItems());
+
     console.log(this.delivery_type);
 
 
-    if (this.delivery_type === 'home') {
+    if (this.delivery_type === 'homedelivery') {
       console.log(this.delivery_type);
       const post_Data = {
         'homeDelivery': true,
@@ -194,16 +198,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
           'sTime': this.selectedQsTime,
           'eTime': this.selectedQeTime
         },
-        'orderItem': [{
-          'id': 805,
-          'quantity': 2
-        },
-        {
-          'id': 2,
-          'quantity': 1
-        }
-        ],
-        'orderDate': '2020-11-26',
+        'orderItem': this.getOrderItems(),
+        'orderDate': '2020-12-10',
         'phoneNumber': '8129630960',
         'email': 'aneesh.mg@jaldee.com'
       };
@@ -222,27 +218,22 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
           'sTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
           'eTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']
         },
-        'orderItem': [{
-          'id': 805,
-          'quantity': 2
-        }
-        ],
-        'orderDate': '2020-12-09',
+        'orderItem': this.getOrderItems(),
+        'orderDate': '2020-12-10',
         'phoneNumber': '6303603789',
         'email': 'shiva.kumar@gmai.com'
 
       };
       console.log(post_Data);
-      // this.consumer_services.CreateConsumerOrder(this.account_id, post_Data)
-      // .subscribe(
-      //   data => {
-      //     const history: any = data;
-      //   console.log(history);
-      //   },
-      //   error => {
-      //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   }
-      // );
+      this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
+        .subscribe(
+          data => {
+            this.sharedFunctionobj.openSnackBar('Order placed successfully');
+          },
+          error => {
+            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
       // this.router.navigate(['consumer', 'order', 'payment'] );
 
 
@@ -254,5 +245,14 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     console.log('chnage time');
   }
 
+  getOrderItems() {
+    this.orderSummary = [];
+    this.orders.forEach(item => {
+      const itemId = item.itemId;
+      const qty = this.getItemQty(item);
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty });
+    });
+    return this.orderSummary;
+  }
 
 }

@@ -866,4 +866,15 @@ export class SharedServices {
   getaccountId() {
     return this.accountId;
   }
+  getConsumeraddress() {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpGet(url);
+  }
+  updateConsumeraddress(data) {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpPut(url , data);
+  }
+  CreateConsumerOrder(accountid, postData) {
+    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
+  }
 }

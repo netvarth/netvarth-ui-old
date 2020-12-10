@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import * as moment from 'moment';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
-// import { SharedServices } from '../../services/shared-services';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -39,13 +39,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   choose_type = 'store';
   advance_amount: any;
   account_id: any;
+  storeChecked = true;
+  homeChecked = false;
 
 
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
-    // private shared_services: SharedServices,
+    private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions) {
     this.route.queryParams.subscribe(
       params => {
@@ -58,19 +60,25 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    // this.catalog_details = this.shared_services.getOrderDetails();
-    // console.log(JSON.stringify(this.catalog_details));
-    // if (this.catalog_details.homeDelivery.homeDelivery) {
-    //   this.home_delivery = true;
-    // }
-    // if (this.catalog_details.pickUp.orderPickUp) {
-    //   this.store_pickup = true;
-    // }
-    // this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+    this.catalog_details = this.shared_services.getOrderDetails();
+    console.log(JSON.stringify(this.catalog_details));
+    if (this.catalog_details.home_delivery) {
+      if (this.catalog_details.homeDelivery.homeDelivery) {
+        this.home_delivery = true;
+        this.choose_type = 'home';
+      }
+    } if (this.catalog_details.pickUp) {
+      if (this.catalog_details.pickUp.orderPickUp) {
+        this.store_pickup = true;
+        this.choose_type = 'store';
+        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+      }
+    }
+    //
     // console.log(this.sel_checkindate);
 
     // this.hold_sel_checkindate = this.sel_checkindate;
-    // this.advance_amount = this.currentcatlog.advanceAmount;
+     this.advance_amount = this.catalog_details.advanceAmount;
     this.showfuturediv = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -154,13 +162,13 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        delivery_type: 'homedelivery',
-        // catlog_id: this.currentcatlog.id ,
-        // selectedQsTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        // selectedQeTime: this.currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
-        // order_date: this.sel_checkindate,
-        // advance_amount: this.advance_amount,
-        // account_id: this.account_id
+        delivery_type: 'store',
+        catlog_id: this.catalog_details.id ,
+        selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+        selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
+        order_date: this.sel_checkindate,
+        advance_amount: this.catalog_details.advance_amount,
+        account_id: this.account_id
 
       }
 

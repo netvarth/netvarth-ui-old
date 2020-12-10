@@ -1995,8 +1995,14 @@ getTotalItemAndPrice() {
 }
 checkout() {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-//  this.router.navigate(['consumer', 'order', 'cart']);
-   this.router.navigate(['order/shoppingcart']);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+      account_id:  this.provider_bussiness_id
+
+    }
+
+  };
+   this.router.navigate(['order/shoppingcart'], navigationExtras);
 }
 itemDetails(item) {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);

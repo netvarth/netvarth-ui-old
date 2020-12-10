@@ -185,14 +185,7 @@ export class ConsumerServices {
     return this.servicemeta.httpGet(url);
     // return this.servicemeta.httpGet('consumer/orders', null, params);
   }
-  getConsumeraddress() {
-    const url = 'consumer/deliveryAddress';
-    return this.servicemeta.httpGet(url);
-  }
-  updateConsumeraddress(data) {
-    const url = 'consumer/deliveryAddress';
-    return this.servicemeta.httpPut(url , data);
-  }
+
   getOrderHistory() {
      return this.servicemeta.httpGet('consumer/orders/history');
    }
@@ -202,6 +195,14 @@ export class ConsumerServices {
   GetConsumerCatalogs(accountid) {
     const url = 'consumer/orders/catalogs/'   + accountid;
     return this.servicemeta.httpGet(url);
+  }
+  getConsumeraddress() {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpGet(url);
+  }
+  updateConsumeraddress(data) {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpPut(url , data);
   }
 
 }

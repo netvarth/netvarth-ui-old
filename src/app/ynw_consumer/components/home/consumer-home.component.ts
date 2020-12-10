@@ -1840,9 +1840,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.todayOrderslst = [];
     this.todayOrderslst_more = [];
     this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-    const params = {
-      'date-eq': this.tDate
-    };
+    // const params = {
+    //   'date-eq': this.tDate
+    // };
     this.consumer_services.getConsumerOrders().subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
@@ -1868,9 +1868,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    const params = {
-      'date-ge': this.tomorrowDate
-    };
+    // const params = {
+    //   'date-ge': this.tomorrowDate
+    // };
     this.consumer_services.getConsumerOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
