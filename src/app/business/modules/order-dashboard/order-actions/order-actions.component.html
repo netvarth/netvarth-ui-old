@@ -49,7 +49,7 @@
                 </div>
             </div>
         </ng-container>
-        <div class="action-box pointer-cursor" (click)="gotoDetails()" *ngIf="!mulipleSelection">
+        <div class="action-box pointer-cursor" (click)="gotoDetails()" *ngIf="!mulipleSelection && data.source !== 'details'">
             <div class="action-box-sub">
                 <span class="viewdetails-icon"></span>
                 <div class="icon-text">View Details</div>
