@@ -192,7 +192,8 @@ prefillData: any = [];
     (qParams) => {
         this.isFromadd = qParams.isFrom;
         if (this.isFromadd) {
-            this.prefillData = this.provider_services.getCatalogPrefiledDetails();
+            this.prefillData  = this.sharedfunctionObj.getitemfromLocalStorage('prefilldata');
+          //  this.prefillData = this.provider_services.getCatalogPrefiledDetails();
             console.log(this.prefillData);
         }
  });
@@ -400,8 +401,8 @@ prefillData: any = [];
     'catalogItem': this.seletedCatalogItems,
     'cancellationPolicy': form_data.cancelationPolicy
     };
-
-    this.provider_services.setCatalogPrefilledDetails(postdata);
+    this.sharedfunctionObj.setitemonLocalStorage('prefilldata', postdata);
+  //  this.provider_services.setCatalogPrefilledDetails(postdata);
  }
 
  addItemstoCart(type, data) {
