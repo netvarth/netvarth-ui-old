@@ -52,10 +52,13 @@
                                             <div
                                                 class="col-sm-7 col-md-7 col-lg-7  col-xl-7 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
                                                 <div class="txt-custdet">Customer Details</div>
-                                                <div class="txt-cust-name">Krishnadas PS</div>
+                                                <div class="txt-cust-name">{{waitlist.orderFor.firstName}}&nbsp;{{waitlist.orderFor.lastName}}</div>
                                                 <div class="txt-addrs">
                                                     <i class="fa fa-phone"></i>
-                                                    985568475</div>
+                                                    {{waitlist.phoneNumber}}</div>
+                                                    <div class="txt-addrs">
+                                                        <i class="fa fa-envelope"></i>
+                                                        {{waitlist.email}}</div>
                                                 <div class="txt-addrs">
                                                     <i class="fa fa-map-marker"></i>
                                                     107, Teachers colony HSR Layout, Bangalore</div>
@@ -63,7 +66,8 @@
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
                                                 <div class="txt-custdet">Delivery Type</div>
-                                                <div class="txt-cust-name">Store PickUp</div>
+                                                <div *ngIf="waitlist.storePickup" class="txt-cust-name">Store Pick Up</div>
+                                                <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
                                                 <div><button mat-raised-button class="action-btn">ACTIONS</button></div>
                                                 <!-- <div class="mgn-up-10"><button mat-raised-button class="cancel-btn">CANCEL</button></div> -->
                                             </div>

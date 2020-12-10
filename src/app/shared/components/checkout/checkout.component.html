@@ -110,7 +110,7 @@
                     <ng-template matStepLabel>Fill out your address</ng-template>
 
                     <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
-                      <mat-grid-tile *ngFor="let address of added_address; let i = index">
+                      <mat-grid-tile *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
                         <mat-grid-tile-header>
                           <i class="fa fa-map-marker" aria-hidden="true"></i>
                           <span class="adrs-head">Address {{i+1}}</span>

@@ -95,7 +95,9 @@ flex-basis: 50% !important;
     font-size: 0.8rem;
 }
 .highlight{
-  background: #42A948; /* green */
+//   background: #42A948 !important; /* green */
+  box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+  border: 2px dashed #494952a1 !important;
 }
 ::ng-deep .mat-stepper-vertical {
     background: #f2f2f2 !important;
@@ -223,6 +225,10 @@ display: grid !important;
 ::ng-deep .order-checkout .mat-grid-tile {
     border: 1px dashed #4949526b;
 }
+::ng-deep .order-checkout .mat-grid-tile:hover{
+    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+    cursor: pointer !important;
+}
 ::ng-deep .order-checkout .mat-grid-tile-header {
     margin-bottom: 4px;
     font-size: 17px;
@@ -269,4 +275,7 @@ display: grid !important;
     overflow: hidden;
     width: 100%;
     margin-left: 10px;
+}
+::ng-deep .order-checkout .c-body {
+    background: #f2f2f2 !important;
 }

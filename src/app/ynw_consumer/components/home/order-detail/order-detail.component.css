@@ -31,7 +31,7 @@
     font-size: 0.9rem;
     color: grey;
 }
-.order-det .fa-phone, .order-det .fa-map-marker {
+.order-det .fa-phone, .order-det .fa-map-marker, .order-det .fa-envelope {
     color: #35568a;
     margin-right: 5px;
 }
