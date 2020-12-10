@@ -1721,11 +1721,11 @@ export class ProviderServices {
       return this.servicemeta.httpGet(url);
    }
    getProviderHistoryOrders(filter = {}) {
-      const url = 'provider/orders/history/count';
+      const url = 'provider/orders/history';
       return this.servicemeta.httpGet(url, null, filter);
    }
    getProviderHistoryOrdersCount(filter = {}) {
-      const url = 'provider/orders/history';
+      const url = 'provider/orders/history/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
    getProviderOrderStates(uuid) {
