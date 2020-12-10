@@ -85,8 +85,8 @@
                       </div> -->
                     </div>
                     <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                      <!-- <button mat-button matStepperPrevious>Back</button> -->
+                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
 
                     </div>
 
@@ -97,6 +97,21 @@
                     <!-- <ng-template matStepperIcon="edit">
                       <mat-icon>ContactMail</mat-icon>
                     </ng-template> -->
+
+                    <!-- If there is no address -->
+                    <div *ngIf="added_address.length === 0" class="mgn-up-20">
+                      <div class="adrs-lyr-1">
+                        <div class="adrs-lyr-2">
+                          <div class="adrs-loc">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          </div>
+                          <div class="adrs-add">
+                            <div class="adrs-nw-txt">Add New Address</div>
+                            <div class="adrs-ad-btn" (click)="addAddress()">Add new</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     <div class="div-outline custId-cursor col-md-6 mt-1"
                       *ngFor="let address of added_address; let i = index">
@@ -123,11 +138,11 @@
 
                       <div class="clearfix"></div>
                     </div>
-                    <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
-                    </div>
+                    <!-- <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
+                    </div> -->
                     <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                      <!-- <button mat-button matStepperPrevious>Back</button> -->
+                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
 
                   </mat-step>
