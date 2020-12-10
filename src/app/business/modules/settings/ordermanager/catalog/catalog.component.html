@@ -68,11 +68,11 @@
                                                                   class="icon-disable"></i>
                                                               {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}
                                                           </button>
-                                                          <button type="button" (click)="doRemoveCatalog(catalog)"
+                                                          <!-- <button type="button" (click)="doRemoveCatalog(catalog)"
                                                               mat-menu-item>
                                                               <i class="icon-delete"></i>
                                                               {{delete_btn}}
-                                                          </button>
+                                                          </button> -->
                                                       </mat-menu>
                                                   </span>
                                                   <span class="mbt-mobile-show">
@@ -84,8 +84,8 @@
                                                               class="icon-enable icon-disable1"></i>
                                                           <i *ngIf="catalog.catalogStatus=='ACTIVE'" class="icon-disable icon-disable1"></i>
                                                           {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}</button>
-                                                      <button class="deletecls" type="button"
-                                                          (click)="doRemoveCatalog(catalog)">{{delete_btn}}</button>
+                                                      <!-- <button class="deletecls" type="button"
+                                                          (click)="doRemoveCatalog(catalog)">{{delete_btn}}</button> -->
                                                   </span>
                                               </td>
                                           </tr>

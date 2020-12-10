@@ -71,10 +71,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
       this.action = qParams.action;
-      this.cataId = qParams.id;
-      console.log(this.action);
-      console.log(this.cataId);
-     
+      this.cataId = qParams.id;     
       }
       );
   }
@@ -95,32 +92,29 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.getProviderItems()
       .subscribe((data) => {
         this.catalogItem = data;
-          console.log('cataloITem' + JSON.stringify(this.catalogItem));
-          console.log('selectcataloITem' + JSON.stringify(this.seletedCatalogItems));
-
         this.api_loading = false;
         if (this.seletedCatalogItems !== null) {
           this.selectedCount = this.seletedCatalogItems.length;
-          this.catalogItem.map(item => {
-            if (this.seletedCatalogItems.includes(item.itemId)) {
-              item.selected = true;
+          console.log(this.selectedCount);
+          console.log(this.catalogItem);
+          for (const itm of this.catalogItem) {
+            for (const selitem of this.seletedCatalogItems) {
+               if ( itm.itemId === selitem.item.itemId) {
+                itm.selected = true;
+               }
             }
-          return item;
-          });
-          console.log('cataloITem' + JSON.stringify(this.catalogItem));
+        }
+         
+          // this.catalogItem.map(itm => {
+          //   if (this.seletedCatalogItems['item'].includes(itm.itemId)) {
+          //     itm.selected = true;
+          //   }
+          // return itm;
+          // });
+          console.log(this.catalogItem);
 
         }
-        //   this.selectedCount = this.seletedCatalogItems.length;
-        //   for (let e = 0; e < this.seletedCatalogItems.length; e++) {
-        //   for (let i = 0; i < this.catalogItem.length; i++) {
-        //       if (this.catalogItem[i].id === this.seletedCatalogItems[e].id) {
-        //         this.catalogItem[i].selected = true;
-        //       }
-        //     }
-        //   }
-        //   console.log('cataloITem' + JSON.stringify(this.catalogItem));
-
-        // }
+        
 
 
       });
@@ -143,8 +137,8 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.seletedCatalogItems1 = {};
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
-       this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
-       this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+       this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || 1;
+       this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || 5;
        this.seletedCatalogItems1.item = this.catalogItem[ia];
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
