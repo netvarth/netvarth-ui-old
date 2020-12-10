@@ -27,17 +27,22 @@
             <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small">
               <div class="col-md-12 no-padding-small mgn-up-30">
 
-                <mat-vertical-stepper fxLayout="column" [linear]="true" #stepper>
+                <mat-vertical-stepper fxLayout="column"  #stepper>
                   <mat-step label="Step1">
                     <!-- <ng-template matStepperIcon="edit">
                       <mat-icon></mat-icon>
                     </ng-template> -->
-                    <ng-template matStepLabel>Enter your Registered Mobile Number</ng-template>
-                    <mat-form-field>
+                    <ng-template matStepLabel>Account</ng-template>
+                    <div class="ph-outline">
+                      <input class="ph-ip" required>
+                      <!-- <div></div> -->
+                      <label class="ph-label">Mobile number</label>
+                    </div>
+                    <!-- <mat-form-field>
                       <input matInput placeholder="Mobile Number" required>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <div>
-                      <button mat-button matStepperNext>Next</button>
+                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
 
                   </mat-step>
@@ -48,14 +53,14 @@
                     </ng-template> -->
 
                     <div>
-                      <p>Choose delivery type</p>
+                      <span class="d-type">Choose delivery type</span>
                       <mat-radio-group [(ngModel)]="choose_type">
-                        <mat-radio-button class="mgn-lt-5 mgn-bt-5" [value]="'store'">
+                        <mat-radio-button [value]="'store'">
                           Store pick up
-                        </mat-radio-button>
-                        <mat-radio-button class="mgn-lt-5   mgn-rt-10" [value]="'home'">
+                        </mat-radio-button> &nbsp;&nbsp;&nbsp;
+                        <mat-radio-button [value]="'home'">
                           Home delivery
-                        </mat-radio-button>&nbsp;
+                        </mat-radio-button>
                       </mat-radio-group>
 
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">

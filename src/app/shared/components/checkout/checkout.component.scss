@@ -1,0 +1,218 @@
+.border {
+    border-bottom: 0px solid #dbdbdb !important;
+}
+.cart-flex {
+
+flex-basis: 50% !important;
+}
+.shopcart-cancel {
+    position: absolute;
+    right: 0;
+    top: 15px !important;
+    left: 10px !important;
+    padding-right: 10px;
+
+}
+
+.order-checkout .bg-grey {
+    background: #f2f2f2;;
+}
+.order-checkout .prov-name {
+    margin-left: 14px;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 50px;
+    border-bottom: 1px solid;
+}
+.order-checkout .prov-dp {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    background-image: url('https://www.tasteofhome.com/wp-content/uploads/2018/01/exps28800_UG143377D12_18_1b_RMS-3-696x696.jpg');
+    background-repeat: round;
+}
+.order-checkout .prov-name-txt {
+    font-size: 17px;
+    color: #282c3f;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.order-checkout .prov-loc {
+    font-size: 13px;
+    color: #686b78;
+}
+.order-checkout .fa-stop-circle {
+    color: #1a407b;
+}
+.order-checkout .width-100 {
+    width: 100%;
+}
+.order-checkout .item-name {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+.order-checkout .item-qty {
+    color: #1a407b;
+}
+.order-checkout .bill-details-txt {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #222223;
+}
+.order-checkout .amount-details {
+    font-size: 13px;
+    color: #686b78;
+    line-height: 2;
+}
+.order-checkout .bdr-bt-grey {
+    border-bottom: 1px solid #80808094;
+}
+.order-checkout .bill-labels {
+    flex: 1;
+}
+.order-checkout .hr-line {
+    border-bottom: 1px solid #b9aeae;
+    margin: 10px 0 10px;
+}
+.order-checkout .hr-line-pitch-blk {
+    border-bottom: 2px solid black;
+    margin-bottom: 5px;
+}
+.order-checkout .to-pay {
+    font-weight: 600;
+    color: #282c3f;
+}
+.order-checkout .chekout-btn {
+    float: right;
+    background: #183e7a;
+    color: white;
+    font-size: 0.8rem;
+}
+::ng-deep .mat-stepper-vertical {
+    background: #f2f2f2 !important;
+}
+::ng-deep .mat-step {
+    background: white;
+    border-bottom: 30px solid #f2f2f2;
+}
+::ng-deep .mat-vertical-stepper-header .mat-step-icon {
+    width: 40px !important;
+    height: 40px !important;
+    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+    margin-left: -8px !important;
+    border-radius: 0px !important;
+}
+::ng-deep .mat-step-icon-content {
+    color: white !important;
+}
+// ::ng-deep .account .mat-step-icon-content ::before {
+//     content: "\f007";
+//     font-family: 'FontAwesome';
+// }
+::ng-deep .mat-step-label-selected .mat-step-text-label {
+    color: #282c3f !important;
+}
+::ng-deep .mat-step-text-label {
+    font-size: 25px;
+    font-weight: 600;
+    color: #93959f;
+    display: flex;
+    align-items: center;
+    letter-spacing: -.3px;
+}
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #183e7a !important;
+}
+::ng-deep .ph-outline {
+    border: 1px solid #d4d5d9;
+    padding: 0;
+    display: block;
+    position: relative;
+    transform: translateZ(0);
+    border-bottom: 1px solid #d4d5d9!important;
+    width: 350px;
+    margin-bottom: 20px;
+}
+::ng-deep .ph-outline .ph-ip {
+    background-color: transparent;
+    line-height: normal;
+    border: none;
+    outline: none;
+    height: 70px;
+    width: 100%;
+    font-size: 17px;
+    margin: 0;
+    padding: 0 20px;
+    padding-top: 22px;
+    box-shadow: none;
+    box-sizing: border-box;
+    border-radius: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+::ng-deep .ph-outline .ph-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #7e808c;
+    transform: translateY(-70%);
+    position: absolute;
+    left: 0;
+    bottom: 24px;
+    padding-left: 20px;
+    line-height: 20px;
+    cursor: text;
+    transition: .2s ease;
+    width: 100%;
+    will-change: transform,color,font-size;
+    pointer-events: none;
+}
+::ng-deep .nxt-btn {
+    background-color: #183e7a !important;
+    color: white !important
+}
+::ng-deep .nxt-btn .mat-button-wrapper {
+    padding: 40px;
+}
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background-color: #183e7a !important;
+}
+::ng-deep .disp-grid {
+display: grid !important;
+}
+::ng-deep .d-type {
+    display: block;
+    font-size: 1rem;
+    color: #7e808c;
+    font-weight: 400;
+    margin-left: 6px;
+    margin-bottom: 20px;
+}
+::ng-deep .mat-radio-button {
+    font-size: 0.8rem !important;
+}
+::ng-deep .mat-radio-outer-circle {
+    // width: 15px !important;
+    // height: 15px !important;
+    border-radius: 0% !important;
+}
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #183e7a !important;
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #183e7a !important;
+}
+::ng-deep .mat-radio-group {
+    margin-left: 6px !important;
+}
+::ng-deep .mat-radio-label-content {
+    padding-left: 3px !important;
+    margin-top: 1px !important;
+}
