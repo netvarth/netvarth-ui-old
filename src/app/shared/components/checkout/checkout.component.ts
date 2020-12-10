@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -52,6 +52,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   linear: boolean;
   catalog_details: any;
   trackUuid;
+  screenWidth: number;
+  no_of_grids: number;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -105,6 +107,25 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         }
       }
       }
+      this.onResize();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+       divider = divident / 2;
+    } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
+      divider = divident / 2;
+    } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+      divider = divident / 2;
+    } else if (this.screenWidth < 375) {
+      divider = divident / 1;
+    }
+    this.no_of_grids = Math.round(divident / divider);
+    console.log(this.screenWidth);
+    console.log(this.no_of_grids);
   }
 
   ngOnInit() {

@@ -252,7 +252,6 @@ export class OrderDetailComponent implements OnInit {
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
-        console.log(qParams);
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
       });
@@ -267,7 +266,6 @@ export class OrderDetailComponent implements OnInit {
   onResize() {
     this.screenWidth = window.innerWidth;
     let divider;
-    console.log(this.screenWidth);
     const divident = this.screenWidth / 37.8;
     if (this.screenWidth > 1000) {
        divider = divident / 6;
@@ -374,7 +372,6 @@ export class OrderDetailComponent implements OnInit {
     });
   }
   getValue(data) {
-    console.log(data);
     this.showView = data;
   }
 

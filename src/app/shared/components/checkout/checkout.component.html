@@ -27,7 +27,7 @@
             <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small">
               <div class="col-md-12 no-padding-small mgn-up-30">
 
-                <mat-vertical-stepper fxLayout="column"  #stepper>
+                <mat-vertical-stepper fxLayout="column" #stepper>
                   <mat-step label="Step1">
                     <!-- <ng-template matStepperIcon="edit">
                       <mat-icon></mat-icon>
@@ -49,7 +49,19 @@
                   <mat-step label="Step 2">
                     <ng-template matStepLabel>Delivery options</ng-template>
                     <div>
-                      <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
+                      <span *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type</span>
+                      <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
+                        <mat-radio-button [value]="'store'" [checked]="true">
+                          Store pick up
+                        </mat-radio-button> &nbsp;&nbsp;&nbsp;
+                        <mat-radio-button [value]="'home'" [checked]="false">
+                          Home delivery
+                        </mat-radio-button>
+                      </mat-radio-group>
+
+
+
+                      <!-- <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
                        <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
                           <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'" [checked]="true">
                               Store pick up
@@ -57,7 +69,8 @@
                           <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'" [checked]="false">
                               Home delivery
                           </mat-radio-button>&nbsp;
-                      </mat-radio-group>
+                      </mat-radio-group> -->
+
                       <div *ngIf="store_pickup && !home_delivery">
                         Store Pick Up
                       </div>
@@ -95,54 +108,38 @@
                   </mat-step>
                   <mat-step label="Step 3">
                     <ng-template matStepLabel>Fill out your address</ng-template>
-                    <!-- <ng-template matStepperIcon="edit">
-                      <mat-icon>ContactMail</mat-icon>
-                    </ng-template> -->
 
-                    <!-- If there is no address -->
-                    <div *ngIf="added_address.length === 0" class="mgn-up-20">
-                      <div class="adrs-lyr-1">
-                        <div class="adrs-lyr-2">
-                          <div class="adrs-loc">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                          </div>
-                          <div class="adrs-add">
-                            <div class="adrs-nw-txt">Add New Address</div>
-                            <div class="adrs-ad-btn" (click)="addAddress()">Add new</div>
-                          </div>
+                    <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
+                      <mat-grid-tile *ngFor="let address of added_address; let i = index">
+                        <mat-grid-tile-header>
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          <span class="adrs-head">Address {{i+1}}</span>
+                        </mat-grid-tile-header>
+                        <div class="adrs-data">
+                          <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                          <div>{{address.address}}</div>
+                          <div>{{address.city}} , {{address.postalCode}}</div>
+                          <div> {{address.phoneNumber}}</div>
+                          <div> {{address.email}}</div>
                         </div>
-                      </div>
-                    </div>
-
-                    <div class="div-outline custId-cursor col-md-6 mt-1"
-                      *ngFor="let address of added_address; let i = index">
-                      <mat-card class="card" [ngClass]="{'highlight': selectedRowIndex == i}"
-                      (click)="highlight(i,address)">
-                        <mat-card-header>Address {{i+1}}</mat-card-header>
-                        <mat-card-content>
-                          <div>
-                            <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                            <div>{{address.address}}</div>
-                            <div>{{address.city}} , {{address.postalCode}}</div>
-                            <div> {{address.phoneNumber}}</div>
-                            <div> {{address.email}}</div>
-                          </div>
-                        </mat-card-content>
-                        <mat-card-actions>
-                          <button type="button" class="btn btn-link" (click)="updateAddress(address,i)"> Edit </button>
-
-
-                        </mat-card-actions>
-                      </mat-card>
-
-
-
-
-
-                      <div class="clearfix"></div>
-                    </div>
-                    <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
-                    </div>
+                        <mat-grid-tile-footer>
+                          <button class="add-adrs-btn" mat-flat-button (click)="updateAddress(address,i)">
+                            Edit
+                          </button>
+                        </mat-grid-tile-footer>
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <mat-grid-tile-header>
+                          <i class="fa fa-map-marker" aria-hidden="true"></i>
+                          <span class="adrs-head">Add new address</span>
+                        </mat-grid-tile-header>
+                        <mat-grid-tile-footer>
+                          <button class="add-adrs-btn" mat-flat-button (click)="addAddress()">
+                            Add new
+                          </button>
+                        </mat-grid-tile-footer>
+                      </mat-grid-tile>
+                    </mat-grid-list>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
                       <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
@@ -194,7 +191,7 @@
                                           <div class="name cart-flex">
                                             <i class="fa fa-stop-circle"></i>
                                             <span class="item-name">{{item.itemName}}</span>
-                                            </div>
+                                          </div>
                                           <div class="quantity item-qty">{{getItemQty(item)}}</div>
                                           <div class="price rupee-font">&#8377;{{item.price}}</div>
                                         </div>
@@ -210,29 +207,29 @@
 
                           </div>
 
-                                <div class="">
-                                  <div class="bill-details-txt">
-                                    Bill Details
-                                  </div>
-                                  <div class="amount-table">
-                                    <div class="">
-                                      <div class="disp-flex width-100 amount-details">
-                                        <div class="bill-labels">Item Total</div>
-                                        <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div>
-                                      </div>
-                                      <div class="hr-line"></div>
-                                      <div class="disp-flex width-100 amount-details">
-                                        <div class="bill-labels">Taxes and Charges</div>
-                                        <div class="price rupee-font">&#8377;{{getTaxCharges()}}</div>
-                                      </div>
-                                      <div class="hr-line-pitch-blk mgn-up-20"></div>
-                                      <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
-                                        <div class="bill-labels">TO PAY</div>
-                                        <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div>
-                                      </div>
-                                    </div>
-                                  </div>
+                          <div class="">
+                            <div class="bill-details-txt">
+                              Bill Details
+                            </div>
+                            <div class="amount-table">
+                              <div class="">
+                                <div class="disp-flex width-100 amount-details">
+                                  <div class="bill-labels">Item Total</div>
+                                  <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div>
                                 </div>
+                                <div class="hr-line"></div>
+                                <div class="disp-flex width-100 amount-details">
+                                  <div class="bill-labels">Taxes and Charges</div>
+                                  <div class="price rupee-font">&#8377;{{getTaxCharges()}}</div>
+                                </div>
+                                <div class="hr-line-pitch-blk mgn-up-20"></div>
+                                <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
+                                  <div class="bill-labels">TO PAY</div>
+                                  <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
                         </div>
                       </div>
@@ -254,4 +251,3 @@
     </div>
   </div>
 </section>
-

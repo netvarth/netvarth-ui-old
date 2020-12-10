@@ -37,11 +37,11 @@
                                                 (click)="providerDetail(waitlist.providerAccount)">
                                                 {{waitlist.providerAccount.businessName | capitalizeFirst}}
                                             </h3>
-                                            <a class="loc-cls" [href]="waitlist.providerAccount.location.googleMapUrl"
+                                            <!-- <a class="loc-cls" [href]="waitlist.providerAccount.location.googleMapUrl"
                                                 target="_blank">
                                                 <i class="fa fa-map-marker"></i>
                                                 {{waitlist.providerAccount.location.place | capitalizeFirst}}
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
 
@@ -93,7 +93,8 @@
                                         <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
                                             *ngIf="showView === 'grid'">
                                             <mat-grid-tile *ngFor="let item of waitlist.orderItem">
-                                                <mat-grid-tile-header>
+                                                <mat-grid-tile-header
+                                                    [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
@@ -105,20 +106,24 @@
                                         </mat-grid-list>
 
                                         <!-- List View -->
-                                       <div *ngIf="showView === 'list'" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 cust-det-outline">
-                                           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2" *ngFor="let item of waitlist.orderItem">
-                                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-5">
-                                                <div class="itm-nme">{{item.name}}</div>
-                                                <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}</div>
-                                                <div class="itm-qty">Qty - {{item.quantity}}</div>
-                                            </div>
-                                            <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5">
-                                                <div class="lst-img">
+                                        <div *ngIf="showView === 'list'"
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 cust-det-outline">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2"
+                                                *ngFor="let item of waitlist.orderItem">
+                                                <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-5">
+                                                    <div class="itm-nme">{{item.name}}</div>
+                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}
+                                                    </div>
+                                                    <div class="itm-qty">Qty - {{item.quantity}}</div>
+                                                </div>
+                                                <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5">
+                                                    <div class="lst-img"
+                                                        [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                           </div>
-                                       </div>
+                                        </div>
 
                                     </div>
                                 </div>

@@ -219,3 +219,54 @@ display: grid !important;
     padding-left: 3px !important;
     margin-top: 1px !important;
 }
+
+::ng-deep .order-checkout .mat-grid-tile {
+    border: 1px dashed #4949526b;
+}
+::ng-deep .order-checkout .mat-grid-tile-header {
+    margin-bottom: 4px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #282c3f;
+    line-height: 1.18;
+    text-transform: capitalize;
+    background: white !important;
+    color: #191717d1 !important;
+}
+::ng-deep .order-checkout .mat-grid-tile-header .fa-map-marker {
+    font-size: 1.1rem;
+    margin-right: 8px;
+    margin-top: -2px;
+}
+::ng-deep .order-checkout .mat-grid-tile-footer {
+    background: white !important;
+}
+::ng-deep .order-checkout .add-adrs-btn {
+        border: 1px solid #183e7a !important;
+        border-radius: 0 !important;
+        text-transform: uppercase !important;
+        font-weight: 600 !important;
+        color: #183e7a !important;
+        width: 130px;
+        height: 34px;
+        font-size: 14px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+}
+::ng-deep .order-checkout .adrs-head {
+    font-size: 17px;
+    font-weight: 500;
+    color: #282c3f;
+    line-height: 1.18;
+    text-transform: capitalize;
+}
+::ng-deep .order-checkout .adrs-data {
+    font-size: 14px;
+    color: #93959f;
+    margin-bottom: 8px;
+    font-weight: 300;
+    line-height: 16px;
+    overflow: hidden;
+    width: 100%;
+    margin-left: 10px;
+}
