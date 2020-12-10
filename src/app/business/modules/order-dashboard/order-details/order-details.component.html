@@ -13,10 +13,10 @@
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
-                <div class="bold font11"> {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
+                <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName"> {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
-                <div> <i class="fa fa-phone" aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
-                <div> <i class="fa fa-map-marker" aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
+                <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone" aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
+                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
                 <div class="bold font11"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
@@ -44,7 +44,9 @@
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
                 *ngIf="selectedType==='grid'">
                 <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
-                    <img [src]="getItemImg(item)" style="width: 50px;" class="mgn-up-10 mgn-bt-10">
+                    <!-- <img [src]="getItemImg(item)" style="width: 50px;" class="mgn-up-10 mgn-bt-10"> -->
+                    <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
+                    </div>
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}</div>

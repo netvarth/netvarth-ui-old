@@ -52,9 +52,14 @@
         width: 20%;
     }
 }
-@media (min-width: 992px) {
+@media (min-width: 551px) {
     .gridlist .order-item {
         width: 25%;
+    }
+}
+@media(min-width: 551px) and (max-width: 993px){
+    .gridlist .order-item {
+        width: 30%;
     }
 }
 .orderdetails .storepickup-icon,
@@ -65,4 +70,9 @@
     .itemlist, .orderdetails {
         margin: 20px 0 !important;
     }
+}
+.item-img {
+    height: 100px;
+    width: 100%;
+    margin-bottom: 10px;
 }
