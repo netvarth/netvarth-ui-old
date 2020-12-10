@@ -11,7 +11,6 @@
     color: white !important;
 }
 .itemlist th {
-    /* border-bottom: 1px solid #ccc; */
     padding: 5px;
 }
 .itemlist {
@@ -52,11 +51,6 @@
         width: 20%;
     }
 }
-/* @media (max-width: 551px) {
-    .gridlist .order-item {
-        width: 25%;
-    }
-} */
 @media(min-width: 551px) and (max-width: 1200px){
     .gridlist .order-item {
         width: 30%;

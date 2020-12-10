@@ -123,6 +123,7 @@ export class OrderDashboardComponent implements OnInit {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       this.resetList();
+      this.doSearch();
     });
   }
   stopprop(event) {
@@ -142,7 +143,6 @@ export class OrderDashboardComponent implements OnInit {
       filter['orderDate-gt'] = this.getTodayDate();
     }
     this.providerservices.getProviderOrders(filter).subscribe(data => {
-      console.log(data);
       this.orders = data;
       this.loading = false;
     });
@@ -151,7 +151,6 @@ export class OrderDashboardComponent implements OnInit {
     const filter = {};
     filter['orderDate-gt'] = this.getTodayDate();
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
-      console.log(data);
       this.futureOrdersCount = data;
     });
   }
@@ -159,7 +158,6 @@ export class OrderDashboardComponent implements OnInit {
     const filter = {};
     filter['orderDate-eq'] = this.getTodayDate();
     this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
-      console.log(data);
       this.todayOrdersCount = data;
     });
   }
@@ -169,14 +167,12 @@ export class OrderDashboardComponent implements OnInit {
     filter = this.setFilterForApi();
     // this.getProviderHistoryOrdersCount(filter);
     this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
-      console.log(data);
       this.historyOrders = data;
       this.loading = false;
     });
   }
   getProviderHistoryOrdersCount(filter) {
     this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
-      console.log(data);
       this.historyOrdersCount = data;
     });
   }
@@ -189,8 +185,6 @@ export class OrderDashboardComponent implements OnInit {
       const indx = this.selectedOrders.indexOf(order);
       this.selectedOrders.splice(indx, 1);
     }
-    console.log(this.selectedOrders);
-    console.log(this.orderSelected);
   }
   showFilter() {
     this.showFilterSection = true;
@@ -321,7 +315,6 @@ export class OrderDashboardComponent implements OnInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNumber-eq'] = this.filter.phone_number;
     }
-    console.log(api_filter);
     return api_filter;
   }
   getDefaultCatalogStatus() {

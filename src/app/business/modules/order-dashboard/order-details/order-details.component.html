@@ -12,20 +12,24 @@
         <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
-                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
-                <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName"> {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
+                <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
+                <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
+                    {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
-                <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone" aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
-                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
+                <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
+                        aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
+                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker"
+                        aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
                 <div class="bold font11"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
-                <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
+                <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
+                        *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
-                <div class="" [class.mgn-up-70]="!small_device_display"> <span class="customer-action-btn pointer-cursor"
-                        (click)="showOrderActions()">Actions</span>
+                <div class="" [class.mgn-up-70]="!small_device_display"> <span
+                        class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
                 </div>
             </div>
         </div>
@@ -44,7 +48,6 @@
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
                 *ngIf="selectedType==='grid'">
                 <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
-                    <!-- <img [src]="getItemImg(item)" style="width: 50px;" class="mgn-up-10 mgn-bt-10"> -->
                     <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
                     </div>
                     <h4>{{item.name}}</h4>

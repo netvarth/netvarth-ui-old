@@ -486,7 +486,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
-          console.log(this.bill_data);
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
@@ -577,9 +576,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           }
           const services = this.services.map((ob) => ob.name);
-          console.log(this.source);
           if (this.source !== 'order') {
-          this.itemServicesGroup[0]['values'] = services;
+            this.itemServicesGroup[0]['values'] = services;
           }
         },
         error => {
@@ -653,7 +651,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           data => {
             this.pre_payment_log = data;
             this.refundedAmount = 0;
-            console.log(this.pre_payment_log);
             for (let i = 0; i < this.pre_payment_log.length; i++) {
               if (this.pre_payment_log[i].refundDetails.length > 0) {
                 for (const payment of this.pre_payment_log[i].refundDetails) {
@@ -918,7 +915,6 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.actiontype = null;
             this.curSelItm.typ = 'Services';
             this.curSelItm.qty = 1;
-            console.log(this.curSelItm);
             this.getWaitlistBill();
             resolve();
           },

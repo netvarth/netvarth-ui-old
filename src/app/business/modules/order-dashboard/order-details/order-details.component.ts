@@ -25,7 +25,6 @@ export class OrderDetailsComponent implements OnInit {
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions) {
     this.activaterouter.params.subscribe(param => {
-      console.log(param);
       this.uid = param.id;
       this.customerLabel = this.sharedFunctions.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
@@ -48,7 +47,6 @@ export class OrderDetailsComponent implements OnInit {
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
       this.loading = false;
-      console.log(data);
     });
   }
   goBack() {
@@ -68,7 +66,7 @@ export class OrderDetailsComponent implements OnInit {
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
-
+      this.getOrderDetails(this.uid);
     });
   }
   getItemImg(item) {

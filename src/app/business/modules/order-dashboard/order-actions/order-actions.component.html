@@ -11,45 +11,17 @@
         <p>Order No: {{orderDetails.orderNumber}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <!-- <div class="action-box pointer-cursor" *ngIf="showAccept" (click)="changeOrderStatus('accepted')">
-            <div class="action-box-sub">
-                <span class="start-icon"></span>
-                <div class="icon-text">Accept</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showPreparing" (click)="changeOrderStatus('accepted')">
-            <div class="action-box-sub">
-                <span class="start-icon"></span>
-                <div class="icon-text">Preparing</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showOntheWay" (click)="changeOrderStatus('accepted')">
-            <div class="action-box-sub">
-                <span class="changestatus-icon"></span>
-                <div class="icon-text">On the Way</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showDelivered" (click)="changeOrderStatus('accepted')">
-            <div class="action-box-sub">
-                <span class="changestatus-icon"></span>
-                <div class="icon-text">Delivered</div>
-            </div>
-        </div>
-        <div class="action-box pointer-cursor" *ngIf="showCancel" (click)="changeOrderStatus('accepted')">
-            <div class="action-box-sub">
-                <span class="cancel-icon"></span>
-                <div class="icon-text">Reject</div>
-            </div>
-        </div> -->
         <ng-container *ngIf="catalogStatuses.length > 0">
-            <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)" *ngFor="let status of catalogStatuses">
+            <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)"
+                *ngFor="let status of catalogStatuses">
                 <div class="action-box-sub">
                     <span class="viewdetails-icon"></span>
                     <div class="icon-text">{{status}}</div>
                 </div>
             </div>
         </ng-container>
-        <div class="action-box pointer-cursor" (click)="gotoDetails()" *ngIf="!mulipleSelection && data.source !== 'details'">
+        <div class="action-box pointer-cursor" (click)="gotoDetails()"
+            *ngIf="!mulipleSelection && data.source !== 'details'">
             <div class="action-box-sub">
                 <span class="viewdetails-icon"></span>
                 <div class="icon-text">View Details</div>
