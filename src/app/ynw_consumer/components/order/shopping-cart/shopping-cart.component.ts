@@ -40,6 +40,7 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
   choose_type = 'store';
 
 
+
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -48,13 +49,12 @@ export class ShoppingCartComponent implements OnInit,OnDestroy {
     private shared_services: SharedServices) {
       this.catalog_details = this.shared_services.getOrderDetails();
       console.log(JSON.stringify(this.catalog_details));
-      console.log(this.catalog_details);
-      if(this.catalog_details.homeDelivery.homeDelivery){
-        this.home_delivery = true;
-      }
-      if(this.catalog_details.pickUp.orderPickUp){
-       this.store_pickup = true;
-      }
+      // if(this.catalog_details.homeDelivery.homeDelivery){
+      //   this.home_delivery = true;
+      // }
+      // if(this.catalog_details.pickUp.orderPickUp){
+      //  this.store_pickup = true;
+      // }
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       console.log(this.sel_checkindate);
     }

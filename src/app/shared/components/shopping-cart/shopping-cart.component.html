@@ -79,7 +79,7 @@
 
                         </div>
                         <div>
-                          <p>Choose delivery type</p>
+                          <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
                            <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
                               <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'" [checked]="true">
                                   Store pick up
