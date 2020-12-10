@@ -280,8 +280,8 @@ export class OrderHistoryComponent implements OnInit {
       .subscribe(
         data => {
           this.entire_history = data;
-          this.entire_history.forEach(token_details_sp => {
-            this.entire_history_data = token_details_sp;
+          this.entire_history.forEach(order_history_details => {
+            this.entire_history_data = order_history_details;
           });
           this.loading = false;
           
