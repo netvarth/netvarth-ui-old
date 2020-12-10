@@ -48,42 +48,43 @@
                   </mat-step>
                   <mat-step label="Step 2">
                     <ng-template matStepLabel>Delivery options</ng-template>
-                    <!-- <ng-template matStepperIcon="edit">
-                      <mat-icon>LocalShipping</mat-icon>
-                    </ng-template> -->
-
                     <div>
-                      <span class="d-type">Choose delivery type</span>
-                      <mat-radio-group [(ngModel)]="choose_type">
-                        <mat-radio-button [value]="'store'">
-                          Store pick up
-                        </mat-radio-button> &nbsp;&nbsp;&nbsp;
-                        <mat-radio-button [value]="'home'">
-                          Home delivery
-                        </mat-radio-button>
+                      <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
+                       <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
+                          <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'" [checked]="true">
+                              Store pick up
+                          </mat-radio-button>
+                          <mat-radio-button  class="mgn-lt-5   mgn-rt-10" [value]="'home'" [checked]="false">
+                              Home delivery
+                          </mat-radio-button>&nbsp;
                       </mat-radio-group>
-
+                      <div *ngIf="store_pickup && !home_delivery">
+                        Store Pick Up
+                      </div>
+                      <div *ngIf="home_delivery && !store_pickup">
+                        Home Delivery
+                      </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                         Date/Time
                         <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
-                            (click)="changeTime()">Change
-                          </a></span>
-                      </div>
-                      <!-- <div>
-                          <h4>
-                              <span *ngIf="!isFuturedate">Today, </span>
-                              <span *ngIf="!isFuturedate">
-                                  {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
-                              </span>
-                              <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
-                              </span>
-                              <span *ngIf="isFuturedate">
-                                  {{currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + currentcatlog.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
-                              </span>
-
-                          </h4>
-                      </div> -->
+                          (click)="changeTime()" >Change
+                            </a></span>
                     </div>
+                    <div>
+                        <h4>
+                            <span *ngIf="!isFuturedate">Today, </span>
+                            <span *ngIf="!isFuturedate">
+                                {{nextAvailableTime}}
+                            </span>
+                            <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                            </span>
+                            <span *ngIf="isFuturedate">
+                                {{nextAvailableTime}}
+                            </span>
+
+                        </h4>
+                    </div>
+                  </div>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
                       <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
@@ -140,8 +141,8 @@
 
                       <div class="clearfix"></div>
                     </div>
-                    <!-- <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
-                    </div> -->
+                    <div (click)="addAddress();"> <button type="button" class="btn btn-link"> Add New Address </button>
+                    </div>
                     <div>
                       <!-- <button mat-button matStepperPrevious>Back</button> -->
                       <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>

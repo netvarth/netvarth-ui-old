@@ -8,7 +8,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 //  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../services/shared-services';
-// import { OrderService } from '../../../ynw_consumer/components/order/order.service';
+import { projectConstants } from '../../../app.component';
 
 
 @Component({
@@ -17,6 +17,13 @@ import { SharedServices } from '../../services/shared-services';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
+  isFuturedate: boolean;
+  todaydate: any;
+  showfuturediv: boolean;
+  home_delivery: boolean;
+  store_pickup: boolean;
+  nextAvailableTime: string;
+  sel_checkindate: any;
   customer_email: any;
   customer_phoneNumber: any;
   selectedAddress: string;
@@ -40,6 +47,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   account_id: any;
   choose_type;
   selectedRowIndex = -1;
+  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   linear: boolean;
   catalog_details: any;
@@ -76,10 +84,31 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         // this.members = params.members;
         // this.prepayment = params.prepayment;
       });
+      this.catalog_details = this.shared_services.getOrderDetails();
+      console.log(JSON.stringify(this.catalog_details));
+      console.log(this.catalog_details);
+      if (this.catalog_details.pickUp) {
+        if (this.catalog_details.pickUp.orderPickUp) {
+          this.store_pickup = true;
+          this.choose_type = 'store';
+          this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+          this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+        }
+      }
+      if (this.catalog_details.homeDelivery) {
+        if (this.catalog_details.homeDelivery.homeDelivery) {
+          this.home_delivery = true;
+          if (!this.store_pickup) {
+            this.choose_type = 'home';
+          this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+          this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+        }
+      }
+      }
   }
 
   ngOnInit() {
-    console.log('checkout shared');
+
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
@@ -259,7 +288,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
             const retData = data;
             let retUUID;
             let prepayAmount;
-            let uuidList = [];
+            const uuidList = [];
             Object.keys(retData).forEach(key => {
                 if (key === '_prepaymentAmount') {
                     prepayAmount = retData['_prepaymentAmount'];
@@ -304,7 +333,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
             error => {
               this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
-            
+
             );
 }
   changeTime() {
@@ -326,6 +355,26 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.customer_email = address.email;
     this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
     console.log(this.selectedAddress);
+  }
+  handleFuturetoggle() {
+    this.showfuturediv = !this.showfuturediv;
+  }
+  changeType() {
+    if (this.choose_type === 'store') {
+        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+    } else {
+        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      }
+      console.log(this.nextAvailableTime);
+      console.log(this.todaydate);
+      console.log(this.sel_checkindate);
+      if (this.todaydate === this.sel_checkindate) {
+      this.isFuturedate = false;
+      } else {
+        this.isFuturedate = true;
+      }
   }
 
 }
