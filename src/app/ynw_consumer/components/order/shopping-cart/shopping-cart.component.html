@@ -80,7 +80,7 @@
                         </div>
                         <div>
                           <p>Choose delivery type</p>
-                           <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup">
+                           <mat-radio-group [(ngModel)]="choose_type">
                               <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'">
                                   Store pick up
                               </mat-radio-button>
@@ -88,39 +88,20 @@
                                   Home delivery
                               </mat-radio-button>
                           </mat-radio-group>
-<div *ngIf="store_pickup">
-  store_pickup
-</div>
-<div *ngIf="home_delivery">
-  home_delivery
-</div>
+
                           <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                             Date/Time
                             <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
                               (click)="changeTime()" >Change
                                 </a></span>
                         </div>
-                        <div *ngIf="choose_type='home'">
-                          <h4>
-                              <span *ngIf="!isFuturedate">Today, </span>
-                              <span *ngIf="!isFuturedate">
-                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}
-                              </span>
-                              <span *ngIf="isFuturedate">{{catalog_details.nextAvailableDeliveryDetails.availableDate | date: dateFormat}},
-                              </span>
-                              <span *ngIf="isFuturedate">
-                                  {{catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']}}
-                              </span>
-
-                          </h4>
-                      </div>
-                        <div *ngIf="choose_type=='store'">
+                        <div>
                             <h4>
                                 <span *ngIf="!isFuturedate">Today, </span>
                                 <span *ngIf="!isFuturedate">
                                     {{catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
                                 </span>
-                                <span *ngIf="isFuturedate">{{catalog_details.nextAvailablePickUpDetails.availableDate | date: dateFormat}},
+                                <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
                                 </span>
                                 <span *ngIf="isFuturedate">
                                     {{catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']}}
