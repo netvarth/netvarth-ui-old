@@ -135,6 +135,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     console.log(this.cataId);
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
       this.seletedCatalogItems1 = {};
+      this.catalogItemsSelected = [];
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
        this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || 1;
