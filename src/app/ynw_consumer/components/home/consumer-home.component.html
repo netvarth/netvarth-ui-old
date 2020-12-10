@@ -1402,7 +1402,7 @@
                                  </td>
                              </tr>
 
-                             <!-- <tr *ngIf="!more_tdyOrdersShow && total_tdy_order.length > 3"
+                             <tr *ngIf="!more_tdyOrdersShow && total_tdy_order.length > 3"
                                  (click)="showMoreTdyOrders()">
                                  <td colspan="6"><a>Show more...</a></td>
                              </tr>
@@ -1411,7 +1411,8 @@
                                      <td>
                                          <h4 class="disp-flex">
                                              <div class="circle-tokens">
-                                                 <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
+                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
                                              </div>
                                              <span class="mgn-up-10">
                                                  Order :<br> #{{oder.orderNumber}}
@@ -1459,13 +1460,16 @@
                                          </mat-menu>
                                      </td>
                                  </tr>
-                             </ng-container> -->
+                                 <tr *ngIf="more_tdyOrdersShow" (click)="showlessTdyOrders()">
+                                    <td colspan="6"><a>Show less...</a></td>
+                                </tr>
+                             </ng-container>
 
                          </tbody>
 
                          <!-- FUTURE ORDERS -->
 
-                         <!-- <thead class="header" *ngIf="(total_future_order.length != 0)">
+                         <thead class="header" *ngIf="(total_future_order.length != 0)">
                              <th colspan="6">UPCOMING</th>
                          </thead>
                          <tbody *ngIf="total_future_order.length != 0">
@@ -1473,7 +1477,8 @@
                                  <td>
                                      <h4 class="disp-flex">
                                          <div class="circle-tokens">
-                                             <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                            <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
+                                            <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
                                          </div>
                                          <span class="mgn-up-10">
                                              Order :<br> #{{oder.orderNumber}}
@@ -1522,7 +1527,7 @@
                                  </td>
                              </tr>
                              <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
-                                 (click)="showMoreTdyOrders()">
+                                 (click)="showMoreFutOrders()">
                                  <td colspan="6"><a>Show more...</a></td>
                              </tr>
                              <ng-container *ngIf="more_futrOrdersShow">
@@ -1530,7 +1535,8 @@
                                      <td>
                                          <h4 class="disp-flex">
                                              <div class="circle-tokens">
-                                                 <i class="fa appt-icon" [matTooltip]="'Appointment'"></i>
+                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
+                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
                                              </div>
                                              <span class="mgn-up-10">
                                                  Order :<br> #{{oder.orderNumber}}
@@ -1578,8 +1584,11 @@
                                          </mat-menu>
                                      </td>
                                  </tr>
+                                 <tr *ngIf="more_futrOrdersShow" (click)="showlessFutOrders()">
+                                    <td colspan="6"><a>Show less...</a></td>
+                                </tr>
                              </ng-container>
-                         </tbody> -->
+                         </tbody>
 
                      </table>
                  </div>
