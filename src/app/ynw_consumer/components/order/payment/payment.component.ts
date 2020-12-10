@@ -33,6 +33,7 @@ export class PaymentComponent implements OnInit {
     consumer_name: any;
     iconClass: string;
     prepayment;
+    orderId: any;
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -65,6 +66,7 @@ export class PaymentComponent implements OnInit {
         this.shared_services.getOrderByConsumerUUID(this.uuid, this.accountId).subscribe(
             (order: any) => {
                 this.activeCatalog = order;
+                this.orderId = this.activeCatalog.orderNumber;
                 this.orderDetails = {
                     'amount': this.prepayment,
                     'paymentMode': null,
@@ -157,6 +159,7 @@ export class PaymentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        console.log(this.checkIn_type);
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.livetrack, this.accountId, this.uuid, this.prepayment);
     }
 

@@ -281,7 +281,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     account_id: this.account_id,
-                    type_check: 'checkin_prepayment',
+                    type_check: 'order_prepayment',
                     prepayment: prepayAmount,
                     uuid: this.trackUuid
                 }
