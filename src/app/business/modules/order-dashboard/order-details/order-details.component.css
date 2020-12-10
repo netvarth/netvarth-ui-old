@@ -25,7 +25,7 @@
 .orderdetails {
     margin: 20px;
     padding: 30px;
-    box-shadow: 10px 10px 15px 0px #cccccc9c;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
 }
 .fa-phone, .fa-map-marker {
     color: #334b99;
@@ -52,12 +52,12 @@
         width: 20%;
     }
 }
-@media (min-width: 551px) {
+/* @media (max-width: 551px) {
     .gridlist .order-item {
         width: 25%;
     }
-}
-@media(min-width: 551px) and (max-width: 993px){
+} */
+@media(min-width: 551px) and (max-width: 1200px){
     .gridlist .order-item {
         width: 30%;
     }
