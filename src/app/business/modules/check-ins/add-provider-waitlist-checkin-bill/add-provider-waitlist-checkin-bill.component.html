@@ -84,6 +84,15 @@
 																	<mat-icon>more_vert</mat-icon>
 																</button>
 																<mat-menu #menu="matMenu">
+																	<button mat-menu-item (click)="showDeliveryCharge()"
+																		*ngIf="source==='order' && checkin.homeDelivery">
+																		<span
+																			*ngIf="bill_data.deliveryCharges > 0">Update
+																			Delivery Charge</span>
+																		<span
+																			*ngIf="bill_data.deliveryCharges === 0">Add
+																			Delivery Charge</span>
+																	</button>
 																	<button mat-menu-item
 																		(click)="orderDiscountSelected()"
 																		*ngIf="(discounts.length > 0)">
@@ -234,6 +243,55 @@
 																</div>
 															</div>
 														</ng-container>
+													</div>
+												</ng-container>
+												<ng-container *ngIf="showDeliveryChargeSection">
+													<div class="section-two">
+														<div class="bill-breakup">
+															<div class="list">
+																<div class="list-content">
+																	<div class="c-row two">
+																		<div
+																			class="add-serv-item edit-row service no-padding">
+																			<div
+																				class="spl col-md-8 col-sm-8 col-lg-8 no-padding">
+																				<div
+																					class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding">
+																					<div class="rightalign pad-rt-10">
+																						Delivery Charge</div>
+																				</div>
+																				<div
+																					class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
+																					<span
+																						class="label">{{qty_cap}}</span>
+																					<span class="number">
+																						<mat-form-field
+																							class="example-full-width">
+																							<input type="number" min="0"
+																								max="{{qty_limit}}"
+																								matInput #itemserviceqty
+																								aria-label="Number"
+																								(keypress)="isNumeric($event)"
+																								(keyup)="isvalid($event)"
+																								matInput value="1"
+																								size="3"
+																								[(ngModel)]="deliveryCharge"
+																								[ngModelOptions]="{standalone: true}">
+																						</mat-form-field>
+																					</span>
+																				</div>
+																			</div>
+																			<div class="spr col-md-4 col-sm-4">
+																				<button class="cs-btn bt1"
+																					(click)="applyDeliveryCharge()">{{apply_cap}}</button>
+																				<button class="cs-btn bt2"
+																					(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
 													</div>
 												</ng-container>
 												<ng-container *ngIf="(showPCouponSection || showDiscountSection)">
@@ -791,6 +849,14 @@
 																	<td class="price rupee-font">(+){{bill_data.totalTaxAmount |
 													currency:'&#8377;'}}</td>
 																</tr>
+																<tr class="amt discount"
+																	*ngIf="bill_data.deliveryCharges > 0">
+																	<td class="name"><span class="tax-top">Delivery
+																			Charge </span>
+																	</td>
+																	<td class="price rupee-font">
+																		(+){{bill_data.deliveryCharges}}</td>
+																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
 																	<td class="price  rupee-font">{{bill_data.netRate |
@@ -906,8 +972,8 @@
 																			<span>{{payment.paymentMode}}</span>
 																		</span>
 																		<span class="mode"
-																			*ngIf="payment.paymentGateway"> <span
-																				class="title">Payment Gateway</span>
+																			*ngIf="payment.paymentGateway">
+																			<span class="title">Payment Gateway</span>
 																			<span>{{payment.paymentGateway}}</span>
 																		</span>
 																	</span>

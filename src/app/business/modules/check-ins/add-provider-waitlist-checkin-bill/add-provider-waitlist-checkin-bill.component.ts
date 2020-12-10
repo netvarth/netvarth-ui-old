@@ -216,6 +216,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   amounttoRefund = '';
   selectedPayment;
   refundedAmount;
+  showDeliveryChargeSection = false;
+  deliveryCharge = 0;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -820,6 +822,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       itm.qty = vv;
     }
   }
+  showDeliveryCharge() {
+    this.showDiscountSection = false;
+    this.disableDiscountbtn = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = true;
+  }
   orderDiscountSelected() {
     this.showDiscountSection = true;
     this.disableDiscountbtn = false;
@@ -827,6 +838,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
   orderPCouponSelected() {
     this.showDiscountSection = false;
@@ -835,6 +847,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
   jCouponSelected() {
     this.showDiscountSection = false;
@@ -843,6 +856,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.disableJCouponbtn = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
 
   disaplynoteSelected() {
@@ -853,6 +867,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemMenuSection = false;
     this.showDisplaynoteSection = true;
     this.showPrivatenoteSection = false;
+    this.showDeliveryChargeSection = false;
   }
 
   privatenoteSelected() {
@@ -863,6 +878,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemMenuSection = false;
     this.showDisplaynoteSection = false;
     this.showPrivatenoteSection = true;
+    this.showDeliveryChargeSection = false;
   }
 
   itemServiceManualAdd(type, name) {
@@ -1002,6 +1018,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDiscountSection = false;
     this.showPCouponSection = false;
     this.showJCouponSection = false;
+    this.showDeliveryChargeSection = false;
     this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
@@ -1022,6 +1039,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDiscountSection = false;
     this.showPCouponSection = false;
     this.showJCouponSection = false;
+    this.showDeliveryChargeSection = false;
     this.showAddItemsec = true;
     this.itemServiceSelected('Items', name);
     this.itemServiceSearch.setValue(name);
@@ -1189,6 +1207,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.jCoupon = '';
     this.showJCouponSection = false;
     this.showDiscountSection = false;
+    this.showDeliveryChargeSection = false;
     this.showPCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = true;
@@ -1209,6 +1228,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.billPrivateNote = '';
       this.privatebuttondisabled = true;
     }
+  }
+
+  applyDeliveryCharge() {
+    const data = { 'deliveryCharges': this.deliveryCharge };
+    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data);
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
