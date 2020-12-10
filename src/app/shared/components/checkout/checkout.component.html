@@ -100,7 +100,8 @@
 
                     <div class="div-outline custId-cursor col-md-6 mt-1"
                       *ngFor="let address of added_address; let i = index">
-                      <mat-card class="card">
+                      <mat-card class="card" [ngClass]="{'highlight': selectedRowIndex == i}"
+                      (click)="highlight(i,address)">
                         <mat-card-header>Address {{i+1}}</mat-card-header>
                         <mat-card-content>
                           <div>

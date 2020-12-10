@@ -17,6 +17,9 @@ import { SharedServices } from '../../services/shared-services';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
+  customer_email: any;
+  customer_phoneNumber: any;
+  selectedAddress: string;
   orderSummary: any[];
   taxAmount: any;
   orderAmount: any;
@@ -36,6 +39,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   advance_amount: any;
   account_id: any;
   choose_type;
+  selectedRowIndex = -1;
 
   linear: boolean;
   catalog_details: any;
@@ -85,7 +89,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.customer_data = activeUser;
     }
     console.log(this.customer_data);
-    // this.getaddress();
+    this.getaddress();
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -101,7 +105,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   getOrderFinalAmountToPay() {
 
-    return parseInt(this.orderAmount , 0) + parseInt(this.getTaxCharges(), 0);
+    return parseInt(this.orderAmount, 0) + parseInt(this.getTaxCharges(), 0);
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -138,7 +142,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-       this.getaddress();
+      this.getaddress();
     });
   }
 
@@ -178,7 +182,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
   // }
   getTotalItemPrice() {
-    this.price = 0;
+      this.price = 0;
     for (const item of this.orderList) {
       this.price = this.price + item.price;
     }
@@ -196,7 +200,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       console.log(this.delivery_type);
       const post_Data = {
         'homeDelivery': true,
-        'homeDeliveryAddress': 'madathiparambil house po kozhukully tcr',
+        'homeDeliveryAddress': this.selectedAddress,
         'catalog': {
           'id': this.catalog_details.id
         },
@@ -209,8 +213,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         },
         'orderItem': this.getOrderItems(),
         'orderDate': '2020-12-10',
-        'phoneNumber': '8129630960',
-        'email': 'aneesh.mg@jaldee.com'
+        'phoneNumber': this.customer_phoneNumber,
+        'email': this.customer_email
       };
       console.log(post_Data);
     }
@@ -262,6 +266,13 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.orderSummary.push({ 'id': itemId, 'quantity': qty });
     });
     return this.orderSummary;
+  }
+  highlight(index, address) {
+    this.selectedRowIndex = index;
+    this.customer_phoneNumber = address.phoneNumber;
+    this.customer_email = address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
+    console.log(this.selectedAddress);
   }
 
 }
