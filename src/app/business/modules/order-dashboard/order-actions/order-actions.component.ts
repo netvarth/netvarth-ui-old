@@ -77,8 +77,8 @@ export class OrderActionsComponent implements OnInit {
     this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id], navigationExtras);
   }
   changeOrderStatus(status) {
-    this.dialogRef.close();
     this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {
+      this.dialogRef.close();
     },
       error => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
