@@ -61,7 +61,6 @@ nextAvailableTime;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     this.catalog_details = this.shared_services.getOrderDetails();
-    this.catalog_details = this.catalog_details[0];
     console.log(JSON.stringify(this.catalog_details));
     console.log(this.catalog_details);
     if (this.catalog_details.pickUp) {
