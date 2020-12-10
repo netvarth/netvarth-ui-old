@@ -4,7 +4,7 @@ import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 //  import { ConsumerServices } from '../../../ynw_consumer/services/consumer-services.service';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../services/shared-services';
@@ -43,6 +43,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
   linear: boolean;
   catalog_details: any;
+  trackUuid;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -238,22 +239,75 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
       };
       console.log(post_Data);
-      this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
-        .subscribe(
-          data => {
-            this.sharedFunctionobj.openSnackBar('Order placed successfully');
-          },
-          error => {
-            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+      this.confirmOrder(post_Data);
+      // ;
+      // this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
+      //   .subscribe(
+      //     data => {
+      //       this.sharedFunctionobj.openSnackBar('Order placed successfully');
+      //     },
+      //     error => {
+      //       this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //     }
+      //   );
       // this.router.navigate(['consumer', 'order', 'payment'] );
-
-
-
-
     }
   }
+  confirmOrder(post_Data) {
+    // this.api_loading = true;
+    this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
+        .subscribe(data => {
+            const retData = data;
+            let retUUID;
+            let prepayAmount;
+            let uuidList = [];
+            Object.keys(retData).forEach(key => {
+                if (key === '_prepaymentAmount') {
+                    prepayAmount = retData['_prepaymentAmount'];
+                } else {
+                    retUUID = retData[key];
+                    this.trackUuid = retData[key];
+                    uuidList.push(retData[key]);
+                    console.log(retUUID);
+                }
+            });
+            // if (this.selectedMessage.files.length > 0) {
+            //     this.consumerNoteAndFileSave(retUUID);
+            // }
+            // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+            // const member = [];
+            // for (const memb of this.waitlist_for) {
+            //     member.push(memb.firstName + ' ' + memb.lastName);
+            // }
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                    account_id: this.account_id,
+                    type_check: 'checkin_prepayment',
+                    prepayment: prepayAmount,
+                    uuid: this.trackUuid
+                }
+            };
+          console.log(this.catalog_details.advanceAmount);
+            if (this.catalog_details.advanceAmount) {
+              console.log('hi');
+              // this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+
+                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+            } else {
+               this.router.navigate(['consumer']);
+            }
+        },
+            // error => {
+            //     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+            //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            //     this.api_loading = false;
+            // }
+            error => {
+              this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+            
+            );
+}
   changeTime() {
     console.log('chnage time');
   }

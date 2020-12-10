@@ -19,19 +19,9 @@ export class PaymentComponent implements OnInit {
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    breadcrumbs = [
-        {
-            title: 'My Jaldee',
-            url: '/consumer'
-        },
-        {
-            title: 'Payment'
-        }
-    ];
-    breadcrumb_moreoptions: any = [];
-    activeWt: any;
+    activeCatalog: any;
     prepaymentAmount: number;
-    waitlistDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
+    orderDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
     payment_popup: any;
     pid: any;
     status: any;
@@ -55,7 +45,8 @@ export class PaymentComponent implements OnInit {
     ) {
         this.route.params.subscribe(
             params => {
-                this.uuid = params.id;
+                // this.uuid = params.id;
+                console.log(this.uuid);
             });
         this.route.queryParams.subscribe(
             params => {
@@ -63,56 +54,32 @@ export class PaymentComponent implements OnInit {
                 this.accountId = params.account_id;
                 this.pid = params.pid;
                 this.prepayment = params.prepayment;
+                this.uuid = params.uuid
+                console.log(this.pid);
             });
     }
     goBack() {
         this.router.navigate(['/']);
     }
     ngOnInit() {
-        // this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(
-        //     (wailist: any) => {
-        //         this.activeWt = wailist;
-        //         if (this.activeWt.service.serviceType === 'virtualService') {
-        //             switch (this.activeWt.service.virtualCallingModes[0].callingMode) {
-        //                 case 'Zoom': {
-        //                     this.iconClass = 'fa zoom-icon';
-        //                     break;
-        //                 }
-        //                 case 'GoogleMeet': {
-        //                     this.iconClass = 'fa meet-icon';
-        //                     break;
-        //                 }
-        //                 case 'WhatsApp': {
-        //                     if (this.activeWt.service.virtualServiceType === 'audioService') {
-        //                         this.iconClass = 'fa wtsapaud-icon';
-        //                     } else {
-        //                         this.iconClass = 'fa wtsapvid-icon';
-        //                     }
-        //                     break;
-        //                 }
-        //                 case 'Phone': {
-        //                     this.iconClass = 'fa phon-icon';
-        //                     break;
-        //                 }
-        //             }
-        //         }
-        //         this.consumer_name = this.activeWt.appmtFor[0].userName;
-        //         this.livetrack = this.activeWt.service.livetrack;
-        //        this.prepaymentAmount = this.prepayment;
-        //         this.waitlistDetails = {
-        //             'amount': this.prepaymentAmount,
-        //             'paymentMode': null,
-        //             'uuid': this.uuid,
-        //             'accountId': this.accountId,
-        //             'purpose': 'prePayment'
-        //         };
-        //         if (this.pid) {
-        //             this.getPaymentStatus(this.pid);
-        //         }
-        //     },
-        //     () => {
-        //     }
-        // );
+        this.shared_services.getOrderByConsumerUUID(this.uuid, this.accountId).subscribe(
+            (order: any) => {
+                this.activeCatalog = order;
+                this.orderDetails = {
+                    'amount': this.prepayment,
+                    'paymentMode': null,
+                    'uuid': this.uuid,
+                    'accountId': this.accountId,
+                    'purpose': 'prePayment'
+                };
+                if (this.pid) {
+                    this.shared_functions.setitemonLocalStorage('returntyp', 'consumer');
+                    this.getPaymentStatus(this.pid);
+                }
+            },
+            () => {
+            }
+        );
     }
     getPaymentStatus(pid) {
         this.shared_functions.removeitemfromLocalStorage('acid');
@@ -124,11 +91,8 @@ export class PaymentComponent implements OnInit {
                     this.status = this.status.toLowerCase();
                     if (this.status === 'success') {
                         this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
-                        if (this.activeWt.service.livetrack) {
-                            this.router.navigate(['consumer', 'appointment', 'track']);
-                        } else {
-                            this.router.navigate(['consumer']);
-                        }
+                           this.router.navigate(['consumer']);
+                       
                     } else {
                         this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
                         this.router.navigate(['consumer']);
@@ -138,12 +102,9 @@ export class PaymentComponent implements OnInit {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
-        /*this.user_type = 'consumer';
-        this.loading = 0;
-        this.status = 'Success'; // Success // 'Failed' // 'NoResult'
-        this.status = this.status.toLowerCase();*/
     }
     payuPayment() {
+        console.log('hi');
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
@@ -154,11 +115,12 @@ export class PaymentComponent implements OnInit {
         this.makeFailedPayment(paymentWay);
     }
     makeFailedPayment(paymentMode) {
-        this.waitlistDetails.paymentMode = paymentMode;
+        this.orderDetails.paymentMode = paymentMode;
         this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
         this.shared_functions.setitemonLocalStorage('acid', this.accountId);
         this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
-        this.shared_services.consumerPayment(this.waitlistDetails)
+        console.log(this.orderDetails);
+        this.shared_services.consumerPayment(this.orderDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
                 this.pGateway = pData.paymentGateway;
