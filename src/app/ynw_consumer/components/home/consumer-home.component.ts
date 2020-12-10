@@ -1291,6 +1291,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
       }
+      else if(result === 'reloadlist' && type === 'order'){
+        this.getTdyOrder();
+      }
     });
   }
   isRated(wait) {

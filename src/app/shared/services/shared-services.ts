@@ -518,6 +518,9 @@ export class SharedServices {
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     }
+    else if (type === 'order') {
+      path = 'consumer/order/rating';
+    }
     return this.servicemeta.httpGet(path, null, params);
   }
   postConsumerRateService(params, data, type) {
@@ -526,6 +529,9 @@ export class SharedServices {
       path = 'consumer/waitlist/rating';
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
+    }
+    else if (type === 'order') {
+      path = 'consumer/order/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
   }
@@ -691,6 +697,10 @@ export class SharedServices {
   }
   addConsumerAppointmentNote(accountid, uuid, body) {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerOrderNote(accountid, uuid, body){
+    const url = 'consumer/order/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
   consumerMassCommunicationAppt(data) {

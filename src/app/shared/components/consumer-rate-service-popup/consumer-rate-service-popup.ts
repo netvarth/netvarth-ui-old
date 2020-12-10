@@ -41,6 +41,9 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     } else if (this.type === 'appointment') {
       this.uuid = this.waitlist.uid;
     }
+    else if (this.type === 'order') {
+      this.uuid = this.waitlist.uid;
+    }
   }
 
   ngOnInit() {
@@ -54,12 +57,19 @@ export class ConsumerRateServicePopupComponent implements OnInit {
         'account-eq': this.waitlist.providerAccount.id,
         'uId-eq': this.uuid
       };
-    } else {
+    } else if(this.type === 'checkin'){
       params = {
         'account': this.waitlist.providerAccount.id,
         'uId-eq': this.uuid
       };
     }
+      else {
+        params = {
+          'account-eq': this.waitlist.providerAccount.id,
+          'uId-eq': this.uuid
+        };
+      }
+    
 
     this.shared_services.getConsumerRateService(params, this.type)
       .subscribe(

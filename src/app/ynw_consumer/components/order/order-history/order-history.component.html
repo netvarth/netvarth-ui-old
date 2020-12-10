@@ -18,13 +18,13 @@
                         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                         <div class="card history one" *ngIf="!loading">
                             <div class="table-outer history-tbl no-padding"
-                                *ngIf="entire_history && entire_history.length > 0">
+                                >
                                 <table class="table" *ngIf="entire_history && entire_history.length > 0">
                                     <thead>
                                         <tr>
                                             <th class="th3">{{date_cap}} & Time</th>
-                                            <th class="th1">{{service_provider_cap}}</th>
-                                            <th class="th2">{{location_cap}}</th>
+                                            <!-- <th class="th1">{{service_provider_cap}}</th>
+                                            <th class="th2">{{location_cap}}</th> -->
                                             <th> Order for</th>
                                             <th class="th6">Order Number</th>
                                             <th class="th4">{{status_cap}}</th>
@@ -45,14 +45,14 @@
                                                             {{his_wait.timeSlot.eTime}}</span>
                                                     </div>
                                                 </td>
-                                                <td data-title="Service Provider"
+                                                <!-- <td data-title="Service Provider" 
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
                                                     <span
                                                         class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 </td>
                                                 <td data-title="Location" class="td2">
-                                                    {{his_wait.providerAccount.location.place || '' | capitalizeFirst}}</td>
+                                                    {{his_wait.providerAccount.location.place || '' | capitalizeFirst}}</td> -->
                                                 <td data-title="Order for">
                                                     {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
                                                     {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>

@@ -1383,22 +1383,23 @@
                                  </td>
                                  <td></td>
                                  <td>
-                                     <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                     <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
-                                     </button>
-                                     <mat-menu #appMenu="matMenu">
+                                     </button> -->
+                                     <!-- <mat-menu #appMenu="matMenu">
                                          <button mat-menu-item>
                                              <i class="fa cross-icon"></i>
                                              Cancel</button>
+                                             <button mat-menu-item (click)="addWaitlistMessage(oder,'order')">
+                                                <i class="fa chat-icon"></i>
+                                                {{send_msg_cap}}
+                                            </button>
                                          <button mat-menu-item>
-                                             <i class="fa chat-icon"></i>
-                                             {{send_msg_cap}}
-                                         </button>
-                                         <button mat-menu-item>
-                                             <span>{{rate_visit}}</span>
-                                         </button>
-                                     </mat-menu>
+                                            <span class="rate-service" [class.rated]="isRated(oder)"
+                                                (click)="rateService(oder,'order')">{{rate_visit}}</span>
+                                        </button>
+                                     </mat-menu> -->
                                  </td>
                              </tr>
 
@@ -1442,11 +1443,11 @@
                                      </td>
                                      <td></td>
                                      <td>
-                                         <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
-                                         </button>
-                                         <mat-menu #appMenu="matMenu">
+                                         </button> -->
+                                         <!-- <mat-menu #appMenu="matMenu">
                                              <button mat-menu-item>
                                                  <i class="fa cross-icon"></i>
                                                  Cancel</button>
@@ -1457,7 +1458,7 @@
                                              <button mat-menu-item>
                                                  <span>{{rate_visit}}</span>
                                              </button>
-                                         </mat-menu>
+                                         </mat-menu> -->
                                      </td>
                                  </tr>
                                  <tr *ngIf="more_tdyOrdersShow" (click)="showlessTdyOrders()">
@@ -1508,11 +1509,11 @@
                                  </td>
                                  <td></td>
                                  <td>
-                                     <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                     <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
-                                     </button>
-                                     <mat-menu #appMenu="matMenu">
+                                     </button> -->
+                                     <!-- <mat-menu #appMenu="matMenu">
                                          <button mat-menu-item>
                                              <i class="fa cross-icon"></i>
                                              Cancel</button>
@@ -1523,7 +1524,7 @@
                                          <button mat-menu-item>
                                              <span>{{rate_visit}}</span>
                                          </button>
-                                     </mat-menu>
+                                     </mat-menu> -->
                                  </td>
                              </tr>
                              <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
@@ -1566,11 +1567,11 @@
                                      </td>
                                      <td></td>
                                      <td>
-                                         <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
-                                         </button>
-                                         <mat-menu #appMenu="matMenu">
+                                         </button> -->
+                                         <!-- <mat-menu #appMenu="matMenu">
                                              <button mat-menu-item>
                                                  <i class="fa cross-icon"></i>
                                                  Cancel</button>
@@ -1581,7 +1582,7 @@
                                              <button mat-menu-item>
                                                  <span>{{rate_visit}}</span>
                                              </button>
-                                         </mat-menu>
+                                         </mat-menu> -->
                                      </td>
                                  </tr>
                                  <tr *ngIf="more_futrOrdersShow" (click)="showlessFutOrders()">
