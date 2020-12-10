@@ -55,12 +55,13 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selectedCount = 0;
   api_loading = true;
   seletedCatalogItems = [];
-  seletedCatalogItems1 = [];
+  seletedCatalogItems1: any = {};
   tempcatalog = [];
   minquantity;
   maxquantity;
   action = '';
   cataId;
+  catalogItemsSelected: any = [];
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -129,33 +130,32 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
       this.catalogItem[index].selected = true;
       this.selectedCount++;
-       
     } else {
       this.catalogItem[index].selected = false;
       this.selectedCount--;
-      
     }
-    console.log(this.seletedCatalogItems);
+    console.log(this.catalogItem[index].selected);
   }
   selectedItems() {
     console.log(this.action);
     console.log(this.cataId);
-    this.seletedCatalogItems1 = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
+      this.seletedCatalogItems1 = {};
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
-        this.catalogItem[ia].minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
-        this.catalogItem[ia].maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
-        this.seletedCatalogItems1.push(this.catalogItem[ia]);
+       this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+       this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+       this.seletedCatalogItems1.item = this.catalogItem[ia];
+       this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
     }
-    console.log(this.seletedCatalogItems1);
+    console.log(this.catalogItemsSelected);
 
     if (this.action === 'edit' && this.cataId !== 'add') {
-      this.provider_servicesobj.editCatalogItems(this.cataId, this.seletedCatalogItems1).subscribe(
+      this.provider_servicesobj.editCatalogItems(this.cataId, this.catalogItemsSelected).subscribe(
       (data) => {
         this.shared_functions.openSnackBar('Items updated');
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'edit',
                           isFrom: true }
@@ -166,7 +166,8 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         }
         );
       } else {
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.seletedCatalogItems1);
+        console.log(this.catalogItemsSelected);
+        this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'add',
                           isFrom: true }

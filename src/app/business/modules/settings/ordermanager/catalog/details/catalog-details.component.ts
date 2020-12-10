@@ -465,6 +465,9 @@ createForm() {
         this.amForm.get('orderType').setValue('SHOPPINGCART');
         this.amForm.get('orderStatuses').setValue(['Order Received', 'Canceled']);
         this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
+        if (this.action === 'add' && this.isFromadd) {
+            this.updateprefillForm();
+            }
     } else {
         this.amForm = this.fb.group({
         catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
