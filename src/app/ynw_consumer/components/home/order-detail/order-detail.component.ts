@@ -239,6 +239,7 @@ export class OrderDetailComponent implements OnInit {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   screenWidth: number;
   no_of_grids: any;
+  showView = 'grid';
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -276,10 +277,7 @@ export class OrderDetailComponent implements OnInit {
     } else if (this.screenWidth < 375) {
       divider = divident / 2;
     }
-    console.log(divident);
-    console.log(divider);
     this.no_of_grids = Math.round(divident / divider);
-    console.log(this.no_of_grids);
   }
 
   ngOnInit() {
@@ -376,6 +374,10 @@ export class OrderDetailComponent implements OnInit {
     });
     this.actiondialogRef.afterClosed().subscribe(data => {
     });
+  }
+  getValue(data) {
+    console.log(data);
+    this.showView = data;
   }
 
 }

@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-row ">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <app-header *ngIf="shared_functions.checkLogin()"></app-header> 
+                        <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                     </div>
                 </div>
                 <div class="panel-body no-padding">
@@ -35,20 +35,22 @@
                                         <div class="pad-10">
                                             <h3 class="custId-cursor head-color disp-flex"
                                                 (click)="providerDetail(waitlist.providerAccount)">
-                                                {{waitlist.providerAccount.businessName | capitalizeFirst}} 
+                                                {{waitlist.providerAccount.businessName | capitalizeFirst}}
                                             </h3>
                                             <a class="loc-cls" [href]="waitlist.providerAccount.location.googleMapUrl"
-                                            target="_blank">
+                                                target="_blank">
                                                 <i class="fa fa-map-marker"></i>
-                                                {{waitlist.providerAccount.location.place | capitalizeFirst}} 
+                                                {{waitlist.providerAccount.location.place | capitalizeFirst}}
                                             </a>
                                         </div>
                                     </div>
 
                                     <!-- Consumer Details -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
-                                        <div class="col-sm-12 col-md-12 col-lg-12  col-xl-12 col-xs-12 cust-det-outline">
-                                            <div class="col-sm-7 col-md-7 col-lg-7  col-xl-7 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12  col-xl-12 col-xs-12 cust-det-outline">
+                                            <div
+                                                class="col-sm-7 col-md-7 col-lg-7  col-xl-7 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
                                                 <div class="txt-custdet">Customer Details</div>
                                                 <div class="txt-cust-name">Krishnadas PS</div>
                                                 <div class="txt-addrs">
@@ -58,7 +60,8 @@
                                                     <i class="fa fa-map-marker"></i>
                                                     107, Teachers colony HSR Layout, Bangalore</div>
                                             </div>
-                                            <div class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
+                                            <div
+                                                class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
                                                 <div class="txt-custdet">Delivery Type</div>
                                                 <div class="txt-cust-name">Store PickUp</div>
                                                 <div><button mat-raised-button class="action-btn">ACTIONS</button></div>
@@ -71,29 +74,52 @@
                                     <!-- Toggle -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
                                         <span>ORDERED ITEMS</span>
-                                            <mat-button-toggle-group #group="matButtonToggleGroup" class="fl-right">
-                                                <mat-button-toggle value="left" aria-label="Text align left">
-                                                  <mat-icon class="l-ht-0 fa fa-list mgn-bt-5"></mat-icon>
-                                                </mat-button-toggle>
-                                                <mat-button-toggle value="center" aria-label="Text align center">
-                                                  <mat-icon class="l-ht-0 fa fa-th-large mgn-bt-5"></mat-icon>
-                                                </mat-button-toggle>
-                                              </mat-button-toggle-group>
+                                        <mat-button-toggle-group #group="matButtonToggleGroup" class="fl-right">
+                                            <mat-button-toggle value="list" aria-label="Text align left"
+                                                (click)="getValue('list')">
+                                                <mat-icon class="l-ht-0 fa fa-list mgn-bt-5"></mat-icon>
+                                            </mat-button-toggle>
+                                            <mat-button-toggle value="grid" aria-label="Text align center"
+                                                (click)="getValue('grid')">
+                                                <mat-icon class="l-ht-0 fa fa-th-large mgn-bt-5"></mat-icon>
+                                            </mat-button-toggle>
+                                        </mat-button-toggle-group>
                                     </div>
 
                                     <!-- Item list -->
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
-                                        <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
+                                    <div
+                                        class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
+                                        <!-- Grid View -->
+                                        <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
+                                            *ngIf="showView === 'grid'">
                                             <mat-grid-tile *ngFor="let item of waitlist.orderItem">
                                                 <mat-grid-tile-header>
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
-                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}</div>
+                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}
+                                                    </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
                                             </mat-grid-tile>
                                         </mat-grid-list>
+
+                                        <!-- List View -->
+                                       <div *ngIf="showView === 'list'" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 cust-det-outline">
+                                           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2" *ngFor="let item of waitlist.orderItem">
+                                            <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-5">
+                                                <div class="itm-nme">{{item.name}}</div>
+                                                <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}</div>
+                                                <div class="itm-qty">Qty - {{item.quantity}}</div>
+                                            </div>
+                                            <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5">
+                                                <div class="lst-img">
+
+                                                </div>
+                                            </div>
+                                           </div>
+                                       </div>
+
                                     </div>
                                 </div>
                             </div>

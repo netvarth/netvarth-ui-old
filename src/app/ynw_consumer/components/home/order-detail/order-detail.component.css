@@ -84,3 +84,16 @@
 .order-det .itm-qty {
     font-size: 0.8rem;
 }
+.order-det .bt-lst-bdr {
+    border-bottom: 1px solid #80808063;
+}
+.order-det .lst-img {
+    background: beige;
+    height: 70px;
+    width: 90px;
+    float: right;
+    background-image: url('https://miro.medium.com/max/700/0*oTfm1pTXLxitHHFy.jpg');
+    background-repeat: round;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
