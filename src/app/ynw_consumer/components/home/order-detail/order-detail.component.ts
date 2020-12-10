@@ -252,6 +252,7 @@ export class OrderDetailComponent implements OnInit {
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
+        console.log(qParams);
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
       });
@@ -282,19 +283,16 @@ export class OrderDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getCommunicationHistory();
-    this.waitlist = this.dummyData[0]; // should be deleted
-    console.log(this.waitlist);
-    // this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
-    //   (data) => {
-    //     this.waitlist = data;
-    //     this.generateQR();
-    //     this.getWtlistHistory(this.waitlist.ynwUuid, this.waitlist.providerAccount.id);
-    //   },
-    //   (error) => {
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //   });
+    this.sharedServices.getOrderByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
+      (data) => {
+        this.waitlist = data;
+        console.log(this.waitlist);
+      },
+      (error) => {
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
 
-    this.getFavouriteProvider();
+   // this.getFavouriteProvider();
   }
 
   getCommunicationHistory() {

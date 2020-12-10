@@ -188,7 +188,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.price = this.price + item.price;
     }
     this.orderAmount = this.price;
-    console.log(this.orderAmount);
       return this.orderAmount;
   }
   confirm() {

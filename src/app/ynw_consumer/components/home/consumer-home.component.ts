@@ -348,7 +348,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           providerId: booking.providerAccount.id
         }
       };
-      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
+     this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
   }
 
@@ -1840,14 +1840,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.todayOrderslst = [];
     this.todayOrderslst_more = [];
     this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-    // const params = {
-    //   'date-eq': this.tDate
-    // };
-    this.consumer_services.getConsumerOrders().subscribe(data => {
+    const params = {
+      'orderDate-eq': this.tDate
+    };
+    this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
       this.total_tdy_order = this.orders;
       if (data) {
-       // this.getFutureOrder();
+        this.getFutureOrder();
       }
       // show more
       for (let i = 0; i < this.total_tdy_order.length; i++) {
@@ -1868,10 +1868,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    // const params = {
-    //   'date-ge': this.tomorrowDate
-    // };
-    this.consumer_services.getConsumerOrders().subscribe(data => {
+    const params = {
+      'orderDate-ge': this.tomorrowDate
+    };
+    this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       // show more
