@@ -488,6 +488,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          this.deliveryCharge = this.bill_data.deliveryCharges;
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
