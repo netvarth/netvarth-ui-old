@@ -892,6 +892,8 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.countryCode != this.selectedCountryCode) {
             selCountryCode = this.selectedCountryCode;
             console.log(selCountryCode);
+        } else {
+            selCountryCode = this.countryCode;
         }
 
         // }
