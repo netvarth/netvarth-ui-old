@@ -236,7 +236,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
                                 <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
-                                <div class="cust-detail" *ngIf="customer[0].phoneNo">+91 {{customer[0].phoneNo}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].phoneNo">{{customer[0].countryCode}} {{customer[0].phoneNo}}</div>
                                 <div class="cust-detail" *ngIf="customer[0].email">{{customer[0].email}}</div>
                                 <div><span class="mgn-rt-30" *ngIf="customer[0].gender"> Gender:
                                         <span class="cust-detail">
