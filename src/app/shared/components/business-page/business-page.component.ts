@@ -2479,9 +2479,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['order/shoppingcart']);
   }
   itemDetails(item) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+       item:  item
+
+      }
+
+    };
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     // this.router.navigate(['order/item-details']);
-      this.router.navigate(['consumer', 'order', 'item-details']);
+      this.router.navigate([ 'order', 'item-details'], navigationExtras);
   }
   increment(item) {
     this.addToCart(item);

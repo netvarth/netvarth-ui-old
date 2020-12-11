@@ -70,7 +70,7 @@ nextAvailableTime;
         this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
         this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       }
-    } 
+    }
     if (this.catalog_details.homeDelivery) {
       if (this.catalog_details.homeDelivery.homeDelivery) {
         this.home_delivery = true;
@@ -290,7 +290,7 @@ this.isFuturedate = false;
         this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
         this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
       }
-      console.log(this.nextAvailableTime);    
+      console.log(this.nextAvailableTime);
       console.log(this.todaydate);
       console.log(this.sel_checkindate);
       if (this.todaydate === this.sel_checkindate) {

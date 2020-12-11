@@ -10,6 +10,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -18,13 +19,17 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
-  isFuturedate: boolean;
-  todaydate: any;
-  showfuturediv: boolean;
+  isFuturedate = false;
+  sel_checkindate;
+  showfuturediv;
+  today;
+  server_date;
+  minDate;
+  maxDate;
+  todaydate;
   home_delivery: boolean;
   store_pickup: boolean;
   nextAvailableTime: string;
-  sel_checkindate: any;
   customer_email: any;
   customer_phoneNumber: any;
   selectedAddress: string;
@@ -56,6 +61,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   screenWidth: number;
   no_of_grids: number;
   isLinear = true;
+  loginForm: FormGroup;
+  storeContact: FormGroup;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -63,15 +70,13 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private dialog: MatDialog,
     private shared_services: SharedServices,
-    //  private consumer_services: ConsumerServices,
-    // private orderService: OrderService
+    private _formBuilder: FormBuilder
+
   ) {
     this.catalog_details = this.shared_services.getOrderDetails();
     this.account_id = this.shared_services.getaccountId();
     this.route.queryParams.subscribe(
       params => {
-        console.log(params);
-        console.log(JSON.stringify(params));
         this.delivery_type = params.delivery_type;
         if (this.delivery_type === 'home') {
         }
@@ -83,10 +88,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         this.order_date = params.order_date;
         this.advance_amount = params.advance_amount;
         this.account_id = params.account_id;
-
-        // this.pid = params.pid;
-        // this.members = params.members;
-        // this.prepayment = params.prepayment;
       });
     this.catalog_details = this.shared_services.getOrderDetails();
     console.log(JSON.stringify(this.catalog_details));
@@ -126,8 +127,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-    console.log(this.screenWidth);
-    console.log(this.no_of_grids);
+
   }
 
   ngOnInit() {
@@ -144,8 +144,46 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     } else {
       this.doLogin();
     }
-    console.log(this.customer_data);
+
     this.getaddress();
+    this.loginForm = this._formBuilder.group({
+      phone: [this.customer_phoneNumber, Validators.required]
+    });
+    this.storeContact = this._formBuilder.group({
+      phone: [this.customer_phoneNumber, Validators.required],
+      email: ['', Validators.required]
+    });
+    this.advance_amount = this.catalog_details.advanceAmount;
+    this.showfuturediv = false;
+    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+    this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    this.today = new Date(this.today);
+    this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    this.minDate = new Date(this.minDate);
+    const dd = this.today.getDate();
+    const mm = this.today.getMonth() + 1; // January is 0!
+    const yyyy = this.today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    this.todaydate = dtoday;
+    this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+    console.log(this.todaydate);
+if (this.todaydate === this.sel_checkindate) {
+this.isFuturedate = false;
+} else {
+  this.isFuturedate = true;
+}
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -198,7 +236,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
-      // width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
@@ -216,7 +253,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   updateAddress(address, index) {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
-      // width: '800px;',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
@@ -236,16 +272,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   goBack() {
     this.location.back();
   }
-  // getTotalItemPrice() {
-  //  let total = 0;
-  //   for (const item of this.orders) {
-  //    total = total + parseInt(item.promotionalPrice, 0) * parseInt(this.getItemQty(item), 0 );
 
-  //   }
-  //   this.orderAmount = total;
-  //   return total;
-
-  // }
   getTotalItemPrice() {
     this.price = 0;
     for (const item of this.orderList) {
@@ -255,10 +282,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     return this.orderAmount;
   }
   confirm() {
-    console.log(this.getOrderItems());
-
-    console.log(this.delivery_type);
-
 
     if (this.delivery_type === 'homedelivery') {
       console.log(this.delivery_type);
@@ -276,13 +299,17 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
           'eTime': this.selectedQeTime
         },
         'orderItem': this.getOrderItems(),
-        'orderDate': '2020-12-10',
+        'orderDate': this.sel_checkindate,
         'phoneNumber': this.customer_phoneNumber,
         'email': this.customer_email
       };
       console.log(post_Data);
+      this.confirmOrder(post_Data);
     }
     if (this.delivery_type === 'store') {
+      console.log(this.storeContact.value);
+      const contactNumber = this.storeContact.value.phone;
+      const contact_email = this.storeContact.value.email;
       const post_Data = {
         'storePickup': true,
         'catalog': {
@@ -296,25 +323,16 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
           'eTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']
         },
         'orderItem': this.getOrderItems(),
-        'orderDate': '2020-12-10',
-        'phoneNumber': '6303603789',
-        'email': 'shiva.kumar@gmai.com'
+        'orderDate': this.sel_checkindate,
+        'phoneNumber': contactNumber,
+        'email': contact_email
 
       };
       console.log(post_Data);
       this.confirmOrder(post_Data);
-      // ;
-      // this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
-      //   .subscribe(
-      //     data => {
-      //       this.sharedFunctionobj.openSnackBar('Order placed successfully');
-      //     },
-      //     error => {
-      //       this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //     }
-      //   );
-      // this.router.navigate(['consumer', 'order', 'payment'] );
+
     }
+
   }
   doLogin(origin?, passParam?) {
     // this.shared_functions.openSnackBar('You need to login to check in');
@@ -365,7 +383,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     });
   }
   confirmOrder(post_Data) {
-    // this.api_loading = true;
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
         const retData = data;
@@ -379,17 +396,9 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
             retUUID = retData[key];
             this.trackUuid = retData[key];
             uuidList.push(retData[key]);
-            console.log(retUUID);
           }
         });
-        // if (this.selectedMessage.files.length > 0) {
-        //     this.consumerNoteAndFileSave(retUUID);
-        // }
-        // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
-        // const member = [];
-        // for (const memb of this.waitlist_for) {
-        //     member.push(memb.firstName + ' ' + memb.lastName);
-        // }
+
         const navigationExtras: NavigationExtras = {
           queryParams: {
             account_id: this.account_id,
@@ -398,11 +407,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
             uuid: this.trackUuid
           }
         };
-        console.log(this.catalog_details.advanceAmount);
-        if (this.catalog_details.advanceAmount) {
-          console.log('hi');
-          // this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
 
+        if (this.catalog_details.advanceAmount) {
           this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
         } else {
           this.router.navigate(['consumer']);
@@ -444,9 +450,11 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   changeType() {
     if (this.choose_type === 'store') {
+      this.delivery_type = 'store';
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
     } else {
+      this.delivery_type = 'homedelivery';
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
     }
