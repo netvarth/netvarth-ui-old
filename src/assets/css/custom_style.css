@@ -26572,3 +26572,10 @@ hr {
 .bg-white {
   background: white !important;
 }
+.order-catalog .mat-expansion-panel-header-title {
+  font-weight: bold;
+  font-size: 1rem;
+}
+.order-catalog .mat-expansion-panel-body {
+  border-bottom: 1px solid #ccc;
+}

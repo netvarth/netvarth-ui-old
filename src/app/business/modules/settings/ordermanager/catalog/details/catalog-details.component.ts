@@ -173,6 +173,7 @@ uploadcatalogImages: any = [];
 payAdvance = 'NONE';
 isFromadd = false;
 prefillData: any = [];
+step = 1;
  constructor(private provider_services: ProviderServices,
  private sharedfunctionObj: SharedFunctions,
  private router: Router,
@@ -1670,5 +1671,7 @@ deleteTempImage(img, index) {
             }
         });
         }
-
+        showStep(step) {
+this.step = step;
+        }
 }
