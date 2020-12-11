@@ -25,7 +25,7 @@
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Active Orders">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
@@ -128,7 +128,7 @@
             No active orders
           </div>
           <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
               (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
@@ -139,16 +139,16 @@
                 </span>
               </div>
               <div class="main-sec">
-                <div class="bold"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime">
+                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div class="mgn-up-15 datetime bold grey-color">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="red">
+                <div class="redish bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
@@ -156,10 +156,11 @@
             </div>
           </ng-container>
         </div>
+        <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Future">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             <div class="col-md-3 col-xs-6 col-sm-4 no-padding">
               <mat-select class="selecttype" [(ngModel)]="selected_type">
@@ -262,7 +263,7 @@
             No future orders
           </div>
           <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding bold" *ngFor="let order of orders;let i=index"
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
               (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
@@ -273,16 +274,16 @@
                 </span>
               </div>
               <div class="main-sec">
-                <div class="bold"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime">
+                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div class="mgn-up-15 datetime bold grey-color">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="red">
+                <div class="redish bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
@@ -290,10 +291,11 @@
             </div>
           </ng-container>
         </div>
+        <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="History">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30" *ngIf="!loading">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-5">
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-5">
               <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
@@ -398,7 +400,7 @@
             No history orders
           </div>
           <ng-container *ngIf="historyOrders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding bold"
+            <div class="card boxshadow-style pointer-cursor no-padding"
               *ngFor="let order of historyOrders;let i=index" (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
@@ -409,16 +411,16 @@
                 </span>
               </div>
               <div class="main-sec">
-                <div class="bold"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime">
+                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                <div class="mgn-up-15 datetime bold grey-color">
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="red">
+                <div class="redish bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
@@ -426,6 +428,7 @@
             </div>
           </ng-container>
         </div>
+        <div class="clearfix"></div>
       </mat-tab>
     </mat-tab-group>
     <div class="clearfix"></div>

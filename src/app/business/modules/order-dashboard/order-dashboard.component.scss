@@ -4,7 +4,8 @@
     float: left !important;
     display: table !important;
     margin: 10px !important;
-    min-height: 150px
+    min-height: 150px;
+    height: 150px;
 }
 .order-count {
     font-weight: bold;
@@ -15,7 +16,6 @@
 }
 .boxshadow-style {
     box-shadow: 10px 10px 15px 0px #cccccc9c !important;
-    border: 1px solid #ccc !important;
 }
 ::ng-deep .custom-frame {
     & .mat-checkbox-background, .mat-checkbox-frame {
@@ -38,7 +38,7 @@
     padding: 0 10px 10px 15px;
 }
 .main-sec .datetime {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 @media (max-width:345px) {
     .orderlist .card {
@@ -51,4 +51,13 @@
 .main-act-btn {
     padding: 10px;
     border: 1px solid #9999;
+}
+.order-hght {
+    min-height: 250px;
+}
+.grey-color {
+    color: grey;
+}
+.redish {
+    color: #ff0000ab !important;
 }

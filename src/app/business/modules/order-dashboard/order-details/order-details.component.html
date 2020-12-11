@@ -20,7 +20,7 @@
                         aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
                 <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker"
                         aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
-                <div class="bold font11"> {{orderDetails.orderDate | date: display_dateFormat}},
+                <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
                         *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
-                <div class="" [class.mgn-up-70]="!small_device_display"> <span
+                <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
                         class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
                 </div>
             </div>
@@ -48,8 +48,9 @@
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
                 *ngIf="selectedType==='grid'">
                 <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
+                    <div class="itemimg-sec">
                     <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
-                    </div>
+                    </div></div>
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}</div>

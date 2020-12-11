@@ -36,7 +36,7 @@
     padding: 10px;
     margin: 5px;
     text-align: center;
-    height: 200px;
+    height: 250px;
     width: 20%;
     box-shadow: 5px 5px 5px 0px #cccccc60 !important;
     border: 1px solid #cccc !important;
@@ -66,7 +66,19 @@
     }
 }
 .item-img {
-    height: 100px;
+    height: 100%;
     width: 100%;
+}
+.itemimg-sec {
+    height: 130px;
+    width: 130px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 10px;
+}
+@media (max-width: 365px) {
+    .itemimg-sec {
+        height: 100px;
+        width: 100px;
+    }
 }
