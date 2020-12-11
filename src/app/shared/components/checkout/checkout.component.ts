@@ -142,7 +142,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.customer_data = activeUser;
       this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
     } else {
-      this.doLogin();
+      this.doLogin('consumer');
     }
 
     this.getaddress();
@@ -194,11 +194,9 @@ this.isFuturedate = false;
   }
   isLoggedIn() {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    if (activeUser) {
+    console.log(activeUser);
       return true;
-    } else {
-      return false;
-    }
+
 
   }
   getTaxCharges() {
@@ -361,6 +359,7 @@ this.isFuturedate = false;
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.loginForm.controls['phone'].setValue(result.primaryPhoneNumber);
         this.isLoggedIn();
         // if (passParam['callback'] === 'communicate') {
         //   // this.getFavProviders();
@@ -386,14 +385,12 @@ this.isFuturedate = false;
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
         const retData = data;
-        let retUUID;
         let prepayAmount;
         const uuidList = [];
         Object.keys(retData).forEach(key => {
           if (key === '_prepaymentAmount') {
             prepayAmount = retData['_prepaymentAmount'];
           } else {
-            retUUID = retData[key];
             this.trackUuid = retData[key];
             uuidList.push(retData[key]);
           }
