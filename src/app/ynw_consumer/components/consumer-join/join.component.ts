@@ -283,7 +283,9 @@ export class ConsumerJoinComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
-    const post_data = { password: submit_data.new_password };
+    const post_data = { 
+      countryCode: this.selectedCountryCode,
+      password: submit_data.new_password };
     this.shared_services.ConsumerSetPassword(this.otp, post_data)
       .subscribe(
         () => {
