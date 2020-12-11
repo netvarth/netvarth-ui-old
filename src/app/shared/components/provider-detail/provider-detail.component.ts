@@ -159,6 +159,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     ]
   };
   waitlistestimatetimetooltip = Messages.SEARCH_ESTIMATE_TOOPTIP;
+  isLinear = true;
 
   // Edited//
   public domain;
@@ -1792,13 +1793,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -1814,19 +1815,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   deptItem['departmentItems'] = [];
                   for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
                     if (!apptServices[aptIndex]['provider'] && apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === apptServices[aptIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'appt', 'item': apptServices[aptIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                       this.serviceCount++;
                     }
                   }
                   for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
                     if (!wlServices[wlIndex]['provider'] && wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === wlServices[wlIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': wlServices[wlIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                       this.serviceCount++;
                     }
                   }
                   if (!this.userId) {
                     for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-                      deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
                       this.userCount++;
                     }
                   }
@@ -1837,16 +1838,17 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               console.log(this.servicesAndProviders);
               // });
             } else {
+              // tslint:disable-next-line:no-shadowed-variable
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -1915,7 +1917,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
-    } else if (actionObj['type']==='item') {
+    } else if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);
       } else if (actionObj['action'] === 'add') {
@@ -1923,7 +1925,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else if (actionObj['action'] === 'remove') {
         this.decrement(actionObj['service']);
       }
-    }else {
+    } else {
       this.providerDetClicked(actionObj['userId']);
     }
   }
@@ -1952,7 +1954,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           //   }
           // } else if (catalogs.length === 1) {
             this.shared_services.setOrderDetails(this.activeCatalog);
-            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++){
+            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
               orderItems.push({ 'type': 'item', 'item': this.activeCatalog.catalogItem[itemIndex].item });
               this.itemCount++;
             }
@@ -1965,7 +1967,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
 
 
-//OrderItem add to cart
+// OrderItem add to cart
 addToCart(itemObj) {
   const item = itemObj.item;
   this.orderList.push(item);
@@ -2006,9 +2008,18 @@ checkout() {
 }
 itemDetails(item) {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-  this.router.navigate(['consumer', 'order', 'item-details']);
+  const navigationExtras: NavigationExtras = {
+    queryParams: {
+     item:  item
+
+    }
+
+  };
+  this.router.navigate([ 'order', 'item-details'], navigationExtras);
+    //this.router.navigate(['consumer', 'order', 'item-details']);
 }
 increment(item) {
+  console.log(item);
   this.addToCart(item);
 }
 

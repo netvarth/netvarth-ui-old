@@ -2323,13 +2323,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2343,19 +2343,19 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   deptItem['departmentItems'] = [];
                   for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
                     if (!apptServices[aptIndex]['provider'] && apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === apptServices[aptIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'appt', 'item': apptServices[aptIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                       this.serviceCount++;
                     }
                   }
                   for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
                     if (!wlServices[wlIndex]['provider'] && wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === wlServices[wlIndex].department) {
-                      deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': wlServices[wlIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                       this.serviceCount++;
                     }
                   }
                   if (!this.userId) {
                     for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-                      deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] })
+                      deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
                       this.userCount++;
                     }
                   }
@@ -2365,16 +2365,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.servicesAndProviders = servicesAndProviders;
               // });
             } else {
+              // tslint:disable-next-line:no-shadowed-variable
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2444,7 +2445,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  //OrderItem add to cart
+  // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
     this.orderList.push(item);
@@ -2479,7 +2480,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   itemDetails(item) {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.router.navigate(['consumer', 'order', 'item-details']);
+    // this.router.navigate(['order/item-details']);
+      this.router.navigate(['consumer', 'order', 'item-details']);
   }
   increment(item) {
     this.addToCart(item);

@@ -54,6 +54,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   trackUuid;
   screenWidth: number;
   no_of_grids: number;
+  isLinear = true;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -138,6 +139,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.customer_data = activeUser;
+      this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
     }
     console.log(this.customer_data);
     this.getaddress();
@@ -148,6 +150,9 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   getItemPrice(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
+  }
+  isLoggedIn() {
+    return false;
   }
   getTaxCharges() {
     // const qty = this.orderList.filter(i => i.itemId === item.itemId).length;

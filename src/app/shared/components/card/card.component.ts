@@ -35,12 +35,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
-                    this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist')
+                    this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist');
                 }
-                if (this.service.serviceAvailability['calculationMode'] != 'NoCalc') {
+                if (this.service.serviceAvailability['calculationMode'] !== 'NoCalc') {
                     if (this.service.serviceAvailability['serviceTime']) {
                         this.timingCaption = 'Next Available Time';
-                        this.timings = this.getAvailibilityForCheckin(this.service.serviceAvailability['availableDate'], this.service.serviceAvailability['serviceTime'])
+                        this.timings = this.getAvailibilityForCheckin(this.service.serviceAvailability['availableDate'], this.service.serviceAvailability['serviceTime']);
                     } else {
                         this.timingCaption = 'Est Wait Time';
                         this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
@@ -56,7 +56,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             case 'donation':
                 this.service = this.item.item;
                 console.log(this.service);
-                this.buttonCaption = 'Donate'
+                this.buttonCaption = 'Donate';
                 break;
             case 'catalog':
                 this.service = this.item.item;
@@ -92,6 +92,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
       }
     cardActionPerformed(type, action, service, location, userId, event) {
         console.log(location);
+        console.log(action);
         event.stopPropagation();
         const actionObj = {};
         actionObj['type'] = type;
