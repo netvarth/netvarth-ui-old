@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
+// import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
@@ -109,7 +109,8 @@ export class OrderBillComponent implements OnInit {
   razorpay_payment_id: any;
   razorpayDetails: any = [];
   refundedAmount;
-  constructor(private consumer_services: ConsumerServices,
+  constructor(
+    //   private consumer_services: ConsumerServices,
       public consumer_checkin_history_service: CheckInHistoryServices,
       public sharedfunctionObj: SharedFunctions,
       public sharedServices: SharedServices,
@@ -129,43 +130,20 @@ export class OrderBillComponent implements OnInit {
               console.log(params);
               if (params.accountId) {
                   this.accountId = params.accountId;
+                  console.log(this.accountId);
               }
               if (params.paidStatus) {
                   this.paidStatus = params.paidStatus;
               }
               if (params.uuid) {
                   this.uuid = params.uuid;
+                  console.log(this.uuid);
 
               }
               if (params.source) {
                   this.source = params.source;
               }
               this.getWaitlist();
-              if (this.source === 'history') {
-                  this.breadcrumbs = [
-                      {
-                          title: 'My Jaldee',
-                          url: 'consumer'
-                      },
-                      {
-                          title: 'Checkins History',
-                          url: 'consumer/checkin/history'
-                      },
-                      {
-                          title: 'Bill'
-                      }
-                  ];
-              } else {
-                  this.breadcrumbs = [
-                      {
-                          title: 'My Jaldee',
-                          url: 'consumer'
-                      },
-                      {
-                          title: 'Bill'
-                      }
-                  ];
-              }
               if (this.source === 'history') {
                   this.checkIn_type = 'checkin_historybill';
               }
@@ -187,13 +165,14 @@ export class OrderBillComponent implements OnInit {
   ngOnInit() {
   }
   getWaitlist() {
-      const params = {
-          account: this.accountId
-      };
-      this.consumer_services.getWaitlistDetail(this.uuid, params)
+    //   const params = {
+    //       account: this.accountId
+    //   };
+      this.sharedServices.getOrderByConsumerUUID(this.uuid, this.accountId)
           .subscribe(
               data => {
                   this.checkin = data;
+                  console.log(this.checkin);
                   this.getCouponList();
                   this.getWaitlistBill();
                   this.getPrePaymentDetails();
