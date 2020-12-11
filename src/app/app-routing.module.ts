@@ -18,6 +18,7 @@ import { TwilioService } from './shared/services/twilio-service';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
+import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -53,7 +54,8 @@ const routes: Routes = [
       { path: 'consumer-join', component: ConsumerJoinComponent},
     { path: 'pay/:id', component: PaymentLinkComponent },
     { path: 'order/checkout', component: CheckoutSharedComponent },
-    { path: 'order/shoppingcart', component: ShoppingCartSharedComponent }
+    { path: 'order/shoppingcart', component: ShoppingCartSharedComponent },
+    { path: 'order/item-details', component: ItemDetailsSharedComponent}
     // { path: '**', redirectTo: 'not-found' }
 ];
 

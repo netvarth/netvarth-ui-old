@@ -88,6 +88,7 @@ import { CheckoutSharedComponent } from './shared/components/checkout/checkout.c
 import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
+import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -124,7 +125,8 @@ export function init_app(globalService: GlobalService) {
     JaldeeBlogComponent,
     CheckoutSharedComponent,
     ShoppingCartSharedComponent,
-    AddAddressComponent
+    AddAddressComponent,
+    ItemDetailsSharedComponent
   ],
   entryComponents: [
     SignUpComponent,
