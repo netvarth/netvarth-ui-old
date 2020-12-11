@@ -10,7 +10,7 @@
 <section>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding order" *ngIf="!loading">
         <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
-            <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding">
+            <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
                 <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
                 <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
