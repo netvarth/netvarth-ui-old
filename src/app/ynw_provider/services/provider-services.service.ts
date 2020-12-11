@@ -1775,7 +1775,7 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpPost(url, data);
    }
-   deleteCatalogItems(id,data) {
+   deleteCatalogItems(id, data) {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpDelete(url, data);
    }

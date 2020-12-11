@@ -145,6 +145,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
     }
+    
     console.log(this.catalogItemsSelected);
     console.log(this.seletedCatalogItems);
     if (this.action === 'edit' && this.cataId !== 'add') {
