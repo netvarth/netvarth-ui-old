@@ -1897,7 +1897,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   }
   cardClicked(actionObj) {
-    console.log(actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2010,7 +2009,7 @@ itemDetails(item) {
   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   const navigationExtras: NavigationExtras = {
     queryParams: {
-     item:  item
+     item:  JSON.stringify(item)
 
     }
 

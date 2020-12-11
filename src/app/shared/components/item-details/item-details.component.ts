@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Image, ImageEvent, AccessibilityConfig } from '@ks89/angular-modal-gallery';
-import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -67,6 +66,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   showArrows = true;
   showDots = true;
   imagesRect: Image[] = new Array <Image> ();
+  item: any;
   // imagesRect: Image[] = [
   //   new Image(
   //     0,
@@ -120,20 +120,23 @@ export class ItemDetailsSharedComponent implements OnInit {
   //   new Image(6, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   // ];
   constructor(   public sharedFunctionobj: SharedFunctions,
-    private sharedServices: SharedServices,
     private location: Location,
-    private router: Router ) { }
+    public route: ActivatedRoute,
+    private router: Router )
+     {
+      this.route.queryParams.subscribe(
+        params => {
+          this.item = params.item;
+          console.log(this.item);
+        }); 
+      }
 
   ngOnInit() {
     const orderList = JSON.parse(localStorage.getItem('order'));
     if (orderList) {
       this.orderList = orderList;
     }
-    console.log(this.orderList);
-    this.sharedServices.getItemDetails(1).subscribe(
-      (item: any) => {
-        console.log(item);
-        this.currentItem = item;
+        this.currentItem = JSON.parse(this.item);
         this.itemImages = this.currentItem.itemImages;
         for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
           const imgobj = new Image(this.itemImages[imgIndex].id,
@@ -143,9 +146,10 @@ export class ItemDetailsSharedComponent implements OnInit {
                 title: this.itemImages[imgIndex].title},
           );
           this.imagesRect = [... this.imagesRect, imgobj];
+          console.log(this.imagesRect);
         }
       }
-    );
+   
     // this.customOptions = {
     //   dots: true,
     //   loop: true,
@@ -161,7 +165,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     //     }
     //   }
     // };
-  }
+  
   checkout() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'cart']);
