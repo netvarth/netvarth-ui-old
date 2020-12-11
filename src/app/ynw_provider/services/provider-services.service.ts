@@ -1771,8 +1771,16 @@ export class ProviderServices {
       const url = 'provider/order/settings/' + status;
       return this.servicemeta.httpPut(url);
    }
-   editCatalogItems(id,data) {
+   addCatalogItems(id,data) {
       const url = 'provider/catalog/' + id + '/items';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteCatalogItems(id,data) {
+      const url = 'provider/catalog/' + id + '/items';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   updateCatalogItems(id,data) {
+      const url = 'provider/catalog/item';
       return this.servicemeta.httpPost(url, data);
    }
    setCatalogPrefilledDetails(data) {

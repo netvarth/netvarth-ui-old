@@ -62,6 +62,9 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   action = '';
   cataId;
   catalogItemsSelected: any = [];
+  selecteditemfordelete: any = [];
+  selecteditemforadd: any = [];
+  selecteditemforupdate: any = [];
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -105,12 +108,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             }
         }
          
-          // this.catalogItem.map(itm => {
-          //   if (this.seletedCatalogItems['item'].includes(itm.itemId)) {
-          //     itm.selected = true;
-          //   }
-          // return itm;
-          // });
           console.log(this.catalogItem);
 
         }
@@ -133,9 +130,13 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selectedItems() {
     console.log(this.action);
     console.log(this.cataId);
+    this.api_loading = true;
+    this.catalogItemsSelected = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
       this.seletedCatalogItems1 = {};
-      this.catalogItemsSelected = [];
+      this.selecteditemfordelete = [];
+      this.selecteditemforupdate = [];
+      this.selecteditemforadd = [];
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
        this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || 1;
@@ -145,21 +146,47 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       }
     }
     console.log(this.catalogItemsSelected);
-
+    console.log(this.seletedCatalogItems);
     if (this.action === 'edit' && this.cataId !== 'add') {
-      this.provider_servicesobj.editCatalogItems(this.cataId, this.catalogItemsSelected).subscribe(
-      (data) => {
+    const deleteresult = this.seletedCatalogItems.filter(o1 => this.catalogItemsSelected.filter(o2 => o2.item.itemId === o1.item.itemId).length === 0);
+    if (deleteresult.length > 0) {
+      for (const selitem of deleteresult) {
+      this.selecteditemfordelete.push(selitem.item.itemId);
+    }
+  }
+  console.log(deleteresult);
+  const addresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.item.itemId).length === 0);
+  if (addresult.length > 0) {
+    for (const selitem of addresult) {
+    this.selecteditemforadd.push(selitem);
+  }
+}
+const updateresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.minQuantity === o1.minQuantity).length === 0);
+  if (updateresult.length > 0) {
+    for (const selitem of updateresult) {
+    this.selecteditemforupdate.push(selitem);
+  }
+}
+    console.log(addresult);
+    if (this.selecteditemfordelete.length > 0) {
+      this.deleteItems(this.selecteditemfordelete);
+    }
+    if (this.selecteditemforadd.length > 0) {
+      this.addItems(this.selecteditemforadd);
+    }
+    if (this.selecteditemforupdate.length > 0) {
+      this.updateItems(this.selecteditemforupdate);
+    }
+
+      if (!this.api_loading) {
         this.shared_functions.openSnackBar('Items updated');
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+       // this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'edit',
                           isFrom: true }
     };
     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
-      }, error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-        );
+  }
       } else {
         console.log(this.catalogItemsSelected);
         this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
@@ -185,10 +212,42 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   };
       this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
     }
-   
   }
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/billing->items']);
+  }
+  addItems(addlist) {
+    console.log(addlist);
+    // this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
+    //   (data) => {
+    //     this.api_loading = false;
+    //   }, error => {
+    //     this.api_loading = false;
+    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //     );
+  }
+  deleteItems(deletelist) {
+    console.log(deletelist);
+    // this.provider_servicesobj.deleteCatalogItems(this.cataId, deletelist).subscribe(
+    //   (data) => {
+    //     this.api_loading = false;
+    //   }, error => {
+    //     this.api_loading = false;
+    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //     );
+  }
+  updateItems(updatelist) {
+    console.log(updatelist);
+    // this.provider_servicesobj.updateCatalogItems(this.cataId, updatelist).subscribe(
+    //   (data) => {
+    //     this.api_loading = false;
+    //   }, error => {
+    //     this.api_loading = false;
+    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //     );
   }
 
 }
