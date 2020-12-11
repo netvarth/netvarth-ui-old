@@ -9,6 +9,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../services/shared-services';
 import { projectConstants } from '../../../app.component';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 
 
 @Component({
@@ -87,28 +88,28 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         // this.members = params.members;
         // this.prepayment = params.prepayment;
       });
-      this.catalog_details = this.shared_services.getOrderDetails();
-      console.log(JSON.stringify(this.catalog_details));
-      console.log(this.catalog_details);
-      if (this.catalog_details.pickUp) {
-        if (this.catalog_details.pickUp.orderPickUp) {
-          this.store_pickup = true;
-          this.choose_type = 'store';
-          this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-          this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
-        }
+    this.catalog_details = this.shared_services.getOrderDetails();
+    console.log(JSON.stringify(this.catalog_details));
+    console.log(this.catalog_details);
+    if (this.catalog_details.pickUp) {
+      if (this.catalog_details.pickUp.orderPickUp) {
+        this.store_pickup = true;
+        this.choose_type = 'store';
+        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       }
-      if (this.catalog_details.homeDelivery) {
-        if (this.catalog_details.homeDelivery.homeDelivery) {
-          this.home_delivery = true;
-          if (!this.store_pickup) {
-            this.choose_type = 'home';
+    }
+    if (this.catalog_details.homeDelivery) {
+      if (this.catalog_details.homeDelivery.homeDelivery) {
+        this.home_delivery = true;
+        if (!this.store_pickup) {
+          this.choose_type = 'home';
           this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
           this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
         }
       }
-      }
-      this.onResize();
+    }
+    this.onResize();
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -116,7 +117,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     let divider;
     const divident = this.screenWidth / 37.8;
     if (this.screenWidth > 1000) {
-       divider = divident / 2;
+      divider = divident / 2;
     } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
       divider = divident / 2;
     } else if (this.screenWidth > 375 && this.screenWidth < 500) {
@@ -140,6 +141,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     if (activeUser) {
       this.customer_data = activeUser;
       this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
+    } else {
+      this.doLogin();
     }
     console.log(this.customer_data);
     this.getaddress();
@@ -152,7 +155,13 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     return item.price * qty;
   }
   isLoggedIn() {
-    return false;
+    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    if (activeUser) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
   getTaxCharges() {
     // const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -238,12 +247,12 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
   // }
   getTotalItemPrice() {
-      this.price = 0;
+    this.price = 0;
     for (const item of this.orderList) {
       this.price = this.price + item.price;
     }
     this.orderAmount = this.price;
-      return this.orderAmount;
+    return this.orderAmount;
   }
   confirm() {
     console.log(this.getOrderItems());
@@ -307,61 +316,109 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       // this.router.navigate(['consumer', 'order', 'payment'] );
     }
   }
+  doLogin(origin?, passParam?) {
+    // this.shared_functions.openSnackBar('You need to login to check in');
+    // const current_provider = passParam['current_provider'];
+    // let is_test_account = null;
+    // if (current_provider) {
+    //   if (current_provider.test_account === '1') {
+    const is_test_account = true;
+    //   } else {
+    //     is_test_account = false;
+    //   }
+    // }
+    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+      width: '40%',
+      panelClass: ['loginmainclass', 'popup-class'],
+      disableClose: true,
+      data: {
+        type: origin,
+        is_provider: false,
+        test_account: is_test_account,
+        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        const pdata = { 'ttype': 'updateuserdetails' };
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.isLoggedIn();
+        // if (passParam['callback'] === 'communicate') {
+        //   // this.getFavProviders();
+        //   // this.showCommunicate(passParam['providerId']);
+        // } else if (passParam['callback'] === 'history') {
+        //   // this.redirectToHistory();
+        // } else if (passParam['callback'] === 'fav') {
+        //   // this.getFavProviders(passParam['mod']);
+        // } else if (passParam['callback'] === 'donation') {
+        //   // this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+        // } else if (passParam['callback'] === 'appointment') {
+        //   // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+        // } else {
+        //   // this.getFavProviders();
+        //   // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+        // }
+      } else if (result === 'showsignup') {
+        // this.doSignup(passParam);
+      }
+    });
+  }
   confirmOrder(post_Data) {
     // this.api_loading = true;
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
-        .subscribe(data => {
-            const retData = data;
-            let retUUID;
-            let prepayAmount;
-            const uuidList = [];
-            Object.keys(retData).forEach(key => {
-                if (key === '_prepaymentAmount') {
-                    prepayAmount = retData['_prepaymentAmount'];
-                } else {
-                    retUUID = retData[key];
-                    this.trackUuid = retData[key];
-                    uuidList.push(retData[key]);
-                    console.log(retUUID);
-                }
-            });
-            // if (this.selectedMessage.files.length > 0) {
-            //     this.consumerNoteAndFileSave(retUUID);
-            // }
-            // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
-            // const member = [];
-            // for (const memb of this.waitlist_for) {
-            //     member.push(memb.firstName + ' ' + memb.lastName);
-            // }
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    account_id: this.account_id,
-                    type_check: 'order_prepayment',
-                    prepayment: prepayAmount,
-                    uuid: this.trackUuid
-                }
-            };
-          console.log(this.catalog_details.advanceAmount);
-            if (this.catalog_details.advanceAmount) {
-              console.log('hi');
-              // this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
+      .subscribe(data => {
+        const retData = data;
+        let retUUID;
+        let prepayAmount;
+        const uuidList = [];
+        Object.keys(retData).forEach(key => {
+          if (key === '_prepaymentAmount') {
+            prepayAmount = retData['_prepaymentAmount'];
+          } else {
+            retUUID = retData[key];
+            this.trackUuid = retData[key];
+            uuidList.push(retData[key]);
+            console.log(retUUID);
+          }
+        });
+        // if (this.selectedMessage.files.length > 0) {
+        //     this.consumerNoteAndFileSave(retUUID);
+        // }
+        // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
+        // const member = [];
+        // for (const memb of this.waitlist_for) {
+        //     member.push(memb.firstName + ' ' + memb.lastName);
+        // }
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            account_id: this.account_id,
+            type_check: 'order_prepayment',
+            prepayment: prepayAmount,
+            uuid: this.trackUuid
+          }
+        };
+        console.log(this.catalog_details.advanceAmount);
+        if (this.catalog_details.advanceAmount) {
+          console.log('hi');
+          // this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
 
-                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
-            } else {
-               this.router.navigate(['consumer']);
-            }
-        },
-            // error => {
-            //     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-            //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            //     this.api_loading = false;
-            // }
-            error => {
-              this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
+          this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+        } else {
+          this.router.navigate(['consumer']);
+        }
+      },
+        // error => {
+        //     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
+        //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     this.api_loading = false;
+        // }
+        error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
 
-            );
-}
+      );
+  }
   changeTime() {
     console.log('chnage time');
   }
@@ -387,20 +444,20 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   }
   changeType() {
     if (this.choose_type === 'store') {
-        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
     } else {
-        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
-      }
-      console.log(this.nextAvailableTime);
-      console.log(this.todaydate);
-      console.log(this.sel_checkindate);
-      if (this.todaydate === this.sel_checkindate) {
+      this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+    }
+    console.log(this.nextAvailableTime);
+    console.log(this.todaydate);
+    console.log(this.sel_checkindate);
+    if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
-      } else {
-        this.isFuturedate = true;
-      }
+    } else {
+      this.isFuturedate = true;
+    }
   }
 
 }
