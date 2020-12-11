@@ -16,126 +16,11 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                        <div class="lbr col-sm-12 col-md-4 col-lg-5">
-                            <div class="cr1">
-                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
-                                    <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="addorderitem" (click)="imagefile.click()">
-                                            <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
-                                                        type="file" accept="/*;capture=camera" style="display:none;"
-                                                        (change)="imageSelect($event, 'main')">Add item
-                                                    image
-                                                </a></p>
-                                            <p class="addorderitemp2"> <img style="width: 65%;"
-                                                    src="assets/images/add.svg" /></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ph-gal-bx main-img"
-                                    *ngIf="mainimage_list_popup && mainimage_list_popup.length > 0">
-                                    <ul class="ph-gal">
-                                        <ng-container *ngFor="let file of mainimage_list_popup;let i = index">
-                                            <li>
-                                                <div class="galbx">
-                                                    <span class="mbt">
-                                                        <button type="button" mat-icon-button
-                                                            [matMenuTriggerFor]="menu">
-                                                            <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button" mat-menu-item
-                                                                (click)="deleteTempImage(file, i, 'main')">
-                                                                <i class="icon-delete"></i>
-                                                                <span>{{delete_btn}}</span>
-                                                            </button>
-                                                        </mat-menu>
-                                                    </span>
-                                                    <div class="img-h" (click)="openmainImageModalRow(file)">
-                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
-                                                            *ngIf="file.modal.img" />
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ng-container>
-                                    </ul>
-                                </div>
-                                <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
-                                    <ul class="ph-gal">
-                                        <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                            <li *ngIf="i<2" [class.gallery-li]="image_list_popup.length === 2">
-                                                <div class="galbx">
-                                                    <span class="mbt">
-                                                        <button type="button" mat-icon-button
-                                                            [matMenuTriggerFor]="menu">
-                                                            <mat-icon>more_vert</mat-icon>
-                                                        </button>
-                                                        <mat-menu #menu="matMenu">
-                                                            <button type="button" mat-menu-item
-                                                                (click)="deleteTempImage(file, i)">
-                                                                <i class="icon-delete"></i>
-                                                                <span>{{delete_btn}}</span>
-                                                            </button>
-                                                        </mat-menu>
-                                                    </span>
-                                                    <div class="img-h" (click)="openImageModalRow(file)">
-                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
-                                                            *ngIf="file.modal.img" />
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ng-container>
-                                        <li *ngIf="image_list_popup.length>2">
-                                            <div class="galbx">
-                                                <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
-                                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                                                <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img
-                                                        *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" /></div>
-                                                <span class="mbt" *ngIf="(image_list_popup.length-3)==0">
-                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                        <mat-icon>more_vert</mat-icon>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button type="button" mat-menu-item
-                                                            (click)="deleteTempImage(image_list_popup[2], 2)">
-                                                            <i class="icon-delete"></i>
-                                                            <span>{{delete_btn}}</span>
-                                                        </button>
-                                                    </mat-menu>
-                                                </span>
-                                                <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
-                                                    *ngIf="(image_list_popup.length-3)==0">
-                                                    <div class="overlay-y"></div><img
-                                                        *ngIf="image_list_popup[2].modal.img"
-                                                        [src]="image_list_popup[2].modal.img" />
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
-                                        (buttonBeforeHook)="onButtonBeforeHook()"
-                                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                                </div>
-                                <div class="no-dta" *ngIf="action === 'edit'">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">
-                                        <div class="addmoreorderitem" (click)="imagefile.click()">
-                                            <label class="pointer-cursor"><input multiple #imagefile type="file"
-                                                    accept="/*;capture=camera" style="display:none;"
-                                                    (change)="imageSelect($event)">Add more</label>
-                                            <p class="addmoreorderitemp1"> <img style="width: 65%;"
-                                                    src="assets/images/add.svg" /></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="lbl col-sm-12 col-md-8 col-lg-7">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
-                                class="ynw-common-form-nm orderitemcrete">
+                                class="ynw-common-form-nm">
 
                                 <div class="form-group">
                                     <mat-form-field>
@@ -395,9 +280,131 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white">
+                            <div class="cr1">
+                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20">
+                                        <div class="addorderitem" (click)="imagefile.click()">
+                                            <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
+                                                        type="file" accept="/*;capture=camera" style="display:none;"
+                                                        (change)="imageSelect($event, 'main')">Add item
+                                                    image
+                                                </a></p>
+                                            <p class="addorderitemp2"> <img style="width: 65%;"
+                                                    src="assets/images/add.svg" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ph-gal-bx main-img"
+                                    *ngIf="mainimage_list_popup && mainimage_list_popup.length > 0">
+                                    <ul class="ph-gal">
+                                        <ng-container *ngFor="let file of mainimage_list_popup;let i = index">
+                                            <li>
+                                                <div class="galbx">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" mat-menu-item
+                                                                (click)="deleteTempImage(file, i, 'main')">
+                                                                <i class="icon-delete"></i>
+                                                                <span>{{delete_btn}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <div class="img-h" (click)="openmainImageModalRow(file)">
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                            *ngIf="file.modal.img" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                </div>
+                                <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                    <h5>Item Gallery</h5>
+                                    <ul class="ph-gal">
+                                        <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                            <li *ngIf="i<2">
+                                                <div class="galbx">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" mat-menu-item
+                                                                (click)="deleteTempImage(file, i)">
+                                                                <i class="icon-delete"></i>
+                                                                <span>{{delete_btn}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <div class="img-h" (click)="openImageModalRow(file)">
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                            *ngIf="file.modal.img" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                        <li *ngIf="image_list_popup.length>2">
+                                            <div class="galbx">
+                                                <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
+                                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img
+                                                        *ngIf="image_list_popup[2].modal.img"
+                                                        [src]="image_list_popup[2].modal.img" /></div>
+                                                <span class="mbt" *ngIf="(image_list_popup.length-3)==0">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" mat-menu-item
+                                                            (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                            <i class="icon-delete"></i>
+                                                            <span>{{delete_btn}}</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                                <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
+                                                    *ngIf="(image_list_popup.length-3)==0">
+                                                    <div class="overlay-y"></div><img
+                                                        *ngIf="image_list_popup[2].modal.img"
+                                                        [src]="image_list_popup[2].modal.img" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                        (buttonBeforeHook)="onButtonBeforeHook()"
+                                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                </div>
+
+                                <div class="no-dta">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 txt-align-center">
+                                        <input multiple #imagefile type="file" accept="/*;capture=camera"
+                                            style="display:none;" (change)="imageSelect($event)">
+                                        <span *ngIf="!image_list_popup || (image_list_popup && image_list_popup.length === 0)"
+                                            class="cs-btn bt3" (click)="imagefile.click()">
+                                            Add Gallery Images
+                                    </span>
+                                        <a *ngIf="image_list_popup && image_list_popup.length > 0" class="pull-right"
+                                            (click)="imagefile.click()">
+                                            Add more
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 </section>

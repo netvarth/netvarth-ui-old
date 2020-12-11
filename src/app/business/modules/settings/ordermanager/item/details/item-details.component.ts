@@ -97,6 +97,11 @@ export class ItemDetailsComponent implements OnInit {
         base64: [],
         caption: []
     };
+    selectedMessageMain = {
+        files: [],
+        base64: [],
+        caption: []
+    };
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
@@ -190,6 +195,8 @@ export class ItemDetailsComponent implements OnInit {
     loadImages(imagelist) {
         this.image_list_popup = [];
         this.mainimage_list_popup = [];
+        // this.selectedMessageMain.files = [];
+        // this.selectedMessage.files = [];
         if (imagelist.length > 0) {
             for (let i = 0; i < imagelist.length; i++) {
                 if (imagelist[i].displayImage) {
@@ -201,6 +208,8 @@ export class ItemDetailsComponent implements OnInit {
                             description: imagelist[i].caption || ''
                         });
                     this.mainimage_list_popup.push(imgobj);
+                    // this.selectedMessageMain.files.push(imagelist[i]);
+                    // this.selectedMessageMain.base64.push(imagelist[i].url);
                 } else {
                     const imgobj = new Image(
                         i,
@@ -209,6 +218,8 @@ export class ItemDetailsComponent implements OnInit {
                             description: imagelist[i].caption || ''
                         });
                     this.image_list_popup.push(imgobj);
+                    // this.selectedMessage.files.push(imagelist[i]);
+                    // this.selectedMessage.base64.push(imagelist[i].url);
                 }
             }
         }
@@ -459,8 +470,8 @@ export class ItemDetailsComponent implements OnInit {
         this.provider_services.addItem(post_data)
             .subscribe(
                 (data) => {
-                    if (this.selectedMessage.files.length > 0) {
-                        this.saveImages(data, 'main');
+                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                        this.saveImages(data);
                     }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
@@ -472,6 +483,11 @@ export class ItemDetailsComponent implements OnInit {
                         this.haveMainImg = false;
                         this.mainImage = false;
                         this.selectedMessage = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
+                        this.selectedMessageMain = {
                             files: [],
                             base64: [],
                             caption: []
@@ -535,29 +551,47 @@ export class ItemDetailsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'items', item.itemId], navigationExtras);
     }
     redirecToJaldeeOrdermanager() {
-        this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Do you want to exit?'
+            }
+          });
+          dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
+            }
+          });
     }
-    saveImages(id, type?) {
+    saveImages(id) {
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
+        console.log(this.selectedMessageMain);
+        console.log(this.selectedMessage);
+        for (const pic of this.selectedMessageMain.files) {
+            submit_data.append('files', pic, pic['name']);
+            let properties = {};
+                properties = {
+                    'caption': this.selectedMessageMain.caption[i] || '',
+                    'displayImage': true
+                };
+            propertiesDetob[i] = properties;
+            i++;
+        }
         for (const pic of this.selectedMessage.files) {
             submit_data.append('files', pic, pic['name']);
             let properties = {};
-            if (type) {
-                properties = {
-                    'caption': this.selectedMessage.caption[i] || '',
-                    'displayImage': true
-                };
-            } else {
                 properties = {
                     'caption': this.selectedMessage.caption[i] || '',
                     'displayImage': false
                 };
-            }
             propertiesDetob[i] = properties;
             i++;
         }
+        console.log(propertiesDetob);
         const propertiesDet = {
             'propertiesMap': propertiesDetob
         };;
@@ -639,21 +673,30 @@ export class ItemDetailsComponent implements OnInit {
                 } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
                     this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
-                    this.selectedMessage.files.push(file);
+                    if (type) {
+                    this.selectedMessageMain.files.push(file);
+                    } else {
+                        this.selectedMessage.files.push(file);
+                    }
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        this.selectedMessage.base64.push(e.target['result']);
+                        console.log(this.selectedMessage);
+                        console.log(this.selectedMessageMain);
+                        console.log(this.image_list_popup);
+                        console.log(this.mainimage_list_popup);
                         if (type) {
+                            this.selectedMessageMain.base64.push(e.target['result']);
                             this.mainimage_list_popup = [];
-                            for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                            for (let i = 0; i < this.selectedMessageMain.files.length; i++) {
                                 const imgobj = new Image(i,
                                     {
-                                        img: this.selectedMessage.base64[i],
+                                        img: this.selectedMessageMain.base64[i],
                                         description: ''
                                     });
                                 this.mainimage_list_popup.push(imgobj);
                             }
                         } else {
+                            this.selectedMessage.base64.push(e.target['result']);
                             this.image_list_popup = [];
                             for (let i = 0; i < this.selectedMessage.files.length; i++) {
                                 const imgobj = new Image(i,
@@ -668,8 +711,8 @@ export class ItemDetailsComponent implements OnInit {
                     reader.readAsDataURL(file);
                 }
             }
-            if (this.itmId && this.selectedMessage.files.length > 0) {
-                this.saveImages(this.itmId, type);
+            if (this.itmId && (this.selectedMessageMain.files.length > 0 || this.selectedMessage.files.length > 0)) {
+                this.saveImages(this.itmId);
             } else {
                 this.api_loading = false;
                 if (type) {
@@ -694,7 +737,11 @@ export class ItemDetailsComponent implements OnInit {
                     const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
                     this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                         .subscribe((data) => {
-                            this.selectedMessage.files.splice(index, 1);
+                            if (type) {
+                            this.selectedMessageMain.files.splice(index, 1);
+                            } else {
+                                this.selectedMessage.files.splice(index, 1);
+                            }
                         },
                             error => {
                                 this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -703,12 +750,14 @@ export class ItemDetailsComponent implements OnInit {
             });
         } else {
             this.mainImage = false;
-            this.selectedMessage.files.splice(index, 1);
-            this.selectedMessage.base64.splice(index, 1);
             if (type) {
                 this.mainimage_list_popup = [];
+                this.selectedMessageMain.files.splice(index, 1);
+                this.selectedMessageMain.base64.splice(index, 1);
             } else {
                 this.image_list_popup.splice(index, 1);
+                this.selectedMessage.files.splice(index, 1);
+                this.selectedMessage.base64.splice(index, 1);
             }
         }
     }
