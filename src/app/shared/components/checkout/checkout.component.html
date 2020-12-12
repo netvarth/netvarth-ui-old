@@ -34,15 +34,14 @@
                     </ng-template> -->
                     <ng-template matStepLabel>Account</ng-template>
                     <form [formGroup]="loginForm" >
-
-                      <mat-form-field>
-                        <input matInput placeholder="Phone Number" formControlName="phone" readonly="true">
-                      </mat-form-field>
-
+                      <!-- <mat-form-field>
+                        <input  formControlName="phone" readonly="true">
+                      </mat-form-field> -->
+                      <div class="ph-outline">
+                        <input class="ph-ip" formControlName="phone" required>
+                        <label class="ph-label">Mobile number</label>
+                      </div>
                     </form>
-                    <!-- <mat-form-field>
-                      <input matInput placeholder="Mobile Number" required>
-                    </mat-form-field> -->
                     <div>
                       <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
@@ -146,23 +145,25 @@
                   </ng-container>
                   <ng-container>
                     <form [formGroup] = "storeContact">
-                      <mat-form-field class="example-full-width">
-                        <mat-label> Contact Phone Number</mat-label>
-                        <input matInput placeholder="Enter your phone number" value="" formControlName="phone">
-                      </mat-form-field>
-
-                      <mat-form-field class="example-full-width">
-                        <mat-label>Contact Email</mat-label>
-                        <input matInput placeholder="Enter your email" value=""formControlName="email">
-                      </mat-form-field>
+                      <!-- <mat-form-field class="example-full-width">
+                         <mat-label> Contact Phone Number</mat-label>
+                        <input matInput placeholder="Enter your phone number" value="" formControlName="phone"> 
+                      </mat-form-field> -->
+                      <div class="ph-outline">
+                        <input class="ph-ip" formControlName="phone" required>
+                        <label class="ph-label">Contact number</label>
+                      </div>
+                      <div class="ph-outline">
+                        <input class="ph-ip" formControlName="email">
+                        <label class="ph-label">Email</label>
+                      </div>
+                      <!-- <mat-form-field class="example-full-width">
+                       <mat-label>Contact Email</mat-label>
+                        <input matInput placeholder="Enter your email" value=""formControlName="email"> 
+                      </mat-form-field> -->
                     </form>
 
                   </ng-container>
-                    <div class="col-md-4">
-                      <!-- <button mat-button matStepperPrevious>Back</button> -->
-                      <button mat-flat-button (click)="confirm()" class="chekout-btn pull-left">CHECKOUT &nbsp; → </button>
-                    </div>
-
                   </mat-step>
 
                 </mat-vertical-stepper>
@@ -186,10 +187,6 @@
                 <div class="bill-section">
                   <div class="bill-section-content">
                     <div class="bill-wrapper ">
-                      <!-- <div style="text-align: center;">
-                        Order Summary
-                      </div> -->
-
                       <div class="bill-content">
                         <div class="section-three">
                           <div class="bill-breakup">
@@ -248,11 +245,7 @@
 
                         </div>
                       </div>
-
-                      <!-- <div>
                         <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
-                      </div> -->
-
                     </div>
                   </div>
                 </div>

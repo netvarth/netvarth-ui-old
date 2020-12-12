@@ -135,14 +135,14 @@ flex-basis: 50% !important;
     background-color: #183e7a !important;
 }
 ::ng-deep .ph-outline {
-    border: 1px solid #d4d5d9;
-    padding: 0;
-    display: block;
-    position: relative;
-    transform: translateZ(0);
-    border-bottom: 1px solid #d4d5d9!important;
-    width: 350px;
-    margin-bottom: 20px;
+    border: 1px solid #d4d5d9 !important;
+    padding: 0 !important;
+    display: block !important;
+    position: relative !important;
+    transform: translateZ(0) !important;
+    border-bottom: 1px solid #d4d5d9 !important;
+    width: 350px !important;
+    margin-bottom: 20px !important;
 }
 ::ng-deep .ph-outline .ph-ip {
     background-color: transparent;
