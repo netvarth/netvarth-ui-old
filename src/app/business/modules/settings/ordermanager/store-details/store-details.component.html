@@ -19,19 +19,19 @@
                                 <span class="editbt" (click)="editInfo()"></span>
                                 <div class="ot-it">
                                     <h3>{{info_list.firstName}} {{info_list.lastName}}</h3>
-                                    <div class="c-ot m0">
+                                    <div class="c-ot m0" *ngIf="info_list.phone">
                                         <div class="item displyfont">
                                             <span class="ttle">Phone</span>
                                             <span>{{info_list.phone}}</span>
                                         </div>
                                     </div><br>
                                     <div class="c-ot m0">
-                                        <div class="item displyfont">
+                                        <div class="item displyfont" *ngIf="info_list.email">
                                             <span class="ttle">Email</span>
                                             <span>{{info_list.email}}</span>
                                         </div>
                                     </div><br>
-                                    <div class="c-ot m0">
+                                    <div class="c-ot m0" *ngIf="info_list.address">
                                         <div class="item displyfont">
                                             <span class="ttle">Address</span>
                                             <span>{{info_list.address}}</span>
