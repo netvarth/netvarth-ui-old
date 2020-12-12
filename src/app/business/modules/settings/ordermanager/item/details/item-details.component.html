@@ -323,6 +323,11 @@
                                             </li>
                                         </ng-container>
                                     </ul>
+                                    <ks-modal-gallery [id]="1" [modalImages]="mainimage_list_popup"
+                                    [plainGalleryConfig]="customPlainMainGalleryRowConfig"
+                                    [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                    (buttonBeforeHook)="onButtonBeforeHook()"
+                                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                                 </div>
                                 <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">
                                     <h5>Item Gallery</h5>

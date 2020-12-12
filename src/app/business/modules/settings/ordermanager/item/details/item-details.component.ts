@@ -106,6 +106,10 @@ export class ItemDetailsComponent implements OnInit {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
+    customPlainMainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+    };
     customButtonsFontAwesomeConfig: ButtonsConfig = {
         visible: true,
         strategy: ButtonsStrategy.CUSTOM,
@@ -654,7 +658,7 @@ export class ItemDetailsComponent implements OnInit {
     }
     openmainImageModalRow(image: Image) {
         const index: number = this.getCurrentIndexCustomLayout(image, this.mainimage_list_popup);
-        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+        this.customPlainMainGalleryRowConfig = Object.assign({}, this.customPlainMainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     }
     private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
         return image ? images.indexOf(image) : -1;
