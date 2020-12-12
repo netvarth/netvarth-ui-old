@@ -21,9 +21,11 @@
               <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                 (keyup)="resetApiErrors()" *ngIf="!showInfo" class="ynw-common-form-nm order-catalog">
                 <!-- <div class="createcatalogupper"> -->
+
+
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 1">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Basic Info
                       </mat-panel-title>
@@ -94,7 +96,7 @@
                 <!-- <div class="form-group row" > -->
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 2">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Working hours
                       </mat-panel-title>
@@ -160,7 +162,7 @@
                 </mat-accordion>
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 3">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Items
                       </mat-panel-title>
@@ -187,7 +189,7 @@
 
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 4">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Payment Information
                       </mat-panel-title>
@@ -240,7 +242,7 @@
 
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 5">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Store Pick-Up
                       </mat-panel-title>
@@ -327,7 +329,7 @@
 
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 6">
-                    <mat-expansion-panel-header class="min90">
+                    <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Home Delivery
                       </mat-panel-title>
