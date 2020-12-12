@@ -20,6 +20,7 @@ export class MedicalrecordListComponent implements OnInit {
   public mr_dataSource = new MatTableDataSource<any[]>([]);
   displayedColumns = ['createdDate', 'mrNo', 'serviceName', 'bookingType', 'medicalrecord', 'rx'];
   patientDetails: ArrayBuffer;
+  customer_label = '';
   constructor(private provider_services: ProviderServices,
     private activatedRoute: ActivatedRoute,
     public dateformat: DateFormatPipe,
@@ -27,6 +28,7 @@ export class MedicalrecordListComponent implements OnInit {
     private sharedfunctionObj: SharedFunctions,
     private location: Location) {
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
 
 

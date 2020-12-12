@@ -56,6 +56,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   jc_code;
   isCheckin;
   checkin_label = '';
+  showToken = false;
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
     private location: Location,
@@ -66,6 +67,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
         this.jc_code = params.id;
         this.getCouponview();
         this.getJaldeeCouponStatistic();
+        this.getWaltilistmgrSettings();
       });
     // this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
   }
@@ -112,5 +114,10 @@ export class ProviderJcouponDetailsComponent implements OnInit {
       }
     );
   }
-
+  getWaltilistmgrSettings() {
+    this.provider_servicesobj.getWaitlistMgr()
+      .subscribe((data: any) => {
+        this.showToken = data.showTokenId;
+      });
+  }
 }

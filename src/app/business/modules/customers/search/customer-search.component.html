@@ -259,7 +259,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
                                     *ngIf="customer_data.dob">
                                     <div><b>DOB</b></div>
-                                    <div>{{customer_data.dob}}</div>
+                                    <div>{{customer_data.dob | date: display_dateFormat}}</div>
                                 </div>
                                 <hr class="wide-separator-line" />
                                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">

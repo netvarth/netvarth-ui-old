@@ -227,7 +227,7 @@ export class CustomerSearchComponent implements OnInit {
     emptyFielderror = false;
     foundMultiCustomer = false;
     multiCustomerData: any;
-
+    display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
 
 
 

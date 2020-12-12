@@ -212,7 +212,8 @@
                             <div class="cr1" *ngIf="jCouponStat">
                                 <h5>Coupon Stats</h5>
                                 <div class="chart">
-                                    <p> #Checkins Applied : {{jCouponStat.providerUsage.usageCount}}</p>
+                                    <p *ngIf="!showToken"> #Checkins Applied : {{jCouponStat.providerUsage.usageCount}}</p>
+                                    <p *ngIf="showToken"> #Tokens Applied : {{jCouponStat.providerUsage.usageCount}}</p>
                                     <p> Total Amount Discounted : {{jCouponStat.providerUsage.usageAmt}}</p>
                                     <p> Amount Reimbursed by Jaldee.com : {{jCouponStat.providerUsage.reimbursed}}</p>
                                 </div>

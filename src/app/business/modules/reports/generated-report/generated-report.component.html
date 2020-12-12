@@ -16,13 +16,14 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
 
 
-      <div class="card p20" id="reportGenerated">
+      <div class="card p20">
         <div>
-          <div class="criteria-btn-dv">
+          <div class="criteria-btn-dv pull-right">
             <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save"  (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
             <button type="button" class="btn default" (click)="printReport()"> Print </button>
           </div>
         </div>
+        <div id="reportGenerated">
         <hr width="100%">
 
           <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
@@ -98,7 +99,7 @@
           <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
            <b> No Records Found</b>
           </div>
-
+</div>
       </div>
     </div>
     <div class="clearfix"></div>

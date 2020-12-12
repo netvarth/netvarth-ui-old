@@ -99,7 +99,7 @@ export class ShareRxComponent implements OnInit {
     private provider_servicesobj: ProviderServices,
     private medicalService: MedicalrecordService
   ) {
-
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.provider_user_Id = this.medicalService.getDoctorId();
     this.mrId = this.data.mrId;
     this.type = this.data.type;

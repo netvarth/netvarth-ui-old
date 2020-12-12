@@ -16,7 +16,7 @@
           </div>
           <div *ngIf="!loading">
             <div *ngIf="mrList=== 0" class="mgn-up-10 style-padding">
-              <p>No Medical Records Found For This Patient</p>
+              <p>No Medical Records Found For This {{customer_label | capitalizeFirst}}</p>
             </div>
             <mat-table *ngIf="mrList!== 0" [dataSource]="mr_dataSource">
 

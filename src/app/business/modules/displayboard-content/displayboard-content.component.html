@@ -58,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody style="overflow: scroll;">
-                                    <tr *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
+                                    <tr class="txt-align-center" *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
                                         [class.startWaitlist]="checkin.callingStatus">
                                         <td
                                             *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
