@@ -90,8 +90,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
         this.account_id = params.account_id;
       });
     this.catalog_details = this.shared_services.getOrderDetails();
-    console.log(JSON.stringify(this.catalog_details));
-    console.log(this.catalog_details);
     if (this.catalog_details.pickUp) {
       if (this.catalog_details.pickUp.orderPickUp) {
         this.store_pickup = true;
@@ -135,17 +133,17 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
-    console.log(this.orders);
     this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.customer_data = activeUser;
       this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
+      this.getaddress();
     } else {
       this.doLogin('consumer');
     }
 
-    this.getaddress();
+   // this.getaddress();
     this.loginForm = this._formBuilder.group({
       phone: [this.customer_phoneNumber, Validators.required]
     });
@@ -178,7 +176,6 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-    console.log(this.todaydate);
 if (this.todaydate === this.sel_checkindate) {
 this.isFuturedate = false;
 } else {
@@ -194,10 +191,11 @@ this.isFuturedate = false;
   }
   isLoggedIn() {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    console.log(activeUser);
-      return true;
-
-
+   if (activeUser) {
+    this.loginForm.get('phone').setValue(activeUser.primaryPhoneNumber);
+   // this.getaddress();
+   }
+    return true;
   }
   getTaxCharges() {
     // const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -215,8 +213,6 @@ this.isFuturedate = false;
   catlogArry() {
     this.catlog = itemjson;
     this.catalogItem = this.catlog.default.catalogItem;
-    console.log(this.catlog.default);
-    console.log(this.catalogItem);
   }
   getaddress() {
     console.log('hi');
@@ -282,7 +278,6 @@ this.isFuturedate = false;
   confirm() {
 
     if (this.delivery_type === 'homedelivery') {
-      console.log(this.delivery_type);
       const post_Data = {
         'homeDelivery': true,
         'homeDeliveryAddress': this.selectedAddress,
@@ -301,11 +296,9 @@ this.isFuturedate = false;
         'phoneNumber': this.customer_phoneNumber,
         'email': this.customer_email
       };
-      console.log(post_Data);
       this.confirmOrder(post_Data);
     }
     if (this.delivery_type === 'store') {
-      console.log(this.storeContact.value);
       const contactNumber = this.storeContact.value.phone;
       const contact_email = this.storeContact.value.email;
       const post_Data = {
@@ -326,7 +319,6 @@ this.isFuturedate = false;
         'email': contact_email
 
       };
-      console.log(post_Data);
       this.confirmOrder(post_Data);
 
     }
@@ -359,7 +351,6 @@ this.isFuturedate = false;
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.loginForm.controls['phone'].setValue(result.primaryPhoneNumber);
         this.isLoggedIn();
         // if (passParam['callback'] === 'communicate') {
         //   // this.getFavProviders();
@@ -455,9 +446,6 @@ this.isFuturedate = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
     }
-    console.log(this.nextAvailableTime);
-    console.log(this.todaydate);
-    console.log(this.sel_checkindate);
     if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
     } else {
