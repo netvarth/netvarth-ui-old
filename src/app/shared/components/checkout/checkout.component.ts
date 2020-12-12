@@ -19,6 +19,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutSharedComponent implements OnInit, OnDestroy {
+  businessDetails: any;
   isFuturedate = false;
   sel_checkindate;
   showfuturediv;
@@ -132,7 +133,8 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
 
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
+    this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+   this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
     this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -198,16 +200,18 @@ this.isFuturedate = false;
     return true;
   }
   getTaxCharges() {
-    // const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    this.taxAmount = 100;
-    return this.taxAmount;
+    let deliveryCharge = 0;
+    if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+      deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+    }
+    return deliveryCharge;
   }
   getOrderFinalAmountToPay() {
 
-    return parseInt(this.orderAmount, 0) + parseInt(this.getTaxCharges(), 0);
+    return this.price + this.getTaxCharges();
   }
   getItemQty(item) {
-    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     return qty;
   }
   catlogArry() {
@@ -269,12 +273,17 @@ this.isFuturedate = false;
 
   getTotalItemPrice() {
     this.price = 0;
-    for (const item of this.orderList) {
-      this.price = this.price + item.price;
+
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
     }
-    this.orderAmount = this.price;
-    return this.orderAmount;
+    return this.price;
   }
+
   confirm() {
 
     if (this.delivery_type === 'homedelivery') {
@@ -375,6 +384,7 @@ this.isFuturedate = false;
   confirmOrder(post_Data) {
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
+        localStorage.removeItem('order');
         const retData = data;
         let prepayAmount;
         const uuidList = [];
@@ -420,7 +430,7 @@ this.isFuturedate = false;
   getOrderItems() {
     this.orderSummary = [];
     this.orders.forEach(item => {
-      const itemId = item.itemId;
+      const itemId = item.id;
       const qty = this.getItemQty(item);
       this.orderSummary.push({ 'id': itemId, 'quantity': qty });
     });

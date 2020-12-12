@@ -13,6 +13,7 @@ import { SharedServices } from '../../services/shared-services';
 
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
+  deliveryCharge = 0;
   store_pickup: boolean;
   home_delivery: boolean;
   catalog_details: any;
@@ -41,9 +42,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   account_id: any;
   storeChecked = true;
   homeChecked = false;
-nextAvailableTime;
-availableDates: any = [];
-catalog_Id: any;
+  nextAvailableTime;
+  availableDates: any = [];
+  catalog_Id: any;
 
   constructor(
     public router: Router,
@@ -61,11 +62,11 @@ catalog_Id: any;
   ngOnInit() {
     console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
+    this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.catalog_details = this.shared_services.getOrderDetails();
     console.log(JSON.stringify(this.catalog_details));
-    if(this.catalog_details){
-      this.catalog_Id = this.catalog_details.id
+    if (this.catalog_details) {
+      this.catalog_Id = this.catalog_details.id;
       console.log(this.catalog_Id);
     }
 
@@ -81,22 +82,24 @@ catalog_Id: any;
     if (this.catalog_details.homeDelivery) {
       if (this.catalog_details.homeDelivery.homeDelivery) {
         this.home_delivery = true;
+
         if (!this.store_pickup) {
           this.choose_type = 'home';
-        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+          this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+          this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+          this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+        }
       }
     }
-    }
-     console.log(this.store_pickup);
-     console.log(this.home_delivery);
-     console.log(this.sel_checkindate);
-     console.log(this.nextAvailableTime);
+    console.log(this.store_pickup);
+    console.log(this.home_delivery);
+    console.log(this.sel_checkindate);
+    console.log(this.nextAvailableTime);
     //
     // console.log(this.sel_checkindate);
 
     // this.hold_sel_checkindate = this.sel_checkindate;
-     this.advance_amount = this.catalog_details.advanceAmount;
+    this.advance_amount = this.catalog_details.advanceAmount;
     this.showfuturediv = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -122,26 +125,31 @@ catalog_Id: any;
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     console.log(this.todaydate);
-if (this.todaydate === this.sel_checkindate) {
-this.isFuturedate = false;
-} else {
-  this.isFuturedate = true;
-  this.getOrderAvailableDatesForPickup();
-}
+    if (this.todaydate === this.sel_checkindate) {
+      this.isFuturedate = false;
+    } else {
+      this.isFuturedate = true;
+      this.getOrderAvailableDatesForPickup();
+    }
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   }
   getItemQty(item) {
-    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+    const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
     return qty;
   }
-  getItemPrice(item) {
-    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    return item.price * qty;
+
+  getItemPrice(itemObj) {
+    const qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
+    let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+    return item_price * qty;
   }
   increment(item) {
     this.addToCart(item);
@@ -156,38 +164,55 @@ this.isFuturedate = false;
     this.getItemQty(Item);
 
   }
-  removeFromCart(Item) {
+
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
     console.log(this.orderList);
     for (const i in this.orderList) {
-      if (this.orderList[i] === Item) {
+      if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
+        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }
     this.getTotalItemAndPrice();
-    this.getItemQty(Item);
+    this.getItemQty(itemObj);
   }
   getTotalItemAndPrice() {
     this.price = 0;
     this.order_count = 0;
-    for (const item of this.orderList) {
-      this.price = this.price + item.price;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
       this.order_count = this.order_count + 1;
     }
+    return this.price;
   }
   removeItemFromCart(item) {
-    this.orderList = this.orderList.filter(Item => Item.itemId !== item.itemId);
-    this.orders = [...new Map(this.orderList.map(Item => [Item['itemId'], Item])).values()];
+    this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
+    this.orders = [...new Map(this.orderList.map(Item => [item.Item['itemId'], Item])).values()];
     console.log(this.orders);
 
+  }
+  getSubTotal() {
+    let subtotal = 0;
+    let deliveryCharge = 0;
+    if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+      deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+    }
+    subtotal = subtotal + this.price + deliveryCharge;
+    return subtotal;
   }
   cart() {
     console.log('cart');
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        delivery_type :this.choose_type,
-        catlog_id: this.catalog_details.id ,
+        delivery_type: this.choose_type,
+        catlog_id: this.catalog_details.id,
         // selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
         // selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
         // order_date: this.sel_checkindate,
@@ -285,7 +310,7 @@ this.isFuturedate = false;
     } else {
       this.isFuturedate = false;
     }
-    this.handleFuturetoggle(); 
+    this.handleFuturetoggle();
     // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
   }
   handleFuturetoggle() {
@@ -293,35 +318,35 @@ this.isFuturedate = false;
   }
   changeType() {
     if (this.choose_type === 'store') {
-        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
     } else {
-        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
-      }
-      console.log(this.nextAvailableTime);
-      console.log(this.todaydate);
-      console.log(this.sel_checkindate);
-      if (this.todaydate === this.sel_checkindate) {
+      this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+    }
+    console.log(this.nextAvailableTime);
+    console.log(this.todaydate);
+    console.log(this.sel_checkindate);
+    if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
-      } else {
-        this.isFuturedate = true;
-      }
+    } else {
+      this.isFuturedate = true;
+    }
   }
   getOrderAvailableDatesForPickup() {
     console.log('hi');
     const _this = this;
-    console.log(this.catalog_Id)
+    console.log(this.catalog_Id);
     console.log(this.account_id);
-    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id , this.account_id )
-        .subscribe((data: any) => {
-          console.log(data);
-            const availables = data.filter(obj => obj.availableSlots);
-            const availDates = availables.map(function (a) { return a.date; });
-            _this.availableDates = availDates.filter(function (elem, index, self) {
-                return index === self.indexOf(elem);
-            });
-            console.log(_this.availableDates);
+    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+      .subscribe((data: any) => {
+        console.log(data);
+        const availables = data.filter(obj => obj.availableSlots);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.availableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
         });
-}
+        console.log(_this.availableDates);
+      });
+  }
 }

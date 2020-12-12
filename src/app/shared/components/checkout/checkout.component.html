@@ -147,7 +147,7 @@
                     <form [formGroup] = "storeContact">
                       <!-- <mat-form-field class="example-full-width">
                          <mat-label> Contact Phone Number</mat-label>
-                        <input matInput placeholder="Enter your phone number" value="" formControlName="phone"> 
+                        <input matInput placeholder="Enter your phone number" value="" formControlName="phone">
                       </mat-form-field> -->
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="phone" required>
@@ -159,7 +159,7 @@
                       </div>
                       <!-- <mat-form-field class="example-full-width">
                        <mat-label>Contact Email</mat-label>
-                        <input matInput placeholder="Enter your email" value=""formControlName="email"> 
+                        <input matInput placeholder="Enter your email" value=""formControlName="email">
                       </mat-form-field> -->
                     </form>
 
@@ -177,10 +177,10 @@
                   <div class="prov-dp"></div>
                   <div class="prov-name">
                     <div class="prov-name-txt">
-                      AKSHAYA HOTEL
+                     {{businessDetails.bname}}
                     </div>
                     <div class="prov-loc">
-                      Poothole
+                        {{businessDetails.blocation}}
                     </div>
                   </div>
                 </div>
@@ -202,10 +202,10 @@
                                         <div class="c-row one width-100">
                                           <div class="name cart-flex">
                                             <i class="fa fa-stop-circle"></i>
-                                            <span class="item-name">{{item.itemName}}</span>
+                                            <span class="item-name">{{item.item.itemName}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{getItemQty(item)}}</div>
-                                          <div class="price rupee-font">&#8377;{{item.price}}</div>
+                                          <div class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
                                         </div>
                                       </div>
 

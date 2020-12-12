@@ -44,12 +44,27 @@
                              <div class="mgn-up-10">
                               <div class="div-outline custId-cursor">
                                   <div class="c-row one">
+                                      <div class="col-md-2" *ngIf="item.item.itemImages">
+                                          <img class="card-img img-responsive" height="60px" [src]="item.item.itemImages[0].thumbUrl" alt="Profile Pic" />
+                                      </div>
+                                <div class="name cart-flex"> {{item.item.itemName}}</div>
+                                <div class="no-padding">
 
-                                <div class="name cart-flex"> {{item.itemName}}</div>
-                                <button (click)="decrement(item)">-</button>
+                                    <div class="btn-rt pull-right">
+                                        <button (click)="decrement(item)">-</button>
+                                    </div>
+                                    <div class="count-o pull-right">
+                                        {{getItemQty(item)}}
+                                    </div>
+                                    <div class="btn-lt pull-right">
+                                        <button (click)="increment(item)">+</button>
+                                    </div>
+                                </div>
+                                <!-- <button (click)="decrement(item)">-</button>
                                 <span class="quantity">{{getItemQty(item)}}</span>
-                                <button (click)="increment(item)">+</button>
-                                <span>{{getItemPrice(item)}}</span>
+                                <button (click)="increment(item)">+</button> -->
+                                <span class="rupee-font">&#8377;{{ getItemPrice(item) }}&nbsp;</span>
+
                                 <div style="padding-left: 30px;">
                                     <button  (click)="removeItemFromCart(item)">
                                         <i style="float: right;" class="fa fa-window-close"></i>
@@ -124,28 +139,32 @@
                           <div class="amt-content">
                             <table class="amt-content">
                               <tbody>
-                                  <tr>
+                                  <!-- <tr>
                                       <td><u> Apply Promcode </u> </td>
 
-                                    </tr>
+                                    </tr> -->
                                 <tr>
                                   <td >Item Total</td>
-                                  <td style="text-align: end;" class="price rupee-font">
-                                  {{this.price}}
+                                  <td style="text-align: end;">
+                                      <span class="rupee-font">&#8377;{{getTotalItemAndPrice()}}&nbsp;</span>
+
                                   </td>
                                 </tr>
 
 
 
 
-                                <tr>
+                                <tr *ngIf="choose_type=='home'" >
                                   <td >Delivery charge </td>
-                                  <td style="text-align: end;" class="price  rupee-font"> 100</td>
+                                  <td style="text-align: end;" >
+                                      <span class="rupee-font">&#8377;{{deliveryCharge}}&nbsp;</span></td>
                                 </tr>
 
                                 <tr >
                                   <td >Subtotal</td>
-                                  <td style="text-align: end;" class="price rupee-font">500</td>
+                                  <td style="text-align: end;">
+                                      <span class="rupee-font">&#8377; {{getSubTotal()}}&nbsp;</span>
+                                   </td>
                                 </tr>
 
 

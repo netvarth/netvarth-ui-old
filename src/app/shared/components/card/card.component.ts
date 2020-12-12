@@ -85,8 +85,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         console.log(this.extras);
         const orderList = this.extras;
         let qty = 0;
-        if (orderList !== null && orderList.filter(i => i.itemId === item.itemId)) {
-          qty = orderList.filter(i => i.itemId === item.itemId).length;
+        if (orderList !== null && orderList.filter(i => i.item.itemId === item.itemId)) {
+          qty = orderList.filter(i => i.item.itemId === item.itemId).length;
         }
         return qty;
       }
