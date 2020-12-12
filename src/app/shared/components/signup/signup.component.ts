@@ -321,7 +321,7 @@ export class SignUpComponent implements OnInit {
     }
 
     let userProfile = {
-      countryCode: this.selectedCountryCode,
+      countryCode: dialCode,
       primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
       firstName: null,
       lastName: null
@@ -336,7 +336,7 @@ export class SignUpComponent implements OnInit {
     } else {
 
       userProfile = {
-        countryCode: this.selectedCountryCode,
+        countryCode: dialCode,
         primaryMobileNo: loginId || null,
         firstName: this.toCamelCase(fname) || null,
         lastName: this.toCamelCase(lname) || null,
@@ -520,8 +520,9 @@ export class SignUpComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
+    const dialCode = this.signupForm.get('phonenumber').value.dialCode;
     const post_data = { 
-      countryCode : this.selectedCountryCode,
+      countryCode : dialCode,
       password: submit_data.new_password };
     if (this.is_provider === 'true') {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
@@ -559,7 +560,7 @@ export class SignUpComponent implements OnInit {
           () => {
             this.actionstarted = false;
             const login_data = {
-              'countryCode': this.selectedCountryCode,
+              'countryCode': dialCode,
               'loginId': this.user_details.userProfile.primaryMobileNo,
               'password': post_data.password
             };
