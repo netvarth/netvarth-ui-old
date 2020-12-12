@@ -887,4 +887,7 @@ export class SharedServices {
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
   }
+  getAvailableDatesForPickup(catalogid , accountid?) {
+    return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid +  '?account=' + accountid);
+  }
 }

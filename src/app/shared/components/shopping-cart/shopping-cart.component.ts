@@ -42,6 +42,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   storeChecked = true;
   homeChecked = false;
 nextAvailableTime;
+availableDates: any = [];
+catalog_Id: any;
 
   constructor(
     public router: Router,
@@ -62,6 +64,11 @@ nextAvailableTime;
     this.orders = [...new Map(this.orderList.map(item => [item['itemId'], item])).values()];
     this.catalog_details = this.shared_services.getOrderDetails();
     console.log(JSON.stringify(this.catalog_details));
+    if(this.catalog_details){
+      this.catalog_Id = this.catalog_details.id
+      console.log(this.catalog_Id);
+    }
+
     console.log(this.catalog_details);
     if (this.catalog_details.pickUp) {
       if (this.catalog_details.pickUp.orderPickUp) {
@@ -119,6 +126,7 @@ if (this.todaydate === this.sel_checkindate) {
 this.isFuturedate = false;
 } else {
   this.isFuturedate = true;
+  this.getOrderAvailableDatesForPickup();
 }
   }
   ngOnDestroy() {
@@ -202,6 +210,7 @@ this.isFuturedate = false;
   }
   changeTime() {
     this.action = 'timeChange';
+    console.log(this.choose_type);
   }
   calculateDate(days) {
     // this.resetApi();
@@ -299,4 +308,20 @@ this.isFuturedate = false;
         this.isFuturedate = true;
       }
   }
+  getOrderAvailableDatesForPickup() {
+    console.log('hi');
+    const _this = this;
+    console.log(this.catalog_Id)
+    console.log(this.account_id);
+    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id , this.account_id )
+        .subscribe((data: any) => {
+          console.log(data);
+            const availables = data.filter(obj => obj.availableSlots);
+            const availDates = availables.map(function (a) { return a.date; });
+            _this.availableDates = availDates.filter(function (elem, index, self) {
+                return index === self.indexOf(elem);
+            });
+            console.log(_this.availableDates);
+        });
+}
 }
