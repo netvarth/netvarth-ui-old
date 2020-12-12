@@ -1,5 +1,5 @@
 <!-- Card -->
-<div class="card booking-card pointer-cursor" *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
+<div class="card booking-card pointer-cursor service" *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
     <!-- Card content -->
     <div class="card-body">
@@ -44,29 +44,34 @@
     </div>
 </div>
 <div class="card booking-card pointer-cursor order" *ngIf="item.type=='catalog' || item.type=='item'" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
-    <div class="card-item-head">
+    <div class="card-item-head" *ngIf="service.itemImages">
         <img class="card-img img-responsive" [src]="service.itemImages[0].thumbUrl" alt="Profile Pic" />
     </div>
     <div class="card-item-content">
         <h4 class="card-title font-weight-bold d-block">
-            <a class="d-block name line-clamp">{{service.displayName}}</a>
-            <p class="module1 line-clamp1">{{service.shortDesc}}</p>
-            <a class="price rupee-font"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>
+            <a class="d-block name module1 line-clamp1">{{service.displayName}}</a>
+            <p class="module1 line-clamp1">{{service.itemDesc}}</p>            
         </h4>
-        <div class="col-md-12 pad-lt-25">
-            <div class="btn-lt pull-left">
-                <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
-            </div>
-            <div class="count-o pull-left">
-                {{getItemQty(item)}}
-            </div>
-            <div class="btn-rt pull-left">
-                <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
-            </div>
+        <div class="col-md-12 no-padding">
+            <!-- <div class="col-md-5 no-padding">
+                
+            </div> -->
+            <div class="col-md-12 no-padding">     
+                <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>          
+                <div class="btn-rt pull-right">
+                    <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
+                </div>
+                <div class="count-o pull-right">
+                    {{getItemQty(item)}}
+                </div>
+                <div class="btn-lt pull-right">                
+                    <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
+                </div>
+            </div>            
         </div>
     </div>
 </div>
-<div class="card booking-card booking-card-user pointer-cursor" *ngIf="item.type==='provider'"
+<div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type==='provider'"
     (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
     <div class="card-item-head">
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">

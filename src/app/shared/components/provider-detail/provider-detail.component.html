@@ -370,7 +370,7 @@
                     </div>
                 </div>
                 <ng-container *ngIf="orderItems.length >0">
-                    <div class="bus-item-N" *ngFor="let item of orderItems">
+                    <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
