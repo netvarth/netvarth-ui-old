@@ -322,7 +322,8 @@ export class SignUpComponent implements OnInit {
 
     let userProfile = {
       countryCode: dialCode,
-      primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+      // primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+      primaryMobileNo: loginId || null,
       firstName: null,
       lastName: null
     };
