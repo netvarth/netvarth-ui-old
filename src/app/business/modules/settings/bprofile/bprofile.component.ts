@@ -22,7 +22,7 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-bprofile',
@@ -786,6 +786,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe(
         data => {
           this.image_list = data;
+          console.log(this.image_list);
           if (this.image_list && this.image_list.length !== 0) {
             this.galryFilled = true;
           }

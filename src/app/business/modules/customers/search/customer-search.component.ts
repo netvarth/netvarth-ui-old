@@ -584,6 +584,7 @@ export class CustomerSearchComponent implements OnInit {
         this._location.back();
     }
     createNew() {
+        this.qParams['source'] = 'clist';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };

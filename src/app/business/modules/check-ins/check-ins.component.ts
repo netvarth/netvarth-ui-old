@@ -382,6 +382,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { mode: 'PHONE_CHECKIN', value: 'Phone in Check-in' },
     { mode: 'ONLINE_CHECKIN', value: 'Online Check-in' },
   ];
+  waitlistModesToken = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in Token' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in Token' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online Token' },
+  ];
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -497,6 +502,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.settings = data;
         this.calculationmode = this.settings.calculationMode;
         this.showToken = this.settings.showTokenId;
+        if (this.showToken) {
+          this.waitlistModes = this.waitlistModesToken;
+        }
         if (this.showToken) {
           this.breadcrumbs_init = [{ title: 'Tokens' }];
           this.tokenOrCheckin = 'Tokens';

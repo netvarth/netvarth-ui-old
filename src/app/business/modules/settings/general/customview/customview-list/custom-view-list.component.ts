@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
+import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-custom-view-list',
@@ -76,7 +76,8 @@ export class CustomViewListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to delete this custom view?'
+        'message': 'Do you want to delete this custom view?',
+        'buttons': 'yes'
       }
     });
     this.removeitemdialogRef.afterClosed().subscribe(result => {
