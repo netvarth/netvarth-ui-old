@@ -327,11 +327,11 @@ export class ItemDetailsComponent implements OnInit {
             'taxable': this.holdtaxable,
             'showOnLandingpage': this.item.isShowOnLandingpage,
             'stockAvailable': this.item.isStockAvailable,
-            'showPromotionalPrice': this.item.showPromotionalPrice,
             'promotionalPrice': this.item.promotionalPrice || 0,
             'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
             'promotionallabel': this.item.promotionLabelType || 'ONSALE'
         });
+        this.showPromotionalPrice = this.item.showPromotionalPrice;
         this.curtype = this.item.promotionalPriceType || 'FIXED';
     }
     handleTypechange(typ) {
