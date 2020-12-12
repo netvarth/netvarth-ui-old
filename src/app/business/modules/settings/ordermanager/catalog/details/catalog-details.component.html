@@ -17,12 +17,10 @@
         </div>
         <div class="card p0 queue-form" *ngIf="!api_loading">
           <div class="copy locd">
-
             <div class="lbl col-sm-12 col-md-8 col-lg-7">
               <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                 (keyup)="resetApiErrors()" *ngIf="!showInfo" class="ynw-common-form-nm order-catalog">
                 <!-- <div class="createcatalogupper"> -->
-
 
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 1">
@@ -61,6 +59,15 @@
                       <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                         characters remaining</span>
                     </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
+                      Show personalized information about this catalog
+                      <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+                        Click here</span>
+                      <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+                        <i class="fa fa-check"></i>
+                        <a (click)="showInfoSection()"> Instructions Added</a>
+                      </div>
+                    </div>
                     <div class="form-group">
                       <label class="col-form-label" for="PromotionalPricetype">Order type</label>
                       <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
@@ -80,10 +87,9 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
-
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
-                    <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2)">Next</button>
-                  </div>
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2)">Next</button>
+                    </div>
                   </mat-expansion-panel>
                 </mat-accordion>
                 <!-- <div class="form-group row" > -->
@@ -153,7 +159,6 @@
                     </div>
                   </mat-expansion-panel>
                 </mat-accordion>
-
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 3">
                     <mat-expansion-panel-header class="min90">
@@ -174,7 +179,6 @@
                         <span class="cs-btn bt3" (click)="addItemstoCart('edit',amForm.value)"> Edit items</span>
                       </div>
                     </div>
-
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
                       <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2)">Back</button>&nbsp;
                       <button type="button" class="cs-btn bt1" mat-button (click)="showStep(4)">Next</button>
@@ -202,7 +206,8 @@
                           <label>Advance payment &nbsp;
                             <mat-checkbox formControlName="advancePaymentStatus"
                               (change)="handleadvancePayment($event)">
-                            </mat-checkbox></label>
+                            </mat-checkbox>
+                          </label>
                           <div *ngIf="payAdvance === 'FIXED'">
                             <mat-form-field>
                               <input matInput type="text" class="form-control number-ip-sm" id="advancePayment"
@@ -215,7 +220,8 @@
                         <div class="form-group">
                           <label>Cancelation policy &nbsp;
                             <mat-slide-toggle formControlName="cancelationPolicyStatus" [disabled]="true">
-                            </mat-slide-toggle></label><br>
+                            </mat-slide-toggle>
+                          </label><br>
                           <label class="link underline" (click)="addcancelpolicy()">Add cancelation policy</label>
                           <div *ngIf="showpolicy">
                             <mat-form-field>
@@ -320,7 +326,6 @@
                   </mat-expansion-panel>
                 </mat-accordion>
 
-
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 6">
                     <mat-expansion-panel-header class="min90">
@@ -413,6 +418,7 @@
                     <button type="button" class="cs-btn bt1" mat-button (click)="showStep(5)">Back</button>
                   </mat-expansion-panel>
                 </mat-accordion>
+
                 <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                   style="display: inline-flex;">
                   <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn_cap}}</button>
