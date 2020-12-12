@@ -15,18 +15,19 @@
                   <i class="fa fa-arrow-left"></i>
                 </a>
                 <span class=" mgn-lt-10 amount">Continue shopping</span>
-                <span class="pull-right mgn-rt-10" *ngIf="getItemQty()>0"><i class="fa fa-shopping-cart" (click)="checkout()"><sup class="blue"> {{getItemQty()}}</sup></i></span>
+                <span class="pull-right mgn-rt-10" *ngIf="getItemQty()>0"><i class="fa fa-shopping-cart"
+                    (click)="checkout()"><sup class="blue"> {{getItemQty()}}</sup></i></span>
               </h5>
             </div>
             <div class="container">
               <div class="row">
                 <div class="col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
-                    <ks-carousel [id]="1" [images]="imagesRect"
-                      [carouselConfig]="{maxHeight: '400px',minHeight: '400px', showArrows: false, objectFit: 'scale-down', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
-                      [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"
-                      [dotsConfig]="{visible: false}" [playConfig]="{autoPlay:false}">
-                    </ks-carousel>
-                  <!--
+                  <!-- <ks-carousel [id]="1" [images]="imagesRect"
+                  [carouselConfig]="{maxHeight: '400px',minHeight: '400px', showArrows: false, objectFit: 'scale-down', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
+                  [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"
+                  [dotsConfig]="{visible: false}" [playConfig]="{autoPlay:false}">
+                </ks-carousel>  -->
+
                   <owl-carousel [options]="{items: 1, dots: true, navigation: false}" [items]="itemImages"
                     [carouselClasses]="['owl-theme', 'row', 'sliding']">
                     <div class="item" *ngFor="let image of itemImages;let i = index">
@@ -34,27 +35,40 @@
                         <img [src]="image.url" />
                       </div>
                     </div>
-                  </owl-carousel> -->
+                  </owl-carousel>
                 </div>
                 <div class="col-md-6 col-sm-5 no-padding">
                   <div class="col-md-12 no-padding">
                     <div class="col-md-6 no-padding mgn-up-10">
-                      <p class="mgn-rt-10 m0" ><img class="ordericon home"
-                              src="../../../../assets/images/home.png" />&nbsp;Home delivery accepted</p>
+                      <p class="mgn-rt-10 m0"><img class="ordericon home"
+                          src="../../../../assets/images/home.png" />&nbsp;Home delivery accepted</p>
                       <p class="m0">Within in the store working Hours</p>
-                      </div>
-                      <div class="col-md-6 no-padding">
-                        <p class="m0"  ><img class="ordericon pickup"
+                    </div>
+                    <div class="col-md-6 no-padding">
+                      <p class="m0"><img class="ordericon pickup"
                           src="../../../../assets/images/pickup.png" />&nbsp;Store Pickup available</p>
-                          <p class="m0">Within in the store working Hours</p>
-                      </div>
+                      <p class="m0">Within in the store working Hours</p>
+                    </div>
                   </div>
                   <div class="col-md-12 mgn-up-20">
                     <h2 class="m0">{{currentItem.displayName}}</h2>
-                    <p class="title-style">
-                      <span class="rupee-font" style="font-size: xx-large">&#8377;{{currentItem.price}}</span> &nbsp;
+                    <p class="title-style" *ngIf="isPromotionalpriceFixed">
                       <span class="rupee-font"
-                        style=" font-size: x-large; text-decoration: line-through;">&#8377;1500</span>
+                        style=" font-size: x-large; text-decoration: line-through;">&#8377;{{currentItem.price}}</span>&nbsp;
+                      <span class="rupee-font"
+                        style="font-size: xx-large">&#8377;{{currentItem.promotionalPrice}}</span>
+                    </p>
+                    <p class="title-style" *ngIf="isPromotionalpricePertage">
+                      &nbsp;
+                      <span class="rupee-font"
+                        style=" font-size: x-large; text-decoration: line-through;">&#8377;{{currentItem.price}}</span>&nbsp;
+                      <span class="rupee-font" style="font-size: x-large">
+                        <sup>{{currentItem.promotionalPrcnt}}%</sup></span>&nbsp;
+                      <span class="rupee-font"
+                        style="font-size: xx-large">&#8377;{{currentItem.promotionalPrice}}</span>
+                    </p>
+                    <p class="title-style" *ngIf="isPrice">
+                      <span class="rupee-font" style="font-size: xx-large">&#8377;{{currentItem.price}}</span> &nbsp;
                     </p>
                   </div>
                   <div class="col-md-12  mr-area">
@@ -73,15 +87,15 @@
                   </div>
                   <div class="col-md-12 pad-lt-25 mgn-bt-50">
                     <div class="btn-lt pull-left">
-                        <button (click)="decrement()">-</button>
+                      <button (click)="decrement()">-</button>
                     </div>
                     <div class="count-o pull-left">
-                        {{getItemQty()}}
+                      {{getItemQty()}}
                     </div>
                     <div class="btn-rt pull-left">
-                        <button (click)="increment()">+</button>
+                      <button (click)="increment()">+</button>
                     </div>
-                </div>
+                  </div>
                 </div>
               </div>
             </div>

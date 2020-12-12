@@ -67,6 +67,9 @@ export class ItemDetailsSharedComponent implements OnInit {
   showDots = true;
   imagesRect: Image[] = new Array <Image> ();
   item: any;
+  isPromotionalpriceFixed;
+  isPromotionalpricePertage;
+  isPrice;
   // imagesRect: Image[] = [
   //   new Image(
   //     0,
@@ -130,13 +133,23 @@ export class ItemDetailsSharedComponent implements OnInit {
           console.log(this.item);
         }); 
       }
-
   ngOnInit() {
     const orderList = JSON.parse(localStorage.getItem('order'));
     if (orderList) {
       this.orderList = orderList;
     }
         this.currentItem = JSON.parse(this.item);
+        if(this.currentItem.showPromotionalPrice){
+          if(this.currentItem.promotionalPriceType === 'FIXED'){
+            this.isPromotionalpriceFixed = true;
+          }
+          else{
+            this.isPromotionalpricePertage = true;
+          }
+        }
+        else{
+          this.isPrice = true;
+        }
         this.itemImages = this.currentItem.itemImages;
         for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
           const imgobj = new Image(this.itemImages[imgIndex].id,
