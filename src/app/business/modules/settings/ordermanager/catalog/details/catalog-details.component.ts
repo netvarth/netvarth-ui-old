@@ -243,10 +243,6 @@ step = 1;
  ngOnInit() {
  }
  setCatalogPrefillfields(form_data) {
-    console.log(form_data.orderStatuses);
-    console.log(this.selday_arr);
-    console.log(this.selday_arrstorepickup);
-    console.log(this.selday_arrhomedelivery);
     const daystr: any = [];
     for (const cday of this.selday_arr) {
     daystr.push(cday);
@@ -268,7 +264,7 @@ step = 1;
     const endtime_format = moment(enddate).format('hh:mm A') || null;
 
     //store pickup
-    console.log(this.selday_arrstorepickup);
+    
     const storedaystr: any = [];
     for (const cday of this.selday_arrstorepickup) {
     storedaystr.push(cday);
@@ -296,11 +292,7 @@ step = 1;
     for (const cday of this.selday_arrhomedelivery) {
     homedaystr.push(cday);
     }
-    if (this.homedeliveryStat && this.selday_arrhomedelivery.length === 0) {
-    const error = 'Please select the homedelivery days';
-    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    return;
-    }
+    
     let homeendDate;
     const homestartDate = this.convertDate(form_data.startdatehome);
     if (form_data.enddatehome) {
@@ -309,34 +301,38 @@ step = 1;
     homeendDate = '';
     }
     // check whether the start and end times are selected
-    if (!this.dstart_timehome || !this.dend_timehome) {
-    this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
-    return;
-    }
-    // today
-    if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
-    this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
-    return;
-    }
+   
     const curdatehome = new Date();
     curdatehome.setHours(this.dstart_timehome.hour);
     curdatehome.setMinutes(this.dstart_timehome.minute);
-    const enddatehome= new Date();
+    const enddatehome = new Date();
     enddatehome.setHours(this.dend_timehome.hour);
     enddatehome.setMinutes(this.dend_timehome.minute);
     const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
     const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
-    if (this.payAdvance === 'FIXED') {
-       if (form_data.advancePayment === '') {
-           this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelclass': 'snackbarerror' });
-           return;
-       }
-    }
+    
+    
+    let seltedimg = [];
+    let seltedimgpopup = [];
+    let seltedimgbase = [];
+   if (this.selectedMessage.files.length > 0) {
+        seltedimg = this.selectedMessage.files;
+   }
+   console.log(seltedimg);
+   if (this.image_list_popup) {
+        seltedimgpopup = this.image_list_popup;
+   }
+   console.log(seltedimgpopup);
+   if (this.selectedMessage.base64.length > 0) {
+        seltedimgbase = this.selectedMessage.base64;
+   }
+   console.log(seltedimgbase);
+   
     const postdata = {
-    'catalogName': form_data.catalogName,
-    'catalogDesc': form_data.catalogDesc,
+    'catalogName': form_data.catalogName || '',
+    'catalogDesc': form_data.catalogDesc || '',
     'catalogSchedule': {
-    'repeatIntervals': daystr || null,
+    'repeatIntervals': daystr || [],
     'startDate': startDate || '',
     'terminator': {
     'endDate': endDate || ''
@@ -353,7 +349,7 @@ step = 1;
     'pickUp': {
     'orderPickUp': form_data.storepickup,
     'pickUpSchedule': {
-    'repeatIntervals': storedaystr || null,
+    'repeatIntervals': storedaystr || [],
     'startDate': storestartDate || '',
     'terminator': {
     'endDate': storeendDate || ''
@@ -370,7 +366,7 @@ step = 1;
     'homeDelivery': {
     'homeDelivery': form_data.homedelivery,
     'deliverySchedule': {
-    'repeatIntervals': homedaystr || null,
+    'repeatIntervals': homedaystr || [],
     'startDate': homestartDate || '',
     'terminator': {
     'endDate': homeendDate || ''
@@ -383,8 +379,8 @@ step = 1;
     ]
     },
     'deliveryOtpVerification': form_data.homeotpverify,
-    'deliveryRadius': form_data.deliverykms,
-    'deliveryCharge': form_data.deliverycharge
+    'deliveryRadius': form_data.deliverykms || '',
+    'deliveryCharge': form_data.deliverycharge || ''
     },
     'showPrice': form_data.itemPriceInfo,
     'paymentType': this.payAdvance,
@@ -400,13 +396,19 @@ step = 1;
     'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
     },
     'catalogItem': this.seletedCatalogItems,
-    'cancellationPolicy': form_data.cancelationPolicy
+    'cancellationPolicy': form_data.cancelationPolicy ,
+     'image': seltedimg || [],
+    'imagepop': seltedimgpopup || [],
+    'imagebase64': seltedimgbase || []
     };
+    console.log(postdata);
     this.sharedfunctionObj.setitemonLocalStorage('prefilldata', postdata);
   //  this.provider_services.setCatalogPrefilledDetails(postdata);
  }
 
  addItemstoCart(type, data) {
+     console.log(data);
+     console.log(type);
     this.setCatalogPrefillfields(data);
     const navigationExtras: NavigationExtras = {
         queryParams: { action: type,
@@ -966,7 +968,15 @@ updateprefillForm() {
     homeDeliveryradius = '';
     homeDeliverycharge = '';
  }
-
+ if (this.prefillData.image.length > 0) {
+    this.selectedMessage.files = this.prefillData.image;
+ }
+ if (this.prefillData.imagepop.length > 0) {
+    this.image_list_popup = this.prefillData.imagepop;
+ }
+ if (this.prefillData.imagebase64.length > 0) {
+    this.selectedMessage.base64 = this.prefillData.imagebase64;
+ }
  this.amForm.setValue({
         'catalogName': this.prefillData.catalogName,
         'catalogDesc': this.prefillData.catalogDesc || '',
@@ -1305,7 +1315,6 @@ onSubmit(form_data) {
             }
          }
         
-        
          const postdata = {
          'catalogName': form_data.catalogName,
          'catalogDesc': form_data.catalogDesc,
@@ -1391,6 +1400,7 @@ onSubmit(form_data) {
          'minNumberItem': 1,
          'maxNumberItem': 100,
          'cancellationPolicy': form_data.cancelationPolicy
+        
          };
          if (this.action === 'add') {
          console.log(postdata);
