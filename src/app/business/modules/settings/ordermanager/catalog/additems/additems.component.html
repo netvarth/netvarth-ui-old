@@ -1,42 +1,50 @@
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeecatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToJaldeecatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
             select items
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
     </div>
-  </section>
-  <section >
-        <div  *ngIf="api_loading">
-                <app-common-innerloading-spinner></app-common-innerloading-spinner>
-            </div>
-<div *ngIf="!api_loading" >
-   
-    <ng-container *ngIf="catalogItem && catalogItem.length > 0">
-       <div class="bus-item" *ngFor="let item of catalogItem;let i=index;">
-           <div class="card card-item-n no-padding" (click)="selectItem(item,i)" [class.itemselected]="item.selected">
-                <img src="http://scalejd.jaldee.com/73887/logo/mylogo.jpg?Sat%20Nov%2028%202020%2012:13:01%20GMT+0530%20(India%20Standard%20Time)" >
-               <div class="card-item-title">
-                   <a class="pointer-cursor"><b>
-                           {{item.displayName | capitalizeFirst | limitTo: [35, '...']}}
-                       </b>  <p class="rupee-font">{{item.price| currency:'&#8377;'}}</p></a>
+</section>
+<section class="add_item_">
+    <div *ngIf="api_loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div *ngIf="!api_loading">
 
-               </div>
-              
-           </div>
-         <label style="margin-top: 5px;margin-left:20px">Min quantity</label>  <input matInput type="number" min="1" value="1" class="form-control number-ip-sm" id="minquty_{{item.itemId}}"  placeholder="Min quantity" style="margin-top: 5px;margin-left:30px" >
-         <label style="margin-top: 5px;margin-left:20px">Max quantity</label>  <input matInput type="number" min="5" value="5" class="form-control number-ip-sm" id="maxquty_{{item.itemId}}"  placeholder="Max quantity" style="margin-top: 5px;margin-left:30px">
-       </div>
-       
+        <ng-container *ngIf="catalogItem && catalogItem.length > 0">
+            <div class="card">
+            <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
+                <mat-grid-tile *ngFor="let item of catalogItem;let i=index;">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(item,i)" [class.itemselected]="item.selected">
+                        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside img_sample no-padding">
+                            
+                        </div>
+                        <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
+                            <div class="item-name-outer">
+                                <div class="item-name">{{item.displayName}}</div>
+                                <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
+                            </div>
+                            <div class="price_outer">
+                                <input class="ip-field"  placeholder="Min Qty">
+                                <input class="ip-field"  placeholder="Max Qty">
+                            </div>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
 
-   </ng-container>
 
-  
-  </div>
-  
-  <div  *ngIf="!api_loading">
-        <div >{{selectedCount}} items are selected</div>
-        <div> <button type="button"  (click)="selectedItems()" [disabled]="selectedCount === 0" class="cs-btn bt1" mat-button>ok</button>
-     </div>
-     </div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="!api_loading">
+        <div>{{selectedCount}} items are selected</div>
+        <div> <button type="button" (click)="selectedItems()" [disabled]="selectedCount === 0" class="cs-btn bt1"
+                mat-button>ok</button>
+        </div>
+    </div>
 </section>

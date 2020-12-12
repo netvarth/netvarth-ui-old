@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { Validators, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -65,6 +66,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selecteditemfordelete: any = [];
   selecteditemforadd: any = [];
   selecteditemforupdate: any = [];
+  itemQtyForm: FormGroup;
+  formBuilder: any;
+  screenWidth: number;
+  no_of_grids: number;
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -74,10 +79,26 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
       this.action = qParams.action;
-      this.cataId = qParams.id;     
+      this.cataId = qParams.id;
       }
       );
+      this.onResize();
+      }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+       divider = divident / 4;
+    } else if (this.screenWidth > 400 && this.screenWidth < 1000) {
+      divider = divident / 2;
+    }  else if (this.screenWidth < 400) {
+      divider = divident / 1;
+    }
+    this.no_of_grids = Math.round(divident / divider);
   }
+
 
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -88,6 +109,14 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.getitems();
     this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
     console.log(this.seletedCatalogItems);
+    this.itemQtyForm = this.formBuilder.group({
+      users: this.formBuilder.array([
+       this.formBuilder.group({
+        min: [null, [Validators.required]],
+        max: [null, [Validators.required]]
+       })
+     ])
+  });
   }
   ngOnDestroy() {
   }
@@ -107,13 +136,9 @@ export class AddItemsComponent implements OnInit, OnDestroy {
                }
             }
         }
-         
           console.log(this.catalogItem);
 
         }
-        
-
-
       });
   }
   selectItem(item, index) {
@@ -145,7 +170,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
     }
-    
     console.log(this.catalogItemsSelected);
     console.log(this.seletedCatalogItems);
     if (this.action === 'edit' && this.cataId !== 'add') {

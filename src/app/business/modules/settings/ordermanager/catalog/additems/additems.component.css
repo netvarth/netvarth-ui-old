@@ -299,11 +299,60 @@
     margin-bottom: 20px !important;
   }
   .itemselected{
-      background-color: burlywood !important;
+      background-color: #eeb31a8f !important;
   }
   
- 
-  
+ /* New item grid style */
+ .add_item_  mat-grid-tile {
+    background: #3c8dbc0f !important;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+    cursor: pointer;
+ }
+ .add_item_ .fit_inside {
+  height: 100% !important;
+  overflow: auto !important;
+ }
+ .add_item_ .img_sample {
+   background-image: url('https://images.wholesalesalwar.com/images/500/2020y/January/15495/Wine-Georgette-Festival-Wear-Embroidery-Work-Churidar-Suit-7120.jpg');
+   background-repeat: round !important;
+ }
+ .add_item_ .price_outer {
+  position: absolute;
+  bottom: 0;
+ }
+.add_item_ .ip-field {
+  width: 100%;
+  overflow: auto;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+.add_item_ .ip-field:hover {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.add_item_ input::placeholder {
+  color: grey;
+  font-size: 0.7rem;
+}
+.add_item_ .item-name-outer {
+  text-align: center;
+  margin-top: 10px;
+  line-height: 2;
+}
+.add_item_ .item-name {
+  font-size: 1rem;
+  color: #3c8dbc;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: system-ui;
+}
+.add_item_ .item-price {
+  font-size: smaller;
+}
   
   
   
