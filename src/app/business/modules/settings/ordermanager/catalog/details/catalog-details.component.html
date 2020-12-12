@@ -58,22 +58,6 @@
                       <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                         characters remaining</span>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
-                      Show personalized information about this catalog
-                      <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
-                        Click here</span>
-                      <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
-                        <i class="fa fa-check"></i>
-                        <a (click)="showInfoSection()"> Instructions Added</a>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-form-label" for="PromotionalPricetype">Order type</label>
-                      <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
-                        <mat-radio-button value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
-                        <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
                     <div class="form-group">
                       <mat-form-field>
                         <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
@@ -85,6 +69,22 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label" for="PromotionalPricetype">Order type</label>
+                      <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
+                        <mat-radio-button value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
+                        <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
+                      Show personalized information about this catalog
+                      <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
+                        Click here</span>
+                      <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
+                        <i class="fa fa-check"></i>
+                        <a (click)="showInfoSection()"> Instructions Added</a>
+                      </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
                       <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2)">Next</button>
@@ -132,7 +132,7 @@
                     </div>
                     <div class="form-group schedulesub_outer">
                       <div class="startendtime" style="display: flex">
-                        <div class="starttimediv" style="flex-grow: 1">
+                        <div class="starttimediv mgn-rt-20">
                           <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
                           <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time
                             (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
@@ -290,7 +290,7 @@
 
                         <div class="form-group schedulesub_outer">
                           <div class="startendtime" style="display: flex">
-                            <div class="starttimediv" style="flex-grow: 1">
+                            <div class="starttimediv mgn-rt-20">
                               <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
                               <ngb-timepicker formControlName="qstarttimestore" meridian="true" #sch_start_timestore
                                 (ngModelChange)="changestoretime('start',$event)"></ngb-timepicker>
@@ -374,7 +374,7 @@
                         </div>
                         <div class="form-group schedulesub_outer">
                           <div class="startendtime" style="display: flex">
-                            <div class="starttimediv" style="flex-grow: 1">
+                            <div class="starttimediv mgn-rt-20">
                               <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
                               <ngb-timepicker formControlName="qstarttimehome" meridian="true" #sch_start_timehome
                                 (ngModelChange)="changehometime('start',$event)"></ngb-timepicker>
