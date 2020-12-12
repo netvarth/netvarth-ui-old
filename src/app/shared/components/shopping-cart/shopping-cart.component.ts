@@ -178,12 +178,12 @@ this.isFuturedate = false;
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        delivery_type: 'store',
+        delivery_type :this.choose_type,
         catlog_id: this.catalog_details.id ,
-        selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
-        order_date: this.sel_checkindate,
-        advance_amount: this.catalog_details.advance_amount,
+        // selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
+        // selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
+        // order_date: this.sel_checkindate,
+        // advance_amount: this.catalog_details.advance_amount,
         account_id: this.account_id
 
       }
