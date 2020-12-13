@@ -16,7 +16,7 @@ import { ProviderServices } from '../../ynw_provider/services/provider-services.
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'a_dsp', 'version', 'activeSkin','jld', 'qrp']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin','jld', 'qrp']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
