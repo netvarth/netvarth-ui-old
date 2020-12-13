@@ -4,7 +4,6 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { Validators, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -66,10 +65,11 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selecteditemfordelete: any = [];
   selecteditemforadd: any = [];
   selecteditemforupdate: any = [];
-  itemQtyForm: FormGroup;
-  formBuilder: any;
   screenWidth: number;
   no_of_grids: number;
+  min: any;
+  max: any;
+
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -109,14 +109,14 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.getitems();
     this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
     console.log(this.seletedCatalogItems);
-    this.itemQtyForm = this.formBuilder.group({
-      users: this.formBuilder.array([
-       this.formBuilder.group({
-        min: [null, [Validators.required]],
-        max: [null, [Validators.required]]
-       })
-     ])
-  });
+  //   this.itemQtyForm = this.formBuilder.group({
+  //     users: this.formBuilder.array([
+  //      this.formBuilder.group({
+  //       min: [null, [Validators.required]],
+  //       max: [null, [Validators.required]]
+  //      })
+  //    ])
+  // });
   }
   ngOnDestroy() {
   }
@@ -131,7 +131,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           console.log(this.catalogItem);
           for (const itm of this.catalogItem) {
             for (const selitem of this.seletedCatalogItems) {
-               if ( itm.itemId === selitem.item.itemId) {
+               if (itm.itemId === selitem.item.itemId) {
                 itm.selected = true;
                }
             }
