@@ -326,17 +326,21 @@ export class ItemDetailsComponent implements OnInit {
             'displayName': this.item.displayName || null,
             'shortDec': this.item.shortDec || null,
             'displayDesc': this.item.itemDesc || null,
-            'note': this.item.note || null,
+            'note': this.item.notes[0].note || null,
             'price': this.item.price || null,
             'taxable': this.holdtaxable,
             'showOnLandingpage': this.item.isShowOnLandingpage,
             'stockAvailable': this.item.isStockAvailable,
             'promotionalPrice': this.item.promotionalPrice || 0,
             'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
-            'promotionallabel': this.item.promotionLabelType || 'ONSALE'
+            'promotionallabel': this.item.promotionLabelType || 'ONSALE',
+            'customlabel': this.item.promotionLabel || ''
         });
         this.showPromotionalPrice = this.item.showPromotionalPrice;
         this.curtype = this.item.promotionalPriceType || 'FIXED';
+        if (this.amForm.get('promotionallabel').value === 'CUSTOM') {
+            this.showCustomlabel = true;
+        }
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
