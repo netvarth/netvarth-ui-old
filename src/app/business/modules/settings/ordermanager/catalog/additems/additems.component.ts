@@ -133,6 +133,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             for (const selitem of this.seletedCatalogItems) {
                if (itm.itemId === selitem.item.itemId) {
                 itm.selected = true;
+                itm.id = selitem.id;
                 itm.minQuantity = selitem.minQuantity;
                 itm.maxQuantity = selitem.maxQuantity;
                }
@@ -194,21 +195,44 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.selecteditemforadd.push(selitem);
   }
 }
-const updateresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.minQuantity === o1.minQuantity).length === 0);
-  if (updateresult.length > 0) {
-    for (const selitem of updateresult) {
-    this.selecteditemforupdate.push(selitem);
-  }
+const updateminresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.minQuantity == o1.minQuantity).length === 0);
+const updatemaxresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.maxQuantity == o1.maxQuantity).length === 0);
+
+console.log(updateminresult);
+console.log(updatemaxresult);
+if (updatemaxresult.length > 0 || updateminresult.length > 0) {
+  this.selecteditemforupdate = updateminresult.concat(updatemaxresult);
 }
-    console.log(addresult);
+let updateitemsselected = [];
+if (this.selecteditemforupdate.length > 0 ) {
+  updateitemsselected = [...new Map(this.selecteditemforupdate.map(item => [item.item['itemId'], item])).values()];
+}
+
+console.log(updateitemsselected);
+
+
+
     if (this.selecteditemfordelete.length > 0) {
       this.deleteItems(this.selecteditemfordelete);
     }
     if (this.selecteditemforadd.length > 0) {
       this.addItems(this.selecteditemforadd);
     }
-    if (this.selecteditemforupdate.length > 0) {
-      this.updateItems(this.selecteditemforupdate);
+    if (updateitemsselected.length > 0 && this.selecteditemforadd.length > 0) {
+      const updateitem = [];
+      for (const itm of updateitemsselected) {
+        for (const selitem of this.selecteditemforadd) {
+           if (itm.item.itemId !== selitem.item.itemId) {
+            updateitem.push(itm);
+           }
+        }
+    }
+    console.log(updateitem);
+    if (updateitem.length > 0) {
+      this.updateItems(updateitem);
+    }
+    } else {
+      this.updateItems(updateitemsselected);
     }
 
       if (!this.api_loading) {
@@ -273,7 +297,16 @@ const updateresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogI
   }
   updateItems(updatelist) {
     console.log(updatelist);
-    // this.provider_servicesobj.updateCatalogItems(this.cataId, updatelist).subscribe(
+    const passlist: any = {};
+    const passingupdateList = [];
+    for (const selitem of updatelist) {
+      passlist.id = selitem.item.id;
+      passlist.maxQuantity = selitem.maxQuantity;
+      passlist.minQuantity = selitem.minQuantity;
+      passingupdateList.push(passlist);
+  }
+    console.log(passingupdateList);
+    // this.provider_servicesobj.updateCatalogItems(this.cataId, passingupdateList).subscribe(
     //   (data) => {
     //     this.api_loading = false;
     //   }, error => {

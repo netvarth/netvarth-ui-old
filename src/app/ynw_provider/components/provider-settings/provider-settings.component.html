@@ -482,19 +482,19 @@
                 <li (click)="redirecTo('storedetails')">
                     <a class="pointer-cursor">
                         <span class="lnk setings">Store detail
-                            <span class="pull-right badge bg-blue">{{service_count}}</span>
+                            <!-- <span class="pull-right badge bg-blue">{{service_count}}</span> -->
                         </span>
-                        <p class="settings_info">Eg: {{services_hint}}.</p>
+                        <p class="settings_info">store information,contact details</p>
                     </a>
                 </li>
                 <li (click)="redirecTo('catalogs')">
                     <a class="pointer-cursor">
                         <span class="lnk setings">Order catalogs
-                            <span class="pull-right badge bg-blue">{{schedules_count}}</span>
+                            <!-- <span class="pull-right badge bg-blue">{{schedules_count}}</span> -->
                         </span>
-                        <p *ngIf="schedules_count == 0" class="req-flds-cap">
+                        <!-- <p *ngIf="schedules_count == 0" class="req-flds-cap">
                             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Schedules are
-                            not created</p>
+                            not created</p> -->
                         <p class="settings_info">Set when you want to accept bookings.</p>
                     </a>
                 </li>
@@ -503,7 +503,7 @@
                         <span class="lnk setings">Items
                             <span class="pull-right badge bg-blue">{{item_count}}</span>
                         </span>
-                        <p class="settings_info">Eg: {{services_hint}}.</p>
+                        <p class="settings_info">Items you want to sell.</p>
                     </a>
                 </li>
                
