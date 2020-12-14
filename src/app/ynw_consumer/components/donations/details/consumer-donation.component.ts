@@ -458,7 +458,6 @@ export class ConsumerDonationComponent implements OnInit {
         this.donate(paymentWay);
     }
     donate(paymentWay) {
-        console.log(this.consumerNote);
         this.showEditView = false;
         const post_Data = {
             'consumer': {
