@@ -32,7 +32,7 @@ import { FormMessageDisplayService } from './shared/modules/form-message-display
 import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
-import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
+import { LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
@@ -59,13 +59,7 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
 import { SignaturePadModule } from 'angular2-signaturepad';
-<<<<<<< HEAD
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
-=======
-import { CardModule } from './shared/components/card/card.module';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-
->>>>>>> refs/remotes/origin/1.6.x
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -127,16 +121,7 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
-<<<<<<< HEAD
     SignaturePadModule
-
-=======
-    ConsumerFooterModule,
-    TruncateModule,
-    SignaturePadModule,
-    CardModule,
-    NgxIntlTelInputModule
->>>>>>> refs/remotes/origin/1.6.x
   ],
   providers: [
     AuthGuardConsumer,
@@ -166,7 +151,7 @@ export function init_app(globalService: GlobalService) {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ],

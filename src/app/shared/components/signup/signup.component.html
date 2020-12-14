@@ -1,15 +1,15 @@
-<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2  && step!=3">&nbsp;<button
-    (click)="onCancelPass()" class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-      aria-hidden="true"></i></button></h1>
-<h1 class="mat-dialog-title custom-login-form" *ngIf="step==1"><span
-    *ngIf="step==1">{{heading}}</span><button mat-dialog-close class="modal_close" tabindex="-1"><i
-      class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title" *ngIf="step!=1 && step!=2  && step!=3">&nbsp;<button (click)="onCancelPass()"
+    class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<h1 class="mat-dialog-title custom-login-form" *ngIf="step==1"><span *ngIf="step==1">{{heading}}</span><button
+    mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+</h1>
 <h1 class="mat-dialog-title" *ngIf="step==2 || step==3"><button mat-dialog-close class="modal_close" tabindex="-1"><i
-    class="fa fa-window-close" aria-hidden="true"></i></button></h1>
-<form [formGroup]="signupForm" class="signup-form custom-login-form" novalidate (ngSubmit)="onSubmit()" (keyup)="resetApiErrors()">
-  <div class="mat-dialog-content" *ngIf="step==1">
+      class="fa fa-window-close" aria-hidden="true"></i></button></h1>
+<form [formGroup]="signupForm" class="signup-form custom-login-form" novalidate (ngSubmit)="onSubmit()"
+  (keyup)="resetApiErrors()">
+  <div class="mat-dialog-content" *ngIf="step==1" style="overflow-y: scroll !important;">
     <div class="form-group" *ngIf="!data.moreOptions.isCreateProv">
-      <div class="form-group">
+      <!-- <div class="form-group">
         <mat-label for="phone">Enter your Mobile Number</mat-label>
         <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
           [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -20,9 +20,10 @@
         </ngx-intl-tel-input>
         <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
       </div>
-      <div class="clearfix"></div>
-      <!-- <div class="form-group mob-prefx mobile-field">
+      <div class="clearfix"></div> -->
+      <div class="form-group mob-prefx mobile-field">
 
+        <mat-label for="phone">Enter your Mobile Number</mat-label>
         <div style="display: flex;">
           <div class="input-group-prepend">
             <span style="width: 65px">
@@ -31,12 +32,12 @@
               </mat-select>
             </span>
           </div>
-          <mat-form-field>
-            <div>
-              <input type="text" style="display: inline;" matInput class="form-control" id="phonenumber"
-                formControlName="phonenumber" autocomplete="off" placeholder="{{mobile_no_cap}} *" maxlength=10>
-            </div>
-          </mat-form-field>
+          <!-- <mat-form-field> -->
+            <!-- <div> -->
+              <input type="text" style="display: inline;" class="form-control" id="phonenumber"
+                formControlName="phonenumber" autocomplete="off" maxlength=10>
+            <!-- </div> -->
+          <!-- </mat-form-field> -->
         </div>
         <div class="clearfix"></div>
 
@@ -48,12 +49,12 @@
     'pattern' : 'Only numbers are allowed'
   })">
         </app-field-error-display>
-      </div> -->
+      </div>
       <div class="form-group">
         <mat-label for="phone">First Name</mat-label>
         <!-- <mat-form-field> -->
-          <input type="text" class="form-control" id="first_name" placeholder=""
-            formControlName="first_name" autocomplete="off" (blur)="onFieldBlur('first_name')">
+        <input type="text" class="form-control" id="first_name" placeholder="" formControlName="first_name"
+          autocomplete="off" (blur)="onFieldBlur('first_name')">
         <!-- </mat-form-field> -->
         <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'first_name',
 {
@@ -65,8 +66,8 @@
       <div class="form-group">
         <mat-label for="phone">Last Name</mat-label>
         <!-- <mat-form-field> -->
-          <input type="text"  class="form-control" id="last_name" placeholder=""
-            formControlName="last_name" autocomplete="off" (blur)="onFieldBlur('last_name')">
+        <input type="text" class="form-control" id="last_name" placeholder="" formControlName="last_name"
+          autocomplete="off" (blur)="onFieldBlur('last_name')">
         <!-- </mat-form-field> -->
         <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'last_name',
   {
@@ -86,7 +87,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="data.claimData !== undefined">
-        <input type="text" matInput class="form-control" placeholder="{{domain_cap}}"
+        <input type="text" class="form-control" placeholder="{{domain_cap}}"
           formControlName="selectedDomainIndex" autocomplete="off">
       </mat-form-field>
       <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'selectedDomainIndex')"
@@ -600,35 +601,12 @@
 </div>
 <div class="mat-dialog-content" *ngIf="step==3">
   <section class="col-md-12 col-xs-12 col-sm-12 no-padding">
-<<<<<<< HEAD
-      <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding">
-          <label class="col-form-label bold">How did you hear us?</label>
-      </div>
-      <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
-          <mat-radio-group [(ngModel)]="hearus">
-              <!-- <mat-radio-button value="Jaldee">Jaldee</mat-radio-button> -->
-              <mat-radio-button value="Facebook">Facebook</mat-radio-button>
-              <mat-radio-button value="Friend">Friend</mat-radio-button>
-              <mat-radio-button value="GoogleSearch">Google</mat-radio-button>
-              <mat-radio-button value="SalesReps">Sales Reps</mat-radio-button>
-              <div class="clearfix"></div>
-              <app-saleschannel *ngIf="hearus==='SalesReps'" (retfromSC)="onReferalSubmit($event)" (resetApiErrors)="resetApiErrors()">
-              </app-saleschannel>
-              <mat-radio-button value="Twitter">Twitter</mat-radio-button>
-              <mat-radio-button value="Other">Other</mat-radio-button>
-          </mat-radio-group>
-      </div>
-      <mat-dialog-actions>
-          <button tabindex="-1" (click)="skipHearus()" class="cs-btn bt2">Skip</button>
-          <button tabindex="2" [disabled]="!hearus || (hearus=='SalesReps' && !scfound)" [ngClass]="{'disabled': !hearus || (hearus=='SalesReps' && !scfound)}" (click)="submitHearus(hearus)" class="cs-btn bt1">{{ok_btn_cap}}</button>
-      </mat-dialog-actions>
-=======
     <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding">
       <label class="col-form-label bold">How did you hear us?</label>
     </div>
     <div class="form-group col-md-12 col-xs-12 col-sm-12 hearus no-padding">
       <mat-radio-group [(ngModel)]="hearus">
-        <mat-radio-button value="Jaldee">Jaldee</mat-radio-button>
+        <!-- <mat-radio-button value="Jaldee">Jaldee</mat-radio-button> -->
         <mat-radio-button value="Facebook">Facebook</mat-radio-button>
         <mat-radio-button value="Friend">Friend</mat-radio-button>
         <mat-radio-button value="GoogleSearch">Google</mat-radio-button>
@@ -647,7 +625,6 @@
         [ngClass]="{'disabled': !hearus || (hearus=='SalesReps' && !scfound)}" (click)="submitHearus(hearus)"
         class="cs-btn bt1">{{ok_btn_cap}}</button>
     </mat-dialog-actions>
->>>>>>> refs/remotes/origin/1.6.x
   </section>
 
 </div>

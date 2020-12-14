@@ -82,10 +82,7 @@ export class SignUpComponent implements OnInit {
   actionstarted = false;
   scCode;
   scfound = false;
-<<<<<<< HEAD
-  showTermcondition = false;
-=======
-  phoneNumber;
+    phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
@@ -93,7 +90,7 @@ export class SignUpComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
->>>>>>> refs/remotes/origin/1.6.x
+  showTermcondition = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -106,6 +103,9 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.is_provider) {
+      this.countryCodes = [{ displayName: '+91', value: '+91' }];
+    }
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
@@ -316,13 +316,13 @@ export class SignUpComponent implements OnInit {
       }
       return false;
     }
-    const phoneNumber = this.signupForm.get('phonenumber').value.e164Number;
-    const dialCode = this.signupForm.get('phonenumber').value.dialCode;
+    const phoneNumber = this.signupForm.get('phonenumber').value;
+    const dialCode = '+91';
 
     let loginId = phoneNumber;
-    if(phoneNumber.startsWith(dialCode)) {
-      loginId = phoneNumber.split(dialCode)[1];
-    }
+    // if(phoneNumber.startsWith(dialCode)) {
+    //   loginId = phoneNumber.split(dialCode)[1];
+    // }
 
     let userProfile = {
       countryCode: dialCode,
@@ -527,7 +527,7 @@ export class SignUpComponent implements OnInit {
     const ob = this;
     const dialCode = this.signupForm.get('phonenumber').value.dialCode;
     const post_data = { 
-      countryCode : dialCode,
+      countryCode : '+91',
       password: submit_data.new_password };
     if (this.is_provider === 'true') {
       this.shared_services.ProviderSetPassword(this.otp, post_data)

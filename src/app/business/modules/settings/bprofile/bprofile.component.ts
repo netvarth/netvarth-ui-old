@@ -22,12 +22,8 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
-<<<<<<< HEAD
-import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
-declare let cordova: any;
-=======
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
->>>>>>> refs/remotes/origin/1.6.x
+declare let cordova: any;
 
 @Component({
   selector: 'app-bprofile',
