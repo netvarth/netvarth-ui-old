@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../../../../shared/component/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
     selector: 'app-consumer-livetrack',

@@ -50,7 +50,7 @@ export class DrugListComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   removedrugdialogRef;
-
+  customer_label = '';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     public dialog: MatDialog,
@@ -73,6 +73,7 @@ export class DrugListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.patientDetails = this.medicalrecord_service.getPatientDetails();
     if (this.patientDetails.memberJaldeeId) {
       this.display_PatientId = this.patientDetails.memberJaldeeId;

@@ -32,6 +32,7 @@ export class ProPicPopupComponent implements OnInit {
     api_success: string;
     img_save_caption = 'Save';
     savedisabled = false;
+    canceldisabled = false;
     canvasRotation = 0;
     transform: ImageTransform = {};
     scale = 1;
@@ -139,6 +140,7 @@ export class ProPicPopupComponent implements OnInit {
     }
 
     saveImages() {
+        this.canceldisabled = true;
         const file = this.fileToReturn;
         this.success_error = null;
         this.error_list = [];
@@ -208,6 +210,7 @@ export class ProPicPopupComponent implements OnInit {
                     this.sharedfunctionobj.sendMessage(pdata);
                     this.api_success = Messages.BPROFILE_LOGOUPLOADED;
                     this.img_save_caption = 'Uploaded';
+                    this.canceldisabled = false;
                     setTimeout(() => {
                         this.dialogRef.close();
                     }, projectConstantsLocal.TIMEOUT_DELAY);

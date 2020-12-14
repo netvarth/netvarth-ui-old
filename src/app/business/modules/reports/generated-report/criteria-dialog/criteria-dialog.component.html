@@ -2,7 +2,7 @@
     <h1 mat-dialog-title class="head-t">Save this report as</h1>
     <div mat-dialog-content class="txt-center">
         <mat-form-field class="example-full-width width100pc">
-            <input type="text" [(ngModel)]="criteria_name" placeholder="Type here...">
+            <input type="text" [(ngModel)]="criteria_name" placeholder="Type here..." (keyup)="keyPress()">
         </mat-form-field>
     </div>
     <div mat-dialog-actions>
@@ -17,7 +17,7 @@
 <div *ngIf="for_view" class="view-pad">
     <h1 mat-dialog-title class="head-t">Criteria Details</h1>
     <hr>
-    <div mat-dialog-content>
+    <div mat-dialog-content class="no-padding-small">
         <table>
             <tr>
                 <td>Report Name : </td>
@@ -45,6 +45,9 @@
         </div>
     </div>
 </div>
-<div class="api_succes_msg"  *ngIf="api_success">
+<div class="api_succes_msg" *ngIf="api_success">
     Report saved successfully
+</div>
+<div class="api_error_msg" *ngIf="api_error">
+    Please enter the report name
 </div>

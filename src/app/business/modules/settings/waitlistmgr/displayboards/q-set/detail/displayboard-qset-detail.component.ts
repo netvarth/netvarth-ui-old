@@ -88,6 +88,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     userIds: any = [];
     serviceScheduleCount;
     provider_label = '';
+    customer_label = '';
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -95,6 +96,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         private shared_Functionsobj: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions
     ) {
+        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
     }
     ngOnInit() {
@@ -245,8 +247,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 for (let i = 0; i < this.providerLabels.length; i++) {
                     if (this.providerLabels[i].label === key) {
                         this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
-                        this.labelMultiCtrl.push(this.providerLabels[i]);
-                        this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
+                        this.labelMultiCtrl = this.providerLabels[i];
+                        this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key]; 
+                        console.log(this.labelMultiCtrl);
                     }
                 }
             });
@@ -382,6 +385,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             'wlStatus': this.selectedWtlstList,
             'providers': userIds
         };
+        console.log(this.qboardConditions);
         if (this.actionparam === 'add') {
             const post_data = {
                 'name': name,
@@ -542,6 +546,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.defaultLabels = this.labelfromConstants;
         for (let i = 0; i < this.defaultLabels.length; i++) {
             this.defaultLabels[i].checked = false;
+            if (this.defaultLabels[i].name === 'appmtFor') {
+                this.defaultLabels[i].displayname = this.customer_label[0].toUpperCase() + this.customer_label.substr(1);
+            }
         }
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
@@ -820,15 +827,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.labelsList.splice(index, 1);
     }
-    // providerLabelSelection(value, label) {
-    //     this.labelList[label] = value;
-    // }
     providerLabelSelection(label) {
-        this.labelList = {};
-        if (this.labelMultiCtrl.length > 0) {
-            for (let i = 0; i < this.labelMultiCtrl.length; i++) {
-                this.labelList[this.labelMultiCtrl[i].label] = true;
-            }
-        }
+        this.labelList[label.label] = true;
     }
+    // providerLabelSelection(label) {
+    //     this.labelList = {};
+    //     if (this.labelMultiCtrl.length > 0) {
+    //         for (let i = 0; i < this.labelMultiCtrl.length; i++) {
+    //             this.labelList[this.labelMultiCtrl[i].label] = true;
+    //         }
+    //     }
+    // }
 }

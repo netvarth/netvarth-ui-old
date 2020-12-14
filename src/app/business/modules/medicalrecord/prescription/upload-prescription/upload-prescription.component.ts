@@ -70,13 +70,14 @@ export class UploadPrescriptionComponent implements OnInit {
       }
     ]
   };
+  customer_label = '';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-
+      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.mode) {
         const type = queryParams.mode;

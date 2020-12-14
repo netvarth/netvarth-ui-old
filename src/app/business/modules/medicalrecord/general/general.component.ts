@@ -34,7 +34,7 @@ export class GeneralComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any = {};
   navigationExtras: NavigationExtras;
-
+  customer_label = '';
   constructor(
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
@@ -44,7 +44,7 @@ export class GeneralComponent implements OnInit {
     private medicalrecordService: MedicalrecordService
   ) {
 
-
+    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
     this.customerDetails = this.medicalrecordService.getPatientDetails();
     if (this.customerDetails.memberJaldeeId) {
       this.display_PatientId = this.customerDetails.memberJaldeeId;

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 
 
 @Component({
@@ -39,6 +40,8 @@ export class ConsumerJoinComponent implements OnInit {
   actionstarted: boolean;
   consumerjoin = 'consumerjoin';
   user_details;
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+  selectedCountryCode;
   cancel_btn_cap = Messages.CANCEL_BTN;
   ok_btn_cap = Messages.OK_BTN;
   resendemailotpsuccess = true;
@@ -50,6 +53,14 @@ export class ConsumerJoinComponent implements OnInit {
   phoneExists = false;
   isPhoneValid = false;
   resendViaEmail: boolean;
+  phoneNumber;
+  separateDialCode = true;
+  SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+  selectedCountry = CountryISO.India;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  phoneError: string;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -67,6 +78,8 @@ export class ConsumerJoinComponent implements OnInit {
     this.test_provider = data.test_account;
   }
   ngOnInit() {
+    console.log(this.selectedCountryCode)
+    this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
@@ -79,13 +92,23 @@ export class ConsumerJoinComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERONLY)])],
       password: ['', Validators.compose([Validators.required])],
+      phone: new FormControl(undefined, [Validators.required]),
       first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
     });
   }
   showError() {
+    this.phoneError = null;
     this.show_error = true;
-    const pN = this.mobile_num.trim();
+    if (!this.loginForm.get('phone').value) {
+      this.phoneError = 'Please enter your phone number';
+      return false;
+    } else if (this.loginForm.get('phone').errors && !this.loginForm.get('phone').value.e164Number.startsWith(this.loginForm.get('phone').value.dialCode + '55')) {
+      this.phoneError = 'Phone number is invalid';
+      return false;
+    }
+    const pN = this.loginForm.get('phone').value.e164Number;
+    // const pN = this.mobile_num.trim();
     const pW = this.document.getElementById('password').value.trim();
     if (pN === '') {
       if (this.mobile_num) {
@@ -105,7 +128,11 @@ export class ConsumerJoinComponent implements OnInit {
     this.phoneExists = false;
   }
   onSubmit(data) {
-    const pN = this.mobile_num.trim();
+    const dialCode = data.phone.dialCode;
+    const pN = data.phone.e164Number.trim();
+   
+
+    // const pN = this.mobile_num.trim();
     const pW = data.password.trim();
     if (pN === '') {
       if (this.mobile_num) {
@@ -119,10 +146,14 @@ export class ConsumerJoinComponent implements OnInit {
         return;
       }
     }
-    const loginId = pN;
+    let loginId = pN;
+    if(pN.startsWith(dialCode)) {
+      loginId = pN.split(dialCode)[1];
+    }
     const ob = this;
     const post_data = {
-      'countryCode': '+91',
+      'countryCode': dialCode,
+      // 'countryCode': '+91',
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
@@ -187,9 +218,14 @@ export class ConsumerJoinComponent implements OnInit {
     //   firstName: null,
     //   lastName: null
     // };
-    const userProfile = {
-      countryCode: '+91',
-      primaryMobileNo: this.loginForm.get('emailId').value || null,
+    const dialCode = this.loginForm.get('phone').value.dialCode;
+    const pN = this.loginForm.get('phone').value.e164Number;
+    let loginId = pN.split(dialCode)[1];
+
+       const userProfile = {
+      // countryCode: '+91',
+      countryCode: dialCode,
+      primaryMobileNo: loginId || null,
       firstName: this.loginForm.get('first_name').value || null,
       lastName: this.loginForm.get('last_name').value || null,
     };
@@ -277,13 +313,17 @@ export class ConsumerJoinComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
-    const post_data = { password: submit_data.new_password };
+    const dialCode = this.loginForm.get('phone').value.dialCode;
+    const post_data = { 
+      countryCode: dialCode,
+      password: submit_data.new_password };
     this.shared_services.ConsumerSetPassword(this.otp, post_data)
       .subscribe(
         () => {
           this.actionstarted = false;
           const login_data = {
-            'countryCode': '+91',
+            // 'countryCode': '+91',
+            'countryCode': dialCode,
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };
@@ -392,9 +432,10 @@ export class ConsumerJoinComponent implements OnInit {
   }
 
   checkAccountExists() {
-    this.mobile_num = this.document.getElementById('emailId').value;
+    this.mobile_num = this.document.getElementById('phone').value;
+    const dialCode = this.loginForm.get('phone').value.dialCode;
     if (this.mobile_num) {
-      this.shared_services.consumerMobilenumCheck(this.mobile_num).subscribe((accountExists) => {
+      this.shared_services.consumerMobilenumCheck(this.mobile_num, dialCode).subscribe((accountExists) => {
         if (accountExists) {
           this.phoneExists = true;
           this.isPhoneValid = true;

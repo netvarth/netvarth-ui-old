@@ -27,7 +27,8 @@
                                             class="col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
 
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
+                                                <div
+                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
                                                     Donation
                                                 </div>
                                                 <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
@@ -44,7 +45,7 @@
                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 border-tp check-new-group">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                 <div
-                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding c-checkin-new">
+                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
                                                         Donor name <a
                                                             class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
@@ -64,30 +65,43 @@
                                                                     *ngIf="userPhone">{{userPhone}}</span>
                                                                 <!-- <span class="mgn-lt-10 phonevallabel"
                                                                     *ngIf="currentPhone && changePhno">{{currentPhone}}</span> -->
-                                                                    <a
-                                                                    class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i
                                                                         class="fa fa-pencil"
                                                                         (click)="editPhone()"></i></a>
                                                             </div>
-                                                            <div class="" *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                            <div class=""
+                                                                *ngIf="userData && userData.userProfile && userData.userProfile.email">
                                                                 <i class="fa fa-envelope-o "></i>
-                                                                <span class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
-                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i class="fa fa-pencil"
-                                                                (click)="handleEmail()"></i></a>
+                                                                <span
+                                                                    class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
+                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                        class="fa fa-pencil"
+                                                                        (click)="handleEmail()"></i></a>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
+                                                        <mat-chip-list class="btns">
+                                                            <mat-chip (click)="handleSideScreen('note')"><a
+                                                                    class="lnk action pointer-cursor"><i
+                                                                        class="fa fa-file-text-o mgn-rt-5"
+                                                                        aria-hidden="true"></i>Add notes
+                                                                </a>
+                                                            </mat-chip>
+                                                        </mat-chip-list>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding" *ngIf="action==''">
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
+                                        *ngIf="action==''">
                                         <div class="col-md-6 col-xs-12 col-sm-12">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
                                                 <div class="mgn-up-5 input-group mobile-error c-checkin-new">
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
                                                         Amount
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -102,10 +116,11 @@
                                             <div class="prepay-amt mgn-bt-20">
                                                 <div
                                                     class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                    <p class="form-level-settings applybill">Minimum <span class="bold"><span
-                                                        class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.minDonationAmount}}</span>
+                                                    <p class="form-level-settings applybill">Minimum <span
+                                                            class="bold"><span
+                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.minDonationAmount}}</span>
                                                         Maximum <span class="bold"><span
-                                                            class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.maxDonationAmount}}</span>
+                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.maxDonationAmount}}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -117,7 +132,7 @@
                                                         <div class="lnk">Make payment
                                                         </div>
                                                         <div class="mgn-bt-10">
-                                                            
+
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
@@ -136,7 +151,20 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                    *ngIf="action=='note'">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Add notes
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <textarea class="form-control mgn-bt-20 mgn-up-20" [(ngModel)]="consumerNote"
+                                            #consumernote (change)="handleConsumerNote(consumernote.value)"
+                                            maxlength="1000"></textarea>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
+                                            <button mat-button class="cs-btn bt1 backtocheckin" (click)="goBack()">OK
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                     *ngIf="action=='donor'">
                                     <div class="mgn-up-5 input-group mobile-error c-checkin-new">
@@ -144,11 +172,12 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                             <label>
-                                                <input type="text" placeholder="donor name"
-                                                    class="phonenum" [(ngModel)]="donor" />
-                                                <button (click)="addDonor()" class="btn bt3 btn-default coupon-apply-btn"
+                                                <input type="text" placeholder="donor name" class="phonenum"
+                                                    [(ngModel)]="donor" />
+                                                <button (click)="addDonor()"
+                                                    class="btn bt3 btn-default coupon-apply-btn"
                                                     type="button">Ok</button>
-                                                    <app-field-error-display [displayError]="true"
+                                                <app-field-error-display [displayError]="true"
                                                     *ngIf="donorerror != null" errorMsg={{donorerror}}>
                                                 </app-field-error-display>
                                             </label>
@@ -176,45 +205,45 @@
                                     </div>
                                 </div>
                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                            *ngIf="action=='email'">
-                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Please
-                                enter your
-                                email for payment</div>
-                            <div class="col-md-7 col-sm-12 col-xs-12 mgn-bt-20">
-                                <ng-container>
-                                    <div class="form-group">
-                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                            id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
-                                            autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
-                                            oncopy="return false" oncut="return false" ondrag="return false"
-                                            ondrop="return false">
-                                        <app-field-error-display [displayError]="true" *ngIf="emailerror != null"
-                                            errorMsg={{emailerror}}>
-                                        </app-field-error-display>
+                                    *ngIf="action=='email'">
+                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Please
+                                        enter your
+                                        email for payment</div>
+                                    <div class="col-md-7 col-sm-12 col-xs-12 mgn-bt-20">
+                                        <ng-container>
+                                            <div class="form-group">
+                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                                    id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
+                                                    autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                    onpaste="return false;" oncopy="return false" oncut="return false"
+                                                    ondrag="return false" ondrop="return false">
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                                </app-field-error-display>
+                                            </div>
+                                            <div class="form-group" *ngIf="confrmshow">
+                                                <!-- <mat-form-field> -->
+                                                <input style="border-bottom: 1px solid" class="form-control emailPrepay"
+                                                    id="email1" placeholder="Re-enter Email(user@xyz.com)"
+                                                    [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
+                                                    oncopy="return false" oncut="return false" ondrag="return false"
+                                                    ondrop="return false">
+                                                <!-- </mat-form-field> -->
+                                                <app-field-error-display [displayError]="true"
+                                                    *ngIf="email1error != null" errorMsg={{email1error}}>
+                                                </app-field-error-display>
+                                            </div>
+                                            <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
+                                            <span class="input-group-btn">
+                                                <button class="btn bt3 btnCancel" type="button" (click)="goBack()">
+                                                    Cancel
+                                                </button>
+                                                <button class="btn bt3 btn-default" (click)="addEmail()"
+                                                    type="button">Add</button>
+                                            </span>
+                                        </ng-container>
                                     </div>
-                                    <div class="form-group" *ngIf="confrmshow">
-                                        <!-- <mat-form-field> -->
-                                        <input style="border-bottom: 1px solid" class="form-control emailPrepay"
-                                            id="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                            [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
-                                            oncopy="return false" oncut="return false" ondrag="return false"
-                                            ondrop="return false">
-                                        <!-- </mat-form-field> -->
-                                        <app-field-error-display [displayError]="true" *ngIf="email1error != null"
-                                            errorMsg={{email1error}}>
-                                        </app-field-error-display>
-                                    </div>
-                                    <!-- <span class="input-group-btn" *ngIf="confrmshow"> -->
-                                    <span class="input-group-btn">
-                                        <button class="btn bt3 btnCancel" type="button" (click)="goBack()">
-                                            Cancel
-                                        </button>
-                                        <button class="btn bt3 btn-default" (click)="addEmail()"
-                                            type="button">Add</button>
-                                    </span>
-                                </ng-container>
-                            </div>
-                        </div>
+                                </div>
                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding c-checkin-new"
                                     *ngIf="action=='service'">
                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">

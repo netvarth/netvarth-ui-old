@@ -62,6 +62,7 @@ export class MedicalrecordComponent implements OnInit {
   logsdialogRef: any;
   loading = true;
   doctorName;
+  customer_label = '';
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -70,6 +71,7 @@ export class MedicalrecordComponent implements OnInit {
     private medicalService: MedicalrecordService,
     private datePipe: DateFormatPipe
   ) {
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.activated_route.queryParams.subscribe(queryParams => {
       if (queryParams['calledfrom']) {

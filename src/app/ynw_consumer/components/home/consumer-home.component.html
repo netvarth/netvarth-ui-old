@@ -136,6 +136,12 @@
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -187,7 +193,7 @@
                                                 <button mat-menu-item *ngIf="!checkIfFav(booking.providerAccount.id)">
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
-                                                        to Favourite</span>
+                                                        to Favourites</span>
                                                 </button>
                                                 <button class="custId-cursor" mat-menu-item
                                                     *ngIf="(booking.apptStatus=='Confirmed'|| 'prepaymentPending') && (booking.jaldeeApptDistanceTime && booking.service.livetrack && booking.apptStatus === 'Confirmed')"
@@ -338,6 +344,12 @@
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -389,7 +401,7 @@
                                                 <button mat-menu-item *ngIf="!checkIfFav(booking.providerAccount.id)">
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
-                                                        to Favourite</span>
+                                                        to Favourites</span>
                                                 </button>
                                                 <button class="custId-cursor" mat-menu-item
                                                     *ngIf="(booking.waitlistStatus=='checkedIn'|| 'prepaymentPending') && (booking.jaldeeWaitlistDistanceTime && booking.service.livetrack && booking.waitlistStatus === 'checkedIn')"
@@ -485,6 +497,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">
@@ -689,6 +707,12 @@
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
+                                                </span>
                                             </td>
                                             <td class="pay-wdth">
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
@@ -841,6 +865,12 @@
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -887,7 +917,7 @@
                                                 <button mat-menu-item *ngIf="!checkIfFav(booking.providerAccount.id)">
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
-                                                        to Favourite</span>
+                                                        to Favourites</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -978,6 +1008,12 @@
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>
                                             </span>
+                                            <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <button class="bt3 cust-btn cursor-auto">
+                                                    Paid
+                                                    &#8377;{{booking.amountPaid}}
+                                                </button>
+                                            </span>
                                         </td>
                                         <td class="pay-wdth">
                                             <span *ngIf="booking.billViewStatus == 'Show'">
@@ -1023,7 +1059,7 @@
                                                 <button mat-menu-item *ngIf="!checkIfFav(booking.providerAccount.id)">
                                                     <span class="icon-favourite"
                                                         (click)="addFavProvider(booking.providerAccount.id)">&nbsp;&nbsp;Add
-                                                        to Favourite</span>
+                                                        to Favourites</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -1101,6 +1137,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">
@@ -1239,6 +1281,12 @@
                                                     <button class="bt3 cust-btn"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
+                                                </span>
+                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                    <button class="bt3 cust-btn cursor-auto">
+                                                        Paid
+                                                        &#8377;{{booking.amountPaid}}
+                                                    </button>
                                                 </span>
                                             </td>
                                             <td class="pay-wdth">

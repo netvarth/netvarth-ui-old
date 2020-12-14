@@ -58,6 +58,21 @@
                                                 <h6 class="card-title service">
                                                     {{sel_ser_det.name}}
                                                 </h6>
+                                                <div class="mgn-bt-15" style="font-size: 1rem;">
+                                                    <span *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                        Service Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{serviceCost}}</span>
+                                                        </span>&nbsp;
+                                                    <span *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'">
+                                                    Booking Fee
+                                                    <span class="prepaymin-cls bold"><span
+                                                            class="rupee-font">&#8377;
+                                                        </span>{{prepaymentAmount}}</span>
+                                                    </span>
+                                                </div>
+                                                    
                                                 <div class="">
 
                                                     <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
@@ -277,9 +292,9 @@
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span> -->
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno">{{countryCode}} {{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno">{{countryCode}} {{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                             <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i> -->
@@ -367,7 +382,8 @@
                                                     </h6>
                                                 </div> -->
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'"
+                                                    
+                                                    <!-- <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'"
                                                         class="mgn-bt-20">
                                                         This service requires
                                                         an advance
@@ -375,7 +391,7 @@
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{prepaymentAmount}}</span>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="checkin-btn-bp pointer-cursor"
                                                         *ngIf="type !== 'reschedule'"
                                                         [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === ''"
@@ -781,8 +797,13 @@
                                             <tr>
                                                 <td class="td1" [class.pad-bt-15]="phoneerror != null">Phone : &nbsp;&nbsp;</td>
                                                 <td> 
+                                                    <span style="width: 65px">
+                                                    <select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                                                    <option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</option>
+                                                  </select>
+                                                </span>
                                                     <input type="text" maxlength="10"
-                                                        placeholder="Phone number" class=""
+                                                        placeholder="Phone number" class="countryCodeMob"
                                                         [(ngModel)]="selected_phone" />
                                                     <app-field-error-display class="red" [displayError]="true"
                                                         *ngIf="phoneerror != null" errorMsg={{phoneerror}}>

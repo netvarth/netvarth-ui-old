@@ -448,7 +448,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Completed', value: 'Completed' },
-    { displayName: 'Cancelled', value: 'Cancelled,Rejected' }
+    { displayName: 'Cancelled', value: 'Cancelled,Rejected' },
+    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_APPT_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'Confirmed' },
@@ -459,7 +461,9 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'arrived' },
     { displayName: 'Started', value: 'started' },
     { displayName: 'Completed', value: 'done' },
-    { displayName: 'Cancelled', value: 'cancelled' }
+    { displayName: 'Cancelled', value: 'cancelled' },
+    { displayName: 'Prepayment Pending', value: 'prepaymentPending' },
+    { displayName: 'Failed', value: 'failed' }
   ],
   FUTURE_CHECK_IN_STATUSES_FILTER: [
     { displayName: 'Checked in', value: 'checkedIn' },
@@ -731,7 +735,9 @@ export const projectConstantsLocal = {
     { value: 'NotPaid', displayName: 'Not Paid' },
     { value: 'PartiallyPaid', displayName: 'Partially Paid' },
     { value: 'FullyPaid', displayName: 'Fully Paid' },
-    { value: 'Refund', displayName: 'Refund' }
+    { value: 'Refund', displayName: 'Refund' },
+    { value: 'PartiallyRefunded', displayName: 'Partially Refunded' },
+    { value: 'FullyRefunded', displayName: 'Fully Refunded' }
   ],
 
   REPORT_TYPE: [
@@ -814,6 +820,12 @@ export const projectConstantsLocal = {
   },
   COUNTRY_CODES: [    
     { displayName: '+91', value: '+91' }  
+  ],
+  CONSUMER_COUNTRY_CODES: [
+    { displayName: '+91', value: '+91' },
+    { displayName: '+49', value: '+49' },
+    { displayName: '+44', value: '+44' },
+    { displayName: '+1', value: '+1' }
   ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },

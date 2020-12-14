@@ -125,6 +125,8 @@ export class CheckinActionsComponent implements OnInit {
         this.qrCodegeneration(this.checkin);
         const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
         const bname = bprof.bn;
+        const fname = (this.checkin.waitlistingFor[0].firstName) ? this.checkin.waitlistingFor[0].firstName : '';
+        const lname = (this.checkin.waitlistingFor[0].lastName) ? this.checkin.waitlistingFor[0].lastName : '';
         setTimeout(() => {
             const printContent = document.getElementById('print-section');
             const params = [
@@ -143,7 +145,9 @@ export class CheckinActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
-            checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td></tr>';
+            if (fname !== '' || lname !== '') {
+                checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+            }
             if (this.checkin.service && this.checkin.service.deptName) {
                 checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
             }
@@ -694,10 +698,10 @@ export class CheckinActionsComponent implements OnInit {
         let virtualServicemode;
         let virtualServicenumber;
         if (this.checkin.virtualService) {
-          Object.keys(this.checkin.virtualService).forEach(key => {
-            virtualServicemode = key;
-            virtualServicenumber = this.checkin.virtualService[key];
-          });
+            Object.keys(this.checkin.virtualService).forEach(key => {
+                virtualServicemode = key;
+                virtualServicenumber = this.checkin.virtualService[key];
+            });
         }
         this.router.navigate(['provider', 'check-ins', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid, showtoken: this.showToken, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber } });
         // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { source: 'waitlist-block', uid: this.checkin.ynwUuid } });

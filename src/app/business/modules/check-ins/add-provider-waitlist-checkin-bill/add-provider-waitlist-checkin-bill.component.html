@@ -4,7 +4,6 @@
 </button>
 </h1> -->
 <!-- <section>
-	
 	<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> -->
 <section class="">
@@ -84,15 +83,6 @@
 																	<mat-icon>more_vert</mat-icon>
 																</button>
 																<mat-menu #menu="matMenu">
-																	<button mat-menu-item (click)="showDeliveryCharge()"
-																		*ngIf="source==='order' && checkin.homeDelivery">
-																		<span
-																			*ngIf="bill_data.deliveryCharges > 0">Update
-																			Delivery Charge</span>
-																		<span
-																			*ngIf="bill_data.deliveryCharges === 0">Add
-																			Delivery Charge</span>
-																	</button>
 																	<button mat-menu-item
 																		(click)="orderDiscountSelected()"
 																		*ngIf="(discounts.length > 0)">
@@ -142,6 +132,7 @@
 																					*ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
 																					<ng-container
 																						*ngFor="let group of ItemServiceGroupOptions | async">
+																						<!-- <mat-optgroup [label]="group.type" *ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)"> -->
 																						<ng-container
 																							*ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
 																							<mat-option
@@ -153,7 +144,7 @@
 																							</mat-option>
 																						</ng-container>
 																						<mat-option
-																							*ngIf="group.values.length==0 && source !== 'order'"
+																							*ngIf="group.values.length==0"
 																							[disabled]="true">
 																							<span
 																								class="no-data"></span>{{no_cap}}
@@ -243,55 +234,6 @@
 																</div>
 															</div>
 														</ng-container>
-													</div>
-												</ng-container>
-												<ng-container *ngIf="showDeliveryChargeSection">
-													<div class="section-two">
-														<div class="bill-breakup">
-															<div class="list">
-																<div class="list-content">
-																	<div class="c-row two">
-																		<div
-																			class="add-serv-item edit-row service no-padding">
-																			<div
-																				class="spl col-md-8 col-sm-8 col-lg-8 no-padding">
-																				<div
-																					class="item selectbox col-md-9 col-sm-8 col-lg-9 no-padding">
-																					<div class="rightalign pad-rt-10">
-																						Delivery Charge</div>
-																				</div>
-																				<div
-																					class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
-																					<span
-																						class="label">{{qty_cap}}</span>
-																					<span class="number">
-																						<mat-form-field
-																							class="example-full-width">
-																							<input type="number" min="0"
-																								max="{{qty_limit}}"
-																								matInput #itemserviceqty
-																								aria-label="Number"
-																								(keypress)="isNumeric($event)"
-																								(keyup)="isvalid($event)"
-																								matInput value="1"
-																								size="3"
-																								[(ngModel)]="deliveryCharge"
-																								[ngModelOptions]="{standalone: true}">
-																						</mat-form-field>
-																					</span>
-																				</div>
-																			</div>
-																			<div class="spr col-md-4 col-sm-4">
-																				<button class="cs-btn bt1"
-																					(click)="applyDeliveryCharge()">{{apply_cap}}</button>
-																				<button class="cs-btn bt2"
-																					(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
 													</div>
 												</ng-container>
 												<ng-container *ngIf="(showPCouponSection || showDiscountSection)">
@@ -849,14 +791,6 @@
 																	<td class="price rupee-font">(+){{bill_data.totalTaxAmount |
 													currency:'&#8377;'}}</td>
 																</tr>
-																<tr class="amt discount"
-																	*ngIf="bill_data.deliveryCharges > 0">
-																	<td class="name"><span class="tax-top">Delivery
-																			Charge </span>
-																	</td>
-																	<td class="price rupee-font">
-																		(+){{bill_data.deliveryCharges}}</td>
-																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
 																	<td class="price  rupee-font">{{bill_data.netRate |
@@ -887,7 +821,7 @@
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
-																	<td class="price rupee-font">{{customer_label}} will
+																	<td class="price rupee-font">{{customer_label | capitalizeFirst}} will
 																		save
 																		{{bill_data.totalAmountSaved | currency:'&#8377;'}}
 																	</td>
@@ -935,7 +869,7 @@
 									*
 									{{bill_data.privateNotes.privateNotes}}</div>
 							</div> -->
-												<div class="section-four lg-tbl" *ngIf="showPaidlist">
+												<div class="section-four lg-tbl no-padding-small" *ngIf="showPaidlist">
 													<div class="heading">
 														<span class="back"
 															(click)="showpaidSection()">{{back_cap}}</span>
@@ -945,16 +879,14 @@
 														<div class="table-th">
 															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
-															<!-- <div class="th three">{{refundable_cap}}</div> -->
+															<div class="th three" *ngIf="bill_data.billStatus!='Settled'">{{refundable_cap}}</div>
 														</div>
 														<div class="listing"
 															*ngFor="let payment of pre_payment_log; let i = index">
 															<div class="wrap">
 																<div class="td one">
-																	<span class="date">{{stringtoDate(payment.paymentOn,
-													'date')}}</span>
-																	<span class="time">{{stringtoDate(payment.paymentOn,
-													'time')}}</span>
+																	<span class="date">{{payment.paymentOn | date: dateFormat}}</span>
+																		<span class="time">{{payment.paymentTime}}</span>
 																</div>
 																<div class="td two">
 																	<span class="amt rupee-font">{{payment.amount |
@@ -972,19 +904,19 @@
 																			<span>{{payment.paymentMode}}</span>
 																		</span>
 																		<span class="mode"
-																			*ngIf="payment.paymentGateway">
-																			<span class="title">Payment Gateway</span>
+																			*ngIf="payment.paymentGateway"> <span
+																				class="title">Payment Gateway</span>
 																			<span>{{payment.paymentGateway}}</span>
 																		</span>
 																	</span>
 																</div>
-																<div class="td three">
+																<div class="td three" *ngIf="bill_data.billStatus!='Settled'">
 																	<span class="amt rupee-font"
-																		*ngIf="payment.refundableAmount > 0 && payment.paymentGateway!='PAYTM'">{{payment.refundableAmount |
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount |
 													currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
-																		*ngIf="payment.refundableAmount > 0 && payment.paymentGateway!='PAYTM'">Refund</button>
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">Refund</button>
 																</div>
 															</div>
 															<div class="refunds-table"

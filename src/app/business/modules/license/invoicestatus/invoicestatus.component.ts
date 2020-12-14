@@ -3,6 +3,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { NavigationExtras, Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 // import { SOURCE } from '@angular/core/src/di/injector';
 
 
@@ -54,6 +55,7 @@ export class InvoiceStatusComponent {
     invoiceStatus: false,
   };
   invoice_status_cap = Messages.INVOICE_STATUS_CAP;
+  display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   constructor(
     private router: Router,
     public provider_services: ProviderServices) {

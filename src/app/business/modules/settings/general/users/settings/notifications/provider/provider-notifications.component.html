@@ -53,6 +53,7 @@
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="sms">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber"
                           [(ngModel)]="notifyphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -61,7 +62,7 @@
                       </div>
                     </div>
                     <ul *ngIf="ph_arr.length > 0">
-                      <li *ngFor="let phne of ph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phne of ph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phne,ph_arr, 'newcheckin')"></i></li>
                     </ul>
                   </li>
@@ -92,6 +93,7 @@
                     <span [class.icon-add]="!pushcheckin" [class.icon-minus]="pushcheckin" (click)="pushcheckinAddClicked()"></span>
                     <div class="form-group" *ngIf="pushcheckin">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber"
                           [(ngModel)]="notifypushcheckinphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -100,7 +102,7 @@
                       </div>
                     </div>
                     <ul *ngIf="pushcheckinph_arr.length > 0">
-                      <li *ngFor="let phne of pushcheckinph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phne of pushcheckinph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phne,pushcheckinph_arr, 'newcheckin')"></i></li>
                     </ul>
                   </li>
@@ -129,6 +131,7 @@
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="cancelsms">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber"
                           [(ngModel)]="notifycanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -137,7 +140,7 @@
                       </div>
                     </div>
                     <ul *ngIf="ph1_arr.length > 0">
-                      <li *ngFor="let phnecancel of ph1_arr">{{phnecancel}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phnecancel of ph1_arr">+91 {{phnecancel}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phnecancel,ph1_arr, 'cancelcheckin')"></i></li>
                     </ul>
                   </li>
@@ -170,6 +173,7 @@
                       (click)="pushcancelledCheckinsmsAddClicked()"></span>
                     <div class="form-group" *ngIf="pushcancelph">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber"
                           [(ngModel)]="notifypushcanclcheckinphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -178,7 +182,7 @@
                       </div>
                     </div>
                     <ul *ngIf="pushcanclcheckin_arr.length > 0">
-                      <li *ngFor="let phnecancel of pushcanclcheckin_arr">{{phnecancel}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phnecancel of pushcanclcheckin_arr">+91 {{phnecancel}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phnecancel,pushcanclcheckin_arr, 'cancelcheckin')"></i></li>
                     </ul>
                   </li>
@@ -214,6 +218,7 @@
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="smsAppt">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifyApptphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -222,7 +227,7 @@
                       </div>
                     </div>
                     <ul *ngIf="apptph_arr.length > 0">
-                      <li *ngFor="let phne of apptph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phne of apptph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phne, apptph_arr, 'newappointment')"></i></li>
                     </ul>
                   </li>
@@ -253,6 +258,7 @@
                     <span [class.icon-add]="!pushApptPh" [class.icon-minus]="pushApptPh" (click)="pushApptAddClicked()"></span>
                     <div class="form-group" *ngIf="pushApptPh">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifypushApptphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -261,7 +267,7 @@
                       </div>
                     </div>
                     <ul *ngIf="apptpushph_arr.length > 0">
-                      <li *ngFor="let phne of apptpushph_arr">{{phne}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phne of apptpushph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phne, apptpushph_arr, 'newappointment')"></i></li>
                     </ul>
                   </li>
@@ -289,6 +295,7 @@
                       <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
                     <div class="form-group" *ngIf="cancelsmsAppt">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifyApptcanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -297,7 +304,7 @@
                       </div>
                     </div>
                     <ul *ngIf="apptph1_arr.length > 0">
-                      <li *ngFor="let phnecancel_appt of apptph1_arr">{{phnecancel_appt}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phnecancel_appt of apptph1_arr">+91 {{phnecancel_appt}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phnecancel_appt, apptph1_arr, 'cancelappointment')"></i></li>
                     </ul>
                   </li>
@@ -330,6 +337,7 @@
                       (click)="pushcancelledApptAddClicked()"></span>
                     <div class="form-group" *ngIf="pushcancelAppt">
                       <div class="input-group mb-3 phadd">
+                        <input class="form-control" style="max-width: 50px !important;" type="text" readonly value="+91">
                         <input type="text" class="form-control" placeholder="Phonenumber" (keypress)="isNumeric($event)"
                           [(ngModel)]="notifypushApptcanclphonenumber" minlength="0" maxlength="10">
                         <div class="input-group-append">
@@ -338,7 +346,7 @@
                       </div>
                     </div>
                     <ul *ngIf="pushapptcancelph_arr.length > 0">
-                      <li *ngFor="let phnecancel_appt of pushapptcancelph_arr">{{phnecancel_appt}} <i class="pointer-cursor icon-delete"
+                      <li *ngFor="let phnecancel_appt of pushapptcancelph_arr">+91 {{phnecancel_appt}} <i class="pointer-cursor icon-delete"
                           (click)="removePhEmail(phnecancel_appt, pushapptcancelph_arr, 'cancelappointment')"></i></li>
                     </ul>
                   </li>

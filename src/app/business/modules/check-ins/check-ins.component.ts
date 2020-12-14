@@ -79,7 +79,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_started_checkin_msg = '';
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
-  check_in_statuses_filter = projectConstants.CHECK_IN_STATUSES_FILTER;
+  check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   locations: any = [];
@@ -382,6 +382,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { mode: 'PHONE_CHECKIN', value: 'Phone in Check-in' },
     { mode: 'ONLINE_CHECKIN', value: 'Online Check-in' },
   ];
+  waitlistModesToken = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in Token' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in Token' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online Token' },
+  ];
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -497,6 +502,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.settings = data;
         this.calculationmode = this.settings.calculationMode;
         this.showToken = this.settings.showTokenId;
+        if (this.showToken) {
+          this.waitlistModes = this.waitlistModesToken;
+        }
         if (this.showToken) {
           this.breadcrumbs_init = [{ title: 'Tokens' }];
           this.tokenOrCheckin = 'Tokens';
@@ -1674,9 +1682,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1944,7 +1952,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all') {
+    if (this.filter.waitlist_status === 'all' && this.time_type !== 3) {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.labelFilterData !== '') {
@@ -2211,6 +2219,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
   }
   checkinClicked(source) {
+    if (this.queues.length === 0) {
+      this.shared_functions.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
+    } else {
     let deptId;
     let userId;
     if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
@@ -2231,6 +2242,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+  }
   }
   searchCustomer() {
     // const navigationExtras: NavigationExtras = {
@@ -2586,6 +2598,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   printBill(checkinlist) {
     // const _this = this;
     this.qrCodegeneration(checkinlist);
+    const fname = (checkinlist.waitlistingFor[0].firstName) ? checkinlist.waitlistingFor[0].firstName : '';
+    const lname = (checkinlist.waitlistingFor[0].lastName) ? checkinlist.waitlistingFor[0].lastName : '';
     const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     setTimeout(() => {
@@ -2606,7 +2620,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.bname.charAt(0).toUpperCase() + this.bname.substring(1) + '</td></tr>';
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + checkinlist.queue.location.place + '</td></tr>';
       checkin_html += '</thead><tbody>';
-      checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + checkinlist.waitlistingFor[0].firstName + ' ' + checkinlist.waitlistingFor[0].lastName + '</td></tr>';
+      if (fname !== '' || lname !== '') {
+      checkin_html += '<tr><td width="48%" align="right">Customerccc</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+      }
       if (checkinlist.service && checkinlist.service.deptName) {
         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + checkinlist.service.deptName + '</td></tr>';
       }
@@ -2889,9 +2905,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   openImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    console.log(index);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {

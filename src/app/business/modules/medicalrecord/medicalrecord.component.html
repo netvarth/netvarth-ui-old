@@ -11,8 +11,8 @@
   <div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 mgn-up-10 no-padding-small">
     <div class="card title-gb no-padding">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10">
-          <label>Patient Name </label>&nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
-          <label>Patient Id  </label>&nbsp; <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
+          <label>{{customer_label | capitalizeFirst}} Name </label>&nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}} </span><br>
+          <label>{{customer_label | capitalizeFirst}} Id  </label>&nbsp; <span>{{display_PatientId}}</span> <br *ngIf="display_PatientId">
           <label  *ngIf="customerDetails.dob">DOB </label> &nbsp;<span  *ngIf="customerDetails.dob">{{customerDetails.dob  | date:display_dateFormat}} </span> <br  *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
 
@@ -25,7 +25,7 @@
       </div>
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 ">
         <h5 class="heading2b">Add or view medical records</h5>
-        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8"  style="padding-left:0px;padding-right:0px;"><span class="normal-sz">Patient visit date </span>
+        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8"  style="padding-left:0px;padding-right:0px;"><span class="normal-sz">{{customer_label | capitalizeFirst}} visit date </span>
           <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
           <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
         </div><div class="col-md-4 col-xs-12 col-sm-12 col-lg-4"  style="padding-left:0px;padding-right:0px;">

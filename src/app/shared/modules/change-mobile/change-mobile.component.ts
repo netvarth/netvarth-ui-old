@@ -33,6 +33,8 @@ export class ChangeMobileComponent implements OnInit {
   is_verified = false;
   user_details;
   prev_phonenumber;
+  countryCode = 91;
+  currentcountryCode;
   step = 1;
   curtype;
   usertype;
@@ -75,12 +77,15 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 1;
           if (this.shared_functions.isBusinessOwner('returntyp') === 'provider') {
             this.prev_phonenumber = success['basicInfo']['mobile'];
+            this.currentcountryCode = success['basicInfo']['countryCode'];
+
             // this.spForm.setValue({
             //   'phonenumber': success['basicInfo']['mobile'] || null
             // });
             this.is_verified = success['basicInfo']['phoneVerified'];
           } else {
             this.prev_phonenumber = success['userProfile']['primaryMobileNo'];
+            this.currentcountryCode = success['userProfile']['countryCode'];
             // this.spForm.setValue({
             //   'phonenumber': success['userProfile']['primaryMobileNo'] || null
             // });
@@ -95,7 +100,7 @@ export class ChangeMobileComponent implements OnInit {
 
     this.resetApiErrors();
 
-    this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'))
+    this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'), this.countryCode)
       .subscribe(
         () => {
           this.step = 2;
@@ -141,7 +146,10 @@ export class ChangeMobileComponent implements OnInit {
 
     this.resetApiErrors();
 
-    const post_data = { 'loginId': this.submit_data.phonenumber };
+    const post_data = { 
+      'countryCode': this.countryCode,
+      'loginId': this.submit_data.phonenumber
+     };
     this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         () => {

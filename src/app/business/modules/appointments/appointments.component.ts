@@ -1198,9 +1198,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {};
     }
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1352,9 +1352,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     let Mfilter = this.setFilterForApi();
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {

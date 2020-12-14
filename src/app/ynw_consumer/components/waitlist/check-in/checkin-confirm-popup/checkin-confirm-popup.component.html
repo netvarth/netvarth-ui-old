@@ -65,9 +65,9 @@
                 {{waitlist_for[0].phoneNo}}
             </span> -->
             <span class="mgn-lt-10 phonevallabel"
-                *ngIf="userPhone && !changePhno">{{userPhone}}</span>
+                *ngIf="userPhone && !changePhno">{{countryCode}} {{userPhone}}</span>
             <span class="mgn-lt-10 phonevallabel"
-                *ngIf="currentPhone && changePhno">{{currentPhone}}</span><a
+                *ngIf="currentPhone && changePhno">{{countryCode}} {{currentPhone}}</span><a
                 class="mgn-lt-5 lnk pointer-cursor">
                 <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                     (click)="editPhone()"></i> -->
@@ -80,7 +80,7 @@
         <div class="contact-section"
             *ngIf="changePhno && currentPhone != callingModes && service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
             <i class="fa wtsapaud-icon wtsap-cal"></i>
-            <span class="mgn-lt-10 phonevallabel">{{callingModes}}</span><a
+            <span class="mgn-lt-10 phonevallabel">{{countryCode}} {{callingModes}}</span><a
                 class="mgn-lt-5 lnk pointer-cursor">
             </a>
             <div class="mode-hint mgn-bt-5">
@@ -115,14 +115,14 @@
         </app-field-error-display>
         
     </div>
-    <div *ngIf="service_det.isPrePayment" class="col-sm-12 col-xs-12 col-md-12 mgn-bt-20">
-        This service requires an advance payment of
+    <div *ngIf="service_det.isPrePayment" class="mgn-bt-20" style="font-size: 1rem;">
+        This service requires a booking fee of
         <span class="prepaymin-cls bold"><span class="rupee-font">&#8377;
         </span>{{prepaymentAmount}}</span>
     </div>
 </div>
 <div class = "clearfix"></div>
-<div class="coupon mgn-up-15">
+<div class="coupon">
     <div class="containerAppt textcenter" style="background-color:white">
         <h5 class="mgn-up-10 no-mgn-bt"><b>Date/Time</b></h5> 
         <h6 class="card-title serv-time border-style waitinginLine">

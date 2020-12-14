@@ -126,7 +126,7 @@
               </table>
               <div class="book-status"> Current status
               </div>
-              <table class="status-table">
+              <table class="status-table" *ngIf="!history">
                 <tbody>
                   <tr *ngIf="type=='wl' && (statusInfo.waitlistStatus === 'arrived' || statusInfo.waitlistStatus === 'checkedIn')">
                     <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead </td>

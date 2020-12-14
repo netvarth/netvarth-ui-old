@@ -1202,3 +1202,12 @@ height: 150px !important;
 .mandatoryChip {
   border: 1px solid rgb(255, 0, 0) !important;
 }
+.countryCodeMob {
+  width: 130px;
+  margin-left: 5px;
+}
+@media screen and (max-width: 640px) {
+  .countryCodeMob {
+    width: 105px;
+  }
+}

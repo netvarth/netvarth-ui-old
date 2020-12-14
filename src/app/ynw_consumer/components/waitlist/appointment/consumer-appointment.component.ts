@@ -144,10 +144,12 @@ export class ConsumerAppointmentComponent implements OnInit {
     deptLength;
     filterDepart = false;
     confrmshow = false;
-
+    countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+    selectedCountryCode;
     userData: any = [];
     userEmail;
     userPhone;
+    countryCode;
     currentPhone;
     users: any = [];
     emailExist = false;
@@ -225,6 +227,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     noPhoneError = false;
     noEmailError = false;
     noCallingError = false;
+    serviceCost;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -270,6 +273,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             });
     }
     ngOnInit() {
+        console.log(this.countryCodes)
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -320,6 +324,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
+        console.log(this.customer_data)
         if (this.type !== 'reschedule') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
@@ -564,17 +569,20 @@ export class ConsumerAppointmentComponent implements OnInit {
             consumerNoteTitle: serv.consumerNoteTitle
         };
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+        this.serviceCost = this.sel_ser_det.price;
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
-        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.availableSlots);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+        if (locid && servid && accountid) {
+            _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.availableSlots);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
@@ -763,6 +771,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             phNumber = this.userPhone;
         }
+        let selCountryCode;
+        if (this.countryCode != this.selectedCountryCode) {
+            selCountryCode = this.selectedCountryCode;
+        } else {
+            selCountryCode = this.countryCode;
+        }
         const post_Data = {
             'schedule': {
                 'id': this.apptTime['scheduleId']
@@ -773,6 +787,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'countryCode': selCountryCode,
             'phoneNumber': phNumber,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
@@ -1475,11 +1490,20 @@ export class ConsumerAppointmentComponent implements OnInit {
             .then(
                 data => {
                     this.userData = data;
+                    this.countryCode = this.userData.userProfile.countryCode;
+                    if (this.selectedCountryCode) {
+                        if (this.countryCode != this.selectedCountryCode) {
+                            this.countryCode = this.selectedCountryCode;
+                            console.log(this.countryCode)
+                        }
+                    } else {
+                        this.selectedCountryCode = this.countryCode;
+                    }
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'reschedule') {
                             this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                             }
+                        }
                         // this.currentPhone = this.userPhone;
                     }
                     if (this.userEmail) {
@@ -1854,6 +1878,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
+        if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
+            this.countryCode = this.selectedCountryCode;
+            console.log(this.countryCode)
+        }
         if (this.callingModes === '') {
             this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
             this.noCallingError = false;
@@ -1910,7 +1938,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
-        } else if(this.userEmail && this.payEmail.trim() == '') {
+        } else if (this.userEmail && this.payEmail.trim() == '') {
             this.emailerror = 'Please enter a valid email.';
             this.noEmailError = false;
 
@@ -1920,18 +1948,19 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     showConfirmPopup(post_Data) {
-        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == ''){
-            
+        if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+
             this.sharedFunctionobj.openSnackBar('Please provide your notes here', { 'panelClass': 'snackbarerror' });
             this.apptdisable = false
         } else {
             const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass','confirmpopup'],
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmpopup'],
                 disableClose: true,
                 data: {
                     service_details: this.sel_ser_det,
                     waitlist_for: this.waitlist_for,
+                    countryCode: this.countryCode,
                     userPhone: this.userPhone,
                     post_Data: post_Data,
                     account_id: this.account_id,
@@ -1952,6 +1981,6 @@ export class ConsumerAppointmentComponent implements OnInit {
             });
         }
         // this.dialogRef.close();
-       
+
     }
 }

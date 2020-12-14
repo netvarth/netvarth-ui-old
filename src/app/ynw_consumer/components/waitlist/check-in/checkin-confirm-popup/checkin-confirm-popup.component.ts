@@ -52,6 +52,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     emailExist = false;
     confrmshow = false;
     noEmailError = false;
+    countryCode;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -65,6 +66,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
         console.log(data);
         this.service_det = data.service_details;
         this.waitlist_for = data.waitlist_for;
+        this.countryCode = data.countryCode,
         this.userPhone = data.userPhone;
         this.post_Data = data.post_Data;
         this.account_id = data.account_id;

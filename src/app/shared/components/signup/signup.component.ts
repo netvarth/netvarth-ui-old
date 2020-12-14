@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -8,6 +8,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-signup',
@@ -41,7 +42,7 @@ export class SignUpComponent implements OnInit {
   activeSubDomainIndex;
   subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
   subDomainList = [];
-  countryCodes = projectConstantsLocal.COUNTRY_CODES;
+  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
   selectedCountryCode;
   dropdownSettings = {
     singleSelection: false,
@@ -81,6 +82,14 @@ export class SignUpComponent implements OnInit {
   actionstarted = false;
   scCode;
   scfound = false;
+  phoneNumber;
+  separateDialCode = true;
+  SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+  selectedCountry = CountryISO.India;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  phoneError: string;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -193,8 +202,7 @@ export class SignUpComponent implements OnInit {
     switch (step) {
       case 1: this.signupForm = this.fb.group({
         is_provider: ['true'],
-        phonenumber: ['', Validators.compose(
-          [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        phonenumber: new FormControl(undefined, [Validators.required]),
         first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
@@ -296,9 +304,26 @@ export class SignUpComponent implements OnInit {
     this.user_details = {};
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
+    
+    if (!this.signupForm.get('phonenumber').value) {
+      this.api_error = 'Phone number required';
+      if (document.getElementById('phonenumber')) {
+        document.getElementById('phonenumber').focus();
+      }
+      return false;
+    }
+    const phoneNumber = this.signupForm.get('phonenumber').value.e164Number;
+    const dialCode = this.signupForm.get('phonenumber').value.dialCode;
+
+    let loginId = phoneNumber;
+    if(phoneNumber.startsWith(dialCode)) {
+      loginId = phoneNumber.split(dialCode)[1];
+    }
+
     let userProfile = {
-      countryCode: this.selectedCountryCode,
-      primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+      countryCode: dialCode,
+      // primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
+      primaryMobileNo: loginId || null,
       firstName: null,
       lastName: null
     };
@@ -312,8 +337,8 @@ export class SignUpComponent implements OnInit {
     } else {
 
       userProfile = {
-        countryCode: this.selectedCountryCode,
-        primaryMobileNo: this.signupForm.get('phonenumber').value || null,
+        countryCode: dialCode,
+        primaryMobileNo: loginId || null,
         firstName: this.toCamelCase(fname) || null,
         lastName: this.toCamelCase(lname) || null,
         // licensePackage: this.signupForm.get('package_id').value || null,
@@ -496,8 +521,9 @@ export class SignUpComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     const ob = this;
+    const dialCode = this.signupForm.get('phonenumber').value.dialCode;
     const post_data = { 
-      countryCode : this.selectedCountryCode,
+      countryCode : dialCode,
       password: submit_data.new_password };
     if (this.is_provider === 'true') {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
@@ -535,7 +561,7 @@ export class SignUpComponent implements OnInit {
           () => {
             this.actionstarted = false;
             const login_data = {
-              'countryCode': this.selectedCountryCode,
+              'countryCode': dialCode,
               'loginId': this.user_details.userProfile.primaryMobileNo,
               'password': post_data.password
             };
