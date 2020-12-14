@@ -217,6 +217,8 @@ export class ProviderCheckinComponent implements OnInit {
     virtualServicemode;
     virtualServicenumber;
     emptyFielderror = false;
+    countryCode;
+
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -473,6 +475,7 @@ export class ProviderCheckinComponent implements OnInit {
                                 this.customer_data = data[0];
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
+                            this.countryCode = this.customer_data.countryCode;
                             if (this.source === 'waitlist-block') {
                                 this.showBlockHint = true;
                                 if (this.showtoken) {
@@ -1065,6 +1068,7 @@ export class ProviderCheckinComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'countryCode': this.countryCode,
             // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'waitlistMode': this.checkinType

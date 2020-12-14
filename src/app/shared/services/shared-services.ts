@@ -177,9 +177,9 @@ export class SharedServices {
     const url = origin + '/login/chpwd';
     return this.servicemeta.httpPut(url, data);
   }
-  verifyNewPhone(phonenumber, origin?) {
+  verifyNewPhone(phonenumber, origin?, countryCode?) {
     // const path = 'consumers/login/verifyLogin/' + phonenumber;
-    const path = origin + '/login/verifyLogin/' + phonenumber;
+    const path = origin + '/login/verifyLogin/' + phonenumber +'?countryCode=' + countryCode;
     return this.servicemeta.httpPost(path);
   }
   verifyNewPhoneOTP(otp, body, origin?) {
