@@ -55,10 +55,8 @@ export class OrderDashboardComponent implements OnInit {
   selectedOrders: any = [];
   selectedTab;
   historyOrdertype = '';
-  server_date;
   todayOrdersCount;
   futureOrdersCount;
-  orderstatus;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -75,7 +73,6 @@ export class OrderDashboardComponent implements OnInit {
     } else {
       this.selectedTab = 1;
     }
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderTodayOrdersCount();
@@ -129,10 +126,6 @@ export class OrderDashboardComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  getTodayDate() {
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    return this.dateformat.transformTofilterDate(server)
-  }
   getProviderTodayOrders() {
     this.loading = true;
     let filter = {};
@@ -153,14 +146,12 @@ export class OrderDashboardComponent implements OnInit {
   }
   getProviderFutureOrdersCount() {
     const filter = {};
-    filter['orderDate-gt'] = this.getTodayDate();
     this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
   }
   getProviderTodayOrdersCount() {
     const filter = {};
-    filter['orderDate-eq'] = this.getTodayDate();
     this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
     });
