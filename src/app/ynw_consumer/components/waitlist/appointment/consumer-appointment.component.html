@@ -58,13 +58,21 @@
                                                 <h6 class="card-title service">
                                                     {{sel_ser_det.name}}
                                                 </h6>
-                                                    <div *ngIf="sel_ser_det.price && type != 'reschedule'"
-                                                        class="mgn-bt-20">
+                                                <div class="mgn-bt-15" style="font-size: 1rem;">
+                                                    <span *ngIf="sel_ser_det.price && type != 'reschedule'">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{serviceCost}}</span>
-                                                    </div>
+                                                        </span>&nbsp;
+                                                    <span *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'">
+                                                    Booking Fee
+                                                    <span class="prepaymin-cls bold"><span
+                                                            class="rupee-font">&#8377;
+                                                        </span>{{prepaymentAmount}}</span>
+                                                    </span>
+                                                </div>
+                                                    
                                                 <div class="">
 
                                                     <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
@@ -374,13 +382,7 @@
                                                     </h6>
                                                 </div> -->
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'"
-                                                     class="mgn-bt-15">
-                                                    Booking Fee
-                                                    <span class="prepaymin-cls bold"><span
-                                                            class="rupee-font">&#8377;
-                                                        </span>{{prepaymentAmount}}</span>
-                                                </div>
+                                                    
                                                     <!-- <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'"
                                                         class="mgn-bt-20">
                                                         This service requires
