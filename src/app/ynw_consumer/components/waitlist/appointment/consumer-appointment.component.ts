@@ -16,6 +16,7 @@ import { ServiceDetailComponent } from '../../../../shared/components/service-de
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -228,6 +229,14 @@ export class ConsumerAppointmentComponent implements OnInit {
     noEmailError = false;
     noCallingError = false;
     serviceCost;
+    phoneNumber;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phoneError: string;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -751,6 +760,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                 } else {
+                    console.log(this.callingModes)
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
                 }
             }
@@ -804,6 +814,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             for (const i in this.virtualServiceArray) {
                 if (i === 'WhatsApp') {
                     post_Data['virtualService'] = this.virtualServiceArray;
+                    console.log(post_Data)
                 } else if (i === 'GoogleMeet') {
                     post_Data['virtualService'] = this.virtualServiceArray;
                 } else if (i === 'Zoom') {
@@ -817,6 +828,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 //     post_Data['virtualService'] = {};
                 // }
             }
+            console.log(post_Data)
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
         //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
@@ -1866,6 +1878,17 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     saveMemberDetails() {
+        let pN;
+        let teleNumber;
+        if (this.callingModes !== '') {
+            pN = this.callingModes.e164Number;
+        }
+        if(pN.startsWith('+')) {
+            teleNumber = pN.split('+')[1];
+            pN = teleNumber;
+            console.log(pN)
+          }
+        console.log(pN)
         this.resetApiErrors();
         this.resetApi();
         this.noEmailError = true;
@@ -1909,6 +1932,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.noPhoneError = true;
             if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 this.callingModes = this.selected_phone;
+            }else {
+                this.callingModes = pN;
+                console.log(pN)
             }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {

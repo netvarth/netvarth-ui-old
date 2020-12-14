@@ -18,6 +18,7 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
@@ -201,6 +202,14 @@ export class ConsumerDonationComponent implements OnInit {
     pGateway: any;
     donorerror = null;
     donor = '';
+    phoneNumber;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    TooltipLabel = TooltipLabel;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phoneError: string;    dialCode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -342,6 +351,12 @@ export class ConsumerDonationComponent implements OnInit {
         }
     }
     addPhone() {
+        const pN = this.selected_phone.e164Number;
+        this.dialCode = this.selected_phone.dialCode;
+        if(pN.startsWith(this.dialCode)) {
+            this.selected_phone = pN.split(this.dialCode)[1];
+        }
+         console.log(this.selected_phone)
         this.resetApiErrors();
         this.resetApi();
         const curphone = this.selected_phone;
@@ -477,6 +492,7 @@ export class ConsumerDonationComponent implements OnInit {
             'donor': {
                 'firstName': this.donorName
             },
+            'countryCode': this.dialCode,
             'donorPhoneNumber': this.userPhone,
             'note': this.consumerNote
         };
@@ -840,6 +856,8 @@ export class ConsumerDonationComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                        this.dialCode = this.userData.userProfile.countryCode || '';
+                        console.log(this.dialCode)
                         this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {

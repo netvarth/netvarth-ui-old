@@ -17,6 +17,7 @@ import { ConsumerAppointmentBillComponent } from './appointment-bill/appointment
 import { HeaderModule } from '../../../../shared/modules/header/header.module';
 import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/ap
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        HeaderModule
+        HeaderModule,
+        NgxIntlTelInputModule
     ],
     entryComponents: [
         AppointmentConfirmPopupComponent

@@ -17,6 +17,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -238,6 +239,14 @@ export class ConsumerCheckinComponent implements OnInit {
     noEmailError = true;
     noCallingError = true;
     serviceCost;
+    phoneNumber;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phoneError: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2027,6 +2036,17 @@ export class ConsumerCheckinComponent implements OnInit {
         this.action = 'timeChange';
     }
     saveMemberDetails() {
+        let pN;
+        let teleNumber;
+        if (this.callingModes !== '') {
+            pN = this.callingModes.e164Number;
+        }
+        if(pN.startsWith('+')) {
+            teleNumber = pN.split('+')[1];
+            pN = teleNumber;
+            console.log(pN)
+          }
+        console.log(pN)
         this.resetApiErrors();
         this.resetApi();
         this.noEmailError = true;
@@ -2070,6 +2090,9 @@ export class ConsumerCheckinComponent implements OnInit {
             this.noPhoneError = true;
             if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 this.callingModes = this.selected_phone;
+            }else {
+                this.callingModes = pN;
+                console.log(pN)
             }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {

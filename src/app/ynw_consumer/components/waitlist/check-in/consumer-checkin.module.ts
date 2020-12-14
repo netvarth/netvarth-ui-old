@@ -18,6 +18,7 @@ import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.compon
 import { HeaderModule } from '../../../../shared/modules/header/header.module';
 import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-co
         Nl2BrPipeModule,
         OwlModule,
         PagerModule,
-        HeaderModule
+        HeaderModule,
+        NgxIntlTelInputModule
     ],
     entryComponents: [
         CheckinConfirmPopupComponent
