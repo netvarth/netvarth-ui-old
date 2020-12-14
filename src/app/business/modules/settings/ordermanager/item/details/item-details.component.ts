@@ -256,7 +256,7 @@ export class ItemDetailsComponent implements OnInit {
                 itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [true],
@@ -276,7 +276,7 @@ export class ItemDetailsComponent implements OnInit {
                 itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [false],
@@ -326,6 +326,12 @@ export class ItemDetailsComponent implements OnInit {
         } else {
            value = this.item.promotionalPrcnt;
         }
+        let note;
+        if (this.item.notes && this.item.notes.length > 0) {
+            note = this.item.notes[0].note;
+        } else {
+            note = '';
+        }
         // this.amForm.get('itemName').setValue(this.item.itemName);
         this.amForm.patchValue({
             'itemCode': this.item.itemCode || '',
@@ -333,7 +339,7 @@ export class ItemDetailsComponent implements OnInit {
             'displayName': this.item.displayName || '',
             'shortDec': this.item.shortDec || '',
             'displayDesc': this.item.itemDesc || '',
-            'note': this.item.notes ? this.item.notes[0].note : '',
+            'note': note ,
             'price': this.item.price || '',
             'taxable': this.holdtaxable,
             'showOnLandingpage': this.item.isShowOnLandingpage,

@@ -63,6 +63,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+    console.log(this.orders);
     this.catalog_details = this.shared_services.getOrderDetails();
     console.log(JSON.stringify(this.catalog_details));
     if (this.catalog_details) {
@@ -366,12 +367,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         console.log(availDates);
       });
   }
-  getAvailabilityByDate(date){
-    this.sel_checkindate = date;        
+  getAvailabilityByDate(date) {
+    this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
     console.log(currentday);
-    if(this.choose_type === 'store'){
+    if (this.choose_type === 'store') {
       console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
       for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
           const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
@@ -379,8 +380,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
             console.log('future time available ');
           }
       }
-    } 
-    else {
+    } else {
     for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
       const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
       if (currentday === pday) {
