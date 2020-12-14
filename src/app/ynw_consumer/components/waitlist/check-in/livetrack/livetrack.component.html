@@ -4,7 +4,7 @@
 <section class="container no-padding confirm-aptckn no-padding-small">
     <div class="content p0 loc-list p-checkin lv-trk ynw-common-form-nm">
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">                
+            <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <app-header *ngIf="shared_functions.checkLogin()" [includedfrom]="'livetrack'"></app-header>
                 </div>
@@ -76,6 +76,8 @@
                                                 <button *ngIf="shareLoc" type="button" [class.disabled]="track_loading"
                                                     class="cs-btn bt1 small-btn"
                                                     (click)="saveLiveTrackDetails()">Ok</button>
+                                                <button *ngIf="!shareLoc" type="button" class="cs-btn bt1 small-btn"
+                                                    (click)="onCancel()">Ok</button>
                                                 <app-common-innerloading-spinner *ngIf="track_loading">
                                                 </app-common-innerloading-spinner>
                                             </div>

@@ -93,6 +93,8 @@ export class DisplayboardsComponent implements OnInit {
                             this.qBoardsActive.push(element);
                         }
                     });
+                    console.log(this.qBoardsActive);
+                    console.log(this.layout_list);
                     this.api_loading = false;
                 },
                 error => {

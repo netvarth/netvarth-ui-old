@@ -32,7 +32,7 @@
                                 <div class="col-md-12 no-padding">
                                     <ul class="nav jd-custom-nav chkn-dash">
                                         <li class="dropdown notifications-menu pull-right" style="display: flex;"
-                                            [class.disabled]="qBoardSelectCount == 0">
+                                            [class.disabled]="qBoardSelectCount == 0" *ngIf="layout_list.length > 1">
                                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                                 (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
                                                 [class.pointer-cursor]="(qBoardSelectCount > 0)"
@@ -84,7 +84,7 @@
                                                             [disabled]="layout.isContainer"
                                                             [checked]="qBoardsSelectedIndex[i]"
                                                             (click)="!layout.isContainer && qBoardClicked(i)"
-                                                            [value]="layout.id" />
+                                                            [value]="layout.id" *ngIf="layout_list.length > 1"/>
                                                         <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
                                                             class="pull-left mgn-lt-10">
                                                             <h3 class="pointer-cursor">

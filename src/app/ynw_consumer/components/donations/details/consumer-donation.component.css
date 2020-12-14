@@ -201,5 +201,12 @@
   }
   .donation_label {
     font-size: 1rem !important;
-  font-weight: 700 !important;
+    font-weight: 700 !important;
+  }
+  .chk-btns-div mat-chip {
+    font-weight: 600;
+    font-size: 0.75rem !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc;
+    border-radius: 20px !important;
   }

@@ -76,8 +76,7 @@ export class CustomViewListComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to delete this custom view?',
-        'buttons': 'yes'
+        'message': 'Do you want to delete this custom view?'
       }
     });
     this.removeitemdialogRef.afterClosed().subscribe(result => {

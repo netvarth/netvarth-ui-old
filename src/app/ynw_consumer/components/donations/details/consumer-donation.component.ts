@@ -458,6 +458,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.donate(paymentWay);
     }
     donate(paymentWay) {
+        console.log(this.consumerNote);
         this.showEditView = false;
         const post_Data = {
             'consumer': {
@@ -477,7 +478,8 @@ export class ConsumerDonationComponent implements OnInit {
             'donor': {
                 'firstName': this.donorName
             },
-            'donorPhoneNumber': this.userPhone
+            'donorPhoneNumber': this.userPhone,
+            'note': this.consumerNote
         };
         if (this.api_error === null && this.donationAmount) {
             console.log(post_Data);

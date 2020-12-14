@@ -2219,6 +2219,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
   }
   checkinClicked(source) {
+    if (this.queues.length === 0) {
+      this.shared_functions.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
+    } else {
     let deptId;
     let userId;
     if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
@@ -2239,6 +2242,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+  }
   }
   searchCustomer() {
     // const navigationExtras: NavigationExtras = {
