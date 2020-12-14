@@ -89,3 +89,12 @@
   font-size: 1rem;
   text-decoration: underline;
 }
+.reschdle .wtsapaud-icon,
+.reschdle .zoom-icon,
+.reschdle .wtsapvid-icon {
+  width: 30px !important;
+}
+.reschdle .meet-icon,
+.reschdle .phon-icon {
+  width: 15px !important;
+}
