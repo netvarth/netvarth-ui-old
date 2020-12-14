@@ -151,7 +151,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if (itemObj.item.showPromotionalPrice) {
         item_price = itemObj.item.promotionalPrice;
       }
-    return item_price * qty;
+      return (item_price * qty).toFixed(2);
   }
   increment(item) {
     this.addToCart(item);
