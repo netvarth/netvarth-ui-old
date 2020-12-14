@@ -315,23 +315,30 @@ export class ItemDetailsComponent implements OnInit {
         this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
     }
     updateForm() {
+        console.log(this.item);
         if (this.item.taxable) {
             // taxable = '1';
             this.holdtaxable = true;
         }
+        let value;
+        if (this.item.promotionalPriceType === 'PCT') {
+            value = this.item.promotionalPrice;
+        } else {
+           value = this.item.promotionalPrcnt;
+        }
         // this.amForm.get('itemName').setValue(this.item.itemName);
         this.amForm.patchValue({
-            'itemCode': this.item.itemCode || null,
-            'itemName': this.item.itemName || null,
-            'displayName': this.item.displayName || null,
-            'shortDec': this.item.shortDec || null,
-            'displayDesc': this.item.itemDesc || null,
-            'note': this.item.notes[0].note || null,
-            'price': this.item.price || null,
+            'itemCode': this.item.itemCode || '',
+            'itemName': this.item.itemName || '',
+            'displayName': this.item.displayName || '',
+            'shortDec': this.item.shortDec || '',
+            'displayDesc': this.item.itemDesc || '',
+            'note': this.item.notes ? this.item.notes[0].note : '',
+            'price': this.item.price || '',
             'taxable': this.holdtaxable,
             'showOnLandingpage': this.item.isShowOnLandingpage,
             'stockAvailable': this.item.isStockAvailable,
-            'promotionalPrice': this.item.promotionalPrice || 0,
+            'promotionalPrice': value || 0,
             'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
             'promotionallabel': this.item.promotionLabelType || 'ONSALE',
             'customlabel': this.item.promotionLabel || ''
@@ -341,6 +348,7 @@ export class ItemDetailsComponent implements OnInit {
         if (this.amForm.get('promotionallabel').value === 'CUSTOM') {
             this.showCustomlabel = true;
         }
+
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
