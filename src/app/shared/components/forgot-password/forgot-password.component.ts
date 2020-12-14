@@ -2,11 +2,11 @@ import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
-import { projectConstantsLocal } from '../../constants/project-constants';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 
 export class ForgotPasswordModel {
   constructor(
@@ -46,7 +46,14 @@ export class ForgotPasswordComponent {
   @Input() business;
   @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
   @Output() retonCancelForgotPassword: EventEmitter<any> = new EventEmitter();
-
+  phoneNumber;
+  separateDialCode = true;
+  SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+  selectedCountry = CountryISO.India;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  phoneError: string;
   constructor(
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -59,16 +66,16 @@ export class ForgotPasswordComponent {
     this.createForm(1);
     this.is_provider = data.is_provider;
   }
-
+  // phonenumber: ['', Validators.compose(
+  //   [Validators.required,
+  //   Validators.maxLength(10),
+  //   Validators.minLength(10),
+  //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
   createForm(form_num) {
     this.step = form_num;
     switch (form_num) {
       case 1: this.fpForm = this.fb.group({
-        phonenumber: ['', Validators.compose(
-          [Validators.required,
-          Validators.maxLength(10),
-          Validators.minLength(10),
-          Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
+        phone: new FormControl(undefined, [Validators.required])
       });
         break;
     }
@@ -88,8 +95,8 @@ export class ForgotPasswordComponent {
 
   onPhoneSubmit(submit_data) {
     this.resetApiErrors();
-    if (this.fpForm.valid) {
-      this.sendOtpApi(submit_data.phonenumber);
+    if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number.startsWith(this.fpForm.get('phone').value.dialCode + '55'))) {
+      this.sendOtpApi(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1]);
     } else {
       this.fed_service.validateAllFormFields(this.fpForm);
     }

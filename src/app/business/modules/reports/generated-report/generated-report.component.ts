@@ -78,7 +78,11 @@ export class GeneratedReportComponent implements OnInit {
   }
 
   redirecToReports() {
-    this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.report_type } });
+    if (this.hide_criteria_save) {
+      this.router.navigate(['provider', 'reports']);
+    } else {
+      this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.report_type } });
+    }
   }
   printReport() {
     const printContent = document.getElementById('reportGenerated');
@@ -96,7 +100,7 @@ export class GeneratedReportComponent implements OnInit {
       // panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        purpose : 'save'
+        purpose: 'save'
       }
     });
     this.reprtdialogRef.afterClosed().subscribe(result => {

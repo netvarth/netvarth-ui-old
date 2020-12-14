@@ -4,7 +4,6 @@
 </button>
 </h1> -->
 <!-- <section>
-	
 	<app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> -->
 <section class="">
@@ -822,7 +821,7 @@
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
-																	<td class="price rupee-font">{{customer_label}} will
+																	<td class="price rupee-font">{{customer_label | capitalizeFirst}} will
 																		save
 																		{{bill_data.totalAmountSaved | currency:'&#8377;'}}
 																	</td>
@@ -870,7 +869,7 @@
 									*
 									{{bill_data.privateNotes.privateNotes}}</div>
 							</div> -->
-												<div class="section-four lg-tbl" *ngIf="showPaidlist">
+												<div class="section-four lg-tbl no-padding-small" *ngIf="showPaidlist">
 													<div class="heading">
 														<span class="back"
 															(click)="showpaidSection()">{{back_cap}}</span>
@@ -880,7 +879,7 @@
 														<div class="table-th">
 															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
-															<!-- <div class="th three">{{refundable_cap}}</div> -->
+															<div class="th three" *ngIf="bill_data.billStatus!='Settled'">{{refundable_cap}}</div>
 														</div>
 														<div class="listing"
 															*ngFor="let payment of pre_payment_log; let i = index">
@@ -911,13 +910,13 @@
 																		</span>
 																	</span>
 																</div>
-																<div class="td three">
+																<div class="td three" *ngIf="bill_data.billStatus!='Settled'">
 																	<span class="amt rupee-font"
-																		*ngIf="payment.refundableAmount > 0">{{payment.refundableAmount |
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount |
 													currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
-																		*ngIf="payment.refundableAmount > 0">Refund</button>
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">Refund</button>
 																</div>
 															</div>
 															<div class="refunds-table"

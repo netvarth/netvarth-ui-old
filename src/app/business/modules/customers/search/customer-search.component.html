@@ -259,7 +259,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
                                     *ngIf="customer_data.dob">
                                     <div><b>DOB</b></div>
-                                    <div>{{customer_data.dob}}</div>
+                                    <div>{{customer_data.dob | date: display_dateFormat}}</div>
                                 </div>
                                 <hr class="wide-separator-line" />
                                 <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
@@ -282,6 +282,30 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                     <i class="fa fa- pointer-cursor" (click)="appointmentClicked()"><u
                                             class="createcheckinstyle">Click here</u></i>
                                 </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-paddinb" *ngIf="foundMultiCustomer && searchClicked">
+                                <table class="table customerlist-grid">
+                                    <tbody>
+                                      <tr class="pointer-cursor" *ngFor="let customer of multiCustomerData let i=index">
+                                        <td class="one">
+                                          <span *ngIf="customer.jaldeeId" class="pad-rt-5 mgn-lt-10"><b>{{customer_label | capitalizeFirst}}
+                                              Id:</b> {{customer.jaldeeId}}</span>
+                                        </td>
+                                        <td class="one">
+                                          <div *ngIf="customer.firstName || customer.lastName" class="bold pull-left mgn-lt-10">
+                                             {{customer.firstName}} {{customer.lastName}}</div>
+                                        </td>
+                                        <td class="two">
+                                            <span *ngIf="customer.phoneNo && customer.phoneNo.length === 10"><i
+                                                class="fa fa-mobile"></i>&nbsp;{{customer.phoneNo}}</span>
+                                        </td>
+                                        <td class="hidden-xs hidden-sm">
+                                          <span *ngIf="customer.email" class="pad-rt-5"><i
+                                              class="fa fa-envelope"></i>&nbsp;{{customer.email}}</span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
                             </div>
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
                             </div>

@@ -689,6 +689,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        if (locid && servid && accountid) {
         _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.availableSlots);
@@ -697,6 +698,7 @@ export class AppointmentActionsComponent implements OnInit {
                     return index === self.indexOf(elem);
                 });
             });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';

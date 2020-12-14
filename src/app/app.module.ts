@@ -59,7 +59,13 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
 import { SignaturePadModule } from 'angular2-signaturepad';
+<<<<<<< HEAD
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
+=======
+import { CardModule } from './shared/components/card/card.module';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+
+>>>>>>> refs/remotes/origin/1.6.x
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -121,8 +127,16 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
+<<<<<<< HEAD
     SignaturePadModule
 
+=======
+    ConsumerFooterModule,
+    TruncateModule,
+    SignaturePadModule,
+    CardModule,
+    NgxIntlTelInputModule
+>>>>>>> refs/remotes/origin/1.6.x
   ],
   providers: [
     AuthGuardConsumer,

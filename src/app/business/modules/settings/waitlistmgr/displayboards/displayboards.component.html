@@ -32,6 +32,7 @@
                                 <div class="col-md-12 no-padding">
                                     <ul class="nav jd-custom-nav chkn-dash">
                                         <li class="dropdown notifications-menu pull-right" style="display: flex;"
+<<<<<<< HEAD
                                             [class.disabled]="qBoardSelectCount == 0">
                                             <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
                                                 (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
@@ -126,6 +127,102 @@
                                                                     (click)="goDisplayboardLayoutDetails(layout, 'layout')">
                                                                     Open
                                                                 </a> </button> -->
+=======
+                                            [class.disabled]="qBoardSelectCount == 0" *ngIf="layout_list.length > 1">
+                                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                (click)="(qBoardSelectCount > 0) && addDisplayboardGroup()"
+                                                [class.pointer-cursor]="(qBoardSelectCount > 0)"
+                                                class="dropdown-toggle navbar-item-color bold ">
+                                                <span>
+                                                    <i class="fa fa-plus"></i> New Group
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown notifications-menu pull-right" style="display: flex;">
+                                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button"
+                                                (click)="addDisplayboardLayout()"
+                                                class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                                <span>
+                                                    <i class="fa fa-plus"></i> {{statusboard_cap}}
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-12" *ngIf="layout_list.length==0">
+                                    <div class="row">
+                                        <div class="no-dta">
+                                            <p>No {{statusboard_cap}}s created yet.</p>
+                                            <span class="cs-btn bt3" (click)="addDisplayboardLayout()">Create</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-padding" *ngIf="layout_list.length!==0">
+                                    <div class="table-responsive">
+                                        <table class="table tbl-qboard">
+                                            <!-- <thead class="qBoardselected-table">
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Refresh Interval</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead> -->
+                                            <tbody>
+                                                <tr *ngFor="let layout of layout_list, let i=index"
+                                                    [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]">
+                                                    <!-- <td class="centeralign">
+                                                        
+                                                        <mat-checkbox class="pt10" >
+                                                        </mat-checkbox> 
+                                                    </td> -->
+                                                    <td>
+                                                        <input type="checkbox" class="ckbx pull-left"
+                                                            [disabled]="layout.isContainer"
+                                                            [checked]="qBoardsSelectedIndex[i]"
+                                                            (click)="!layout.isContainer && qBoardClicked(i)"
+                                                            [value]="layout.id" *ngIf="layout_list.length > 1"/>
+                                                        <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
+                                                            class="pull-left mgn-lt-10">
+                                                            <h3 class="pointer-cursor">
+                                                                <i *ngIf="layout.isContainer"
+                                                                    class="fa fa-object-group"></i>&nbsp;{{layout.displayName | capitalizeFirst}}
+                                                                <!-- <span
+                                                                    *ngIf="!layout.container" class="layout_name"> (Id -
+                                                                    {{layout.id}})</span> -->
+                                                            </h3>
+                                                        </div>
+                                                    </td>
+                                                    <td class="pull-right">
+                                                        <span class="">
+                                                            <button type="button" mat-icon-button
+                                                                [matMenuTriggerFor]="appMenu">
+                                                                <mat-icon>more_vert</mat-icon>
+                                                            </button>
+                                                        </span>
+                                                        <mat-menu #appMenu="matMenu">
+                                                            <button mat-menu-item
+                                                                (click)="ViewDisplayboardLayout(layout)"><i
+                                                                    class="fa fa-eye" aria-hidden="true"></i>
+                                                                View
+                                                            </button>
+                                                            <!-- <button mat-menu-item
+                                                                (click)="editDisplayboardLayout(layout)">
+                                                                <i class="icon-edit"></i>
+                                                                Edit
+                                                            </button> -->
+                                                            <button mat-menu-item
+                                                                (click)="deleteDisplayboardLayout(layout)">
+                                                                <i class="icon-delete"></i>
+                                                                Delete
+                                                            </button>
+                                                            <button mat-menu-item>
+                                                                <i class="fa fa-folder-open"></i>
+                                                                <a class="pointer-cursor"
+                                                                    style="color: black; font-weight: 400;"
+                                                                    (click)="goDisplayboardLayoutDetails(layout, 'layout')">
+                                                                    Open
+                                                                </a> </button>
+>>>>>>> refs/remotes/origin/1.6.x
                                                         </mat-menu>
                                                     </td>
                                                 </tr>

@@ -22,7 +22,7 @@
                             <mat-slide-toggle [(ngModel)]="livetrack_status" (change)="handle_liveTracking($event)">
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}
-                             <div class="form-level-settings">
+                             <div class="form-level-settings disp-flex">
                                     <p class="settings_info" *ngIf="livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.
                                         </p>
                                         <p class="settings_info" *ngIf="!livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.

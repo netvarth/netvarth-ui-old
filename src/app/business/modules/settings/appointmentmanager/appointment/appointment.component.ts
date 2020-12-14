@@ -76,6 +76,7 @@ export class AppointmentComponent implements OnInit {
     checkindisablemsg = '';
     pass_loc;
     sel_queue_id;
+    countryCode;
     // sel_queue_waitingmins;
     // sel_queue_servicetime = '';
     // sel_queue_name;
@@ -471,6 +472,8 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
+                            this.countryCode = this.customer_data.countryCode;
+                            console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;
                                 this.heading = 'Confirm your Appointment';
@@ -529,6 +532,7 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            console.log(this.waitlist_for)
         }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -695,7 +699,9 @@ export class AppointmentComponent implements OnInit {
             // };
             fn.subscribe(data => {
                 this.familymembers = [];
+                console.log(this.familymembers)
                 this.familymembers.push(this.customer_data);
+                console.log(this.familymembers)
                 for (const mem of data) {
                     if (mem.id !== this.customer_data.id) {
                         this.familymembers.push(mem);
@@ -1020,6 +1026,7 @@ export class AppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
+            'countryCode': this.countryCode,
             'phoneNumber': this.consumerPhoneNo,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'appointmentMode': this.apptType
@@ -1838,6 +1845,7 @@ export class AppointmentComponent implements OnInit {
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        if (locid && servid && accountid) {
         _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.availableSlots);
@@ -1846,6 +1854,7 @@ export class AppointmentComponent implements OnInit {
                     return index === self.indexOf(elem);
                 });
             });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';

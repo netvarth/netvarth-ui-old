@@ -22,8 +22,12 @@ import { GalleryImportComponent } from '../../../../shared/modules/gallery/impor
 import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
+<<<<<<< HEAD
 import { ConfirmBoxComponent } from '../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 declare let cordova: any;
+=======
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+>>>>>>> refs/remotes/origin/1.6.x
 
 @Component({
   selector: 'app-bprofile',
@@ -787,6 +791,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe(
         data => {
           this.image_list = data;
+          console.log(this.image_list);
           if (this.image_list && this.image_list.length !== 0) {
             this.galryFilled = true;
           }
@@ -1531,7 +1536,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you want to delete this cover photo?'
+        'message': 'Do you want to remove this cover photo?'
       }
     });
     dialogrefd.afterClosed().subscribe(result => {

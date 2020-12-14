@@ -259,10 +259,10 @@
             </div>
             <div class="col-md-12 mgn-bt-20" *ngIf="providerLabelsCount > 0">
                 <label class="col-form-label">
-                    Select Labels
+                    Select Label
                 </label>
                 <mat-form-field>
-                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
+                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
                             noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
@@ -275,14 +275,14 @@
                     </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
+                <!-- <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
                     <label class="col-form-label">
-                        Selected Labels:
+                        Selected Label:
                     </label>
                     <ul *ngFor="let label of labelMultiCtrl" class="mgn-up-10 col-md-12 no-padding">
                         <li>
                             {{label.displayName}}
-                        </li>
+                        </li> -->
                         <!-- <mat-form-field class="col-md-6 no-padding">
                             <mat-select placeholder="Select value" [(value)]="label.selectedValue">
                                 <mat-option *ngFor="let value of label.valueSet" [value]="value.value"
@@ -291,8 +291,8 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field> -->
-                    </ul>
-                </div>
+                    <!-- </ul>
+                </div> -->
             </div>
             <!-- <div class="sort-label col-md-12">
                 <label class="col-form-label mgn-bt-10">

@@ -25,6 +25,7 @@ export class LastVisitComponent implements OnInit {
   visitcount: any;
   back_type: any;
   selectedRowIndex = -1;
+  customer_label = '';
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
@@ -51,6 +52,7 @@ export class LastVisitComponent implements OnInit {
     if (this.accountType !== 'BRANCH') {
       this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
     }
+    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
     // tslint:disable-next-line: no-shadowed-variable
     // this.medicalrecordService.patient_data.subscribe(data => {
     //   this.customerDetails = JSON.parse(data.customerDetail);

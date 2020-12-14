@@ -225,7 +225,9 @@ export class CustomerSearchComponent implements OnInit {
     checkinType;
     isFrom;
     emptyFielderror = false;
-
+    foundMultiCustomer = false;
+    multiCustomerData: any;
+    display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
 
 
 
@@ -582,6 +584,7 @@ export class CustomerSearchComponent implements OnInit {
         this._location.back();
     }
     createNew() {
+        this.qParams['source'] = 'clist';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
@@ -682,9 +685,11 @@ export class CustomerSearchComponent implements OnInit {
                 break;
         }
         this.foundCustomer = false;
+        this.foundMultiCustomer = false;
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
+                    console.log(data);
                     this.loading = false;
                     if (data.length === 0) {
                         // this.form_data = data;
@@ -709,10 +714,18 @@ export class CustomerSearchComponent implements OnInit {
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {
-                        this.foundCustomer = true;
-                        this.customer_data = data[0];
-                        this.customerPhone = this.customer_data.phoneNo;
-                        this.searchClicked = true;
+                        if (data.length === 1) {
+                            this.foundCustomer = true;
+                            this.customer_data = data[0];
+                            this.customerPhone = this.customer_data.phoneNo;
+                            this.searchClicked = true;
+                            this.foundMultiCustomer = false;
+                        } else {
+                            this.searchClicked = true;
+                            this.foundMultiCustomer = true;
+                            this.foundCustomer = false;
+                            this.multiCustomerData = data;
+                        }
                     }
                 },
                 error => {

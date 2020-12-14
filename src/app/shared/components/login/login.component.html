@@ -1,5 +1,4 @@
-<form [formGroup]="loginForm" class="login-form" novalidate (ngSubmit)="loginForm.valid &&
-onSubmit(loginForm.value)" *ngIf="step==1">
+<form [formGroup]="loginForm" class="login-form custom-login-form" novalidate (ngSubmit)="onSubmit(loginForm.value)" *ngIf="step==1">
     <div class="mat-dialog-title">{{heading}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
                 class="fa fa-window-close" aria-hidden="true"></i></button></div>
     <div class="mat-dialog-content">
@@ -26,42 +25,59 @@ onSubmit(loginForm.value)" *ngIf="step==1">
             </app-field-error-display>
         </div>
         <div>Or</div> -->
+
         <div class="form-group">
-                <div class="form-group mob-prefx mobile-field">
-                    <div style="display: flex;">
-                            <div class="input-group-prepend">
-                                <span style="width: 65px">
-                                    <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
-                                    <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
-                                  </mat-select>
-                                </span>
-                                <!-- <span class="input-group-text" id="">+91</span> -->
-                                </div>
-            <mat-form-field>
-                <input *ngIf="heading == 'Service Provider Login'" type="text" matInput class="form-control" id="emailId" maxlength="50"
-                        placeholder="Enter your 10 digit mobile number" formControlName="emailId" autocomplete="off"
-                        (keyup)="handlekeyup($event)">
-                        <input *ngIf="heading != 'Service Provider Login'" type="text" matInput class="form-control" id="emailId" maxlength="10"
-                        placeholder="Enter your 10 digit mobile number" formControlName="emailId" autocomplete="off"
-                        (keyup)="handlekeyup($event)">
-                        
-            </mat-form-field>
-            </div>
+            <mat-label for="phone">Enter your Mobile Number</mat-label>
+            <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                [selectedCountryISO] = "selectedCountry"
+                [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                formControlName="phone">
+            </ngx-intl-tel-input>
+            <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+        </div>
+
+
+        <!-- <div class="form-group">
+            <div class="form-group mob-prefx mobile-field">
+                <div style="display: flex;">
+                    <div class="input-group-prepend">
+                        <span style="width: 65px">
+                            <mat-select [(ngModel)]="selectedCountryCode" [ngModelOptions]="{standalone: true}">
+                                <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">
+                                    {{codes.displayName}}</mat-option>
+                            </mat-select>
+                        </span>
+                    </div>
+                    <mat-form-field>
+                        <input *ngIf="heading == 'Service Provider Login'" type="text" matInput class="form-control"
+                            id="emailId" maxlength="50" placeholder="Enter your 10 digit mobile number"
+                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+                        <input *ngIf="heading != 'Service Provider Login'" type="text" matInput class="form-control"
+                            id="emailId" maxlength="10" placeholder="Enter your 10 digit mobile number"
+                            formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)">
+
+                    </mat-form-field>
                 </div>
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
+            </div>
+            <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId') && show_error"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
                 
   {
     'pattern' : phOrem_error
   })">
             </app-field-error-display>
-            <p  *ngIf="heading == 'Service Provider Login'"class="form-level-settings">*Corporate account holders, sign in with email id/mobile number</p>
-        </div>
+            <p *ngIf="heading == 'Service Provider Login'" class="form-level-settings">*Corporate account holders, sign
+                in with email id/mobile number</p>
+        </div> -->
         <div class="form-group">
-            <mat-form-field>
-                <input type="password" matInput class="form-control" id="password" placeholder="Password"
+            <mat-label for="password">Password</mat-label>
+            <!-- <mat-form-field> -->
+                <input type="password"  class="form-control" id="password" placeholder=""
                     formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
-            </mat-form-field>
+            <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && show_error"
                 errorMsg="Password is required">
             </app-field-error-display>
@@ -88,6 +104,6 @@ onSubmit(loginForm.value)" *ngIf="step==1">
 </form>
 
 <div class="example-container" *ngIf="step==2">
-    <app-forgot-password (retonChangePassword)="onChangePassword()"
-        (retonCancelForgotPassword)="cancelForgotPassword()" [consumerlogin] = "true"></app-forgot-password>
+    <app-forgot-password (retonChangePassword)="onChangePassword()" (retonCancelForgotPassword)="cancelForgotPassword()"
+        [consumerlogin]="true"></app-forgot-password>
 </div>

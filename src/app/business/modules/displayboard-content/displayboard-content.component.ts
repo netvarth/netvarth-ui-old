@@ -60,10 +60,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     qBoardFooter;
     qBoardGroupFooter: any;
     qBoardGroupTitle: any;
-    bLogoWidth: string;
-    bLogoHeight: string;
-    gLogoWidth: string;
-    gLogoHeight: string;
+    bLogoWidth = '';
+    bLogoHeight = '';
+    gLogoWidth = '';
+    gLogoHeight = '';
     glogo = '';
     gPosition;
     constructor(private activated_route: ActivatedRoute,
@@ -92,6 +92,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         if (this.isContainer) {
             hgt_reduced = 320;
             fullhgt_reduced = 270;
+        }
+        if (this.bLogoHeight === '') {
+            hgt_reduced = 136;
+            fullhgt_reduced = 86;
         }
         this.fullHeight = screenHeight - fullhgt_reduced;
         if (this.boardRows > 1) {
@@ -431,18 +435,19 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     getFieldValue(field, checkin) {
         let fieldValue = '';
         if (field.name === 'waitlistingFor' || field.name === 'appmtFor') {
-            const lastName = checkin[field.name][0].lastName;
-            const nameLength = lastName.length;
-            const encryptedName = [];
             let lastname = '';
-            for (let i = 0; i < nameLength; i++) {
-                encryptedName[i] = lastName[i].replace(/./g, '*');
+            if (checkin[field.name][0].lastName) {
+                const lastName = checkin[field.name][0].lastName;
+                const nameLength = lastName.length;
+                const encryptedName = [];
+                for (let i = 0; i < nameLength; i++) {
+                    encryptedName[i] = lastName[i].replace(/./g, '*');
+                }
+                for (let i = 0; i < nameLength; i++) {
+                    lastname += encryptedName[i];
+                }
             }
-            for (let i = 0; i < nameLength; i++) {
-                lastname += encryptedName[i];
-
-            }
-            fieldValue = checkin[field.name][0].firstName + ' ' + lastname;
+            fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
         } else if (field.name === 'appointmentTime') {
@@ -462,9 +467,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         } else if (field.name === 'primaryMobileNo') {
             let full_phone = '';
             if (this.type === 'waitlist') {
-                full_phone = checkin['waitlistingFor'][0]['phoneNo'];
+                if (checkin['waitlistingFor'][0]['phoneNo'] && checkin['waitlistingFor'][0]['phoneNo'] !== 'null') {
+                    full_phone = checkin['waitlistingFor'][0]['phoneNo'];
+                }
             } else {
-                full_phone = checkin.phoneNumber;
+                if (checkin.phoneNumber) {
+                    full_phone = checkin.phoneNumber;
+                }
             }
             if (full_phone) {
                 const phLength = full_phone.length;

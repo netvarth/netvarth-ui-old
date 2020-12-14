@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -10,13 +10,15 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -29,14 +31,23 @@ export class LoginComponent implements OnInit {
   is_provider = 'true';
   step = 1;
   moreParams = [];
-  countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
-  selectedCountryCode;
+  // countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
+  // selectedCountryCode;
   api_loading = true;
   show_error = false;
   test_provider = null;
   heading = '';
   phOrem_error = '';
   signup_here = '';
+  phoneNumber;
+  separateDialCode = true;
+  SearchCountryField = SearchCountryField;
+	TooltipLabel = TooltipLabel;
+  selectedCountry = CountryISO.India;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  phoneError: string;
+
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -54,10 +65,15 @@ export class LoginComponent implements OnInit {
     this.test_provider = data.test_account;
     this.is_provider = data.is_provider || 'true';
   }
+  ngAfterViewInit() {
+   
+    // this.loginForm.controls.phone.setDialCode();
+    // this.cd.detectChanges();
+  }
   ngOnInit() {
-    if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
-    }
+    // if (this.countryCodes.length !== 0) {
+    //   this.selectedCountryCode =this.countryCodes[0].value;
+    // }
     this.moreParams = this.data.moreparams;
     this.createForm();
     this.api_loading = false;
@@ -83,12 +99,40 @@ export class LoginComponent implements OnInit {
       //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       emailId: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
       password: ['', Validators.compose([Validators.required])],
+      phone: new FormControl(undefined, [Validators.required])
     });
+    // this.phoneNumber = '+19605551784';
+    // e164Number: "+911234567890",
+    // internationalNumber: "+91 1234 567 890",
+    // nationalNumber: "01234 567 890",
+    // countryCode: "IN",
+    // this.phoneNumber = '+1 2015551234';
+    // this.phoneNumber = '+19605551784';
+    // this.phoneNumber =  {
+// dialCode: "+1",
+// e164Number: "+11234567890",
+// internationalNumber: "+1 9605551784",
+// nationalNumber: "09605551784",
+// countryCode: "IN",
+// number: "+19605551784"}
+    // this.loginForm.controls.phone.setValue(phoneNumber);
+    // this.phoneNumber = '(123)456-7890';
+    // this.loginForm.controls.phone.setValue(this.phoneNumber);
+
   }
   showError() {
+    this.phoneError = null;
     this.show_error = true;
+    if (!this.loginForm.get('phone').value) {
+      this.phoneError = 'Please enter your phone number';
+      return false;
+    } else if (this.loginForm.get('phone').errors && !this.loginForm.get('phone').value.e164Number.startsWith(this.loginForm.get('phone').value.dialCode + '55')) {
+      this.phoneError = 'Phone number is invalid';
+      return false;
+    }
+    const pN = this.loginForm.get('phone').value.e164Number;
     // const pN = this.document.getElementById('phonenumber').value.trim();
-    const pN = this.document.getElementById('emailId').value.trim();
+    // const pN = this.document.getElementById('emailId').value.trim();
     const pW = this.document.getElementById('password').value.trim();
     // if (pN === '') {
     //   if (this.document.getElementById('phonenumber')) {
@@ -97,10 +141,10 @@ export class LoginComponent implements OnInit {
     //   }
     // }
     if (pN === '') {
-      if (this.document.getElementById('emailId')) {
-        this.document.getElementById('emailId').focus();
-        return;
-      }
+      // if (this.document.getElementById('emailId')) {
+      //   this.document.getElementById('emailId').focus();
+      //   return;
+      // }
     }
     if (pW === '') {
       if (this.document.getElementById('password')) {
@@ -112,28 +156,32 @@ export class LoginComponent implements OnInit {
   onSubmit(data) {
     this.resetApiErrors();
     // const pN = data.phonenumber.trim();
-    const pN = data.emailId.trim();
+    const dialCode = data.phone.dialCode;
+    const pN = data.phone.e164Number.trim();
     const pW = data.password.trim();
     //  const email = data.emailId.trim();
-    if (pN === '') {
-      if (this.document.getElementById('emailId')) {
-        this.document.getElementById('emailId').focus();
-        return;
-      }
-    }
+    // if (pN === '') {
+    //   if (this.document.getElementById('emailId')) {
+    //     this.document.getElementById('emailId').focus();
+    //     return;
+    //   }
+    // }
     if (pW === '') {
       if (this.document.getElementById('password')) {
         this.document.getElementById('password').focus();
         return;
       }
     }
-    const loginId = pN;
+    let loginId = pN;
+    if(pN.startsWith(dialCode)) {
+      loginId = pN.split(dialCode)[1];
+    }
     // if (email !== '') {
     //   loginId = email;
     // }
     const ob = this;
     const post_data = {
-      'countryCode': this.selectedCountryCode,
+      'countryCode': dialCode,
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
@@ -205,8 +253,6 @@ export class LoginComponent implements OnInit {
   handleSignup() {
     this.dialogRef.close();
     this.doSignup();
-    console.log('dhf');
-    console.log(this.moreParams);
     // if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
     //   this.dialogRef.close('showsignup');
     // } else {

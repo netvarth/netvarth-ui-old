@@ -383,6 +383,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     { mode: 'PHONE_CHECKIN', value: 'Phone in Check-in' },
     { mode: 'ONLINE_CHECKIN', value: 'Online Check-in' },
   ];
+  waitlistModesToken = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in Token' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in Token' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online Token' },
+  ];
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -498,6 +503,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.settings = data;
         this.calculationmode = this.settings.calculationMode;
         this.showToken = this.settings.showTokenId;
+        if (this.showToken) {
+          this.waitlistModes = this.waitlistModesToken;
+        }
         if (this.showToken) {
           this.breadcrumbs_init = [{ title: 'Tokens' }];
           this.tokenOrCheckin = 'Tokens';
@@ -2212,6 +2220,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['provider', 'settings', 'general', 'users']);
   }
   checkinClicked(source) {
+    if (this.queues.length === 0) {
+      this.shared_functions.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
+    } else {
     let deptId;
     let userId;
     if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
@@ -2232,6 +2243,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+  }
   }
   searchCustomer() {
     // const navigationExtras: NavigationExtras = {
@@ -2540,7 +2552,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-                checkin_html += '<td style="padding:10px">xcxcxcxccxcx' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
@@ -2895,9 +2907,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
   openImageModalRow(image: Image) {
-    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    console.log(index);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
