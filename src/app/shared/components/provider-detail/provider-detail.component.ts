@@ -2003,8 +2003,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place,
-      'logo': this.bLogo
+      'logo': this.businessjson.logo.url
     };
+    console.log(businessObject);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {

@@ -45,6 +45,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   nextAvailableTime;
   availableDates: any = [];
   catalog_Id: any;
+  businessDetails: any;
 
   constructor(
     public router: Router,
@@ -60,18 +61,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('cart shared');
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+    this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
     console.log(this.orders);
+    console.log(this.businessDetails);
     this.catalog_details = this.shared_services.getOrderDetails();
     console.log(JSON.stringify(this.catalog_details));
     if (this.catalog_details) {
       this.catalog_Id = this.catalog_details.id;
-      console.log(this.catalog_Id);
     }
 
-    console.log(this.catalog_details);
     if (this.catalog_details.pickUp) {
       if (this.catalog_details.pickUp.orderPickUp) {
         this.store_pickup = true;

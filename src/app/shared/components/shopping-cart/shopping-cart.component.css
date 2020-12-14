@@ -96,7 +96,6 @@ flex-basis: 50% !important;
     width: 50px;
     height: 50px;
     position: relative;
-    background-image: url('https://www.tasteofhome.com/wp-content/uploads/2018/01/exps28800_UG143377D12_18_1b_RMS-3-696x696.jpg');
     background-repeat: round;
 }
 .shop-cart .prov-name-txt {
@@ -106,6 +105,7 @@ flex-basis: 50% !important;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    text-transform: uppercase;
 }
 .shop-cart .prov-loc {
     font-size: 13px;
@@ -206,4 +206,10 @@ flex-basis: 50% !important;
 ::ng-deep .shop-cart .mat-radio-button.mat-accent .mat-radio-inner-circle {
   background-color: #183e7a !important;
   border-radius: 0% !important;
+}
+.shop-cart .confm_btn {
+  background: #183e7a;
+  border: none;
+  color: white;
+  padding: 5px;
 }

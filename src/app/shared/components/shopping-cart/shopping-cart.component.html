@@ -8,7 +8,6 @@
           </div>
         </div>
         <div class="panel-body no-padding">
-          <!-- <div class="c-outer m0"> -->
           <div class="bg-grey">
             <div class="card title-gb m0">
               <h5 class="mgn-up-10">
@@ -18,171 +17,13 @@
                 <span class=" mgn-lt-10 amount">Continue shopping</span>
               </h5>
             </div>
-
-            <!-- <div class="col-a pl0 col-md-12 col-lg-8 col-xl-8 col-xs-12" *ngIf="action==''">
-              <div class="bill-section">
-                <div class="bill-section-content">
-                  <div class="bill-wrapper ">
-                    <div style="text-align: center;">
-                      Your Cart !!
-                    </div>
-
-                    <div class="bill-content">
-                      <div class="section-three">
-                        <div class="bill-breakup">
-                          <div class="list border">
-
-
-                            <div class="list-content" style="text-align: left;"
-                              *ngFor="let item of orders; let i = index">
-
-                              <div class="copy one">
-                                <div class="col-a col-b cd-b">
-                                  <div class="mgn-up-10">
-                                    <div class="div-outline custId-cursor">
-                                      <div class="c-row one">
-                                        <div class="col-md-2" *ngIf="item.item.itemImages">
-                                          <img class="card-img img-responsive" height="60px"
-                                            [src]="item.item.itemImages[0].thumbUrl" alt="Profile Pic" />
-                                        </div>
-                                        <div class="name cart-flex"> {{item.item.itemName}}</div>
-                                        <div class="no-padding">
-
-                                          <div class="btn-rt pull-right">
-                                            <button (click)="decrement(item)">-</button>
-                                          </div>
-                                          <div class="count-o pull-right">
-                                            {{getItemQty(item)}}
-                                          </div>
-                                          <div class="btn-lt pull-right">
-                                            <button (click)="increment(item)">+</button>
-                                          </div>
-                                        </div>
-                                        <span class="rupee-font">&#8377;{{ getItemPrice(item) }}&nbsp;</span>
-
-                                        <div style="padding-left: 30px;">
-                                          <button (click)="removeItemFromCart(item)">
-                                            <i style="float: right;" class="fa fa-window-close"></i>
-                                          </button>
-                                        </div>
-
-                                      </div>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                        <div>
-                          <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
-                          <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup"
-                            (change)="changeType()">
-                            <mat-radio-button class="mgn-lt-5 mgn-bt-5" [value]="'store'" [checked]="true">
-                              Store pick up
-                            </mat-radio-button>
-                            <mat-radio-button class="mgn-lt-5   mgn-rt-10" [value]="'home'" [checked]="false">
-                              Home delivery
-                            </mat-radio-button>&nbsp;
-                          </mat-radio-group>
-                          <div *ngIf="store_pickup && !home_delivery">
-                            store pickup
-                          </div>
-                          <div *ngIf="home_delivery && !store_pickup">
-                            home delivery
-                          </div>
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                            Date/Time
-                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 change"
-                                (click)="changeTime()">Change
-                              </a></span>
-                          </div>
-                          <div>
-                            <h4>
-                              <span *ngIf="!isFuturedate">Today, </span>
-                              <span *ngIf="!isFuturedate">
-                                {{nextAvailableTime}}
-                              </span>
-                              <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
-                              </span>
-                              <span *ngIf="isFuturedate">
-                                {{nextAvailableTime}}
-                              </span>
-
-                            </h4>
-                          </div>
-                        </div>
-
-                        <div class="copy one">
-                          <div class="col-a col-b cd-b">
-                            <div class="mgn-up-10">
-                              <div class="div-outline custId-cursor">
-                                <div class="amount-table">
-                                  <div class="amt-content">
-                                    <table class="amt-content">
-                                      <tbody>
-                                        <tr>
-                                          <td>Item Total</td>
-                                          <td style="text-align: end;">
-                                            <span class="rupee-font">&#8377;{{getTotalItemAndPrice()}}&nbsp;</span>
-
-                                          </td>
-                                        </tr>
-
-
-
-
-                                        <tr *ngIf="choose_type=='home'">
-                                          <td>Delivery charge </td>
-                                          <td style="text-align: end;">
-                                            <span class="rupee-font">&#8377;{{deliveryCharge}}&nbsp;</span>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Subtotal</td>
-                                          <td style="text-align: end;">
-                                            <span class="rupee-font">&#8377; {{getSubTotal()}}&nbsp;</span>
-                                          </td>
-                                        </tr>
-
-
-
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <h2 class="textcenter"><button class="pay" (click)="cart()">
-                            <h6 style="padding-top: 10px;">Confirm Order</h6>
-                          </button></h2>
-
-                      </div>
-                    </div>
-
-
-
-
-
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-
             <!-- revamped section -->
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="action==''">
               <div class="col-sm-7 col-md-7 col-lg-7 col-xs-12 pad-10">
                 <div class="card col-xs-12">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2"
                     *ngFor="let item of orders;  let i = index">
-                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
+                    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9 no-padding">
                       <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img" *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5">
@@ -206,13 +47,13 @@
               <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
                 <div class="card col-xs-12">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
-                    <div class="prov-dp"></div>
+                    <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
                     <div class="prov-name">
                       <div class="prov-name-txt">
-                        AKSHAYA HOTEL
+                        {{businessDetails.bname}}
                       </div>
                       <div class="prov-loc">
-                        Poothole
+                        {{businessDetails.blocation}}
                       </div>
                     </div>
                   </div>
@@ -271,21 +112,13 @@
                     <div class="flex1">Sub Total</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
-                 <button (click)="cart()">Confirm Order</button>
+                  <button (click)="cart()" class="confm_btn">Confirm Order</button>
                 </div>
               </div>
             </div>
 
 
-
-
-
-
-
-
-
-
-
+            <!-- Change date -->
             <div class="panel-body no-padding">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="card p0">
@@ -344,9 +177,6 @@
                 </div>
               </div>
             </div>
-
-
-
 
 
           </div>
