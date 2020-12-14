@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
-import { projectConstants } from '../../../app.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
