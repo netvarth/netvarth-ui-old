@@ -2507,7 +2507,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place,
-      'logo': this.bLogo
+      'logo': this.businessjson.logo.url
     };
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);

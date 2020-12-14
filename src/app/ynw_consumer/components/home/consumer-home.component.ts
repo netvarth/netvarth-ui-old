@@ -1867,12 +1867,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_future_order = [];
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-    const serverdate = moment(server).format();
-    const servdate = new Date(serverdate);
-    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+    // const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+   // const serverdate = moment(server).format();
+   // const servdate = new Date(serverdate);
+   // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+   this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
     const params = {
-      'orderDate-ge': this.tomorrowDate
+      'orderDate-gt': this.tDate
     };
     this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.future_orders = data; // saving future orders
