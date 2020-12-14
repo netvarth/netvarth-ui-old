@@ -89,6 +89,7 @@ import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/s
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -184,6 +185,7 @@ export function init_app(globalService: GlobalService) {
     SignaturePadModule,
     CardModule,
     MatStepperModule
+    NgxIntlTelInputModule
   ],
   providers: [
     AuthGuardConsumer,
@@ -226,4 +228,5 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 
