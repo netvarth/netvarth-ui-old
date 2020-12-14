@@ -19,8 +19,8 @@
             <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
                 <mat-grid-tile *ngFor="let item of catalogItem;let i=index;">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(item,i)" [class.itemselected]="item.selected">
-                        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside img_sample no-padding">
-                            
+                        <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
+                            <img [src]="getItemImg(item)" > 
                         </div>
                         <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
                             <div class="item-name-outer">
@@ -28,8 +28,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                             </div>
                             <div class="price_outer">
-                                <input class="ip-field" id="minquty_{{item.itemId}}" type="number" placeholder="Min Qty">
-                                <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" placeholder="Max Qty">
+                                <input class="ip-field" id="minquty_{{item.itemId}}" type="number" value = "{{item.minQuantity}}" placeholder="Min Qty">
+                                <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty">
                             </div>
                         </div>
                     </div>

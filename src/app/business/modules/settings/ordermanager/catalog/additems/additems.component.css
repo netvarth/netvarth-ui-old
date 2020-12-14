@@ -310,12 +310,20 @@
     cursor: pointer;
  }
  .add_item_ .fit_inside {
-  height: 100% !important;
+  height: 100% ;
   overflow: auto !important;
  }
  .add_item_ .img_sample {
-   background-image: url('https://images.wholesalesalwar.com/images/500/2020y/January/15495/Wine-Georgette-Festival-Wear-Embroidery-Work-Churidar-Suit-7120.jpg');
+   /* background-image: url('https://images.wholesalesalwar.com/images/500/2020y/January/15495/Wine-Georgette-Festival-Wear-Embroidery-Work-Churidar-Suit-7120.jpg'); */
    background-repeat: round !important;
+ }
+ .add_item_ img{
+  object-fit: cover!important;
+  height: 95%!important;
+  /* overflow: auto; */
+  width: 95%!important;
+  padding-top: 5px !important;
+  padding-left: 5px !important;
  }
  .add_item_ .price_outer {
   position: absolute;

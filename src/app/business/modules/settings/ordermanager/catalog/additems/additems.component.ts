@@ -133,11 +133,19 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             for (const selitem of this.seletedCatalogItems) {
                if (itm.itemId === selitem.item.itemId) {
                 itm.selected = true;
+                itm.minQuantity = selitem.minQuantity;
+                itm.maxQuantity = selitem.maxQuantity;
                }
             }
         }
           console.log(this.catalogItem);
 
+        } else {
+          for (const itm of this.catalogItem) {
+                itm.minQuantity = '1';
+                itm.maxQuantity = '5';
+              
+        }
         }
       });
   }
@@ -164,8 +172,8 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.selecteditemforadd = [];
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
-       this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || 1;
-       this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || 5;
+       this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
+       this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
        this.seletedCatalogItems1.item = this.catalogItem[ia];
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
@@ -274,5 +282,17 @@ const updateresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogI
     //     }
     //     );
   }
+  getItemImg(item) {
+    if (item.itemImages) {
+        const img = item.itemImages.filter(image => image.displayImage);
+        if (img[0]) {
+            return img[0].url;
+        } else {
+            return '../../../../assets/images/order/Items.svg';
+        }
+    } else {
+        return '../../../../assets/images/order/Items.svg';
+    }
+}
 
 }
