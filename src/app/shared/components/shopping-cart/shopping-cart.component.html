@@ -159,12 +159,18 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Choose
                           Timings</div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                          <mat-chip-list>
+                          <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="futureAvailableTime"> 
+                            <p>{{futureAvailableTime}}</p>
+                          </div>
+                          <div  *ngIf="!nextAvailableTime"> 
+                              <p>No timings are available</p>
+                            </div>
+                          <!-- <mat-chip-list>
                             <mat-chip>
                               09:00 AM - 10:00 PM
 
                             </mat-chip>
-                          </mat-chip-list>
+                          </mat-chip-list> -->
 
                         </div>
 

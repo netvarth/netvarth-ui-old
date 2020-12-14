@@ -46,6 +46,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   availableDates: any = [];
   catalog_Id: any;
   businessDetails: any;
+  futureAvailableTime;
 
   constructor(
     public router: Router,
@@ -256,6 +257,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const nDt = new Date(ndate);
     if (nDt.getTime() >= strtDt.getTime()) {
       this.sel_checkindate = ndate;
+      this.getAvailabilityByDate(this.sel_checkindate);
       // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -313,7 +315,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.isFuturedate = false;
     }
     this.handleFuturetoggle();
-    this.getAvailabilityByDate(this.sel_checkindate);
+    // this.getAvailabilityByDate(this.sel_checkindate);
   }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
@@ -368,6 +370,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       });
   }
   getAvailabilityByDate(date) {
+    console.log(date);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
@@ -377,13 +380,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
           const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
           if (currentday === pday) {
+            // this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule
+            this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
             console.log('future time available ');
           }
       }
     } else {
+      console.log(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals);
     for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
-      const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
+      const pday = Number(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals[i]);
+      console.log(pday);
       if (currentday === pday) {
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+
         console.log('future time available');
       }
     }
