@@ -107,6 +107,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     refundedAmount;
+    provider_label = '';
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -177,6 +178,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
                 }
 
             });
+            this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
     }
     goBack() {
         this.location.back();

@@ -203,7 +203,7 @@
                                         <ul class="details badges m0 no-padding">
                                             <ng-container *ngIf="locationjson && locationjson.length > 0">
                                                 <li *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
-                                                    [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
+                                                    [matTooltip]="'Parking Type: ' + locationjson[0].parkingType | capitalizeFirst">
                                                     <span class="icon-parking"></span></li>
                                                 <li
                                                     *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">

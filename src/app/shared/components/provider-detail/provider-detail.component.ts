@@ -632,6 +632,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               } else {
                 this.locationjson['isPlaceisSame'] = false;
               }
+              this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               // schedule_arr = [];
               // if (this.locationjson[i].bSchedule) {
               //   if (this.locationjson[i].bSchedule.timespec) {
