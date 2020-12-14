@@ -1708,12 +1708,20 @@ export class ProviderServices {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
-   getProviderOrders(filter = {}) {
+   getProviderTodayOrders(filter = {}) {
       const url = 'provider/orders';
       return this.servicemeta.httpGet(url, null, filter);
    }
-   getProviderOrdersCount(filter = {}) {
+   getProviderTodayOrdersCount(filter = {}) {
       const url = 'provider/orders/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderFutureOrders(filter = {}) {
+      const url = 'provider/orders/future';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderFutureOrdersCount(filter = {}) {
+      const url = 'provider/orders/future/count';
       return this.servicemeta.httpGet(url, null, filter);
    }
    getProviderOrderById(id) {

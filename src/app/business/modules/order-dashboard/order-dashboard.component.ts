@@ -86,11 +86,11 @@ export class OrderDashboardComponent implements OnInit {
     this.shared_functions.setitemToGroupStorage('orderTab', this.selectedTab);
     switch (type) {
       case 1: {
-        this.getProviderOrders();
+        this.getProviderTodayOrders();
         break;
       }
       case 2: {
-        this.getProviderOrders();
+        this.getProviderFutureOrders();
         break;
       }
       case 3: {
@@ -133,16 +133,20 @@ export class OrderDashboardComponent implements OnInit {
     const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     return this.dateformat.transformTofilterDate(server)
   }
-  getProviderOrders() {
+  getProviderTodayOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    if (this.selectedTab === 1) {
-      filter['orderDate-eq'] = this.getTodayDate();
-    } else {
-      filter['orderDate-gt'] = this.getTodayDate();
-    }
-    this.providerservices.getProviderOrders(filter).subscribe(data => {
+    this.providerservices.getProviderTodayOrders(filter).subscribe(data => {
+      this.orders = data;
+      this.loading = false;
+    });
+  }
+  getProviderFutureOrders() {
+    this.loading = true;
+    let filter = {};
+    filter = this.setFilterForApi();
+    this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
       this.orders = data;
       this.loading = false;
     });
@@ -150,14 +154,14 @@ export class OrderDashboardComponent implements OnInit {
   getProviderFutureOrdersCount() {
     const filter = {};
     filter['orderDate-gt'] = this.getTodayDate();
-    this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
+    this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
   }
   getProviderTodayOrdersCount() {
     const filter = {};
     filter['orderDate-eq'] = this.getTodayDate();
-    this.providerservices.getProviderOrdersCount(filter).subscribe(data => {
+    this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
     });
   }

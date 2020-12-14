@@ -184,7 +184,7 @@ export function init_app(globalService: GlobalService) {
     TruncateModule,
     SignaturePadModule,
     CardModule,
-    MatStepperModule
+    MatStepperModule,
     NgxIntlTelInputModule
   ],
   providers: [
