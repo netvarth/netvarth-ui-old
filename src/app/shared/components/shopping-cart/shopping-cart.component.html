@@ -206,7 +206,8 @@
                                           Choose
                                           Date</div>
                                       <div class="pull-left brd-round brd-light mgn-up-20">
-                                          <div class="icon-minus pull-left" [class.disable]="disableMinus()"
+                                          <!-- <div class="icon-minus pull-left" [class.disable]="disableMinus()" -->
+                                          <div class="icon-minus pull-left" 
                                               (click)="calculateDate(-1)">
                                           </div>
 
@@ -220,9 +221,9 @@
                                       <mat-datepicker-toggle matSuffix [for]="picker">
                                       </mat-datepicker-toggle>
                                       <mat-datepicker #picker ></mat-datepicker>
-                                      <input class="" style="visibility: hidden; width:1px" type="text"
+                                      <!-- <input class="" style="visibility: hidden; width:1px" type="text"
                                           [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                                          (dateChange)="handleFutureDateChange($event)">
+                                          (dateChange)="handleFutureDateChange($event)"> -->
 
                                   </div>
 

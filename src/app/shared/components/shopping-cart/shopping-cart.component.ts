@@ -129,8 +129,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.isFuturedate = false;
     } else {
       this.isFuturedate = true;
-      this.getOrderAvailableDatesForPickup();
     }
+    this.getOrderAvailableDatesForPickup();
+    this.getOrderAvailableDatesForHome();
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -311,7 +312,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.isFuturedate = false;
     }
     this.handleFuturetoggle();
-    // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    this.getAvailabilityByDate(this.sel_checkindate);
   }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
@@ -334,19 +335,58 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
   }
   getOrderAvailableDatesForPickup() {
-    console.log('hi');
+    console.log('pickup');
     const _this = this;
     console.log(this.catalog_Id);
     console.log(this.account_id);
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
         console.log(data);
-        const availables = data.filter(obj => obj.availableSlots);
+        const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
         _this.availableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
-        console.log(_this.availableDates);
+        console.log(availDates);
       });
+  }
+  getOrderAvailableDatesForHome() {
+    console.log('home');
+    const _this = this;
+    console.log(this.catalog_Id);
+    console.log(this.account_id);
+    _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+      .subscribe((data: any) => {
+        console.log(data);
+        const availables = data.filter(obj => obj.isAvailable);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.availableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
+        });
+        console.log(availDates);
+      });
+  }
+  getAvailabilityByDate(date){
+    this.sel_checkindate = date;        
+    const cday = new Date(this.sel_checkindate);
+    const currentday = (cday.getDay() + 1);
+    console.log(currentday);
+    if(this.choose_type === 'store'){
+      console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
+      for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
+          const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
+          if (currentday === pday) {
+            console.log('future time available ');
+          }
+      }
+    } 
+    else {
+    for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
+      const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
+      if (currentday === pday) {
+        console.log('future time available');
+      }
+    }
+   }
   }
 }

@@ -890,4 +890,7 @@ export class SharedServices {
   getAvailableDatesForPickup(catalogid , accountid?){
     return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid +  '?account=' + accountid);
   }
+  getAvailableDatesForHome(catalogid , accountid?){
+    return this.servicemeta.httpGet('consumer/orders/catalogs/delivery/dates/' + catalogid +  '?account=' + accountid);
+  }
 }
