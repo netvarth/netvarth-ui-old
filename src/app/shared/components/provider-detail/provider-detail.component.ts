@@ -1893,7 +1893,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log(loc);
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    this.getCatalogs(this.selectedLocation.id);
+    this.getCatalogs(this.provider_bussiness_id);
+
 
   }
   cardClicked(actionObj) {
@@ -1934,10 +1935,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
    * Order Related Code
    */
 
-  getCatalogs(locationId) {
+  getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
     this.shared_services.setaccountId(account_Id);
-    console.log(locationId);
+    console.log(bprovider_id);
     this.orderItems = [];
     const orderItems = [];
     this.shared_services.getConsumerCatalogs(account_Id).subscribe(
@@ -2015,6 +2016,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['order/shoppingcart'], navigationExtras);
   }
   itemDetails(item) {
+    console.log(JSON.stringify(item));
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place
@@ -2049,8 +2051,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     return qty;
   }
   catlogArry() {
-    // this.catlog = itemjson;
-    // this.catalogItem = catalog.default.catalogItem;
+console.log(this.sharedFunctionobj.getitemfromLocalStorage('order'));
     if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
     }

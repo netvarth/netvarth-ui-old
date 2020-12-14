@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsSharedComponent implements OnInit {
+  currentItemObject: any;
+  price: number;
+  order_count: number;
   accessibilityConfig: AccessibilityConfig = {
     backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
     backgroundTitle: 'CUSTOM background title',
@@ -65,7 +68,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   autoPlay = true;
   showArrows = true;
   showDots = true;
-  imagesRect: Image[] = new Array <Image> ();
+  imagesRect: Image[] = new Array<Image>();
   item: any;
   isPromotionalpriceFixed;
   isPromotionalpricePertage;
@@ -122,63 +125,69 @@ export class ItemDetailsSharedComponent implements OnInit {
   //   ),
   //   new Image(6, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
   // ];
-  constructor(   public sharedFunctionobj: SharedFunctions,
+  constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
     public route: ActivatedRoute,
-    private router: Router )
-     {
-      this.route.queryParams.subscribe(
-        params => {
-          this.item = params.item;
-          console.log(this.item);
-        }); 
-      }
+    private router: Router) {
+    this.route.queryParams.subscribe(
+      params => {
+        this.item = params.item;
+        console.log(this.item);
+      });
+  }
+  updateCartCount() {
+    const orderCount = this.orderList.length();
+    return orderCount;
+  }
   ngOnInit() {
     const orderList = JSON.parse(localStorage.getItem('order'));
     if (orderList) {
       this.orderList = orderList;
     }
-        this.currentItem = JSON.parse(this.item);
-        if(this.currentItem.showPromotionalPrice){
-          if(this.currentItem.promotionalPriceType === 'FIXED'){
-            this.isPromotionalpriceFixed = true;
-          }
-          else{
-            this.isPromotionalpricePertage = true;
-          }
-        }
-        else{
-          this.isPrice = true;
-        }
-        this.itemImages = this.currentItem.itemImages;
-        for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
-          const imgobj = new Image(this.itemImages[imgIndex].id,
-              {img: this.itemImages[imgIndex].url,
-              description: this.itemImages[imgIndex].title},
-              {img: this.itemImages[imgIndex].url,
-                title: this.itemImages[imgIndex].title},
-          );
-          this.imagesRect = [... this.imagesRect, imgobj];
-          console.log(this.imagesRect);
-        }
+    this.currentItemObject = JSON.parse(this.item);
+    this.currentItem = this.currentItemObject.item;
+    if (this.currentItem.showPromotionalPrice) {
+      if (this.currentItem.promotionalPriceType === 'FIXED') {
+        this.isPromotionalpriceFixed = true;
+      } else {
+        this.isPromotionalpricePertage = true;
       }
-   
-    // this.customOptions = {
-    //   dots: true,
-    //   loop: true,
-    //   autoplay: true,
-    //   responsiveClass: true,
-    //   responsive: {
-    //     0: {
-    //       items: 1
-    //     },
-    //     992: {
-    //       items: 1,
-    //       center: true,
-    //     }
-    //   }
-    // };
-  
+    } else {
+      this.isPrice = true;
+    }
+    this.itemImages = this.currentItem.itemImages;
+    for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
+      const imgobj = new Image(this.itemImages[imgIndex].id,
+        {
+          img: this.itemImages[imgIndex].url,
+          description: this.itemImages[imgIndex].title
+        },
+        {
+          img: this.itemImages[imgIndex].url,
+          title: this.itemImages[imgIndex].title
+        },
+      );
+      this.imagesRect = [... this.imagesRect, imgobj];
+      console.log(this.imagesRect);
+    }
+  }
+
+  // this.customOptions = {
+  //   dots: true,
+  //   loop: true,
+  //   autoplay: true,
+  //   responsiveClass: true,
+  //   responsive: {
+  //     0: {
+  //       items: 1
+  //     },
+  //     992: {
+  //       items: 1,
+  //       center: true,
+  //     }
+  //   }
+  // };
+
   checkout() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'cart']);
@@ -186,8 +195,8 @@ export class ItemDetailsSharedComponent implements OnInit {
   getItemQty() {
     const orderList = this.orderList;
     let qty = 0;
-    if (orderList !== null && orderList.filter(i => i.itemId === this.currentItem.itemId)) {
-      qty = orderList.filter(i => i.itemId === this.currentItem.itemId).length;
+    if (orderList !== null && orderList.filter(i => i.item.itemId === this.currentItem.itemId)) {
+      qty = orderList.filter(i => i.item.itemId === this.currentItem.itemId).length;
     }
     return qty;
   }
@@ -207,15 +216,17 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.removeFromCart();
   }
   addToCart() {
-    this.orderList.push(this.currentItem);
+    this.orderList.push(this.currentItemObject);
+    console.log(this.orderList);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.getItemQty();
+    this.updateCartCount();
 
   }
   removeFromCart() {
     console.log(this.orderList);
     for (const i in this.orderList) {
-      if (this.orderList[i].itemId === this.currentItem.itemId) {
+      if (this.orderList[i].item.itemId === this.currentItem.itemId) {
         this.orderList.splice(i, 1);
         this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
         break;
@@ -223,6 +234,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     }
 
     this.getItemQty();
+    this.updateCartCount();
   }
 
 
