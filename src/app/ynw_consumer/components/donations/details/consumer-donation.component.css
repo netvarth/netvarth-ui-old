@@ -210,3 +210,7 @@
     border: 1px solid #ccc;
     border-radius: 20px !important;
   }
+  .c-checkin-new .lnk {
+    font-size: 1rem!important;
+    font-weight: 700!important;
+}
