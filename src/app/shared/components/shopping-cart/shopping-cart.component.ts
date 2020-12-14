@@ -200,6 +200,24 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log(this.orders);
 
   }
+  getTotalItemPrice() {
+    this.price = 0; 
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
+    }
+    return this.price;
+  }
+  getDeliveryCharge() {
+    let deliveryCharge = 0;
+    if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+      deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+    }
+    return deliveryCharge;
+  }
   getSubTotal() {
     let subtotal = 0;
     let deliveryCharge = 0;

@@ -100,14 +100,14 @@
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
                     <div class="oder-sumary-txt">Order Summary</div>
-                    <div class="order-label"><a>Apply Promo Code</a></div>
+                    <!-- <div class="order-label"><a>Apply Promo Code</a></div> -->
                     <div class="order-label">
                       <div class="flex1">Item Total</div>
-                      <div class="price rupee-font">&#8377;{{price}}</div>
+                      <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
-                    <div class="order-label">
+                    <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>
-                      <div class="price rupee-font">&#8377;{{deliveryCharge}}</div>
+                      <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
