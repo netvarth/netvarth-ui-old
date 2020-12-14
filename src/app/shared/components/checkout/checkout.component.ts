@@ -430,7 +430,7 @@ this.isFuturedate = false;
   getOrderItems() {
     this.orderSummary = [];
     this.orders.forEach(item => {
-      const itemId = item.id;
+      const itemId = item.item.itemId;
       const qty = this.getItemQty(item);
       this.orderSummary.push({ 'id': itemId, 'quantity': qty });
     });
