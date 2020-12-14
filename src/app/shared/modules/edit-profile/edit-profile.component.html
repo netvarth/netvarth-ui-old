@@ -1,6 +1,6 @@
-<section [ngClass]="{'container': curtype=='consumer'}">
+<!-- <section [ngClass]="{'container': curtype=='consumer'}">
     <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section>
+</section> -->
 <section *ngIf="curtype!='consumer'" class="myaccount">
     <div class="card title-gb">
         <h5 class="mgn-up-10">My Account</h5>
