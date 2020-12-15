@@ -13,6 +13,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
+import { CardModule } from '../../../../../shared/components/card/card.module';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         TruncateModule,
         CapitalizeFirstPipeModule,
+        CardModule
     ],
     exports: [ItemsComponent]
 })

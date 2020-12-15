@@ -22,6 +22,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     waitinglineCap = Messages.WAITINGLINE;
     personsAheadText = '';
     itemQty = 0;
+    actions: string;
     constructor(private sharedFunctons: SharedFunctions,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.sharedFunctons.getitemfromLocalStorage('sysdate');
@@ -63,8 +64,17 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.service);
                 break;
             case 'item':
+                console.log(this.item);
                 this.service = this.item.item;
                 console.log(this.service);
+                break;
+            case 'pitem':
+                this.service = this.item.item;
+                this.actions = this.extras;
+                console.log(this.service);
+                console.log(this.actions);
+                break;
+            case 'item-head': 
                 break;
             default:
                 this.user = this.item.item;
@@ -86,10 +96,13 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         const orderList = this.extras;
         let qty = 0;
         if (orderList !== null && orderList.filter(i => i.item.itemId === item.itemId)) {
-          qty = orderList.filter(i => i.item.itemId === item.itemId).length;
+            qty = orderList.filter(i => i.item.itemId === item.itemId).length;
         }
         return qty;
-      }
+    }
+    stopProp(event) {
+        event.stopPropagation();
+    }
     cardActionPerformed(type, action, service, location, userId, event) {
         console.log(location);
         console.log(action);

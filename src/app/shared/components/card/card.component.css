@@ -351,3 +351,20 @@ font-weight: 500;
         padding-left: 15px !important;
     }
 }
+.booking-card.head .card-item-head{
+    text-align: center !important;
+}
+.booking-card.head .card-item-head .card-img{
+    object-fit: scale-down !important;
+}
+button.fxmenu {
+    position: absolute;
+    right: 20px;
+    border-radius: 100%;
+    background: white;
+    padding: 2px 5px 0px 5px;
+    text-align: center;
+}
+.booking-card.card.order.disabled {
+    opacity: .4 !important;
+}

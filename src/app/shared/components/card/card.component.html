@@ -43,8 +43,15 @@
         </div>
     </div>
 </div>
-<div class="card booking-card pointer-cursor order" *ngIf="item.type=='catalog' || item.type=='item'" (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+<div class="card booking-card pointer-cursor order" [class.disabled]="service['status'] && service['status']=='INACTIVE'"  *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'" (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
     <div class="card-item-head" *ngIf="service.itemImages">
+        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions" (click)="stopProp($event)">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #appMenu="matMenu" >
+            <button mat-menu-item *ngFor="let action of item.actions" (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>                                                
+        </mat-menu>
         <img class="card-img img-responsive" [src]="service.itemImages[0].thumbUrl" alt="Profile Pic" />
     </div>
     <div class="card-item-content">
@@ -58,20 +65,20 @@
             </div> -->
             <div class="col-md-12 no-padding">
                 <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>
-                <div class="btn-rt pull-right">
+                <div class="btn-rt pull-right" *ngIf="item.type=='item'">
                     <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
                 </div>
-                <div class="count-o pull-right">
+                <div class="count-o pull-right" *ngIf="item.type=='item'">
                     {{getItemQty(item)}}
                 </div>
-                <div class="btn-lt pull-right">
+                <div class="btn-lt pull-right" *ngIf="item.type=='item'">
                     <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type==='provider'"
+<div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
     (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
     <div class="card-item-head">
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
@@ -84,6 +91,17 @@
             <a
                 *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName | capitalizeFirst}}</a>
         </h4>
+    </div>
+</div>
+<div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
+    (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
+    <div class="card-item-head">
+        <img class="card-img img-responsive" src="assets/images/add.svg" alt="Profile Pic">
+    </div>
+    <div class="card-item-content">
+        <h4 class="card-title font-weight-bold text-center">
+            <a class="pointer-cursor"><b>Add Item</b> </a>
+        </h4>                                                                                
     </div>
 </div>
 <!-- Card -->

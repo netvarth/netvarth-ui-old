@@ -8,7 +8,7 @@
     </div>
 </section>
 <section>
-    <p class="form-level-settings">{{frm_items_cap}}</p>
+    <p class="form-level-settings mgn-lt-10">{{frm_items_cap}}</p>
     <!-- <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
         <div class="property-card" (click)="addItem()">
             <a>
@@ -20,15 +20,15 @@
         </div>
     </div> -->
 
-    <div class="bus-item additem">
+    <!-- <div class="bus-item-O additem" >
         <div class="card card-item-n no-padding pointer-cursor" (click)="addItem()">
             <img src="assets/images/add.svg" class="mgn-up-30">
             <div class="card-item-title">
                 <a class="pointer-cursor"><b>Add Item</b> </a>
             </div>
         </div>
-    </div>
-    <div>
+    </div> -->
+    <div class="width100">
         <ng-container *ngIf="item_list.length >= 1">
             <!-- <div class="bus-item card" *ngFor="let item of item_list;let i=index;" (click)="editViewedItem(item.itemId)"
                 style="margin-right: 10px !important;">
@@ -46,8 +46,17 @@
                     </div>
                 </div>
             </div> -->
-            <div class="bus-item" *ngFor="let item of item_list;let i=index;">
-                <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
+            <div class="bus-item-O">
+                <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]=""
+                    (actionPerformed)="cardClicked($event)"></app-card>
+            </div>
+            <div class="bus-item-O" *ngFor="let item of items">
+                <app-card [item]="item" [terminology]='' [extras]="" [loc]=""
+                    (actionPerformed)="cardClicked($event)"></app-card>
+            </div>
+            <!-- <div class="bus-item" *ngFor="let item of item_list;let i=index;"> -->
+
+                <!-- <div class="card card-item-n no-padding pointer-cursor" (click)="editViewedItem(item.itemId)">
                     <img [src]="getItemImg(item)" class="mgn-up-5">
                     <div class="card-item-title">
                         <a><b>
@@ -62,8 +71,8 @@
                         <i *ngIf="item.status=='ACTIVE'" class="icon-disable"></i>
                         {{(item.status=='ACTIVE') ? 'Disable' :'Enable'}}
                     </div>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
         </ng-container>
     </div>
     <div class="clearfix"></div>

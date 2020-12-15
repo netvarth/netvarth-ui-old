@@ -3,7 +3,9 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { TruncateModule } from '../../pipes/limitTo.module';
 import { CardComponent } from './card.component';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+// import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     declarations: [
@@ -12,7 +14,9 @@ import { CardComponent } from './card.component';
     imports: [
         CommonModule,
         TruncateModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        MatMenuModule,
+        MatIconModule
     ],
     exports: [
         CardComponent
