@@ -69,7 +69,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   no_of_grids: number;
   min: any;
   max: any;
-
+  catalog: any = [];
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -107,18 +107,29 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     this.getitems();
-    this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
-    console.log(this.seletedCatalogItems);
-  //   this.itemQtyForm = this.formBuilder.group({
-  //     users: this.formBuilder.array([
-  //      this.formBuilder.group({
-  //       min: [null, [Validators.required]],
-  //       max: [null, [Validators.required]]
-  //      })
-  //    ])
-  // });
+    if (this.action === 'edit' && this.cataId !== 'add') {
+      this.getCatalog();
+    } else {
+      this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
+      console.log(this.seletedCatalogItems);
+    }
+    
   }
   ngOnDestroy() {
+  }
+
+
+  getCatalog() {
+    this.provider_servicesobj.getProviderCatalogs(this.cataId)
+      .subscribe((data) => {
+        this.catalog = data;
+        this.api_loading = false;
+        if (this.catalog.catalogItem) {
+          this.seletedCatalogItems = this.catalog.catalogItem;
+          console.log(this.seletedCatalogItems);
+      }
+       
+      });
   }
   getitems() {
     this.provider_servicesobj.getProviderItems()
@@ -275,45 +286,46 @@ console.log(updateitemsselected);
   }
   addItems(addlist) {
     console.log(addlist);
-    // this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
-    //   (data) => {
-    //     this.api_loading = false;
-    //   }, error => {
-    //     this.api_loading = false;
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }
-    //     );
+    this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
+      (data) => {
+        this.api_loading = false;
+      }, error => {
+        this.api_loading = false;
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+        );
   }
   deleteItems(deletelist) {
     console.log(deletelist);
-    // this.provider_servicesobj.deleteCatalogItems(this.cataId, deletelist).subscribe(
-    //   (data) => {
-    //     this.api_loading = false;
-    //   }, error => {
-    //     this.api_loading = false;
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }
-    //     );
+    this.provider_servicesobj.deleteCatalogItems(this.cataId, deletelist).subscribe(
+      (data) => {
+        this.api_loading = false;
+      }, error => {
+        this.api_loading = false;
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+        );
   }
   updateItems(updatelist) {
     console.log(updatelist);
-    const passlist: any = {};
+    let passlist: any = {};
     const passingupdateList = [];
     for (const selitem of updatelist) {
+      passlist = {};
       passlist.id = selitem.item.id;
       passlist.maxQuantity = selitem.maxQuantity;
       passlist.minQuantity = selitem.minQuantity;
       passingupdateList.push(passlist);
   }
     console.log(passingupdateList);
-    // this.provider_servicesobj.updateCatalogItems(this.cataId, passingupdateList).subscribe(
-    //   (data) => {
-    //     this.api_loading = false;
-    //   }, error => {
-    //     this.api_loading = false;
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }
-    //     );
+    this.provider_servicesobj.updateCatalogItems(this.cataId, passingupdateList).subscribe(
+      (data) => {
+        this.api_loading = false;
+      }, error => {
+        this.api_loading = false;
+        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+        );
   }
   getItemImg(item) {
     if (item.itemImages) {

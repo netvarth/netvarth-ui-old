@@ -1789,7 +1789,7 @@ export class ProviderServices {
    }
    updateCatalogItems(id, data) {
       const url = 'provider/catalog/item';
-      return this.servicemeta.httpPost(url, data);
+      return this.servicemeta.httpPut(url, data);
    }
    setCatalogPrefilledDetails(data) {
       this.catalogPrefilledInput = data;

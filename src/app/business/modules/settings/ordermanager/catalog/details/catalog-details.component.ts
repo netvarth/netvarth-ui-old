@@ -174,6 +174,8 @@ export class CatalogdetailComponent implements OnInit {
     isFromadd = false;
     prefillData: any = [];
     step = 1;
+    item_count = 0;
+    item_list: any = [];
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -226,6 +228,7 @@ export class CatalogdetailComponent implements OnInit {
                                         if (!this.seletedCatalogItems) {
                                             if (this.catalog.catalogItem) {
                                                 this.seletedCatalogItems = this.catalog.catalogItem;
+                                                console.log(this.seletedCatalogItems);
                                                 this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
                                             }
                                         }
@@ -241,7 +244,23 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getItems();
     }
+    getItems() {
+        this.provider_services.getProviderItems()
+          .subscribe(data => {
+            this.item_list = data;
+            this.item_count = this.item_list.length;
+          },
+            (error) => {
+                this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            });
+      }
+
+      gotoItems() {
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
+      }
+
     setCatalogPrefillfields(form_data) {
         const daystr: any = [];
         for (const cday of this.selday_arr) {
