@@ -43,7 +43,7 @@
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber">
                 <span class="itemHead">Phone No</span>
-                <span class="itemVal">+{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
+                <span class="itemVal">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>

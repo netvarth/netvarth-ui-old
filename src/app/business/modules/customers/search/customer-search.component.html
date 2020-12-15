@@ -254,7 +254,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
                                     *ngIf="customer_data.phoneNo">
                                     <div><b>PhoneNo:</b></div>
-                                    <div>{{customer_data.phoneNo}}</div>
+                                    <div>{{customer_data.countryCode}} {{customer_data.phoneNo}}</div>
                                 </div>
                                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
                                     *ngIf="customer_data.dob">
@@ -297,7 +297,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form-nm">
                                         </td>
                                         <td class="two">
                                             <span *ngIf="customer.phoneNo && customer.phoneNo.length === 10"><i
-                                                class="fa fa-mobile"></i>&nbsp;{{customer.phoneNo}}</span>
+                                                class="fa fa-mobile"></i>&nbsp;{{customer.countryCode}} {{customer.phoneNo}}</span>
                                         </td>
                                         <td class="hidden-xs hidden-sm">
                                           <span *ngIf="customer.email" class="pad-rt-5"><i

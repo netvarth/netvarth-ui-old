@@ -23,10 +23,8 @@
                             </mat-slide-toggle>
                              &nbsp;{{livetrack_statusstr}}
                              <div class="form-level-settings disp-flex">
-                                    <p class="settings_info" *ngIf="livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.
+                                    <p class="settings_info">Track your {{custs_name |capitalizeFirst}} and know their arrival time.
                                         </p>
-                                        <p class="settings_info" *ngIf="!livetrack_status">Know when your {{custs_name |capitalizeFirst}} reach you.
-                                        </p> 
                                  <a class="learnmore-pointer"
                                 id="customer-help" (click)="learnmore_clicked('livetracking', $event)">Learn
                                 More</a></div>

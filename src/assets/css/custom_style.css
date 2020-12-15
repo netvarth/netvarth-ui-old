@@ -10495,7 +10495,7 @@ a {
 }
 
 .linkpage {
-  width: 340px;
+  width: 400px;
   border: 1px solid;
   margin: auto;
   padding: 10px;
@@ -13253,4 +13253,7 @@ ngx-intl-tel-input input[disabled] {
 }
 .custom-login-form .modal_close i:before {
 color: #fff !important;
+}
+.grey-bg {
+  background: darkgrey;
 }

@@ -139,7 +139,8 @@
             </div>
           </nav>
         </header>
-        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0 && time_type !==3" id="qHeader">
+        <div class="head mgn-up-5 mgn-bt-5" *ngIf="activeQs && activeQs.length > 0 && time_type !==3 && !qloading"
+          id="qHeader">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
@@ -148,10 +149,12 @@
                   (click)="viewQClicked(queue)" *ngFor="let queue of activeQs;let i = index">
                   <span *ngIf="!queue.instantQueue">{{queue.name}}<br /><input style="margin:0px;"
                       [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left" />&nbsp;
-                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                    queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                   <span *ngIf="queue.instantQueue">InstantQ<br /><input style="margin:0px;"
                       [checked]="isQueueSelected(queue.id)" type="checkbox" class="ckbx pull-left" />&nbsp;
-                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                    queue.queueSchedule.timeSlots[0]['eTime']}}</span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">
@@ -1111,7 +1114,8 @@
                               (change)="setFilterDataCheckbox('queue', q.id, $event)">
                               {{q.name}}<span class="qtime-size"
                                 *ngIf="q.name != (q.queueSchedule.timeSlots[0]['sTime'] + '-' + q.queueSchedule.timeSlots[0]['eTime'])">
-                                [{{q.queueSchedule.timeSlots[0]['sTime'] + ' - ' + q.queueSchedule.timeSlots[0]['eTime']}}]
+                                [{{q.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                q.queueSchedule.timeSlots[0]['eTime']}}]
                               </span>
                             </mat-checkbox>
                           </li>

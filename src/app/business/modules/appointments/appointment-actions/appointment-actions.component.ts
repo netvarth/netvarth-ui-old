@@ -116,8 +116,8 @@ export class AppointmentActionsComponent implements OnInit {
         if (bdetails) {
             bname = bdetails.bn || '';
         }
-        const fname = (this.appt.appmtFo[0].firstName) ? this.appt.appmtFo[0].firstName : '';
-        const lname = (this.appt.appmtFo[0].lastName) ? this.appt.appmtFo[0].lastName : '';
+        const fname = (this.appt.appmtFor[0].firstName) ? this.appt.appmtFor[0].firstName : '';
+        const lname = (this.appt.appmtFor[0].lastName) ? this.appt.appmtFor[0].lastName : '';
         const _this = this;
         _this.qrCodegeneration(this.appt);
         setTimeout(() => {

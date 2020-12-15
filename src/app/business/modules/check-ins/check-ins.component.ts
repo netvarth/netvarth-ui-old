@@ -327,6 +327,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   allLabels: any = [];
   voicedialogRef: any;
   addCustomerTooltip = '';
+  qloading: boolean;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1216,6 +1217,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.qloading = true;
     this.shared_functions.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
     this.initView(this.selectedView, 'reloadAPIs');
@@ -1652,6 +1654,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (queueid) {
         Mfilter['queue-eq'] = queueid;
+      } else {
+        Mfilter['queue-eq'] = this.selQIds;
+        this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
       }
       // no_filter = true;
     }
@@ -2223,27 +2228,27 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.queues.length === 0) {
       this.shared_functions.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
     } else {
-    let deptId;
-    let userId;
-    if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
-      const filteredDept = this.users.filter(user => user.id === this.selectedUser.id);
-      if (filteredDept[0] && filteredDept[0].deptId) {
-        deptId = filteredDept[0].deptId;
+      let deptId;
+      let userId;
+      if (this.selectedUser && this.selectedUser.id && this.selectedUser.id !== 'all') {
+        const filteredDept = this.users.filter(user => user.id === this.selectedUser.id);
+        if (filteredDept[0] && filteredDept[0].deptId) {
+          deptId = filteredDept[0].deptId;
+        }
+        userId = this.selectedUser.id;
       }
-      userId = this.selectedUser.id;
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          checkin_type: source,
+          calmode: this.calculationmode,
+          showtoken: this.showToken,
+          userId: userId,
+          deptId: deptId
+          // isFrom: 'checkin'
+        }
+      };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
     }
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        checkin_type: source,
-        calmode: this.calculationmode,
-        showtoken: this.showToken,
-        userId: userId,
-        deptId: deptId
-        // isFrom: 'checkin'
-      }
-    };
-    this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-  }
   }
   searchCustomer() {
     // const navigationExtras: NavigationExtras = {
@@ -2623,7 +2628,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       checkin_html += '<tr><td colspan="3" style="text-align:center">' + checkinlist.queue.location.place + '</td></tr>';
       checkin_html += '</thead><tbody>';
       if (fname !== '' || lname !== '') {
-      checkin_html += '<tr><td width="48%" align="right">Customerccc</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+        checkin_html += '<tr><td width="48%" align="right">Customerccc</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
       }
       if (checkinlist.service && checkinlist.service.deptName) {
         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + checkinlist.service.deptName + '</td></tr>';
@@ -2812,6 +2817,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleUserSelection(user) {
+    this.qloading = true;
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
@@ -2855,6 +2861,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQIds.push(this.activeQs[0].id);
       }
     }
+    setTimeout(() => {
+      this.qloading = false;
+    }, 1000);
     if (this.time_type === 1) {
       this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
     } else if (this.time_type === 2) {
