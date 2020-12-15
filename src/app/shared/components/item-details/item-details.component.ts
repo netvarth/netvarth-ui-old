@@ -136,7 +136,7 @@ export class ItemDetailsSharedComponent implements OnInit {
       });
   }
   updateCartCount() {
-    const orderCount = this.orderList.length();
+    const orderCount = this.orderList.length;
     return orderCount;
   }
   ngOnInit() {

@@ -241,6 +241,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.router.navigate(['order/checkout'], navigationExtras);
 
   }
+
   goBack() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.location.back();
@@ -411,15 +412,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
   }
 
-  // itemDetails(item) {
-  //   console.log(JSON.stringify(item));
-  //   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       item: JSON.stringify(item)
-  //     }
-  //   };
-  //   this.router.navigate(['order', 'item-details'], navigationExtras);
-  // }
+  itemDetails(item) {
+    console.log(JSON.stringify(item));
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        item: JSON.stringify(item)
+      }
+    };
+    this.router.navigate(['order', 'item-details'], navigationExtras);
+  }
 }
 
