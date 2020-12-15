@@ -279,3 +279,29 @@ display: grid !important;
 ::ng-deep .order-checkout .c-body {
     background: #f2f2f2 !important;
 }
+::ng-deep .order-checkout .snd_msg_outer {
+    margin-top: 15px;
+    position: relative;
+    height: 48px;
+    color: #686b78;
+    font-size: 13px;
+    width: 100% !important;
+}
+::ng-deep .order-checkout .snd_msg_outer .txtArea {
+    border: 0;
+    outline: 0;
+    resize: none;
+    width: 100%;
+    height: 50px;
+    padding: 16px 16px 16px 40px;
+    color: #3d4152;
+    font-weight: 400;
+    background: #f9f9f9;
+}
+::ng-deep .order-checkout .snd_msg_outer .snd_msg_lbl {
+    font-size: 13px;
+    top: 17px;
+    pointer-events: none;
+    color: #93959f;
+    position: absolute;
+}

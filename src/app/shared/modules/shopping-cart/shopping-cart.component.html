@@ -24,12 +24,15 @@
                   <div *ngIf="orders.length === 0">Your cart is empty</div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2"
                     *ngFor="let item of orders;  let i = index">
-                    <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding" (click)="itemDetails(item);">
-                      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img" *ngIf="item.item.itemImages"
+                    <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding">
+                      <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img" *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.itemName}}</div>
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                        </div>
+                        <div class="add_nte" (click)="addNotes(item,i)">
+                          Have notes?
                         </div>
                       </div>
                     </div>
@@ -44,10 +47,10 @@
                       <div (click)="increment(item)" class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
                       </div>
                     </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3" (click)="addNotes(item,i);">
+                    <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">
                       <a> <i class="fa fa-sticky-note-o" aria-hidden="true">
                         Add Notes</i></a>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

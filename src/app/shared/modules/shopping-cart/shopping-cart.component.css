@@ -213,3 +213,11 @@ flex-basis: 50% !important;
   color: white;
   padding: 5px;
 }
+.shop-cart .add_nte {
+  font-size: 0.7rem;
+  color: #183e7acc;
+  cursor: pointer;
+}
+.shop-cart .fa-sticky-note-o {
+  color: #a3a3d1;
+}
