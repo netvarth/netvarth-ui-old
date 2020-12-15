@@ -67,7 +67,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
         this.service_det = data.service_details;
         this.waitlist_for = data.waitlist_for;
         this.countryCode = data.countryCode,
-        this.userPhone = data.userPhone;
+            this.userPhone = data.userPhone;
         this.post_Data = data.post_Data;
         this.account_id = data.account_id;
         this.sel_queue_personaahead = data.sel_queue_personaahead;
@@ -87,7 +87,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
         this.selectedMessage = data.selectedMessage;
     }
     ngOnInit() {
-    this.getProfile();
+        this.getProfile();
     }
 
 
@@ -121,7 +121,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
 
         return caption;
     }
-    addConsumeremail(){
+    addConsumeremail() {
         this.action = 'addEmail'
     }
     addCheckInConsumer() {
@@ -154,13 +154,13 @@ export class CheckinConfirmPopupComponent implements OnInit {
                         account_id: this.account_id,
                         type_check: 'checkin_prepayment',
                         members: member,
-                        prepayment: prepayAmount
+                        prepayment: prepayAmount,
+                        uuids: uuidList
                     }
                 };
                 if (this.service_det.isPrePayment) {
                     this.router.navigate(['consumer', 'checkin', 'payment', this.trackUuid], navigationExtras);
                     this.dialogRef.close();
-
                 } else {
                     let multiple;
                     if (uuidList.length > 1) {
@@ -207,7 +207,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                 }
             );
     }
-    addEmail(){
+    addEmail() {
         if (this.payEmail && this.payEmail.trim() !== '') {
             const stat = this.validateEmail(this.payEmail.trim());
             if (!stat) {

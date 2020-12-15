@@ -43,6 +43,7 @@ export class ConsumerPaymentComponent implements OnInit {
     members;
     iconClass: string;
     prepayment;
+    uuids: any = [];
     constructor(public router: Router,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
@@ -65,6 +66,7 @@ export class ConsumerPaymentComponent implements OnInit {
                 this.pid = params.pid;
                 this.members = params.members;
                 this.prepayment = params.prepayment;
+                this.uuids = params.uuids;
             });
     }
 
@@ -198,6 +200,6 @@ export class ConsumerPaymentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.livetrack, this.accountId, this.uuid, this.prepayment);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.livetrack, this.accountId, this.uuid, this.prepayment, this.uuids);
     }
 }
