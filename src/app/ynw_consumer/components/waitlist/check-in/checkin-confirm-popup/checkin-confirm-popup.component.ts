@@ -226,6 +226,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                 this.shared_services.updateProfile(post_data, passtyp)
                     .subscribe(
                         () => {
+                            this.action = '';
                             this.getProfile();
                             this.noEmailError = true;
                         },
@@ -251,7 +252,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                 data => {
                     this.userData = data;
                     if (this.userData.userProfile !== undefined) {
-                        this.userEmail = this.userData.userProfile.email || '';
+                        this.userEmail = this.eMail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
                         // this.currentPhone = this.userPhone;
                     }
