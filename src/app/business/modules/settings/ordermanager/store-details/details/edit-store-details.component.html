@@ -4,7 +4,7 @@
            
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="Back()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Update Contact Info</h5>
+            Update Store Contact Info</h5>
     </div>
 </section>
 <section>
@@ -44,7 +44,7 @@
                                         <div class="c-ot m0 no-padding">
                                             <div class="form-group col-md-7 no-padding">
                                                 <mat-form-field>
-                                                    <input matInput type="number" class="form-control" id="phone"
+                                                    <input matInput type="text" class="form-control" id="phone"
                                                         placeholder="Phone*" [(ngModel)]="phone"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
@@ -64,8 +64,8 @@
                                         <div class="c-ot m0 no-padding">
                                             <div class="form-group col-md-7 no-padding">
                                                 <mat-form-field>
-                                                    <input matInput type="number" class="form-control" id="alternatePhone"
-                                                        placeholder="Alternate Phone*" [(ngModel)]="alternatePhone"
+                                                    <input matInput type="text" class="form-control" id="alternatePhone"
+                                                        placeholder="Alternate Phone" [(ngModel)]="alternatePhone"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
@@ -75,7 +75,7 @@
                                             <div class="form-group col-md-7 no-padding">
                                                 <mat-form-field>
                                                     <input matInput type="text" class="form-control" id="alternateEmail"
-                                                        placeholder="Alternate Email*" [(ngModel)]="alternateEmail"
+                                                        placeholder="Alternate Email" [(ngModel)]="alternateEmail"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
@@ -84,8 +84,8 @@
                                         <div class="c-ot m0 no-padding">
                                             <div class="form-group col-md-7 no-padding">
                                                 <mat-form-field>
-                                                    <input matInput type="number" class="form-control" id="whatsappNo"
-                                                        placeholder="whatsapp number*" [(ngModel)]="whatsappNo"
+                                                    <input matInput type="text" class="form-control" id="whatsappNo"
+                                                        placeholder="whatsapp number" [(ngModel)]="whatsappNo"
                                                         [ngModelOptions]="{standalone: true}" autocomplete="off">
                                                 </mat-form-field>
                                             </div>
@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <textarea matInput class="form-control" id="address"
-                                                    placeholder="Address*" [(ngModel)]="address"
+                                                    placeholder="Address" [(ngModel)]="address"
                                                     [ngModelOptions]="{standalone: true}"
                                                     maxlength="255"> </textarea>
                                             </mat-form-field>
