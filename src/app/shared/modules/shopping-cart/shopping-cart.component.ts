@@ -5,7 +5,9 @@ import * as moment from 'moment';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../services/shared-services';
+import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -14,6 +16,8 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
+
+  addItemNotesdialogRef: any;
   deliveryCharge = 0;
   store_pickup: boolean;
   home_delivery: boolean;
@@ -56,6 +60,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private location: Location,
     private shared_services: SharedServices,
+    private dialog: MatDialog,
     public sharedFunctionobj: SharedFunctions) {
     this.route.queryParams.subscribe(
       params => {
@@ -380,6 +385,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         });
       });
   }
+
   dateClass(date: Date): MatCalendarCellCssClasses {
     if(this.choose_type === 'store'){
       return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
@@ -427,5 +433,20 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
   }
+  addNotes(item, index) {
+    this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: item
+
+    });
+    this.addItemNotesdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
 }
+
 
