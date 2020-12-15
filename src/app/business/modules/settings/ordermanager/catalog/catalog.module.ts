@@ -16,13 +16,15 @@ import { AddItemsComponent } from './additems/additems.component';
 import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalogitempopup.component';
 
 
 @NgModule({
     declarations: [
         CatalogComponent,
         CatalogdetailComponent,
-        AddItemsComponent
+        AddItemsComponent,
+        EditcatalogitemPopupComponent
       ],
     imports: [
         CatalogRoutingModule,
@@ -41,6 +43,9 @@ import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
         CapitalizeFirstPipeModule,
         NgbTimepickerModule
     ],
+    entryComponents: [
+        EditcatalogitemPopupComponent
+        ],
     exports: [CatalogComponent]
 })
 export class CatalogModule {}

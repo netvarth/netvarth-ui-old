@@ -163,6 +163,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showTakeaTour = false;
   profile: any = [];
   contactInfo: any = [];
+  catalog_list: any = [];
   orderstatus;
   orderstatusstr;
   constructor(private provider_services: ProviderServices,
@@ -294,6 +295,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getDisplayboardCountWaitlist();
 this.getOrderStatus();
     this.getSchedulesCount();
+    this.getCatalog();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
@@ -1265,6 +1267,12 @@ this.getOrderStatus();
           this.schedules_count = data;
         });
   }
+  getCatalog() {
+    this.provider_services.getProviderCatalogs()
+        .subscribe(data => {
+            this.catalog_list = data;
+        });
+}
 
   // mandatory fields
   getDomainVirtualFields() {

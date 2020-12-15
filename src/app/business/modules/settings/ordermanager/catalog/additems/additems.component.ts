@@ -4,6 +4,9 @@ import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
+import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
+import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 
 
 @Component({
@@ -70,10 +73,12 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   min: any;
   max: any;
   catalog: any = [];
+  editcataItemdialogRef;
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
+    public dialog: MatDialog,
     private provider_servicesobj: ProviderServices) {
     this.emptyMsg = this.shared_functions.getProjectMesssages('ITEM_LISTEMPTY');
     this.activated_route.queryParams.subscribe(
@@ -244,6 +249,37 @@ this.updateItems(updateitemsselected);
       }
   }
 
+  deleteCatalogItem(index) {
+
+    this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the medicine details?'
+      }
+    });
+    this.removeitemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+      }
+    });
+  }
+  editCatalogItem() {
+    this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        type: 'add'
+      }
+    });
+    this.editcataItemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+       
+      }
+    });
+  }
   redirecToJaldeecatalog() {
     if (this.action === 'edit' && this.cataId !== 'add') {
         const navigationExtras: NavigationExtras = {

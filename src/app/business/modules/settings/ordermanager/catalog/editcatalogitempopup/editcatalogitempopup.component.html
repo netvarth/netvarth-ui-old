@@ -1,0 +1,84 @@
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
+    <h1 class="mat-dialog-title">Medicine details
+      <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="close()">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Medicine name & size" formControlName="medicine_name">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
+  {
+  'required' : 'Please enter medicine name',
+  'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
+  })">
+        </app-field-error-display>
+      </div>
+  
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" formControlName="duration" placeholder="Duration in days">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'duration')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'duration',
+  {
+  'required' : 'Please enter the duration.',
+  'pattern' : 'Please enter valid duration',
+  'maxlength' : 'Duration can have only ' + maxNumbers + ' digits'
+  })">
+        </app-field-error-display>
+      </div>
+  
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Frequency per day" formControlName="frequency">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
+  {
+  'required' : 'Please enter the frequency',
+  'maxlength' : 'Frequency can contain only ' + maxChars + ' characters'
+  })">
+        </app-field-error-display>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Dosage per consumption" formControlName="dosage">
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dosage')" [errorMsgs]="fed_service.getErrorMessage(amForm,'dosage',
+  {
+  'required' : 'Please enter the dosage',
+  'maxlength' : 'Dosage can contain only ' + maxChars + ' characters'
+  })">
+        </app-field-error-display>
+      </div>
+  
+  
+  
+  
+      <div class="form-group">
+        <mat-form-field>
+          <textarea matInput class="form-control" id="instructions" placeholder="Additional instructions " formControlName="instructions" maxlength="500"></textarea>
+        </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
+  {
+  'required' : 'Please enter detailed instructions.',
+  'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+  })">
+        </app-field-error-display>
+        <!-- <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span> -->
+      </div>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button  *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
+      <button  type="submit" mat-button class="cs-btn bt1 style-button" [disabled]="!amForm.valid ">Save & Close</button>
+    </div>
+    </mat-dialog-actions>
+  </form>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+  
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+  
