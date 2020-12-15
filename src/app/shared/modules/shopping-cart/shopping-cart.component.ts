@@ -410,4 +410,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  // itemDetails(item) {
+  //   console.log(JSON.stringify(item));
+  //   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       item: JSON.stringify(item)
+  //     }
+  //   };
+  //   this.router.navigate(['order', 'item-details'], navigationExtras);
+  // }
 }
