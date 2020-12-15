@@ -65,8 +65,8 @@
                       Delivery Type
                     </div>
                     <div class="order-label mgn-bt-10">
-                      <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup"
-                        (change)="changeType()">
+                      <div *ngIf="home_delivery && store_pickup">
+                      <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                         <mat-radio-button [value]="'store'" [checked]="true">
                           Store pick up
                         </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -74,6 +74,7 @@
                           Home delivery
                         </mat-radio-button>
                       </mat-radio-group>
+                    </div>
                       <div *ngIf="store_pickup && !home_delivery">
                         store pickup
                       </div>
@@ -158,10 +159,10 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Choose
                           Timings</div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                          <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="futureAvailableTime"> 
+                          <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="futureAvailableTime">
                             <p>{{futureAvailableTime}}</p>
                           </div>
-                          <div  *ngIf="!nextAvailableTime"> 
+                          <div  *ngIf="!nextAvailableTime">
                               <p>No timings are available</p>
                             </div>
                           <!-- <mat-chip-list>
@@ -193,3 +194,4 @@
     <div class="clearfix"></div>
   </div>
 </section>
+

@@ -332,8 +332,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
   }
-  changeType() {
-    if (this.choose_type === 'store') {
+  changeType(event) {
+    if (event.value === 'store') {
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
     } else {
@@ -422,3 +422,4 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   //   this.router.navigate(['order', 'item-details'], navigationExtras);
   // }
 }
+
