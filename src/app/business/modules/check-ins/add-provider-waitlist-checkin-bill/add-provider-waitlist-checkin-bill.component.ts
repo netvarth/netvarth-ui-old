@@ -1667,6 +1667,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             .subscribe(
               () => {
                 this.getPrePaymentDetails();
+                this.getWaitlistBill();
                 this.showRefundSection = false;
                 this.amounttoRefund = '';
               },
