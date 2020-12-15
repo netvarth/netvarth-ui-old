@@ -1871,11 +1871,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
    // const serverdate = moment(server).format();
    // const servdate = new Date(serverdate);
    // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-   this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-    const params = {
-      'orderDate-gt': this.tDate
-    };
-    this.consumer_services.getConsumerOrders(params).subscribe(data => {
+  //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+  //   const params = {
+  //     'orderDate-gt': this.tDate
+  //   };
+    this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       // show more
