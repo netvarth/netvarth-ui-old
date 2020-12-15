@@ -26,7 +26,7 @@
                     <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9 no-padding">
                       <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img" *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
-                      <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5">
+                      <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.itemName}}</div>
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
@@ -142,15 +142,13 @@
                           <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
                           <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
                         </div>
-
-
                         <div class="pickerouter caldiv pull-left mgn-up-20">
                           <mat-datepicker-toggle matSuffix [for]="picker">
                           </mat-datepicker-toggle>
                           <mat-datepicker #picker></mat-datepicker>
                           <input class="" style="visibility: hidden; width:1px" type="text"
-                                          [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                                          (dateChange)="handleFutureDateChange($event)">
+                              [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                              (dateChange)="handleFutureDateChange($event)">
 
                         </div>
 
