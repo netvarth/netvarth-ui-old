@@ -204,5 +204,9 @@ export class ConsumerServices {
     const url = 'consumer/deliveryAddress';
     return this.servicemeta.httpPut(url , data);
   }
+  getConsumerFutOrders() {
+    const url = 'consumer/orders/future';
+    return this.servicemeta.httpGet(url);
+  }
 
 }
