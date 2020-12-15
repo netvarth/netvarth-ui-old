@@ -209,7 +209,8 @@ export class ConsumerDonationComponent implements OnInit {
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
-    phoneError: string;    dialCode;
+    phoneError: string;    
+    dialCode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,

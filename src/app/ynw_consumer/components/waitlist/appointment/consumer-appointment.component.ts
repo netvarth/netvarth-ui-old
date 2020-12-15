@@ -237,6 +237,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;
+    dialCode;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -376,6 +377,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.type === 'reschedule') {
                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
                     this.userPhone = this.appointment.phoneNumber;
+                    // this.countryCode = this.appointment.countryCode;
                 }
 
                 this.sel_loc = this.appointment.location.id;
@@ -1878,6 +1880,15 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     saveMemberDetails() {
+        console.log(this.selected_phone)
+        let phone = this.selected_phone.e164Number;
+        console.log(phone)
+        this.dialCode = this.selected_phone.dialCode;
+        console.log(this.dialCode)
+        if(phone.startsWith(this.dialCode)) {
+            this.selected_phone = phone.split(this.dialCode)[1];
+            console.log(this.selected_phone)
+        }
         let pN;
         let teleNumber;
         if (this.callingModes !== '') {
@@ -1895,14 +1906,17 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.noPhoneError = true;
         this.noCallingError = true;
         const curphone = this.selected_phone;
+        console.log(curphone)
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
         const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
-        if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
-            this.countryCode = this.selectedCountryCode;
+
+        
+        if (this.countryCode != this.dialCode) {
+            this.countryCode = this.dialCode;
             console.log(this.countryCode)
         }
         if (this.callingModes === '') {

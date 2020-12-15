@@ -247,6 +247,7 @@ export class ConsumerCheckinComponent implements OnInit {
     PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;
+    dialCode ;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2036,6 +2037,15 @@ export class ConsumerCheckinComponent implements OnInit {
         this.action = 'timeChange';
     }
     saveMemberDetails() {
+        console.log(this.selected_phone)
+        let phone = this.selected_phone.e164Number;
+        console.log(phone)
+        this.dialCode = this.selected_phone.dialCode;
+        console.log(this.dialCode)
+        if(phone.startsWith(this.dialCode)) {
+            this.selected_phone = phone.split(this.dialCode)[1];
+            console.log(this.selected_phone)
+        }
         let pN;
         let teleNumber;
         if (this.callingModes !== '') {
@@ -2059,10 +2069,14 @@ export class ConsumerCheckinComponent implements OnInit {
         const result1 = pattern1.test(curphone);
         const callResult = pattern.test(curphone);
         const callResult1 = pattern1.test(curphone);
-        if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
-            this.countryCode = this.selectedCountryCode;
+        if (this.countryCode != this.dialCode) {
+            this.countryCode = this.dialCode;
             console.log(this.countryCode)
         }
+        // if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
+        //     this.countryCode = this.selectedCountryCode;
+        //     console.log(this.countryCode)
+        // }
         if (this.callingModes === '') {
             this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
             this.noCallingError = false;

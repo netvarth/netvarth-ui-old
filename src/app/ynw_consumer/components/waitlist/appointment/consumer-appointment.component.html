@@ -796,7 +796,20 @@
                                         <table class="fm-contact-table">
                                             <tr>
                                                 <td class="td1" [class.pad-bt-15]="phoneerror != null">Phone : &nbsp;&nbsp;</td>
-                                                <td> 
+                                                <div class="form-group">
+                                                    <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
+                                                    <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                                                        [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                                        [selectedCountryISO] = "selectedCountry"
+                                                        [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                                                        [(ngModel)]="selected_phone">
+                                                    </ngx-intl-tel-input>
+                                                    
+                                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                                </div>
+                                                <!-- <td> 
                                                     <span style="width: 65px">
                                                     <select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                                     <option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</option>
@@ -808,7 +821,7 @@
                                                     <app-field-error-display class="red" [displayError]="true"
                                                         *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                     </app-field-error-display>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             <tr>
                                                 <td class="td1" [class.pad-bt-15]="emailerror != null">Email :&nbsp;&nbsp; </td>
