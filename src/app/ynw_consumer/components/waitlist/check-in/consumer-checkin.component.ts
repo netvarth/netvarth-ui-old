@@ -242,12 +242,12 @@ export class ConsumerCheckinComponent implements OnInit {
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
+    TooltipLabel = TooltipLabel;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;
-    dialCode ;
+    dialCode;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -2038,25 +2038,23 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     saveMemberDetails() {
         console.log(this.selected_phone)
-        let phone = this.selected_phone.e164Number;
+        let phone = this.selected_phone.e164Number;
         console.log(phone)
-        this.dialCode = this.selected_phone.dialCode;
+        this.dialCode = this.selected_phone.dialCode;
         console.log(this.dialCode)
-        if(phone.startsWith(this.dialCode)) {
-            this.selected_phone = phone.split(this.dialCode)[1];
+        if (phone.startsWith(this.dialCode)) {
+            this.selected_phone = phone.split(this.dialCode)[1];
             console.log(this.selected_phone)
         }
         let pN;
         let teleNumber;
-        if (this.callingModes !== '') {
+        if (this.callingModes !== '' && this.callingModes.e164Number !== '') {
             pN = this.callingModes.e164Number;
         }
-        if(pN.startsWith('+')) {
+        if (pN && pN.startsWith('+')) {
             teleNumber = pN.split('+')[1];
             pN = teleNumber;
-            console.log(pN)
-          }
-        console.log(pN)
+        }
         this.resetApiErrors();
         this.resetApi();
         this.noEmailError = true;
@@ -2071,7 +2069,6 @@ export class ConsumerCheckinComponent implements OnInit {
         const callResult1 = pattern1.test(curphone);
         if (this.countryCode != this.dialCode) {
             this.countryCode = this.dialCode;
-            console.log(this.countryCode)
         }
         // if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
         //     this.countryCode = this.selectedCountryCode;
@@ -2104,9 +2101,12 @@ export class ConsumerCheckinComponent implements OnInit {
             this.noPhoneError = true;
             if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 this.callingModes = this.selected_phone;
-            }else {
-                this.callingModes = pN;
-                console.log(pN)
+            } else {
+                if (pN) {
+                    this.callingModes = pN;
+                } else {
+                    this.callingModes = this.selected_phone;
+                }
             }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {

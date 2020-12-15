@@ -1891,14 +1891,13 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         let pN;
         let teleNumber;
-        if (this.callingModes !== '') {
+        if (this.callingModes !== '' && this.callingModes.e164Number !== '') {
             pN = this.callingModes.e164Number;
         }
-        if(pN.startsWith('+')) {
+        if (pN && pN.startsWith('+')) {
             teleNumber = pN.split('+')[1];
             pN = teleNumber;
-            console.log(pN)
-          }
+        }
         console.log(pN)
         this.resetApiErrors();
         this.resetApi();
@@ -1947,8 +1946,11 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 this.callingModes = this.selected_phone;
             }else {
-                this.callingModes = pN;
-                console.log(pN)
+                if (pN) {
+                    this.callingModes = pN;
+                } else {
+                    this.callingModes = this.selected_phone;
+                }
             }
         }
         if (this.payEmail && this.payEmail.trim() !== '') {
