@@ -106,14 +106,13 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-    this.getitems();
     if (this.action === 'edit' && this.cataId !== 'add') {
       this.getCatalog();
     } else {
       this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
       console.log(this.seletedCatalogItems);
     }
-    
+    this.getitems();
   }
   ngOnDestroy() {
   }
