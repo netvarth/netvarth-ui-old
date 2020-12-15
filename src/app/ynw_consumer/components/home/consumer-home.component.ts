@@ -192,6 +192,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   futureOrderslst_more: any = [];
   futureOrderslst: any = [];
   orders;
+  showOrder = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -1061,6 +1062,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   providerDetail(provider, event) {
+    console.log('order');
     event.stopPropagation();
     this.router.navigate(['searchdetail', provider.uniqueId]);
   }
@@ -1901,6 +1903,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showlessFutOrders() {
     this.more_futrOrdersShow = false;
   }
-
+  showOrders() {
+    this.showOrder = true;
+  }
+  showBookings() {
+    this.showOrder = false;
+  }
 
 }

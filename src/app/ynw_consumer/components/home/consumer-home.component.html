@@ -25,11 +25,15 @@
                             <img class="myjaldee-bg" _ngcontent-ywv-c30="" src="assets/images/myjaldee/Group92.png">
                         </div>
                     </div>
+
+
                     <h2 class="ng-tns-c16-8 bg-yelow">
                         <div class="jld-option">
-                            <div class="col-sm-4 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY BOOKINGS</div>
-                            <div class="col-sm-8 col-md-6 col-lg-6 col-xs-7">
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xs-5 mgn-up-10 no-padding-small mgn-lft-2" *ngIf="!showOrder">MY BOOKINGS</div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xs-5 mgn-up-10 no-padding-small mgn-lft-2" *ngIf="showOrder">MY ORDERS</div>
+                            <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9 no-padding-small">
+                                <div class="fl-right disply-flex">
+                                <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                     <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>My
                                         Payments</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
@@ -37,7 +41,7 @@
                                         <i class="fa myjld-payment"></i>
                                     </button>
                                 </div>
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                                <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                     <button class="flat-btn full-wdth" mat-flat-button (click)="getmyfavourites()">My
                                         Favourites</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
@@ -45,7 +49,7 @@
                                         <i class="fa myjld-fav"></i>
                                     </button>
                                 </div>
-                                <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                                <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                     <button class="flat-btn full-wdth" mat-flat-button
                                         (click)="gotoHistory()">History</button>
                                     <button class="flat-icon-btn" mat-flat-button (click)="gotoHistory()"
@@ -53,14 +57,30 @@
                                         <i class="fa myjld-histry"></i>
                                     </button>
                                 </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
+                                    <button *ngIf="!showOrder" class="flat-btn full-wdth" mat-flat-button
+                                        (click)="showOrders()">My Orders</button>
+                                    <button *ngIf="!showOrder" class="flat-icon-btn" mat-flat-button (click)="showOrders()"
+                                        [matTooltip]="'Orders'">
+                                        <i class="fa ordr_ico"></i>
+                                    </button>
+
+                                    <button *ngIf="showOrder" class="flat-btn full-wdth" mat-flat-button
+                                        (click)="showBookings()">My Bookings</button> 
+                                    <button *ngIf="showOrder" class="flat-icon-btn" mat-flat-button (click)="showBookings()"
+                                        [matTooltip]="'Bookings'">
+                                        <i class="fa bookin_ico"></i>
+                                    </button>  
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </h2>
-                    <div *ngIf="((today_totalbookings.length == 0 && future_totalbookings.length == 0) && !loading)"
+                    <div *ngIf="((today_totalbookings.length == 0 && future_totalbookings.length == 0) && !loading && !showOrder)"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No current Bookings available</p>
                     </div>
-                    <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading">
+                    <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder">
                         <table class="table">
 
                             <!-- TODAY BOOKINGS  -->
@@ -315,7 +335,8 @@
                                                         Checked-in
                                                     </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                        | capitalizeFirst}}</span>
                                                 </span>
 
                                                 <span *ngIf="(booking.service.serviceType !== 'virtualService')">
@@ -324,7 +345,8 @@
                                                         Checked-in
                                                     </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                        | capitalizeFirst}}</span>
                                                 </span>
                                                 <span *ngIf="booking.isRescheduled" class="circle-tokens">
                                                     <i class="consumer-reschedule-icon"
@@ -448,7 +470,7 @@
                                                 <span class="doctrnme" *ngIf="booking.provider">
                                                     Provider :
                                                     {{booking.provider.firstName}}
-                                                {{booking.provider.lastName}}<br>
+                                                    {{booking.provider.lastName}}<br>
                                                 </span>
                                                 <span>
                                                     <i class="fa phon-icon"
@@ -498,7 +520,8 @@
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
-                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <span
+                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
                                                     <button class="bt3 cust-btn cursor-auto">
                                                         Paid
                                                         &#8377;{{booking.amountPaid}}
@@ -678,7 +701,8 @@
                                                             Checked-in
                                                         </span>
                                                         <span
-                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                            | capitalizeFirst}}</span>
                                                     </span>
 
                                                     <span *ngIf="(booking.service.serviceType !== 'virtualService')">
@@ -687,7 +711,8 @@
                                                             Checked-in
                                                         </span>
                                                         <span
-                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                            | capitalizeFirst}}</span>
                                                     </span>
                                                     <span *ngIf="booking.isRescheduled" class="circle-tokens">
                                                         <i class="consumer-reschedule-icon"
@@ -707,7 +732,8 @@
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
-                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <span
+                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
                                                     <button class="bt3 cust-btn cursor-auto">
                                                         Paid
                                                         &#8377;{{booking.amountPaid}}
@@ -979,7 +1005,8 @@
                                                         Checked-in
                                                     </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                        | capitalizeFirst}}</span>
                                                 </span>
 
                                                 <span *ngIf="(booking.service.serviceType !== 'virtualService')">
@@ -988,7 +1015,8 @@
                                                         Checked-in
                                                     </span>
                                                     <span
-                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                        *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                        | capitalizeFirst}}</span>
                                                 </span>
                                                 <span *ngIf="booking.isRescheduled" class="circle-tokens">
                                                     <i class="consumer-reschedule-icon"
@@ -1138,7 +1166,8 @@
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
-                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <span
+                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
                                                     <button class="bt3 cust-btn cursor-auto">
                                                         Paid
                                                         &#8377;{{booking.amountPaid}}
@@ -1253,7 +1282,8 @@
                                                             Checked-in
                                                         </span>
                                                         <span
-                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                            | capitalizeFirst}}</span>
                                                     </span>
 
                                                     <span *ngIf="(booking.service.serviceType !== 'virtualService')">
@@ -1262,7 +1292,8 @@
                                                             Checked-in
                                                         </span>
                                                         <span
-                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus | capitalizeFirst}}</span>
+                                                            *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
+                                                            | capitalizeFirst}}</span>
                                                     </span>
                                                     <span *ngIf="booking.isRescheduled" class="circle-tokens">
                                                         <i class="consumer-reschedule-icon"
@@ -1282,7 +1313,8 @@
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>
                                                 </span>
-                                                <span *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
+                                                <span
+                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'">
                                                     <button class="bt3 cust-btn cursor-auto">
                                                         Paid
                                                         &#8377;{{booking.amountPaid}}
@@ -1357,7 +1389,7 @@
 
 
                     <!-- Order Section -->
-                    <h2 class="ng-tns-c16-8 bg-logo_blue">
+                    <!-- <h2 class="ng-tns-c16-8 bg-logo_blue">
                         <div class="jld-option">
                             <div class="col-sm-6 col-md-6 col-lg-6 col-xs-6 mgn-up-10">MY ORDERS</div>
 
@@ -1381,61 +1413,64 @@
                                 </div>
                             </div>
                         </div>
-                    </h2>
-                     <!-- If there is no order -->
-                     <!-- <div *ngIf="((total_tdy_order.length == 0 && total_future_order.length == 0) && !loading)"
-                     class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
-                     <p class="locate-customer">No Current Orders available</p>
-                 </div> -->
+                    </h2> -->
 
-                 <div class="table-outer1 order-dash ng-tns-c16-57" *ngIf="!loading">
-                     <table class="table">
-                         <!-- TODAY'S ORDERS -->
-                         <thead class="header" *ngIf="(total_tdy_order.length != 0)">
-                             <th colspan="6">TODAY</th>
-                         </thead>
-                         <tbody *ngIf="total_tdy_order.length != 0">
-                             <tr *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
-                                 <td>
-                                     <h4 class="disp-flex">
-                                         <div class="circle-tokens">
-                                             <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
-                                             <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
-                                         </div>
-                                         <span class="mgn-up-10">
-                                             Order :<br> #{{oder.orderNumber}}
-                                         </span>
-                                     </h4>
-                                 </td>
-                                 <td class="tdisplay-block">
-                                    <h4 (click)="providerDetail(oder.providerAccount,$event)">
-                                        {{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                    </span>
-                                     <div class="userName">
-                                         <i class="fa fa-user for"></i>
-                                         {{oder.orderFor.firstName}}
-                                         {{oder.orderFor.lastName}}
-                                     </div>
-                                 </td>
-                                 <td>
-                                     <h6>
-                                         <span>{{oder.orderStatus | capitalizeFirst}}</span>
-                                     </h6>
-                                 </td>
-                                 <td class="pay-wdth">
-                                     <span>
-                                         <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                             &#8377;{{oder.cartAmount}}</button>
-                                     </span>
-                                 </td>
-                                 <td></td>
-                                 <td>
-                                     <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                    <!-- If there is no order -->
+                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order.length == 0) && !loading) && showOrder"
+                        class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
+                        <p class="locate-customer">No Current Orders available</p>
+                    </div>
+
+                    <div class="table-outer1  ng-tns-c16-57" *ngIf="!loading && showOrder">
+                        <table class="table">
+                            <!-- TODAY'S ORDERS -->
+                            <thead class="header" *ngIf="(total_tdy_order.length != 0)">
+                                <th colspan="6">TODAY</th>
+                            </thead>
+                            <tbody *ngIf="total_tdy_order.length != 0">
+                                <tr *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
+                                    <td>
+                                        <h4 class="disp-flex">
+                                            <div class="circle-tokens">
+                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico"
+                                                    [matTooltip]="'Store Pickup'"></i>
+                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
+                                                    [matTooltip]="'Home Delivery'"></i>
+                                            </div>
+                                            <span class="mgn-up-10">
+                                                Order :<br> #{{oder.orderNumber}}
+                                            </span>
+                                        </h4>
+                                    </td>
+                                    <td class="tdisplay-block">
+                                        <h4  (click)="providerDetail(oder.providerAccount,$event)">
+                                            {{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                        </span>
+                                        <div class="userName">
+                                            <i class="fa fa-user for"></i>
+                                            {{oder.orderFor.firstName}}
+                                            {{oder.orderFor.lastName}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                        </h6>
+                                    </td>
+                                    <td class="pay-wdth">
+                                        <span>
+                                            <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
+                                                &#8377;{{oder.cartAmount}}</button>
+                                        </span>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
                                      </button> -->
-                                     <!-- <mat-menu #appMenu="matMenu">
+                                        <!-- <mat-menu #appMenu="matMenu">
                                          <button mat-menu-item>
                                              <i class="fa cross-icon"></i>
                                              Cancel</button>
@@ -1448,55 +1483,57 @@
                                                 (click)="rateService(oder,'order')">{{rate_visit}}</span>
                                         </button>
                                      </mat-menu> -->
-                                 </td>
-                             </tr>
+                                    </td>
+                                </tr>
 
-                             <tr *ngIf="!more_tdyOrdersShow && total_tdy_order.length > 3"
-                                 (click)="showMoreTdyOrders()">
-                                 <td colspan="6"><a>Show more...</a></td>
-                             </tr>
-                             <ng-container *ngIf="more_tdyOrdersShow">
-                                 <tr *ngFor="let oder of todayOrderslst_more;" (click)="showBookingDetails(oder)">
-                                     <td>
-                                         <h4 class="disp-flex">
-                                             <div class="circle-tokens">
-                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
-                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
-                                             </div>
-                                             <span class="mgn-up-10">
-                                                 Order :<br> #{{oder.orderNumber}}
-                                             </span>
-                                         </h4>
-                                     </td>
-                                     <td class="tdisplay-block">
-                                         <h4>{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                         <div class="userName">
-                                             <i class="fa fa-user for"></i>
-                                             {{oder.orderFor.firstName}}
-                                             {{oder.orderFor.lastName}}
-                                         </div>
-                                         <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                         </span>
-                                     </td>
-                                     <td>
-                                         <h6>
-                                             <span>{{oder.orderStatus | capitalizeFirst}}</span>
-                                         </h6>
-                                     </td>
-                                     <td class="pay-wdth">
-                                         <span>
-                                             
-                                             <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                                 &#8377;{{oder.cartAmount}}</button>
-                                         </span>
-                                     </td>
-                                     <td></td>
-                                     <td>
-                                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                <tr *ngIf="!more_tdyOrdersShow && total_tdy_order.length > 3"
+                                    (click)="showMoreTdyOrders()">
+                                    <td colspan="6"><a>Show more...</a></td>
+                                </tr>
+                                <ng-container *ngIf="more_tdyOrdersShow">
+                                    <tr *ngFor="let oder of todayOrderslst_more;" (click)="showBookingDetails(oder)">
+                                        <td>
+                                            <h4 class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i *ngIf="oder.storePickup" class="fa store_pick_ico"
+                                                        [matTooltip]="'Store Pickup'"></i>
+                                                    <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
+                                                        [matTooltip]="'Home Delivery'"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    Order :<br> #{{oder.orderNumber}}
+                                                </span>
+                                            </h4>
+                                        </td>
+                                        <td class="tdisplay-block">
+                                            <h4 (click)="providerDetail(oder.providerAccount,$event)">{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{oder.orderFor.firstName}}
+                                                {{oder.orderFor.lastName}}
+                                            </div>
+                                            <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <h6>
+                                                <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                            </h6>
+                                        </td>
+                                        <td class="pay-wdth">
+                                            <span>
+
+                                                <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
+                                                    &#8377;{{oder.cartAmount}}</button>
+                                            </span>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
                                          </button> -->
-                                         <!-- <mat-menu #appMenu="matMenu">
+                                            <!-- <mat-menu #appMenu="matMenu">
                                              <button mat-menu-item>
                                                  <i class="fa cross-icon"></i>
                                                  Cancel</button>
@@ -1508,61 +1545,63 @@
                                                  <span>{{rate_visit}}</span>
                                              </button>
                                          </mat-menu> -->
-                                     </td>
-                                 </tr>
-                                 <tr *ngIf="more_tdyOrdersShow" (click)="showlessTdyOrders()">
-                                    <td colspan="6"><a>Show less...</a></td>
-                                </tr>
-                             </ng-container>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="more_tdyOrdersShow" (click)="showlessTdyOrders()">
+                                        <td colspan="6"><a>Show less...</a></td>
+                                    </tr>
+                                </ng-container>
 
-                         </tbody>
+                            </tbody>
 
-                         <!-- FUTURE ORDERS -->
+                            <!-- FUTURE ORDERS -->
 
-                         <thead class="header" *ngIf="total_future_order && (total_future_order.length != 0)">
-                             <th colspan="6">UPCOMING</th>
-                         </thead>
-                         <tbody *ngIf="total_future_order && total_future_order.length != 0">
-                             <tr *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
-                                 <td>
-                                     <h4 class="disp-flex">
-                                         <div class="circle-tokens">
-                                            <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
-                                            <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
-                                         </div>
-                                         <span class="mgn-up-10">
-                                             Order :<br> #{{oder.orderNumber}}
-                                         </span>
-                                     </h4>
-                                 </td>
-                                 <td class="tdisplay-block">
-                                     <h4>{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                     <div class="userName">
-                                         <i class="fa fa-user for"></i>
-                                         {{oder.orderFor.firstName}}
-                                         {{oder.orderFor.lastName}}
-                                     </div>
-                                     <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                     </span>
-                                 </td>
-                                 <td>
-                                     <h6>
-                                         <span>{{oder.orderStatus | capitalizeFirst}}</span>
-                                     </h6>
-                                 </td>
-                                 <td class="pay-wdth">
-                                     <span>
-                                         <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                             &#8377;{{oder.cartAmount}}</button>
-                                     </span>
-                                 </td>
-                                 <td></td>
-                                 <td>
-                                     <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                            <thead class="header" *ngIf="total_future_order && (total_future_order.length != 0)">
+                                <th colspan="6">UPCOMING</th>
+                            </thead>
+                            <tbody *ngIf="total_future_order && total_future_order.length != 0">
+                                <tr *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
+                                    <td>
+                                        <h4 class="disp-flex">
+                                            <div class="circle-tokens">
+                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico"
+                                                    [matTooltip]="'Store Pickup'"></i>
+                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
+                                                    [matTooltip]="'Home Delivery'"></i>
+                                            </div>
+                                            <span class="mgn-up-10">
+                                                Order :<br> #{{oder.orderNumber}}
+                                            </span>
+                                        </h4>
+                                    </td>
+                                    <td class="tdisplay-block">
+                                        <h4 (click)="providerDetail(oder.providerAccount,$event)">{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                        <div class="userName">
+                                            <i class="fa fa-user for"></i>
+                                            {{oder.orderFor.firstName}}
+                                            {{oder.orderFor.lastName}}
+                                        </div>
+                                        <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <h6>
+                                            <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                        </h6>
+                                    </td>
+                                    <td class="pay-wdth">
+                                        <span>
+                                            <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
+                                                &#8377;{{oder.cartAmount}}</button>
+                                        </span>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
                                      </button> -->
-                                     <!-- <mat-menu #appMenu="matMenu">
+                                        <!-- <mat-menu #appMenu="matMenu">
                                          <button mat-menu-item>
                                              <i class="fa cross-icon"></i>
                                              Cancel</button>
@@ -1574,53 +1613,55 @@
                                              <span>{{rate_visit}}</span>
                                          </button>
                                      </mat-menu> -->
-                                 </td>
-                             </tr>
-                             <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
-                                 (click)="showMoreFutOrders()">
-                                 <td colspan="6"><a>Show more...</a></td>
-                             </tr>
-                             <ng-container *ngIf="more_futrOrdersShow">
-                                 <tr *ngFor="let oder of futureOrderslst_more;" (click)="showBookingDetails(oder)">
-                                     <td>
-                                         <h4 class="disp-flex">
-                                             <div class="circle-tokens">
-                                                <i *ngIf="oder.storePickup" class="fa store_pick_ico" [matTooltip]="'Store Pickup'"></i>
-                                                <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico" [matTooltip]="'Home Delivery'"></i>
-                                             </div>
-                                             <span class="mgn-up-10">
-                                                 Order :<br> #{{oder.orderNumber}}
-                                             </span>
-                                         </h4>
-                                     </td>
-                                     <td class="tdisplay-block">
-                                         <h4>{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
-                                         <div class="userName">
-                                             <i class="fa fa-user for"></i>
-                                             {{oder.orderFor.firstName}}
-                                             {{oder.orderFor.lastName}}
-                                         </div>
-                                         <span class="servName">No Of Products : {{oder.orderItem.length}}
-                                         </span>
-                                     </td>
-                                     <td>
-                                         <h6>
-                                             <span>{{oder.orderStatus | capitalizeFirst}}</span>
-                                         </h6>
-                                     </td>
-                                     <td class="pay-wdth">
-                                         <span>
-                                             <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                                 &#8377;{{oder.cartAmount}}</button>
-                                         </span>
-                                     </td>
-                                     <td></td>
-                                     <td>
-                                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
+                                    (click)="showMoreFutOrders()">
+                                    <td colspan="6"><a>Show more...</a></td>
+                                </tr>
+                                <ng-container *ngIf="more_futrOrdersShow">
+                                    <tr *ngFor="let oder of futureOrderslst_more;" (click)="showBookingDetails(oder)">
+                                        <td>
+                                            <h4 class="disp-flex">
+                                                <div class="circle-tokens">
+                                                    <i *ngIf="oder.storePickup" class="fa store_pick_ico"
+                                                        [matTooltip]="'Store Pickup'"></i>
+                                                    <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
+                                                        [matTooltip]="'Home Delivery'"></i>
+                                                </div>
+                                                <span class="mgn-up-10">
+                                                    Order :<br> #{{oder.orderNumber}}
+                                                </span>
+                                            </h4>
+                                        </td>
+                                        <td class="tdisplay-block">
+                                            <h4 (click)="providerDetail(oder.providerAccount,$event)">{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
+                                            <div class="userName">
+                                                <i class="fa fa-user for"></i>
+                                                {{oder.orderFor.firstName}}
+                                                {{oder.orderFor.lastName}}
+                                            </div>
+                                            <span class="servName">No Of Products : {{oder.orderItem.length}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <h6>
+                                                <span>{{oder.orderStatus | capitalizeFirst}}</span>
+                                            </h6>
+                                        </td>
+                                        <td class="pay-wdth">
+                                            <span>
+                                                <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
+                                                    &#8377;{{oder.cartAmount}}</button>
+                                            </span>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
                                          </button> -->
-                                         <!-- <mat-menu #appMenu="matMenu">
+                                            <!-- <mat-menu #appMenu="matMenu">
                                              <button mat-menu-item>
                                                  <i class="fa cross-icon"></i>
                                                  Cancel</button>
@@ -1632,17 +1673,17 @@
                                                  <span>{{rate_visit}}</span>
                                              </button>
                                          </mat-menu> -->
-                                     </td>
-                                 </tr>
-                                 <tr *ngIf="more_futrOrdersShow" (click)="showlessFutOrders()">
-                                    <td colspan="6"><a>Show less...</a></td>
-                                </tr>
-                             </ng-container>
-                         </tbody>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="more_futrOrdersShow" (click)="showlessFutOrders()">
+                                        <td colspan="6"><a>Show less...</a></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
 
-                     </table>
-                 </div>
-                   
+                        </table>
+                    </div>
+
 
                 </div>
             </div>

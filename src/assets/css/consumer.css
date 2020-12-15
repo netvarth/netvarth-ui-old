@@ -6746,10 +6746,11 @@ margin-top: 7px;
   font-size: 0.9rem;
 }
 .myjld-histry {
-  content: url(../images/myjaldee/historywhite.svg);
+  content: url(../images/myjaldee/history.svg);
   position: relative;
-  padding-right: 1px;
-  width: 20px;
+  width: 22px;
+  top: -2px;
+  margin-right: 3px;
 }
 .myjld-payment {
   content: url(../images/myjaldee/payments-01.svg);
@@ -6797,7 +6798,7 @@ margin-top: 7px;
   color: #183e79 !important;
   text-shadow: 0px 1px #183e79;
 }
-.consumer-dash .order-dash  tbody tr:hover {
+.consumer-dash   tbody tr:hover {
   -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
@@ -6806,7 +6807,7 @@ margin-top: 7px;
 .order-dash table thead th {
   background: rgb(26 64 122 / 24%) !important;
 }
-.consumer-dash .order-dash  tbody tr {
+.consumer-dash   tbody tr {
  cursor: pointer;
 }
 .store_pick_ico {
@@ -6822,4 +6823,28 @@ margin-top: 7px;
   padding-right: 1px;
   width: 25px;
   margin-top: 7px;
+}
+.consumer-dash .item-btn-div {
+  margin-right: 10px;
+  width: fit-content;
+}
+.consumer-dash .disply-flex {
+  display: flex;
+}
+.consumer-dash .mgn-lft-2{
+  margin-left: 2px;
+}
+.bookin_ico {
+  content: url(../images/myjaldee/calendar.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 25px;
+  top: -1px;
+}
+.ordr_ico {
+  content: url(../images/myjaldee/shopping-cart-of-checkered-design.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 22px;
+  top: -2px;
 }
