@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { SharedServices } from '../../services/shared-services';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -47,6 +48,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   catalog_Id: any;
   businessDetails: any;
   futureAvailableTime;
+  storeAvailableDates: any = [];
+  homeAvailableDates: any = [];
 
   constructor(
     public router: Router,
@@ -334,6 +337,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.showfuturediv = !this.showfuturediv;
   }
   changeType(event) {
+    this.choose_type = event.value;
     if (event.value === 'store') {
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
@@ -351,37 +355,38 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
   }
   getOrderAvailableDatesForPickup() {
-    console.log('pickup');
     const _this = this;
     console.log(this.catalog_Id);
     console.log(this.account_id);
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-        console.log(data);
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
-        _this.availableDates = availDates.filter(function (elem, index, self) {
+        _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
-        console.log(availDates);
       });
   }
   getOrderAvailableDatesForHome() {
-    console.log('home');
     const _this = this;
     console.log(this.catalog_Id);
     console.log(this.account_id);
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-        console.log(data);
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
-        _this.availableDates = availDates.filter(function (elem, index, self) {
+        _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
-        console.log(availDates);
       });
   }
+  dateClass(date: Date): MatCalendarCellCssClasses {
+    if(this.choose_type === 'store'){
+      return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }else {
+      return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+}
   getAvailabilityByDate(date) {
     console.log(date);
     this.sel_checkindate = date;
