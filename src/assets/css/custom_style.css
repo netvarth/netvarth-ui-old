@@ -13254,3 +13254,6 @@ ngx-intl-tel-input input[disabled] {
 .custom-login-form .modal_close i:before {
 color: #fff !important;
 }
+.grey-bg {
+  background: darkgrey;
+}
