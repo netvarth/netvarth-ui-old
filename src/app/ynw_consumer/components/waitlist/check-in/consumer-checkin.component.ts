@@ -414,7 +414,7 @@ export class ConsumerCheckinComponent implements OnInit {
             (waitlst: any) => {
                 this.waitlist = waitlst;
                 if (this.type === 'waitlistreschedule') {
-                    // this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
+                    this.waitlist_for.push({ id: this.waitlist.waitlistingFor[0].id, firstName: this.waitlist.waitlistingFor[0].firstName, lastName: this.waitlist.waitlistingFor[0].lastName, phoneNo: this.waitlist.phoneNumber });
                     this.wtlst_for_fname = this.waitlist.waitlistingFor[0].firstName;
                     this.wtlst_for_lname = this.waitlist.waitlistingFor[0].lastName;
                     this.userPhone = this.waitlist.waitlistPhoneNumber;

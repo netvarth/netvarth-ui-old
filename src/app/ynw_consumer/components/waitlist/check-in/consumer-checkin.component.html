@@ -60,13 +60,13 @@
                                                     {{sel_ser_det.name}}
                                                 </h6>
                                                 <div class="mgn-bt-15" style="font-size: 1rem;">
-                                                    <span *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                    <span *ngIf="sel_ser_det.price && type != 'waitlistreschedule'">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{serviceCost}}</span>
                                                         </span>&nbsp;
-                                                    <span *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'">
+                                                    <span *ngIf="sel_ser_det.isPrePayment && type != 'waitlistreschedule'">
                                                     Booking Fee
                                                     <span class="prepaymin-cls bold"><span
                                                             class="rupee-font">&#8377;
