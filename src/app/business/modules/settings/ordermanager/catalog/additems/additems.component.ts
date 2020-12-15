@@ -135,6 +135,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.catalogItem = data;
         this.api_loading = false;
+        for (const itm of this.catalogItem) {
+          itm.minQuantity = '1';
+          itm.maxQuantity = '5';
+  }
         if (this.seletedCatalogItems !== null) {
           this.selectedCount = this.seletedCatalogItems.length;
           console.log(this.selectedCount);
@@ -151,13 +155,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         }
           console.log(this.catalogItem);
 
-        } else {
-          for (const itm of this.catalogItem) {
-                itm.minQuantity = '1';
-                itm.maxQuantity = '5';
-              
-        }
-        }
+        } 
       });
   }
   selectItem(item, index) {
@@ -205,55 +203,36 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.selecteditemforadd.push(selitem);
   }
 }
-const updateminresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.minQuantity == o1.minQuantity).length === 0);
-const updatemaxresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.maxQuantity == o1.maxQuantity).length === 0);
-
-console.log(updateminresult);
-console.log(updatemaxresult);
-if (updatemaxresult.length > 0 || updateminresult.length > 0) {
-  this.selecteditemforupdate = updateminresult.concat(updatemaxresult);
-}
 let updateitemsselected = [];
-if (this.selecteditemforupdate.length > 0 ) {
-  updateitemsselected = [...new Map(this.selecteditemforupdate.map(item => [item.item['itemId'], item])).values()];
+for (const itm of this.catalogItemsSelected) {
+  for (const selitem of this.seletedCatalogItems) {
+     if (itm.item.itemId === selitem.item.itemId) {
+       if (itm.minQuantity != selitem.minQuantity || itm.maxQuantity != selitem.maxQuantity) {
+        updateitemsselected.push(itm);
+       }
+     }
+  }
+}
+if (this.selecteditemfordelete.length > 0) {
+  this.deleteItems(this.selecteditemfordelete);
+}
+if (this.selecteditemforadd.length > 0) {
+  this.addItems(this.selecteditemforadd);
 }
 
 console.log(updateitemsselected);
+if (updateitemsselected.length > 0) {
+this.updateItems(updateitemsselected);
+}
 
-
-
-    if (this.selecteditemfordelete.length > 0) {
-      this.deleteItems(this.selecteditemfordelete);
-    }
-    if (this.selecteditemforadd.length > 0) {
-      this.addItems(this.selecteditemforadd);
-    }
-    if (updateitemsselected.length > 0 && this.selecteditemforadd.length > 0) {
-      const updateitem = [];
-      for (const itm of updateitemsselected) {
-        for (const selitem of this.selecteditemforadd) {
-           if (itm.item.itemId !== selitem.item.itemId) {
-            updateitem.push(itm);
-           }
-        }
-    }
-    console.log(updateitem);
-    if (updateitem.length > 0) {
-      this.updateItems(updateitem);
-    }
-    } else {
-      this.updateItems(updateitemsselected);
-    }
-
-      if (!this.api_loading) {
+   
         this.shared_functions.openSnackBar('Items updated');
-       // this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'edit',
                           isFrom: true }
     };
     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
-  }
+ 
       } else {
         console.log(this.catalogItemsSelected);
         this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);

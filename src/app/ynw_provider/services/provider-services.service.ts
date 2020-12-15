@@ -1788,7 +1788,7 @@ export class ProviderServices {
       return this.servicemeta.httpDelete(url, data);
    }
    updateCatalogItems(id, data) {
-      const url = 'provider/catalog/item';
+      const url = 'provider/catalog/items';
       return this.servicemeta.httpPut(url, data);
    }
    setCatalogPrefilledDetails(data) {

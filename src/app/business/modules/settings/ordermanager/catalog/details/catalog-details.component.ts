@@ -488,7 +488,7 @@ export class CatalogdetailComponent implements OnInit {
                 deliverycharge: ['']
             });
             this.amForm.get('orderType').setValue('SHOPPINGCART');
-            this.amForm.get('orderStatuses').setValue(['Order Received', 'Canceled']);
+            this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Canceled']);
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
             if (this.action === 'add' && this.isFromadd) {
                 this.updateprefillForm();
