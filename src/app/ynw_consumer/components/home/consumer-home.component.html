@@ -1519,10 +1519,10 @@
 
                          <!-- FUTURE ORDERS -->
 
-                         <thead class="header" *ngIf="(total_future_order.length != 0)">
+                         <thead class="header" *ngIf="total_future_order && (total_future_order.length != 0)">
                              <th colspan="6">UPCOMING</th>
                          </thead>
-                         <tbody *ngIf="total_future_order.length != 0">
+                         <tbody *ngIf="total_future_order && total_future_order.length != 0">
                              <tr *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
                                  <td>
                                      <h4 class="disp-flex">

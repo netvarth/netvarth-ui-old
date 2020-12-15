@@ -85,7 +85,6 @@ import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { CardModule } from './shared/components/card/card.module';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
-import { ShoppingCartSharedComponent } from './shared/components/shopping-cart/shopping-cart.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
@@ -125,7 +124,6 @@ export function init_app(globalService: GlobalService) {
     LiveChatComponent,
     JaldeeBlogComponent,
     CheckoutSharedComponent,
-    ShoppingCartSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent
   ],

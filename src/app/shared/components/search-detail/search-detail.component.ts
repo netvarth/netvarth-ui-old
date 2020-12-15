@@ -745,7 +745,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // q_str = 'title:\'' + 'sony new business' + '\''; // ***** this line needs to be commented after testing
     if (this.latitude && this.kwtyp !== 'onlineid') { // case of location is selected
       // calling shared function to get the coordinates for nearybylocation
-      const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, this.loctype);
+      const distanceMetrix = {
+        'state': projectConstants.DISTANCE_STATE,
+        'city': projectConstants.DISTANCE_CITY,
+        'area': projectConstants.DISTANCE_AREA,
+        'metro': projectConstants.DISTANCE_METRO,
+        'capital': projectConstants.DISTANCE_CAPITAL
+      }
+      const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, distanceMetrix, this.loctype);
       const coordinates = retcoordinates['locationRange'];
       projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
       locstr = 'location1:' + coordinates;
