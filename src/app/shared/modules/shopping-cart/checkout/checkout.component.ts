@@ -74,6 +74,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   homeAvailableDates: any = [];
   hold_sel_checkindate;
   ddate;
+  isfutureAvailableTime = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -521,36 +522,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-  getAvailabilityByDate(date) {
-    console.log(date);
-    console.log(this.choose_type);
-    this.sel_checkindate = date;
-    const cday = new Date(this.sel_checkindate);
-    const currentday = (cday.getDay() + 1);
-    console.log(currentday);
-    if (this.choose_type === 'store') {
-      console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
-      for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
-        const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
-        if (currentday === pday) {
-          // this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule
-          this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-          console.log('future time available ');
-        }
-      }
-    } else {
-      console.log(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals);
-      for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
-        const pday = Number(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals[i]);
-        console.log(pday);
-        if (currentday === pday) {
-          this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-
-          console.log('future time available');
-        }
-      }
-    }
-  }
   calculateDate(days) {
     // this.resetApi();
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -630,5 +601,48 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
+  }
+  getAvailabilityByDate(date) {
+    console.log(date);
+    console.log(this.choose_type);
+    this.sel_checkindate = date;
+    const cday = new Date(this.sel_checkindate);
+    const currentday = (cday.getDay() + 1);
+    console.log(currentday);
+    if (this.choose_type === 'store') {
+      console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
+      for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
+        const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
+        if (currentday === pday) {
+          // this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule
+        
+          this.isfutureAvailableTime = true;
+          console.log(this.isfutureAvailableTime);
+          this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+          console.log('future time available ');
+        }
+        else{
+          this.isfutureAvailableTime = false;
+
+        }
+      }
+    } else {
+      console.log(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals);
+      for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
+        const pday = Number(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals[i]);
+        console.log(pday);
+        if (currentday === pday) {
+          this.isfutureAvailableTime = true;
+          console.log(this.isfutureAvailableTime);
+          this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+
+          console.log('future time available');
+        }
+        else{
+          this.isfutureAvailableTime = false;
+
+        }
+      }
+    }
   }
 }
