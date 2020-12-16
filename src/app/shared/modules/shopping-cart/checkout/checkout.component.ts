@@ -196,6 +196,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.getOrderAvailableDatesForPickup();
     this.getOrderAvailableDatesForHome();
+    this.getAvailabilityByDate(this.sel_checkindate);
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -471,12 +472,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.delivery_type = 'store';
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.storeChecked = false;
       this.homeChecked = true;
       this.delivery_type = 'homedelivery';
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
     }
     if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
@@ -520,6 +523,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getAvailabilityByDate(date) {
     console.log(date);
+    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
