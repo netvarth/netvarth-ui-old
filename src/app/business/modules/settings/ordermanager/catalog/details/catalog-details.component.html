@@ -216,20 +216,24 @@
                     </mat-expansion-panel-header>
                     <!-- </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="showadditems">
-                      <div *ngIf="!seletedCatalogItems && this.item_count > 0">
-                        <h4>Add items to your cart</h4>
+                      <div *ngIf="item_count > 0 && catalogItems.length == 0 ">
+                        <div *ngIf="!seletedCatalogItems"><h4>Add items to your cart</h4>
                         <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)">
-                          Add items</span>
+                          Add items</span></div>
+                          <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h4>{{seletedCatalogItems.length}} items are selected</h4>
+                            <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)">
+                              Edit items</span></div>
                       </div>
-                      <div *ngIf="!seletedCatalogItems && this.item_count === 0">
+                      <div *ngIf="item_count === 0">
                         <p class="font-italic">You haven't created any items  
                         <a class="pointlist" (click)="gotoItems()">create items </a></p>
                        
                       </div>
 
-                      <div *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
-                        <h4>{{seletedCatalogItems.length}} items are selected</h4>
+                      <div *ngIf="catalogItems && catalogItems.length > 0">
+                        <h4>{{catalogItems.length}} items are selected</h4>
                         <span class="cs-btn bt3" (click)="addItemstoCart('edit',amForm.value)"> Edit items</span>
+                        <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)"> Add items</span>
                       </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">

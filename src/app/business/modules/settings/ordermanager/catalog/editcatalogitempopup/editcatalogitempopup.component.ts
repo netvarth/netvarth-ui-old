@@ -52,9 +52,10 @@ export class EditcatalogitemPopupComponent implements OnInit {
   drugDetail: any =  [];
   listOfDrugs;
   today = new Date();
-  mrId;
+  cataId;
   fromWhr;
-  drugData;
+  minimumquantity;
+  maximumquantity
   addAnother = false;
 
   constructor(
@@ -66,13 +67,11 @@ export class EditcatalogitemPopupComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
   ) {
-    this.formMode = data.type;
-    if (this.formMode === 'edit') {
-      this.drugData = data.drugDetails;
-    }
-    this.fromWhr = data.isFrom;
+    this.cataId = data.id;
+    this.minimumquantity = data.minquantity;
+    this.maximumquantity = data.maxquantity;
   }
-  taxDetails: any = [];
+  
   ngOnInit() {
     this.api_loading = false;
     this.createForm();
@@ -82,46 +81,23 @@ export class EditcatalogitemPopupComponent implements OnInit {
   createForm() {
 
       this.amForm = this.fb.group({
-        medicine_name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        frequency: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-        instructions: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxCharslong)])],
-        duration: ['', Validators.compose([Validators.required])],
-        dosage: ['', Validators.compose([Validators.required])]
+        maxquantity: ['', Validators.compose([Validators.required])],
+        minquantity: ['', Validators.compose([Validators.required])]
       });
-
-    if (this.formMode === 'edit') {
-      this.updateForm();
-    }
+      this.amForm.get('maxquantity').setValue(this.maximumquantity);
+      this.amForm.get('minquantity').setValue(this.minimumquantity);
   }
 
-  updateForm() {
-    this.amForm.setValue({
-      'medicine_name': this.drugData.medicine_name || null,
-      'frequency': this.drugData.frequency || null,
-      'instructions': this.drugData.instructions || null,
-      'duration': this.drugData.duration || null,
-      'dosage': this.drugData.dosage || null
-    });
-  }
+  
 
   onSubmit(form_data) {
-    this.drugDetail.push(form_data);
-    this.dialogRef.close(this.drugDetail);
+    this.dialogRef.close(form_data);
 
   }
   close() {
-    if (this.addAnother === true) {
-      this.dialogRef.close(this.drugDetail);
-    } else {
       this.dialogRef.close();
-    }
-    
   }
-  saveAndAddOther(form_data) {
-    this.drugDetail.push(form_data);
-    this.addAnother = true;
-    this.amForm.reset();
-  }
+  
 
 
 

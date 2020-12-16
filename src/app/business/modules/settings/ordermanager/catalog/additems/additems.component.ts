@@ -74,6 +74,11 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   max: any;
   catalog: any = [];
   editcataItemdialogRef;
+  addCatalogItems: any = [];
+  itemsforadd: any = [];
+  selecteditemCount = 0;
+  catalogSelectedItemsadd: any = [];
+  seletedCatalogItemsadd: any = {};
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -85,6 +90,8 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       (qParams) => {
       this.action = qParams.action;
       this.cataId = qParams.id;
+      console.log(this.action);
+      console.log(this.cataId);
       }
       );
       this.onResize();
@@ -111,13 +118,14 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-    if (this.action === 'edit' && this.cataId !== 'add') {
+    this.getitems();
+    if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
       this.getCatalog();
     } else {
-      this.seletedCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
-      console.log(this.seletedCatalogItems);
+      this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
+      console.log(this.addCatalogItems);
     }
-    this.getitems();
+    
   }
   ngOnDestroy() {
   }
@@ -131,7 +139,16 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         if (this.catalog.catalogItem) {
           this.seletedCatalogItems = this.catalog.catalogItem;
           console.log(this.seletedCatalogItems);
-      }
+        }
+        if (this.action === 'add' && this.cataId !== 'add') {
+            for (const itm of this.catalogItem) {
+            for (const selitem of this.seletedCatalogItems) {
+               if (itm.itemId !== selitem.item.itemId) {
+                this.itemsforadd.push(itm);
+               }
+            }
+        }
+        }
        
       });
   }
@@ -143,13 +160,11 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         for (const itm of this.catalogItem) {
           itm.minQuantity = '1';
           itm.maxQuantity = '5';
-  }
-        if (this.seletedCatalogItems !== null) {
-          this.selectedCount = this.seletedCatalogItems.length;
-          console.log(this.selectedCount);
-          console.log(this.catalogItem);
-          for (const itm of this.catalogItem) {
-            for (const selitem of this.seletedCatalogItems) {
+         }
+         if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+          this.selectedCount = this.addCatalogItems.length;
+         for (const itm of this.catalogItem) {
+            for (const selitem of this.addCatalogItems) {
                if (itm.itemId === selitem.item.itemId) {
                 itm.selected = true;
                 itm.id = selitem.id;
@@ -158,9 +173,25 @@ export class AddItemsComponent implements OnInit, OnDestroy {
                }
             }
         }
-          console.log(this.catalogItem);
+         }
 
-        } 
+        // if (this.seletedCatalogItems !== null) {
+        //   this.selectedCount = this.seletedCatalogItems.length;
+        //   console.log(this.selectedCount);
+        //   console.log(this.catalogItem);
+        //   for (const itm of this.catalogItem) {
+        //     for (const selitem of this.seletedCatalogItems) {
+        //        if (itm.itemId === selitem.item.itemId) {
+        //         itm.selected = true;
+        //         itm.id = selitem.id;
+        //         itm.minQuantity = selitem.minQuantity;
+        //         itm.maxQuantity = selitem.maxQuantity;
+        //        }
+        //     }
+        // }
+        //   console.log(this.catalogItem);
+
+        // } 
       });
   }
   selectItem(item, index) {
@@ -173,6 +204,17 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.selectedCount--;
     }
     console.log(this.catalogItem[index].selected);
+  }
+  selectaddItem(item, index) {
+    console.log(this.itemsforadd[index].selected);
+    if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
+      this.itemsforadd[index].selected = true;
+      this.selecteditemCount++;
+    } else {
+      this.itemsforadd[index].selected = false;
+      this.selecteditemCount--;
+    }
+    console.log(this.itemsforadd[index].selected);
   }
   selectedItems() {
     console.log(this.action);
@@ -193,90 +235,57 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       }
     }
     console.log(this.catalogItemsSelected);
-    console.log(this.seletedCatalogItems);
-    if (this.action === 'edit' && this.cataId !== 'add') {
-    const deleteresult = this.seletedCatalogItems.filter(o1 => this.catalogItemsSelected.filter(o2 => o2.item.itemId === o1.item.itemId).length === 0);
-    if (deleteresult.length > 0) {
-      for (const selitem of deleteresult) {
-      this.selecteditemfordelete.push(selitem.item.itemId);
-    }
-  }
-  console.log(deleteresult);
-  const addresult = this.catalogItemsSelected.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.item.itemId).length === 0);
-  if (addresult.length > 0) {
-    for (const selitem of addresult) {
-    this.selecteditemforadd.push(selitem);
-  }
-}
-let updateitemsselected = [];
-for (const itm of this.catalogItemsSelected) {
-  for (const selitem of this.seletedCatalogItems) {
-     if (itm.item.itemId === selitem.item.itemId) {
-       if (itm.minQuantity != selitem.minQuantity || itm.maxQuantity != selitem.maxQuantity) {
-        updateitemsselected.push(itm);
-       }
-     }
-  }
-}
-if (this.selecteditemfordelete.length > 0) {
-  this.deleteItems(this.selecteditemfordelete);
-}
-if (this.selecteditemforadd.length > 0) {
-  this.addItems(this.selecteditemforadd);
-}
-
-console.log(updateitemsselected);
-if (updateitemsselected.length > 0) {
-this.updateItems(updateitemsselected);
-}
-
-   
-        this.shared_functions.openSnackBar('Items updated');
-        const navigationExtras: NavigationExtras = {
-          queryParams: { action: 'edit',
-                          isFrom: true }
-    };
-    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
- 
-      } else {
-        console.log(this.catalogItemsSelected);
+    console.log(this.addCatalogItems);
         this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'add',
                           isFrom: true }
     };
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
-      }
   }
 
-  deleteCatalogItem(index) {
+  deleteCatalogItem(itm) {
+    console.log(itm);
+    console.log(this.cataId);
 
     this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you really want to remove the medicine details?'
+        'message': 'Do you really want to remove this item from catalog?'
       }
     });
     this.removeitemdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        
+        this.provider_servicesobj.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+          (data) => {
+            this.api_loading = false;
+          }, error => {
+            this.api_loading = false;
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+            );
       }
     });
   }
-  editCatalogItem() {
+  editCatalogItem(item) {
+    console.log(item);
     this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        type: 'add'
+        id: item.item.itemId,
+        maxquantity: item.maxQuantity,
+        minquantity: item.minQuantity
+
       }
     });
     this.editcataItemdialogRef.afterClosed().subscribe(result => {
       if (result) {
-       
+       console.log(result);
+       this.updateItems(result, item.id);
       }
     });
   }
@@ -320,26 +329,21 @@ this.updateItems(updateitemsselected);
         }
         );
   }
-  updateItems(updatelist) {
+  updateItems(updatelist, id) {
     console.log(updatelist);
-    let passlist: any = {};
-    const passingupdateList = [];
-    for (const selitem of updatelist) {
-      passlist = {};
-      passlist.id = selitem.item.id;
-      passlist.maxQuantity = selitem.maxQuantity;
-      passlist.minQuantity = selitem.minQuantity;
-      passingupdateList.push(passlist);
-  }
-    console.log(passingupdateList);
-    this.provider_servicesobj.updateCatalogItems(this.cataId, passingupdateList).subscribe(
+    const passlist: any = {};
+      passlist.id = id;
+      passlist.maxQuantity = updatelist.maxquantity;
+      passlist.minQuantity = updatelist.minquantity;
+      console.log(passlist);
+     this.provider_servicesobj.updateCatalogItem(passlist).subscribe(
       (data) => {
         this.api_loading = false;
       }, error => {
         this.api_loading = false;
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-        );
+     );
   }
   getItemImg(item) {
     if (item.itemImages) {
@@ -353,5 +357,33 @@ this.updateItems(updateitemsselected);
         return '../../../../assets/images/order/Items.svg';
     }
 }
+
+selectedaddItems() {
+  this.api_loading = true;
+  this.catalogSelectedItemsadd = [];
+  for (let ia = 0; ia < this.itemsforadd.length; ia++) {
+    this.seletedCatalogItemsadd = {};
+    this.selecteditemforadd = [];
+    console.log('minquty_' + this.itemsforadd[ia].itemId + '');
+    if (this.itemsforadd[ia].selected === true) {
+     this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
+     this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
+     this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
+     this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
+    }
+  }
+  if (this.catalogSelectedItemsadd.length > 0) {
+  this.addItems(this.catalogSelectedItemsadd);
+  }
+
+      this.shared_functions.openSnackBar('Items updated');
+      const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'edit',
+                        isFrom: true }
+  };
+  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+
+    } 
+
 
 }

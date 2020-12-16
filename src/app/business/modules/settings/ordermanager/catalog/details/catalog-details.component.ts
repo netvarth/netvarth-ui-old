@@ -102,6 +102,7 @@ export class CatalogdetailComponent implements OnInit {
     tempPostInfoTitle = '';
     public Editor = DecoupledEditor;
     seletedCatalogItems: any;
+    catalogItems: any = [];
     Selall = false;
     selday_arr: any = [];
     Selallstorepickup = false;
@@ -218,6 +219,11 @@ export class CatalogdetailComponent implements OnInit {
                                     (catalog) => {
                                         this.catalog = catalog;
                                         this.catalogname = this.catalog.displayName;
+                                        if (this.catalog.catalogItem) {
+                                            this.catalogItems = this.catalog.catalogItem;
+                                            console.log(this.catalogItems);
+                                           // this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.catalogItems);
+                                        }
                                         if (this.action === 'edit') {
                                             this.createForm();
                                             this.api_loading = false;
@@ -225,13 +231,13 @@ export class CatalogdetailComponent implements OnInit {
                                             this.catalogcaption = 'Catalog Details';
                                             this.api_loading = false;
                                         }
-                                        if (!this.seletedCatalogItems) {
-                                            if (this.catalog.catalogItem) {
-                                                this.seletedCatalogItems = this.catalog.catalogItem;
-                                                console.log(this.seletedCatalogItems);
-                                                this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
-                                            }
-                                        }
+                                        // if (!this.seletedCatalogItems) {
+                                        //     if (this.catalog.catalogItem) {
+                                        //         this.seletedCatalogItems = this.catalog.catalogItem;
+                                        //         console.log(this.seletedCatalogItems);
+                                        //         this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+                                        //     }
+                                        // }
                                     }
                                 );
                             }
