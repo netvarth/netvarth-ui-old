@@ -1459,11 +1459,11 @@
                                         </h6>
                                     </td>
                                     <td class="pay-wdth">
-                                        <span *ngIf="oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
+                                        <span *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
                                             <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                                &#8377;{{oder.bill.netRate}}</button>
+                                                &#8377;{{oder.amountDue}}</button>
                                         </span>
-                                        <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus == 'PartiallyPaid'">
+                                        <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
                                           <button class="bt3 cust-btn cursor-auto">Paid 
                                                 &#8377;{{oder.bill.amountPaid}}
                                           </button>
@@ -1471,7 +1471,7 @@
                                     </td>
                                     <td class="pay-wdth">
                                         <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
-                                           <button class="bt3 cust-btn" *ngIf="oder.orderStatus != 'Canceled'"
+                                           <button class="bt3 cust-btn" *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Canceled'"
                                                   (click)="viewBill(oder,'order',$event)">View Receipt</button>
                                             <!-- <button class="bt3 cust-btn" *ngIf="oder.bill === 'Canceled' && booking.paymentStatus !== 'NotPaid'"
                                                   (click)="viewBill(oder,'order',$event)">View Receipt</button> -->
@@ -1533,17 +1533,24 @@
                                             </h6>
                                         </td>
                                         <td class="pay-wdth" >
-                                           <span *ngIf="oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
+                                           <span *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
                                                <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                                   &#8377;{{oder.bill.netRate}}</button>
+                                                   &#8377;{{oder.amountDue}}</button>
                                             </span>
-                                             <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus == 'PartiallyPaid'">
+                                             <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
                                                <button class="bt3 cust-btn cursor-auto">Paid 
                                                   &#8377;{{oder.bill.amountPaid}}
                                                </button>
                                              </span>
                                          </td>
-                                        <td></td>
+                                         <td class="pay-wdth">
+                                            <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                               <button class="bt3 cust-btn" *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Canceled'"
+                                                      (click)="viewBill(oder,'order',$event)">View Receipt</button>
+                                                <!-- <button class="bt3 cust-btn" *ngIf="oder.bill === 'Canceled' && booking.paymentStatus !== 'NotPaid'"
+                                                      (click)="viewBill(oder,'order',$event)">View Receipt</button> -->
+                                            </span>
+                                        </td>
                                         <td>
                                             <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
@@ -1606,17 +1613,24 @@
                                         </h6>
                                     </td>
                                     <td class="pay-wdth" >
-                                        <span *ngIf="oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
+                                        <span *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
                                             <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                               &#8377;{{oder.bill.netRate}}</button>
+                                               &#8377;{{oder.amountDue}}</button>
                                         </span>
-                                        <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus == 'PartiallyPaid'">
+                                        <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
                                             <button class="bt3 cust-btn cursor-auto">Paid 
                                                 &#8377;{{oder.bill.amountPaid}}
                                             </button>
                                         </span>
                                      </td>
-                                    <td></td>
+                                     <td class="pay-wdth">
+                                        <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                           <button class="bt3 cust-btn" *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Canceled'"
+                                                  (click)="viewBill(oder,'order',$event)">View Receipt</button>
+                                            <!-- <button class="bt3 cust-btn" *ngIf="oder.bill === 'Canceled' && booking.paymentStatus !== 'NotPaid'"
+                                                  (click)="viewBill(oder,'order',$event)">View Receipt</button> -->
+                                        </span>
+                                    </td>
                                     <td>
                                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
@@ -1671,17 +1685,24 @@
                                             </h6>
                                         </td>
                                         <td class="pay-wdth" >
-                                            <span *ngIf="oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
+                                            <span *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Canceled'">
                                                 <button class="bt3 cust-btn" (click)="viewBill(oder,'order',$event)">Pay
-                                                    &#8377;{{oder.bill.netRate}}</button>
+                                                    &#8377;{{oder.amountDue}}</button>
                                             </span>
-                                            <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus == 'PartiallyPaid'">
+                                            <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
                                                  <button class="bt3 cust-btn cursor-auto">Paid 
                                                       &#8377;{{oder.bill.amountPaid}}
                                                   </button>
                                              </span>
                                          </td>
-                                        <td></td>
+                                         <td class="pay-wdth">
+                                            <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                               <button class="bt3 cust-btn" *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Canceled'"
+                                                      (click)="viewBill(oder,'order',$event)">View Receipt</button>
+                                                <!-- <button class="bt3 cust-btn" *ngIf="oder.bill === 'Canceled' && booking.paymentStatus !== 'NotPaid'"
+                                                      (click)="viewBill(oder,'order',$event)">View Receipt</button> -->
+                                            </span>
+                                        </td>
                                         <td>
                                             <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
