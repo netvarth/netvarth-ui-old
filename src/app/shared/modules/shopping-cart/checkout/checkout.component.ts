@@ -11,6 +11,8 @@ import { SharedServices } from '../../../services/shared-services';
 import { projectConstants } from '../../../../app.component';
 import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as moment from 'moment';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-checkout',
@@ -65,6 +67,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   storeContact: FormGroup;
   choose_type = 'store';
+  action: any = '';
+  catalog_Id: any;
+  futureAvailableTime;
+  storeAvailableDates: any = [];
+  homeAvailableDates: any = [];
+  hold_sel_checkindate;
+  ddate;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -94,6 +103,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.storeChecked = true;
     }
     this.catalog_details = this.shared_services.getOrderDetails();
+    this.catalog_Id = this.catalog_details.id;
     if (this.catalog_details.pickUp) {
       if (this.catalog_details.pickUp.orderPickUp) {
         this.store_pickup = true;
@@ -184,6 +194,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.isFuturedate = true;
     }
+    this.getOrderAvailableDatesForPickup();
+    this.getOrderAvailableDatesForHome();
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -424,10 +436,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       );
   }
-  changeTime() {
-    console.log('chnage time');
+  goBackCart() {
+    this.action = '';
   }
-
+  changeTime() {
+    this.action = 'timeChange';
+    console.log(this.choose_type);
+  }
   getOrderItems() {
     this.orderSummary = [];
     this.orders.forEach(item => {
@@ -444,9 +459,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
     console.log(this.selectedAddress);
   }
-  handleFuturetoggle() {
-    this.showfuturediv = !this.showfuturediv;
-  }
+  // handleFuturetoggle() {
+  //   this.showfuturediv = !this.showfuturediv;
+  // }
   changeType(event) {
 
     this.choose_type = event.value;
@@ -468,5 +483,148 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.isFuturedate = true;
     }
+  }
+  getOrderAvailableDatesForPickup() {
+    const _this = this;
+    console.log(this.catalog_Id);
+    console.log(this.account_id);
+    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+      .subscribe((data: any) => {
+        const availables = data.filter(obj => obj.isAvailable);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
+        });
+      });
+  }
+  getOrderAvailableDatesForHome() {
+    const _this = this;
+    console.log(this.catalog_Id);
+    console.log(this.account_id);
+    _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+      .subscribe((data: any) => {
+        const availables = data.filter(obj => obj.isAvailable);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
+        });
+      });
+  }
+
+  dateClass(date: Date): MatCalendarCellCssClasses {
+    if (this.choose_type === 'store') {
+      return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    } else {
+      return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+  }
+  getAvailabilityByDate(date) {
+    console.log(date);
+    this.sel_checkindate = date;
+    const cday = new Date(this.sel_checkindate);
+    const currentday = (cday.getDay() + 1);
+    console.log(currentday);
+    if (this.choose_type === 'store') {
+      console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
+      for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
+        const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
+        if (currentday === pday) {
+          // this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule
+          this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+          console.log('future time available ');
+        }
+      }
+    } else {
+      console.log(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals);
+      for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
+        const pday = Number(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals[i]);
+        console.log(pday);
+        if (currentday === pday) {
+          this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+
+          console.log('future time available');
+        }
+      }
+    }
+  }
+  calculateDate(days) {
+    // this.resetApi();
+    const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
+    const newdate = new Date(date);
+    newdate.setDate(newdate.getDate() + days);
+    const dd = newdate.getDate();
+    const mm = newdate.getMonth() + 1;
+    const y = newdate.getFullYear();
+    const ndate1 = y + '-' + mm + '-' + dd;
+    const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
+    // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+    const strtDt1 = this.todaydate + ' 00:00:00';
+    const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+    const nDt = new Date(ndate);
+    if (nDt.getTime() >= strtDt.getTime()) {
+      this.sel_checkindate = ndate;
+      this.getAvailabilityByDate(this.sel_checkindate);
+      // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+    const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
+    const date1 = new Date(dt1);
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
+    }
+    const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
+    const ddd = new Date(day);
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+  }
+  disableMinus() {
+    const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+    const seldate = new Date(seldate2);
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+    const strtDt = new Date(strtDt2);
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    if (startdate >= selecttdate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  handleFutureDateChange(e) {
+    const tdate = e.targetElement.value;
+    const newdate = tdate.split('/').reverse().join('-');
+    const futrDte = new Date(newdate);
+    const obtmonth = (futrDte.getMonth() + 1);
+    let cmonth = '' + obtmonth;
+    if (obtmonth < 10) {
+      cmonth = '0' + obtmonth;
+    }
+    const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+    this.sel_checkindate = seldate;
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+    const datee2 = new Date(dte2);
+    if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
+    }
+    this.handleFuturetoggle();
+    this.getAvailabilityByDate(this.sel_checkindate);
+  }
+  handleFuturetoggle() {
+    this.showfuturediv = !this.showfuturediv;
   }
 }

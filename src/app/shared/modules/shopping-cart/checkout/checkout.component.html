@@ -24,7 +24,7 @@
                 </h5>
               </div>
 
-              <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small">
+              <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action==''">
                 <div class="col-md-12 no-padding-small mgn-up-30">
 
                   <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
@@ -170,7 +170,7 @@
 
                 </div>
               </div>
-              <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey">
+              <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey"  *ngIf="action==''">
 
                 <div class="card mgn-up-30">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
@@ -251,6 +251,55 @@
                         </div>
                           <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body no-padding"  *ngIf="action=='timeChange'">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                  <div class="card p0">
+                    <div class="copy locd">
+  
+  
+                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                        *ngIf="action=='timeChange'">
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                            Choose
+                            Date</div>
+                          <div class="pull-left brd-round brd-light mgn-up-20">
+                            <div class="icon-minus pull-left" (click)="calculateDate(-1)">
+                            </div>
+  
+                            <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
+                            <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
+                          </div>
+                          <div class="pickerouter caldiv pull-left mgn-up-20">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                            <input class="" style="visibility: hidden; width:1px" type="text"
+                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
+                                (dateChange)="handleFutureDateChange($event)">
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Choose
+                            Timings</div>
+                          <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                            <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="futureAvailableTime">
+                              <p>{{futureAvailableTime}}</p>
+                            </div>
+                            <div  *ngIf="!nextAvailableTime">
+                                <p>No timings are available</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
+                          <button (click)="goBackCart()" class="btn bt3 btn-default coupon-apply-btn"
+                            type="button">Ok</button>
+                        </div>
+                      </div>  
                     </div>
                   </div>
                 </div>
