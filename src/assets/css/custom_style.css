@@ -26687,3 +26687,8 @@ color: #fff !important;
 .order-catalog .mat-expansion-panel-body {
   border-bottom: 1px solid #ccc;
 }
+.shop_cart_icon {
+  margin-top: 5px;
+  font-size: 1.5rem;
+  color: #183e7a;
+}

@@ -186,8 +186,9 @@ export class ConsumerServices {
      return this.servicemeta.httpGet('consumer/orders', null, params);
   }
    getOrderHistory(params?) {
-    return this.servicemeta.httpGet('consumer/orders/history', null, params);
-    // set no_redirect_path in interceptor to avoid redirect on 401
+    const url = 'consumer/orders/history';
+    return this.servicemeta.httpGet(url);
+    // return this.servicemeta.httpGet('consumer/orders/history', null, params);
   }
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);

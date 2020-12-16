@@ -60,6 +60,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   screenWidth;
   viewrxdialogRef;
   accountId;
+  showOrderHist = true;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -69,6 +70,12 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     public shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateroute.queryParams.subscribe(params => {
+      if (params.is_orderShow === 'false') {
+        this.getHistroy();
+        } else {
+          this.getOrderHistory();
+          this.showOrderHist = true;
+        }
       if (params.accountId) {
         this.accountId = params.accountId;
       }
@@ -84,9 +91,12 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     }
   }
   ngOnInit() {
-    // this.getHistoryCount();
-    this.getHistroy();
-    // this.getAppointmentHistoryCount();
+    // if (this.params.is_orderShow === false) {
+    // this.getHistroy();
+    // console.log('f');
+    // } else {
+    //   console.log('f');
+    // }
   }
 
   // Getting Checking History
@@ -355,5 +365,26 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
   goback() {
     this.location.back();
+  }
+
+  getOrderHistory() {
+    this.loadcomplete.history = false;
+   // const api_filter = {};
+    // if (this.accountId) {
+    //   api_filter['account-eq'] = this.accountId;
+    // }
+    this.consumer_services.getOrderHistory()
+      .subscribe(
+        data => {
+          console.log(data);
+          this.entire_history = data;
+          this.loadcomplete.history = true;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.loadcomplete.history = true;
+        }
+      );
   }
 }

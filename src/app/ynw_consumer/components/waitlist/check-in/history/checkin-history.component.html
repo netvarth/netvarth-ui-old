@@ -24,9 +24,10 @@
                                         <tr>
                                             <th class="th3">{{date_cap}} & Time</th>
                                             <th class="th1">{{service_provider_cap}}</th>
-                                            <th class="th2">{{location_cap}}</th>
-                                            <th> Service for</th>
-                                            <th class="th6">{{service_cap}}</th>
+                                            <th *ngIf="!showOrderHist" class="th2">{{location_cap}}</th>
+                                            <th> {{showOrderHist ? 'Order':'Service'}} for</th>
+                                            <th *ngIf="!showOrderHist" class="th6">{{service_cap}}</th>
+                                            <th *ngIf="showOrderHist" class="th6">No of items</th>
                                             <th class="th4">{{status_cap}}</th>
                                             <th class="th5"></th>
                                         </tr>
@@ -204,6 +205,39 @@
                                                     </ul> -->
                                                 </td>
                                             </ng-container>
+
+                                            <!-- order history -->
+                                            <ng-container *ngIf="his_wait.orderStatus">
+                                                <td data-title="Date & Time" class="td3">
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens" *ngIf="!small_device_display">
+                                                            <i class="fa fa-shopping-cart shop_cart_icon"></i>
+                                                        </div>
+                                                        <span> &nbsp;{{his_wait.orderDate | date: dateFormat }},<br>
+                                                            {{his_wait.timeSlot.sTime}} -
+                                                            {{his_wait.timeSlot.eTime}}</span>
+                                                    </div>
+                                                </td>
+                                                <td data-title="Service Provider"
+                                                    (click)="providerDetail(his_wait.providerAccount)"
+                                                    class="td1 provider-name pointer-cursor">
+                                                    <span
+                                                        class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                </td>
+                                                <!-- <td data-title="Location" class="td2">
+                                                    {{his_wait.location.place || '' | capitalizeFirst}}</td> -->
+                                                <td data-title="Service for">
+                                                    {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
+                                                    {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>
+                                                <td data-title="Service" class="td6">
+                                                    <span>{{his_wait.orderItem.length}}</span>
+                                                </td>
+                                                <td data-title="Status" class="td4">
+                                                    <span>{{his_wait.orderStatus}}</span>
+                                                </td>
+                                            </ng-container>
+
+
                                         </tr>
                                     </tbody>
                                 </table>
