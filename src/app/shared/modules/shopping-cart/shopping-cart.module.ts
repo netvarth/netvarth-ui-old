@@ -8,6 +8,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HeaderModule } from '../header/header.module';
 import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { AddAddressComponent } from './checkout/add-address/add-address.component';
+import { MatStepperModule } from '@angular/material/stepper';
 @NgModule({
     imports: [
       ShoppingCartRoutingModule,
@@ -17,8 +20,9 @@ import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component
       MatRadioModule,
       MatDatepickerModule,
       MatNativeDateModule,
+      MatStepperModule,
     ],
-    declarations: [ShoppingCartSharedComponent, AddItemNotesComponent],
+    declarations: [ShoppingCartSharedComponent, AddItemNotesComponent, CheckoutComponent, AddAddressComponent],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
       NO_ERRORS_SCHEMA
