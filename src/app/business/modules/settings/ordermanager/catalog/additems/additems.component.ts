@@ -289,6 +289,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
   redirecToJaldeecatalog() {
     if (this.action === 'edit' && this.cataId !== 'add') {
         const navigationExtras: NavigationExtras = {
@@ -304,6 +305,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
     }
   }
+
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/billing->items']);
   }
@@ -318,17 +320,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         }
         );
   }
-  deleteItems(deletelist) {
-    console.log(deletelist);
-    this.provider_servicesobj.deleteCatalogItems(this.cataId, deletelist).subscribe(
-      (data) => {
-        this.api_loading = false;
-      }, error => {
-        this.api_loading = false;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-        );
-  }
+  
   updateItems(updatelist, id) {
     console.log(updatelist);
     const passlist: any = {};
