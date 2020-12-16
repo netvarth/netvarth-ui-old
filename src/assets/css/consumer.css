@@ -6848,3 +6848,16 @@ margin-top: 7px;
   width: 22px;
   top: -2px;
 }
+.consmr_hme_sec {
+  width: 100% !important;
+}
+.consmr_hme_sec .bdr_0 {
+  border: 0 !important;
+}
+.consmr_hme_sec .panel-heading.top-row {
+  background: white !important;
+}
+.consmr_hme_sec .c_card.card {
+  box-shadow: none !important;
+  height: 800px;
+}
