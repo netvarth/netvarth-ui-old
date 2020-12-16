@@ -245,8 +245,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
 
     };
-    // this.router.navigate(['order', 'shoppingcart', 'checkout'] , navigationExtras);
-    this.router.navigate(['order/checkout'], navigationExtras);
+    this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    // this.router.navigate(['order/checkout'], navigationExtras);
 
   }
 
@@ -387,12 +387,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   dateClass(date: Date): MatCalendarCellCssClasses {
-    if(this.choose_type === 'store'){
+    if (this.choose_type === 'store') {
       return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
-    }else {
+    } else {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
-}
+  }
   getAvailabilityByDate(date) {
     console.log(date);
     this.sel_checkindate = date;

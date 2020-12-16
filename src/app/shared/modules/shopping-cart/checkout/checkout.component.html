@@ -5,7 +5,7 @@
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
       <div class="panel panel-default">
         <div class="panel-heading top-row">
-  
+
           <!-- <a class="pull-left back-btn mgn-up-5"><i class="fa fa-arrow-left"></i></a> -->
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
             <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
@@ -23,10 +23,10 @@
                   <span class=" mgn-lt-10 amount">Continue shopping</span>
                 </h5>
               </div>
-  
+
               <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small">
                 <div class="col-md-12 no-padding-small mgn-up-30">
-  
+
                   <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
                     <mat-step label="Step1" [completed]="isLoggedIn()" >
                       <!-- <ng-template matStepperIcon="edit">
@@ -45,23 +45,23 @@
                       <div>
                         <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                       </div>
-  
+
                     </mat-step>
                     <mat-step label="Step 2">
                       <ng-template matStepLabel>Delivery options</ng-template>
                       <div>
                         <span *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type</span>
-                        <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
-                          <mat-radio-button [value]="'store'" [checked]="true">
+                        <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
+                          <mat-radio-button [value]="'store'" [checked]="storeChecked">
                             Store pick up
                           </mat-radio-button> &nbsp;&nbsp;&nbsp;
-                          <mat-radio-button [value]="'home'" [checked]="false">
+                          <mat-radio-button [value]="'home'" [checked]="homeChecked">
                             Home delivery
                           </mat-radio-button>
                         </mat-radio-group>
-  
-  
-  
+
+
+
                         <!-- <p *ngIf="home_delivery && store_pickup">Choose delivery type</p>
                          <mat-radio-group [(ngModel)]="choose_type" *ngIf="home_delivery && store_pickup" (change)="changeType()">
                             <mat-radio-button  class="mgn-lt-5 mgn-bt-5" [value]="'store'" [checked]="true">
@@ -71,7 +71,7 @@
                                 Home delivery
                             </mat-radio-button>&nbsp;
                         </mat-radio-group> -->
-  
+
                         <div *ngIf="store_pickup && !home_delivery">
                           Store Pick Up
                         </div>
@@ -95,21 +95,21 @@
                               <span *ngIf="isFuturedate">
                                   {{nextAvailableTime}}
                               </span>
-  
+
                           </h4>
                       </div>
                     </div>
                       <div>
                         <!-- <button mat-button matStepperPrevious>Back</button> -->
                         <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
-  
+
                       </div>
-  
-  
+
+
                     </mat-step>
                     <mat-step label="Step 3">
                       <ng-template matStepLabel>Fill out your address</ng-template>
-  
+
                       <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                       <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
                         <mat-grid-tile *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
@@ -162,16 +162,16 @@
                           <input matInput placeholder="Enter your email" value=""formControlName="email">
                         </mat-form-field> -->
                       </form>
-  
+
                     </ng-container>
                     </mat-step>
-  
+
                   </mat-vertical-stepper>
-  
+
                 </div>
               </div>
               <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey">
-  
+
                 <div class="card mgn-up-30">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
@@ -191,10 +191,10 @@
                           <div class="section-three">
                             <div class="bill-breakup">
                               <div class="list border">
-  
+
                                 <div class="list-content" style="text-align: left;"
                                   *ngFor="let item of orders; let i = index">
-  
+
                                   <div class="copy one">
                                     <div class="col-a col-b cd-b">
                                       <div class="mgn-up-10">
@@ -208,21 +208,21 @@
                                             <div class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
                                           </div>
                                         </div>
-  
+
                                       </div>
                                     </div>
                                   </div>
-  
+
                                 </div>
                                 <div class="snd_msg_outer">
                                   <textarea placeholder="Any notes? Write here..." class="txtArea"></textarea>
                                   <!-- <div class="snd_msg_lbl">Any notes?Write here...</div> -->
                                 </div>
-  
+
                               </div>
-  
+
                             </div>
-  
+
                             <div class="">
                               <div class="bill-details-txt">
                                 Bill Details
@@ -246,7 +246,7 @@
                                 </div>
                               </div>
                             </div>
-  
+
                           </div>
                         </div>
                           <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
@@ -255,7 +255,7 @@
                   </div>
                 </div>
               </div>
-  
+
             </div>
           </div>
         </div>
@@ -263,4 +263,3 @@
       </div>
     </div>
   </section>
-  
