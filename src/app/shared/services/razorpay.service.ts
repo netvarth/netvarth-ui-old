@@ -73,6 +73,9 @@ export class RazorpayService {
         } else if (checkin_type === 'waitlist') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        } else if (checkin_type === 'order') {
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
         } else if (checkin_type === 'appt_historybill') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
