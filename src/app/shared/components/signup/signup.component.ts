@@ -341,7 +341,7 @@ export class SignUpComponent implements OnInit {
       // email: eMail
     };
     if (this.countrySelected !== 'in') {
-      userProfile['emailId'] = this.signupForm.get('email').value.trim();
+      userProfile['email'] = this.signupForm.get('email').value.trim();
   }
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
