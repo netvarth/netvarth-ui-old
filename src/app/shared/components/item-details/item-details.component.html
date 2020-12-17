@@ -87,14 +87,22 @@
                   </div>
                   <div class="col-md-12 pad-lt-25 mgn-bt-50">
                     <div class="btn-lt pull-left">
-                      <button (click)="decrement()">-</button>
+                      <button [ngClass]="{'disabled1': currentItemObject.minqty === getItemQty()}" (click)="decrement()">-</button>
                     </div>
                     <div class="count-o pull-left">
                       {{getItemQty()}}
                     </div>
                     <div class="btn-rt pull-left">
-                      <button (click)="increment()">+</button>
+                      <button [ngClass]="{'disabled1': currentItemObject.maxqty === getItemQty()}" (click)="increment()">+</button>
                     </div>
+                  </div>
+                  <div class="col-md-12  mr-area">
+                    <p class="m0 question-header">Minimum Qty</p>
+                    <p>{{currentItemObject.minqty}}</p>
+                  </div>
+                  <div class="col-md-12  mr-area">
+                    <p class="m0 question-header">Maximum Qty</p>
+                    <p>{{currentItemObject.maxqty}}</p>
                   </div>
                 </div>
               </div>
