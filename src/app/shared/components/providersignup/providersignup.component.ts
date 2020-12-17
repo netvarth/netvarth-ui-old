@@ -1,6 +1,6 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
@@ -12,6 +12,7 @@ import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+import { TermsStaticComponent } from '../../modules/terms-static/terms-static.component';
 
 @Component({
   selector: 'app-providersignup',
@@ -151,12 +152,13 @@ export class ProvidersignupComponent implements OnInit {
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     private router: Router, private provider_services: ProviderServices,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    public dialog: MatDialog) { }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
     if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
+      this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.active_step = 0;
     this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -325,7 +327,7 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  
+
 
 
   // onReferalSubmit(sccode) {
@@ -405,9 +407,9 @@ export class ProvidersignupComponent implements OnInit {
     }
   }
   setPassword() {
-    const post_data = { 
-      countryCode : this.selectedCountryCode,
-      password: this.spForm.get('new_password').value 
+    const post_data = {
+      countryCode: this.selectedCountryCode,
+      password: this.spForm.get('new_password').value
     };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
@@ -771,7 +773,7 @@ export class ProvidersignupComponent implements OnInit {
   //     return;
   //   }
   // }
-  handleDomainSelection () {
+  handleDomainSelection() {
     this.selectedSubDomain = this.selectedDomain.subDomains[0];
     this.user_details['sector'] = this.selectedDomain.domain;
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
@@ -782,15 +784,24 @@ export class ProvidersignupComponent implements OnInit {
       this.active_step = 2;
     }
   }
-  backToSubdomains () {
+  backToSubdomains() {
     if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
       this.active_step = 4;
     } else {
       this.active_step = 1;
     }
   }
-  handleSubDomainSelection () {
+  handleSubDomainSelection() {
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.active_step = 2;
+  }
+  showTermsConditions() {
+    const dialogReflog = this.dialog.open(TermsStaticComponent, {
+      width: '50%',
+      panelClass: ['signupmainclass', 'popup-class'],
+      disableClose: true
+    });
+    dialogReflog.afterClosed().subscribe(() => {
+    });
   }
 }
