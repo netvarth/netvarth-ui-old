@@ -47,6 +47,7 @@ export class JaldeeOnlineComponent implements OnInit {
   customer_label = '';
   qrdialogRef: any;
   showIncompleteButton = false;
+  domain;
   constructor(private provider_services: ProviderServices,
     private sharedfunctionobj: SharedFunctions,
     private shared_services: SharedServices,
@@ -59,7 +60,8 @@ export class JaldeeOnlineComponent implements OnInit {
 
   }
   ngOnInit() {
-
+    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.domain = user.sector;
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
     this.jaldee_online_disabled_msg = Messages.JALDEE_ONLINE_DISABLED_MSG.replace('[customer]', this.customer_label);
@@ -79,10 +81,10 @@ export class JaldeeOnlineComponent implements OnInit {
   });
   }
 
-  // learnmore_clicked(mod, e) {
-  //   e.stopPropagation();
-  //   this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
-  // }
+  learnmore_clicked(mod, e) {
+    e.stopPropagation();
+    this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
+  }
 
   copyInputMessage(valuetocopy) {
     const path = projectConstants.PATH + valuetocopy;
