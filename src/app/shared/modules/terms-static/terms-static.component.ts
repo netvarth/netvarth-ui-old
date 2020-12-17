@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import {  ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-terms-static',
@@ -22,6 +23,7 @@ showheaderandfooter = false;
     public shared_functions: SharedFunctions,
     private router: Router,
     private _scrollToService: ScrollToService,
+    public dialogRef: MatDialogRef<TermsStaticComponent>,
     ) {}
 
   ngOnInit() {

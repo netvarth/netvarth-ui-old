@@ -10,6 +10,7 @@ import { FormMessageDisplayModule } from '../../modules/form-message-display/for
 import { ProviderOtpModule } from '../providerotp/providerotp.module';
 import { SalesChannelModule } from '../../modules/saleschannel/saleschannel.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { TermsStaticComponent } from '../../modules/terms-static/terms-static.component';
 @NgModule({
     imports: [
        CommonModule,
@@ -25,9 +26,12 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
        LoadingSpinnerModule
     ],
     declarations: [
-        ProvidersignupComponent
+        ProvidersignupComponent,
+        TermsStaticComponent
     ],
-    entryComponents: [],
+    entryComponents: [
+        TermsStaticComponent
+    ],
     exports: [ProvidersignupComponent]
 })
 export class ProvidersignupModule {}
