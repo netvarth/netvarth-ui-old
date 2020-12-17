@@ -96,7 +96,7 @@ export class MedicalrecordComponent implements OnInit {
       const medicalrecordId = params.get('mrId');
       this.mrId = parseInt(medicalrecordId, 0);
       this.medicalService.setParams(this.bookingType, this.bookingId);
-       this.getPatientVisitListCount();
+      this.getPatientVisitListCount();
 
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
@@ -134,7 +134,7 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getAppointmentById(uid)
       .subscribe((data: any) => {
         const response = data;
-        this.loading =false;
+        this.loading = false;
         this.visitdate = response.consLastVisitedDate;
 
         if (response.department) {
@@ -155,7 +155,7 @@ export class MedicalrecordComponent implements OnInit {
           this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
           this.medicalService.setDoctorId(response.provider.id);
         }
-       
+
       },
         error => {
           this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -165,7 +165,7 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getProviderWaitlistDetailById(uid)
       .subscribe((data: any) => {
         const response = data;
-        this.loading =false;
+        this.loading = false;
         this.visitdate = response.consLastVisitedDate;
         if (response.department) {
           this.department = response.service.department;
@@ -198,7 +198,7 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
-          this.loading =false;
+          this.loading = false;
           this.customerDetails = response[0];
           this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
@@ -268,12 +268,12 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   getMedicalRecordUsingId(mrId) {
-console.log('mrId'+mrId);
+    console.log('mrId' + mrId);
 
     this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-           this.loading =false;
+          this.loading = false;
           this.mrNumber = data.mrNumber;
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
@@ -323,7 +323,10 @@ console.log('mrId'+mrId);
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 100);
     });
   }
   activitylogs() {
@@ -334,7 +337,7 @@ console.log('mrId'+mrId);
       disableClose: true,
       data: {
         'activity_log': this.activityLogs,
-        'mrId' : this.mrId
+        'mrId': this.mrId
       }
     });
 

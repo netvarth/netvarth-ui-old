@@ -28,9 +28,9 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.checkin.consumerNote) {
-      this.dialogRef.close();
-    }
+    // if (!this.checkin.consumerNote) {
+    //   this.dialogRef.close();
+    // }
   }
   getSingleTime(slot) {
     const slots = slot.split('-');

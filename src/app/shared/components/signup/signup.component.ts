@@ -82,7 +82,7 @@ export class SignUpComponent implements OnInit {
   actionstarted = false;
   scCode;
   scfound = false;
-    phoneNumber;
+  phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
@@ -90,7 +90,6 @@ export class SignUpComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
-  showTermcondition = false;
   constructor(
     public dialogRef: MatDialogRef<SignUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -103,9 +102,6 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.is_provider) {
-      this.countryCodes = [{ displayName: '+91', value: '+91' }];
-    }
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
@@ -209,6 +205,7 @@ export class SignUpComponent implements OnInit {
         phonenumber: new FormControl(undefined, [Validators.required]),
         first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
@@ -308,7 +305,7 @@ export class SignUpComponent implements OnInit {
     this.user_details = {};
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
-    
+    // const eMail = this.signupForm.get('email').value.trim();
     if (!this.signupForm.get('phonenumber').value) {
       this.api_error = 'Phone number required';
       if (document.getElementById('phonenumber')) {
@@ -316,21 +313,35 @@ export class SignUpComponent implements OnInit {
       }
       return false;
     }
-    const phoneNumber = this.signupForm.get('phonenumber').value;
-    const dialCode = '+91';
+    if (!this.signupForm.get('email').value) {
+      this.api_error = 'Email Id required';
+      if (document.getElementById('email')) {
+        document.getElementById('email').focus();
+      }
+      return false;
+    }
+    const phoneNumber = this.signupForm.get('phonenumber').value.e164Number;
+    const dialCode = this.signupForm.get('phonenumber').value.dialCode;
 
     let loginId = phoneNumber;
-    // if(phoneNumber.startsWith(dialCode)) {
-    //   loginId = phoneNumber.split(dialCode)[1];
-    // }
-
+    if(phoneNumber.startsWith(dialCode)) {
+      loginId = phoneNumber.split(dialCode)[1];
+    }
+    let emailId;
+    if(dialCode !== '+91') {
+      emailId = this.signupForm.get('email').value.trim();
+    }
     let userProfile = {
       countryCode: dialCode,
       // primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
       primaryMobileNo: loginId || null,
       firstName: null,
-      lastName: null
+      lastName: null,
+      // email: eMail
     };
+    if (dialCode !== '+91') {
+      userProfile['emailId'] = emailId;
+  }
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
         countryCode: this.selectedCountryCode,
@@ -345,6 +356,7 @@ export class SignUpComponent implements OnInit {
         primaryMobileNo: loginId || null,
         firstName: this.toCamelCase(fname) || null,
         lastName: this.toCamelCase(lname) || null,
+        // email: eMail
         // licensePackage: this.signupForm.get('package_id').value || null,
       };
     }
@@ -527,7 +539,7 @@ export class SignUpComponent implements OnInit {
     const ob = this;
     const dialCode = this.signupForm.get('phonenumber').value.dialCode;
     const post_data = { 
-      countryCode : '+91',
+      countryCode : dialCode,
       password: submit_data.new_password };
     if (this.is_provider === 'true') {
       this.shared_services.ProviderSetPassword(this.otp, post_data)
@@ -544,12 +556,14 @@ export class SignUpComponent implements OnInit {
               this.shared_functions.doLogout().then(() => {
                 this.shared_functions.setitemonLocalStorage('new_provider', 'true');
                 this.shared_functions.providerLogin(login_data);
-                this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
               });
             } else {
               this.shared_functions.setitemonLocalStorage('new_provider', 'true');
               this.shared_functions.providerLogin(login_data);
-              this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+              const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
             }
           },
           error => {
@@ -571,6 +585,9 @@ export class SignUpComponent implements OnInit {
             this.shared_functions.consumerLogin(login_data, this.moreParams)
               .then(
                 () => {
+                  const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+                  this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
                   this.dialogRef.close('success');
                 },
                 error => {
@@ -663,7 +680,4 @@ export class SignUpComponent implements OnInit {
   // bank(){
   //   this.bank_action = true;
   // }
-  termsClicked() {
-    (this.showTermcondition) ? this.showTermcondition = false : this.showTermcondition = true;
-  }
 }

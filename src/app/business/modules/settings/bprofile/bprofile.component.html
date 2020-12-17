@@ -89,10 +89,10 @@
 
                   <!-- About You -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
-                    <div class="pad-10"><span class="sub-heads">About Us</span><span class="edit-txt custId-cursor"
+                    <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About Us</span><span class="edit-txt custId-cursor"
                         (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
-                      <span class="cs-btn bt3" (click)="gotoAboutMe()">Complete your profile</span>
+                      <span class="cs-btn bt3" (click)="gotoAboutMe()">About Us</span>
                     </div>
                     <div class="busns-name">
                       {{bProfile.businessName}}

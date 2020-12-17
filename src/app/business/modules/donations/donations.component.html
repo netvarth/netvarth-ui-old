@@ -13,37 +13,37 @@
     </div>
   </div>
   <div class="pull-right">
-      <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
-        <div class="navbar-custom-menu width100pc">
-          <ul class="nav navbar-nav width100pc">
-            <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-              <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-              <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
-                *ngIf="selected_location" style="padding-top: 12px !important;">
-                <span *ngIf="!small_device_display">
-                  {{selected_location.place | capitalizeFirst}}</span>
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <ul class="menu">
-                    <li *ngFor="let location of locations"
-                      [ngClass]="{'active': (location.place == selected_location.place)}">
-                      <!-- <a class="pointer-cursor"> -->
-                       <a class="pointer-cursor" (click)="onChangeLocationSelect(location)">
-                        <h4 *ngIf="location.place.length>='27'">
-                          {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
-                        <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    <nav class="navbar navbar-static-top no-margin" role="navigation" [class.index-zero]="filter_sidebar">
+      <div class="navbar-custom-menu width100pc">
+        <ul class="nav navbar-nav width100pc">
+          <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+            <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+            <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+              *ngIf="selected_location" style="padding-top: 12px !important;">
+              <span *ngIf="!small_device_display">
+                {{selected_location.place | capitalizeFirst}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <ul class="menu">
+                  <li *ngFor="let location of locations"
+                    [ngClass]="{'active': (location.place == selected_location.place)}">
+                    <!-- <a class="pointer-cursor"> -->
+                    <a class="pointer-cursor" (click)="onChangeLocationSelect(location)">
+                      <h4 *ngIf="location.place.length>='27'">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
+                      <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a class="pointer-cursor" (click)="gotoLocations()">Manage Locations</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </section>
 <section class="dashboard content customers p-donations" *ngIf="!apiloading">
   <div class="col-md-12 no-padding-small">
@@ -175,18 +175,21 @@
                       <div class="wrap">
                         <div class="td one">
                           <span class="date">{{stringtoDate(donation.date,
-        'date')}}</span>
+                            'date')}}</span>
                         </div>
-
                         <div class="td two">
-                          <span>{{donation.service.name  |
-                              capitalizeFirst}}</span>
+                          <span>{{donation.service.name |
+                            capitalizeFirst}} </span>
                         </div>
                         <div class="td one">
                           <span *ngIf="donation.consumer.userProfile.firstName">{{donation.donor.firstName}}</span>
                         </div>
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
-        currency:'&#8377;' }}
+                          currency:'&#8377;' }}
+                          <span class="pull-right">
+                            <i *ngIf="donation.note" [matTooltip]="'Notes'"
+                              class="icon-note pointer-cursor" (click)="showConsumerNote(donation)"></i>
+                          </span>
                         </div>
                       </div>
                     </div>

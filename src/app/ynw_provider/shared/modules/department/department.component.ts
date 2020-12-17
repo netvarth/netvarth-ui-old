@@ -84,7 +84,7 @@ export class DepartmentComponent implements OnInit, OnChanges {
         this.deptForm = this.fb.group({
             departmentName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDept_name)])],
             departmentDescription: ['', Validators.compose([Validators.maxLength(500)])],
-            departmentCode: ['', Validators.compose([Validators.maxLength(this.maxcharDept_code)])]
+            departmentCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxcharDept_code)])]
         });
     }
     resetApiErrors() {

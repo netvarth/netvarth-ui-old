@@ -76,6 +76,20 @@
   })">
         </app-field-error-display>
       </div>
+
+      <div class="form-group" *ngIf="signupForm.get(('phonenumber.dialCode').value) !== '+91' && phonenumber">
+        <mat-label for="phone">Email</mat-label>
+        <!-- <mat-form-field> -->
+          <input type="text"  class="form-control" id="last_name" placeholder=""
+            formControlName="email" autocomplete="off" (blur)="onFieldBlur('email')">
+        <!-- </mat-form-field> -->
+        <app-field-error-display [displayError]="fed_service.isFieldValid(signupForm,'email')" [errorMsgs]="fed_service.getErrorMessage(signupForm,'email',
+  {
+    'required' : 'Email is required'
+  })">
+        </app-field-error-display>
+      </div>
+
     </div>
     <div class="form-group" *ngIf="signupForm.get('is_provider').value == 'true'">
       <mat-form-field *ngIf="data.claimData == undefined">

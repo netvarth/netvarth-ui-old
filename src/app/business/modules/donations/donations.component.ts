@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Messages } from '../../../shared/constants/project-messages';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     'selector': 'app-donations',
@@ -70,7 +72,7 @@ export class DonationsComponent implements OnInit {
     small_device_display = false;
     constructor(private provider_services: ProviderServices,
         public dateformat: DateFormatPipe,
-        private routerobj: Router,
+        private routerobj: Router, private dialog: MatDialog,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.onResize();
@@ -424,4 +426,19 @@ export class DonationsComponent implements OnInit {
         this.selected_location = location;
     this.getDonationsList();
     }
+    showConsumerNote(donation) {
+        const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            checkin: donation,
+            type: 'donation'
+          }
+        });
+        notedialogRef.afterClosed().subscribe(result => {
+          if (result === 'reloadlist') {
+          }
+        });
+      }
 }
