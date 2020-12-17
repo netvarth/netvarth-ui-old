@@ -26692,3 +26692,8 @@ color: #fff !important;
   font-size: 1.5rem;
   color: #183e7a;
 }
+.disableall {
+  cursor: default !important;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}

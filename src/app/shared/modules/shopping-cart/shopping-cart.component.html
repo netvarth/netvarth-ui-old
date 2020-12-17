@@ -40,11 +40,11 @@
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right">
                       <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
                       </div>
-                      <div *ngIf="getItemQty(item) >= 2" (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
+                      <div [class.disableall]="getItemQty(item) === item.minqty" *ngIf="getItemQty(item) >= 2" (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
                       </div>
                       <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
                       </div>
-                      <div (click)="increment(item)" class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
+                      <div [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item)" class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
                       </div>
                     </div>
                     <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">

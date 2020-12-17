@@ -221,3 +221,8 @@ flex-basis: 50% !important;
 .shop-cart .fa-sticky-note-o {
   color: #a3a3d1;
 }
+.shop-cart .disableall {
+  cursor: default;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}

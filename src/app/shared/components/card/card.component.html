@@ -72,7 +72,7 @@
             </div> -->
             <div class="col-md-12 no-padding">
                 <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>
-                <div class="btn-rt pull-right" *ngIf="item.type=='item'">
+                <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right" *ngIf="item.type=='item'">
                     <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
                 </div>
                 <div class="count-o pull-right" *ngIf="item.type=='item'">
