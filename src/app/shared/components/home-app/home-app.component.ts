@@ -7,9 +7,9 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
-import { SignUpComponent } from '../signup/signup.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import {version} from '../../../shared/constants/version';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-app',
   templateUrl: './home-app.component.html'
@@ -39,7 +39,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public dialog: MatDialog,
+    public dialog: MatDialog, public router: Router,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -161,14 +161,15 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     //   }
   }
   doSignup() {
-    const dialogReflog = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: { is_provider: 'true' }
-    });
-    dialogReflog.afterClosed().subscribe(() => {
-    });
+    // const dialogReflog = this.dialog.open(SignUpComponent, {
+    //   width: '50%',
+    //   panelClass: ['signupmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: { is_provider: 'true' }
+    // });
+    // dialogReflog.afterClosed().subscribe(() => {
+    // });
+    this.router.navigate(['business/providersignup']);
   }
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {

@@ -12,6 +12,7 @@ const routes: Routes = [
         canActivate: [AuthGuardProvider]
     },
     { path: '', component: HomeAppComponent, canActivate: [AuthGuardHome] },
+    { path: 'business', loadChildren: () => import('./shared/components/phome/phome.module').then(m => m.PhomeModule) },
     { path: 'home', redirectTo: '', pathMatch: 'full', canActivate: [AuthGuardHome] },
     { path: 'logout', component: LogoutComponent },
     { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
