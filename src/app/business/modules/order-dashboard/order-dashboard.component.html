@@ -7,7 +7,7 @@
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
         <div>Total orders</div>
-        <div class="order-count"> {{todayOrdersCount + futureOrdersCount}}</div>
+        <div class="order-count"> {{(todayOrdersCount) ? todayOrdersCount : 0 + (futureOrdersCount) ? futureOrdersCount : 0}}</div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
           <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
             <div> Today</div>
