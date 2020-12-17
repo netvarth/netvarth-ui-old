@@ -153,7 +153,11 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (this.type === 'change_email') {
       this.setMessage('email', this.submitdata.email);
     } else {
-      this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
+      if (this.submitdata.userProfile.countryCode && this.submitdata.userProfile.countryCode !== '+91') {
+        this.setMessage('email', this.submitdata.userProfile.emailId);
+      } else {
+        this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
+      }
     }
   }
 
