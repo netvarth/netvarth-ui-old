@@ -11,6 +11,9 @@ import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddAddressComponent } from './checkout/add-address/add-address.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { NgBootstrapModule } from '../common/ngbootstrap.module';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
     imports: [
       ShoppingCartRoutingModule,
@@ -21,8 +24,27 @@ import { MatStepperModule } from '@angular/material/stepper';
       MatDatepickerModule,
       MatNativeDateModule,
       MatStepperModule,
+      NgBootstrapModule,
+      MatGridListModule,
+      FormsModule,
+      ReactiveFormsModule
+    ],
+    exports: [
+      ShoppingCartRoutingModule,
+      RouterModule,
+      CommonModule,
+      HeaderModule,
+      MatRadioModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
+      MatStepperModule,
+      NgBootstrapModule
     ],
     declarations: [ShoppingCartSharedComponent, AddItemNotesComponent, CheckoutComponent, AddAddressComponent],
+    entryComponents: [
+      AddItemNotesComponent,
+      AddAddressComponent,
+      ],
     schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
       NO_ERRORS_SCHEMA

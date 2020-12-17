@@ -230,7 +230,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         .then(
             res => {
                 this.s3url = res;
-                this.getbusinessprofiledetails_json('coupon', true);  
+                this.getbusinessprofiledetails_json('coupon', true);
                 this.api_loading1 = false;
             },
             () => {
@@ -245,7 +245,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.couponsList[i].showme = true;
     }
   }
-  
+
   applyCoupons(jCoupon) {
     jCoupon = 'hyr';
     this.api_cp_error = null;
@@ -387,7 +387,7 @@ getbusinessprofiledetails_json(section, modDateReq: boolean) {
     };
     this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.router.navigate(['order', 'shoppingcart', 'checkout']);
-    //this.router.navigate(['order/checkout'], navigationExtras);
+    // this.router.navigate(['order/checkout']);
 
   }
 

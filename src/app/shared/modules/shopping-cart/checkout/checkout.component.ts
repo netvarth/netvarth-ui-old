@@ -473,6 +473,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.storeChecked = true;
       this.homeChecked = false;
       this.delivery_type = 'store';
+      this.store_pickup = true;
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
@@ -480,6 +481,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.storeChecked = false;
       this.homeChecked = true;
       this.delivery_type = 'homedelivery';
+      this.home_delivery = true;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
