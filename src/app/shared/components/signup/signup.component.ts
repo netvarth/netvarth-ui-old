@@ -205,6 +205,7 @@ export class SignUpComponent implements OnInit {
         phonenumber: new FormControl(undefined, [Validators.required]),
         first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
@@ -304,11 +305,18 @@ export class SignUpComponent implements OnInit {
     this.user_details = {};
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
-    
+    // const eMail = this.signupForm.get('email').value.trim();
     if (!this.signupForm.get('phonenumber').value) {
       this.api_error = 'Phone number required';
       if (document.getElementById('phonenumber')) {
         document.getElementById('phonenumber').focus();
+      }
+      return false;
+    }
+    if (!this.signupForm.get('email').value) {
+      this.api_error = 'Email Id required';
+      if (document.getElementById('email')) {
+        document.getElementById('email').focus();
       }
       return false;
     }
@@ -319,14 +327,21 @@ export class SignUpComponent implements OnInit {
     if(phoneNumber.startsWith(dialCode)) {
       loginId = phoneNumber.split(dialCode)[1];
     }
-
+    let emailId;
+    if(dialCode !== '+91') {
+      emailId = this.signupForm.get('email').value.trim();
+    }
     let userProfile = {
       countryCode: dialCode,
       // primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
       primaryMobileNo: loginId || null,
       firstName: null,
-      lastName: null
+      lastName: null,
+      // email: eMail
     };
+    if (dialCode !== '+91') {
+      userProfile['emailId'] = emailId;
+  }
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
         countryCode: this.selectedCountryCode,
@@ -341,6 +356,7 @@ export class SignUpComponent implements OnInit {
         primaryMobileNo: loginId || null,
         firstName: this.toCamelCase(fname) || null,
         lastName: this.toCamelCase(lname) || null,
+        // email: eMail
         // licensePackage: this.signupForm.get('package_id').value || null,
       };
     }

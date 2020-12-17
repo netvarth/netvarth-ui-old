@@ -795,7 +795,13 @@
                                         <!-- table -->
                                         <table class="fm-contact-table">
                                             <tr>
-                                                <td class="td1" [class.pad-bt-15]="phoneerror != null">Phone : &nbsp;&nbsp;</td>
+                                                <td class="td1">Phone :&nbsp;&nbsp; </td>
+                                                <td>
+                                                    {{selected_phone}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td1" [class.pad-bt-15]="phoneerror != null">New Phone : &nbsp;&nbsp;</td>
                                                 <div class="form-group">
                                                     <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
                                                     <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
@@ -804,7 +810,7 @@
                                                         [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
                                                         [selectedCountryISO] = "selectedCountry"
                                                         [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                                                        [(ngModel)]="selected_phone">
+                                                        [(ngModel)]="newselected_phone">
                                                     </ngx-intl-tel-input>
                                                     
                                                     <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
@@ -837,11 +843,17 @@
                                                     </app-field-error-display>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td class="td1">Whatsapp Number :&nbsp;&nbsp; </td>
+                                                <td>
+                                                    {{callingModes}}
+                                                </td>
+                                            </tr>
                                             <tr class="mgn-bt-20"
                                                 *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <td class="td1" [class.pad-bt-15]="callingmodePhoneerror != null">
                                                     <i class="fa wtsapaud-icon wtsap-cal"
-                                                        style="top : 10px !important"></i>WhatsApp Number :&nbsp;&nbsp; </td>
+                                                        style="top : 10px !important"></i>New WhatsApp Number :&nbsp;&nbsp; </td>
                                                 <!-- <td> 
                                                     <input type="text" maxlength="10"
                                                         placeholder="WhatsApp number" class=""
@@ -852,14 +864,14 @@
                                                     </app-field-error-display>
                                                 </td> -->
                                                 <div class="form-group">
-                                                    <mat-label for="phone">Enter new Whatsapp Number</mat-label>
+                                                    <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
                                                     <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                                                         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                                                         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
                                                         [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
                                                         [selectedCountryISO] = "selectedCountry"
                                                         [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                                                        [(ngModel)]="callingModes">
+                                                        [(ngModel)]="changedcallingModes">
                                                     </ngx-intl-tel-input>
                                                     
                                                     <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
