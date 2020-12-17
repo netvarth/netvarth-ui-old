@@ -242,7 +242,7 @@
                                                 <span *ngFor="let phone of phonelist">
                                                     <span class="glyphicon glyphicon-user one" style="width:20px"
                                                         [matTooltip]="phone.label | capitalizeFirst">
-                                                    </span>{{phone.instance}}</span>
+                                                    </span>{{businessjson.countryCode}} {{phone.instance}}</span>
                                             </li>
                                             <li *ngIf="emaillist.length > 0">
                                                 <span *ngFor="let email of emaillist"><span
