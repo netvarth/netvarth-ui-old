@@ -8,6 +8,7 @@ import { SharedServices } from '../../services/shared-services';
 import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { Messages } from '../../constants/project-messages';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -61,7 +62,20 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   futureAvailableTime;
   storeAvailableDates: any = [];
   homeAvailableDates: any = [];
-
+  applied_inbilltime = Messages.APPLIED_INBILLTIME;
+  couponvalid = true;
+  api_cp_error = null;
+  s3CouponsList: any = [];
+  selected_coupons: any = [];
+  couponsList: any = [];
+  selected_coupon;
+  showCouponWB: boolean;
+  provider_id: any;
+  s3url;
+  api_loading1 = true;
+  retval;
+  tooltipcls = '';
+  coupon_status = null;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -72,6 +86,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
+        this.provider_id = params.unique_id;
         console.log(this.account_id);
       });
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
@@ -82,6 +97,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.gets3curl();
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
@@ -194,7 +210,109 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.getItemQty(Item);
 
   }
-
+  checkCouponExists(couponCode) {
+    let found = false;
+    for (let index = 0; index < this.selected_coupons.length; index++) {
+        if (couponCode === this.selected_coupons[index]) {
+            found = true;
+            break;
+        }
+    }
+    return found;
+  }
+  clearCouponErrors() {
+    this.couponvalid = true;
+    this.api_cp_error = null;
+}
+  gets3curl() {
+    this.api_loading1 = true;
+    this.retval = this.sharedFunctionobj.getS3Url()
+        .then(
+            res => {
+                this.s3url = res;
+                this.getbusinessprofiledetails_json('coupon', true);  
+                this.api_loading1 = false;
+            },
+            () => {
+                this.api_loading1 = false;
+            }
+        );
+  }
+  toggleterms(i) {
+    if (this.couponsList[i].showme) {
+        this.couponsList[i].showme = false;
+    } else {
+        this.couponsList[i].showme = true;
+    }
+  }
+  
+  applyCoupons(jCoupon) {
+    jCoupon = 'hyr';
+    this.api_cp_error = null;
+    this.couponvalid = true;
+    const couponInfo = {
+        'couponCode': '',
+        'instructions': ''
+    };
+    if (jCoupon) {
+        const jaldeeCoupn = jCoupon.trim();
+        if (this.checkCouponExists(jaldeeCoupn)) {
+            this.api_cp_error = 'Coupon already applied';
+            this.couponvalid = false;
+            return false;
+        }
+        this.couponvalid = false;
+        let found = false;
+        for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+            if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+                this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+                couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+                couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+                this.couponsList.push(couponInfo);
+                found = true;
+                this.selected_coupon = '';
+                break;
+            }
+        }
+        if (found) {
+            this.couponvalid = true;
+            this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+            this.action = '';
+        } else {
+            this.api_cp_error = 'Coupon invalid';
+        }
+    } else {
+        this.api_cp_error = 'Enter a Coupon';
+    }
+  }
+  removeJCoupon(i) {
+    this.selected_coupons.splice(i, 1);
+    this.couponsList.splice(i, 1);
+  }
+  removeCoupons() {
+    this.selected_coupons = [];
+    this.couponsList = [];
+    this.coupon_status = null;
+  }
+  applyPromocode() {
+    this.action = 'coupons';
+}
+getbusinessprofiledetails_json(section, modDateReq: boolean) {
+  let UTCstring = null;
+  if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+  }
+  this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+                  this.s3CouponsList = res;
+                  if (this.s3CouponsList.length > 0) {
+                      this.showCouponWB = true;
+                  }
+      },
+          () => {
+          }
+      );
+}
   removeFromCart(itemObj) {
     const item = itemObj.item;
     console.log(this.orderList);

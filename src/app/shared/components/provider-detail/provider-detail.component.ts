@@ -2010,8 +2010,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        account_id: this.provider_bussiness_id
-
+        account_id: this.provider_bussiness_id,
+        unique_id: this.provider_id,
       }
 
     };
