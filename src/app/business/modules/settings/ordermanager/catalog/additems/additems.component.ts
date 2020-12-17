@@ -139,15 +139,21 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         if (this.catalog.catalogItem) {
           this.seletedCatalogItems = this.catalog.catalogItem;
           console.log(this.seletedCatalogItems);
+          console.log(this.catalogItem);
         }
         if (this.action === 'add' && this.cataId !== 'add') {
-            for (const itm of this.catalogItem) {
-            for (const selitem of this.seletedCatalogItems) {
-               if (itm.itemId !== selitem.item.itemId) {
-                this.itemsforadd.push(itm);
-               }
-            }
-        }
+          this.itemsforadd = [];
+          this.itemsforadd = this.catalogItem.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
+          
+        //     for (const itm of this.catalogItem) {
+        //     for (const selitem of this.seletedCatalogItems) {
+        //        if (itm.itemId === selitem.item.itemId) {
+        //         console.log('gh');
+        //         this.itemsforadd.push(itm);
+        //        }
+        //     }
+        // }
+        console.log(this.itemsforadd);
         }
        
       });
@@ -194,7 +200,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         // } 
       });
   }
-  selectItem(item, index) {
+  selectItem(index) {
     console.log(this.catalogItem[index].selected);
     if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
       this.catalogItem[index].selected = true;
@@ -205,7 +211,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     }
     console.log(this.catalogItem[index].selected);
   }
-  selectaddItem(item, index) {
+  selectaddItem(index) {
     console.log(this.itemsforadd[index].selected);
     if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
       this.itemsforadd[index].selected = true;
@@ -258,8 +264,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     });
     this.removeitemdialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.api_loading = true;
         this.provider_servicesobj.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
           (data) => {
+            this.getCatalog();
             this.api_loading = false;
           }, error => {
             this.api_loading = false;
@@ -285,13 +293,14 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.editcataItemdialogRef.afterClosed().subscribe(result => {
       if (result) {
        console.log(result);
+       this.api_loading = true;
        this.updateItems(result, item.id);
       }
     });
   }
   
   redirecToJaldeecatalog() {
-    if (this.action === 'edit' && this.cataId !== 'add') {
+    if (this.action === 'edit' || this.action === 'add' &&  this.cataId !== 'add') {
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'edit',
                           isFrom: true }
@@ -314,13 +323,19 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
       (data) => {
         this.api_loading = false;
+        this.shared_functions.openSnackBar('Items addeded');
+        const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'edit',
+                        isFrom: true }
+      };
+      this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+
       }, error => {
         this.api_loading = false;
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         );
   }
-  
   updateItems(updatelist, id) {
     console.log(updatelist);
     const passlist: any = {};
@@ -330,6 +345,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       console.log(passlist);
      this.provider_servicesobj.updateCatalogItem(passlist).subscribe(
       (data) => {
+        this.getCatalog();
         this.api_loading = false;
       }, error => {
         this.api_loading = false;
@@ -367,15 +383,7 @@ selectedaddItems() {
   if (this.catalogSelectedItemsadd.length > 0) {
   this.addItems(this.catalogSelectedItemsadd);
   }
-
-      this.shared_functions.openSnackBar('Items updated');
-      const navigationExtras: NavigationExtras = {
-        queryParams: { action: 'edit',
-                        isFrom: true }
-  };
-  this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
-
-    } 
+    }
 
 
 }

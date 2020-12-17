@@ -72,13 +72,13 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label class="col-form-label" for="PromotionalPricetype">Order type</label>
                       <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
                         <mat-radio-button value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
                         <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
                       </mat-radio-group>
-                    </div>
+                    </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
                       Show personalized information about this catalog
                       <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
@@ -217,10 +217,10 @@
                     <!-- </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="showadditems">
                       <div *ngIf="item_count > 0 && catalogItems.length == 0 ">
-                        <div *ngIf="!seletedCatalogItems"><h4>Add items to your cart</h4>
+                        <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
                         <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)">
                           Add items</span></div>
-                          <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h4>{{seletedCatalogItems.length}} items are selected</h4>
+                          <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
                             <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)">
                               Edit items</span></div>
                       </div>
@@ -231,9 +231,9 @@
                       </div>
 
                       <div *ngIf="catalogItems && catalogItems.length > 0">
-                        <h4>{{catalogItems.length}} items are selected</h4>
-                        <span class="cs-btn bt3" (click)="addItemstoCart('edit',amForm.value)"> Edit items</span>
-                        <span class="cs-btn bt3" (click)="addItemstoCart('add',amForm.value)"> Add items</span>
+                        <h6>{{catalogItems.length}} items are selected</h6>
+                        <a class="pointlist" (click)="addItemstoCart('edit',amForm.value)"><u> Edit items</u></a>&nbsp;&nbsp;
+                        <a *ngIf="item_count !== catalogItems.length" class="pointlist" (click)="addItemstoCart('add',amForm.value)"><u> Add items</u></a>
                       </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
@@ -367,12 +367,12 @@
                             </div>
                           </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label>Pick up Otp verification </label>
                           <mat-slide-toggle formControlName="storeotpverify">
                           </mat-slide-toggle>
 
-                        </div>
+                        </div> -->
                       </div>
 
                     </div>
@@ -451,11 +451,11 @@
                             </div>
                           </div>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <label>Home Delivery Otp verification </label>
                           <mat-slide-toggle formControlName="homeotpverify">
                           </mat-slide-toggle>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                           <mat-form-field>
                             <input matInput type="text" class="form-control" id="deliverykms"

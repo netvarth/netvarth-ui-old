@@ -47,7 +47,7 @@
             <div class="card">
             <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
                 <mat-grid-tile *ngFor="let item of catalogItem;let i=index;">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(item,i)" [class.itemselected]="item.selected">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(i)" [class.itemselected]="item.selected">
                         <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
                             <img [src]="getItemImg(item)" > 
                         </div>
@@ -72,7 +72,7 @@
                 <div class="card">
                 <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
                     <mat-grid-tile *ngFor="let item of itemsforadd;let i=index;">
-                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectaddItem(item,i)" [class.itemselected]="item.selected">
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectaddItem(i)" [class.itemselected]="item.selected">
                             <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
                                 <img [src]="getItemImg(item)" > 
                             </div>
@@ -96,22 +96,38 @@
     </div>
 
     <div *ngIf="!api_loading && action === 'add'">
-        <div *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0">
+            <div class="additem-cart-footer" *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0">
+                    <div>{{selectedCount}} items are selected
+                        
+                        <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
+                    </div>
+                </div>
+        <!-- <div *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0">
         <div>{{selectedCount}} items are selected</div>
         <div> <button type="button" (click)="selectedItems()" [disabled]="selectedCount === 0" class="cs-btn bt1"
                 mat-button>ok</button>
         </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="itemsforadd && itemsforadd.length > 0">
+    <!-- <div *ngIf="itemsforadd && itemsforadd.length > 0">
             <div>{{selecteditemCount}} items are selected</div>
             <div> <button type="button" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0" class="cs-btn bt1"
                     mat-button>ok</button>
             </div>
+        </div> -->
+        <div class="additem-cart-footer" *ngIf="itemsforadd && itemsforadd.length > 0">
+            <div>{{selecteditemCount}} items are selected
+                
+                <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>
+            </div>
         </div>
     </div>
     <div *ngIf="!api_loading && action === 'edit'">
-
+        <ng-container *ngIf="seletedCatalogItems.length === 0">
+            <div class="card">
+                No more items in the catalog
+            </div></ng-container>
+        
         <ng-container *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
             <div class="card">
             <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
@@ -136,8 +152,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.item.price}}</div>
                             </div>
                             <div class="price_outer">
-                                <small>Min quantity : {{item.minQuantity}}</small>
-                                <small>Max quantity : {{item.maxQuantity}}</small>
+                                <small class="cert">Minimum quantity : {{item.minQuantity}}<br></small>
+                                <small class="cert">Maximum quantity : {{item.maxQuantity}}</small>
                                 <!-- <input class="ip-field" id="minquty_{{item.item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
                                 <input class="ip-field" id="maxquty_{{item.item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty"> -->
                             </div>

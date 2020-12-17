@@ -361,6 +361,16 @@
 .add_item_ .item-price {
   font-size: smaller;
 }
-  
+.additem-cart-footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f5c84d !important;
+  color: black;
+  font-weight:bold;
+  text-align: center;
+  padding: 15px;
+}  
   
   

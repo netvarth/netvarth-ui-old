@@ -369,7 +369,7 @@ export class CatalogdetailComponent implements OnInit {
                     }
                 ]
             },
-            'orderType': form_data.orderType,
+           // 'orderType': form_data.orderType,
             'orderStatuses': form_data.orderStatuses,
             'pickUp': {
                 'orderPickUp': form_data.storepickup,
@@ -385,8 +385,8 @@ export class CatalogdetailComponent implements OnInit {
                             'eTime': endtime_formatstore
                         }
                     ]
-                },
-                'pickUpOtpVerification': form_data.storeotpverify,
+                }
+               // 'pickUpOtpVerification': form_data.storeotpverify,
             },
             'homeDelivery': {
                 'homeDelivery': form_data.homedelivery,
@@ -403,7 +403,7 @@ export class CatalogdetailComponent implements OnInit {
                         }
                     ]
                 },
-                'deliveryOtpVerification': form_data.homeotpverify,
+              //  'deliveryOtpVerification': form_data.homeotpverify,
                 'deliveryRadius': form_data.deliverykms || '',
                 'deliveryCharge': form_data.deliverycharge || ''
             },
@@ -471,7 +471,7 @@ export class CatalogdetailComponent implements OnInit {
                 enddate: [''],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                orderType: [],
+               // orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
                 advancePaymentStatus: [false],
@@ -483,17 +483,17 @@ export class CatalogdetailComponent implements OnInit {
                 enddatestore: [''],
                 qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
                 qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-                storeotpverify: [false],
+              //  storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
                 qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
                 qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-                homeotpverify: [false],
+               // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: ['']
             });
-            this.amForm.get('orderType').setValue('SHOPPINGCART');
+           // this.amForm.get('orderType').setValue('SHOPPINGCART');
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Canceled']);
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
             if (this.action === 'add' && this.isFromadd) {
@@ -507,7 +507,7 @@ export class CatalogdetailComponent implements OnInit {
                 enddate: [''],
                 qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                orderType: [],
+                //orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
                 advancePaymentStatus: [false],
@@ -519,13 +519,13 @@ export class CatalogdetailComponent implements OnInit {
                 enddatestore: [''],
                 qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
                 qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-                storeotpverify: [false],
+               // storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
                 qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
                 qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-                homeotpverify: [false],
+               // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: ['']
             });
@@ -759,37 +759,37 @@ export class CatalogdetailComponent implements OnInit {
         let orderpickUpstat;
         let orderpickUpstartdate;
         let orderpickUpenddate;
-        let orderpickUpotp;
+       // let orderpickUpotp;
         if (this.catalog.pickUp) {
             orderpickUpstat = this.catalog.pickUp.orderPickUp;
             orderpickUpstartdate = this.catalog.pickUp.pickUpSchedule.startDate || '';
             orderpickUpenddate = this.catalog.pickUp.pickUpSchedule.terminator.endDate || '';
-            orderpickUpotp = this.catalog.pickUp.pickUpOtpVerification || false;
+        //    orderpickUpotp = this.catalog.pickUp.pickUpOtpVerification || false;
         } else {
             orderpickUpstat = false;
             orderpickUpstartdate = '';
             orderpickUpenddate = '';
-            orderpickUpotp = false;
+         //   orderpickUpotp = false;
         }
 
         let homeDeliverystat;
         let homeDeliverystartdate;
         let homeDeliveryenddate;
-        let homeDeliveryotp;
+       // let homeDeliveryotp;
         let homeDeliveryradius;
         let homeDeliverycharge;
         if (this.catalog.homeDelivery) {
             homeDeliverystat = this.catalog.homeDelivery.homeDelivery;
             homeDeliverystartdate = this.catalog.homeDelivery.deliverySchedule.startDate || '';
             homeDeliveryenddate = this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '';
-            homeDeliveryotp = this.catalog.homeDelivery.deliveryOtpVerification || false;
+          //  homeDeliveryotp = this.catalog.homeDelivery.deliveryOtpVerification || false;
             homeDeliveryradius = this.catalog.homeDelivery.deliveryRadius || '';
             homeDeliverycharge = this.catalog.homeDelivery.deliveryCharge || '';
         } else {
             homeDeliverystat = false;
             homeDeliverystartdate = '';
             homeDeliveryenddate = '';
-            homeDeliveryotp = false;
+         //   homeDeliveryotp = false;
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
@@ -801,7 +801,7 @@ export class CatalogdetailComponent implements OnInit {
             'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
             'qstarttime': sttime,
             'qendtime': edtime,
-            'orderType': this.catalog.orderType,
+           // 'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
             'advancePaymentStatus': status,
@@ -813,13 +813,13 @@ export class CatalogdetailComponent implements OnInit {
             'enddatestore': orderpickUpenddate,
             'qstarttimestore': sttimestore || this.dstart_timestore,
             'qendtimestore': edtimestore || this.dend_timestore,
-            'storeotpverify': orderpickUpotp,
+           // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
             'qstarttimehome': sttimehome || this.dstart_timehome,
             'qendtimehome': edtimehome || this.dend_timehome,
-            'homeotpverify': homeDeliveryotp,
+           // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
@@ -961,37 +961,37 @@ export class CatalogdetailComponent implements OnInit {
         let orderpickUpstat;
         let orderpickUpstartdate;
         let orderpickUpenddate;
-        let orderpickUpotp;
+      //  let orderpickUpotp;
         if (this.prefillData.pickUp) {
             orderpickUpstat = this.prefillData.pickUp.orderPickUp;
             orderpickUpstartdate = this.prefillData.pickUp.pickUpSchedule.startDate || '';
             orderpickUpenddate = this.prefillData.pickUp.pickUpSchedule.terminator.endDate || '';
-            orderpickUpotp = this.prefillData.pickUp.pickUpOtpVerification || false;
+          //  orderpickUpotp = this.prefillData.pickUp.pickUpOtpVerification || false;
         } else {
             orderpickUpstat = false;
             orderpickUpstartdate = '';
             orderpickUpenddate = '';
-            orderpickUpotp = false;
+          //  orderpickUpotp = false;
         }
 
         let homeDeliverystat;
         let homeDeliverystartdate;
         let homeDeliveryenddate;
-        let homeDeliveryotp;
+       // let homeDeliveryotp;
         let homeDeliveryradius;
         let homeDeliverycharge;
         if (this.prefillData.homeDelivery) {
             homeDeliverystat = this.prefillData.homeDelivery.homeDelivery;
             homeDeliverystartdate = this.prefillData.homeDelivery.deliverySchedule.startDate || '';
             homeDeliveryenddate = this.prefillData.homeDelivery.deliverySchedule.terminator.endDate || '';
-            homeDeliveryotp = this.prefillData.homeDelivery.deliveryOtpVerification || false;
+         //   homeDeliveryotp = this.prefillData.homeDelivery.deliveryOtpVerification || false;
             homeDeliveryradius = this.prefillData.homeDelivery.deliveryRadius || '';
             homeDeliverycharge = this.prefillData.homeDelivery.deliveryCharge || '';
         } else {
             homeDeliverystat = false;
             homeDeliverystartdate = '';
             homeDeliveryenddate = '';
-            homeDeliveryotp = false;
+          //  homeDeliveryotp = false;
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
@@ -1011,7 +1011,7 @@ export class CatalogdetailComponent implements OnInit {
             'enddate': this.prefillData.catalogSchedule.terminator.endDate || '',
             'qstarttime': sttime,
             'qendtime': edtime,
-            'orderType': this.prefillData.orderType,
+            // 'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
             'itemPriceInfo': this.prefillData.showPrice,
             'advancePaymentStatus': status,
@@ -1023,13 +1023,13 @@ export class CatalogdetailComponent implements OnInit {
             'enddatestore': orderpickUpenddate,
             'qstarttimestore': sttimestore || this.dstart_timestore,
             'qendtimestore': edtimestore || this.dend_timestore,
-            'storeotpverify': orderpickUpotp,
+           // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
             'qstarttimehome': sttimehome || this.dstart_timehome,
             'qendtimehome': edtimehome || this.dend_timehome,
-            'homeotpverify': homeDeliveryotp,
+           // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
@@ -1222,10 +1222,7 @@ export class CatalogdetailComponent implements OnInit {
 
     }
     onSubmit(form_data) {
-        console.log(form_data.orderStatuses);
-        console.log(this.selday_arr);
-        console.log(this.selday_arrstorepickup);
-        console.log(this.selday_arrhomedelivery);
+       
         const daystr: any = [];
         for (const cday of this.selday_arr) {
             daystr.push(cday);
@@ -1341,7 +1338,7 @@ export class CatalogdetailComponent implements OnInit {
                 return;
             }
         }
-
+        console.log(this.seletedCatalogItems);
         const postdata = {
             'catalogName': form_data.catalogName,
             'catalogDesc': form_data.catalogDesc,
@@ -1361,7 +1358,7 @@ export class CatalogdetailComponent implements OnInit {
                 ]
             },
             'catalogStatus': 'ACTIVE',
-            'orderType': form_data.orderType,
+            'orderType': 'SHOPPINGCART',
             'orderStatuses': form_data.orderStatuses,
             'pickUp': {
                 'orderPickUp': form_data.storepickup,
@@ -1380,7 +1377,7 @@ export class CatalogdetailComponent implements OnInit {
                         }
                     ]
                 },
-                'pickUpOtpVerification': form_data.storeotpverify,
+                'pickUpOtpVerification': false,
                 'pickUpScheduledAllowed': true,
                 'pickUpAsapAllowed': false
             },
@@ -1401,7 +1398,7 @@ export class CatalogdetailComponent implements OnInit {
                         }
                     ]
                 },
-                'deliveryOtpVerification': form_data.homeotpverify,
+                'deliveryOtpVerification': false,
                 'deliveryRadius': form_data.deliverykms,
                 'scheduledHomeDeliveryAllowed': true,
                 'asapHomeDeliveryAllowed': false,
@@ -1420,7 +1417,6 @@ export class CatalogdetailComponent implements OnInit {
                 'postInfoTitle': this.postInfoEnabled ? this.postInfoTitle.trim() : '',
                 'postInfoText': this.postInfoEnabled ? this.postInfoText : ''
             },
-            'catalogItem': this.seletedCatalogItems,
             'location': {
                 'id': this.selected_locationId
             },
@@ -1430,9 +1426,11 @@ export class CatalogdetailComponent implements OnInit {
 
         };
         if (this.action === 'add') {
+            postdata['catalogItem'] = this.seletedCatalogItems;
             console.log(postdata);
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
+            postdata['catalogItem'] = this.catalogItems;
             this.editCatalog(postdata);
         }
     }
@@ -1508,10 +1506,10 @@ export class CatalogdetailComponent implements OnInit {
                 // } else if (this.loc_list.length === 1) {
                 // this.loc_name = this.loc_list[0];
                 // }
-                if (this.action === 'add') {
+                //if (this.action === 'add') {
                     this.selected_location = this.loc_list[0];
                     this.selected_locationId = this.loc_list[0].id;
-                }
+               // }
                 // if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
                 // this.selected_locationId = this.params.locationId;
                 // } else 
