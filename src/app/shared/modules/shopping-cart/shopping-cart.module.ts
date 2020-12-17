@@ -14,6 +14,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { NgBootstrapModule } from '../common/ngbootstrap.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MaterialModule } from '../common/material.module';
 @NgModule({
     imports: [
       ShoppingCartRoutingModule,
@@ -27,7 +28,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
       NgBootstrapModule,
       MatGridListModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      MaterialModule
     ],
     exports: [
       ShoppingCartRoutingModule,
@@ -38,7 +40,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
       MatDatepickerModule,
       MatNativeDateModule,
       MatStepperModule,
-      NgBootstrapModule
+      NgBootstrapModule,
+      MaterialModule
     ],
     declarations: [ShoppingCartSharedComponent, AddItemNotesComponent, CheckoutComponent, AddAddressComponent],
     entryComponents: [
