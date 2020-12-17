@@ -13257,3 +13257,8 @@ color: #fff !important;
 .grey-bg {
   background: darkgrey;
 }
+.terms-style {
+  overflow-y: scroll;
+  height: 400px;
+  overflow-x: hidden;
+}
