@@ -301,7 +301,6 @@
   .itemselected{
       background-color: gainsboro !important;
   }
-  
  /* New item grid style */
  .add_item_  mat-grid-tile {
     background: #3c8dbc0f !important;

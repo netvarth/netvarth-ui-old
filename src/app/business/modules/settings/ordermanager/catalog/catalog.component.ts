@@ -148,7 +148,6 @@ export class CatalogComponent implements OnInit, OnDestroy {
                 }
             );
     }
-
     showDetails(id) {
         if (!id) {
             return;

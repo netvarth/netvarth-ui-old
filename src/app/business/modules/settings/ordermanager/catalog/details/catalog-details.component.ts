@@ -750,7 +750,6 @@ export class CatalogdetailComponent implements OnInit {
                 this.Selallhomedelivery = false;
             }
         }
-
         let status;
         if (this.catalog.paymentType === 'FIXED') {
             status = true;
