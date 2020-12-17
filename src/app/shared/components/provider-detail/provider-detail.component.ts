@@ -1955,7 +1955,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         // } else if (catalogs.length === 1) {
         this.shared_services.setOrderDetails(this.activeCatalog);
         for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-          orderItems.push({ 'type': 'item', 'id': this.activeCatalog.catalogItem[itemIndex].id, 'item': this.activeCatalog.catalogItem[itemIndex].item });
+          const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+          const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+          const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+          orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
           this.itemCount++;
         }
         // }
@@ -2053,7 +2056,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     return qty;
   }
   catlogArry() {
-console.log(this.sharedFunctionobj.getitemfromLocalStorage('order'));
+    console.log(this.sharedFunctionobj.getitemfromLocalStorage('order'));
     if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
     }

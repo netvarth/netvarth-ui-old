@@ -404,6 +404,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
         localStorage.removeItem('order');
+        localStorage.removeItem('chosenDate');
+        localStorage.removeItem('order_sp');
         const retData = data;
         let prepayAmount;
         const uuidList = [];
