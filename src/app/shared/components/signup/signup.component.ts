@@ -424,6 +424,7 @@ export class SignUpComponent implements OnInit {
 
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
+    console.log(user_details);
     this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
@@ -608,6 +609,7 @@ export class SignUpComponent implements OnInit {
     this.api_success = null;
   }
   resendOtp(user_details) {
+    console.log(user_details);
     // if (user_details.isAdmin) {
     //   this.signUpApiProvider(user_details);
     // } else {
