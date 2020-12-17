@@ -25,7 +25,8 @@
                                       <thead>
                                           <tr>
                                               <th>Catalog Name</th>
-                                              <th>Order Type</th>
+                                              <th>Start date</th>
+                                              <th>End date</th>
                                               <th>Payment Type</th>
                                               <th>Status</th>
                                               <th>  
@@ -42,7 +43,8 @@
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="itemnameTooltip">{{catalog.catalogName}}</span>
                                               </td>
-                                              <td data-title="Order Type" class="td4 ">{{catalog.orderType}}</td>
+                                              <td data-title="Start date" class="td4 ">{{catalog.catalogSchedule.startDate | date: dateFormat}}</td>
+                                              <td data-title="End date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: dateFormat}}</td>
                                               <td data-title="Payment Type" class="td3">{{catalog.paymentType}}
                                               </td>
                                               <td data-title="Status"

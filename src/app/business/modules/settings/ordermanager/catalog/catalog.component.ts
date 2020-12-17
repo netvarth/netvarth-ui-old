@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-catalog',
@@ -13,6 +14,7 @@ import { Router, NavigationExtras } from '@angular/router';
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit, OnDestroy {
+    dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
     tooltipcls = '';
     name_cap = Messages.ITEM_NAME_CAP;
     price_cap = Messages.PRICES_CAP;
@@ -43,7 +45,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     ];
     item_status = projectConstants.ITEM_STATUS;
     breadcrumbs = this.breadcrumbs_init;
-    itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
+    itemnameTooltip = 'Click here to edit catalog';
     additemdialogRef;
     edititemdialogRef;
     statuschangedialogRef;

@@ -494,6 +494,9 @@ export class CatalogdetailComponent implements OnInit {
                 deliverycharge: ['']
             });
            // this.amForm.get('orderType').setValue('SHOPPINGCART');
+            this.amForm.get('startdate').setValue(new Date());
+            this.amForm.get('startdatestore').setValue(new Date());
+            this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Canceled']);
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
             if (this.action === 'add' && this.isFromadd) {
@@ -1241,12 +1244,12 @@ export class CatalogdetailComponent implements OnInit {
         }
         // check whether the start and end times are selected
         if (!this.dstart_time || !this.dend_time) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
             return;
         }
         // today
         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
             return;
         }
         const curdate = new Date();
@@ -1280,12 +1283,12 @@ export class CatalogdetailComponent implements OnInit {
 
         // check whether the start and end times are selected
         if (!this.dstart_timestore || !this.dend_timestore) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
             return;
         }
         // today
         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
             return;
         }
         const curdatestore = new Date();
@@ -1316,12 +1319,12 @@ export class CatalogdetailComponent implements OnInit {
         }
         // check whether the start and end times are selected
         if (!this.dstart_timehome || !this.dend_timehome) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
             return;
         }
         // today
         if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
             return;
         }
         const curdatehome = new Date();
@@ -1334,7 +1337,7 @@ export class CatalogdetailComponent implements OnInit {
         const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
-                this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelclass': 'snackbarerror' });
+                this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }

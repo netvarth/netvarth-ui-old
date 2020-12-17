@@ -299,7 +299,7 @@
     margin-bottom: 20px !important;
   }
   .itemselected{
-      background-color: #eeb31a8f !important;
+      background-color: gainsboro !important;
   }
   
  /* New item grid style */
@@ -330,12 +330,12 @@
   bottom: 0;
  }
 .add_item_ .ip-field {
-  width: 100%;
-  overflow: auto;
-  height: 30px;
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 5px;
+    max-width: 80px !important;
+    overflow: auto;
+    height: 30px;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 .add_item_ .ip-field:hover {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;

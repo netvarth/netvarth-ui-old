@@ -57,8 +57,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                             </div>
                             <div class="price_outer">
-                                <input class="ip-field" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
-                                <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty">
+                              <span><small>Min.Qty<input class="ip-field"  id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small>  </span>
+                              <span><small>Max.Qty <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" > </small></span> 
                             </div>
                         </div>
                     </div>
@@ -82,8 +82,8 @@
                                     <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                                 </div>
                                 <div class="price_outer">
-                                    <input class="ip-field" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
-                                    <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty">
+                                        <div ><small>Min.Qty&nbsp;<input class="ip-field" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small> </div>
+                                        <div ><small>Max.Qty <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" ></small></div>
                                 </div>
                             </div>
                         </div>
@@ -152,8 +152,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.item.price}}</div>
                             </div>
                             <div class="price_outer">
-                                <small class="cert">Minimum quantity : {{item.minQuantity}}<br></small>
-                                <small class="cert">Maximum quantity : {{item.maxQuantity}}</small>
+                                <small>Min.Qty : {{item.minQuantity}}<br></small>
+                                <small>Max.Qty : {{item.maxQuantity}}</small>
                                 <!-- <input class="ip-field" id="minquty_{{item.item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
                                 <input class="ip-field" id="maxquty_{{item.item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty"> -->
                             </div>
