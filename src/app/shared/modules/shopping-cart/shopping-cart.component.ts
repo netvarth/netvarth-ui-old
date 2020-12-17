@@ -247,7 +247,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   applyCoupons(jCoupon) {
-    jCoupon = 'hyr';
+        console.log(jCoupon);
+
     this.api_cp_error = null;
     this.couponvalid = true;
     const couponInfo = {
@@ -392,8 +393,12 @@ getbusinessprofiledetails_json(section, modDateReq: boolean) {
   }
 
   goBack() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.location.back();
+    if (this.action === 'changeTime') {
+      this.action = '';
+    } else {
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.location.back();
+    }
   }
   goBackCart() {
     this.action = '';

@@ -284,7 +284,7 @@
                           </div>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                          <button (click)="goBackCart()" class="btn bt3 btn-default coupon-apply-btn"
+                          <button (click)="goBackToCheckout()" [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
                             type="button">Ok</button>
                         </div>
                       </div>

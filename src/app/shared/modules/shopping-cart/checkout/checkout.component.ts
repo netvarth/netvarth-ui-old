@@ -274,7 +274,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   }
   goBack() {
-    this.location.back();
+    if (this.action === 'changeTime') {
+      this.action = '';
+    } else {
+      this.location.back();
+    }
   }
 
   getTotalItemPrice() {
@@ -429,7 +433,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       );
   }
-  goBackCart() {
+  goBackToCheckout() {
     this.action = '';
 
     const chosenDateTime = {
@@ -634,6 +638,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       } else {
         this.isfutureAvailableTime = false;
       }
+    }
   }
-}
 }
