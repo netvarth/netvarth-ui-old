@@ -233,10 +233,10 @@ export class ConsumerAppointmentComponent implements OnInit {
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
+    TooltipLabel = TooltipLabel;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;
     dialCode;
     changedcallingModes;
@@ -765,7 +765,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                 } else {
-                    console.log(typeof(this.callingModes));
+                    console.log(typeof (this.callingModes));
                     console.log(this.callingModes)
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
                 }
@@ -1892,9 +1892,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         console.log(this.selected_phone);
         console.log(this.countryCode);
         // console.log(this.newselected_phone.e164Number);
-        if(this.newselected_phone !== null) {
+        if (this.newselected_phone !== null) {
             if (this.selected_phone !== this.newselected_phone.e164Number) {
-                this.dialCode = this.newselected_phone.dialCode;
+                this.dialCode = this.newselected_phone.dialCode;
                 if (this.countryCode != this.dialCode) {
                     this.countryCode = this.dialCode;
                     console.log(this.countryCode)
@@ -1905,7 +1905,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.selected_phone = newNo;
                     console.log("hello");
                 }
-        }
+            }
         }
         console.log("hello");
         this.resetApiErrors();
@@ -1923,7 +1923,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         const callResult1 = pattern1.test(curphone);
         console.log(this.countryCode);
         // if(this.newselected_phone !== null) {
-            
+
         // }
         console.log(this.countryCode);
         if (this.callingModes === '') {
@@ -1953,20 +1953,20 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.noPhoneError = true;
             if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 this.callingModes = this.selected_phone;
-            }else if(this.changedcallingModes !== null){
+            } else if (this.changedcallingModes !== null) {
                 if (this.callingModes !== this.changedcallingModes.e164Number) {
                     if (this.changedcallingModes.e164Number.startsWith('+')) {
                         teleNumber = this.changedcallingModes.e164Number.split('+')[1];
                         this.callingModes = teleNumber;
                         console.log(this.callingModes)
                     }
-                    }else{
+                } else {
                     this.callingModes = this.selected_phone;
                     console.log(this.callingModes)
                 }
             }
-            
-            
+
+
         }
         if (this.payEmail && this.payEmail.trim() !== '') {
             const stat = this.validateEmail(this.payEmail.trim());
@@ -1988,6 +1988,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                         () => {
                             this.getProfile();
                             this.noEmailError = true;
+                            if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+                                this.action = '';
+                            }
                         },
                         error => {
                             this.api_error = error.error;
@@ -1998,10 +2001,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else if (this.userEmail && this.payEmail.trim() == '') {
             this.emailerror = 'Please enter a valid email.';
             this.noEmailError = false;
-
-        }
-        if (this.noEmailError) {
-            this.action = '';
+            if (this.noEmailError) {
+                this.action = '';
+            }
         }
         // if (this.noPhoneError && this.noEmailError && this.noCallingError) {
         //     this.action = '';

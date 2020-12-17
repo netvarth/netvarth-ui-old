@@ -2129,6 +2129,10 @@ export class ConsumerCheckinComponent implements OnInit {
                         () => {
                             this.getProfile();
                             this.noEmailError = true;
+                            this.action = '';
+                            if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+                                this.action = '';
+                            }
                         },
                         error => {
                             this.api_error = error.error;
@@ -2139,10 +2143,9 @@ export class ConsumerCheckinComponent implements OnInit {
         } else if (this.userEmail && this.payEmail.trim() == '') {
             this.emailerror = 'Please enter a valid email.';
             this.noEmailError = false;
-
-        }
-        if (this.noPhoneError && this.noEmailError && this.noCallingError) {
-            this.action = '';
+            if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+                this.action = '';
+            }
         }
     }
     disableButn() {
