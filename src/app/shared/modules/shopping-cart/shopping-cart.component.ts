@@ -17,6 +17,13 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
+  isfutureAvailableTime: boolean;
+  selectedQeTime: any;
+  order_date: any;
+  selectedQsTime: any;
+  catlog_id: any;
+  delivery_type: any;
+  chosenDateDetails: any;
   addItemNotesdialogRef: any;
   deliveryCharge = 0;
   store_pickup: boolean;
@@ -45,7 +52,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   choose_type = 'store';
   advance_amount: any;
   account_id: any;
-  storeChecked = true;
+  storeChecked = false;
   homeChecked = false;
   nextAvailableTime;
   availableDates: any = [];
@@ -67,16 +74,34 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.account_id = params.account_id;
         console.log(this.account_id);
       });
+    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
+    if (this.chosenDateDetails !== null) {
+      this.delivery_type = this.chosenDateDetails.delivery_type;
+      this.choose_type = this.delivery_type;
+    }
   }
 
   ngOnInit() {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
-    console.log(this.orders);
-    console.log(this.businessDetails);
+    if (this.chosenDateDetails !== null) {
+      if (this.delivery_type === 'store') {
+        this.store_pickup = true;
+        this.choose_type = 'store';
+        this.storeChecked = true;
+      } else if (this.delivery_type === 'home') {
+        this.home_delivery = true;
+        this.choose_type = 'home';
+        this.homeChecked = true;
+
+      }
+      this.sel_checkindate = this.chosenDateDetails.order_date;
+      this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
+    } else {
+      this.storeChecked = true;
+    }
     this.catalog_details = this.shared_services.getOrderDetails();
-    console.log(JSON.stringify(this.catalog_details));
     if (this.catalog_details) {
       this.catalog_Id = this.catalog_details.id;
       if (this.catalog_details.pickUp) {
@@ -232,21 +257,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   cart() {
     console.log('cart');
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        delivery_type: this.choose_type,
-        catlog_id: this.catalog_details.id,
-        // selectedQsTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-        // selectedQeTime: this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'],
-        // order_date: this.sel_checkindate,
-        // advance_amount: this.catalog_details.advance_amount,
-        account_id: this.account_id
 
-      }
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.catalog_details.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.catalog_details.advance_amount,
+      account_id: this.account_id
 
     };
-    // this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
-    this.router.navigate(['order/checkout'], navigationExtras);
+    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.router.navigate(['order', 'shoppingcart', 'checkout']);
+    //this.router.navigate(['order/checkout'], navigationExtras);
 
   }
 
@@ -395,32 +418,33 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   getAvailabilityByDate(date) {
     console.log(date);
+    console.log(this.choose_type);
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
     console.log(currentday);
     if (this.choose_type === 'store') {
-      console.log(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals);
-      for (let i = 0; i < this.catalog_details.pickUp.pickUpSchedule.repeatIntervals.length; i++) {
-        const pday = Number(this.catalog_details.pickUp.pickUpSchedule.repeatIntervals[i]);
-        if (currentday === pday) {
-          // this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule
-          this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-          console.log('future time available ');
-        }
+      const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
+      console.log(storeIntervals);
+      console.log(JSON.stringify(storeIntervals));
+      if (storeIntervals.includes(currentday)) {
+        this.isfutureAvailableTime = true;
+        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+      } else {
+        this.isfutureAvailableTime = false;
       }
-    } else {
-      console.log(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals);
-      for (let i = 0; i < this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals.length; i++) {
-        const pday = Number(this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals[i]);
-        console.log(pday);
-        if (currentday === pday) {
-          this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
 
-          console.log('future time available');
-        }
+    } else {
+      const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
+      console.log(homeIntervals);
+      console.log(JSON.stringify(homeIntervals));
+      if (homeIntervals.includes(currentday)) {
+        this.isfutureAvailableTime = true;
+        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+      } else {
+        this.isfutureAvailableTime = false;
       }
-    }
+  }
   }
 
   itemDetails(item) {
