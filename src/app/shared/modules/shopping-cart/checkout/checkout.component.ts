@@ -277,6 +277,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
+      const chosenDateTime = {
+        delivery_type: this.choose_type,
+        catlog_id: this.catalog_details.id,
+        nextAvailableTime: this.nextAvailableTime,
+        order_date: this.sel_checkindate,
+        account_id: this.account_id
+
+      };
+      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
       this.location.back();
     }
   }

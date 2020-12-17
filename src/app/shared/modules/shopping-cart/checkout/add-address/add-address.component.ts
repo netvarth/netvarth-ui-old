@@ -33,7 +33,7 @@ export class AddAddressComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-    private shared_services:SharedServices,
+    private shared_services: SharedServices,
     // private consumer_services: ConsumerServices,
   ) {
     this.address_title = 'Add New Address';

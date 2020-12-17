@@ -101,23 +101,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
-    if (this.chosenDateDetails !== null) {
-      if (this.delivery_type === 'store') {
-        this.store_pickup = true;
-        this.choose_type = 'store';
-        this.storeChecked = true;
-      } else if (this.delivery_type === 'home') {
-        this.home_delivery = true;
-        this.choose_type = 'home';
-        this.homeChecked = true;
-
-      }
-      this.sel_checkindate = this.chosenDateDetails.order_date;
-      this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-    } else {
-      this.storeChecked = true;
-    }
     this.catalog_details = this.shared_services.getOrderDetails();
+
+
     if (this.catalog_details) {
       this.catalog_Id = this.catalog_details.id;
       if (this.catalog_details.pickUp) {
@@ -139,6 +125,24 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
             this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
           }
         }
+      }
+      // set chosendate fromlocalstorgae
+      if (this.chosenDateDetails !== null) {
+        if (this.delivery_type === 'store') {
+          this.store_pickup = true;
+          this.choose_type = 'store';
+          this.storeChecked = true;
+        } else if (this.delivery_type === 'home') {
+          this.home_delivery = true;
+          this.choose_type = 'home';
+          this.homeChecked = true;
+
+        }
+        this.sel_checkindate = this.chosenDateDetails.order_date;
+        console.log(this.sel_checkindate);
+        this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
+      } else {
+        this.storeChecked = true;
       }
       this.advance_amount = this.catalog_details.advanceAmount;
       this.showfuturediv = false;
@@ -490,9 +494,15 @@ getbusinessprofiledetails_json(section, modDateReq: boolean) {
   changeType(event) {
     this.choose_type = event.value;
     if (event.value === 'store') {
+      this.store_pickup = true;
+      this.choose_type = 'store';
+      this.storeChecked = true;
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
     } else {
+      this.home_delivery = true;
+      this.choose_type = 'home';
+      this.homeChecked = true;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
     }
