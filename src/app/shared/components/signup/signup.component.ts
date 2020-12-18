@@ -431,11 +431,11 @@ export class SignUpComponent implements OnInit {
           this.actionstarted = false;
           this.createForm(2);
           this.resendemailotpsuccess = true;
-          if (user_details.userProfile && (user_details.userProfile.email || user_details.userProfile.countryCode!='+91')) {
-            this.setMessage('email', user_details.userProfile.email);
-          } else {
-            this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-          }
+          // if (user_details.userProfile && (user_details.userProfile.email || user_details.userProfile.countryCode!='+91')) {
+          //   this.setMessage('email', user_details.userProfile.email);
+          // } else {
+          //   this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+          // }
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);

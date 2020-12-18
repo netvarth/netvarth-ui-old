@@ -275,12 +275,12 @@ export class ConsumerJoinComponent implements OnInit {
           this.actionstarted = false;
           // this.createForm(2);
           this.resendemailotpsuccess = true;
-          if (user_details.userProfile &&
-            user_details.userProfile.email) {
-            this.setMessage('email', user_details.userProfile.email);
-          } else {
-            this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-          }
+          // if (user_details.userProfile &&
+          //   user_details.userProfile.email) {
+          //   this.setMessage('email', user_details.userProfile.email);
+          // } else {
+          //   this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+          // }
           this.step = 4;
         },
         error => {
