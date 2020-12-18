@@ -61,6 +61,7 @@ export class ConsumerJoinComponent implements OnInit {
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
+  phoneDialCode;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -222,6 +223,16 @@ export class ConsumerJoinComponent implements OnInit {
     const pN = this.loginForm.get('phone').value.e164Number;
     let loginId = pN.split(dialCode)[1];
 
+    if (this.phoneDialCode !== '+91' && !this.loginForm.get('emailId').value) {
+      this.api_error = 'Email Id required';
+      if (document.getElementById('emailId')) {
+        document.getElementById('emailId').focus();
+      }
+      return false;
+    } else {
+
+    }
+
        const userProfile = {
       // countryCode: '+91',
       countryCode: dialCode,
@@ -229,6 +240,9 @@ export class ConsumerJoinComponent implements OnInit {
       firstName: this.loginForm.get('first_name').value || null,
       lastName: this.loginForm.get('last_name').value || null,
     };
+    if (this.loginForm.get('emailId').value) {
+      userProfile['email'] = this.loginForm.get('emailId').value.trim();
+  }
     // if (userProfile.firstName === null) {
     //   userProfile.firstName = 'undefined';
     // }
@@ -433,9 +447,9 @@ export class ConsumerJoinComponent implements OnInit {
 
   checkAccountExists() {
     this.mobile_num = this.document.getElementById('phone').value;
-    const dialCode = this.loginForm.get('phone').value.dialCode;
+    this. phoneDialCode = this.loginForm.get('phone').value.dialCode;
     if (this.mobile_num) {
-      this.shared_services.consumerMobilenumCheck(this.mobile_num, dialCode).subscribe((accountExists) => {
+      this.shared_services.consumerMobilenumCheck(this.mobile_num, this.phoneDialCode).subscribe((accountExists) => {
         if (accountExists) {
           this.phoneExists = true;
           this.isPhoneValid = true;
