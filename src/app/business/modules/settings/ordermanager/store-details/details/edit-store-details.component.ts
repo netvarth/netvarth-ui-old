@@ -58,10 +58,14 @@ export class EditStoreDetailsComponent implements OnInit {
         'alternatePhone': this.alternatePhone,
         'alternateEmail': this.alternateEmail,
         'whatsappNo': this.whatsappNo,
+        'primCountryCode': '+91',
+        'secCountryCode': '+91',
+        'whatsAppCountryCode': '+91',
       };
       this.editInfo(data);
   }
   editInfo(data) {
+   
     this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
