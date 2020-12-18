@@ -79,6 +79,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   hold_sel_checkindate;
   ddate;
   isfutureAvailableTime = false;
+  storeContactNw: any;
+  showSide = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -150,7 +152,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.doLogin('consumer');
     }
 
-    // this.getaddress();
+    this.getStoreContact();
     this.loginForm = this._formBuilder.group({
       phone: [this.customer_phoneNumber, Validators.required]
     });
@@ -665,5 +667,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.isfutureAvailableTime = false;
       }
     }
+  }
+  getStoreContact() {
+    this.shared_services.getStoreContact(this.account_id)
+    .subscribe((data: any) => {
+      console.log(data);
+      this.storeContactNw = data;
+    });
+  }
+  sidebar() {
+    this.showSide = !this.showSide;
+  }
+  closeNav() {
+    this.showSide = false;
   }
 }

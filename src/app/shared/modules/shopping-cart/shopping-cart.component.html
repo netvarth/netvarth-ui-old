@@ -25,7 +25,8 @@
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2"
                     *ngFor="let item of orders;  let i = index">
                     <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding">
-                      <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img" *ngIf="item.item.itemImages"
+                      <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img"
+                        *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.itemName}}</div>
@@ -38,13 +39,16 @@
                     </div>
 
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right">
-                      <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
+                      <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
+                        class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
                       </div>
-                      <div [class.disableall]="getItemQty(item) === item.minqty" *ngIf="getItemQty(item) >= 2" (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
+                      <div [class.disableall]="getItemQty(item) === item.minqty" *ngIf="getItemQty(item) >= 2"
+                        (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
                       </div>
                       <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
                       </div>
-                      <div [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item)" class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
+                      <div [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item)"
+                        class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
                       </div>
                     </div>
                     <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">
@@ -56,7 +60,21 @@
               </div>
 
               <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
-                <div class="card col-xs-12">
+                <!-- Side bar contact -->
+                <div class="contact-outer">
+                  <aside *ngIf="showSide" class="side_nav">
+                    <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
+                    <div class="addrs">
+                      <span>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</span>
+                      <span *ngIf="storeContact.address">
+                        <i class="fa fa-map-marker"></i> {{storeContact.address}}
+                      </span>
+                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}}{{storeContact.phone}}</span>
+                      <span class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                    </div>
+                  </aside>
+                </div>
+                <div [class.opacty]="showSide" class="card col-xs-12">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
                     <div class="prov-name">
@@ -66,23 +84,27 @@
                       <div class="prov-loc">
                         {{businessDetails.blocation}}
                       </div>
+                      <div class="prov-loc store-cntct" (click)="sidebar()">
+                        <i class="fa fa-home store_ico"></i>Store Contact
+                      </div>
                     </div>
                   </div>
+
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey">
                     <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
                       Delivery Type
                     </div>
                     <div class="order-label mgn-bt-10">
                       <div *ngIf="home_delivery && store_pickup">
-                      <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
-                        <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                          Store pick up
-                        </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <mat-radio-button [value]="'home'" [checked]="homeChecked">
-                          Home delivery
-                        </mat-radio-button>
-                      </mat-radio-group>
-                    </div>
+                        <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
+                          <mat-radio-button [value]="'store'" [checked]="storeChecked">
+                            Store pick up
+                          </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <mat-radio-button [value]="'home'" [checked]="homeChecked">
+                            Home delivery
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
                       <div *ngIf="store_pickup && !home_delivery">
                         store pickup
                       </div>
@@ -163,9 +185,9 @@
                           <mat-datepicker-toggle matSuffix [for]="picker">
                           </mat-datepicker-toggle>
                           <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                          <input class="" style="visibility: hidden; width:1px" type="text"
-                              [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate"
-                              (dateChange)="handleFutureDateChange($event)">
+                          <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
+                            [min]="minDate" [max]="maxDate" [value]="ddate"
+                            (dateChange)="handleFutureDateChange($event)">
 
                         </div>
 
@@ -177,9 +199,9 @@
                           <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">
                             <p>{{futureAvailableTime}}</p>
                           </div>
-                          <div  *ngIf="!isfutureAvailableTime">
-                              <p>No timings are available</p>
-                            </div>
+                          <div *ngIf="!isfutureAvailableTime">
+                            <p>No timings are available</p>
+                          </div>
                           <!-- <mat-chip-list>
                             <mat-chip>
                               09:00 AM - 10:00 PM
@@ -268,4 +290,3 @@
     <div class="clearfix"></div>
   </div>
 </section>
-

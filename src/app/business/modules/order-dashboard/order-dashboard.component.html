@@ -148,7 +148,7 @@
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
@@ -283,7 +283,7 @@
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
@@ -420,7 +420,7 @@
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.orderItem.length}}</span> <span
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
                     class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>

@@ -893,4 +893,7 @@ export class SharedServices {
   getAvailableDatesForHome(catalogid , accountid?){
     return this.servicemeta.httpGet('consumer/orders/catalogs/delivery/dates/' + catalogid +  '?account=' + accountid);
   }
+  getStoreContact(accountid?) {
+    return this.servicemeta.httpGet('consumer/orders/settings/store/contact/info/' + accountid);
+  }
 }

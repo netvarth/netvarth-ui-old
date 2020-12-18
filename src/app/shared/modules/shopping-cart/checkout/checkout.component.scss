@@ -26,8 +26,8 @@ flex-basis: 50% !important;
     border-bottom: 1px solid;
 }
 .order-checkout .prov-dp {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     position: relative;
     background-repeat: round;
 }
@@ -368,3 +368,63 @@ display: grid !important;
    max-height: 175px !important;
    margin-top: 0px !important;
 }
+
+// store contact
+.order-checkout .contact-outer {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+  }
+  .order-checkout .contact-outer .cntct-ico {
+    width: fit-content;
+    float: right;
+    margin-right: 40px;
+  }
+  .order-checkout .contact-outer .side_nav {
+    background: #6079a1;
+    color: white;
+    padding: 30px;
+    margin-left: 70px;
+    margin-top: 30px;
+    box-shadow: 0 3px 8px 0 rgba(40,44,63,.4) !important;
+    margin-right: 10px;
+  }
+  .order-checkout .opacty {
+    opacity: 0.1;
+  }
+  .order-checkout .contact-outer .side_nav h4 {
+    font-family: monospace !important;
+    font-size: 1.4rem;
+  }
+  .order-checkout .contact-outer .addrs {
+    display: grid;
+    line-height: 2;
+    font-family: monospace !important;
+  }
+  .order-checkout .mgn-rt-6 {
+    margin-right: 6px;
+  }
+  .order-checkout .contact-outer .addrs i {
+    color: #f1b616;
+  }
+  .order-checkout .contact-outer .wrap {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .order-checkout .contact-outer .fa-envelope {
+    font-size: 0.8rem;
+    margin-right: 8px;
+  }
+  .order-checkout .store-cntct {
+    color: #183e7a !important;
+    cursor: pointer !important;
+    font-family: sans-serif !important;
+  }
+  .order-checkout .store_ico {
+    font-size: 1rem;
+    margin-right: 5px;
+  }
+  .order-checkout .contact-outer .fa-times-circle {
+    cursor: pointer;
+  }

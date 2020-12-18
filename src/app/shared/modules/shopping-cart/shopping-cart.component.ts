@@ -77,6 +77,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   retval;
   tooltipcls = '';
   coupon_status = null;
+  showSide = false;
+  storeContact: any;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -133,6 +135,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
 
+    this.catalog_details = this.shared_services.getOrderDetails();
+    this.getStoreContact();
 
 
       // set chosendate fromlocalstorgae
@@ -625,6 +629,20 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         console.log(result);
       }
     });
+  }
+
+  sidebar() {
+    this.showSide = !this.showSide;
+  }
+  getStoreContact() {
+    this.shared_services.getStoreContact(this.account_id)
+    .subscribe((data: any) => {
+      console.log(data);
+      this.storeContact = data;
+    });
+  }
+  closeNav() {
+    this.showSide = false;
   }
 }
 

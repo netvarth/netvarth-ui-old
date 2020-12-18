@@ -159,8 +159,22 @@
                 </div>
               </div>
               <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey"  *ngIf="action==''">
+                <!-- Side bar contact -->
+                <div class="contact-outer">
+                  <aside *ngIf="showSide" class="side_nav">
+                    <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
+                    <div class="addrs">
+                      <span>{{storeContactNw.firstName}}&nbsp;{{storeContactNw.lastName}}</span>
+                      <span *ngIf="storeContactNw.address">
+                        <i class="fa fa-map-marker"></i> {{storeContactNw.address}}
+                      </span>
+                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}}{{storeContactNw.phone}}</span>
+                      <span class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
+                    </div>
+                  </aside>
+                </div>
 
-                <div class="card mgn-up-30">
+                <div [class.opacty]="showSide" class="card mgn-up-30">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
                     <div class="prov-name">
@@ -169,6 +183,9 @@
                       </div>
                       <div class="prov-loc">
                           {{businessDetails.blocation}}
+                      </div>
+                      <div class="prov-loc store-cntct" (click)="sidebar()">
+                        <i class="fa fa-home store_ico"></i>Store Contact
                       </div>
                     </div>
                   </div>
