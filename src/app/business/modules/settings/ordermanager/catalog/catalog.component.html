@@ -25,9 +25,11 @@
                                       <thead>
                                           <tr>
                                               <th>Catalog Name</th>
-                                              <th>Start date</th>
-                                              <th>End date</th>
-                                              <th>Payment Type</th>
+                                              <th>Store Pickup</th>
+                                              <th>Home Delivery</th>
+                                              <th>Start Date</th>
+                                              <th>End Date</th>
+                                              <!-- <th>Payment Type</th> -->
                                               <th>Status</th>
                                               <th>  
                                                   <!-- <span class="addbt" (click)="addCatalog()"></span> -->
@@ -43,10 +45,12 @@
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="itemnameTooltip">{{catalog.catalogName}}</span>
                                               </td>
-                                              <td data-title="Start date" class="td4 ">{{catalog.catalogSchedule.startDate | date: dateFormat}}</td>
-                                              <td data-title="End date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: dateFormat}}</td>
-                                              <td data-title="Payment Type" class="td3">{{catalog.paymentType}}
-                                              </td>
+                                              <td data-title="Store Pickup" class="td3 ">{{(catalog.pickUp && catalog.pickUp.orderPickUp) ? 'Yes' : 'No'}}</td>
+                                              <td data-title="Home Delivery" class="td3 ">{{(catalog.homeDelivery && catalog.homeDelivery.homeDelivery) ? 'Yes' : 'No'}}</td>
+                                              <td data-title="Start Date" class="td4 ">{{catalog.catalogSchedule.startDate | date: dateFormat}}</td>
+                                              <td data-title="End Date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: dateFormat}}</td>
+                                              <!-- <td data-title="Payment Type" class="td3">{{catalog.paymentType}} 
+                                              </td>-->
                                               <td data-title="Status"
                                                   [ngClass]="{'green-text' : catalog.catalogStatus=='ACTIVE'}">
                                                   {{catalog.catalogStatus}}</td>
