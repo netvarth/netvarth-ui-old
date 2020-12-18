@@ -76,6 +76,7 @@ export class OrderDashboardComponent implements OnInit {
     this.doSearch();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
+    this.getProviderHistoryOrdersCount();
   }
   setTabSelection(type) {
     this.selectedTab = type;
@@ -159,13 +160,13 @@ export class OrderDashboardComponent implements OnInit {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    // this.getProviderHistoryOrdersCount(filter);
     this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
       this.loading = false;
     });
   }
-  getProviderHistoryOrdersCount(filter) {
+  getProviderHistoryOrdersCount() {
+    const filter = {};
     this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
     });

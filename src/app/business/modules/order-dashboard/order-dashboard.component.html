@@ -23,7 +23,7 @@
   </div>
   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
-      <mat-tab label="Active Orders">
+      <mat-tab label="Active Orders ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
@@ -158,7 +158,7 @@
         </div>
         <div class="clearfix"></div>
       </mat-tab>
-      <mat-tab label="Future">
+      <mat-tab label="Future ({{futureOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
@@ -293,7 +293,7 @@
         </div>
         <div class="clearfix"></div>
       </mat-tab>
-      <mat-tab label="History">
+      <mat-tab label="History ({{historyOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-5">

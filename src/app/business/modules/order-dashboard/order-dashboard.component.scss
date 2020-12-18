@@ -61,3 +61,6 @@
 .redish {
     color: #ff0000ab !important;
 }
+::ng-deep .mat-tab-header {
+    z-index: 0 !important;
+}
