@@ -14,12 +14,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  customer_countrycode: any;
   notfutureAvailableTime = false;
   chosenDateDetails: any;
   businessDetails: any;
@@ -87,17 +89,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder
 
   ) {
-    this.catalog_details = this.shared_services.getOrderDetails();
-    console.log(this.catalog_details);
-    this.account_id = this.shared_services.getaccountId();
+
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
     this.catlog_id = this.chosenDateDetails.catlog_id;
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
+    this.getCatalogDetails(this.account_id);
 
-    this.catalog_Id = this.catalog_details.id;
+
     if (this.delivery_type === 'store') {
       this.store_pickup = true;
       this.storeChecked = true;
@@ -140,8 +141,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-      this.customer_data = activeUser;
-      this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
+      const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      this.customer_countrycode = credentials.countryCode;
+      this.customer_phoneNumber = this.customer_countrycode + this.customer_data.loginId;
       console.log(this.customer_phoneNumber);
       this.getaddress();
     } else {
@@ -197,10 +199,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
   }
+
+  getCatalogDetails(accountId) {
+    this.shared_services.getConsumerCatalogs(accountId).subscribe(
+      (catalogs: any) => {
+        this.catalog_details = catalogs[0];
+        this.catalog_Id = this.catalog_details.id;
+      });
+
+  }
+
   isLoggedIn() {
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-      this.loginForm.get('phone').setValue(activeUser.primaryPhoneNumber);
+      const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
+      this.loginForm.get('phone').setValue(customer_phonenumber);
       // this.getaddress();
     }
     return true;
@@ -230,6 +244,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.added_address = data;
+          if (this.added_address.length > 0) {
+            this.highlight(0, this.added_address[0]);
+          }
 
         },
         error => {
@@ -304,8 +321,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
-
-    if (this.delivery_type === 'homedelivery') {
+    if (this.delivery_type === 'home') {
       const post_Data = {
         'homeDelivery': true,
         'homeDeliveryAddress': this.selectedAddress,
@@ -316,8 +332,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'id': 0
         },
         'timeSlot': {
-          'sTime': this.selectedQsTime,
-          'eTime': this.selectedQeTime
+          'sTime': this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'],
+          'eTime': this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']
         },
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
@@ -401,11 +417,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
   confirmOrder(post_Data) {
+    console.log(post_Data);
+
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
-        localStorage.removeItem('order');
-        localStorage.removeItem('chosenDate');
-        localStorage.removeItem('order_sp');
         const retData = data;
         let prepayAmount;
         const uuidList = [];

@@ -1,7 +1,7 @@
 .border {
     border-bottom: 0px solid #dbdbdb !important;
 }
-.cart-flex { 
+.cart-flex {
 
 flex-basis: 50% !important;
 }
@@ -73,7 +73,7 @@ flex-basis: 50% !important;
    .slotdiv {
     max-height: 175px !important;
     margin-top: 0px !important;
-  
+
   }
   .change {
     padding-left: 20px
@@ -212,6 +212,12 @@ flex-basis: 50% !important;
   border: none;
   color: white;
   padding: 5px;
+}
+.shop-cart .confm_btn:disabled,
+.shop-cart .confm_btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 .shop-cart .add_nte {
   font-size: 0.7rem;

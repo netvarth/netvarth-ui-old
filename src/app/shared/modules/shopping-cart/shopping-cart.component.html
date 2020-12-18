@@ -119,16 +119,19 @@
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
+                    <ng-container *ngIf="orders.length!==0">
                     <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>
                       <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
                     </div>
+                  </ng-container>
                   </div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
                     <div class="flex1">SUB TOTAL</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
-                  <button (click)="cart()" class="confm_btn">Confirm Order</button>
+
+                  <button (click)="cart()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Confirm Order</button>
                 </div>
               </div>
             </div>
