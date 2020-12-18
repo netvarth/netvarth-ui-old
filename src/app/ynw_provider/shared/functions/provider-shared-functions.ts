@@ -426,7 +426,11 @@ export class ProviderSharedFuctions {
     if (customerlist.length > 1) {
       type = 'multiple';
       for (const custlst of customerlist) {
-        custids.push(custlst.id);
+        if (source === 'donation-list') {
+          custids.push(custlst.uid);
+        } else {
+          custids.push(custlst.id);
+        }
       }
     } else if (customerlist.length === 1) {
       type = 'single';
@@ -538,4 +542,3 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
-
