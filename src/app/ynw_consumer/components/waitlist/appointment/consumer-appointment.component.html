@@ -64,15 +64,15 @@
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{serviceCost}}</span>
-                                                        </span>&nbsp;
+                                                    </span>&nbsp;
                                                     <span *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'">
-                                                    Booking Fee
-                                                    <span class="prepaymin-cls bold"><span
-                                                            class="rupee-font">&#8377;
-                                                        </span>{{prepaymentAmount}}</span>
+                                                        Booking Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{prepaymentAmount}}</span>
                                                     </span>
                                                 </div>
-                                                    
+
                                                 <div class="">
 
                                                     <!-- <div class="prepay-amt mgn-bt-20" *ngIf="sel_ser_det.isPrePayment">
@@ -292,9 +292,11 @@
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span> -->
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{countryCode}} {{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno">{{countryCode}}
+                                                            {{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{countryCode}} {{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno">{{countryCode}}
+                                                            {{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                             <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i> -->
@@ -382,7 +384,7 @@
                                                     </h6>
                                                 </div> -->
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                    
+
                                                     <!-- <div *ngIf="sel_ser_det.isPrePayment && type != 'reschedule'"
                                                         class="mgn-bt-20">
                                                         This service requires
@@ -426,10 +428,11 @@
                                     <div class="pull-left brd-round brd-light">
 
                                         <div class="icon-minus pull-left" [class.disable]="disableMinus()"
-                                        *ngIf="appointmentSettings.futureAppt" (click)="calculateDate(-1)">
+                                            *ngIf="appointmentSettings.futureAppt" (click)="calculateDate(-1)">
                                         </div>
                                         <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                        <div class="icon-add pull-left" *ngIf="appointmentSettings.futureAppt" (click)="calculateDate(1)"></div>
+                                        <div class="icon-add pull-left" *ngIf="appointmentSettings.futureAppt"
+                                            (click)="calculateDate(1)"></div>
                                     </div>
                                     <div class="pickerouter caldiv pull-left " *ngIf="appointmentSettings.futureAppt">
 
@@ -768,9 +771,13 @@
                         </div>
                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                             *ngIf="action=='members'">
-                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">Booking for
+                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
+                                <div class="pull-left">Booking for
+                                </div>
+                                <a class="lnk pointer-cursoraction mgn-lt-20" (click)="addMember()"><i
+                                        class="fa fa-user-plus"></i> {{add_member_cap}}</a>
                             </div>
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-padding-small">
                                 <ng-container *ngIf="action==='members'">
                                     <div class="member-outer">
                                         <div class="member-list mgn-up-10">
@@ -786,36 +793,98 @@
                                                     </li>
                                                 </mat-radio-group>
                                             </ul>
-                                            <a class="lnk pointer-cursor action mgn-lt-5" (click)="addMember()"><i
-                                                    class="fa fa-user-plus"></i> {{add_member_cap}}</a>
+                                            <!-- <a class="lnk pointer-cursor action mgn-lt-5" (click)="addMember()"><i
+                                                    class="fa fa-user-plus"></i> {{add_member_cap}}</a> -->
                                         </div>
                                     </div>
-                                    <label class="mgn-up-30 mgn-bt-20">Send booking alerts and communications to</label>
-                                    <div class="mgn-bt-20">
-                                        <!-- table -->
-                                        <table class="fm-contact-table">
-                                            <tr>
-                                                <td class="td1">Phone :&nbsp;&nbsp; </td>
-                                                <td>
-                                                    {{selected_phone}}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td1" [class.pad-bt-15]="phoneerror != null">New Phone : &nbsp;&nbsp;</td>
-                                                <div class="form-group">
-                                                    <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
-                                                    <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
-                                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                                                        [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
-                                                        [selectedCountryISO] = "selectedCountry"
-                                                        [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                                                        [(ngModel)]="newselected_phone">
-                                                    </ngx-intl-tel-input>
-                                                    
-                                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                    <div class="grey">
+                                        <div class="serv-head">
+                                            <h5 class="mgn-bt-5 primary-color">Booking alerts and communications will be
+                                                send to
+                                            </h5>
+                                        </div>
+                                        <div class="consumer_appt mgn-bt-10 brd-bt">
+                                            <p class="m0 mgn-lt-10 mgn-up-10">Phone#: <b>{{selected_phone}}</b></p>
+                                            <p class="m0 mgn-up-10-m"
+                                                *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                <i class="fa wtsapaud-icon wtsap-cal"></i> <span>WhatsApp#:
+                                                    <b>{{callingModes}}</b></span></p>
+                                            <p class="mgn-up-5 mgn-lt-10">Email : <b>{{payEmail}}</b></p>
+                                            <p class="mgn-up-5 mgn-lt-10" *ngIf="!editBookingFields">To Change the
+                                                Number/Email <a class="bold" (click)="changeBookingFields()">Click
+                                                    Here</a>
+                                            </p>
+                                        </div>
+
+                                        <div class="mgn-up-20 mgn-bt-20" *ngIf="editBookingFields">
+                                            <form [formGroup]="bookingForm" class="" novalidate>
+                                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <mat-label for="newselected_phone">Enter New Phone# </mat-label>
+                                                        <ngx-intl-tel-input style="width: 300px !important;"
+                                                            [cssClass]="'custom'"
+                                                            [preferredCountries]="preferredCountries"
+                                                            [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                                                            [searchCountryFlag]="true"
+                                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                            [selectFirstCountry]="false" [maxLength]="15"
+                                                            [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                                            [selectedCountryISO]="selectedCountry"
+                                                            [separateDialCode]="separateDialCode"
+                                                            [numberFormat]="PhoneNumberFormat.National" name="newPhone"
+                                                            formControlName="newPhone">
+                                                        </ngx-intl-tel-input>
+                                                        <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+                                                    </div>
                                                 </div>
-                                                <!-- <td> 
+                                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <mat-label for="newselected_phone">Enter New Email </mat-label>
+                                                        <input class="width100 height40" id="newEmail"
+                                                            placeholder="Email(user@xyz.com)" name="newEmail"
+                                                            formControlName="newEmail"
+                                                            autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                            onpaste="return false;" oncopy="return false"
+                                                            oncut="return false" ondrag="return false"
+                                                            ondrop="return false">
+                                                        <app-field-error-display class="red" [displayError]="true"
+                                                            *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                                                        </app-field-error-display>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                                    <div class="form-group"
+                                                        *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                        <mat-label for="newselected_phone">Enter New WhatsApp#
+                                                        </mat-label>
+                                                        <ngx-intl-tel-input style="width: 300px !important;"
+                                                            [cssClass]="'custom'"
+                                                            [preferredCountries]="preferredCountries"
+                                                            [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                                                            [searchCountryFlag]="true"
+                                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                            [selectFirstCountry]="false" [maxLength]="15"
+                                                            [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                                            [selectedCountryISO]="selectedCountry"
+                                                            [separateDialCode]="separateDialCode"
+                                                            [numberFormat]="PhoneNumberFormat.National" name="newWhatsapp"
+                                                            formControlName="newWhatsapp">
+                                                        </ngx-intl-tel-input>
+                                                        <div class="sts-msg error" *ngIf="whatsapperror">{{whatsapperror}}</div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+
+
+                                        <!-- table -->
+                                        <!-- <table class="fm-contact-table">
+                                            <tr>
+                                                <td class="td1" [class.pad-bt-15]="phoneerror != null">New Phone :
+                                                    &nbsp;&nbsp;</td> -->
+                                        <!-- <td> 
                                                     <span style="width: 65px">
                                                     <select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                                     <option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</option>
@@ -828,33 +897,11 @@
                                                         *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                     </app-field-error-display>
                                                 </td> -->
-                                            </tr>
-                                            <tr>
-                                                <td class="td1" [class.pad-bt-15]="emailerror != null">Email :&nbsp;&nbsp; </td>
-                                                <td>
-                                                    <input class="" id="email"
-                                                        placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
-                                                        autocomplete="off" (keyup)="showConfrmEmail($event)"
-                                                        onpaste="return false;" oncopy="return false"
-                                                        oncut="return false" ondrag="return false"
-                                                        ondrop="return false">
-                                                    <app-field-error-display class="red" [displayError]="true"
-                                                        *ngIf="emailerror != null" errorMsg={{emailerror}}>
-                                                    </app-field-error-display>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td1">Whatsapp Number :&nbsp;&nbsp; </td>
-                                                <td>
-                                                    {{callingModes}}
-                                                </td>
-                                            </tr>
-                                            <tr class="mgn-bt-20"
-                                                *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                        <!-- </tr> -->
+                                        <!-- <tr class="mgn-bt-20">
                                                 <td class="td1" [class.pad-bt-15]="callingmodePhoneerror != null">
-                                                    <i class="fa wtsapaud-icon wtsap-cal"
-                                                        style="top : 10px !important"></i>New WhatsApp Number :&nbsp;&nbsp; </td>
-                                                <!-- <td> 
+                                                    </i>New WhatsApp Number :&nbsp;&nbsp; </td> -->
+                                        <!-- <td> 
                                                     <input type="text" maxlength="10"
                                                         placeholder="WhatsApp number" class=""
                                                         [(ngModel)]="callingModes" />
@@ -863,21 +910,14 @@
                                                         errorMsg={{callingmodePhoneerror}}>
                                                     </app-field-error-display>
                                                 </td> -->
-                                                <div class="form-group">
-                                                    <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
-                                                    <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
-                                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                                                        [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
-                                                        [selectedCountryISO] = "selectedCountry"
-                                                        [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
-                                                        [(ngModel)]="changedcallingModes">
-                                                    </ngx-intl-tel-input>
-                                                    
-                                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
-                                                </div>
+                                        <!-- <div class="form-group"> -->
+                                        <!-- <mat-label for="phone">Enter new Whatsapp Number</mat-label> -->
+
+
+                                        <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                        <!-- </div>
                                             </tr>
-                                        </table>
+                                        </table> -->
 
 
                                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
@@ -920,7 +960,7 @@
                                     </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="!showCreateMember">
                                         <button mat-button class="cs-btn bt1 backtocheckin"
-                                            (click)="saveMemberDetails()">OK
+                                            (click)="saveMemberDetails()">OKeee
                                         </button>
                                     </div>
                                 </ng-container>

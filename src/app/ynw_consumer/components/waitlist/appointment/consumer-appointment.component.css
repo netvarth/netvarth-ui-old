@@ -947,7 +947,12 @@ ul.member-ul {
 .pad-up-10 {
   padding-top: 10px !important;
 }
-
+.pad-up-25 {
+  padding-top: 25px !important;
+}
+.pad-up-50 {
+  padding-top: 50px !important;
+}
 .coupon-apply-btn {
   margin-left: 10px !important;
     padding: 6px 15px 8px 15px !important;
@@ -1211,4 +1216,24 @@ height: 150px !important;
   .countryCodeMob {
     width: 105px;
   }
+}
+.width100 {
+  width: 100%;
+}
+.height40 {
+  height: 40px;
+}
+.mgn-up-10-m {
+  margin-top: -10px !important;
+}
+.consumer_appt i.wtsapaud-icon {
+  top: 8px !important;
+}
+.serv-head {
+  background: rgba(0, 0, 0, 0.04) !important;
+  padding: 10px 0 3px 10px !important;
+}
+ngx-intl-tel-input input {
+  font-size: 13px !important;
+  height: 40px !important;
 }
