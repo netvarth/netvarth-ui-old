@@ -441,6 +441,26 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
+      // const files = this.selectedMessage.files;
+      // const propertiesDetob = {};
+      // for (let pic of this.selectedMessage.files) {
+      //     const properties = {
+      //         'caption': this.selectedMessage.caption[pic] || '',
+      //     };
+      //     propertiesDetob[pic] = properties;
+      //     pic++;
+      // }
+      // const propertiesDet = {
+      //     'propertiesMap': propertiesDetob
+      // };
+      // const preInstructionGallery = {
+      //   // 'imagesWithMetData': files,
+      //     'files': files,
+      //     'information': propertiesDet
+      // };
+      // console.log(post_data);
+      // post_data['attachementStream'] = preInstructionGallery;
+      // console.log(post_data);
       this.shared_services.addConsumertoProviderNote(this.user_id,
         post_data)
         .subscribe(

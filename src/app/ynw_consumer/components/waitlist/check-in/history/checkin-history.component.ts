@@ -183,6 +183,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = waitlist.ynwUuid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['typeOfMsg'] = 'single';
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
 
@@ -194,7 +195,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       autoFocus: true,
-      data: pass_ob
+      data: pass_ob,
     });
 
     this.notedialogRef.afterClosed().subscribe(result => {
@@ -295,6 +296,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     pass_ob['uuid'] = waitlist.uid;
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['typeOfMsg'] = 'single';
     pass_ob['appt'] = 'appt';
     this.addNote(pass_ob);
 

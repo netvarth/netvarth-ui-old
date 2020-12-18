@@ -1453,7 +1453,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         type: 'send',
         terminologies: this.terminologiesjson,
         name: this.businessjson.businessName,
-        // typeOfMsg: 'single'
+        typeOfMsg: 'single'
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {

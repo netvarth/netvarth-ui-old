@@ -8374,7 +8374,7 @@ owl-carousel .bt3.active {
 .glbl-seting-tbl td {
   padding-bottom: 10px !important;
   font-weight: 500;
-  padding-left: 3%;
+  /* padding-left: 3%; */
 }
 
 .glbl-seting-heder {

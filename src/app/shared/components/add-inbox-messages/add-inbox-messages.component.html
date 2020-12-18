@@ -83,8 +83,6 @@
             <button type="button"
                 *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox')"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
-                <!-- <button type="button" *ngIf="typeOfMsg === 'single'"
-                class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'"> -->
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">
                 <span><i class="material-icons">attach_file</i></span>
