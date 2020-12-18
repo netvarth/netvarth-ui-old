@@ -632,7 +632,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               } else {
                 this.locationjson['isPlaceisSame'] = false;
               }
-              this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
+              if (this.locationjson[i].parkingType) {
+                this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
+              }
               // schedule_arr = [];
               // if (this.locationjson[i].bSchedule) {
               //   if (this.locationjson[i].bSchedule.timespec) {
@@ -663,7 +665,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               // if (this.userType === 'consumer') {
               //   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
               // }
-             
+
               // locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
               // if (this.businessjson.id && this.userId) {
               //   appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
@@ -1393,7 +1395,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   redirectToHistory() {
     if (this.sharedFunctionobj.checkLogin()) {
-      this.routerobj.navigate(['consumer', 'checkin', 'history'], {queryParams: { accountId: this.businessjson.id}});
+      this.routerobj.navigate(['consumer', 'checkin', 'history'], { queryParams: { accountId: this.businessjson.id } });
     } else { // show consumer login
       const passParam = { callback: 'history' };
       this.doLogin('consumer', passParam);
@@ -2189,13 +2191,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2224,7 +2226,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] })
                       this.userCount++;
                     }
-                  }                  
+                  }
                   servicesAndProviders.push(deptItem);
                 }
               }
@@ -2235,13 +2237,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id']==this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] == this.userId && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id']==this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] == this.userId && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2275,13 +2277,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         error => {
           this.sharedFunctionobj.apiErrorAutoHide(this, error);
         });
-        if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1){
-          for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
-            this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
-            this.serviceCount++;
-          }
-        }
-        
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
+    }
+
   }
   changeLocation(loc) {
     console.log(loc);
@@ -2310,7 +2312,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
-    }else {
+    } else {
       this.providerDetClicked(actionObj['userId']);
     }
   }
