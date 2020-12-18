@@ -145,7 +145,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (activeUser) {
       const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
       this.customer_countrycode = credentials.countryCode;
-      this.customer_phoneNumber = this.customer_countrycode + this.customer_data.loginId;
+      this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
     } else {
@@ -229,8 +229,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return deliveryCharge;
   }
   getOrderFinalAmountToPay() {
-
-    return this.price + this.getTaxCharges();
+     const amount = this.price + this.getTaxCharges();
+    return amount.toFixed(2);
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
@@ -319,7 +319,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
       this.price = this.price + item_price;
     }
-    return this.price;
+    return this.price.toFixed(2);
   }
 
   confirm() {
@@ -512,7 +512,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.storeChecked = false;
       this.homeChecked = true;
-      this.delivery_type = 'homedelivery';
+      this.delivery_type = 'home';
       this.home_delivery = true;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -682,3 +682,4 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.showSide = false;
   }
 }
+

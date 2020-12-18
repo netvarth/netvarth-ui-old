@@ -641,6 +641,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.storeContact = data;
     });
   }
+
+
   closeNav() {
     this.showSide = false;
   }
