@@ -218,7 +218,7 @@ export class CatalogdetailComponent implements OnInit {
                                 this.getCatalog(this.catalog_id).then(
                                     (catalog) => {
                                         this.catalog = catalog;
-                                        this.catalogname = this.catalog.displayName;
+                                        this.catalogcaption = this.catalog.catalogName;
                                         if (this.catalog.catalogItem) {
                                             this.catalogItems = this.catalog.catalogItem;
                                             console.log(this.catalogItems);
@@ -534,10 +534,8 @@ export class CatalogdetailComponent implements OnInit {
             });
         }
         if (this.action === 'edit' && !this.isFromadd) {
-            this.catalogcaption = 'Edit Catalog';
             this.updateForm();
         } else if (this.action === 'edit' && this.isFromadd) {
-            this.catalogcaption = 'Edit Catalog';
             this.updateprefillForm();
         }
     }

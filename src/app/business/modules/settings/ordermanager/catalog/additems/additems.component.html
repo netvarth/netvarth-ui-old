@@ -3,7 +3,7 @@
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToJaldeecatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-            select items
+            {{heading}}
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </h5>
     </div>
@@ -96,7 +96,7 @@
     </div>
 
     <div *ngIf="!api_loading && action === 'add'">
-            <div class="additem-cart-footer" *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0">
+            <div class="additem-cart-footer" *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0 && selectedCount > 0">
                     <div>{{selectedCount}} items are selected
                         
                         <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
@@ -115,7 +115,7 @@
                     mat-button>ok</button>
             </div>
         </div> -->
-        <div class="additem-cart-footer" *ngIf="itemsforadd && itemsforadd.length > 0">
+        <div class="additem-cart-footer" *ngIf="itemsforadd && itemsforadd.length > 0 && selecteditemCount > 0">
             <div>{{selecteditemCount}} items are selected
                 
                 <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>

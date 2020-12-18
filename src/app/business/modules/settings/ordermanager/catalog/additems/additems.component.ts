@@ -79,6 +79,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   selecteditemCount = 0;
   catalogSelectedItemsadd: any = [];
   seletedCatalogItemsadd: any = {};
+  heading = 'Add items to catalog';
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -120,6 +121,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     this.getitems();
     if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
+      this.heading = 'Edit catalog items';
       this.getCatalog();
     } else {
       this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
@@ -142,6 +144,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           console.log(this.catalogItem);
         }
         if (this.action === 'add' && this.cataId !== 'add') {
+          this.heading = 'Add items to catalog';
           this.itemsforadd = [];
           this.itemsforadd = this.catalogItem.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
           

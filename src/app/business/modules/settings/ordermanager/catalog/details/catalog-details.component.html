@@ -4,7 +4,7 @@
       <span class="fa fa-arrow-left pointer-cursor" *ngIf="showInfo" (click)="backToCatalog()"></span>
       <span class="fa fa-arrow-left pointer-cursor" *ngIf="!showInfo"
         (click)="redirecToJaldeeOrdrmnagrCatalog()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Catalog creation
+      {{catalogcaption}}
     </h5>
   </div>
 </section>
@@ -266,6 +266,7 @@
                           </label>
                           <div *ngIf="payAdvance === 'FIXED'">
                             <mat-form-field>
+                                <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
                               <input matInput type="text" class="form-control number-ip-sm" id="advancePayment"
                                 placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off">
                             </mat-form-field>
@@ -455,20 +456,23 @@
                           <mat-slide-toggle formControlName="homeotpverify">
                           </mat-slide-toggle>
                         </div> -->
+
+                        <div class="form-group">
+                            <mat-form-field>
+                                <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
+                              <input matInput type="text" class="form-control number-ip-sm" id="deliverycharge"
+                                placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
+                                maxlength="50">
+                            </mat-form-field>
+                          </div>
                         <div class="form-group">
                           <mat-form-field>
-                            <input matInput type="text" class="form-control" id="deliverykms"
+                            <input matInput type="text" class="form-control number-ip-sm" id="deliverykms"
                               placeholder="Delivery range in Kms" formControlName="deliverykms" autocomplete="off"
                               maxlength="50">
                           </mat-form-field>
                         </div>
-                        <div class="form-group">
-                          <mat-form-field>
-                            <input matInput type="text" class="form-control" id="deliverycharge"
-                              placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
-                              maxlength="50">
-                          </mat-form-field>
-                        </div>
+                       
                       </div>
                     </div>
                     <button type="button" class="cs-btn bt1" mat-button (click)="showStep(5)">Back</button>&nbsp;

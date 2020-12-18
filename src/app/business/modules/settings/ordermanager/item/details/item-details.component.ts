@@ -322,9 +322,9 @@ export class ItemDetailsComponent implements OnInit {
         }
         let value;
         if (this.item.promotionalPriceType === 'PCT') {
-            value = this.item.promotionalPrice;
+            value = this.item.promotionalPrcnt;
         } else {
-           value = this.item.promotionalPrcnt;
+           value = this.item.promotionalPrice;
         }
         let note;
         if (this.item.notes && this.item.notes.length > 0) {
