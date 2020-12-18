@@ -79,7 +79,10 @@
 
 <section *ngIf="curtype!='consumer'">
   <div class="card title-gb">
-    <h5 class="mgn-up-10">Change Mobile #</h5>
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor"
+        (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Mobile #
+    </h5>
   </div>
   <div class="content see-pages mgn-up-10">
     <div class="related-links">

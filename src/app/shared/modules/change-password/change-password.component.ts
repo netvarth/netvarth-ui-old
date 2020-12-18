@@ -108,7 +108,9 @@ export class ChangePasswordComponent implements OnInit {
     }
 
   }
-
+  redirecToSettings() {
+    this.router.navigate(['provider', 'settings', 'bprofile']);
+  }
   resetApiErrors() {
     this.api_error = null;
   }
