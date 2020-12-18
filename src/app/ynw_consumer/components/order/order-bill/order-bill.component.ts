@@ -436,7 +436,7 @@ export class OrderBillComponent implements OnInit {
       bill_html += '	<tr><td style="border-bottom:1px solid #ddd;">';
       bill_html += '<table width="100%">';
       bill_html += '	<tr style="line-height:20px">';
-      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
+      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName + '</td>';
       bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.bill_data.createdDate + '</td>';
       bill_html += '	</tr>';
       bill_html += '	<tr>';
