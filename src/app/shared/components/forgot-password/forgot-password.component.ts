@@ -73,12 +73,14 @@ export class ForgotPasswordComponent {
   //   Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])]
   createForm(form_num) {
     this.step = form_num;
-    switch (form_num) {
-      case 1: this.fpForm = this.fb.group({
-        phone: new FormControl(undefined, [Validators.required])
-      });
-        break;
-    }
+   
+      switch (form_num) {
+        case 1: this.fpForm = this.fb.group({
+          phone: new FormControl(undefined, [Validators.required]),
+          phonenumber: new FormControl(undefined, [Validators.required])
+        });
+          break;
+      }
   }
 
   onNoClick(): void {
@@ -94,11 +96,26 @@ export class ForgotPasswordComponent {
   }
 
   onPhoneSubmit(submit_data) {
+
     this.resetApiErrors();
-    if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number.startsWith(this.fpForm.get('phone').value.dialCode + '55'))) {
-      this.sendOtpApi(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1]);
+    let post_data;
+    if(this.consumerlogin){
+      console.log(this.consumerlogin);
+      console.log(this.fpForm.get('phone').value.e164Number);
+      console.log(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1]);
+      if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number.startsWith(this.fpForm.get('phone').value.dialCode + '55'))) {
+        console.log(this.fpForm.get('phone').value.e164Number);
+        const dialCode = this.fpForm.get('phone').value.dialCode;
+        
+         post_data = dialCode;
+        this.sendOtpApi(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1], post_data);
+      } else{
+        console.log("else")
+        this.fed_service.validateAllFormFields(this.fpForm);
+      }
     } else {
-      this.fed_service.validateAllFormFields(this.fpForm);
+       post_data = '+91';
+      this.sendOtpApi(this.fpForm.get('phonenumber').value, post_data);
     }
   }
 
@@ -142,10 +159,10 @@ export class ForgotPasswordComponent {
     this.sendOtpApi(phonenumber);
   }
 
-  sendOtpApi(phonenumber) {
+  sendOtpApi(phonenumber, post_data?) {
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
     this.resetApiErrors();
-    this.shared_services.forgotPassword(type, phonenumber)
+    this.shared_services.forgotPassword(type, phonenumber, post_data)
       .subscribe(
         () => {
           this.createForm(2);
