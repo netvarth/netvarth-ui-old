@@ -423,7 +423,7 @@ export class ProviderSharedFuctions {
     let ynwcustid;
     let custid = [];
     let name;
-    if (customerlist.length > 1) {
+    if (customerlist.length > 1 || source === 'donation-list') {
       type = 'multiple';
       for (const custlst of customerlist) {
         if (source === 'donation-list') {
@@ -432,7 +432,7 @@ export class ProviderSharedFuctions {
           custids.push(custlst.id);
         }
       }
-    } else if (customerlist.length === 1) {
+    } else if (customerlist.length === 1 && source !== 'donation-list') {
       type = 'single';
       custid = customerlist[0].id || null;
       name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
