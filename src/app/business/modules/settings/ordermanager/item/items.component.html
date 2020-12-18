@@ -10,14 +10,18 @@
 <section>
     <p class="form-level-settings mgn-lt-10">{{frm_items_cap}}</p>
     <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
-        <div class="property-card" (click)="addItem()">
+            <div class="bus-item-O">
+                    <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]=""
+                        (actionPerformed)="cardClicked($event)"></app-card>
+                </div>
+        <!-- <div class="property-card" (click)="addItem()">
             <a>
                 <div class="property-image">
                     <div class="property-image-title">
                     </div>
                 </div>
             </a>
-        </div>
+        </div> -->
     </div>
 
     <!-- <div class="bus-item-O additem" >

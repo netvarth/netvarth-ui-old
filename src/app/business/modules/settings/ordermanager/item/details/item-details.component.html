@@ -113,10 +113,11 @@
 
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                            <span matPrefix><i class="fa fa-inr"></i>  &nbsp;</span>
+                                       <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
                                             formControlName="price" id="price"
-                                            placeholder="{{price_cap}} ({{rupee_symbol}}) *" autocomplete="off">
+                                            placeholder="{{price_cap}}*" autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"
                                         errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
@@ -146,7 +147,7 @@
                                 </div>
                                 <div class="form-group" *ngIf="showPromotionalPrice">
                                     <mat-form-field>
-                                        <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'> ₹ &nbsp;</span>
+                                        <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'><i class="fa fa-inr"></i>  &nbsp;</span>
                                         <span matPrefix *ngIf="curtype == 'PCT'" class='rupee'> % &nbsp;</span>
                                         <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
