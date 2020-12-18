@@ -18,6 +18,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-business-page',
@@ -324,7 +325,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
-    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.userId) {
@@ -412,7 +413,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   getSocialdet(key, field) {
     const retdet = this.orgsocial_list.filter(
       soc => soc.key === key);
-    const returndet = retdet[0][field];
+    let returndet = retdet[0][field];
+    if (returndet === 'BizyGlobe') {
+      returndet = 'bizyGlobe';
+    }
     return returndet;
   }
   setSystemDate() {
