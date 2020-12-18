@@ -471,8 +471,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
-
-            console.log(this.businessjson);
             if (this.businessjson.cover) {
               this.bgCover = this.businessjson.cover.url;
             }
@@ -1805,8 +1803,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   }
                 }
               } else {
-                console.log(wlServices);
-                console.log(this.deptUsers);
                 for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
                   const deptItem = {};
                   deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
@@ -1835,7 +1831,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
               }
               this.servicesAndProviders = servicesAndProviders;
-              console.log(this.servicesAndProviders);
               // });
             } else {
               // tslint:disable-next-line:no-shadowed-variable
@@ -1872,7 +1867,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 }
               }
               this.servicesAndProviders = servicesAndProviders;
-              console.log(this.servicesAndProviders);
             }
           },
             error => {
@@ -1890,7 +1884,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-    console.log(loc);
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
     this.getCatalogs(this.provider_bussiness_id);
@@ -1938,15 +1931,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
     this.shared_services.setaccountId(account_Id);
-    console.log(bprovider_id);
     this.orderItems = [];
     const orderItems = [];
     this.shared_services.getConsumerCatalogs(account_Id).subscribe(
       (catalogs: any) => {
         this.activeCatalog = catalogs[0];
         this.catlogArry();
-        console.log(this.activeCatalog);
-        // console.log(cat)
         // if(catalogs.length > 1) {
         //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
         //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
@@ -1963,7 +1953,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
         // }
         this.orderItems = orderItems;
-        console.log(this.orderItems);
       }
     );
   }
@@ -1980,7 +1969,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
-    console.log(this.orderList);
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
@@ -2003,12 +1991,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
+    let blogoUrl ;
+    if (this.businessjson.logo) {
+      blogoUrl = this.businessjson.logo.url;
+    } else {
+      blogoUrl = '';
+    }
+
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place,
-      'logo': this.businessjson.logo.url
+      'logo': blogoUrl
     };
-    console.log(businessObject);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
@@ -2036,10 +2030,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     };
     this.router.navigate(['order', 'item-details'], navigationExtras);
-    //this.router.navigate(['consumer', 'order', 'item-details']);
+    // this.router.navigate(['consumer', 'order', 'item-details']);
   }
   increment(item) {
-    console.log(item);
     this.addToCart(item);
   }
 
@@ -2047,8 +2040,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.removeFromCart(item);
   }
   getItemQty(itemObj) {
-    console.log(this.counter++);
-    console.log(this.orderList);
     let qty = 0;
     if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.item.itemId)) {
       qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
@@ -2056,7 +2047,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     return qty;
   }
   catlogArry() {
-    console.log(this.sharedFunctionobj.getitemfromLocalStorage('order'));
     if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
     }
