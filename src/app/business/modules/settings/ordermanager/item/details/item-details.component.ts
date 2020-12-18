@@ -89,7 +89,7 @@ export class ItemDetailsComponent implements OnInit {
     photo_cap = Messages.SERVICE_PHOTO_CAP;
     delete_btn = Messages.DELETE_BTN;
     removeimgdialogRef;
-    valueCaption = 'Enter value';
+    valueCaption = 'Enter promotional value';
     curtype = 'FIXED';
     showCustomlabel = false;
     selectedMessage = {
@@ -288,6 +288,7 @@ export class ItemDetailsComponent implements OnInit {
                 promotionallabel: [],
                 customlabel: []
             });
+            this.amForm.get('promotionalPriceType').setValue('FIXED');
         }
         if (this.action === 'edit') {
             this.itemcaption = this.item.displayName;
@@ -345,12 +346,12 @@ export class ItemDetailsComponent implements OnInit {
             'showOnLandingpage': this.item.isShowOnLandingpage,
             'stockAvailable': this.item.isStockAvailable,
             'promotionalPrice': value || 0,
-            'promotionalPriceType': this.item.promotionalPriceType || 'FIXED',
+            'promotionalPriceType': this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType,
             'promotionallabel': this.item.promotionLabelType || 'ONSALE',
             'customlabel': this.item.promotionLabel || ''
         });
         this.showPromotionalPrice = this.item.showPromotionalPrice;
-        this.curtype = this.item.promotionalPriceType || 'FIXED';
+        this.curtype = this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType;
         if (this.amForm.get('promotionallabel').value === 'CUSTOM') {
             this.showCustomlabel = true;
         }
@@ -358,11 +359,11 @@ export class ItemDetailsComponent implements OnInit {
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
-            this.valueCaption = 'Enter value';
+            this.valueCaption = 'Enter promotional value';
             this.curtype = typ;
         } else {
             this.curtype = typ;
-            this.valueCaption = 'Enter percentage value';
+            this.valueCaption = 'Enter promotional value';
         }
     }
     handleLabelchange(type) {
@@ -397,30 +398,36 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = false;
     }
     onSubmit(form_data, isfrom?) {
-        if (this.showPromotionalPrice && !form_data.promotionalPrice) {
-            this.api_error = 'Please enter promotional value';
+        console.log(this.item);
+        if (this.showPromotionalPrice && !form_data.promotionalPrice || form_data.promotionalPrice == 0) {
+           // this.api_error = 'Please enter valid promotional value';
+            this.sharedfunctionObj.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (!this.showPromotionalPrice) {
             form_data.promotionalPrice = '';
         }
-        if (this.showPromotionalPrice && form_data.promotionallabel === 'Other' && !form_data.customlabel) {
-            this.api_error = 'Please enter custom label';
+        if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
+           // this.api_error = 'Please enter custom label';
+           this.sharedfunctionObj.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
             return;
         }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
-            this.api_error = 'Please enter valid price';
+           // this.api_error = 'Please enter valid price';
+           this.sharedfunctionObj.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (iprice < 0) {
-            this.api_error = 'Price should not be a negative value';
+            //this.api_error = 'Price should not be a negative value';
+            this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (form_data.promotionalPrice) {
             const proprice = parseFloat(form_data.price);
             if (proprice < 0) {
-                this.api_error = 'Price should not be a negative value';
+              //  this.api_error = 'Price should not be a negative value';
+              this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }
