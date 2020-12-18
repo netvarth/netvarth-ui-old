@@ -34,7 +34,7 @@
                                                 <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
                                                     <div class="card-body" *ngIf="sel_ser">
                                                         <h6 class="card-title service">
-                                                            {{sel_ser_det.name}}
+                                                            {{sel_ser_det.name | capitalizeFirst}}
                                                             <!-- <span class="donate-by"> by </span>
                                                             {{this.businessjson.businessName}} -->
                                                         </h6>
