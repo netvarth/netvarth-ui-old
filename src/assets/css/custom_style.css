@@ -8378,7 +8378,7 @@ owl-carousel .bt3.active {
 .glbl-seting-tbl td {
   padding-bottom: 10px !important;
   font-weight: 500;
-  padding-left: 3%;
+  /* padding-left: 3%; */
 }
 
 .glbl-seting-heder {
@@ -10499,7 +10499,7 @@ a {
 }
 
 .linkpage {
-  width: 340px;
+  width: 400px;
   border: 1px solid;
   margin: auto;
   padding: 10px;
@@ -26618,6 +26618,14 @@ ngx-intl-tel-input input[disabled] {
 .custom-login-form .modal_close i:before {
 color: #fff !important;
 }
+.grey-bg {
+  background: darkgrey;
+}
+.terms-style {
+  overflow-y: scroll;
+  height: 400px;
+  overflow-x: hidden;
+}
 .createcatalogupper{
   border: 1px solid gainsboro;
   padding: 10px;
@@ -26697,3 +26705,4 @@ color: #fff !important;
   pointer-events: none !important;
   opacity: 0.5 !important;
 }
+

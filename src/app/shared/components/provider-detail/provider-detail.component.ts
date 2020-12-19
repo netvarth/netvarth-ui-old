@@ -21,7 +21,6 @@ import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 
-
 @Component({
   selector: 'app-provider-detail',
   templateUrl: './provider-detail.component.html',
@@ -642,6 +641,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               } else {
                 this.locationjson['isPlaceisSame'] = false;
               }
+              if (this.locationjson[i].parkingType) {
+                this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
+              }
             }
             this.changeLocation(this.locationjson[0]);
             this.api_loading = false;
@@ -1210,7 +1212,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         type: 'send',
         terminologies: this.terminologiesjson,
         name: this.businessjson.businessName,
-        // typeOfMsg: 'single'
+        typeOfMsg: 'single'
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {
@@ -2059,3 +2061,4 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
 }
+
