@@ -33,8 +33,8 @@ export class SharedServices {
   ProviderLogout() {
     return this.servicemeta.httpDelete('provider/login');
   }
-  forgotPassword(type = 'consumer', phonenumber) {
-    return this.servicemeta.httpPost(type + '/login/reset/' + phonenumber);
+  forgotPassword(type = 'consumer', phonenumber, postData?) {
+    return this.servicemeta.httpPost(type + '/login/reset/' + phonenumber, postData);
   }
   addJdn(data) {
     return this.servicemeta.httpPost('provider/settings/jdn/enable', data);
