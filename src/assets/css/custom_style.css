@@ -26705,4 +26705,13 @@ color: #fff !important;
   pointer-events: none !important;
   opacity: 0.5 !important;
 }
+.catalog-grn {
+  color: rgb(0, 128, 0) !important;
+  padding-right: 10px !important;
+}
+
+ .catalog-red {
+  color: rgb(244, 67, 54) !important;
+  padding-right: 10px !important;
+}
 

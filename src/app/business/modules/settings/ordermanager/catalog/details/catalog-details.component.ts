@@ -177,6 +177,11 @@ export class CatalogdetailComponent implements OnInit {
     step = 1;
     item_count = 0;
     item_list: any = [];
+    basic = false;
+    workinghours = false;
+    paymentinformation = true;
+    storepickupinfo = false;
+    homedeliveryinfo = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -793,6 +798,22 @@ export class CatalogdetailComponent implements OnInit {
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
+if (this.catalog.catalogName ) {
+    this.basic = true;
+}
+if (this.catalog.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
+    this.workinghours = true;
+}
+if (this.catalog.cancellationPolicy) {
+    this.paymentinformation = true;
+}
+
+if (orderpickUpstartdate && sttimestore && edtimestore && this.selday_arrstorepickup.length > 0) {
+    this.storepickupinfo = true;
+}
+if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedelivery.length > 0) {
+    this.homedeliveryinfo = true;
+}
 
         this.amForm.setValue({
             'catalogName': this.catalog.catalogName,
@@ -1003,6 +1024,22 @@ export class CatalogdetailComponent implements OnInit {
         }
         if (this.prefillData.imagebase64.length > 0) {
             this.selectedMessage.base64 = this.prefillData.imagebase64;
+        }
+        if (this.prefillData.catalogName ) {
+            this.basic = true;
+        }
+        if (this.prefillData.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
+            this.workinghours = true;
+        }
+        if (this.prefillData.cancellationPolicy) {
+            this.paymentinformation = true;
+        }
+        
+        if (orderpickUpstartdate && sttimestore && edtimestore && this.selday_arrstorepickup.length > 0) {
+            this.storepickupinfo = true;
+        }
+        if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedelivery.length > 0) {
+            this.homedeliveryinfo = true;
         }
         this.amForm.setValue({
             'catalogName': this.prefillData.catalogName,
@@ -1406,7 +1443,7 @@ export class CatalogdetailComponent implements OnInit {
             },
             'showPrice': form_data.itemPriceInfo,
             'paymentType': this.payAdvance,
-            'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
+            'advanceAmount': this.payAdvance === 'FIXED' ? form_data.advancePayment : '',
             'preInfo': {
                 'preInfoEnabled': this.preInfoEnabled,
                 'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',
@@ -1707,7 +1744,46 @@ export class CatalogdetailComponent implements OnInit {
             }
         });
     }
-    showStep(step) {
-        this.step = step;
+    showStep(step, form_data) {
+        console.log(step);
+        console.log(form_data);
+    if (step === 2) {
+        if (form_data.catalogName ) {
+        this.basic = true;
+        }
+        else {
+            this.basic = false;
+         }
+    } else if (step === 3) {
+        if (this.selday_arr.length > 0 && form_data.startdate && form_data.qstarttime && form_data.qendtime) {
+        this.workinghours = true;
+         } else {
+            this.workinghours = false;
+         }
+    } else if (step === 5) {
+        if (this.payAdvance === 'FIXED') {
+            if (form_data.advancePayment) {
+                this.paymentinformation = true;
+            } else {
+                this.paymentinformation = false;
+            }
+        } else {
+            this.paymentinformation = true;
+        }
+    } else if (step === 6) {
+        if (this.selday_arrstorepickup.length > 0 && form_data.startdatestore && form_data.qstarttimestore && form_data.qendtimestore) {
+            this.storepickupinfo = true;
+             } else {
+                this.storepickupinfo = false;
+             }
+
+    } else if (step === 7) {
+        if (this.selday_arrhomedelivery.length > 0 && form_data.startdatehome && form_data.qstarttimehome && form_data.qendtimehome) {
+            this.homedeliveryinfo = true;
+             } else {
+                this.homedeliveryinfo = false;
+             }
     }
+        this.step = step;
+}
 }
