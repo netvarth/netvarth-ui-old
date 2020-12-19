@@ -134,8 +134,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
-
-    this.catalog_details = this.shared_services.getOrderDetails();
     this.getStoreContact();
 
 

@@ -111,6 +111,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.sel_checkindate = this.chosenDateDetails.order_date;
     this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
+    console.log(this.sel_checkindate);
 
 
 

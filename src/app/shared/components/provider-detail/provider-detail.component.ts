@@ -1986,7 +1986,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (itemObj.item.showPromotionalPrice) {
         item_price = itemObj.item.promotionalPrice;
       }
-      this.price = this.price + item_price;
+      const totalPrice = this.price + item_price;
+      this.price = totalPrice;
       this.order_count = this.order_count + 1;
     }
   }
