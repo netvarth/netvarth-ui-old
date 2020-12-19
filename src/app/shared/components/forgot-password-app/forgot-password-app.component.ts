@@ -131,11 +131,9 @@ export class ForgotPasswordAppComponent {
   }
 
   sendOtpApi(phonenumber) {
-    const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
-
     this.resetApiErrors();
-
-    this.shared_services.forgotPassword(type, phonenumber)
+    const post_data = '+91';
+    this.shared_services.forgotPassword('provider', phonenumber, post_data)
       .subscribe(
         () => {
           this.createForm(2);
