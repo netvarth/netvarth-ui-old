@@ -3,7 +3,10 @@
 </section> -->
 <section *ngIf="curtype!='consumer'" class="myaccount">
     <div class="card title-gb">
-        <h5 class="mgn-up-10">My Account</h5>
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+              (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Settings
+          </h5>
     </div>
     <div class="content see-pages">
         <div class="related-links">

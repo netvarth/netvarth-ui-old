@@ -224,6 +224,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       case 'check-ins':
         this.router.navigate([usertype]);
         break;
+      case 'bprofile':
+        this.router.navigate(['provider', 'settings', 'bprofile']);
+        break;
     }
   }
   reloadHandler() { // this is the function which will be called periodically to refresh the contents in various sections

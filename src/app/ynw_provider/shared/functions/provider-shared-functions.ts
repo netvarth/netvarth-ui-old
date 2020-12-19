@@ -423,12 +423,16 @@ export class ProviderSharedFuctions {
     let ynwcustid;
     let custid = [];
     let name;
-    if (customerlist.length > 1) {
+    if (customerlist.length > 1 || source === 'donation-list') {
       type = 'multiple';
       for (const custlst of customerlist) {
-        custids.push(custlst.id);
+        if (source === 'donation-list') {
+          custids.push(custlst.uid);
+        } else {
+          custids.push(custlst.id);
+        }
       }
-    } else if (customerlist.length === 1) {
+    } else if (customerlist.length === 1 && source !== 'donation-list') {
       type = 'single';
       custid = customerlist[0].id || null;
       name = customerlist[0].firstName + ' ' + customerlist[0].lastName;
@@ -538,4 +542,3 @@ export class ProviderSharedFuctions {
     return message;
   }
 }
-

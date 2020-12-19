@@ -171,5 +171,7 @@ export class ChangeMobileComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-
+  redirecToSettings() {
+    this.router.navigate(['provider', 'settings', 'bprofile']);
+  }
 }

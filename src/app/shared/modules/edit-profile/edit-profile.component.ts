@@ -240,4 +240,7 @@ export class EditProfileComponent implements OnInit {
   resetdob() {
     this.editProfileForm.get('dob').setValue(null);
   }
+  redirecToSettings() {
+    this.router.navigate(['provider', 'settings', 'bprofile']);
+  }
 }

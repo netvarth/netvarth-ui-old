@@ -58,7 +58,12 @@
                 </i>
               </a>
             </li>
-
+            <li class="dropdown notifications-menu" *ngIf="selectedDonations && selectedDonations.length>0">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor pad-10" data-toggle="control-sidebar">
+                <span class="" [matTooltip]="'Send Message'">
+                  <i class="fa fa-comments-o" (click)="addInboxMessage()" style="font-size: 1.1rem"></i> </span>
+              </a>
+            </li>
             <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor">
                 <i class="icon-location" [matTooltipClass]="tooltipcls"
@@ -174,6 +179,8 @@
                     <div class="listing" *ngFor="let donation of donations; let i = index">
                       <div class="wrap">
                         <div class="td one">
+                          <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
+                            (change)="selectDonations(i)" />
                           <span class="date">{{stringtoDate(donation.date,
                             'date')}}</span>
                         </div>
@@ -187,8 +194,8 @@
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
                           currency:'&#8377;' }}
                           <span class="pull-right">
-                            <i *ngIf="donation.note" [matTooltip]="'Notes'"
-                              class="icon-note pointer-cursor" (click)="showConsumerNote(donation)"></i>
+                            <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                              (click)="showConsumerNote(donation)"></i>
                           </span>
                         </div>
                       </div>

@@ -154,6 +154,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       case 'consumer-common': this.message_label = 'Message to ' + provider_label; break;
       case 'provider-common': this.message_label = 'Message to ' + consumer_label; break;
       case 'customer-list': this.message_label = 'Message to ' + consumer_label; break;
+      case 'donation-list': this.message_label = 'Message to ' + consumer_label; break;
     }
   }
   createForm() {
@@ -173,70 +174,83 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
-          const post_data = {
-            medium: {
-              email: this.email,
-              sms: this.sms,
-              pushNotification: this.pushnotify
-            },
-            communicationMessage: form_data.message,
-            consumerId: this.uuid
-          };
-          this.shared_services.consumerMassCommunicationWithId(post_data).
-            subscribe(() => {
-              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-              setTimeout(() => {
-                this.dialogRef.close('reloadlist');
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-              error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
-                this.disableButton = false;
-              }
-            );
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify
+              },
+              communicationMessage: form_data.message,
+              consumerId: this.uuid
+            };
+            this.shared_services.consumerMassCommunicationWithId(post_data).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
           }
         } else {
           if (!this.sms && !this.email && !this.pushnotify) {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
-          const post_data = {
-            medium: {
-              email: this.email,
-              sms: this.sms,
-              pushNotification: this.pushnotify
-            },
-            communicationMessage: form_data.message,
-            uuid: this.uuid
-          };
-          if (this.type === 'appt') {
-            this.shared_services.consumerMassCommunicationAppt(post_data).
-              subscribe(() => {
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                setTimeout(() => {
-                  this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify
               },
-                error => {
-                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
-                  this.disableButton = false;
-                }
-              );
-          } else {
-            this.shared_services.consumerMassCommunication(post_data).
-              subscribe(() => {
-                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                setTimeout(() => {
-                  this.dialogRef.close('reloadlist');
-                }, projectConstants.TIMEOUT_DELAY);
-              },
-                error => {
-                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
-                  this.disableButton = false;
-                }
-              );
+              communicationMessage: form_data.message,
+              uuid: this.uuid
+            };
+            if (this.type === 'appt') {
+              this.shared_services.consumerMassCommunicationAppt(post_data).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
+            } else if (this.source === 'donation-list') {
+              this.provider_services.donationMassCommunication(post_data).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
+            } else {
+              this.shared_services.consumerMassCommunication(post_data).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
+            }
           }
-        }
         }
       } else {
         if (this.data.source === 'customer-list') {
@@ -244,28 +258,28 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             this.api_error = 'share message via options are not selected';
             return;
           } else {
-          const post_data = {
-            medium: {
-              email: this.email,
-              sms: this.sms,
-              pushNotification: this.pushnotify
-            },
-            communicationMessage: form_data.message,
-            consumerId: [this.uuid]
-          };
-          this.shared_services.consumerMassCommunicationWithId(post_data).
-            subscribe(() => {
-              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-              setTimeout(() => {
-                this.dialogRef.close('reloadlist');
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-              error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
-                this.disableButton = false;
-              }
-            );
-        }
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify
+              },
+              communicationMessage: form_data.message,
+              consumerId: [this.uuid]
+            };
+            this.shared_services.consumerMassCommunicationWithId(post_data).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
         } else {
           if (this.data.source === 'provider-waitlist') {
             if (!this.sms && !this.email && !this.pushnotify) {
@@ -318,61 +332,61 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       if (this.type === 'appt') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunicationAppt(postdata).
-          subscribe(() => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
-        } else {
-        this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
-          .subscribe(
-            () => {
+            subscribe(() => {
               this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
               setTimeout(() => {
                 this.dialogRef.close('reloadlist');
               }, projectConstants.TIMEOUT_DELAY);
             },
-            error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        } else {
+          this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
+            .subscribe(
+              () => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
         }
       } else {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunication(postdata).
-          subscribe(() => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
-        } else {
-        this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
-          .subscribe(
-            () => {
+            subscribe(() => {
               this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
               setTimeout(() => {
                 this.dialogRef.close('reloadlist');
               }, projectConstants.TIMEOUT_DELAY);
             },
-            error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
-      }
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        } else {
+          this.shared_services.addProviderWaitlistNote(this.uuid, dataToSend)
+            .subscribe(
+              () => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              error => {
+                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        }
       }
     }
   }
@@ -441,6 +455,26 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
+      // const files = this.selectedMessage.files;
+      // const propertiesDetob = {};
+      // for (let pic of this.selectedMessage.files) {
+      //     const properties = {
+      //         'caption': this.selectedMessage.caption[pic] || '',
+      //     };
+      //     propertiesDetob[pic] = properties;
+      //     pic++;
+      // }
+      // const propertiesDet = {
+      //     'propertiesMap': propertiesDetob
+      // };
+      // const preInstructionGallery = {
+      //   // 'imagesWithMetData': files,
+      //     'files': files,
+      //     'information': propertiesDet
+      // };
+      // console.log(post_data);
+      // post_data['attachementStream'] = preInstructionGallery;
+      // console.log(post_data);
       this.shared_services.addConsumertoProviderNote(this.user_id,
         post_data)
         .subscribe(
@@ -505,47 +539,47 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_servicesobj.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
 }

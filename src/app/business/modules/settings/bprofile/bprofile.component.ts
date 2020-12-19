@@ -899,6 +899,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   gotoAboutMe() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'aboutme']);
   }
+  gotoAccountSettings() {
+    this.routerobj.navigate(['provider', 'profile']);
+  }
   // mandatory fields
   getDomainVirtualFields() {
     const weightageObjectOfDomain: any = {};
