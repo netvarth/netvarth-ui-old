@@ -57,8 +57,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                             </div>
                             <div class="price_outer">
-                              <span><small>Min.Qty<input class="ip-field"  id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small>  </span>
-                              <span><small>Max.Qty <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" > </small></span> 
+                              <div><small>Min.Qty<input class="ip-field pl5"  id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small>  </div>
+                              <div><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" > </small></div> 
                             </div>
                         </div>
                     </div>
@@ -82,8 +82,8 @@
                                     <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                                 </div>
                                 <div class="price_outer">
-                                        <div ><small>Min.Qty&nbsp;<input class="ip-field" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small> </div>
-                                        <div ><small>Max.Qty <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" ></small></div>
+                                        <div ><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small> </div>
+                                        <div ><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" ></small></div>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
     <div *ngIf="!api_loading && action === 'edit'">
         <ng-container *ngIf="seletedCatalogItems.length === 0">
             <div class="card">
-                No more items in the catalog
+                No more items in the catalogue
             </div></ng-container>
         
         <ng-container *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
