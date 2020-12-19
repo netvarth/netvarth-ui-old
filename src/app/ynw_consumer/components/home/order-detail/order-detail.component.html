@@ -55,8 +55,8 @@
                                                 <div class="txt-cust-name">{{waitlist.orderFor.firstName}}&nbsp;{{waitlist.orderFor.lastName}}</div>
                                                 <div class="txt-addrs">
                                                     <i class="fa fa-phone"></i>
-                                                    {{waitlist.phoneNumber}}</div>
-                                                    <div class="txt-addrs">
+                                                    {{waitlist.countryCode}}{{waitlist.phoneNumber}}</div>
+                                                    <div class="txt-addrs content_wrap">
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
                                                 <!-- <div class="txt-addrs">
@@ -77,9 +77,9 @@
 
                                     <!-- Toggle -->
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
-                                        <span>ORDERED ITEMS</span>
+                                        <span style="padding-left: 3px !important;">ORDERED ITEMS</span>
                                     <div class="pull-right" style="font-size: large;">
-                                        View
+                                      
                                         <mat-button-toggle-group #group="matButtonToggleGroup" class="fl-right">
                                             <mat-button-toggle value="list" aria-label="Text align left"
                                                 (click)="getValue('list')">
@@ -100,8 +100,10 @@
                                         <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
                                             *ngIf="showView === 'grid'">
                                             <mat-grid-tile *ngFor="let item of waitlist.orderItem">
-                                                <mat-grid-tile-header
+                                                <mat-grid-tile-header *ngIf="item.itemImages"
                                                     [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
+                                                </mat-grid-tile-header>
+                                                <mat-grid-tile-header *ngIf="!item.itemImages">
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
@@ -124,7 +126,7 @@
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
                                                 <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fl-right">
-                                                    <div class="lst-img"
+                                                    <div *ngIf="item.itemImages" class="lst-img"
                                                         [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
 
                                                     </div>
