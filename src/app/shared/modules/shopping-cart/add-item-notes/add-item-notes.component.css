@@ -4,6 +4,9 @@
     border-color: #0a19313d !important;
     outline: 0;
     background: #f9f9f9;
+    height: 153px !important;
+    border: 1px solid #808080a8 !important;
+    margin-bottom: 10px !important;
 }
 .txt-area-msg .img-msg {
     width: 100%;
