@@ -40,11 +40,18 @@
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
-														<span class="dynamic" *ngFor="let user of checkin.appmtFor">
-															{{user.firstName | capitalizeFirst}}
-															{{user.lastName | capitalizeFirst}}
-
-														</span>
+														<ng-container *ngIf="source === 'appt'">
+															<span class="dynamic" *ngFor="let user of checkin.appmtFor">
+																{{user.firstName | capitalizeFirst}}
+																{{user.lastName | capitalizeFirst}}
+															</span>
+														</ng-container>
+														<ng-container *ngIf="source === 'order'">
+															<span class="dynamic">
+																{{checkin.orderFor.firstName | capitalizeFirst}}
+																{{checkin.orderFor.lastName | capitalizeFirst}}
+															</span>
+														</ng-container>
 														<span class="dynamic fl-right">{{billdate}}
 															{{billtime}}</span>
 													</div>
@@ -70,8 +77,9 @@
 										</div>
 										<ng-container *ngIf="bill_data.billStatus!='Settled'">
 											<div class="workbench mat-form-field-wrapper"
-												*ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || (source && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled'))">
-
+												*ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || 
+												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
+												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
 												<ng-container
 													*ngIf="(!showAddItemsec && showAddItemMenuSection) || showAddItemsec || showJCouponSection">
 													<div class="section-two">

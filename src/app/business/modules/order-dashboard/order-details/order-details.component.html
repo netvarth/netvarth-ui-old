@@ -40,9 +40,9 @@
                 </div>
                 <div class="pull-right viewtypes">
                     View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
-                        (click)="selectViewType('list')"></i>
+                        (click)="selectViewType('list')" [matTooltipClass]="tooltipcls" [matTooltip]="'List View'"></i>
                     <i class="fa fa-th-large pointer-cursor" [class.selectedView]="selectedType==='grid'"
-                        (click)="selectViewType('grid')"></i>
+                        (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
                 </div>
             </div>
             <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"

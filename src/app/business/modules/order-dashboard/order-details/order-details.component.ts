@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -21,6 +22,7 @@ export class OrderDetailsComponent implements OnInit {
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   screenWidth;
   small_device_display = false;
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions) {
