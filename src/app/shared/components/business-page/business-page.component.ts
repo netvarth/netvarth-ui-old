@@ -241,6 +241,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   serviceCount: number;
   userCount: number;
   donationServices: any[];
+  service_cap = 'Services and Consultations';
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
   constructor(
@@ -480,6 +481,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.pageFound = true;
               this.socialMedialist = [];
               this.businessjson = res;
+              if (this.businessjson.serviceSector.name !== 'healthCare') {
+                this.service_cap = 'Services';
+              }
               if (this.businessjson.cover) {
                 this.bgCover = this.businessjson.cover.url;
               }

@@ -761,7 +761,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getSelectedItemId(itemName) {
     let itemId = 0;
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].displayName === itemName) {
+      if (this.items[i].displayName === itemName.trim()) {
         itemId = this.items[i].itemId;
         break;
       }
@@ -1389,7 +1389,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
       // } else {
-        msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
+      msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
       // }
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',

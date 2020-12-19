@@ -242,6 +242,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   orderItems: any[];
   itemQty: number;
   activeCatalog: any;
+  service_cap = 'Services and Consultations';
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -470,6 +471,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.pageFound = true;
             this.socialMedialist = [];
             this.businessjson = res;
+            if (this.businessjson.serviceSector.name !== 'healthCare') {
+              this.service_cap = 'Services';
+            }
             if (this.businessjson.cover) {
               this.bgCover = this.businessjson.cover.url;
             }
