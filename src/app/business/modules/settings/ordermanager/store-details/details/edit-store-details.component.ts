@@ -30,13 +30,13 @@ export class EditStoreDetailsComponent implements OnInit {
         private router: Router,
         private shared_Functionsobj: SharedFunctions,
         private provider_services: ProviderServices,
-        ) {
-            this.route.queryParams.subscribe(params => {
-                if (this.router.getCurrentNavigation().extras.state) {
-                  this.data = this.router.getCurrentNavigation().extras.state.contact_info;
-                }
-              });
-         }
+    ) {
+        this.route.queryParams.subscribe(params => {
+            if (this.router.getCurrentNavigation().extras.state) {
+                this.data = this.router.getCurrentNavigation().extras.state.contact_info;
+            }
+        });
+    }
     ngOnInit() {
         this.firstName = this.data.firstName;
         this.lastName = this.data.lastName;
@@ -47,57 +47,57 @@ export class EditStoreDetailsComponent implements OnInit {
         this.alternateEmail = this.data.alternateEmail;
         this.whatsappNo = this.data.whatsappNo;
     }
-    
-     onSubmit() {
-    const data = {
-        'firstName' : this.firstName,
-        'lastName': this.lastName,
-        'phone': this.phone,
-        'email': this.email,
-        'address': this.address,
-        'alternatePhone': this.alternatePhone,
-        'alternateEmail': this.alternateEmail,
-        'whatsappNo': this.whatsappNo,
-        'primCountryCode': '+91',
-        'secCountryCode': '+91',
-        'whatsAppCountryCode': '+91',
-      };
-      if(this.email === this.alternateEmail){ 
-          this.shared_Functionsobj.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
-      }
-      else if(this.phone === this.alternatePhone){ 
-        this.shared_Functionsobj.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
-    }  else{
-        this.editInfo(data);
-      }
-      
-  }
-  editInfo(data) {
-    this.resetApiErrors();
-    this.api_loading = true;
-    this.provider_services.editContactInfo(data)
-        .subscribe(
-            () => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('CONTACT_INFO_UPDATED'));
-                this.api_loading = false;
-                this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
-            },
-            error => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.api_loading = false;
-                this.disableButton = false;
-            }
-        );
-}
-resetApiErrors() {
-    this.api_error = null;
-    this.api_success = null;
-}
-Back() {
-    this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
-}
+
+    onSubmit() {
+        const data = {
+            'firstName': this.firstName,
+            'lastName': this.lastName,
+            'phone': this.phone,
+            'email': this.email,
+            'address': this.address,
+            'alternatePhone': this.alternatePhone,
+            'alternateEmail': this.alternateEmail,
+            'whatsappNo': this.whatsappNo,
+            'primCountryCode': '+91',
+            'secCountryCode': '+91',
+            'whatsAppCountryCode': '+91',
+        };
+        if (this.email === this.alternateEmail) {
+            this.shared_Functionsobj.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
+        }
+        else if (this.phone === this.alternatePhone) {
+            this.shared_Functionsobj.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
+        } else {
+            this.editInfo(data);
+        }
+
+    }
+    editInfo(data) {
+        this.resetApiErrors();
+        this.api_loading = true;
+        this.provider_services.editContactInfo(data)
+            .subscribe(
+                () => {
+                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('CONTACT_INFO_UPDATED'));
+                    this.api_loading = false;
+                    this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
+                },
+                error => {
+                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                    this.disableButton = false;
+                }
+            );
+    }
+    resetApiErrors() {
+        this.api_error = null;
+        this.api_success = null;
+    }
+    Back() {
+        this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
+    }
     onCancel() {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
     }
-   
+
 }
