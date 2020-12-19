@@ -35,7 +35,7 @@
                     </mat-expansion-panel-header>
                     <div class="form-group">
                       <mat-form-field>
-                        <input matInput type="text" class="form-control" id="catalogName" placeholder="Catalog Name*"
+                        <input matInput type="text" class="form-control" id="catalogName" placeholder="Catalogue Name*"
                           formControlName="catalogName" maxlength="50">
                       </mat-form-field>
                       <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'catalogName')"
@@ -49,7 +49,7 @@
                     <div class="form-group">
                       <mat-form-field>
                         <textarea matInput class="form-control" id="catalogDesc"
-                          placeholder="Enter catalog description" formControlName="catalogDesc"
+                          placeholder="Enter catalogue description" formControlName="catalogDesc"
                           (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
                           maxlength="500"></textarea>
                       </mat-form-field>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                       <mat-form-field>
-                        <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
+                        <mat-select placeholder="Catalogue status" formControlName="orderStatuses" [multiple]="true">
                           <!-- <ngx-mat-select-search [formControl]="statMultiFilterCtrl" placeholderLabel="Search departments"
                       noEntriesFoundLabel="no matching department found"></ngx-mat-select-search> -->
                           <mat-option *ngFor=" let stat of status" [value]="stat"
@@ -83,7 +83,7 @@
                       </mat-radio-group>
                     </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
-                      Show personalized information about this catalog
+                      Show personalized information about this Catalogue
                       <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
                         Click here</span>
                       <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
@@ -100,7 +100,7 @@
                             <div class="addorderitem no-margin" (click)="imagefile.click()">
                               <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile type="file"
                                     accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add
-                                  catalog
+                                  catalogue
                                   image
                                 </a></p>
                               <p class="addorderitemp2"> <img style="width: 65%;" src="assets/images/add.svg" /></p>
