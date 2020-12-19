@@ -96,7 +96,8 @@
 
                     </mat-step>
                     <mat-step label="Step 3">
-                      <ng-template matStepLabel>Fill out your address</ng-template>
+                      <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store'"> Contact Details</ng-template>
+                      <ng-template matStepLabel *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">Fill out your address</ng-template>
 
                       <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                       <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
