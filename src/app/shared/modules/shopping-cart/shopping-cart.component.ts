@@ -446,6 +446,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log(this.choose_type);
   }
   calculateDate(days) {
+    console.log(this.todaydate);
     // this.resetApi();
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();

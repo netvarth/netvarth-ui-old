@@ -42,14 +42,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   orderSummary: any[];
   taxAmount: any;
   orderAmount: any;
-  catlog: any;
   catalogItem: any;
   addressDialogRef: any;
   orderList: any = [];
   price: number;
   orders: any[];
   delivery_type: any;
-  catlog_id: any;
   selectedQsTime;
   selectedQeTime;
   order_date;
@@ -95,12 +93,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
-    this.catlog_id = this.chosenDateDetails.catlog_id;
+    this.catalog_Id = this.chosenDateDetails.catlog_id;
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
-    this.getCatalogDetails(this.account_id);
-
-
     if (this.delivery_type === 'store') {
       this.store_pickup = true;
       this.storeChecked = true;
@@ -112,6 +107,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.sel_checkindate = this.chosenDateDetails.order_date;
     this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
     console.log(this.sel_checkindate);
+
+
+
+
 
 
 
@@ -152,7 +151,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.doLogin('consumer');
     }
-
+    this.getCatalogDetails(this.account_id).then(data => {
+      this.catalog_details = data;
+      this.advance_amount = this.catalog_details.advanceAmount;
+      console.log(this.catalog_details);
+    });
     this.getStoreContact();
     this.loginForm = this._formBuilder.group({
       phone: [this.customer_phoneNumber, Validators.required]
@@ -161,7 +164,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       phone: [this.customer_phoneNumber, Validators.required],
       email: ['', Validators.required]
     });
-    this.advance_amount = this.catalog_details.advanceAmount;
+
     this.showfuturediv = false;
     this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -204,11 +207,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getCatalogDetails(accountId) {
-    this.shared_services.getConsumerCatalogs(accountId).subscribe(
-      (catalogs: any) => {
-        this.catalog_details = catalogs[0];
-        this.catalog_Id = this.catalog_details.id;
-      });
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.getConsumerCatalogs(accountId)
+        .subscribe(
+          (data: any) => {
+            console.log(JSON.stringify(data[0]));
+            resolve(data[0]);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
+    //   (catalogs: any) => {
+    //     this.catalog_details = catalogs[0];
+    //   });
 
   }
 
@@ -230,7 +245,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return deliveryCharge;
   }
   getOrderFinalAmountToPay() {
-     const amount = this.price + this.getTaxCharges();
+    const amount = this.price + this.getTaxCharges();
     return amount.toFixed(2);
   }
   getItemQty(item) {
@@ -671,10 +686,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
-    .subscribe((data: any) => {
-      console.log(data);
-      this.storeContactNw = data;
-    });
+      .subscribe((data: any) => {
+        console.log(data);
+        this.storeContactNw = data;
+      });
   }
   sidebar() {
     this.showSide = !this.showSide;
