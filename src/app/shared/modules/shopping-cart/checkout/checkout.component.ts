@@ -21,6 +21,8 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  orderNote: any;
+  phonenumber: any;
   customer_countrycode: any;
   notfutureAvailableTime = false;
   chosenDateDetails: any;
@@ -145,6 +147,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (activeUser) {
       const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
       this.customer_countrycode = credentials.countryCode;
+      this.phonenumber = activeUser.primaryPhoneNumber;
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
       this.getaddress();
@@ -355,13 +358,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
-        'phoneNumber': this.customer_phoneNumber,
-        'email': this.customer_email
+        'countryCode': this.customer_countrycode,
+        'phoneNumber': this.phonenumber,
+        'email': this.customer_email,
+        'orderNote': this.orderNote
       };
       this.confirmOrder(post_Data);
     }
     if (this.delivery_type === 'store') {
-      const contactNumber = this.storeContact.value.phone;
+      // const contactNumber = this.storeContact.value.phone;
       const contact_email = this.storeContact.value.email;
       const post_Data = {
         'storePickup': true,
@@ -377,8 +382,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
-        'phoneNumber': contactNumber,
-        'email': contact_email
+        'countryCode': this.customer_countrycode,
+        'phoneNumber': this.phonenumber,
+        'email': contact_email,
+        'orderNote': this.orderNote
 
       };
       this.confirmOrder(post_Data);
@@ -463,6 +470,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (this.catalog_details.advanceAmount) {
           this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
         } else {
+
+          localStorage.removeItem('order');
+          localStorage.removeItem('order_sp');
+          localStorage.removeItem('chosenDateTime');
           this.router.navigate(['consumer']);
         }
       },
