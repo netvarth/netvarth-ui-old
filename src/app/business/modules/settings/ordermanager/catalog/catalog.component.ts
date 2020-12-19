@@ -21,7 +21,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     taxable_cap = Messages.TAXABLE_CAP;
     edit_btn = Messages.EDIT_BTN;
     delete_btn = Messages.DELETE_BTN;
-    add_item_cap = 'ADD CATALOG';
+    add_item_cap = 'ADD CATALOGUE';
     item_enable_btn = Messages.ITEM_ENABLE_CAP;
     catalog_list: any = [];
     query_executed = false;
@@ -58,7 +58,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
         private sharedfunctionObj: SharedFunctions) {
-        this.emptyMsg = 'No Catalogs found';
+        this.emptyMsg = 'No Catalogue found';
     }
 
     ngOnInit() {
