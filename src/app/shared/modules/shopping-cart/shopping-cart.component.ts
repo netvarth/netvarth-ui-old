@@ -412,7 +412,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     subtotal = subtotal + this.price + deliveryCharge;
     return subtotal;
   }
-  cart() {
+  confirmOrder() {
+    if(this.checkMinimumQuantityofItems()){
 
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
 
@@ -427,10 +428,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     };
     this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.router.navigate(['order', 'shoppingcart', 'checkout']);
-    // this.router.navigate(['order/checkout']);
-
   }
 
+  }
+  checkMinimumQuantityofItems() {
+    let all_itemsSet = true;
+    this.orders.forEach(item => {
+      if (this.getItemQty(item) < item.minqty) {
+        this.sharedFunctionobj.openSnackBar(item.item.itemName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
+        all_itemsSet = false;
+      }
+    });
+    return all_itemsSet;
+  }
   goBack() {
     if (this.action === 'changeTime') {
       this.action = '';

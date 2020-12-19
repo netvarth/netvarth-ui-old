@@ -342,6 +342,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
+    console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
       const post_Data = {
         'homeDelivery': true,
@@ -353,8 +354,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'id': 0
         },
         'timeSlot': {
-          'sTime': this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'],
-          'eTime': this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime']
+          'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+          'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
         },
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
@@ -377,8 +378,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'id': 0
         },
         'timeSlot': {
-          'sTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'],
-          'eTime': this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime']
+          'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+          'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
         },
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
@@ -471,8 +472,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
         } else {
 
-          localStorage.removeItem('order');
+
           localStorage.removeItem('order_sp');
+          localStorage.removeItem('order');
           localStorage.removeItem('chosenDateTime');
           this.router.navigate(['consumer']);
         }
