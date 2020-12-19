@@ -92,16 +92,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.provider_id = params.unique_id;
         console.log(this.account_id);
       });
-    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
-    if (this.chosenDateDetails !== null) {
-      this.delivery_type = this.chosenDateDetails.delivery_type;
-      this.choose_type = this.delivery_type;
-    }
+
   }
 
   ngOnInit() {
     this.gets3curl();
-    this.getCatalogDetails(this.account_id).then( data => {
+    this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       console.log(this.catalog_details);
       if (this.catalog_details) {
@@ -130,32 +126,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
-    });
-    this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-    this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
-    this.getStoreContact();
-
-
-      // set chosendate fromlocalstorgae
-      if (this.chosenDateDetails !== null) {
-        if (this.delivery_type === 'store') {
-          this.store_pickup = true;
-          this.choose_type = 'store';
-          this.storeChecked = true;
-        } else if (this.delivery_type === 'home') {
-          this.home_delivery = true;
-          this.choose_type = 'home';
-          this.homeChecked = true;
-
-        }
-        this.sel_checkindate = this.chosenDateDetails.order_date;
-        console.log(this.sel_checkindate);
-        this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-      } else {
-        this.storeChecked = true;
-      }
-
+      this.fillDateFromLocalStorage();
+      this.orderList = JSON.parse(localStorage.getItem('order'));
+      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+      this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
+      this.getStoreContact();
       this.showfuturediv = false;
       this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -186,15 +161,41 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       } else {
         this.isFuturedate = true;
       }
-    }
+
+    });
+  }
+
 
 
 
   ngOnDestroy() {
-   this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+  }
+  fillDateFromLocalStorage() {
+    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
+    if (this.chosenDateDetails !== null) {
+      this.delivery_type = this.chosenDateDetails.delivery_type;
+      this.choose_type = this.delivery_type;
+      if (this.delivery_type === 'store') {
+        this.store_pickup = true;
+        this.choose_type = 'store';
+        this.storeChecked = true;
+      } else if (this.delivery_type === 'home') {
+        this.home_delivery = true;
+        this.choose_type = 'home';
+        this.homeChecked = true;
+
+      }
+      this.sel_checkindate = this.chosenDateDetails.order_date;
+      console.log(this.sel_checkindate);
+      this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
+    } else {
+      this.storeChecked = true;
+    }
+
   }
   getCatalogDetails(accountId) {
-   const _this = this;
+    const _this = this;
     return new Promise(function (resolve, reject) {
       _this.shared_services.getConsumerCatalogs(accountId)
         .subscribe(
@@ -635,10 +636,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
-    .subscribe((data: any) => {
-      console.log(data);
-      this.storeContact = data;
-    });
+      .subscribe((data: any) => {
+        console.log(data);
+        this.storeContact = data;
+      });
   }
 
 
