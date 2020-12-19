@@ -103,12 +103,13 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Reminder textarea msg content
   getReminderData() {
+    const mode = (this.data.app === 'GoogleMeet') ? 'Google Meet' : this.data.app;
     if (this.data.status) {
       this.msg_to_user = '';
     } else {
       this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
       this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
+      this.videocall_msg = ' , your ' + this.data.app + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\nWhen it is your turn, click on the following link- ' + this.meetingLink;
       this.waitFor = '\n3. Wait for the video call to start';
       this.gooleWaitFor = '\n2. Wait for the video call to start';
       this.zoomWaitFor = '\n2. Wait for the video call to start';
@@ -137,9 +138,10 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Meeting detail textarea msg content
   getMeetingDetailsData() {
+    const mode = (this.data.app === 'GoogleMeet') ? 'Google Meet' : this.data.app;
     this.instalZoom = '\n(If you do not have Zoom installed you will be prompted to install Zoom)';
     this.signinGoogle = '\n(If you are not already signed into Google you must sign in)';
-    this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will receive an alert that the ' + this.data.app + ' call has started.\nOpen the following link- ' + this.meetingLink;
+    this.videocall_msg = 'Follow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\nOpen the following link- ' + this.meetingLink;
     this.waitFor = '\n2. Wait for the video call to begin';
     this.providr_msg = 'How to start the video call -\n1. Open the following link - ' + this.meetingLink;
     this.aloJoin = '\n2. Allow ' + this.customer_label + ' to join the call when you are prompted';

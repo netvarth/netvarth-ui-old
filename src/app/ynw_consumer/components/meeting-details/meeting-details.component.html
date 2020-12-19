@@ -33,13 +33,13 @@
         </div>
     </div>
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'WhatsApp' && data.details.service.virtualServiceType === 'videoService'">
-        * When it is time for your call, you will receive a WhatsApp video call on - +91{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
+        * When it is time for your call, you will receive a WhatsApp video call on - +{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
     </div>
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'WhatsApp' && data.details.service.virtualServiceType === 'audioService'">
-        * When it is time for your call, you will receive a WhatsApp audio call on - +91{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
+        * When it is time for your call, you will receive a WhatsApp audio call on - +{{data.details.virtualService['WhatsApp']}}.<br> Please remember to keep your phone's internet connection on.
     </div>
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'Phone'">
-        * When it is time for your call, you will receive a call on - +91{{data.details.virtualService['Phone']}}
+        * When it is time for your call, you will receive a call on - +{{data.details.virtualService['Phone']}}
     </div>
     <div *ngIf="data.details.service.virtualCallingModes[0].callingMode == 'VideoCall'">
         Follow these instructions to join the video call:

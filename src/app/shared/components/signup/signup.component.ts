@@ -87,6 +87,7 @@ export class SignUpComponent implements OnInit {
   SearchCountryField = SearchCountryField;
 	TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
+  countrySelected = 'in';
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
@@ -205,6 +206,7 @@ export class SignUpComponent implements OnInit {
         phonenumber: new FormControl(undefined, [Validators.required]),
         first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
         selectedDomainIndex: ['', Validators.compose([Validators.required])],
         selectedSubDomains: [0, Validators.compose([Validators.required])],
         package_id: ['', Validators.compose([Validators.required])],
@@ -297,20 +299,32 @@ export class SignUpComponent implements OnInit {
   onItemSelect() {
     // this.license_description = this.license_packages[item.value];
   }
-
+  countryChanged (event) {
+    this.countrySelected = event.iso2;
+  }
   onSubmit(acc_id?) {
     this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
+    console.log(this.signupForm.get('phonenumber'));
     const fname = this.signupForm.get('first_name').value.trim();
     const lname = this.signupForm.get('last_name').value.trim();
-    
+    // const eMail = this.signupForm.get('email').value.trim();
     if (!this.signupForm.get('phonenumber').value) {
       this.api_error = 'Phone number required';
       if (document.getElementById('phonenumber')) {
         document.getElementById('phonenumber').focus();
       }
       return false;
+    }
+    if (this.countrySelected!='in' && !this.signupForm.get('email').value) {
+      this.api_error = 'Email Id required';
+      if (document.getElementById('email')) {
+        document.getElementById('email').focus();
+      }
+      return false;
+    } else {
+
     }
     const phoneNumber = this.signupForm.get('phonenumber').value.e164Number;
     const dialCode = this.signupForm.get('phonenumber').value.dialCode;
@@ -319,14 +333,16 @@ export class SignUpComponent implements OnInit {
     if(phoneNumber.startsWith(dialCode)) {
       loginId = phoneNumber.split(dialCode)[1];
     }
-
     let userProfile = {
       countryCode: dialCode,
-      // primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
       primaryMobileNo: loginId || null,
-      firstName: null,
-      lastName: null
+      firstName: this.toCamelCase(fname) || null,
+      lastName: this.toCamelCase(lname) || null
+      // email: eMail
     };
+    if (this.countrySelected !== 'in') {
+      userProfile['email'] = this.signupForm.get('email').value.trim();
+  }
     if (this.data.moreOptions.isCreateProv) {
       userProfile = {
         countryCode: this.selectedCountryCode,
@@ -334,16 +350,17 @@ export class SignUpComponent implements OnInit {
         firstName: this.toCamelCase(this.data.moreOptions.dataCreateProv.fname) || null,
         lastName: this.toCamelCase(this.data.moreOptions.dataCreateProv.lname) || null
       };
-    } else {
-
-      userProfile = {
-        countryCode: dialCode,
-        primaryMobileNo: loginId || null,
-        firstName: this.toCamelCase(fname) || null,
-        lastName: this.toCamelCase(lname) || null,
-        // licensePackage: this.signupForm.get('package_id').value || null,
-      };
-    }
+    } 
+    // else {
+      // userProfile['firstName'] = this.toCamelCase(fname) || null;
+      // userProfile['lastName'] = this.toCamelCase(lname) || null;
+      // userProfile = {
+      //   countryCode: dialCode,
+      //   primaryMobileNo: loginId || null,
+      //   firstName: this.toCamelCase(fname) || null,
+      //   lastName: this.toCamelCase(lname) || null,
+      // };
+    // }
 
 
     if (fname === '') {
@@ -360,65 +377,65 @@ export class SignUpComponent implements OnInit {
       }
       return;
     }
-    const isAdmin = (this.signupForm.get('is_provider').value === 'true') ? true : false;
-    if (isAdmin) {
-      const sector = this.selectedDomain.domain || '';
-      // const ob = this.signupForm.get('selectedSubDomains').value;
-      // const sub_Sector = ob.map(el =>  el.value );
-      if (this.data.claimData !== undefined) { // claimmable
-        this.user_details = {
-          userProfile: userProfile,
-          sector: this.business_domains[this.activeDomainIndex].domain,
-          subSector: this.subDomainList[this.activeSubDomainIndex].value,
-          isAdmin: isAdmin, // checked this to find provider or customer
-          // licPkgId: this.signupForm.get('package_id').value || null,
-          licPkgId: 9 || null,
-          accountId: this.data.claimData.accountId
-        };
-      } else if (acc_id) {
-        this.user_details = {
-          userProfile: userProfile,
-          sector: this.selectedDomain.domain,
-          subSector: this.subDomainList[this.signupForm.get('selectedSubDomains').value].value,
-          isAdmin: isAdmin, // checked this to find provider or customer
-          // licPkgId: this.signupForm.get('package_id').value || null,
-          licPkgId: 9 || null,
-          accountId: acc_id
-        };
-      } else {
-        const sub_Sector = this.subDomainList[this.signupForm.get('selectedSubDomains').value].value;
-        this.user_details = {
-          userProfile: userProfile,
-          sector: sector,
-          subSector: sub_Sector,
-          isAdmin: isAdmin, // checked this to find provider or customer
-          // licPkgId: this.signupForm.get('package_id').value || null
-          licPkgId: 9 || null
-        };
-      }
-      this.signUpApiProvider(this.user_details);
-    } else {
+    // const isAdmin = (this.signupForm.get('is_provider').value === 'true') ? true : false;
+    // if (isAdmin) {
+    //   const sector = this.selectedDomain.domain || '';
+    //   // const ob = this.signupForm.get('selectedSubDomains').value;
+    //   // const sub_Sector = ob.map(el =>  el.value );
+    //   if (this.data.claimData !== undefined) { // claimmable
+    //     this.user_details = {
+    //       userProfile: userProfile,
+    //       sector: this.business_domains[this.activeDomainIndex].domain,
+    //       subSector: this.subDomainList[this.activeSubDomainIndex].value,
+    //       isAdmin: isAdmin, // checked this to find provider or customer
+    //       // licPkgId: this.signupForm.get('package_id').value || null,
+    //       licPkgId: 9 || null,
+    //       accountId: this.data.claimData.accountId
+    //     };
+    //   } else if (acc_id) {
+    //     this.user_details = {
+    //       userProfile: userProfile,
+    //       sector: this.selectedDomain.domain,
+    //       subSector: this.subDomainList[this.signupForm.get('selectedSubDomains').value].value,
+    //       isAdmin: isAdmin, // checked this to find provider or customer
+    //       // licPkgId: this.signupForm.get('package_id').value || null,
+    //       licPkgId: 9 || null,
+    //       accountId: acc_id
+    //     };
+    //   } else {
+    //     const sub_Sector = this.subDomainList[this.signupForm.get('selectedSubDomains').value].value;
+    //     this.user_details = {
+    //       userProfile: userProfile,
+    //       sector: sector,
+    //       subSector: sub_Sector,
+    //       isAdmin: isAdmin, // checked this to find provider or customer
+    //       // licPkgId: this.signupForm.get('package_id').value || null
+    //       licPkgId: 9 || null
+    //     };
+    //   }
+    //   this.signUpApiProvider(this.user_details);
+    // } else {
       this.user_details = {
         userProfile: userProfile
       };
       this.signUpApiConsumer(this.user_details);
-    }
+    // }
   }
 
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
+    console.log(user_details);
     this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
           this.actionstarted = false;
           this.createForm(2);
           this.resendemailotpsuccess = true;
-          if (user_details.userProfile &&
-            user_details.userProfile.email) {
-            this.setMessage('email', user_details.userProfile.email);
-          } else {
-            this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-          }
+          // if (user_details.userProfile && (user_details.userProfile.email || user_details.userProfile.countryCode!='+91')) {
+          //   this.setMessage('email', user_details.userProfile.email);
+          // } else {
+          //   this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+          // }
         },
         error => {
           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
@@ -426,50 +443,50 @@ export class SignUpComponent implements OnInit {
       );
   }
 
-  signUpApiProvider(user_details) {
-    this.resetApiErrors();
-    this.resendemailotpsuccess = false;
-    this.shared_services.signUpProvider(user_details)
-      .subscribe(
-        () => {
-          this.actionstarted = false;
-          this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
-          this.createForm(2);
-          this.resendemailotpsuccess = true;
-          if (user_details.userProfile &&
-            user_details.userProfile.email) {
-            this.setMessage('email', user_details.userProfile.email);
-          } else {
-            this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
-          }
-        },
-        error => {
-          this.actionstarted = false;
-          if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
-            this.onSubmit(error.error);
-          } else {
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        }
-      );
-  }
+  // signUpApiProvider(user_details) {
+  //   this.resetApiErrors();
+  //   this.resendemailotpsuccess = false;
+  //   this.shared_services.signUpProvider(user_details)
+  //     .subscribe(
+  //       () => {
+  //         this.actionstarted = false;
+  //         this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
+  //         this.createForm(2);
+  //         this.resendemailotpsuccess = true;
+  //         if (user_details.userProfile &&
+  //           user_details.userProfile.email) {
+  //           this.setMessage('email', user_details.userProfile.email);
+  //         } else {
+  //           this.setMessage('mobile', user_details.userProfile.primaryMobileNo);
+  //         }
+  //       },
+  //       error => {
+  //         this.actionstarted = false;
+  //         if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
+  //           this.onSubmit(error.error);
+  //         } else {
+  //           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+  //         }
+  //       }
+  //     );
+  // }
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-    if (this.is_provider === 'true') {
-      this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.otp = submit_data.phone_otp;
-            this.createForm(3);
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
-    } else {
+    // if (this.is_provider === 'true') {
+    //   this.shared_services.OtpSignUpProviderValidate(submit_data.phone_otp)
+    //     .subscribe(
+    //       () => {
+    //         this.actionstarted = false;
+    //         this.otp = submit_data.phone_otp;
+    //         this.createForm(3);
+    //       },
+    //       error => {
+    //         this.actionstarted = false;
+    //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //       }
+    //     );
+    // } else {
       this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
         .subscribe(
           () => {
@@ -482,41 +499,41 @@ export class SignUpComponent implements OnInit {
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
-    }
+    // }
   }
-  skipHearus() {
-    this.resetApiErrors();
-    this.createForm(4);
-  }
-  onReferalSubmit(sccode) {
-    this.scfound = false;
-    this.scCode = null;
-    if (sccode) {
-      this.scCode = sccode;
-      this.scfound = true;
-    }
-  }
-  submitHearus(hearus) {
-    this.actionstarted = true;
-    this.resetApiErrors();
-    const post_data = {
-      'hearBy': hearus,
-    };
-    if (hearus === 'SalesReps') {
-      post_data['scCode'] = this.scCode;
-    }
-    this.shared_services.saveReferralInfo(this.otp, post_data)
-      .subscribe(
-        () => {
-          this.actionstarted = false;
-          this.createForm(4);
-        },
-        error => {
-          this.actionstarted = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-        }
-      );
-  }
+  // skipHearus() {
+  //   this.resetApiErrors();
+  //   this.createForm(4);
+  // }
+  // onReferalSubmit(sccode) {
+  //   this.scfound = false;
+  //   this.scCode = null;
+  //   if (sccode) {
+  //     this.scCode = sccode;
+  //     this.scfound = true;
+  //   }
+  // }
+  // submitHearus(hearus) {
+  //   this.actionstarted = true;
+  //   this.resetApiErrors();
+  //   const post_data = {
+  //     'hearBy': hearus,
+  //   };
+  //   if (hearus === 'SalesReps') {
+  //     post_data['scCode'] = this.scCode;
+  //   }
+  //   this.shared_services.saveReferralInfo(this.otp, post_data)
+  //     .subscribe(
+  //       () => {
+  //         this.actionstarted = false;
+  //         this.createForm(4);
+  //       },
+  //       error => {
+  //         this.actionstarted = false;
+  //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+  //       }
+  //     );
+  // }
   onPasswordSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
@@ -525,37 +542,37 @@ export class SignUpComponent implements OnInit {
     const post_data = { 
       countryCode : dialCode,
       password: submit_data.new_password };
-    if (this.is_provider === 'true') {
-      this.shared_services.ProviderSetPassword(this.otp, post_data)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            const login_data = {
-              'countryCode': this.selectedCountryCode,
-              'loginId': this.user_details.userProfile.primaryMobileNo,
-              'password': post_data.password
-            };
-            this.dialogRef.close();
-            if (this.ynw_credentials != null) {
-              this.shared_functions.doLogout().then(() => {
-                this.shared_functions.setitemonLocalStorage('new_provider', 'true');
-                this.shared_functions.providerLogin(login_data);
-                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-              });
-            } else {
-              this.shared_functions.setitemonLocalStorage('new_provider', 'true');
-              this.shared_functions.providerLogin(login_data);
-              const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-            }
-          },
-          error => {
-            this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          }
-        );
-    } else {
+    // if (this.is_provider === 'true') {
+    //   this.shared_services.ProviderSetPassword(this.otp, post_data)
+    //     .subscribe(
+    //       () => {
+    //         this.actionstarted = false;
+    //         const login_data = {
+    //           'countryCode': this.selectedCountryCode,
+    //           'loginId': this.user_details.userProfile.primaryMobileNo,
+    //           'password': post_data.password
+    //         };
+    //         this.dialogRef.close();
+    //         if (this.ynw_credentials != null) {
+    //           this.shared_functions.doLogout().then(() => {
+    //             this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+    //             this.shared_functions.providerLogin(login_data);
+    //             const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+    //             this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+    //           });
+    //         } else {
+    //           this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+    //           this.shared_functions.providerLogin(login_data);
+    //           const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+    //           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+    //         }
+    //       },
+    //       error => {
+    //         this.actionstarted = false;
+    //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //       }
+    //     );
+    // } else {
       this.shared_services.ConsumerSetPassword(this.otp, post_data)
         .subscribe(
           () => {
@@ -585,31 +602,32 @@ export class SignUpComponent implements OnInit {
             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
           }
         );
-    }
+    // }
   }
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
   }
   resendOtp(user_details) {
-    if (user_details.isAdmin) {
-      this.signUpApiProvider(user_details);
-    } else {
+    console.log(user_details);
+    // if (user_details.isAdmin) {
+    //   this.signUpApiProvider(user_details);
+    // } else {
       this.signUpApiConsumer(user_details);
-    }
+    // }
 
   }
-  clickedPackage(item) {
-    // this.selectedpackage = e;
-    this.license_description = this.license_packages[item.value];
-  }
-  isSelectedClass(id) {
-    if (id === this.signupForm.get('package_id').value) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // clickedPackage(item) {
+  //   // this.selectedpackage = e;
+  //   this.license_description = this.license_packages[item.value];
+  // }
+  // isSelectedClass(id) {
+  //   if (id === this.signupForm.get('package_id').value) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   setMessage(type, data) {
     this.api_error = '';
     if (type === 'email') {

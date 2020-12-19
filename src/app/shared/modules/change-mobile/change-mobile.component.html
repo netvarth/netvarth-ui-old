@@ -20,7 +20,7 @@
                 <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
                   (keyup)="resetApiErrors()" class="ynw-common-form-nm change-mob-style">
                   <div class="form-group phonenumber">
-                    <label for="phonenumber">{{your_curmob_msg}} <b>+{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
+                    <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
                   </div>
                   <div class="form-group col-sm-6 col-md-4 no-padding mobile-field" style="width: 100%">
                     <mat-form-field>
@@ -79,7 +79,10 @@
 
 <section *ngIf="curtype!='consumer'">
   <div class="card title-gb">
-    <h5 class="mgn-up-10">Change Mobile #</h5>
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor"
+        (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Mobile #
+    </h5>
   </div>
   <div class="content see-pages mgn-up-10">
     <div class="related-links">
@@ -89,7 +92,7 @@
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
               (keyup)="resetApiErrors()" class="ynw-common-form-nm change-mob-style">
               <div class="form-group phonenumber">
-                <label for="phonenumber">{{your_curmob_msg}} <b>+{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
+                <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
               </div>
               <div class="form-group col-sm-6 col-md-4 no-padding mobile-field" style="width: 100%">
                 <mat-form-field>
@@ -130,7 +133,7 @@
         <div class="right-menu">
           <div class="right-menu-header">{{related_links_cap}}</div>
           <ul class="related-link">
-            <li (click)="shared_functions.redirectto('profile')" class="icon-profile">{{user_profile_cap}}</li>
+            <li (click)="shared_functions.redirectto('profile')" class="no-padding"><i class="fa fa-gears mgn-rt-10"></i> Account Settings</li>
             <li (click)="shared_functions.redirectto('change-password')" class="icon-password">{{change_pass_cap}}</li>
           </ul>
         </div>

@@ -10,12 +10,14 @@ import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+// import { CountryCode } from 'ngx-intl-tel-input/lib/data/country-code';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -172,6 +174,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         base64: [],
         caption: []
     };
+    editBookingFields = false;
     activeWt;
     searchForm: FormGroup;
     apptTime = '';
@@ -227,7 +230,20 @@ export class ConsumerAppointmentComponent implements OnInit {
     noPhoneError = false;
     noEmailError = false;
     noCallingError = false;
+    whatsapperror = '';
     serviceCost;
+    phoneNumber;
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    TooltipLabel = TooltipLabel;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phoneError: string;
+    dialCode;
+    changedcallingModes;
+    newselected_phone;
+    bookingForm: FormGroup;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -273,7 +289,11 @@ export class ConsumerAppointmentComponent implements OnInit {
             });
     }
     ngOnInit() {
-        console.log(this.countryCodes)
+        this.bookingForm = this.fb.group({
+            newEmail: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
+            newWhatsapp: new FormControl(undefined),
+            newPhone: new FormControl(undefined)
+        });
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
@@ -324,7 +344,6 @@ export class ConsumerAppointmentComponent implements OnInit {
         const dtoday = yyyy + '-' + cmon + '-' + cday;
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        console.log(this.customer_data)
         if (this.type !== 'reschedule') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
         }
@@ -367,6 +386,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.type === 'reschedule') {
                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
                     this.userPhone = this.appointment.phoneNumber;
+                    // this.countryCode = this.appointment.countryCode;
                 }
 
                 this.sel_loc = this.appointment.location.id;
@@ -771,12 +791,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             phNumber = this.userPhone;
         }
-        let selCountryCode;
-        if (this.countryCode != this.selectedCountryCode) {
-            selCountryCode = this.selectedCountryCode;
-        } else {
-            selCountryCode = this.countryCode;
-        }
+        // let selCountryCode;
+        // if (this.countryCode != this.dialCode) {
+        //     selCountryCode = this.dialCode;
+        // } else {
+        //     selCountryCode = this.countryCode;
+        // }
         const post_Data = {
             'schedule': {
                 'id': this.apptTime['scheduleId']
@@ -787,7 +807,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'countryCode': selCountryCode,
+            'countryCode': this.countryCode,
             'phoneNumber': phNumber,
             'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
@@ -1069,8 +1089,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.resetApi();
         let derror = '';
         const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
-        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        // const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        // const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const blankpattern = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
         if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
             derror = 'Please enter a valid first name';
@@ -1078,15 +1098,15 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
             derror = 'Please enter a valid last name';
         }
-        if (derror === '') {
-            if (this.addmemberobj.mobile !== '') {
-                if (!phonepattern.test(this.addmemberobj.mobile)) {
-                    derror = 'Phone number should have only numbers';
-                } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
-                    derror = 'Enter a 10 digit mobile number';
-                }
-            }
-        }
+        // if (derror === '') {
+        // if (this.addmemberobj.mobile !== '') {
+        //     if (!phonepattern.test(this.addmemberobj.mobile)) {
+        //         derror = 'Phone number should have only numbers';
+        //     } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
+        //         derror = 'Enter a 10 digit mobile number';
+        //     }
+        // }
+        // }
         if (derror === '') {
             const post_data = {
                 'userProfile': {
@@ -1491,14 +1511,14 @@ export class ConsumerAppointmentComponent implements OnInit {
                 data => {
                     this.userData = data;
                     this.countryCode = this.userData.userProfile.countryCode;
-                    if (this.selectedCountryCode) {
-                        if (this.countryCode != this.selectedCountryCode) {
-                            this.countryCode = this.selectedCountryCode;
-                            console.log(this.countryCode)
-                        }
-                    } else {
-                        this.selectedCountryCode = this.countryCode;
-                    }
+                    // if (this.selectedCountryCode) {
+                    //     if (this.countryCode != this.selectedCountryCode) {
+                    //         this.countryCode = this.selectedCountryCode;
+                    //         console.log(this.countryCode)
+                    //     }
+                    // } else {
+                    //     this.selectedCountryCode = this.countryCode;
+                    // }
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         if (this.type !== 'reschedule') {
@@ -1552,7 +1572,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                 switch (section) {
                     case 'settings':
                         this.settingsjson = res;
-                        console.log(this.settingsjson)
                         this.futuredate_allowed = (this.settingsjson.futureDateWaitlist === true) ? true : false;
                         /*this.maxsize = this.settingsjson.maxPartySize;
                         if (this.maxsize === undefined) {
@@ -1591,7 +1610,6 @@ export class ConsumerAppointmentComponent implements OnInit {
                         break;
                     case 'appointmentsettings':
                         this.appointmentSettings = res;
-                        console.log(this.appointmentSettings)
                         break;
                     case 'departmentProviders': {
                         let deptProviders: any = [];
@@ -1866,87 +1884,212 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     saveMemberDetails() {
+        // console.log("hello");
+        // let teleNumber;
+        // console.log(this.selected_phone);
+        // console.log(this.countryCode);
+        // console.log(this.newselected_phone.e164Number);
+        // if (this.newselected_phone !== null) {
+        //     if (this.selected_phone !== this.newselected_phone.e164Number) {
+        //         this.dialCode = this.newselected_phone.dialCode;
+        //         if (this.countryCode != this.dialCode) {
+        //             this.countryCode = this.dialCode;
+        //             console.log(this.countryCode)
+        //         }
+        //         console.log(this.dialCode);
+        //         if (this.newselected_phone.e164Number.startsWith(this.dialCode)) {
+        //             newNo = this.newselected_phone.e164Number.split(this.dialCode)[1];
+        //             this.selected_phone = newNo;
+        //             console.log("hello");
+        //         }
+        //     }
+        // }
+        // console.log("hello");
         this.resetApiErrors();
         this.resetApi();
         this.noEmailError = true;
         this.noPhoneError = true;
         this.noCallingError = true;
-        const curphone = this.selected_phone;
-        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const result = pattern.test(curphone);
-        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-        const result1 = pattern1.test(curphone);
-        const callResult = pattern.test(curphone);
-        const callResult1 = pattern1.test(curphone);
-        if (this.selectedCountryCode && this.countryCode != this.selectedCountryCode) {
-            this.countryCode = this.selectedCountryCode;
-            console.log(this.countryCode)
-        }
-        if (this.callingModes === '') {
-            this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
-            this.noCallingError = false;
-        } else if (!callResult) {
-            this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
-            this.noCallingError = false;
-        } else if (!callResult1) {
-            this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
-            this.noCallingError = false;
-        }
-        if (this.selected_phone === '') {
-            this.phoneerror = Messages.BPROFILE_PHONENO;
-            this.noPhoneError = false;
-        } else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
-            this.noPhoneError = false;
-        } else if (!result1) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
-            this.noPhoneError = false;
-        } else {
-            this.currentPhone = this.selected_phone;
-            this.userPhone = this.selected_phone;
-            this.edit = true;
-            this.changePhno = true;
-            this.noPhoneError = true;
-            if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                this.callingModes = this.selected_phone;
-            }
-        }
-        if (this.payEmail && this.payEmail.trim() !== '') {
-            const stat = this.validateEmail(this.payEmail.trim());
-            if (!stat) {
-                this.emailerror = 'Please enter a valid email.';
-                this.noEmailError = false;
+        this.emailerror = '';
+        this.phoneError = '';
+        this.whatsapperror = '';
+        // const curphone = this.selected_phone;
+        // console.log(curphone)
+        // const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        // const result = pattern.test(curphone);
+        // const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        // const result1 = pattern1.test(curphone);
+        // const callResult = pattern.test(curphone);
+        // const callResult1 = pattern1.test(curphone);
+        // console.log(this.countryCode);
+        // if(this.newselected_phone !== null) {
+
+        // }
+        // console.log(this.countryCode);
+        // if (this.callingModes === '') {
+        //     this.callingmodePhoneerror = Messages.BPROFILE_PHONENO;
+        //     this.noCallingError = false;
+        // } else if (!callResult) {
+        //     this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
+        //     this.noCallingError = false;
+        // } else if (!callResult1) {
+        //     this.callingmodePhoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
+        //     this.noCallingError = false;
+        // }
+        // if (this.selected_phone === '') {
+        //     this.phoneerror = Messages.BPROFILE_PHONENO;
+        //     this.noPhoneError = false;
+        // } else if (!result) {
+        //     this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID;
+        //     this.noPhoneError = false;
+        // } else if (!result1) {
+        //     this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS;
+        //     this.noPhoneError = false;
+        // } else {
+        this.currentPhone = this.selected_phone;
+        this.userPhone = this.selected_phone;
+        this.edit = true;
+        this.changePhno = true;
+        this.noPhoneError = true;
+        let whatsAppNum;
+        let phoneNum;
+        let emailId;
+        if (this.editBookingFields) {
+            if ((this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value.number.trim() != '') && this.bookingForm.get('newPhone').errors && !this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode + '55')) {
+                this.phoneError = 'Phone number is invalid';
+                return false;
             } else {
-                const post_data = {
-                    'id': this.userData.userProfile.id || null,
-                    'firstName': this.userData.userProfile.firstName || null,
-                    'lastName': this.userData.userProfile.lastName || null,
-                    'dob': this.userData.userProfile.dob || null,
-                    'gender': this.userData.userProfile.gender || null,
-                    'email': this.payEmail.trim() || ''
-                };
-                const passtyp = 'consumer';
-                this.shared_services.updateProfile(post_data, passtyp)
-                    .subscribe(
+                if (this.bookingForm.get('newPhone').value && this.bookingForm.get('newPhone').value != "") {
+                    if (this.bookingForm.get('newPhone').value.e164Number.startsWith(this.bookingForm.get('newPhone').value.dialCode)) {
+                        phoneNum = this.bookingForm.get('newPhone').value.e164Number.split(this.bookingForm.get('newPhone').value.dialCode)[1];
+                        this.countryCode = this.bookingForm.get('newPhone').value.dialCode;
+                        this.userPhone = phoneNum;
+                        this.selected_phone = phoneNum;
+                    }
+                }
+            }
+            if ((this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value.number.trim() != '') && this.bookingForm.get('newWhatsapp').errors && !this.bookingForm.get('newWhatsapp').value.e164Number.startsWith(this.bookingForm.get('newWhatsapp').value.dialCode + '55')) {
+                this.whatsapperror = 'WhatsApp number is invalid';
+                return false;
+            } else {
+                if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value!="") {
+                    whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number;
+                    if (this.bookingForm.get('newPhone').value.e164Number.startsWith('+')) {
+                        whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
+                        this.callingModes = whatsAppNum;
+                    }
+                }
+            }
+            if (this.bookingForm.get('newEmail').errors) {
+                this.emailerror = "Email is invalid";
+                return false;
+            } else {
+                emailId = this.bookingForm.get('newEmail').value;
+                if (emailId && emailId != "") {
+                    this.payEmail = emailId;
+                    const post_data = {
+                        'id': this.userData.userProfile.id || null,
+                        'firstName': this.userData.userProfile.firstName || null,
+                        'lastName': this.userData.userProfile.lastName || null,
+                        'dob': this.userData.userProfile.dob || null,
+                        'gender': this.userData.userProfile.gender || null,
+                        'email': this.payEmail.trim() || ''
+                    };
+                    this.updateEmail(post_data).then(
                         () => {
-                            this.getProfile();
-                            this.noEmailError = true;
-                        },
+                            this.action = '';
+                        }, 
                         error => {
                             this.api_error = error.error;
-                            this.noEmailError = false;
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
+                            return false;
+                        }
+                    )
+                } else {
+                    this.action = '';
+                }
             }
-        } else if (this.userEmail && this.payEmail.trim() == '') {
-            this.emailerror = 'Please enter a valid email.';
-            this.noEmailError = false;
 
-        }
-        if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+        } else {
             this.action = '';
         }
+
+        // if (this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+        //     this.callingModes = this.selected_phone;
+        // } else if (this.changedcallingModes !== null) {
+        //     if (this.callingModes !== this.changedcallingModes.e164Number) {
+        // if (this.changedcallingModes.e164Number.startsWith('+')) {
+        //     teleNumber = this.changedcallingModes.e164Number.split('+')[1];
+        //     this.callingModes = teleNumber;
+        //     console.log(this.callingModes)
+        // }
+        // } else {
+        //     this.callingModes = this.selected_phone;
+        //     console.log(this.callingModes)
+        // }
+        // }
+
+
+        // }
+        // if (this.payEmail && this.payEmail.trim() !== '') {
+        //     const stat = this.validateEmail(this.payEmail.trim());
+        //     if (!stat) {
+        //         this.emailerror = 'Please enter a valid email.';
+        //         this.noEmailError = false;
+        //     } else {
+        //         const post_data = {
+        //             'id': this.userData.userProfile.id || null,
+        //             'firstName': this.userData.userProfile.firstName || null,
+        //             'lastName': this.userData.userProfile.lastName || null,
+        //             'dob': this.userData.userProfile.dob || null,
+        //             'gender': this.userData.userProfile.gender || null,
+        //             'email': this.payEmail.trim() || ''
+        //         };
+        //         const passtyp = 'consumer';
+        //         this.shared_services.updateProfile(post_data, passtyp)
+        //             .subscribe(
+        //                 () => {
+        //                     this.getProfile();
+        //                     this.noEmailError = true;
+        //                     if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+        //                         this.action = '';
+        //                     }
+        //                 },
+        //                 error => {
+        //                     this.api_error = error.error;
+        //                     this.noEmailError = false;
+        //                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //                 });
+        //     }
+        // } else if (this.userEmail && this.payEmail.trim() == '') {
+        //     this.emailerror = 'Please enter a valid email.';
+        //     this.noEmailError = false;
+        //     if (this.noEmailError) {
+        //         this.action = '';
+        //     }
+        // }
+        this.editBookingFields = false;
+        // if (this.noPhoneError && this.noEmailError && this.noCallingError) {
+        //     this.action = '';
+        // }
     }
+    
+    updateEmail (post_data) {
+        const _this = this;
+        const passtyp = 'consumer';
+        return new Promise(function (resolve, reject) {
+            _this.shared_services.updateProfile(post_data, passtyp)
+                .subscribe(
+                    () => {
+                        _this.getProfile();
+                        resolve(true);
+                    },
+                    error => {
+                        reject(error);                                
+                    });
+          });
+    }
+
     showConfirmPopup(post_Data) {
         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
 
@@ -1982,5 +2125,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         // this.dialogRef.close();
 
+    }
+    changeBookingFields() {
+        this.editBookingFields = true;
     }
 }

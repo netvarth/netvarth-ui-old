@@ -270,6 +270,11 @@
                       <span *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="bold">
                         {{verified_level_change}}.
                       </span>
+                      <p *ngIf="bProfile && bProfile.verifyLevel =='NONE'" class="form-level-settings">In order to verify the account please contact jaldee support +91 8880125000
+                        <a class="learnmore-pointer" id="customer-help"
+                          (click)="learnmore_clicked('verified-levels', $event)">Learn More
+                        </a>
+                      </p>
                       <span *ngIf="bProfile && bProfile.verifyLevel == 'BASIC'">
                         <img height="80" width="70" src="./assets/images/BasicOrg.png" alt="Basic">
                       </span>

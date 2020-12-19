@@ -12,6 +12,7 @@ import { OwlModule } from 'ngx-owl-carousel';
 import { ConsumerDonationsComponent } from './donations.component';
 import { ConsumerDonationComponent } from './details/consumer-donation.component';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,9 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         OwlModule,
-        HeaderModule
+        HeaderModule,
+        NgxIntlTelInputModule
+
     ],
     exports: [ConsumerDonationsComponent]
 })

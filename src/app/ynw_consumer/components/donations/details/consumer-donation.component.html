@@ -34,13 +34,16 @@
                                                 <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
                                                     <div class="card-body" *ngIf="sel_ser">
                                                         <h6 class="card-title service">
-                                                            {{sel_ser_det.name}}
+                                                            {{sel_ser_det.name | capitalizeFirst}}
                                                             <!-- <span class="donate-by"> by </span>
                                                             {{this.businessjson.businessName}} -->
                                                         </h6>
                                                     </div>
                                                 </div>
                                             </div>
+
+
+
                                         </div>
                                         <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 border-tp check-new-group">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -62,7 +65,7 @@
                                                             <div class="">
                                                                 <i class="fa fa-mobile "></i>
                                                                 <span class="mgn-lt-10 phonevallabel"
-                                                                    *ngIf="userPhone">{{userPhone}}</span>
+                                                                    *ngIf="userPhone">{{dialCode}} {{userPhone}}</span>
                                                                 <!-- <span class="mgn-lt-10 phonevallabel"
                                                                     *ngIf="currentPhone && changePhno">{{currentPhone}}</span> -->
                                                                 <a class="mgn-lt-5 lnk pointer-cursor"><i
@@ -80,6 +83,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+
                                                     <div
                                                         class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
                                                         <mat-chip-list class="btns">
@@ -190,8 +195,26 @@
                                     <div class="mgn-up-5 input-group mobile-error c-checkin-new">
                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10">Enter new mobile number
                                         </div>
-                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
-                                            <label>
+                                        <div class="col-md-4 col-xs-12 col-sm-6 mgn-bt-20">
+                                            
+                                            <div class="form-group">
+                                                <!-- <mat-label for="phone">Enter new Mobile Number</mat-label> -->
+                                                <ngx-intl-tel-input class="mobInput" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                                                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                                                    [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
+                                                    [selectedCountryISO] = "selectedCountry"
+                                                    [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                                                    [(ngModel)]="selected_phone">
+                                                </ngx-intl-tel-input>
+                                                
+                                                <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                            </div>
+                                            <button (click)="addPhone()"
+                                                    class="btn bt3 btn-default coupon-apply-btn"
+                                                    type="button">Ok</button>
+                                            
+                                            <!-- <label>
                                                 <input type="text" maxlength="10" placeholder="Mobile number"
                                                     class="phonenum" [(ngModel)]="selected_phone" />
                                                 <button (click)="addPhone()"
@@ -200,7 +223,7 @@
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                 </app-field-error-display>
-                                            </label>
+                                            </label> -->
                                         </div>
                                     </div>
                                 </div>

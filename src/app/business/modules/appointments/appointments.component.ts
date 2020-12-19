@@ -336,6 +336,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_type = '';
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
+  qloading: boolean;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2117,6 +2118,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     this.initView(this.selectedView, 'reloadAPIs');
@@ -2201,6 +2203,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleUserSelection(user) {
+    this.qloading = true;
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
@@ -2247,6 +2250,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selQIds.push(this.activeSchedules[0].id);
       }
     }
+    setTimeout(() => {
+      this.qloading = false;
+    }, 1000);
     if (this.time_type === 1) {
       this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {

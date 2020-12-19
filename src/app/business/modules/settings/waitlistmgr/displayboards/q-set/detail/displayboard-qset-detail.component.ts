@@ -546,7 +546,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.defaultLabels = this.labelfromConstants;
         for (let i = 0; i < this.defaultLabels.length; i++) {
             this.defaultLabels[i].checked = false;
-            if (this.defaultLabels[i].name === 'appmtFor') {
+            if (this.defaultLabels[i].name === 'waitlistingFor') {
                 this.defaultLabels[i].displayname = this.customer_label[0].toUpperCase() + this.customer_label.substr(1);
             }
         }

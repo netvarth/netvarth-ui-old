@@ -225,6 +225,9 @@ export class ShareRxComponent implements OnInit {
             'email': this.thirdpartyemail
           }
         };
+        if (this.thirdpartyphone !== '') {
+          passData['shareThirdParty']['countryCode'] = '+91';
+        }
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.shared_functions.openSnackBar('Prescription shared successfully');

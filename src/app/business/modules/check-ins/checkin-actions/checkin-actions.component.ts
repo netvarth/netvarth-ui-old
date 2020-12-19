@@ -236,25 +236,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.checkin_date = seldate;
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-        const date2 = new Date(dt2);
-        const dte0 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
-        const datee2 = new Date(dte2);
-        if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        } else {
-            this.isFuturedate = false;
-        }
-        this.handleFuturetoggle();
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
         this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
-    handleFuturetoggle() {
-        // this.showfuturediv = !this.showfuturediv;
-    }
-
     calculateDate(days, type) {
         const dte = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
@@ -314,7 +298,6 @@ export class CheckinActionsComponent implements OnInit {
         // }
     }
     rescheduleWaitlist() {
-        // this.checkin_date = moment(this.checkin_date).format('DD-MM-YYYY')
         const data = {
             'ynwUuid': this.ynwUuid,
             'queue': this.sel_queue_id,

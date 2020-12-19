@@ -78,7 +78,7 @@ onSubmit(loginForm.value)">
             </div>
         </div>
         <div class="mat-dialog-actions">
-            <button class="cust-logpg-submt" *ngIf="!phoneExists" type="submit" mat-button
+            <button class="cust-logpg-submt mgn-up-20" *ngIf="!phoneExists" type="submit" mat-button
                 [disabled]="api_loading" (click)="checkAccountExists()"
                 (keyup)="clearPhoneExists()">
                 <span *ngIf="!api_loading">Continue</span>
@@ -108,7 +108,7 @@ onSubmit(loginForm.value)">
         <div class="mat-dialog-content">
             <div class="form-group" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">First Name</mat-label>
+                    <mat-label for="password">First Name *</mat-label>
 
                     <input type="text"  class="form-control" id="first_name" 
                         formControlName="first_name" (keypress)="resetApiErrors()" autocomplete="off"
@@ -123,7 +123,7 @@ onSubmit(loginForm.value)">
             </div>
             <div class="form-group" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">Last Name</mat-label>
+                    <mat-label for="password">Last Name *</mat-label>
 
                     <input type="text"  class="form-control" id="last_name"
                         formControlName="last_name" autocomplete="off" (keypress)="resetApiErrors()"
@@ -133,6 +133,21 @@ onSubmit(loginForm.value)">
                     {
                         'required' : 'Last name is required',
                         'pattern' : 'Only alphabets are allowed'
+                    })">
+                </app-field-error-display>
+            </div>
+
+            <div class="form-group" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
+                <!-- <mat-form-field> -->
+                    <mat-label for="password">Email *</mat-label>
+
+                    <input type="text"  class="form-control" id="emailId"
+                        formControlName="emailId" autocomplete="off" (keypress)="resetApiErrors()"
+                        (blur)="onFieldBlur('emailId')">
+                <!-- </mat-form-field> -->
+                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
+                    {
+                        'required' : 'Email Id is required'
                     })">
                 </app-field-error-display>
             </div>

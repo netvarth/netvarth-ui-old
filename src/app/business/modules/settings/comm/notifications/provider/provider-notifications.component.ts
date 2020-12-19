@@ -558,6 +558,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okCheckinStatus = true;
       this.notifycheknPushphonenumber = '';
+      this.cheknPushph = false;
     }
   }
   addChkinemil() {
@@ -652,6 +653,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
+      this.cheknCancelPushph = false;
     }
   }
   addCheknCanclemil() {
@@ -778,6 +780,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okApptStatus = true;
       this.notifyapptPushphonenumber = '';
+      this.apptPushph = false;
     }
   }
   addorderPushPh() {
@@ -966,6 +969,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okApptCancelStatus = true;
       this.notifyapptcancelPushphonenumber = '';
+      this.apptcancelPushph = false;
     }
   }
   addOrdercancelPushPh() {
@@ -1116,6 +1120,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okDonateStatus = true;
       this.notifypushDonatephonenumber = '';
+      this.pushAppDonate = false;
     }
   }
   addDonatemail() {
@@ -1211,6 +1216,7 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okSystemStatus = true;
       this.notifypushSystemphonenumber = '';
+      this.pushSystem = false;
     }
   }
 

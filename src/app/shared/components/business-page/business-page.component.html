@@ -153,11 +153,11 @@
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
+                                <!-- <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Area of Specialization</div>
                                     <div class="question-value1">{{businessjson.serviceSubSector.displayName |
                                         capitalizeFirst}}</div>
-                                </div>
+                                </div> -->
                                 <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10"
                                     *ngFor="let vfield of virtualfieldsCombinedjson">
                                     <div class="question-outer" *ngIf="vfield.value">
@@ -203,7 +203,7 @@
                                         <ul class="details badges m0 no-padding">
                                             <ng-container *ngIf="locationjson && locationjson.length > 0">
                                                 <li *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
-                                                    [matTooltip]="'Parking Type: ' + locationjson[0].parkingType">
+                                                    [matTooltip]="'Parking Type: ' + locationjson[0].parkingType | capitalizeFirst">
                                                     <span class="icon-parking"></span></li>
                                                 <li
                                                     *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">
@@ -242,7 +242,7 @@
                                                 <span *ngFor="let phone of phonelist">
                                                     <span class="glyphicon glyphicon-user one" style="width:20px"
                                                         [matTooltip]="phone.label | capitalizeFirst">
-                                                    </span>{{phone.instance}}</span>
+                                                    </span>{{businessjson.countryCode}} {{phone.instance}}</span>
                                             </li>
                                             <li *ngIf="emaillist.length > 0">
                                                 <span *ngFor="let email of emaillist"><span

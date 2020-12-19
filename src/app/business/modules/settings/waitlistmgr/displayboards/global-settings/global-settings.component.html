@@ -11,7 +11,7 @@
     </div>
 
     <div *ngIf="onlyHeader && !api_loading" class="content w-manager settings comn-cls lic-page">
-        <div class="col-md-12 no-paddig-small">
+        <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card">
                     <h6 class="glbl-seting-h6" [ngClass]="{'glbl-seting-hiden': is_hidden}">Header Settings</h6>
@@ -62,11 +62,11 @@
                                         <table class="glbl-seting-tbl">
                                             <tr>
                                                 <td>Width</td>
-                                                <td><input type="text" [(ngModel)]="width" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                                <td><input type="number" [(ngModel)]="width" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
                                             </tr>
                                             <tr>
                                                 <td>Height</td>
-                                                <td><input type="text" [(ngModel)]="height" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
+                                                <td><input type="number" [(ngModel)]="height" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;px</td>
                                             </tr>
                                             <tr>
                                                 <td>Position</td>

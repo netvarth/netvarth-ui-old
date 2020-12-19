@@ -1,5 +1,5 @@
 
-import {interval as observableInterval, Subscription } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -56,6 +56,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
+    console.log(this.submitdata);
     this.createForm();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -108,15 +109,20 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   resendOTPMobile() {
-    this.resendOTPEmail.emit(false);
-    this.resetCounter(this.refreshTime);
-    if (this.submitdata.userProfile !== undefined) {
-      this.submitdata.userProfile.email = null;
-    }
-    // delete this.submitdata.userProfile.email;
-    this.resendOtp.emit(this.submitdata);
-    if (this.type !== 'forgot_password') {
-      this.setMessageType();
+    console.log(this.submitdata);
+    if (this.submitdata.userProfile.countryCode === '+91') {
+      this.resendOTPEmail.emit(false);
+      this.resetCounter(this.refreshTime);
+      if (this.submitdata.userProfile !== undefined) {
+        this.submitdata.userProfile.email = null;
+      }
+      // delete this.submitdata.userProfile.email;
+      this.resendOtp.emit(this.submitdata);
+      if (this.type !== 'forgot_password') {
+        this.setMessageType();
+      }
+    } else {
+      this.setResendViaEmail();
     }
   }
 
@@ -153,7 +159,11 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (this.type === 'change_email') {
       this.setMessage('email', this.submitdata.email);
     } else {
-      this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
+      if (this.submitdata.userProfile.countryCode && this.submitdata.userProfile.countryCode !== '+91') {
+        this.setMessage('email', this.submitdata.userProfile.email);
+      } else {
+        this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
+      }
     }
   }
 

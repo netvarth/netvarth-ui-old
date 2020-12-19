@@ -11,7 +11,8 @@
                     <div class="copy locd block-level" *ngIf="!apiloading">
                         <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngFor="let wtlst of waitlist">
                             <div class="info-img">
-                                <img src="assets/images/bg-01.png"></div>
+                                <img src="assets/images/bg-01.png">
+                            </div>
                             <div class="details">
                                 <!-- <div class="book-head"> Booking Confirmed </div> -->
                                 <div class="book-head" *ngIf="type !== 'waitlistreschedule'"> Booking Confirmed </div>
@@ -33,7 +34,8 @@
                                             <td width="48%" align="right">Name of the
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td class="name-line-ht">{{wtlst.provider.firstName}} {{wtlst.provider.lastName}},
+                                            <td class="name-line-ht">{{wtlst.provider.firstName}}
+                                                {{wtlst.provider.lastName}},
                                                 {{wtlst.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr>
@@ -78,7 +80,8 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="wtlst.service.virtualCallingModes && wtlst.service.virtualCallingModes[0].callingMode === 'WhatsApp' && wtlst.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                <span>{{wtlst.service?.name}}</span></td>
+                                                <span>{{wtlst.service?.name}}</span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Time window </td>
@@ -92,14 +95,16 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{wtlst.checkinEncId}}</td>
                                         </tr>
-                                        <tr *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type != 'waitlistreschedule'">
+                                        <tr
+                                            *ngIf="!wtlst.parentUuid && wtlst.service?.minPrePaymentAmount && infoParams.type != 'waitlistreschedule'">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">&#8377;
                                                 </span>{{infoParams.prepayment}}
                                             </td>
                                         </tr>
-                                        <tr *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">
+                                        <tr
+                                            *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">&#8377;
@@ -127,7 +132,8 @@
                                 </table>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{wtlst.checkinEncId}}" target="blank">
-                                        {{path}}status/{{wtlst.checkinEncId}}</a></div>
+                                        {{path}}status/{{wtlst.checkinEncId}}</a>
+                                </div>
                                 <!-- <div class="txt-align-center mgn-up-10" *ngIf="wtlst.consumer.email_verified"> A booking
                             confirmation
                             has been sent to your email
@@ -144,7 +150,8 @@
                                 </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick(wtlst)">
-                                        <strong>OK</strong></span></div>
+                                        <strong>OK</strong></span>
+                                </div>
                             </div>
                         </div>
                         <div class="powered-by">
@@ -152,7 +159,8 @@
                                 <div class="one">powered by</div>
                                 <div class="two">
                                     <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
-                                        style="width: 15px;">&nbsp;Jaldee</div>
+                                        style="width: 15px;">&nbsp;Jaldee
+                                </div>
                             </div>
                         </div>
                     </div>

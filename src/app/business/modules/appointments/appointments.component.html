@@ -129,7 +129,7 @@
           </nav>
         </header>
         <div class="head mgn-up-5 mgn-bt-5" id="apptsSchedules"
-          *ngIf="activeSchedules && activeSchedules.length > 0 && time_type !==3">
+          *ngIf="activeSchedules && activeSchedules.length > 0 && time_type !==3 && !qloading">
           <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="col-md-12 col-xs-12 col-sm-12 checkins-owl">
               <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
@@ -140,7 +140,8 @@
                     <input style="margin:0px;" [checked]="isQueueSelected(schedule.id)" type="checkbox"
                       class="ckbx pull-left" />&nbsp;
                     <span *ngIf="schedule.apptSchedule.timeSlots && schedule.apptSchedule.timeSlots[0]">
-                      {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' + schedule.apptSchedule.timeSlots[0]['eTime']}}</span></span>
+                      {{schedule.apptSchedule.timeSlots[0]['sTime'] + ' - ' +
+                      schedule.apptSchedule.timeSlots[0]['eTime']}}</span></span>
                 </button>
               </owl-carousel>
               <div class="owl-theme">
