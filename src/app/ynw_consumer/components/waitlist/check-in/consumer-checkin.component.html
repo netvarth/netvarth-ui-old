@@ -971,11 +971,11 @@
                                             </h5>
                                         </div>
                                         <div class="consumer_appt mgn-bt-10 brd-bt">
-                                            <p class="m0 mgn-lt-10 mgn-up-10">Phone#: <b>{{selected_phone}}</b></p>
+                                            <p class="m0 mgn-lt-10 mgn-up-10">Phone#: <b>{{countryCode}} {{selected_phone}}</b></p>
                                             <p class="m0 mgn-up-10-m"
                                                 *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <i class="fa wtsapaud-icon wtsap-cal"></i> <span>WhatsApp#:
-                                                    <b>{{callingModes}}</b></span></p>
+                                                    <b>{{countryCode}} {{callingModes}}</b></span></p>
                                             <p class="mgn-up-5 mgn-lt-10">Email : <b>{{payEmail}}</b></p>
                                             <p class="mgn-up-5 mgn-lt-10" *ngIf="!editBookingFields">To Change the
                                                 Number/Email <a class="bold" (click)="changeBookingFields()">Click
