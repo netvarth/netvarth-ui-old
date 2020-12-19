@@ -76,7 +76,7 @@ export class CatalogdetailComponent implements OnInit {
     catalog;
     taxDetails: any = [];
     catalogname: any;
-    catalogcaption = 'Add Catalogue';
+    catalogcaption = 'Add Catalog';
     showPromotionalPrice = false;
     galleryDialog;
     gallery_view_caption = Messages.GALLERY_CAP;
@@ -233,7 +233,7 @@ export class CatalogdetailComponent implements OnInit {
                                             this.createForm();
                                             this.api_loading = false;
                                         } else if (this.action === 'view') {
-                                            this.catalogcaption = 'Catalogue Details';
+                                            this.catalogcaption = 'Catalog Details';
                                             this.api_loading = false;
                                         }
                                         // if (!this.seletedCatalogItems) {
