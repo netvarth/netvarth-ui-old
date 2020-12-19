@@ -62,11 +62,17 @@ export class EditStoreDetailsComponent implements OnInit {
         'secCountryCode': '+91',
         'whatsAppCountryCode': '+91',
       };
-      this.editInfo(data);
+      if(this.email === this.alternateEmail){ 
+          this.shared_Functionsobj.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
+      }
+      else if(this.phone === this.alternatePhone){ 
+        this.shared_Functionsobj.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
+    }  else{
+        this.editInfo(data);
+      }
+      
   }
   editInfo(data) {
-   
-    this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
     this.provider_services.editContactInfo(data)
