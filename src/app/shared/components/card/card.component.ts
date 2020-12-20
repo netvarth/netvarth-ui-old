@@ -74,7 +74,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.service);
                 console.log(this.actions);
                 break;
-            case 'item-head': 
+            case 'item-head':
                 break;
             default:
                 this.user = this.item.item;
@@ -91,8 +91,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     getItemQty(itemObj) {
         const item = itemObj.item;
-        console.log(item);
-        console.log(this.extras);
         const orderList = this.extras;
         let qty = 0;
         if (orderList !== null && orderList.filter(i => i.item.itemId === item.itemId)) {
@@ -104,8 +102,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        console.log(location);
-        console.log(action);
         event.stopPropagation();
         const actionObj = {};
         actionObj['type'] = type;
@@ -119,7 +115,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (userId) {
             actionObj['userId'] = userId;
         }
-        console.log(actionObj);
         this.actionPerformed.emit(actionObj);
     }
     getTerminologyTerm(term) {

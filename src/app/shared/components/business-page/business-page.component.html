@@ -140,7 +140,7 @@
                         </div>
                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                             <ul class="bus-actions bus-actions-horiz no-padding">
-                               
+
                             </ul>
                         </div> -->
                     </div>
@@ -190,12 +190,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') || 
-                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' || 
-                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') ||
+                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' ||
+                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                 locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true' || locationjson[0]?.locationVirtualFields?.firstaid=='true'
                                 || locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'">
                                     <div class="question-header">Amenities</div>
@@ -216,10 +216,10 @@
                                                     [matTooltip]="'Ambulance Services'"><span
                                                         class="icon-ambulance"></span>
                                                 </li>
-                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' || 
-                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' || 
+                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' || 
+                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
                                                     <span class="icon-emergency"></span></li>
                                                 <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
@@ -287,13 +287,13 @@
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0" [class.mgn-bt-10]="!showDepartments">
-                    <h5 class="mgn-bt-5 primary-color"> {{service_cap}} 
+                    <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
                     <h6 class="question-header">Book online now for your convenience.
                     </h6>
                 </div>
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0" [class.mgn-bt-10]="!showDepartments">
-                    <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations 
+                    <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
                     </h5>
                     <h6 class="question-header">You select a specialty and the doctor you would like to book services for.
                     </h6>
@@ -365,7 +365,7 @@
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
-                    <div class="shopping-cart-footer" *ngIf="order_count>0">
+                    <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
                         <div>Your Order ({{ order_count }})
                             <span class="rupee-font">SubTotal :&#8377;{{ price }}&nbsp;</span>
                             <button class="btn btn-primary" (click)="checkout();">Checkout</button>
@@ -381,7 +381,7 @@
       <div class="modal-header">
         <span class="close" (click)="closeModal()">&times;</span>
       </div>
-      <div class="modal-body">       
+      <div class="modal-body">
         <div class="section-app text-center">
             <p>Download Jaldee App</p>
             <a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
@@ -391,6 +391,6 @@
         </div>
       </div>
     </div>
-  
+
   </div>
 <!-- <app-consumer-footer></app-consumer-footer> -->

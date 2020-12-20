@@ -472,10 +472,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
         } else {
 
-
-          localStorage.removeItem('order_sp');
-          localStorage.removeItem('order');
-          localStorage.removeItem('chosenDateTime');
+          this.orderList = [];
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order');
           this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
           this.router.navigate(['consumer']);
         }

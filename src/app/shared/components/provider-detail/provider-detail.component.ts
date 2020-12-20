@@ -43,6 +43,8 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
+  clear_cart_dialogRef: any;
+  spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
   more_cap = Messages.MORE_CAP;
   less_cap = Messages.LESS_CAP;
@@ -483,6 +485,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               this.getbusinessprofiledetails_json('departmentProviders', true);
             }
             this.business_exists = true;
+
             this.provider_bussiness_id = this.businessjson.id;
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
@@ -1520,6 +1523,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
@@ -1968,10 +1972,50 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
+    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+          if (this.getConfirmation()) {
+            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          }
+        }
+      }
+    }
     this.orderList.push(itemObj);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.getTotalItemAndPrice();
     this.getItemQty(item);
+  }
+
+
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+        this.orderList = [];
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        return true;
+      } else {
+        can_remove = false;
+
+      }
+    });
+    return can_remove;
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
@@ -1998,7 +2042,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
-    let blogoUrl ;
+    let blogoUrl;
     if (this.businessjson.logo) {
       blogoUrl = this.businessjson.logo.url;
     } else {
@@ -2062,6 +2106,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   reset() {
 
+  }
+  showOrderFooter() {
+    let showFooter = false;
+    this.spId_local_id = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    if (this.spId_local_id !== null) {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (this.spId_local_id !== this.provider_bussiness_id) {
+          showFooter = false;
+        } else {
+          showFooter = true;
+        }
+      }
+
+    }
+    return showFooter;
   }
 
 }

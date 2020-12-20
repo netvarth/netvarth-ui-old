@@ -42,6 +42,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
   more_cap = Messages.MORE_CAP;
   less_cap = Messages.LESS_CAP;
@@ -396,7 +397,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
     const appPopupDisplayed = this.sharedFunctionobj.getitemfromLocalStorage('a_dsp');
-    if(!appPopupDisplayed) {
+    if (!appPopupDisplayed) {
       this.popUp.nativeElement.style.display = 'block';
     }
   }
@@ -671,7 +672,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.locationjson['isPlaceisSame'] = false;
               }
               if (this.locationjson[i].parkingType) {
-              this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
+                this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               }
               // schedule_arr = [];
               // if (this.locationjson[i].bSchedule) {
@@ -2468,14 +2469,53 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-
   // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
+    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+         if (this.getConfirmation()) {
+          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        }
+      }
+      }
+    }
     this.orderList.push(itemObj);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
     this.getTotalItemAndPrice();
     this.getItemQty(item);
+  }
+
+
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+       this.orderList=[];
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        return true;
+      } else {
+        can_remove = false;
+
+      }
+    });
+    return can_remove;
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
@@ -2563,6 +2603,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reset() {
 
+  }
+  showOrderFooter() {
+    let showFooter = false;
+    this.spId_local_id = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    if (this.spId_local_id !== null) {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (this.spId_local_id !== this.provider_bussiness_id) {
+          showFooter = false;
+        } else {
+          showFooter = true;
+        }
+      }
+
+    }
+    return showFooter;
   }
 
 }
