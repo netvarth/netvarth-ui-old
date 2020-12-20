@@ -7,17 +7,21 @@ import { LanguagesComponent } from './languages/languages.component';
 import { AdditionalInfoComponent } from './additionalinfo/additionalinfo.component';
 import { AboutMeComponent } from './aboutme/aboutme.component';
 import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
+import { SocialMediaComponent } from './social-media/social-media.component';
 
 const routes: Routes = [
-    {path: '', component: BProfileComponent },
-    {path: '', children : [
-        {path: 'media', component: MediaComponent },
-        {path: 'specializations', component: SpecializationsComponent },
-        {path: 'languages', component: LanguagesComponent },
-        {path: 'additionalinfo', component: AdditionalInfoComponent },
-        {path: 'aboutme', component: AboutMeComponent },
-        {path: 'jaldeeonline', component: JaldeeOnlineComponent}
-    ]},
+    { path: '', component: BProfileComponent },
+    {
+        path: '', children: [
+            { path: 'media', component: MediaComponent },
+            { path: 'specializations', component: SpecializationsComponent },
+            { path: 'languages', component: LanguagesComponent },
+            { path: 'additionalinfo', component: AdditionalInfoComponent },
+            { path: 'aboutme', component: AboutMeComponent },
+            { path: 'jaldeeonline', component: JaldeeOnlineComponent },
+            { path: 'social', component: SocialMediaComponent }
+        ]
+    },
     {
         path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)
     },
@@ -29,4 +33,4 @@ const routes: Routes = [
     exports: [RouterModule]
 })
 
-export class BProfileRoutingModule {}
+export class BProfileRoutingModule { }

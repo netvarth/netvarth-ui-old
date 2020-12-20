@@ -253,8 +253,8 @@ export const projectConstantsLocal = {
     { key: 'youtube', iconClass: 'fa fa-youtube-square ytb', iconImg: 'youtube.png', displayName: 'Youtube' },
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
-    { key: 'instagram', iconClass: 'fa fa-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
-    { key: 'bizyGlobe', iconClass: 'BizyGlobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
+    { key: 'instagram', iconClass: 'fa fa-instagram inst', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
@@ -818,14 +818,14 @@ export const projectConstantsLocal = {
     MANDATORY_INFO: { 'name': 'MANDATORY_INFO', 'value': 15 },
     PROFILE_PIC: { 'name': 'PROFILE_PIC', 'value': 5 }
   },
-  COUNTRY_CODES: [    
-    { displayName: '+91', value: '+91' }  
+  COUNTRY_CODES: [
+    { displayName: '+91', value: '+91' }
   ],
   CONSUMER_COUNTRY_CODES: [
-    { displayName: '+91', value: '+91' },
-    { displayName: '+49', value: '+49' },
-    { displayName: '+44', value: '+44' },
-    { displayName: '+1', value: '+1' }
+    { displayName: '+91', value: '+91' },
+    { displayName: '+49', value: '+49' },
+    { displayName: '+44', value: '+44' },
+    { displayName: '+1', value: '+1' }
   ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },

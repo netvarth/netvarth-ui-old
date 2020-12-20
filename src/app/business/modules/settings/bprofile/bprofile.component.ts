@@ -391,6 +391,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   shareLink: any;
   href;
   img_list: string;
+  socialMediaFilled = false;
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -718,6 +719,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           if (this.bProfile.phoneNumbers && this.bProfile.phoneNumbers.length !== 0) {
             this.contactInfoPhFilled = true;
           }
+          if (this.bProfile.phoneNumbers && this.bProfile.phoneNumbers.length !== 0) {
+            this.socialMediaFilled = true;
+          }
           if (this.bProfile.emails && this.bProfile.emails.length !== 0) {
             this.contactInfoMailFilled = true;
           }
@@ -900,6 +904,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
   gotoAccountSettings() {
     this.routerobj.navigate(['provider', 'profile']);
+  }
+  gotoSocialMedia() {
+    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'social']);
   }
   // mandatory fields
   getDomainVirtualFields() {

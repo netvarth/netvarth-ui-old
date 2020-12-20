@@ -22,8 +22,10 @@
                   <!-- Cover Photo -->
                   <div class="coverFotoBorder cover-bg" [ngStyle]="{ 'background-image': 'url(' + imageToShow + ')'}">
                     <!--Camera icon(cover) For large device -->
-                    <span mat-button [matMenuTriggerFor]="menu" class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
-                      <span class="fa propic-cam-icon mgn-top-m3"></span><span class="mgn-top-m3">&nbsp;&nbsp;{{imageToShow ? 'Edit' : 'Upload'}} Cover
+                    <span mat-button [matMenuTriggerFor]="menu"
+                      class="edit-txt custId-cursor pad-10 edit-cover disp-flex">
+                      <span class="fa propic-cam-icon mgn-top-m3"></span><span
+                        class="mgn-top-m3">&nbsp;&nbsp;{{imageToShow ? 'Edit' : 'Upload'}} Cover
                         Photo
                       </span>
                     </span>
@@ -78,15 +80,15 @@
                       </div>
                       <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
-                        [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
                       </div>
                     </div>
                   </div>
 
                   <!-- About You -->
                   <div class="col-md-12 col-sm-12 col-xs-12 no-padding abt-you-box" #basicInfoSection>
-                    <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About Us</span><span class="edit-txt custId-cursor"
-                        (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
+                    <div class="pad-10"><span *ngIf="aboutmefilled" class="sub-heads">About Us</span><span
+                        class="edit-txt custId-cursor" (click)="gotoAboutMe()" *ngIf="aboutmefilled">Manage</span></div>
                     <div class="no-dta" *ngIf="!aboutmefilled">
                       <span class="cs-btn bt3" (click)="gotoAboutMe()">About Us</span>
                     </div>
@@ -101,24 +103,29 @@
 
                 <!-- QR code -->
                 <div class="pubs card w-dta bprof no-shadow no-padding-up">
-                  <div *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0" class="incomplete-msg">
+                  <div
+                    *ngIf="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0"
+                    class="incomplete-msg">
                     <div>
                       Please complete your profile to activate your Jaldee Link and QR Code
                     </div>
                   </div>
-                  <div [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
+                  <div
+                    [class.all_disabled]="showIncompleteButton || (reqFields.name || reqFields.location  ||reqFields.specialization) || bProfile.specialization.length === 0">
                     <div>
                       <h6 class="sub-heads">Here is your QR code and Link
                         <sup><span class="inactive" *ngIf="!onlinepresence_status">Inactive</span>
                           <span class="active" *ngIf="onlinepresence_status">Active</span></sup>
-                        <span class="edit-txt custId-cursor"
-                          (click)="reDirectToJaldeeOnline()">{{onlinepresence_status? 'Manage' : 'Enable'}}</span></h6>
+                        <span class="edit-txt custId-cursor" (click)="reDirectToJaldeeOnline()">{{onlinepresence_status?
+                          'Manage' : 'Enable'}}</span>
+                      </h6>
                       <div class="clearfix"></div>
                       <div class="bus-prof-qr-sec">
                         <div class="mgn-up-10">
                           <!-- If there is NO Custom ID -->
                           <div *ngIf="!bProfile.customId">
-                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" #qrCodeOnlineId>
+                            <div class="bprof-qr-border mgn-bt-10 col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
+                              #qrCodeOnlineId>
                               <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12 txt-center">
                                 <ngx-qrcode #accQR [elementType]="elementType" [value]="qr_value"
                                   (click)="qrCodegeneraterOnlineID(bProfile.accEncUid)" class="custId-cursor">
@@ -131,8 +138,9 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
-                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
+                                      <share-buttons [theme]="'circles-dark'"
+                                        [include]="['facebook','whatsapp','email','copy']" [url]="shareLink"
+                                        [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
@@ -162,8 +170,9 @@
                                 <div class="mgn-up-10">
                                   <div class="disp-flex smal-device-wt">
                                     <div class="trackSlide bprof-icons share-ico">
-                                      <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','copy']"
-                                        [url]="shareLink" [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
+                                      <share-buttons [theme]="'circles-dark'"
+                                        [include]="['facebook','whatsapp','email','copy']" [url]="shareLink"
+                                        [image]="qrCodePath" [showIcon]="true" [showText]="true" [size]="-4">
                                       </share-buttons>
                                     </div>
                                     <div class="dwnld-bdr custId-cursor">
@@ -254,11 +263,22 @@
                       <span class="fontstyl">Account Settings</span>
                     </div>
                   </div>
+                  <!-- social media -->
+                  <div class="cd-b">
+                    <div class="div-outline custId-cursor" (click)="gotoSocialMedia()"
+                      [ngClass]="{'div-grn-outline':socialMediaFilled}">
+                      <i *ngIf="socialMediaFilled" class="fa fa-check-circle fa-lg fa-grn fl-right"
+                        aria-hidden="true"></i>
+                      <i class="fa contct-icon"></i> &nbsp;&nbsp;
+                      <span class="fontstyl">Social Media Links and Visiting Sites</span>
+                    </div>
+                  </div>
                   <!-- Gallery View Grid -->
                   <div class="cd-b">
                     <div class="div-outline">
                       <div class="sub-heads mgn-bt-20">Gallery
-                        <span class="edit-txt custId-cursor" *ngIf="image_list.length>0" (click)="editImageGallery()">Add more</span>
+                        <span class="edit-txt custId-cursor" *ngIf="image_list.length>0"
+                          (click)="editImageGallery()">Add more</span>
                       </div>
                       <app-jaldee-gallery [status]="'ACTIVE'" [images]="image_list" [source]="'gallery'"
                         [page]="'bProfile'">
@@ -266,7 +286,7 @@
                     </div>
                   </div>
                   <!-- Social media -->
-                  <div class="cd-b">
+                  <!-- <div class="cd-b">
                     <div class="div-outline">
                       <div class="sub-heads mgn-bt-20">
                         Social Media <span class="edit-txt custId-cursor" (click)="handleSocialmedia()"
@@ -309,7 +329,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -470,7 +490,8 @@
                                               <tr *ngFor="let row of fields.value;let i = index">
                                                 <td *ngFor="let column of fields.Columns;let j = index"
                                                   [attr.data-title]="fields.Columns[j].displayName">
-                                                  {{column.type=='Enum' ? vkeyNameMap[row[column.key]] : row[column.key]}}
+                                                  {{column.type=='Enum' ? vkeyNameMap[row[column.key]] :
+                                                  row[column.key]}}
                                                 </td>
                                                 <td class="action">
                                                   <span class="mbt">
@@ -690,4 +711,4 @@
     </div>
     <div class="clearfix"></div>
   </div>
-</section> 
+</section>
