@@ -492,9 +492,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
       );
   }
-  goBackToCheckout() {
+  goBackToCheckout(selectesTimeslot) {
     this.action = '';
-
+    this.nextAvailableTime = selectesTimeslot;
     const chosenDateTime = {
       delivery_type: this.choose_type,
       catlog_id: this.catalog_details.id,

@@ -97,6 +97,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.gets3curl();
+    this.fetchCatalog();
+
+  }
+
+
+
+
+  ngOnDestroy() {
+    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+  }
+  fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       console.log(this.catalog_details);
@@ -163,13 +174,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
 
     });
-  }
-
-
-
-
-  ngOnDestroy() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
   }
   fillDateFromLocalStorage() {
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
@@ -413,22 +417,22 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return subtotal;
   }
   confirmOrder() {
-    if(this.checkMinimumQuantityofItems()){
+    if (this.checkMinimumQuantityofItems()) {
 
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
 
-    const chosenDateTime = {
-      delivery_type: this.choose_type,
-      catlog_id: this.catalog_details.id,
-      nextAvailableTime: this.nextAvailableTime,
-      order_date: this.sel_checkindate,
-      advance_amount: this.catalog_details.advance_amount,
-      account_id: this.account_id
+      const chosenDateTime = {
+        delivery_type: this.choose_type,
+        catlog_id: this.catalog_details.id,
+        nextAvailableTime: this.nextAvailableTime,
+        order_date: this.sel_checkindate,
+        advance_amount: this.catalog_details.advance_amount,
+        account_id: this.account_id
 
-    };
-    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-    this.router.navigate(['order', 'shoppingcart', 'checkout']);
-  }
+      };
+      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+    }
 
   }
   checkMinimumQuantityofItems() {
@@ -442,6 +446,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
+    console.log(this.action);
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
@@ -449,7 +454,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.location.back();
     }
   }
-  goBackCart() {
+  goBackCart(selectedTimeslot) {
+    this.nextAvailableTime = selectedTimeslot;
     this.action = '';
   }
   changeTime() {
@@ -651,7 +657,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.storeContact = data;
       });
   }
-
+  // resetDateTime() {
+  //   this.action = '';
+  //   this.fetchCatalog();
+  // }
 
   closeNav() {
     this.showSide = false;

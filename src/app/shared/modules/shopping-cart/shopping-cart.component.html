@@ -213,8 +213,10 @@
 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                        <button (click)="goBackCart()" class="btn bt3 btn-default coupon-apply-btn"
+                        <button (click)="goBackCart(futureAvailableTime)" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Ok</button>
+                          <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
+                          type="button">Cancel</button> -->
                       </div>
                     </div>
                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
