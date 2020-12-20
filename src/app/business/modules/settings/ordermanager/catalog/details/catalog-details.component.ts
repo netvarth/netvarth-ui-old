@@ -167,7 +167,7 @@ export class CatalogdetailComponent implements OnInit {
         'Completed',
         'In Transit',
         'Shipped',
-        'Canceled'
+        'Cancelled'
     ];
     selectedStatus;
     uploadcatalogImages: any = [];
@@ -502,7 +502,7 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm.get('startdate').setValue(new Date());
             this.amForm.get('startdatestore').setValue(new Date());
             this.amForm.get('startdatehome').setValue(new Date());
-            this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Canceled']);
+            this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
             if (this.action === 'add' && this.isFromadd) {
                 this.updateprefillForm();
@@ -772,7 +772,7 @@ export class CatalogdetailComponent implements OnInit {
         //    orderpickUpotp = this.catalog.pickUp.pickUpOtpVerification || false;
         } else {
             orderpickUpstat = false;
-            orderpickUpstartdate = '';
+            orderpickUpstartdate = new Date();
             orderpickUpenddate = '';
          //   orderpickUpotp = false;
         }
@@ -792,7 +792,7 @@ export class CatalogdetailComponent implements OnInit {
             homeDeliverycharge = this.catalog.homeDelivery.deliveryCharge || '';
         } else {
             homeDeliverystat = false;
-            homeDeliverystartdate = '';
+            homeDeliverystartdate = new Date();
             homeDeliveryenddate = '';
          //   homeDeliveryotp = false;
             homeDeliveryradius = '';
@@ -1747,20 +1747,19 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
     showStep(step, form_data) {
         console.log(step);
         console.log(form_data);
-    if (step === 2) {
+    // if (step === 2) {
         if (form_data.catalogName ) {
         this.basic = true;
-        }
-        else {
+        } else {
             this.basic = false;
          }
-    } else if (step === 3) {
+    // } else if (step === 3) {
         if (this.selday_arr.length > 0 && form_data.startdate && form_data.qstarttime && form_data.qendtime) {
         this.workinghours = true;
          } else {
             this.workinghours = false;
          }
-    } else if (step === 5) {
+    // } else if (step === 5) {
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment) {
                 this.paymentinformation = true;
@@ -1770,20 +1769,20 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         } else {
             this.paymentinformation = true;
         }
-    } else if (step === 6) {
+    // } else if (step === 6) {
         if (this.selday_arrstorepickup.length > 0 && form_data.startdatestore && form_data.qstarttimestore && form_data.qendtimestore) {
             this.storepickupinfo = true;
              } else {
                 this.storepickupinfo = false;
              }
 
-    } else if (step === 7) {
+    // } else if (step === 7) {
         if (this.selday_arrhomedelivery.length > 0 && form_data.startdatehome && form_data.qstarttimehome && form_data.qendtimehome) {
             this.homedeliveryinfo = true;
              } else {
                 this.homedeliveryinfo = false;
              }
-    }
+  //  }
         this.step = step;
 }
 }

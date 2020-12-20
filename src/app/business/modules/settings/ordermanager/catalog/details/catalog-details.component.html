@@ -69,7 +69,7 @@
                           <!-- <ngx-mat-select-search [formControl]="statMultiFilterCtrl" placeholderLabel="Search departments"
                       noEntriesFoundLabel="no matching department found"></ngx-mat-select-search> -->
                           <mat-option *ngFor=" let stat of status" [value]="stat"
-                            [disabled]="stat === 'Order Received'||stat === 'Canceled' || stat === 'Order Confirmed'">
+                            [disabled]="stat === 'Order Received'||stat === 'Cancelled' || stat === 'Order Confirmed'">
                             {{stat}}
                           </mat-option>
                         </mat-select>

@@ -127,7 +127,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
       console.log(this.addCatalogItems);
     }
-    
   }
   ngOnDestroy() {
   }
@@ -137,7 +136,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.getProviderCatalogs(this.cataId)
       .subscribe((data) => {
         this.catalog = data;
-        this.api_loading = false;
         if (this.catalog.catalogItem) {
           this.seletedCatalogItems = this.catalog.catalogItem;
           console.log(this.seletedCatalogItems);
@@ -147,25 +145,15 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           this.heading = 'Add items to catalog';
           this.itemsforadd = [];
           this.itemsforadd = this.catalogItem.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
-          
-        //     for (const itm of this.catalogItem) {
-        //     for (const selitem of this.seletedCatalogItems) {
-        //        if (itm.itemId === selitem.item.itemId) {
-        //         console.log('gh');
-        //         this.itemsforadd.push(itm);
-        //        }
-        //     }
-        // }
         console.log(this.itemsforadd);
         }
-       
+        this.api_loading = false;
       });
   }
   getitems() {
     this.provider_servicesobj.getProviderItems()
       .subscribe((data) => {
         this.catalogItem = data;
-        this.api_loading = false;
         for (const itm of this.catalogItem) {
           itm.minQuantity = '1';
           itm.maxQuantity = '5';
@@ -180,27 +168,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
                 itm.minQuantity = selitem.minQuantity;
                 itm.maxQuantity = selitem.maxQuantity;
                }
-            }
+          }
         }
          }
-
-        // if (this.seletedCatalogItems !== null) {
-        //   this.selectedCount = this.seletedCatalogItems.length;
-        //   console.log(this.selectedCount);
-        //   console.log(this.catalogItem);
-        //   for (const itm of this.catalogItem) {
-        //     for (const selitem of this.seletedCatalogItems) {
-        //        if (itm.itemId === selitem.item.itemId) {
-        //         itm.selected = true;
-        //         itm.id = selitem.id;
-        //         itm.minQuantity = selitem.minQuantity;
-        //         itm.maxQuantity = selitem.maxQuantity;
-        //        }
-        //     }
-        // }
-        //   console.log(this.catalogItem);
-
-        // } 
+         this.api_loading = false;
       });
   }
   selectItem(index) {
