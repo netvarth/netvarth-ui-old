@@ -278,10 +278,10 @@ export class CatalogdetailComponent implements OnInit {
       }
 
     setCatalogPrefillfields(form_data) {
-        const daystr: any = [];
-        for (const cday of this.selday_arr) {
-            daystr.push(cday);
-        }
+        // const daystr: any = [];
+        // for (const cday of this.selday_arr) {
+        //     daystr.push(cday);
+        // }
         let endDate;
         const startDate = this.convertDate(form_data.startdate);
         if (form_data.enddate) {
@@ -289,14 +289,14 @@ export class CatalogdetailComponent implements OnInit {
         } else {
             endDate = '';
         }
-        const curdate = new Date();
-        curdate.setHours(this.dstart_time.hour);
-        curdate.setMinutes(this.dstart_time.minute);
-        const enddate = new Date();
-        enddate.setHours(this.dend_time.hour);
-        enddate.setMinutes(this.dend_time.minute);
-        const starttime_format = moment(curdate).format('hh:mm A') || null;
-        const endtime_format = moment(enddate).format('hh:mm A') || null;
+        // const curdate = new Date();
+        // curdate.setHours(this.dstart_time.hour);
+        // curdate.setMinutes(this.dstart_time.minute);
+        // const enddate = new Date();
+        // enddate.setHours(this.dend_time.hour);
+        // enddate.setMinutes(this.dend_time.minute);
+        // const starttime_format = moment(curdate).format('hh:mm A') || null;
+        // const endtime_format = moment(enddate).format('hh:mm A') || null;
 
         //store pickup
 
@@ -367,15 +367,15 @@ export class CatalogdetailComponent implements OnInit {
             'catalogName': form_data.catalogName || '',
             'catalogDesc': form_data.catalogDesc || '',
             'catalogSchedule': {
-                'repeatIntervals': daystr || [],
+                'repeatIntervals': [1, 2, 3, 4, 5, 6, 7],
                 'startDate': startDate || '',
                 'terminator': {
                     'endDate': endDate || ''
                 },
                 'timeSlots': [
                     {
-                        'sTime': starttime_format,
-                        'eTime': endtime_format
+                        'sTime': '12:01 AM',
+                        'eTime': '11:59 PM'
                     }
                 ]
             },
@@ -479,8 +479,8 @@ export class CatalogdetailComponent implements OnInit {
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 startdate: [''],
                 enddate: [''],
-                qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-                qendtime: [this.dend_time, Validators.compose([Validators.required])],
+               // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
+              //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                // orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
@@ -504,7 +504,11 @@ export class CatalogdetailComponent implements OnInit {
                 deliverycharge: ['']
             });
            // this.amForm.get('orderType').setValue('SHOPPINGCART');
+           const dt = new Date();
+           dt.setFullYear(dt.getFullYear() + 2);
             this.amForm.get('startdate').setValue(new Date());
+         this.amForm.get('enddate').setValue(dt);
+                    console.log(dt);
             this.amForm.get('startdatestore').setValue(new Date());
             this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
@@ -518,8 +522,8 @@ export class CatalogdetailComponent implements OnInit {
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 startdate: [''],
                 enddate: [''],
-                qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-                qendtime: [this.dend_time, Validators.compose([Validators.required])],
+                //qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
+               // qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 //orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
@@ -657,31 +661,31 @@ export class CatalogdetailComponent implements OnInit {
 
     updateForm() {
         console.log(this.catalog);
-        const sttime = {
-            hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
-                ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
-                ['h:mm A']).format('mm'), 10)
-        };
-        const edtime = {
-            hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
-                ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
-                ['h:mm A']).format('mm'), 10)
-        };
-        this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
-        this.selday_arr = [];
-        // extracting the selected days
-        for (let j = 0; j < this.catalog.catalogSchedule.repeatIntervals.length; j++) {
-            // pushing the day details to the respective array to show it in the page
-            this.selday_arr.push(Number(this.catalog.catalogSchedule.repeatIntervals[j]));
-        }
-        if (this.selday_arr.length === 7) {
-            this.Selall = true;
-        } else {
-            this.Selall = false;
-        }
+        // const sttime = {
+        //     hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        //         ['h:mm A']).format('HH'), 10),
+        //     minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
+        //         ['h:mm A']).format('mm'), 10)
+        // };
+        // const edtime = {
+        //     hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        //         ['h:mm A']).format('HH'), 10),
+        //     minute: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].eTime,
+        //         ['h:mm A']).format('mm'), 10)
+        // };
+        // this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // this.selday_arr = [];
+        // // extracting the selected days
+        // for (let j = 0; j < this.catalog.catalogSchedule.repeatIntervals.length; j++) {
+        //     // pushing the day details to the respective array to show it in the page
+        //     this.selday_arr.push(Number(this.catalog.catalogSchedule.repeatIntervals[j]));
+        // }
+        // if (this.selday_arr.length === 7) {
+        //     this.Selall = true;
+        // } else {
+        //     this.Selall = false;
+        // }
 
 
         let sttimestore;
@@ -803,12 +807,12 @@ export class CatalogdetailComponent implements OnInit {
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
-if (this.catalog.catalogName ) {
+if (this.catalog.catalogName && this.catalog.catalogSchedule.startDate && this.catalog.catalogSchedule.terminator.endDate) {
     this.basic = true;
 }
-if (this.catalog.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
-    this.workinghours = true;
-}
+// if (this.catalog.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
+//     this.workinghours = true;
+// }
 if (this.catalog.cancellationPolicy) {
     this.paymentinformation = true;
 }
@@ -825,8 +829,8 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'catalogDesc': this.catalog.catalogDesc || '',
             'startdate': this.catalog.catalogSchedule.startDate || '',
             'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
-            'qstarttime': sttime,
-            'qendtime': edtime,
+            //'qstarttime': sttime,
+            //'qendtime': edtime,
            // 'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
@@ -876,31 +880,31 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         }
     }
     updateprefillForm() {
-        const sttime = {
-            hour: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].sTime,
-                ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].sTime,
-                ['h:mm A']).format('mm'), 10)
-        };
-        const edtime = {
-            hour: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].eTime,
-                ['h:mm A']).format('HH'), 10),
-            minute: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].eTime,
-                ['h:mm A']).format('mm'), 10)
-        };
-        this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
-        this.selday_arr = [];
-        // extracting the selected days
-        for (let j = 0; j < this.prefillData.catalogSchedule.repeatIntervals.length; j++) {
-            // pushing the day details to the respective array to show it in the page
-            this.selday_arr.push(Number(this.prefillData.catalogSchedule.repeatIntervals[j]));
-        }
-        if (this.selday_arr.length === 7) {
-            this.Selall = true;
-        } else {
-            this.Selall = false;
-        }
+        // const sttime = {
+        //     hour: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].sTime,
+        //         ['h:mm A']).format('HH'), 10),
+        //     minute: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].sTime,
+        //         ['h:mm A']).format('mm'), 10)
+        // };
+        // const edtime = {
+        //     hour: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].eTime,
+        //         ['h:mm A']).format('HH'), 10),
+        //     minute: parseInt(moment(this.prefillData.catalogSchedule.timeSlots[0].eTime,
+        //         ['h:mm A']).format('mm'), 10)
+        // };
+        // this.dstart_time = sttime; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_time = edtime; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // this.selday_arr = [];
+        // // extracting the selected days
+        // for (let j = 0; j < this.prefillData.catalogSchedule.repeatIntervals.length; j++) {
+        //     // pushing the day details to the respective array to show it in the page
+        //     this.selday_arr.push(Number(this.prefillData.catalogSchedule.repeatIntervals[j]));
+        // }
+        // if (this.selday_arr.length === 7) {
+        //     this.Selall = true;
+        // } else {
+        //     this.Selall = false;
+        // }
         let sttimestore;
         if (this.prefillData.pickUp && this.prefillData.pickUp.pickUpSchedule) {
             sttimestore = {
@@ -1030,12 +1034,12 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         if (this.prefillData.imagebase64.length > 0) {
             this.selectedMessage.base64 = this.prefillData.imagebase64;
         }
-        if (this.prefillData.catalogName ) {
+        if (this.prefillData.catalogName && this.prefillData.catalogSchedule.startDate && this.prefillData.catalogSchedule.terminator.endDate) {
             this.basic = true;
         }
-        if (this.prefillData.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
-            this.workinghours = true;
-        }
+        // if (this.prefillData.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
+        //     this.workinghours = true;
+        // }
         if (this.prefillData.cancellationPolicy) {
             this.paymentinformation = true;
         }
@@ -1051,8 +1055,8 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'catalogDesc': this.prefillData.catalogDesc || '',
             'startdate': this.prefillData.catalogSchedule.startDate || '',
             'enddate': this.prefillData.catalogSchedule.terminator.endDate || '',
-            'qstarttime': sttime,
-            'qendtime': edtime,
+          //  'qstarttime': sttime,
+          //  'qendtime': edtime,
             // 'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
             'itemPriceInfo': this.prefillData.showPrice,
@@ -1265,15 +1269,15 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
     }
     onSubmit(form_data) {
        
-        const daystr: any = [];
-        for (const cday of this.selday_arr) {
-            daystr.push(cday);
-        }
-        if (this.selday_arr.length === 0) {
-            const error = 'Please select the days';
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            return;
-        }
+        // const daystr: any = [];
+        // for (const cday of this.selday_arr) {
+        //     daystr.push(cday);
+        // }
+        // if (this.selday_arr.length === 0) {
+        //     const error = 'Please select the days';
+        //     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
         let endDate;
         const startDate = this.convertDate(form_data.startdate);
         if (form_data.enddate) {
@@ -1282,23 +1286,23 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             endDate = '';
         }
         // check whether the start and end times are selected
-        if (!this.dstart_time || !this.dend_time) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        // today
-        if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        const curdate = new Date();
-        curdate.setHours(this.dstart_time.hour);
-        curdate.setMinutes(this.dstart_time.minute);
-        const enddate = new Date();
-        enddate.setHours(this.dend_time.hour);
-        enddate.setMinutes(this.dend_time.minute);
-        const starttime_format = moment(curdate).format('hh:mm A') || null;
-        const endtime_format = moment(enddate).format('hh:mm A') || null;
+        // if (!this.dstart_time || !this.dend_time) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // // today
+        // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // const curdate = new Date();
+        // curdate.setHours(this.dstart_time.hour);
+        // curdate.setMinutes(this.dstart_time.minute);
+        // const enddate = new Date();
+        // enddate.setHours(this.dend_time.hour);
+        // enddate.setMinutes(this.dend_time.minute);
+        // const starttime_format = moment(curdate).format('hh:mm A') || null;
+        // const endtime_format = moment(enddate).format('hh:mm A') || null;
 
         //store pickup
         console.log(this.selday_arrstorepickup);
@@ -1386,7 +1390,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'catalogDesc': form_data.catalogDesc,
             'catalogSchedule': {
                 'recurringType': 'Weekly',
-                'repeatIntervals': daystr,
+                'repeatIntervals': [1, 2, 3, 4, 5, 6, 7],
                 'startDate': startDate,
                 'terminator': {
                     'endDate': endDate,
@@ -1394,8 +1398,8 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                 },
                 'timeSlots': [
                     {
-                        'sTime': starttime_format,
-                        'eTime': endtime_format
+                        'sTime': '12:01 AM',
+                        'eTime': '11:59 PM'
                     }
                 ]
             },

@@ -75,6 +75,24 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
+                    <div class="form-group row">
+                      <div class="col-md-3 col-sm-4 col-xs-4 no-padding-small">
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="picker" (dateChange)="compareDate($event.value,0)"
+                            placeholder="Start Date" formControlName="startdate" readonly>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-3 col-sm-4 col-xs-5">
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="picker1" (dateChange)="compareDate($event.value,1)"
+                            placeholder="End Date" formControlName="enddate" readonly>
+                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
                     <!-- <div class="form-group">
                       <label class="col-form-label" for="PromotionalPricetype">Order type</label>
                       <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
@@ -82,7 +100,7 @@
                         <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
                       </mat-radio-group>
                     </div> -->
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
+                    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
                       Show personalized information about this catalog
                       <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
                         Click here</span>
@@ -90,7 +108,7 @@
                         <i class="fa fa-check"></i>
                         <a (click)="showInfoSection()"> Instructions Added</a>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="clearfix"></div>
                     <div class="lbr col-sm-12 col-md-12 col-lg-12 no-padding bg-white">
                       <div class="cr1 no-padding">
@@ -143,8 +161,8 @@
                     </div>
                   </mat-expansion-panel>
                 </mat-accordion>
-                <!-- <div class="form-group row" > -->
-                <mat-accordion class="mgn-up-5">
+                
+                <!-- <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 2">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
@@ -154,12 +172,7 @@
                         aria-hidden="true"></i>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <!-- <div class="schselectall">
-                      <i class="fa fa-square-o" *ngIf="!Selall" (click)="handleselectall()">
-                        {{select_All}}</i>
-                      <i class="fa fa-check-square-o" *ngIf="Selall" (click)="handleselectnone()">
-                        {{select_All}}</i>
-                    </div> -->
+                   
                     <p>Select your date and time</p>
                     <section class="schedule-section leftselectAll start-endtime-wrap">
                       <div *ngFor="let wday of weekdays; index as i">
@@ -205,15 +218,15 @@
                         </div>
                       </div>
                     </div>
-                    <!-- </div> -->
+                   
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
                       <button type="button" class="cs-btn bt1" mat-button (click)="showStep(1,amForm.value)">Back</button>&nbsp;
                       <button type="button" class="cs-btn bt1" mat-button (click)="showStep(3,amForm.value)">Next</button>
                     </div>
                   </mat-expansion-panel>
-                </mat-accordion>
+                </mat-accordion> -->
                 <mat-accordion class="mgn-up-5">
-                  <mat-expansion-panel [expanded]="step == 3">
+                  <mat-expansion-panel [expanded]="step == 2">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Items <i *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0 || catalogItems && catalogItems.length > 0" class="fa fa-check-circle  catalog-grn fl-right"
@@ -245,14 +258,14 @@
                       </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2,amForm.value)">Back</button>&nbsp;
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(4,amForm.value)">Next</button>
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(1,amForm.value)">Back</button>&nbsp;
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(3,amForm.value)">Next</button>
                     </div>
                   </mat-expansion-panel>
                 </mat-accordion>
 
                 <mat-accordion class="mgn-up-5">
-                  <mat-expansion-panel [expanded]="step == 4">
+                  <mat-expansion-panel [expanded]="step == 3">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Payment Information <i *ngIf="paymentinformation" class="fa fa-check-circle  catalog-grn fl-right"
@@ -302,14 +315,14 @@
                       </div>
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(3,amForm.value)">Back</button>&nbsp;
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(5,amForm.value)">Next</button>
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(2,amForm.value)">Back</button>&nbsp;
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(4,amForm.value)">Next</button>
                     </div>
                   </mat-expansion-panel>
                 </mat-accordion>
 
                 <mat-accordion class="mgn-up-5">
-                  <mat-expansion-panel [expanded]="step == 5">
+                  <mat-expansion-panel [expanded]="step == 4">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Store Pick-Up <i *ngIf="storepickupinfo && storepickupStat" class="fa fa-check-circle  catalog-grn fl-right"
@@ -392,14 +405,14 @@
 
                     </div>
                     <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(4,amForm.value)">Back</button>&nbsp;
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(6,amForm.value)">Next</button>
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(3,amForm.value)">Back</button>&nbsp;
+                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(5,amForm.value)">Next</button>
                     </div>
                   </mat-expansion-panel>
                 </mat-accordion>
 
                 <mat-accordion class="mgn-up-5">
-                  <mat-expansion-panel [expanded]="step == 6">
+                  <mat-expansion-panel [expanded]="step == 5">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
                         Home Delivery <i *ngIf="homedeliveryinfo && homedeliveryStat" class="fa fa-check-circle  catalog-grn fl-right"
@@ -493,7 +506,7 @@
                        
                       </div>
                     </div>
-                    <button type="button" class="cs-btn bt1" mat-button (click)="showStep(5,amForm.value)">Back</button>&nbsp;
+                    <button type="button" class="cs-btn bt1" mat-button (click)="showStep(4,amForm.value)">Back</button>&nbsp;
                     <button type="button" class="cs-btn bt1" mat-button (click)="showStep(0,amForm.value)">Finish</button>
                   </mat-expansion-panel>
                 </mat-accordion>
