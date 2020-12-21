@@ -719,7 +719,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           if (this.bProfile.phoneNumbers && this.bProfile.phoneNumbers.length !== 0) {
             this.contactInfoPhFilled = true;
           }
-          if (this.bProfile.phoneNumbers && this.bProfile.phoneNumbers.length !== 0) {
+          if (this.bProfile.socialMedia && this.bProfile.socialMedia.length > 0) {
             this.socialMediaFilled = true;
           }
           if (this.bProfile.emails && this.bProfile.emails.length !== 0) {

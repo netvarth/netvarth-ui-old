@@ -50,3 +50,6 @@
 ::placeholder {
     font-style: italic;
 }
+.mat-icon-button {
+    width: 0px !important;
+}

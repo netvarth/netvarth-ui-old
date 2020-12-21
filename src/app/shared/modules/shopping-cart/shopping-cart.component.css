@@ -159,9 +159,11 @@ flex-basis: 50% !important;
 }
 .shop-cart .itm_img {
   background-repeat: round !important;
-  height: 50px;
+  height: 60px;
   padding: 0;
-  width: 50px;
+  width: 60px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .shop-cart .itm_sumry_outline {
   margin-top: 17px;

@@ -441,3 +441,6 @@ display: grid !important;
     font-size: 0.8rem !important;
     text-align: left;
   }
+  ::ng-deep .order-checkout .fa-asterisk {
+      font-size: 0.4rem;
+  }
