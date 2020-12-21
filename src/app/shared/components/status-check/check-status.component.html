@@ -4,9 +4,10 @@
       <div class="copy locd" *ngIf="!api_loading">
         <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
           <div class="info-img">
-            <img src="assets/images/bg-01.png"></div>
+            <img src="assets/images/bg-01.png">
+          </div>
           <div class="details mgn-up-100">
-            <div class="book-head ynw-common-form-nm" *ngIf="type!='wl' && type!='appt'">
+            <div class="book-head ynw-common-form-nm" *ngIf="type!='wl' && type!='appt' && type!='order'">
               <div class="col-md-8 col-xs-8 col-sm-8">
                 <mat-form-field>
                   <input matInput placeholder='Enter Confirmation id' class="form-control" [(ngModel)]="encId"
@@ -21,6 +22,7 @@
               <div class="book-details" *ngIf="type=='wl' && statusInfo.showToken"> Token details </div>
               <div class="book-details" *ngIf="type=='wl' && !statusInfo.showToken"> Check-in details </div>
               <div class="book-details" *ngIf="type=='appt'"> Appointment details </div>
+              <div class="book-details" *ngIf="type=='order'"> Order details </div>
               <table class="book-details-sub chkntoknappt-details">
                 <tbody>
                   <tr *ngIf="!statusInfo.provider">
@@ -31,8 +33,16 @@
                   <tr *ngIf="statusInfo.provider">
                     <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}}, {{statusInfo.providerAccount?.businessName}}</td>
+                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}},
+                      {{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
+                  <!-- <tr *ngIf="type=='order'">
+                    <td width="48%" align="right">Location </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.queue?.location.place}}&nbsp;<a [href]="statusInfo.queue.location.googleMapUrl"
+                        target="_blank" class="icon-location" matTooltip="Click to navigate">
+                      </a></td>
+                  </tr> -->
                   <tr *ngIf="type=='wl'">
                     <td width="48%" align="right">Location </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -46,7 +56,7 @@
                     <td> {{statusInfo.location.place}}&nbsp;<a [href]="statusInfo.location.googleMapUrl" target="_blank"
                         class="icon-location" matTooltip="Click to navigate">
                       </a></td>
-                  </tr> 
+                  </tr>
                   <tr *ngIf="statusInfo.token">
                     <td width="48%" align="right">Token No </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -76,8 +86,24 @@
                       </span>
                     </td>
                   </tr>
-                  
-                  <tr>
+                  <tr *ngIf="type=='order'">
+                    <td width="48%" align="right">Order For </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>
+                      <span class="forwhom">
+                        {{statusInfo.orderFor.firstName | capitalizeFirst}} {{statusInfo.orderFor.lastName |
+                        capitalizeFirst}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="statusInfo.homeDeliveryAddress">
+                    <td width="48%" align="right">Home Delivery Address </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td>
+                      <span [innerHTML]="statusInfo.homeDeliveryAddress | nl2br"></span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="type !== 'order'">
                     <td width="48%" align="right">Service</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>
@@ -94,7 +120,8 @@
                         <i *ngIf="statusInfo.service.serviceType == 'virtualService' && statusInfo.service.virtualCallingModes[0].callingMode =='Phone'"
                           class="fa phon-icon know-status-i"></i>
                       </span>
-                      {{statusInfo.service?.name}}</td>
+                      {{statusInfo.service?.name}}
+                    </td>
                   </tr>
                   <tr *ngIf="type=='wl'">
                     <td width="48%" align="right">Time window </td>
@@ -103,24 +130,35 @@
                       {{statusInfo.queue.queueStartTime}} -
                       {{statusInfo.queue.queueEndTime}}</td>
                   </tr>
+                  <tr *ngIf="type=='order'">
+                    <td width="48%" align="right">Time window </td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td> {{statusInfo.orderDate | date: dateFormat }},
+                      {{statusInfo.orderTimeWindow.timeSlots[0].eTime}} -
+                      {{statusInfo.orderTimeWindow.timeSlots[0].sTime}}</td>
+                  </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.appmtDate | date: dateFormat }},
                       {{getSingleTime(statusInfo.appmtTime)}}</td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="type!='order'">
                     <td width="48%" align="right">Booking No</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
                     <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>
                   </tr>
+                  <tr *ngIf="type=='order'">
+                    <td width="48%" align="right">Order Id</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td *ngIf="type=='order'"> {{statusInfo.orderNumber}}</td>
+                  </tr>
                   <tr *ngIf="statusInfo.service?.minPrePaymentAmount && statusInfo.waitlistMode !== 'WALK_IN_CHECKIN'">
                     <td width="48%" align="right">Amount paid</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td><span
-                      class="rupee-font">&#8377;
-                  </span> {{statusInfo.service.minPrePaymentAmount}}</td>
+                    <td><span class="rupee-font">&#8377;
+                      </span> {{statusInfo.service.minPrePaymentAmount}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -128,7 +166,8 @@
               </div>
               <table class="status-table" *ngIf="!history">
                 <tbody>
-                  <tr *ngIf="type=='wl' && (statusInfo.waitlistStatus === 'arrived' || statusInfo.waitlistStatus === 'checkedIn')">
+                  <tr
+                    *ngIf="type=='wl' && (statusInfo.waitlistStatus === 'arrived' || statusInfo.waitlistStatus === 'checkedIn')">
                     <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.personsAhead}}</td>
@@ -145,8 +184,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="txt-align-center"
-                *ngIf="statusInfo.waitlistStatus">
+              <div class="txt-align-center" *ngIf="statusInfo.waitlistStatus">
                 <span class="cancelled" *ngIf="statusInfo.waitlistStatus === 'cancelled'">
                   <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
                   <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
@@ -159,8 +197,7 @@
                   {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
                 </span>
               </div>
-              <div class="txt-align-center"
-                *ngIf="statusInfo.apptStatus">
+              <div class="txt-align-center" *ngIf="statusInfo.apptStatus">
                 <span class="cancelled"
                   *ngIf="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'">
                   Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
@@ -171,15 +208,22 @@
                   Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
                 </span>
               </div>
-              <div class="notes" *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled && statusInfo.service.postInfoTitle">
+              <div class="txt-align-center" *ngIf="type == 'order'">
+                <span class="green">
+                  Order {{statusInfo.orderStatus}}
+                </span>
+              </div>
+              <div class="notes"
+                *ngIf="statusInfo.service && statusInfo.service.postInfoEnabled && statusInfo.service.postInfoTitle">
                 <div class="preinfo-title">{{statusInfo.service.postInfoTitle}} </div>
                 <div [innerHTML]="statusInfo.service.postInfoText">
                 </div>
-            </div>
+              </div>
               <div class="ok-btn">
-                <span class="pointer-cursor" style="font-size: medium;"  (click)="okClick()">
-                  Close</span></div>
-            <!-- <div class="txt-align-center mgn-up-30">
+                <span class="pointer-cursor" style="font-size: medium;" (click)="okClick()">
+                  Close</span>
+              </div>
+              <!-- <div class="txt-align-center mgn-up-30">
               <a class="status-check" (click)="okClick()"> Visit Jaldee.com to check another status</a>
             </div> -->
             </div>
@@ -195,11 +239,12 @@
             <div class="one">powered by</div>
             <div class="two">
               <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
-                style="width: 15px;">&nbsp;Jaldee</div>
+                style="width: 15px;">&nbsp;Jaldee
+            </div>
           </div>
         </div>
       </div>
       <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </div>
-  </div> 
+  </div>
 </section>

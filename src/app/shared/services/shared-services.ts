@@ -730,6 +730,10 @@ export class SharedServices {
     const url = 'consumer/appointment/enc/' + encId;
     return this.servicemeta.httpGet(url);
   }
+  getOrderbyEncId(encId) {
+    const url = 'consumer/orders/enc/' + encId;
+    return this.servicemeta.httpGet(url);
+  }
   getServicesforAppontmntByLocationId(locid) {
     if (locid) {
       const url = 'consumer/appointment/service/' + locid;

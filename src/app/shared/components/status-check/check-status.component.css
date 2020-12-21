@@ -154,3 +154,6 @@ overflow: auto;
   font-weight: 600;
   font-size: 1rem;
 }
+.book-details-sub tbody {
+  vertical-align: baseline !important;
+}

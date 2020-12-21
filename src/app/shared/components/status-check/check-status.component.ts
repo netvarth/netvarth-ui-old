@@ -48,8 +48,10 @@ export class CheckYourStatusComponent implements OnInit {
           this.encId = qparams.id;
           if (this.encId.split('-')[0] === 'c') {
             this.type = 'wl';
-          } else {
+          } else if (this.encId.split('-')[0] === 'a') {
             this.type = 'appt';
+          } else {
+            this.type = 'order';
           }
           if (this.type === 'wl') {
             this.placeText = 'Check-in Id';
@@ -85,8 +87,10 @@ export class CheckYourStatusComponent implements OnInit {
     if (this.encId) {
       if (this.type === 'wl') {
         this.getWLDetails(this.encId);
-      } else {
+      } else if (this.type === 'appt') {
         this.getApptDetails(this.encId);
+      } else {
+        this.getOrderDetails(this.encId);
       }
     } else {
       this.api_loading = false;
@@ -196,8 +200,10 @@ export class CheckYourStatusComponent implements OnInit {
       this.api_loading = true;
       if (encId.split('-')[0] === 'c') {
         this.getWLDetails(encId);
-      } else {
+      } else if (encId.split('-')[0] === 'a') {
         this.getApptDetails(encId);
+      } else {
+        this.getOrderDetails(encId);
       }
     }
   }
@@ -273,7 +279,23 @@ export class CheckYourStatusComponent implements OnInit {
       return false;
     }
   }
-
+  getOrderDetails(encId) {
+    this.foundDetails = false;
+    this.history = false;
+    this.shared_services.getOrderbyEncId(encId)
+      .subscribe(
+        (data: any) => {
+          this.statusInfo = data;
+          this.foundDetails = true;
+          this.type = 'order';
+          this.api_loading = false;
+        },
+        (error) => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.foundDetails = false;
+          this.api_loading = false;
+        });
+  }
   getApptDetails(encId) {
     this.foundDetails = false;
     this.shared_services.getApptbyEncId(encId)
