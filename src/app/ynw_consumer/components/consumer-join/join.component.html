@@ -145,11 +145,11 @@ onSubmit(loginForm.value)">
                         formControlName="emailId" autocomplete="off" (keypress)="resetApiErrors()"
                         (blur)="onFieldBlur('emailId')">
                 <!-- </mat-form-field> -->
-                <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
+                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
                     {
                         'required' : 'Email Id is required'
                     })">
-                </app-field-error-display>
+                </app-field-error-display> -->
             </div>
             <!-- <div class="example-container joinotp">
                 <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
