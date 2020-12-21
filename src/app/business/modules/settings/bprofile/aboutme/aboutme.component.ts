@@ -31,6 +31,7 @@ export class AboutMeComponent implements OnInit {
   change_cap = Messages.BPROFILE_CHANGE_CAP;
   profile_name_summary_cap = Messages.SEARCH_PRI_PROF_NAME_SUMMARY_CAP;
   business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
+  business_user_name_cap = Messages.SEARCH_PRI_BUISINESS_USER_NAME_CAP;
   profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
@@ -101,6 +102,7 @@ export class AboutMeComponent implements OnInit {
   createForm() {
     this.formfields = {
       bname: [{ value: this.bProfile.businessName, disabled: false }, Validators.compose([Validators.required])],
+      busername: [{ value: this.bProfile.businessUserName, disabled: false }],
       // shortname: [{ value: this.bProfile.shortName, disabled: false }],
       // bdesc: [{ value: this.bProfile.businessDesc, disabled: false }, Validators.compose([Validators.required])]
       bdesc: [{ value: this.bProfile.businessDesc, disabled: false },  Validators.compose([Validators.required])]
@@ -145,11 +147,9 @@ export class AboutMeComponent implements OnInit {
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
-        'businessDesc': form_data.bdesc
-        // ,
-        // 'shortName': form_data.shortname
+        'businessDesc': form_data.bdesc,
+        'businessUserName': form_data.busername
       };
-      // console.log('bProdile..' + this.bProfile);
       if (this.bProfile.businessName) {
         this.UpdatePrimaryFields(post_itemdata);
       } else {

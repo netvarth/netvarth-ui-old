@@ -979,6 +979,9 @@ ul.details.badges li {
 .bus-page .cvr-dp-bdr {
   border: 5px solid #ffffff !important;
 }
+.bus-page .font_user_size {
+  font-size: 1.1rem;
+}
 
 .bus-item-N {
   width: 16.6%;

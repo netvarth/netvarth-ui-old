@@ -42,6 +42,10 @@ ul.details.contact {
   margin: auto;
 }
 
+.bus-page .font_user_size {
+  font-size: 1.1rem;
+}
+
 .info-bar {
   background-color: #f5f5f5 !important;
 }
