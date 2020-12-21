@@ -398,9 +398,6 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = false;
     }
     onSubmit(form_data, isfrom?) {
-        console.log(this.showPromotionalPrice);
-        console.log(form_data.promotionalPrice);
-
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
            // this.api_error = 'Please enter valid promotional value';
             this.sharedfunctionObj.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });

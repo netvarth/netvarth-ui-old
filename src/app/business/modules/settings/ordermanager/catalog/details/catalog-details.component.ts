@@ -269,7 +269,7 @@ export class CatalogdetailComponent implements OnInit {
       }
 
       gotoItems() {
-        this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
+        this.router.navigate(['provider', 'settings', 'pos', 'items']);
       }
 
     setCatalogPrefillfields(form_data) {

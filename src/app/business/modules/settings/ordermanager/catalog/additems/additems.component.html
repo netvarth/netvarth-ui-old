@@ -97,7 +97,11 @@
 
     <div *ngIf="!api_loading && action === 'add'">
             <div class="additem-cart-footer" *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0 && selectedCount > 0">
-                    <div>{{selectedCount}} items are selected
+                    <div  *ngIf="selectedCount === 1">selected {{selectedCount}} item. 
+                        
+                        <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
+                    </div>
+                    <div *ngIf="selectedCount > 1">selected {{selectedCount}} items. 
                         
                         <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
                     </div>
@@ -116,7 +120,11 @@
             </div>
         </div> -->
         <div class="additem-cart-footer" *ngIf="itemsforadd && itemsforadd.length > 0 && selecteditemCount > 0">
-            <div>{{selecteditemCount}} items are selected
+            <div *ngIf="selecteditemCount === 1">selected {{selecteditemCount}} item.
+                
+                <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>
+            </div>
+            <div *ngIf="selecteditemCount > 1">selected {{selecteditemCount}} items.
                 
                 <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>
             </div>

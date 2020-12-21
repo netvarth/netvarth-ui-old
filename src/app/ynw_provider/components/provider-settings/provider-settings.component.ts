@@ -960,7 +960,7 @@ this.getOrderStatus();
         this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
         break;
       case 'orderitems':
-        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'items']);
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
         break;
     }
   }
