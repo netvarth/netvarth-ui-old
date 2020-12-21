@@ -385,7 +385,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
           } else {
-      // const contactNumber = this.storeContact.value.phone;
+       const contactNumber = this.storeContact.value.phone;
       const contact_email = this.storeContact.value.email;
       const post_Data = {
         'storePickup': true,
@@ -402,7 +402,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         'orderItem': this.getOrderItems(),
         'orderDate': this.sel_checkindate,
         'countryCode': this.customer_countrycode,
-        'phoneNumber': this.phonenumber,
+        'phoneNumber': contactNumber,
         'email': contact_email,
         'orderNote': this.orderNote
 
