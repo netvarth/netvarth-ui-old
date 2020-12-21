@@ -26714,4 +26714,9 @@ color: #fff !important;
   color: rgb(244, 67, 54) !important;
   padding-right: 10px !important;
 }
-
+.orange {
+  color: orange;
+}
+.yellow {
+  color: yellow;
+}

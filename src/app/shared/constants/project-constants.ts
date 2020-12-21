@@ -858,5 +858,21 @@ export const projectConstantsLocal = {
     { value: 'PartiallyPaid', displayName: 'Partially Paid' },
     { value: 'FullyPaid', displayName: 'Fully Paid' },
     { value: 'Refund', displayName: 'Refund' }
-  ]
+  ],
+  PAYMENT_STATUS_CLASS: [
+    { value: 'NotPaid', class: 'red' },
+    { value: 'PartiallyPaid', class: 'orange' },
+    { value: 'FullyPaid', class: 'greenc' },
+    { value: 'Refund', class: 'yellow' },
+    { value: 'PartiallyRefunded', class: 'yellow' },
+    { value: 'FullyRefunded', class: 'yellow' }
+  ],
+  BILL_PAYMENT_STATUS_WITH_DISPLAYNAME: {
+    NotPaid: 'Not Paid',
+    PartiallyPaid: 'Partially Paid',
+    FullyPaid: 'Fully Paid',
+    PartiallyRefunded: 'Partially Refunded',
+    FullyRefunded: 'Fully Refunded',
+    Refund: 'Refund'
+  }
 };

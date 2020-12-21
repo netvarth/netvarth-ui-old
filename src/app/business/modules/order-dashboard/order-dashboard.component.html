@@ -7,7 +7,8 @@
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
         <div>Total orders</div>
-        <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}</div>
+        <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
           <div class="col-md-4 col-xs-6 col-sm-6 no-padding">
             <div> Today</div>
@@ -147,12 +148,15 @@
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="redish bold">
+                <div class="darkblue bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
-                    class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
+                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                    (click)="stopprop($event);gotoBill(order)"
+                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
+                    currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
@@ -285,12 +289,14 @@
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="redish bold">
+                <div class="darkblue bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
-                    class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
+                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                    (click)="stopprop($event);gotoBill(order)">{{order.cartAmount |
+                    currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
@@ -406,8 +412,8 @@
             No history orders
           </div>
           <ng-container *ngIf="historyOrders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding"
-              *ngFor="let order of historyOrders;let i=index" (click)="gotoDetails(order)">
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index"
+              (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
@@ -422,12 +428,14 @@
                   {{order.orderDate | date: display_dateFormat}},
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
-                <div class="redish bold">
+                <div class="darkblue bold">
                   {{order.orderStatus}}
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
-                    class="greenc rupee-font bold mgn-lt-10">{{order.cartAmount | currency:'INR'}}</span>
+                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                    (click)="stopprop($event);gotoBill(order)">{{order.cartAmount |
+                    currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>

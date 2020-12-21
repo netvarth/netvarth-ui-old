@@ -56,6 +56,8 @@ export class OrderDashboardComponent implements OnInit {
   historyOrdertype = '';
   todayOrdersCount;
   futureOrdersCount;
+  payStatusClassList = projectConstantsLocal.PAYMENT_STATUS_CLASS;
+  billPaymentStatuses = projectConstantsLocal.BILL_PAYMENT_STATUS_WITH_DISPLAYNAME;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -325,6 +327,34 @@ export class OrderDashboardComponent implements OnInit {
     if (this.selectedTab === 2) {
       this.getProviderFutureOrders();
       this.getProviderFutureOrdersCount();
+    }
+  }
+  getPayClass(order) {
+    if (order.bill) {
+      const retdet = this.payStatusClassList.filter(
+        soc => soc.value === order.bill.billPaymentStatus);
+      const returndet = retdet[0].class;
+      return returndet;
+    } else {
+      return 'red';
+    }
+  }
+  gotoBill(order) {
+    this.providerservices.getWaitlistBill(order.uid)
+      .subscribe(
+        data => {
+          this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getPaymentTooltip(order) {
+    if (order.bill && order.bill.billPaymentStatus) {
+      return this.billPaymentStatuses[order.bill.billPaymentStatus];
+    } else {
+      return 'Not Paid';
     }
   }
 }
