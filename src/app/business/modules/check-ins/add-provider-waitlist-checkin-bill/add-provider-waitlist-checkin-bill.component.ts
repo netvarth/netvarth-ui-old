@@ -1527,13 +1527,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + (item.quantity * item.price).toFixed(2) + '</td>';
       bill_html += '	</tr>';
       // List<Discount> itemDiscounts = mapper.readValue(item.getDiscount().toString(), new TypeReference<List<Discount>>(){};
+      if (item.discount && item.discount.length > 0) {
       for (const itemDiscount of item.discount) {
         bill_html += '	<tr style="color:#aaa">';
         bill_html += '<td style="text-align:right" colspan="2">' + itemDiscount.name + '</td>';
         bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(itemDiscount.discountValue).toFixed(2) + '</td>';
         bill_html += '	</tr>';
       }
-      if (item.discount && item.discount.length > 0) {
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';
