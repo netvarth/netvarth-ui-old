@@ -72,6 +72,8 @@ export class SocialMediaComponent implements OnInit {
         this.provider_services.getBussinessProfile().subscribe(
             data => {
                 this.bProfile = data;
+                this.socialLink = [];
+                this.social_arr = [];
                 if (this.bProfile.socialMedia) {
                     for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
                         if (this.bProfile.socialMedia[i].resource !== '') {
@@ -88,5 +90,35 @@ export class SocialMediaComponent implements OnInit {
     }
     keyPressed(index) {
         this.showSave[index] = true;
+    }
+    deleteSocialmedia(sockey) {
+        console.log(this.social_arr);
+        console.log(sockey);
+        const post_data: any = [];
+        for (let i = 0; i < this.social_arr.length; i++) {
+            if (this.social_arr[i].Sockey !== sockey) {
+                post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
+            }
+        }
+        console.log(post_data);
+        const submit_data = {
+            'socialMedia': post_data
+        };
+        this.provider_services.updateSocialMediaLinks(submit_data)
+            .subscribe(
+                () => {
+                    this.getBusinessProfile();
+                },
+                () => {
+                }
+            );
+    }
+    showDelete(key) {
+        const filteredList = this.social_arr.filter(social => social.Sockey === key);
+        if (filteredList.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
