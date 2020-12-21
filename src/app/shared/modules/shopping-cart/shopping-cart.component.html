@@ -33,7 +33,7 @@
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div class="add_nte" (click)="addNotes(item,i)">
-                          Add note
+                        {{item.consumerNote ? 'Edit Note':'Add Note'}}
                         </div>
                       </div>
                     </div>

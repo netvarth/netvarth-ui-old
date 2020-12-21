@@ -646,8 +646,18 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     });
     this.addItemNotesdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        this.orderList.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            Item['consumerNote'] = result;
+          }
+        });
+        this.orders.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            Item['consumerNote'] = result;
+          }
+        });
       }
+      console.log(this.orderList);
     });
   }
 

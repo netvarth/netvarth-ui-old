@@ -9,20 +9,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class AddItemNotesComponent implements OnInit {
 
+  item: any;
   notes: any;
-  itemNotes: any;
+  btnTitle = 'Add';
+
 
   constructor(
     public dialogRef: MatDialogRef<AddItemNotesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.itemNotes = this.data;
+    this.item = this.data;
   }
   ngOnInit() {
-    this.notes = this.itemNotes.notes;
+
+    if (this.item.consumerNote) {
+      this.btnTitle = 'Edit';
+
+      this.notes = this.item.consumerNote;
+    }
   }
-  closeDialog() {
-    this.dialogRef.close();
+  closeDialog(notes) {
+    this.dialogRef.close(notes);
   }
 
 }

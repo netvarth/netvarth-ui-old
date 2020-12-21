@@ -381,36 +381,36 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     }
     if (this.delivery_type === 'store') {
-      if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
+      if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
-          } else {
-       const contactNumber = this.storeContact.value.phone;
-      const contact_email = this.storeContact.value.email;
-      const post_Data = {
-        'storePickup': true,
-        'catalog': {
-          'id': this.catalog_details.id
-        },
-        'orderFor': {
-          'id': 0
-        },
-        'timeSlot': {
-          'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-          'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
-        },
-        'orderItem': this.getOrderItems(),
-        'orderDate': this.sel_checkindate,
-        'countryCode': this.customer_countrycode,
-        'phoneNumber': contactNumber,
-        'email': contact_email,
-        'orderNote': this.orderNote
+      } else {
+        const contactNumber = this.storeContact.value.phone;
+        const contact_email = this.storeContact.value.email;
+        const post_Data = {
+          'storePickup': true,
+          'catalog': {
+            'id': this.catalog_details.id
+          },
+          'orderFor': {
+            'id': 0
+          },
+          'timeSlot': {
+            'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+            'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+          },
+          'orderItem': this.getOrderItems(),
+          'orderDate': this.sel_checkindate,
+          'countryCode': this.customer_countrycode,
+          'phoneNumber': contactNumber,
+          'email': contact_email,
+          'orderNote': this.orderNote
 
-      };
-      this.confirmOrder(post_Data);
+        };
+        this.confirmOrder(post_Data);
 
+      }
     }
-  }
 
   }
   doLogin(origin?, passParam?) {
@@ -497,7 +497,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
           this.sharedFunctionobj.removeitemfromLocalStorage('order');
           this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
-          this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}});
+          this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
         }
       },
         // error => {
@@ -530,11 +530,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log(this.choose_type);
   }
   getOrderItems() {
+
     this.orderSummary = [];
     this.orders.forEach(item => {
+      let consumerNote = '';
       const itemId = item.item.itemId;
       const qty = this.getItemQty(item);
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty });
+      if (item.consumerNote) {
+        consumerNote = item.consumerNote;
+      }
+
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote':consumerNote });
     });
     return this.orderSummary;
   }

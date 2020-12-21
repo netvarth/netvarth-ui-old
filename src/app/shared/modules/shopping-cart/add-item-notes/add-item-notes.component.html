@@ -13,19 +13,19 @@
     </div>
     <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xs-8 mgn-bt-10">
       <mat-form-field>
-        <textarea matInput rows="6">
-          {{notes}}
+        <textarea matInput rows="6" [(ngModel)]=notes>
+
           </textarea>
       </mat-form-field>
       <div class="disp-flex">
-        <button class="cancel-btn" (click)="closeDialog()">Cancel</button> &nbsp;&nbsp;&nbsp;
-        <button class="snd-btn">Add</button>
+        <button class="cancel-btn" (click)="closeDialog(notes)">Cancel</button> &nbsp;&nbsp;&nbsp;
+        <button class="snd-btn" (click)="closeDialog(notes)">{{btnTitle}}</button>
       </div>
     </div>
   </div>
 
 </mat-dialog-content>
-<!-- 
+<!--
 <mat-dialog-actions>
 
   <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
