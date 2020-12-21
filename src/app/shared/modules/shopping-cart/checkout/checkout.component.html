@@ -271,7 +271,7 @@
 
                           </div>
                         </div>
-                          <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
+                          <button mat-flat-button [disabled] = "getdisable()" (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
                   </div>

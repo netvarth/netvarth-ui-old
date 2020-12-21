@@ -712,5 +712,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   closeNav() {
     this.showSide = false;
   }
+  getdisable() {
+    return false;
+    // console.log(this.disablecheck === false);
+    // if(this.choose_type === 'home') {
+    //   if (this.added_address.length === 0) {
+    //     // this.disablecheck = true
+    //   }
+    // }
+    // if(this.choose_type === 'store') {
+    //   if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
+    //     // this.disablecheck = true
+    //   }
+    // }
+  }
+
 }
 

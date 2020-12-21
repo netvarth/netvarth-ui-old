@@ -94,6 +94,13 @@ flex-basis: 50% !important;
     color: white;
     font-size: 0.8rem;
 }
+.order-checkout .chekout-btn:disabled,
+.order-checkout .chekout-btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .highlight{
 //   background: #42A948 !important; /* green */
   box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
