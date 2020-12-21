@@ -100,7 +100,7 @@
                           <mat-radio-button [value]="'store'" [checked]="storeChecked">
                             Store pick up
                           </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <mat-radio-button [value]="'home'" [checked]="homeChecked">
+                          <mat-radio-button [value]="'home'" [checked]="!storeChecked">
                             Home delivery
                           </mat-radio-button>
                         </mat-radio-group>

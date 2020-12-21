@@ -54,8 +54,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   choose_type = 'store';
   advance_amount: any;
   account_id: any;
-  storeChecked = false;
-  homeChecked = false;
+  storeChecked = true;
   nextAvailableTime;
   availableDates: any = [];
   catalog_Id: any;
@@ -187,8 +186,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       } else if (this.delivery_type === 'home') {
         this.home_delivery = true;
         this.choose_type = 'home';
-        this.homeChecked = true;
-
+        this.storeChecked = false;
       }
       this.sel_checkindate = this.chosenDateDetails.order_date;
       console.log(this.sel_checkindate);
@@ -560,7 +558,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
-      this.homeChecked = true;
+      this.storeChecked = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
     }
@@ -622,7 +620,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
       }

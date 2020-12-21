@@ -58,8 +58,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   advance_amount: any;
   account_id: any;
   selectedRowIndex = -1;
-  storeChecked = false;
-  homeChecked = false;
+  storeChecked = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   linear: boolean;
@@ -104,7 +103,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     } else if (this.delivery_type === 'home') {
       this.home_delivery = true;
-      this.homeChecked = true;
+      this.storeChecked = false;
     }
     this.sel_checkindate = this.chosenDateDetails.order_date;
     this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
@@ -554,7 +553,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.choose_type = event.value;
     if (this.choose_type === 'store') {
       this.storeChecked = true;
-      this.homeChecked = false;
       this.delivery_type = 'store';
       this.store_pickup = true;
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
@@ -562,7 +560,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.storeChecked = false;
-      this.homeChecked = true;
       this.delivery_type = 'home';
       this.home_delivery = true;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
@@ -713,7 +710,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       console.log(JSON.stringify(homeIntervals));
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
       }
