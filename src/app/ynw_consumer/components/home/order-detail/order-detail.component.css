@@ -100,3 +100,32 @@
     overflow: hidden;
     white-space: nowrap;
 }
+.order-det .store_cont_outr {
+    position: absolute;
+    z-index: 10;
+    background: #3c5c8d;
+    color: white;
+    padding: 30px;
+    height: 50%;
+    margin-top: 30px;
+    width: 30%;
+}
+.order-det .opacit_5 {
+    opacity: 0.5;
+}
+.order-det .store_cont_outr .addrs {
+    line-height: 3;
+    display: grid;
+}
+.order-det .store_cont_outr .addrs i {
+    color: #f1b616 !important;
+}
+.order-det .fa-times-circle {
+    cursor: pointer;
+}
+.order-det .view_as {
+    font-size: 0.9rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: grey;
+}

@@ -240,6 +240,8 @@ export class OrderDetailComponent implements OnInit {
   screenWidth: number;
   no_of_grids: any;
   showView = 'grid';
+  showSide = false;
+  storeContact: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -289,6 +291,7 @@ export class OrderDetailComponent implements OnInit {
       (error) => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
+    this.getStoreContact();
 
    // this.getFavouriteProvider();
   }
@@ -373,6 +376,20 @@ export class OrderDetailComponent implements OnInit {
   }
   getValue(data) {
     this.showView = data;
+  }
+  sidebar() {
+    this.showSide = true;
+  }
+  closeNav() {
+    this.showSide = false;
+  }
+  getStoreContact() {
+    console.log('store');
+    this.sharedServices.getStoreContact(this.providerId)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.storeContact = data;
+      });
   }
 
 }
