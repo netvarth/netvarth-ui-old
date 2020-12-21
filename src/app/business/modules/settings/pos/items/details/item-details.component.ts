@@ -398,7 +398,7 @@ export class ItemDetailsComponent implements OnInit {
         this.api_loading = false;
     }
     onSubmit(form_data, isfrom?) {
-        console.log(this.showPromotionalPrice);
+        console.log(isfrom);
         console.log(form_data.promotionalPrice);
 
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
@@ -501,7 +501,7 @@ export class ItemDetailsComponent implements OnInit {
         this.provider_services.addItem(post_data)
             .subscribe(
                 (data) => {
-                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && isFrom === 'saveadd') {
                         this.saveImages(data);
                     }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
@@ -525,7 +525,10 @@ export class ItemDetailsComponent implements OnInit {
                         };
                         this.image_list_popup = [];
                         this.mainimage_list_popup = [];
-                    } else {
+                    } else if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && !isFrom) {
+                        const route = 'list';
+                        this.saveImages(data, route);
+                    } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
                         this.router.navigate(['provider', 'settings', 'pos', 'items']);
                     }
                 },
@@ -596,7 +599,7 @@ export class ItemDetailsComponent implements OnInit {
             }
           });
     }
-    saveImages(id) {
+    saveImages(id,routeTo?) {
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
@@ -629,9 +632,9 @@ export class ItemDetailsComponent implements OnInit {
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
-            // if (this.action === 'edit') {
-            // this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
-            // }
+            if (routeTo === 'list') {
+                this.router.navigate(['provider', 'settings', 'pos', 'items']);
+            }
             this.getItem(id).then(
                 (item) => {
                     this.item = item;
