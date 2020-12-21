@@ -5,7 +5,7 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -55,11 +55,17 @@ export class ItemsComponent implements OnInit, OnDestroy {
     items: any[];
     itemHead: { type: string; };
     actions: any = [];
+    isFrom;
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
+        private activated_route: ActivatedRoute,
         private sharedfunctionObj: SharedFunctions) {
+            this.activated_route.queryParams.subscribe(
+                (qParams) => {
+                    this.isFrom = qParams.type;
+                });
         this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
     }
 
@@ -240,7 +246,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
     redirecToJaldeeBilling() {
-        this.routerobj.navigate(['provider', 'settings', 'pos']);
+        if (this.isFrom === 'ordermanager') {
+            this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
+        } else {
+            this.routerobj.navigate(['provider', 'settings', 'pos']);
+        }
+        
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);

@@ -269,7 +269,12 @@ export class CatalogdetailComponent implements OnInit {
       }
 
       gotoItems() {
-        this.router.navigate(['provider', 'settings', 'pos', 'items']);
+        const navigatExtras: NavigationExtras = {
+            queryParams: {
+              type: 'ordermanager'
+            }
+          };
+        this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
       }
 
     setCatalogPrefillfields(form_data) {

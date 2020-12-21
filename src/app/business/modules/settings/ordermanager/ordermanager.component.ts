@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -83,8 +83,13 @@ export class OrdermanagerComponent implements OnInit {
         });
   }
   gotoItems() {
+    const navigatExtras: NavigationExtras = {
+      queryParams: {
+        type: 'ordermanager'
+      }
+    };
     if (this.noitemError) {
-      this.router.navigate(['provider', 'settings', 'pos', 'items']);
+      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
     } else {
       this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
     }

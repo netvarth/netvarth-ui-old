@@ -960,7 +960,12 @@ this.getOrderStatus();
         this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
         break;
       case 'orderitems':
-        this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
+          const navigatExtras: NavigationExtras = {
+            queryParams: {
+              type: 'ordermanager'
+            }
+          };
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
         break;
     }
   }
