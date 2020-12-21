@@ -1,14 +1,9 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToJaldeeBilling()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-             {{itemcaption}}
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToJaldeeOrdermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{itemcaption}}
         </h5>
     </div>
 </section>
@@ -21,43 +16,70 @@
                 </div>
                 <div class="card p0" *ngIf="!api_loading">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+
+                        <div class="lbl col-sm-12 col-md-8 col-lg-7">
                             <form *ngIf="action=='add' || action === 'edit' && amForm" [formGroup]="amForm" novalidate
                                 (ngSubmit)="amForm.valid && onSubmit(amForm.value)" (keyup)="resetApiErrors()"
                                 class="ynw-common-form-nm">
+
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="itemName"
+                                            placeholder="Item Name *" formControlName="itemName" autocomplete="off"
+                                            maxlength="50">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'itemName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemName',
+                                {
+                                  'required' : 'Please enter the item name',
+                                  'maxlength' : 'Item name can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
                                 <div class="form-group">
                                     <mat-form-field>
                                         <input matInput type="text" class="form-control" id="displayName"
-                                            placeholder="{{item_name_cap}} *" formControlName="displayName"
-                                            autocomplete="off">
+                                            placeholder="Display Name *" formControlName="displayName"
+                                            autocomplete="off" maxlength="50">
                                     </mat-form-field>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
                                 {
-                                  'required' : 'Please enter item name',
-                                  'maxlength' : 'Name can contain only ' + maxChars + ' characters'
+                                  'required' : 'Please enter the display name',
+                                  'maxlength' : 'Display name can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <input matInput type="text" class="form-control" id="shortDesc"
-                                            placeholder="{{short_desc_cap}} " formControlName="shortDesc"
-                                            autocomplete="off" maxlength="50">
+                                        <input matInput type="text" class="form-control" id="itemCode"
+                                            placeholder="Item Code *" formControlName="itemCode" autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display
-                                        [displayError]="fed_service.isFieldValid(amForm,'shortDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDesc',
+                                        [displayError]="fed_service.isFieldValid(amForm,'itemCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemCode',
                                 {
-                                  'required' : 'Please enter the short description',
+                                  'required' : 'Please enter item code',
+                                  'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="shortDec"
+                                            placeholder="Short Description *" formControlName="shortDec"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'shortDec')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDec',
+                                {
+                                  'required' : 'Please enter short description',
                                   'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
                                 </div>
-
                                 <div class="form-group">
                                     <mat-form-field>
-                                        <textarea matInput class="form-control" id="shortDesc"
+                                        <textarea matInput class="form-control" id="displayDesc"
                                             placeholder="{{detailed_dec_cap}} " formControlName="displayDesc"
                                             (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
                                             maxlength="500"></textarea>
@@ -72,13 +94,30 @@
                                     <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
                                         characters remaining</span>
                                 </div>
+                                <div class="form-group">
+                                    <mat-form-field>
+                                        <textarea matInput class="form-control" id="note" placeholder="Note "
+                                            formControlName="note" (keyup)="setnoteCharCount()" (focus)="setnoteFocus()"
+                                            (blur)="lostnoteFocus()" maxlength="500"></textarea>
+                                    </mat-form-field>
+                                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'note')"
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'note',
+                                {
+                                  'required' : 'Please enter note.',
+                                  'maxlength' : 'Note can contain only ' + maxCharslong + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                    <span class="max-char-length" *ngIf="isnotefocused">You have {{notechar_count}}
+                                        characters remaining</span>
+                                </div>
 
                                 <div class="form-group">
-                                    <mat-form-field class="rupee-font">
-                                        <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                    <mat-form-field>
+                                            <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
+                                       <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
                                             formControlName="price" id="price"
-                                            placeholder="{{price_cap}} ({{rupee_symbol}}) *" autocomplete="off">
+                                            placeholder="{{price_cap}}*" autocomplete="off">
                                     </mat-form-field>
                                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"
                                         errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
@@ -91,6 +130,59 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <mat-checkbox [(ngModel)]="showPromotionalPrice"
+                                        [ngModelOptions]="{standalone: true}">
+                                        Show promotional price
+                                    </mat-checkbox>
+                                </div>
+                                <div class="form-group" *ngIf="showPromotionalPrice">
+                                    <label class="col-form-label" for="PromotionalPricetype">Promotional
+                                        price type</label>
+                                    <mat-radio-group formControlName="promotionalPriceType">
+                                        <mat-radio-button (click)="handleTypechange('FIXED')" value="FIXED">Fixed
+                                        </mat-radio-button>&nbsp;&nbsp;
+                                        <mat-radio-button (click)="handleTypechange('PCT')" value="PCT">Percentage
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="form-group" *ngIf="showPromotionalPrice">
+                                    <mat-form-field>
+                                        <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'><i class="fa fa-inr"></i>  &nbsp;</span>
+                                        <span matPrefix *ngIf="curtype == 'PCT'" class='rupee'> % &nbsp;</span>
+                                        <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                            (keyup)="isvalid($event)" class="form-control number-ip-sm"
+                                            formControlName="promotionalPrice" id="promotionalPrice"
+                                            [placeholder]="valueCaption" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'promotionalPrice')" errorMsg=""
+                                        [errorMsgs]="fed_service.getErrorMessage(amForm,'promotionalPrice',
+                                {
+                                  
+                                  'pattern' : 'Please enter valid price',
+                                  'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group" *ngIf="showPromotionalPrice">
+                                    <label class="col-form-label" for="PromotionalPricelabel">Promotional Label</label>
+                                    <mat-radio-group formControlName="promotionallabel">
+                                        <mat-radio-button (click)="handleLabelchange('Sale')" value="ONSALE">Sale
+                                        </mat-radio-button>&nbsp;&nbsp;
+                                        <mat-radio-button (click)="handleLabelchange('Clearence')" value="CLEARANCE">
+                                            Clearence</mat-radio-button>&nbsp;&nbsp;
+                                        <mat-radio-button (click)="handleLabelchange('Other')" value="CUSTOM">Other
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="form-group" *ngIf="showPromotionalPrice && showCustomlabel">
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="customlabel"
+                                            placeholder="Custom Label " formControlName="customlabel"
+                                            autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-form-label" for="taxable">{{taxable_cap}} </label>
                                     <mat-slide-toggle formControlName="taxable" (change)="handleTaxablechange()"
                                         [checked]="holdtaxable">
@@ -99,18 +191,34 @@
                                         errorMsg="Please select taxable">
                                     </app-field-error-display>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding" style="display: inline-flex;">
-                                    <button (click)="onCancel()" type="button"
-                                        class="cs-btn bt2">{{cancel_btn_cap}}</button>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="showOnLandingpage">Visibility in landing
+                                        page</label>
+                                    <mat-slide-toggle formControlName="showOnLandingpage">
+                                    </mat-slide-toggle>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="stockAvailable">Stock Available</label>
+                                    <mat-slide-toggle formControlName="stockAvailable">
+                                    </mat-slide-toggle>
+
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                    style="display: inline-flex;">
+                                    <!-- <button (click)="onCancel()" type="button"
+                                        class="cs-btn bt2">{{cancel_btn_cap}}</button> -->
+                                    <button type="button" *ngIf="action=='add'"
+                                        (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1" mat-button
+                                        [disabled]="!amForm.valid || disableButton">save & add another</button>
                                     &nbsp;
                                     <button type="submit" class="cs-btn bt1" mat-button
                                         [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
-                                    <!-- <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
-                                        *ngIf="api_loading"> -->
-                                    <!-- </app-common-innerloading-spinner> -->
+
                                 </div>
                             </form>
-                            <app-field-error-display class="itemerror"[displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+                            <app-field-error-display class="itemerror" [displayError]="true" *ngIf="api_error"
+                                errorMsg="{{api_error}}">
                             </app-field-error-display>
                             <app-form-success-display [displayMsg]="true" *ngIf="api_success"
                                 successMsg="{{api_success}}">
@@ -135,10 +243,10 @@
                                                                     {{item.displayName}}
                                                                 </span>
                                                             </div>
-                                                            <div class="dtls" *ngIf="item.shortDesc">
+                                                            <div class="dtls" *ngIf="item.itemName">
                                                                 <span class="label">{{short_desc_cap}}</span>
                                                                 <span class="ttle">
-                                                                    {{item.shortDesc}}
+                                                                    {{item.itemName}}
                                                                 </span>
                                                             </div>
                                                             <div class="dtls" *ngIf="item.displayDesc">
@@ -150,7 +258,7 @@
                                                             <div class="dtls">
                                                                 <span class="label">{{price_cap}}</span>
                                                                 <span class="ttle rupee-font">
-                                                                    {{item.price | currency:'&#8377;'}}
+                                                                    {{item.price}}
                                                                 </span>
                                                             </div>
                                                             <div class="dtls">
@@ -161,8 +269,7 @@
                                                             </div>
                                                             <div class="dtls">
                                                                 <span class="label">{{status_cap}}</span>
-                                                                <span class="ttle"
-                                                                    [ngClass]="{'green-text' : item.status=='ACTIVE'}">{{item.status}}
+                                                                <span class="ttle">{{item.status}}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -174,11 +281,136 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
+
+                        <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white">
+                            <div class="cr1">
+                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20">
+                                        <div class="addorderitem" (click)="imagefile.click()">
+                                            <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
+                                                        type="file" accept="/*;capture=camera" style="display:none;"
+                                                        (change)="imageSelect($event, 'main')">Add item
+                                                    image
+                                                </a></p>
+                                            <p class="addorderitemp2"> <img style="width: 65%;"
+                                                    src="assets/images/add.svg" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ph-gal-bx main-img"
+                                    *ngIf="mainimage_list_popup && mainimage_list_popup.length > 0">
+                                    <ul class="ph-gal">
+                                        <ng-container *ngFor="let file of mainimage_list_popup;let i = index">
+                                            <li>
+                                                <div class="galbx">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" mat-menu-item
+                                                                (click)="deleteTempImage(file, i, 'main')">
+                                                                <i class="icon-delete"></i>
+                                                                <span>{{delete_btn}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <div class="img-h" (click)="openmainImageModalRow(file)">
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                            *ngIf="file.modal.img" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                    <ks-modal-gallery [id]="1" [modalImages]="mainimage_list_popup"
+                                    [plainGalleryConfig]="customPlainMainGalleryRowConfig"
+                                    [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                    (buttonBeforeHook)="onButtonBeforeHook()"
+                                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                </div>
+                                <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                    <h5>Item Gallery</h5>
+                                    <ul class="ph-gal">
+                                        <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                            <li *ngIf="i<2">
+                                                <div class="galbx">
+                                                    <span class="mbt">
+                                                        <button type="button" mat-icon-button
+                                                            [matMenuTriggerFor]="menu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button type="button" mat-menu-item
+                                                                (click)="deleteTempImage(file, i)">
+                                                                <i class="icon-delete"></i>
+                                                                <span>{{delete_btn}}</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </span>
+                                                    <div class="img-h" (click)="openImageModalRow(file)">
+                                                        <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                            *ngIf="file.modal.img" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                        <li *ngIf="image_list_popup.length>2">
+                                            <div class="galbx">
+                                                <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
+                                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img
+                                                        *ngIf="image_list_popup[2].modal.img"
+                                                        [src]="image_list_popup[2].modal.img" /></div>
+                                                <span class="mbt" *ngIf="(image_list_popup.length-3)==0">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" mat-menu-item
+                                                            (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                            <i class="icon-delete"></i>
+                                                            <span>{{delete_btn}}</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                                <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
+                                                    *ngIf="(image_list_popup.length-3)==0">
+                                                    <div class="overlay-y"></div><img
+                                                        *ngIf="image_list_popup[2].modal.img"
+                                                        [src]="image_list_popup[2].modal.img" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                        (buttonBeforeHook)="onButtonBeforeHook()"
+                                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                </div>
+
+                                <div class="no-dta">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 txt-align-center">
+                                        <input multiple #imagefile type="file" accept="/*;capture=camera"
+                                            style="display:none;" (change)="imageSelect($event)">
+                                        <span *ngIf="!image_list_popup || (image_list_popup && image_list_popup.length === 0)"
+                                            class="cs-btn bt3" (click)="imagefile.click()">
+                                            Add Gallery Images
+                                    </span>
+                                        <a *ngIf="image_list_popup && image_list_popup.length > 0" class="pull-right"
+                                            (click)="imagefile.click()">
+                                            Add more
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 </section>

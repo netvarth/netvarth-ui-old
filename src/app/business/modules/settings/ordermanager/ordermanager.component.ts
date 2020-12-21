@@ -84,7 +84,7 @@ export class OrdermanagerComponent implements OnInit {
   }
   gotoItems() {
     if (this.noitemError) {
-      this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
+      this.router.navigate(['provider', 'settings', 'pos', 'items']);
     } else {
       this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
     }
