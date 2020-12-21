@@ -212,6 +212,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           }
         );
     });
+
+
     // this.shared_services.getConsumerCatalogs(accountId).subscribe(
     //   (catalogs: any) => {
     //     this.catalog_details = catalogs[0];
@@ -219,6 +221,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   }
   getItemQty(item) {
+    console.log(item);
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     if (qty === 0) {
       this.removeItemFromCart(item);
@@ -380,8 +383,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   removeItemFromCart(item) {
     console.log(item);
+    console.log('hai');
     this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
-    this.orders = [...new Map(this.orderList.map(Item => [item.item['itemId'], Item])).values()];
+    console.log(this.orderList);
+    this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
+    console.log(this.orders);
     if (this.orders.length === 0) {
       this.disabledConfirmbtn = true;
     }

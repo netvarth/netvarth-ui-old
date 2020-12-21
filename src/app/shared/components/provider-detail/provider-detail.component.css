@@ -1057,6 +1057,7 @@ ul.bus-actions li.more_less a.lnk {
   font-weight:bold;
   text-align: center;
   padding: 15px;
+  -webkit-backface-visibility: hidden;
 }
 .card-img-top {
   flex-grow: 1;
