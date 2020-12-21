@@ -497,7 +497,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
           this.sharedFunctionobj.removeitemfromLocalStorage('order');
           this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
-          this.router.navigate(['consumer']);
+          this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}});
         }
       },
         // error => {

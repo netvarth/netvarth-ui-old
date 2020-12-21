@@ -207,6 +207,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.api_loading = false;
         }, 8000);
       }
+      if (qparams && qparams.source) {
+        this.showOrder = true;        
+      }
     });
   }
   // public carouselOne: NgxCarousel;
