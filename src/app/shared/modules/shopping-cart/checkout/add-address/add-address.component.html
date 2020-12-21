@@ -9,7 +9,10 @@
       <div class="lbl col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
   
   
-        <div class="form-group">
+        <div class="form-group" style="display: flex;">
+          <div class="input-group-prepend mob-prefix" #mobPrefix>
+            <span class="input-group-text" style="margin-top:auto;">+91</span>
+          </div>
   <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
         </mat-form-field>
