@@ -629,7 +629,7 @@ export class ItemDetailsComponent implements OnInit {
             // if (this.action === 'edit') {
             // this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
             // }
-            this.getItem(this.item_id).then(
+            this.getItem(id).then(
                 (item) => {
                     this.item = item;
                     if (this.item.itemImages) {
@@ -641,7 +641,7 @@ export class ItemDetailsComponent implements OnInit {
         },
             error => {
                 this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.getItem(this.item_id).then(
+                this.getItem(id).then(
                     (item) => {
                         this.item = item;
                         if (this.item.itemImages) {

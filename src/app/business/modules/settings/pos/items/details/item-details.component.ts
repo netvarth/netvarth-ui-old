@@ -632,7 +632,7 @@ export class ItemDetailsComponent implements OnInit {
             // if (this.action === 'edit') {
             // this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
             // }
-            this.getItem(this.item_id).then(
+            this.getItem(id).then(
                 (item) => {
                     this.item = item;
                     if (this.item.itemImages) {
@@ -644,7 +644,7 @@ export class ItemDetailsComponent implements OnInit {
         },
             error => {
                 this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.getItem(this.item_id).then(
+                this.getItem(id).then(
                     (item) => {
                         this.item = item;
                         if (this.item.itemImages) {
@@ -769,9 +769,13 @@ export class ItemDetailsComponent implements OnInit {
                     this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                         .subscribe((data) => {
                             if (type) {
-                            this.selectedMessageMain.files.splice(index, 1);
+                                this.mainimage_list_popup = [];
+                                this.selectedMessageMain.files.splice(index, 1);
+                                this.selectedMessageMain.base64.splice(index, 1);
                             } else {
+                                this.image_list_popup.splice(index, 1);
                                 this.selectedMessage.files.splice(index, 1);
+                                this.selectedMessage.base64.splice(index, 1);
                             }
                         },
                             error => {
