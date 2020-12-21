@@ -9,6 +9,7 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { CardModule } from '../../../shared/components/card/card.module';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CardModule } from '../../../shared/components/card/card.module';
     MatTabsModule,
     LoadingSpinnerModule,
     CapitalizeFirstPipeModule,
-    CardModule
+    CardModule,
+    Nl2BrPipeModule
   ],
   exports: [
     OrderDashboardComponent

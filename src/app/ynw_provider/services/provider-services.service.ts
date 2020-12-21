@@ -1284,6 +1284,10 @@ export class ProviderServices {
       const url = 'provider/donation';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   getDonationByUid(uid) {
+      const url = 'provider/donation/' + uid;
+      return this.servicemeta.httpGet(url);
+   }
    getCauseCount(filter) {
       const url = 'provider/services/count';
       return this.servicemeta.httpGet(url, null, filter);

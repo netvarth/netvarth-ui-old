@@ -317,4 +317,14 @@ export class OrderDashboardComponent implements OnInit {
       this.orderStatusFilter = data;
     });
   }
+  refresh() {
+    if (this.selectedTab === 1) {
+      this.getProviderTodayOrders();
+      this.getProviderTodayOrdersCount();
+    }
+    if (this.selectedTab === 2) {
+      this.getProviderFutureOrders();
+      this.getProviderFutureOrdersCount();
+    }
+  }
 }

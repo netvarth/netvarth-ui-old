@@ -37,6 +37,7 @@ export class CheckYourStatusComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   source = '';
   history = false;
+  storeContactInfo: any = [];
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
     private shared_functions: SharedFunctions) {
@@ -289,6 +290,7 @@ export class CheckYourStatusComponent implements OnInit {
           this.foundDetails = true;
           this.type = 'order';
           this.api_loading = false;
+          this.getStoreContactInfo(this.statusInfo.providerAccount.id);
         },
         (error) => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -366,5 +368,10 @@ export class CheckYourStatusComponent implements OnInit {
     t2 = time1.slice(2);
     appx_ret.time = t2;
     return appx_ret;
+  }
+  getStoreContactInfo(accountId) {
+    this.shared_services.getStoreContact(accountId).subscribe(data => {
+      this.storeContactInfo = data;
+    });
   }
 }

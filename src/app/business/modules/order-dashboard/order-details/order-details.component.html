@@ -18,8 +18,9 @@
                 <div> {{orderDetails.orderNumber}}</div>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
-                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker"
-                        aria-hidden="true"></i>{{orderDetails.homeDeliveryAddress}}</div>
+                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
+                </div>
                 <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
@@ -27,7 +28,8 @@
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
                 <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
                         *ngIf="orderDetails.homeDelivery"></i>
-                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i></div>
+                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
+                </div>
                 <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
                         class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
                 </div>
@@ -49,8 +51,9 @@
                 *ngIf="selectedType==='grid'">
                 <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
                     <div class="itemimg-sec">
-                    <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
-                    </div></div>
+                        <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
+                        </div>
+                    </div>
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}</div>

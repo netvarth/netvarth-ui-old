@@ -96,6 +96,11 @@
                       </span>
                     </td>
                   </tr>
+                  <tr *ngIf="type=='order'">
+                    <td width="48%" align="right">Order Id</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td *ngIf="type=='order'"> {{statusInfo.orderNumber}}</td>
+                  </tr>
                   <tr *ngIf="statusInfo.homeDeliveryAddress">
                     <td width="48%" align="right">Home Delivery Address </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -149,16 +154,28 @@
                     <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
                     <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>
                   </tr>
-                  <tr *ngIf="type=='order'">
-                    <td width="48%" align="right">Order Id</td>
+                  <tr *ngIf="type=='order' && storeContactInfo && (storeContactInfo.address || storeContactInfo.phone)">
+                    <td width="48%" align="right">Store Contact Info</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td *ngIf="type=='order'"> {{statusInfo.orderNumber}}</td>
+                    <td *ngIf="type=='order'">
+                      <div *ngIf="storeContactInfo.address" [innerHTML]="storeContactInfo.address | nl2br"></div>
+                      <div *ngIf="storeContactInfo.phone">{{storeContactInfo.primCountryCode}} {{storeContactInfo.phone}}</div>
+                    </td>
                   </tr>
-                  <tr *ngIf="statusInfo.service?.minPrePaymentAmount && statusInfo.waitlistMode !== 'WALK_IN_CHECKIN'">
+                  <tr
+                    *ngIf="type!='order' && statusInfo.service?.minPrePaymentAmount && statusInfo.waitlistMode !== 'WALK_IN_CHECKIN'">
                     <td width="48%" align="right">Amount paid</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td><span class="rupee-font">&#8377;
                       </span> {{statusInfo.service.minPrePaymentAmount}}</td>
+                  </tr>
+                  <tr
+                    *ngIf="type=='order' && ((statusInfo.bill && statusInfo.bill.amountPaid > 0) || statusInfo.advanceAmountPaid > 0)">
+                    <td width="48%" align="right">Amount paid</td>
+                    <td width="2%">&nbsp;:&nbsp;</td>
+                    <td><span class="rupee-font">&#8377;
+                      </span> {{(statusInfo.bill.amountPaid) ? statusInfo.bill.amountPaid :
+                      statusInfo.advanceAmountPaid}}</td>
                   </tr>
                 </tbody>
               </table>
