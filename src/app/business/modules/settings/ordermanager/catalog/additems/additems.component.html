@@ -20,7 +20,7 @@
                 <mat-grid-tile *ngFor="let item of catalogItem;let i=index;">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(item,i)" [class.itemselected]="item.selected">
                         <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
-                            <img [src]="getItemImg(item)" > 
+                            <img [src]="getItemImg(item)" >
                         </div>
                         <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
                             <div class="item-name-outer">
@@ -49,7 +49,7 @@
                 <mat-grid-tile *ngFor="let item of catalogItem;let i=index;">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectItem(i)" [class.itemselected]="item.selected">
                         <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
-                            <img [src]="getItemImg(item)" > 
+                            <img [src]="getItemImg(item)" >
                         </div>
                         <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
                             <div class="item-name-outer">
@@ -58,7 +58,7 @@
                             </div>
                             <div class="price_outer">
                               <div><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5"  id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small>  </div>
-                              <div><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" > </small></div> 
+                              <div><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" type="number" min="1" value = "{{item.maxQuantity}}" > </small></div>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                     <mat-grid-tile *ngFor="let item of itemsforadd;let i=index;">
                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  (click)="selectaddItem(i)" [class.itemselected]="item.selected">
                             <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
-                                <img [src]="getItemImg(item)" > 
+                                <img [src]="getItemImg(item)" >
                             </div>
                             <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
                                 <div class="item-name-outer">
@@ -90,20 +90,23 @@
                     </mat-grid-tile>
                 </mat-grid-list>
             </div>
-    
-    
+
+
             </ng-container>
+
     </div>
 
-    <div *ngIf="!api_loading && action === 'add'">
+
+
+    <div *ngIf="!api_loading && action == 'add'">
             <div class="additem-cart-footer" *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0 && selectedCount > 0">
-                    <div  *ngIf="selectedCount === 1">selected {{selectedCount}} item. 
-                        
-                        <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
+                    <div  *ngIf="selectedCount == 1">selected {{selectedCount}} item.
+
+                        <button class="btn btn-primary" (click)="selectedItems()" >OK</button>
                     </div>
-                    <div *ngIf="selectedCount > 1">selected {{selectedCount}} items. 
-                        
-                        <button class="btn btn-primary" (click)="selectedItems()" [disabled]="selectedCount === 0">OK</button>
+                    <div *ngIf="selectedCount > 1">selected {{selectedCount}} items.
+
+                        <button class="btn btn-primary" (click)="selectedItems()" >OK</button>
                     </div>
                 </div>
         <!-- <div *ngIf="catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length ==  0">
@@ -120,41 +123,41 @@
             </div>
         </div> -->
         <div class="additem-cart-footer" *ngIf="itemsforadd && itemsforadd.length > 0 && selecteditemCount > 0">
-            <div *ngIf="selecteditemCount === 1">selected {{selecteditemCount}} item.
-                
-                <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>
+            <div *ngIf="selecteditemCount == 1">selected {{selecteditemCount}} item.
+
+                <button class="btn btn-primary" (click)="selectedaddItems()" >OK</button>
             </div>
             <div *ngIf="selecteditemCount > 1">selected {{selecteditemCount}} items.
-                
-                <button class="btn btn-primary" (click)="selectedaddItems()" [disabled]="selecteditemCount === 0">OK</button>
+
+                <button class="btn btn-primary" (click)="selectedaddItems()" >OK</button>
             </div>
         </div>
     </div>
-    <div *ngIf="!api_loading && action === 'edit'">
-        <ng-container *ngIf="seletedCatalogItems.length === 0">
+    <div *ngIf="!api_loading && action == 'edit'">
+        <ng-container *ngIf="seletedCatalogItems.length == 0">
             <div class="card">
                 No more items in the catalog
             </div></ng-container>
-        
+
         <ng-container *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
             <div class="card">
             <mat-grid-list cols="{{no_of_grids}}" rowHeight="150px" [gutterSize]="'20px'">
                 <mat-grid-tile *ngFor="let item of seletedCatalogItems;let i=index;">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_inside no-padding"  >
                         <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xs-5 fit_inside  no-padding">
-                            <img [src]="getItemImg(item.item)" > 
+                            <img [src]="getItemImg(item.item)" >
                         </div>
                         <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-7 fit_inside no-padding">
-                                
+
                             <div class="item-name-outer">
                                     <button class="pull-right" mat-icon-button [matMenuTriggerFor]="appMenu"  >
                                             <mat-icon>more_vert</mat-icon>
                                         </button>
                                         <mat-menu #appMenu="matMenu" >
                                             <button mat-menu-item  (click)="editCatalogItem(item)">
-                                                <i class="icon-edit"></i>Edit</button> 
+                                                <i class="icon-edit"></i>Edit</button>
                                                 <button mat-menu-item (click)="deleteCatalogItem(item)" >
-                                                        <i class="icon-delete"></i>Delete</button>                                                
+                                                        <i class="icon-delete"></i>Delete</button>
                                         </mat-menu>
                                 <div class="item-name">{{item.item.displayName}}</div>
                                 <div class="item-price price rupee-font">&#8377;{{item.item.price}}</div>
