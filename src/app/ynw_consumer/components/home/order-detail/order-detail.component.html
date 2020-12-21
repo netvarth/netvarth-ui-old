@@ -117,7 +117,7 @@
                                                 <mat-grid-tile-header *ngIf="item.itemImages"
                                                     [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
                                                 </mat-grid-tile-header>
-                                                <mat-grid-tile-header *ngIf="!item.itemImages">
+                                                <mat-grid-tile-header class="default_img" *ngIf="!item.itemImages">
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>

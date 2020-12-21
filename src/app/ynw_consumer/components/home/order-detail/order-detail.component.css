@@ -131,3 +131,6 @@
 .order-det .mat-grid-tile .mat-grid-tile-header {
     background-color: #ffefc9;
 }
+.order-det .default_img {
+    background-image: url('http://jaldeetest.s3-website.ap-south-1.amazonaws.com/101130/item/828/thumbnail/1608363716998.jpg');
+}

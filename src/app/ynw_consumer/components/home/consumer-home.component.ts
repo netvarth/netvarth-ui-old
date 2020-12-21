@@ -275,8 +275,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.historyTooltip = this.shared_functions.getProjectMesssages('HISTORY_TOOLTIP');
     this.gets3curl();
     this.getAppointmentToday();
-    this.getAppointmentFuture();
-    this.getTdyOrder();
+    // this.getAppointmentFuture();
+    // this.getTdyOrder();
     this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
@@ -435,6 +435,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.waitlists = data;
           this.today_totalbookings = this.appointments.concat(this.waitlists);
           this.loading = false;
+          this.getAppointmentFuture();
           // more case
           this.todayBookings = [];
           console.log(this.todayBookings);
@@ -1292,8 +1293,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getWaitlist();
       } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
-      }
-      else if(result === 'reloadlist' && type === 'order'){
+      } else if(result === 'reloadlist' && type === 'order') {
         this.getTdyOrder();
       }
     });
@@ -1724,6 +1724,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.future_waitlists = data;
           this.future_totalbookings = this.future_waitlists.concat(this.future_appointments);
           this.loading = false;
+          this.getTdyOrder();
           this.futureBookings = [];
           this.futureBookings_more = [];
           for (let i = 0; i < this.future_totalbookings.length; i++) {
@@ -1871,6 +1872,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   getFutureOrder() {
+    console.log(this.today_totalbookings);
+    console.log(this.future_totalbookings);
+    if (this.today_totalbookings.length === 0 &&  this.future_totalbookings.length === 0) {
+      this.showOrder = true;
+    }
     this.future_orders = '';
     this.total_future_order = [];
     this.futureOrderslst = [];

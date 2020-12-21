@@ -78,7 +78,7 @@
                     </h2>
                     <div *ngIf="((today_totalbookings.length == 0 && future_totalbookings.length == 0) && !loading && !showOrder)"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
-                        <p class="locate-customer">No current Bookings available</p>
+                        <p class="locate-customer">No Active Bookings</p>
                     </div>
                     <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder">
                         <table class="table">
@@ -1418,7 +1418,7 @@
                     <!-- If there is no order -->
                     <div *ngIf="((total_tdy_order.length == 0 && total_future_order.length == 0) && !loading) && showOrder"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
-                        <p class="locate-customer">No Current Orders available</p>
+                        <p class="locate-customer">No Active Orders</p>
                     </div>
 
                     <div class="table-outer1  ng-tns-c16-57" *ngIf="!loading && showOrder">
