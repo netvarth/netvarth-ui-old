@@ -342,31 +342,50 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
+    // if(this.choose_type === 'home') {
+    //   if (this.added_address.length === 0) {
+    //     // this.disablecheck = true
+    //   }
+    // }
+    // if(this.choose_type === 'store') {
+    //   if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
+    //     // this.disablecheck = true
+    //   }
+    // }
     console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
-      const post_Data = {
-        'homeDelivery': true,
-        'homeDeliveryAddress': this.selectedAddress,
-        'catalog': {
-          'id': this.catalog_details.id
-        },
-        'orderFor': {
-          'id': 0
-        },
-        'timeSlot': {
-          'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-          'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
-        },
-        'orderItem': this.getOrderItems(),
-        'orderDate': this.sel_checkindate,
-        'countryCode': this.customer_countrycode,
-        'phoneNumber': this.phonenumber,
-        'email': this.customer_email,
-        'orderNote': this.orderNote
-      };
-      this.confirmOrder(post_Data);
+      if (this.added_address.length === 0) {
+        this.sharedFunctionobj.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        return;
+      } else {
+        const post_Data = {
+          'homeDelivery': true,
+          'homeDeliveryAddress': this.selectedAddress,
+          'catalog': {
+            'id': this.catalog_details.id
+          },
+          'orderFor': {
+            'id': 0
+          },
+          'timeSlot': {
+            'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+            'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+          },
+          'orderItem': this.getOrderItems(),
+          'orderDate': this.sel_checkindate,
+          'countryCode': this.customer_countrycode,
+          'phoneNumber': this.phonenumber,
+          'email': this.customer_email,
+          'orderNote': this.orderNote
+        };
+        this.confirmOrder(post_Data);
+      }
     }
     if (this.delivery_type === 'store') {
+      if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
+        this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
+        return;
+          } else {
       // const contactNumber = this.storeContact.value.phone;
       const contact_email = this.storeContact.value.email;
       const post_Data = {
@@ -392,6 +411,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.confirmOrder(post_Data);
 
     }
+  }
 
   }
   doLogin(origin?, passParam?) {
@@ -712,20 +732,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   closeNav() {
     this.showSide = false;
   }
-  getdisable() {
-    return false;
-    // console.log(this.disablecheck === false);
-    // if(this.choose_type === 'home') {
-    //   if (this.added_address.length === 0) {
-    //     // this.disablecheck = true
-    //   }
-    // }
-    // if(this.choose_type === 'store') {
-    //   if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
-    //     // this.disablecheck = true
-    //   }
-    // }
-  }
+
 
 }
 
