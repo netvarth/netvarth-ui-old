@@ -428,3 +428,9 @@ display: grid !important;
   .order-checkout .contact-outer .fa-times-circle {
     cursor: pointer;
   }
+  ::ng-deep .order-checkout .head_labels {
+    text-align: left;
+    color: grey;
+    font-size: 0.8rem !important;
+    text-align: left;
+  }

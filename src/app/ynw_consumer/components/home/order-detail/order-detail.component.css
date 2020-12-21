@@ -129,3 +129,6 @@
     margin-bottom: auto;
     color: grey;
 }
+.order-det .mat-grid-tile .mat-grid-tile-header {
+    background-color: #ffefc9;
+}
