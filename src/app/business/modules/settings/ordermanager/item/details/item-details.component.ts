@@ -229,7 +229,7 @@ export class ItemDetailsComponent implements OnInit {
         }
     }
     ngOnInit() {
-        // this.getTaxpercentage();
+         this.getTaxpercentage();
     }
     getItem(itemId) {
         const _this = this;
