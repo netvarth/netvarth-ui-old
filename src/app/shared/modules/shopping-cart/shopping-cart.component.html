@@ -42,7 +42,7 @@
                       <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
                         class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
                       </div>
-                      <div [class.disableall]="getItemQty(item) === item.minqty" *ngIf="getItemQty(item) >= 2"
+                      <div *ngIf="getItemQty(item) >= 2"
                         (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
                       </div>
                       <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
