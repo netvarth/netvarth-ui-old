@@ -178,7 +178,7 @@
 
                     <div class="listing" *ngFor="let donation of donations; let i = index">
                       <!-- <div class="wrap pointer-cursor" (click)="gotoDonation(donation)"> -->
-                      <div class="wrap"></div>
+                      <div class="wrap">
                       <div class="td one">
                         <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
                           (change)="selectDonations(i)" (click)="stopprop($event)" />
