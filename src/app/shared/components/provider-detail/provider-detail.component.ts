@@ -1975,7 +1975,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.orderItems = orderItems;
       }
     );
-    }
+  }
   }
 
 
