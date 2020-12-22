@@ -1264,3 +1264,10 @@ img.ordericon.home {
     padding: 0 40px !important;
   }
 }
+.bus-page .btn-chkout {
+  background: #173058;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}

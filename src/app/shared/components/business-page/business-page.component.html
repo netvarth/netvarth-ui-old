@@ -371,7 +371,7 @@
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
                         <div>Your Order ({{ order_count }})
                             <span class="rupee-font">SubTotal :&#8377;{{ price }}&nbsp;</span>
-                            <button class="btn btn-primary" (click)="checkout();">Checkout</button>
+                            <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
                         </div>
                     </div>
                 </ng-container>
