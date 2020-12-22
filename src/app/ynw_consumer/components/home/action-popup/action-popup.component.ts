@@ -24,6 +24,7 @@ export class ActionPopupComponent implements OnInit {
   chekinLvTrackoff = false;
   chekinLvTrackon = false;
   showRescheduleWtlist = false;
+  fromOrderDetails = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -34,6 +35,9 @@ export class ActionPopupComponent implements OnInit {
   ngOnInit() {
     this.bookingDetails = this.data.booking;
     console.log(this.bookingDetails);
+    if (this.bookingDetails.quantity) {
+      this.fromOrderDetails = true;
+    } else {
     this.checkLvTrack();
     if (this.bookingDetails.apptStatus === 'Confirmed' || this.bookingDetails.apptStatus === 'Arrived') {
       this.showRescheduleAppt = true;
@@ -58,6 +62,7 @@ export class ActionPopupComponent implements OnInit {
     } else if (this.bookingDetails.waitlistStatus === 'checkedIn' || this.bookingDetails.waitlistStatus === 'arrived' || this.bookingDetails.waitlistStatus === 'prepaymentPending') {
       this.showcheckinCancel = true;
       this.showapptCancel = false;
+    }
     }
   }
   gotoAptmtReschedule() {

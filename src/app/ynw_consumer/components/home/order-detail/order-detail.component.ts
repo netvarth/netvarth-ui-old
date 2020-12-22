@@ -242,6 +242,8 @@ export class OrderDetailComponent implements OnInit {
   showView = 'grid';
   showSide = false;
   storeContact: any;
+  showNteSection = false;
+  noteIndex: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -365,6 +367,7 @@ export class OrderDetailComponent implements OnInit {
     this.view_more = !this.view_more;
   }
   gotoActions(booking) {
+    console.log(booking);
     this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -390,6 +393,12 @@ export class OrderDetailComponent implements OnInit {
         console.log(data);
         this.storeContact = data;
       });
+  }
+  showNote(index) {
+    console.log(index);
+    this.noteIndex = [];
+    this.noteIndex = index;
+    this.showNteSection = !this.showNteSection;
   }
 
 }

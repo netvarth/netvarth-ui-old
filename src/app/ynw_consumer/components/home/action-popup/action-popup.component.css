@@ -45,3 +45,38 @@
 .consumer-action .action-small .mat-grid-tile-footer {
     /* display: none !important; */
 }
+
+/* order msg */
+.consumer-action textarea {
+    margin-top: 30px;
+    width: 100%;
+    border-color: #0a19313d !important;
+    outline: 0;
+    background: #f9f9f9;
+    height: 153px !important;
+    border: 1px solid #808080a8 !important;
+    margin-bottom: 10px !important;
+}
+.consumer-action .img-msg {
+    width: 100%;
+    overflow: auto;
+    padding: 30px;
+    background: #ffefc9;
+    height: 210px;
+}
+.consumer-action .snd-btn {
+    width: 100%;
+    background: #274a81;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    padding: 10px;
+}
+.consumer-action .cancel-btn {
+    width: 100%;
+    border: none;
+    color: black;
+    background: #9e9e9e85;
+    border-radius: 4px;
+    padding: 10px;
+}

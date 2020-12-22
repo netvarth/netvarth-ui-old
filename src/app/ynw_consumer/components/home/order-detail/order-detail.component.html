@@ -66,14 +66,11 @@
                                                 <div class="txt-custdet">Customer Details</div>
                                                 <div class="txt-cust-name">{{waitlist.orderFor.firstName}}&nbsp;{{waitlist.orderFor.lastName}}</div>
                                                 <div class="txt-addrs">
-                                                    <i class="fa fa-phone"></i>
-                                                    {{waitlist.countryCode}}{{waitlist.phoneNumber}}</div>
+                                                    <i class="fa fa-phone"></i>{{waitlist.phoneNumber}}</div>
                                                     <div class="txt-addrs content_wrap">
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
-                                                <!-- <div class="txt-addrs">
-                                                    <i class="fa fa-map-marker"></i>
-                                                    107, Teachers colony HSR Layout, Bangalore</div> -->
+                                                    
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
@@ -82,6 +79,9 @@
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
                                                 <!-- <div><button mat-raised-button class="action-btn">ACTIONS</button></div> -->
                                                 <!-- <div class="mgn-up-10"><button mat-raised-button class="cancel-btn">CANCEL</button></div> -->
+                                            </div>
+                                            <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
+                                                <div class="odr_msg_outer"><textarea class="txtArea" readonly>{{waitlist.orderNote}}</textarea></div>
                                             </div>
 
                                         </div>
@@ -125,6 +125,15 @@
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
+                                                <mat-grid-tile-footer *ngIf="item.consumerNote" (click)="gotoActions(item)">
+                                                    <div class="show_nte">
+                                                        <i style="font-size: 18px;" class="material-icons">
+                                                            description
+                                                        </i>&nbsp;&nbsp;
+                                                      <div class="txt-center">Notes
+                                                    </div>
+                                                    </div>
+                                                </mat-grid-tile-footer>
                                             </mat-grid-tile>
                                         </mat-grid-list>
 
@@ -132,9 +141,13 @@
                                         <div *ngIf="showView === 'list'"
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 cust-det-outline">
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2"
-                                                *ngFor="let item of waitlist.orderItem">
+                                                *ngFor="let item of waitlist.orderItem; let i = index">
                                                 <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xs-5">
-                                                    <div class="itm-nme">{{item.name}}</div>
+                                                    <div class="itm-nme">{{item.name}}
+                                                        <i *ngIf="item.consumerNote" style="font-size: 1rem;" class="material-icons curs-pont" (click)="showNote(i)">
+                                                            description
+                                                        </i>
+                                                    </div>
                                                     <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
@@ -144,6 +157,11 @@
                                                         [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
 
                                                     </div>
+                                                </div>
+                                                <div *ngIf="noteIndex === i && showNteSection" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                                    <div class="snd_msg_outer">
+                                                        <textarea class="txtArea" readonly>{{item.consumerNote}}</textarea>
+                                                      </div>
                                                 </div>
                                             </div>
                                         </div>

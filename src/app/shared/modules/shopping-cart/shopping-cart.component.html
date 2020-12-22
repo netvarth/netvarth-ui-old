@@ -70,7 +70,7 @@
                         <i class="fa fa-map-marker"></i> {{storeContact.address}}
                       </span>
                       <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}}{{storeContact.phone}}</span>
-                      <span class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                      <span *ngIf="storeContact.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
                     </div>
                   </aside>
                 </div>

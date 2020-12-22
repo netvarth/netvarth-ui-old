@@ -1875,11 +1875,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   getFutureOrder() {
-    console.log(this.today_totalbookings);
-    console.log(this.future_totalbookings);
-    if (this.today_totalbookings.length === 0 &&  this.future_totalbookings.length === 0) {
-      this.showOrder = true;
-    }
     this.future_orders = '';
     this.total_future_order = [];
     this.futureOrderslst = [];
@@ -1895,6 +1890,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
+      if ((this.today_totalbookings.length === 0 &&  this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0 )) {
+        this.showOrder = true;
+      }
       // show more
       for (let i = 0; i < this.total_future_order.length; i++) {
         if (i <= 2) {
