@@ -28,7 +28,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     emptyMsg = '';
     domain;
     breadcrumb_moreoptions: any = [];
-    frm_items_cap = Messages.FRM_LEVEL_ITEMS_MSG;
+    frm_items_cap = 'Catalog creation and management';
     breadcrumbs_init = [
         {
             url: '/provider/settings',
