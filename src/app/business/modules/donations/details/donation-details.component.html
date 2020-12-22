@@ -1,0 +1,21 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Donation
+        </h5>
+    </div>
+</section>
+
+<section>
+    <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div>
+
+
+            {{donationDetails.donor.firstName}}
+            {{donationDetails.donorPhoneNumber}}
+            {{donationDetails.date | date: display_dateFormat}}
+            {{donationDetails.service.name}}
+        </div>
+    </div>
+</section>

@@ -449,4 +449,10 @@ export class DonationsComponent implements OnInit {
       }
     });
   }
+  stopprop(event) {
+    event.stopPropagation();
+  }
+  gotoDonation(donation) {
+    this.routerobj.navigate(['provider', 'donations', donation.uid]);
+  }
 }
