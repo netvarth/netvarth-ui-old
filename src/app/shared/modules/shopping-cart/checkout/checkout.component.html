@@ -175,7 +175,7 @@
                         <i class="fa fa-map-marker"></i> {{storeContactNw.address}}
                       </span>
                       <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}}{{storeContactNw.phone}}</span>
-                      <span *ngIf="storeContactNw.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
+                      <span [matTooltip]="storeContactNw.email" *ngIf="storeContactNw.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
                     </div>
                   </aside>
                 </div>
