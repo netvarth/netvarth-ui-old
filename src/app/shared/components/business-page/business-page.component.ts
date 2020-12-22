@@ -245,6 +245,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   service_cap = 'Services and Consultations';
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
+  orderstatus: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -798,7 +799,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(loc);
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
-    this.getCatalogs(this.selectedLocation.id);
+    this.shared_services.getOrderSettings(this.provider_bussiness_id).subscribe(
+      (settings: any) => {
+        this.orderstatus = settings.enableOrder;
+        this.getCatalogs(this.provider_bussiness_id);
+      }
+      );
   }
   // private getUserWaitingTime(provids_locid) {
   //   if (provids_locid.length > 0) {
@@ -2445,6 +2451,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(locationId);
     this.orderItems = [];
     const orderItems = [];
+    if(this.orderstatus) {
     this.shared_services.getConsumerCatalogs(account_Id).subscribe(
       (catalogs: any) => {
         this.activeCatalog = catalogs[0];
@@ -2472,6 +2479,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(this.orderItems);
       }
     );
+    }
   }
 
 
