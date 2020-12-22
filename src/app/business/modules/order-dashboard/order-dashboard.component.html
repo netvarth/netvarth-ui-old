@@ -150,6 +150,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
@@ -291,6 +293,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
@@ -430,6 +434,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span

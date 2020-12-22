@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -356,5 +357,20 @@ export class OrderDashboardComponent implements OnInit {
     } else {
       return 'Not Paid';
     }
+  }
+  showConsumerNote(order) {
+    const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: order,
+        type: 'order'
+      }
+    });
+    notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }
