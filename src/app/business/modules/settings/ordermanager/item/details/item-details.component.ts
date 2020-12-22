@@ -89,7 +89,7 @@ export class ItemDetailsComponent implements OnInit {
     photo_cap = Messages.SERVICE_PHOTO_CAP;
     delete_btn = Messages.DELETE_BTN;
     removeimgdialogRef;
-    valueCaption = 'Enter the discounted price you offer';
+    valueCaption = 'Enter promotional value';
     curtype = 'FIXED';
     showCustomlabel = false;
     selectedMessage = {
@@ -359,11 +359,11 @@ export class ItemDetailsComponent implements OnInit {
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
-            this.valueCaption = 'Enter the discounted price you offer';
+            this.valueCaption = 'Enter promotional value';
             this.curtype = typ;
         } else {
             this.curtype = typ;
-            this.valueCaption = 'Enter the discounted price you offer';
+            this.valueCaption = 'Enter promotional value';
         }
     }
     handleLabelchange(type) {

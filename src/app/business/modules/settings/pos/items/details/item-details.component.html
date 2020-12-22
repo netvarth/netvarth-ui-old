@@ -45,7 +45,7 @@
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
                                 {
-                                  'required' : 'Please enter the display name',
+                                  'required' : 'Enter the name that your customers want to see',
                                   'maxlength' : 'Display name can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
@@ -58,7 +58,7 @@
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'itemCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemCode',
                                 {
-                                  'required' : 'Please enter item code',
+                                  'required' : 'Enter a code for item',
                                   'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
@@ -192,8 +192,7 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-form-label" for="showOnLandingpage">Visibility in landing
-                                        page</label>
+                                    <label class="col-form-label" for="showOnLandingpage">Online visibility</label>
                                     <mat-slide-toggle formControlName="showOnLandingpage">
                                     </mat-slide-toggle>
 
