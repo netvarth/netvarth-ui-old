@@ -6,8 +6,6 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../constants/project-constants';
 import { SharedServices } from '../../../../services/shared-services';
-// import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
-// import { projectConstantsLocal } from 'src/app/shared/constants/project-constants';
 
 @Component({
   selector: 'app-add-address',
@@ -15,6 +13,7 @@ import { SharedServices } from '../../../../services/shared-services';
   styleUrls: ['./add-address.component.css']
 })
 export class AddAddressComponent implements OnInit {
+  disableSave: boolean;
   amForm: FormGroup;
   api_error = null;
   api_success = null;
@@ -34,7 +33,6 @@ export class AddAddressComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private shared_services: SharedServices,
-    // private consumer_services: ConsumerServices,
   ) {
     this.address_title = 'Add New Address';
     this.formMode = data.type;
@@ -87,20 +85,16 @@ export class AddAddressComponent implements OnInit {
     this.dialogRef.close();
   }
   onSubmit(form_data) {
-    console.log(form_data);
-    console.log(JSON.stringify(form_data));
-    console.log(JSON.stringify(this.exist_add));
-
+    this.disableSave = true;
     if (this.formMode === 'edit') {
       this.exist_add.splice(this.index, 1);
     }
     this.exist_add.push(form_data);
 
-    console.log(JSON.stringify(this.exist_add));
-
     this.shared_services.updateConsumeraddress(this.exist_add)
       .subscribe(
         data => {
+          this.disableSave = false;
           if (this.formMode === 'edit') {
             this.sharedfunctionObj.openSnackBar('Address Updated successfully');
           } else {
@@ -110,6 +104,7 @@ export class AddAddressComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
+          this.disableSave = false;
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );

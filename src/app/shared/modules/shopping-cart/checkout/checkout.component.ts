@@ -59,6 +59,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   account_id: any;
   selectedRowIndex = -1;
   storeChecked = true;
+  emailId;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   linear: boolean;
@@ -163,7 +164,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       phone: [this.customer_phoneNumber, Validators.required]
     });
     this.storeContact = this._formBuilder.group({
-      phone: [this.customer_phoneNumber, Validators.required],
+      phone: [this.phonenumber, Validators.required],
       email: ['', Validators.required]
     });
 

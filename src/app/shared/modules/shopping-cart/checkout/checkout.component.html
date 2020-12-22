@@ -138,10 +138,14 @@
                            <mat-label> Contact Phone Number</mat-label>
                           <input matInput placeholder="Enter your phone number" value="" formControlName="phone">
                         </mat-form-field> -->
-                        <div class="ph-outline">
+                        <div class="ph-outline" style="display: flex;" >
+                            <div class="input-group">
+                                <span class="input-group-addon">+91</span>
                           <input class="ph-ip" formControlName="phone" required>
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
+                          </div>
                         </div>
+
                         <div class="ph-outline">
                           <input class="ph-ip" formControlName="email">
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
