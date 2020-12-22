@@ -33,7 +33,6 @@ export class OrderActionsComponent implements OnInit {
     if (this.orderDetails.length > 1) {
       this.mulipleSelection = true;
     }
-    console.log(this.orderStatusClasses);
     this.getPos();
   }
   setActions() {
@@ -99,10 +98,8 @@ export class OrderActionsComponent implements OnInit {
       });
   }
   getOrderActionClass(status) {
-    console.log(status);
     const retdet = this.orderStatusClasses.filter(
       soc => soc.value === status);
-      console.log(retdet);
     const returndet = retdet[0].class;
     return returndet;
   }
