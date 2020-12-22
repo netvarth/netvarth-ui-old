@@ -1403,6 +1403,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        } else if(passParam['callback'] === 'order'){
+            this.checkout();
         } else {
           this.getFavProviders();
           this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
@@ -1438,6 +1440,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+        } else if(passParam['callback'] === 'order'){
+          this.checkout();
         } else {
           this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
         }
@@ -2042,28 +2046,35 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   checkout() {
-    let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
-      blogoUrl = '';
-    }
-
-    const businessObject = {
-      'bname': this.businessjson.businessName,
-      'blocation': this.locationjson[0].place,
-      'logo': blogoUrl
-    };
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        account_id: this.provider_bussiness_id,
-        unique_id: this.provider_id,
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
       }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account_id: this.provider_bussiness_id,
+          unique_id: this.provider_id,
+        }
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
 
-    };
-    this.router.navigate(['order/shoppingcart'], navigationExtras);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam );
+    }
+  
+  
   }
   itemDetails(item) {
     console.log(JSON.stringify(item));
