@@ -26726,3 +26726,59 @@ color: #fff !important;
 .shadow-none {
   box-shadow: none !important;
 }
+.order-received-icon {
+  content: url(../images/order/Order-recived.svg);
+  width: 40px;
+}
+.order-ack-icon {
+  content: url(../images/order/order-acknowldged.svg);
+  width: 40px;
+}
+.order-confirmed-icon {
+  content: url(../images/order/Order-confirmation.svg);
+  width: 40px;
+}
+.preparing-icon {
+  content: url(../images/order/Preparing.svg);
+  width: 40px;
+}
+.packing-icon {
+  content: url(../images/order/packing.svg);
+  width: 40px;
+}
+.payment-required-icon {
+  content: url(../images/order/paymentrequired.svg);
+  width: 40px;
+}
+.readyfor-pay-icon {
+  content: url(../images/order/paymentrequired.svg);
+  width: 40px;
+}
+.readyfor-ship-icon {
+  content: url(../images/order/ready-for-shipment.svg);
+  width: 40px;
+}
+.readyfor-delivery-icon {
+  content: url(../images/order/ready-for-delivery.svg);
+  width: 40px;
+}
+.order-completed-icon {
+  content: url(../images/order/Order-complete.svg);
+  width: 40px;
+}
+.intransit-icon {
+  content: url(../images/order/Intransit.svg);
+  width: 40px;
+}
+.shipped-icon {
+  content: url(../images/order/order-shipped.svg);
+  width: 40px;
+}
+.order-cancelled-icon {
+  content: url(../images/order/Order-cnacelled.svg);
+  width: 40px;
+}
+.socialmedia-icon {
+  content: url(../images/social-media.svg);
+  width: 20px;
+}
