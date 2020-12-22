@@ -22,12 +22,17 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions
 
   ) {
+    console.log(data);
     this.checkin = data.checkin;
     this.type = data.type;
     if (this.checkin.service && this.checkin.service.consumerNoteTitle) {
       this.noteTitle = this.checkin.service.consumerNoteTitle;
     } else {
-      this.noteTitle = 'Notes';
+      if (this.type) {
+        this.noteTitle = 'Item Notes';
+      } else {
+        this.noteTitle = 'Notes';
+      }
     }
     this.consumer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }

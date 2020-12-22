@@ -1,9 +1,9 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{noteTitle}} from
-  <span *ngIf="type === 'checkin'">{{checkin.waitlistingFor[0].firstName}}
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{noteTitle}}
+  <span *ngIf="type === 'checkin'"> from {{checkin.waitlistingFor[0].firstName}}
     {{checkin.waitlistingFor[0].lastName}}</span>
-  <span *ngIf="type === 'appt'">{{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}}</span>
-  <span *ngIf="type === 'donation'">{{checkin.donor.firstName}}</span>
-  <span *ngIf="type === 'order' || type == 'order-details'">{{checkin.orderFor.firstName}}
+  <span *ngIf="type === 'appt'"> from {{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}}</span>
+  <span *ngIf="type === 'donation'"> from {{checkin.donor.firstName}}</span>
+  <span *ngIf="type === 'order'"> from {{checkin.orderFor.firstName}}
     {{checkin.orderFor.lastName}}</span>
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>

@@ -84,13 +84,13 @@ export class OrderDetailsComponent implements OnInit {
       return '../../../../assets/images/order/Items.svg';
     }
   }
-  showConsumerNote(order) {
+  showConsumerNote(item) {
     const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        checkin: order,
+        checkin: item,
         type: 'order-details'
       }
     });
