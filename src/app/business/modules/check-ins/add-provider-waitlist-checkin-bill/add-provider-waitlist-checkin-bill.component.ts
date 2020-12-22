@@ -216,6 +216,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   amounttoRefund = '';
   selectedPayment;
   refundedAmount;
+  showDeliveryChargeSection = false;
+  deliveryCharge = 0;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -231,7 +233,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
     this.activated_route.queryParams.subscribe(qparams => {
       this.source = qparams.source;
-      if (this.source) {
+      if (this.source === 'appt') {
         this.breadcrumbs = [
           {
             title: 'Appointments',
@@ -242,6 +244,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         ];
         this.getApptDetails();
+      } else if (this.source === 'order') {
+        this.ad_ser_item_cap = 'Add Item';
+        this.getOrderDetails();
       } else {
         this.breadcrumbs = [
           {
@@ -284,7 +289,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
-        if (this.source) {
+        if (this.source === 'appt') {
           this.breadcrumbs = [
             {
               title: 'Appointments',
@@ -295,6 +300,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           ];
           this.getApptDetails();
+        } else if (this.source === 'order') {
+          this.getOrderDetails();
         } else {
           if (this.showToken) {
             this.breadcrumbs = [
@@ -339,6 +346,30 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           }
         });
+  }
+
+  getOrderDetails() {
+    this.provider_services.getProviderOrderById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          this.jaldeeConsumer = this.checkin.jaldeeConsumer ? true : false;
+          this.emailId = this.checkin.email;
+          this.mobilenumber = this.checkin.phoneNumber;
+          this.getWaitlistBill();
+          this.getPrePaymentDetails()
+            .then(
+              () => {
+                this.bill_load_complete = 1;
+              },
+              () => {
+                this.bill_load_complete = 0;
+              }
+            );
+        }, error => {
+          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
 
   getApptDetails() {
@@ -457,6 +488,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           this.bill_data = data;
+          this.deliveryCharge = this.bill_data.deliveryCharges;
           this.changedDate = this.changeDate(this.bill_data.createdDate);
           this.billNotesExists = false;
           // this.jcMessages = this.getJCMessages(this.bill_data.jCoupon);
@@ -547,7 +579,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             }
           }
           const services = this.services.map((ob) => ob.name);
-          this.itemServicesGroup[0]['values'] = services;
+          if (this.source !== 'order') {
+            this.itemServicesGroup[0]['values'] = services;
+          }
         },
         error => {
           this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -610,7 +644,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getPrePaymentDetails() {
     return new Promise((resolve, reject) => {
       let uid;
-      if (this.source) {
+      if (this.source === 'appt' || this.source === 'order') {
         uid = this.checkin.uid;
       } else {
         uid = this.checkin.ynwUuid;
@@ -727,7 +761,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getSelectedItemId(itemName) {
     let itemId = 0;
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].displayName === itemName) {
+      if (this.items[i].displayName === itemName.trim()) {
         itemId = this.items[i].itemId;
         break;
       }
@@ -738,7 +772,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     let itemPrice = 0;
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].displayName === itemName) {
-        itemPrice = this.items[i].price;
+        itemPrice = (this.items[i].promotionalPrice) ? this.items[i].promotionalPrice : this.items[i].price;
         break;
       }
     }
@@ -789,6 +823,15 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       itm.qty = vv;
     }
   }
+  showDeliveryCharge() {
+    this.showDiscountSection = false;
+    this.disableDiscountbtn = false;
+    this.showPCouponSection = false;
+    this.showJCouponSection = false;
+    this.showAddItemsec = false;
+    this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = true;
+  }
   orderDiscountSelected() {
     this.showDiscountSection = true;
     this.disableDiscountbtn = false;
@@ -796,6 +839,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
   orderPCouponSelected() {
     this.showDiscountSection = false;
@@ -804,6 +848,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showJCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
   jCouponSelected() {
     this.showDiscountSection = false;
@@ -812,6 +857,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.disableJCouponbtn = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = false;
+    this.showDeliveryChargeSection = false;
   }
 
   disaplynoteSelected() {
@@ -822,6 +868,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemMenuSection = false;
     this.showDisplaynoteSection = true;
     this.showPrivatenoteSection = false;
+    this.showDeliveryChargeSection = false;
   }
 
   privatenoteSelected() {
@@ -832,6 +879,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showAddItemMenuSection = false;
     this.showDisplaynoteSection = false;
     this.showPrivatenoteSection = true;
+    this.showDeliveryChargeSection = false;
   }
 
   itemServiceManualAdd(type, name) {
@@ -971,6 +1019,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDiscountSection = false;
     this.showPCouponSection = false;
     this.showJCouponSection = false;
+    this.showDeliveryChargeSection = false;
     this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
@@ -991,6 +1040,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showDiscountSection = false;
     this.showPCouponSection = false;
     this.showJCouponSection = false;
+    this.showDeliveryChargeSection = false;
     this.showAddItemsec = true;
     this.itemServiceSelected('Items', name);
     this.itemServiceSearch.setValue(name);
@@ -1158,6 +1208,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.jCoupon = '';
     this.showJCouponSection = false;
     this.showDiscountSection = false;
+    this.showDeliveryChargeSection = false;
     this.showPCouponSection = false;
     this.showAddItemsec = false;
     this.showAddItemMenuSection = true;
@@ -1178,6 +1229,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.billPrivateNote = '';
       this.privatebuttondisabled = true;
     }
+  }
+
+  applyDeliveryCharge() {
+    const data = { 'deliveryCharges': this.deliveryCharge };
+    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data);
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -1262,7 +1318,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPayWorkBench = false;
   }
   makePayment(mode, amount, paynot?, status?) {
-    if (this.source) {
+    if (this.source === 'appt' || this.source === 'order') {
       this.pay_data.uuid = this.checkin.uid;
     } else {
       this.pay_data.uuid = this.checkin.ynwUuid;
@@ -1278,8 +1334,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
             if (status === 2) {
-              if (this.source) {
+              if (this.source === 'appt') {
                 this.getApptDetails();
+              } else if (this.source === 'order') {
+                this.getOrderDetails();
               } else {
                 this.getCheckinDetails();
               }
@@ -1331,7 +1389,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
       // } else {
-        msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
+      msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
       // }
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -1398,8 +1456,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '	<tr style="line-height:20px">';
     if (!this.source) {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.waitlistingFor[0].firstName + ' ' + this.checkin.waitlistingFor[0].lastName + '</td>';
-    } else {
+    } else if (this.source === 'appt') {
       bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.appmtFor[0].firstName + ' ' + this.checkin.appmtFor[0].lastName + '</td>';
+    } else {
+      bill_html += '<td width="50%" style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif;">' + this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName + '</td>';
     }
     bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
     bill_html += '	</tr>';
@@ -1467,13 +1527,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + (item.quantity * item.price).toFixed(2) + '</td>';
       bill_html += '	</tr>';
       // List<Discount> itemDiscounts = mapper.readValue(item.getDiscount().toString(), new TypeReference<List<Discount>>(){};
+      if (item.discount && item.discount.length > 0) {
       for (const itemDiscount of item.discount) {
         bill_html += '	<tr style="color:#aaa">';
         bill_html += '<td style="text-align:right" colspan="2">' + itemDiscount.name + '</td>';
         bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(itemDiscount.discountValue).toFixed(2) + '</td>';
         bill_html += '	</tr>';
       }
-      if (item.discount && item.discount.length > 0) {
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';

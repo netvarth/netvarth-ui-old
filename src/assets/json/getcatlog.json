@@ -1,0 +1,150 @@
+[
+  {
+    "id": 3,
+    "catalogName": "Lunch",
+    "catalogDesc": "tasty food",
+    "catalogSchedule": {
+      "recurringType": "Weekly",
+      "repeatIntervals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "startDate": "2020-11-26",
+      "terminator": {
+        "endDate": "2022-01-01",
+        "noOfOccurance": 0
+      },
+      "timeSlots": [
+        {
+          "sTime": "09:00 AM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    },
+    "catalogStatus": "ACTIVE",
+    "orderType": "SHOPPINGCART",
+    "pickUp": {
+      "orderPickUp": true,
+      "pickUpSchedule": {
+        "recurringType": "Weekly",
+        "repeatIntervals": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "startDate": "2020-11-26",
+        "terminator": {
+          "endDate": "2022-01-01",
+          "noOfOccurance": 0
+        },
+        "timeSlots": [
+          {
+            "sTime": "09:00 AM",
+            "eTime": "08:00 PM"
+          }
+        ]
+      },
+      "pickUpOtpVerification": true,
+      "pickUpScheduledAllowed": true,
+      "pickUpAsapAllowed": true
+    },
+    "homeDelivery": {
+      "homeDelivery": true,
+      "deliverySchedule": {
+        "recurringType": "Weekly",
+        "repeatIntervals": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "startDate": "2020-11-26",
+        "terminator": {
+          "endDate": "2022-01-01",
+          "noOfOccurance": 0
+        },
+        "timeSlots": [
+          {
+            "sTime": "09:00 AM",
+            "eTime": "08:00 PM"
+          }
+        ]
+      },
+      "deliveryOtpVerification": true,
+      "deliveryRadius": 5,
+      "scheduledHomeDeliveryAllowed": true,
+      "asapHomeDeliveryAllowed": true,
+      "deliveryCharge": 0
+    },
+    "showPrice": true,
+    "paymentType": "FIXED",
+    "advanceAmount": 2,
+    "showContactInfo": true,
+    "preInfo": {
+      "preInfoEnabled": true,
+      "preInfoTitle": "nothing",
+      "preInfoText": "more"
+    },
+    "postInfo": {
+      "postInfoEnabled": true,
+      "postInfoTitle": "nothing",
+      "postInfoText": "less"
+    },
+    "orderStatuses": [
+      "Accepted",
+      "Rejected",
+      "Preparing",
+      "onTheWay",
+      "Delivered"
+    ],
+    "catalogItem": [
+      {
+        "id": 1,
+        "itemId": 1,
+        "catalogId": 3,
+        "minQuantity": 1,
+        "maxQuantity": 10
+      },
+      {
+        "id": 2,
+        "itemId": 2,
+        "catalogId": 3,
+        "minQuantity": 1,
+        "maxQuantity": 10
+      }
+    ],
+    "minNumberItem": 1,
+    "maxNumberItem": 3,
+    "autoConfirm": false,
+    "nextAvailablePickUpDetails": {
+      "availableDate": "2020-12-03",
+      "timeSlots": [
+        {
+          "sTime": "06:00 PM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    },
+    "nextAvailableDeliveryDetails": {
+      "availableDate": "2020-12-03",
+      "timeSlots": [
+        {
+          "sTime": "06:00 PM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    }
+  }
+]

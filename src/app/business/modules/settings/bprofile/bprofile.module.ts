@@ -23,6 +23,7 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AboutMeComponent } from './aboutme/aboutme.component';
 import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
+import { SocialMediaComponent } from './social-media/social-media.component';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { JaldeeOnlineComponent } from './jaldee-online/jaldee-online.component';
         AdditionalInfoComponent,
         SpecializationsComponent,
         AboutMeComponent,
-        JaldeeOnlineComponent
+        JaldeeOnlineComponent,
+        SocialMediaComponent
     ],
     entryComponents: [
         AddProviderBprofileSpokenLanguagesComponent,

@@ -5,6 +5,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
 export class ProviderServices {
+   catalogPrefilledInput: any = [];
    constructor(private servicemeta: ServiceMeta) { }
    getProviderConfig() {
       return this.servicemeta.httpGet('accounts/conf');
@@ -1283,6 +1284,10 @@ export class ProviderServices {
       const url = 'provider/donation';
       return this.servicemeta.httpGet(url, null, filter);
    }
+   getDonationByUid(uid) {
+      const url = 'provider/donation/' + uid;
+      return this.servicemeta.httpGet(url);
+   }
    getCauseCount(filter) {
       const url = 'provider/services/count';
       return this.servicemeta.httpGet(url, null, filter);
@@ -1702,8 +1707,123 @@ export class ProviderServices {
       const path = 'provider/report/' + reportName + '/' + reportType;
       return this.servicemeta.httpDelete(path);
    }
-   donationMassCommunication(data) {
+      donationMassCommunication(data) {
       const url = 'provider/donation/consumerMassCommunication';
       return this.servicemeta.httpPost(url, data);
    }
+
+   uploadItemImages(id, data) {
+      const url = 'provider/items/' + id + '/image';
+      return this.servicemeta.httpPost(url, data);
+   }
+   getProviderTodayOrders(filter = {}) {
+      const url = 'provider/orders';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderTodayOrdersCount(filter = {}) {
+      const url = 'provider/orders/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderFutureOrders(filter = {}) {
+      const url = 'provider/orders/future';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderFutureOrdersCount(filter = {}) {
+      const url = 'provider/orders/future/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderOrderById(id) {
+      const url = 'provider/orders/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderHistoryOrders(filter = {}) {
+      const url = 'provider/orders/history';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderHistoryOrdersCount(filter = {}) {
+      const url = 'provider/orders/history/count';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
+   getProviderOrderStates(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   changeOrderStatus(uuid, action) {
+      const url = 'provider/orders/' + uuid + '/' + action;
+      return this.servicemeta.httpPut(url);
+   }
+   addCatalog(data) {
+      return this.servicemeta.httpPost('provider/catalog', data);
+   }
+   editCatalog(data) {
+      return this.servicemeta.httpPut('provider/catalog', data);
+   }
+   getProviderCatalogs(id?) {
+      if (id) {
+         return this.servicemeta.httpGet('provider/catalog/' + id);
+      } else {
+         return this.servicemeta.httpGet('provider/catalog');
+      }
+   }
+   stateChangeCatalog(id, status) {
+      const url = 'provider/catalog/' + id + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   deleteUplodeditemImage(name, id) {
+      return this.servicemeta.httpDelete('provider/items/' + id + '/image/' + name);
+   }
+   uploadCatalogImages(id, data) {
+      const url = 'provider/catalog/' + id + '/image';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteUplodedCatalogImage(name, id) {
+      return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
+   }
+   getProviderOrderSettings() {
+      const url = 'provider/order/settings';
+      return this.servicemeta.httpGet(url);
+   }
+   setProviderOrderSStatus(status) {
+      const url = 'provider/order/settings/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   addCatalogItems(id,data) {
+      const url = 'provider/catalog/' + id + '/items';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteCatalogItems(id, data) {
+      const url = 'provider/catalog/' + id + '/items';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   deleteCatalogItem(id,itemid) {
+      const url = 'provider/catalog/' + id + '/item/' + itemid;
+      return this.servicemeta.httpDelete(url);
+   }
+   updateCatalogItems(id, data) {
+      const url = 'provider/catalog/items';
+      return this.servicemeta.httpPut(url, data);
+   }
+   updateCatalogItem(data) {
+      const url = 'provider/catalog/item';
+      return this.servicemeta.httpPut(url, data);
+   }
+   setCatalogPrefilledDetails(data) {
+      this.catalogPrefilledInput = data;
+      console.log(this.catalogPrefilledInput);
+    }
+    getCatalogPrefiledDetails() {
+      return this.catalogPrefilledInput;
+    }
+   getDefaultCatalogStatuses() {
+      const url = 'provider/catalog/statuses';
+      return this.servicemeta.httpGet(url);
+   }
+   getContactInfo() {
+      return this.servicemeta.httpGet('provider/order/settings/contact/info');
+   }
+   editContactInfo(data) {
+      return this.servicemeta.httpPut('provider/order/settings/contact/info', data);
+   }
 }
+
+

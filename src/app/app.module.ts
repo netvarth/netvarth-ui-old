@@ -59,7 +59,17 @@ import { ProviderDataStorageService } from './ynw_provider/services/provider-dat
 import { JoyrideModule } from 'ngx-joyride';
 import { ShareService } from 'ngx-sharebuttons';
 import { SignaturePadModule } from 'angular2-signaturepad';
+<<<<<<< HEAD
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
+=======
+import { CardModule } from './shared/components/card/card.module';
+import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
+import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+
+>>>>>>> refs/remotes/origin/1.7-order
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -79,7 +89,21 @@ export function init_app(globalService: GlobalService) {
     RequestForComponent,
     ForceDialogComponent,
     ConsumerPaymentmodeComponent,
+<<<<<<< HEAD
     VoicecallDetailsSendComponent
+=======
+    ManageProviderComponent,
+    CheckYourStatusComponent,
+    PaymentLinkComponent,
+    VoicecallDetailsSendComponent,
+    JdnComponent,
+    UpdateProfilePopupComponent,
+    LiveChatComponent,
+    JaldeeBlogComponent,
+    CheckoutSharedComponent,
+    AddAddressComponent,
+    ItemDetailsSharedComponent
+>>>>>>> refs/remotes/origin/1.7-order
   ],
   entryComponents: [
     SignUpComponent,
@@ -90,7 +114,13 @@ export function init_app(globalService: GlobalService) {
     CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
+<<<<<<< HEAD
     ConsumerPaymentmodeComponent
+=======
+    JdnComponent,
+    UpdateProfilePopupComponent,
+    AddAddressComponent
+>>>>>>> refs/remotes/origin/1.7-order
   ],
   imports: [
     CapitalizeFirstPipeModule,
@@ -121,7 +151,16 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
+<<<<<<< HEAD
     SignaturePadModule
+=======
+    ConsumerFooterModule,
+    TruncateModule,
+    SignaturePadModule,
+    CardModule,
+    MatStepperModule,
+    NgxIntlTelInputModule
+>>>>>>> refs/remotes/origin/1.7-order
   ],
   providers: [
     AuthGuardConsumer,
@@ -162,4 +201,5 @@ export function init_app(globalService: GlobalService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 

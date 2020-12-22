@@ -1,0 +1,237 @@
+[
+  {
+    "id": 31,
+    "catalogName": "Lunch",
+    "catalogDesc": "Lunch, an abbreviation for luncheon, is a meal eaten around midday. During the 20th century, the meaning gradually narrowed to a meal eaten midday.",
+    "catalogSchedule": {
+      "recurringType": "Weekly",
+      "repeatIntervals": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "startDate": "2020-11-20",
+      "terminator": {
+        "endDate": "2022-01-01",
+        "noOfOccurance": 0
+      },
+      "timeSlots": [
+        {
+          "sTime": "09:00 AM",
+          "eTime": "08:00 PM"
+        }
+      ]
+    },
+    "catalogStatus": "INACTIVE",
+    "orderType": "SHOPPINGCART",
+    "pickUp": {
+      "orderPickUp": true,
+      "pickUpSchedule": {
+        "recurringType": "Weekly",
+        "repeatIntervals": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "startDate": "2020-11-20",
+        "terminator": {
+          "endDate": "2022-01-01",
+          "noOfOccurance": 0
+        },
+        "timeSlots": [
+          {
+            "sTime": "09:00 AM",
+            "eTime": "08:00 PM"
+          }
+        ]
+      },
+      "pickUpOtpVerification": true,
+      "pickUpScheduledAllowed": true,
+      "pickUpAsapAllowed": true
+    },
+    "homeDelivery": {
+      "homeDelivery": true,
+      "deliverySchedule": {
+        "recurringType": "Weekly",
+        "repeatIntervals": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "startDate": "2020-11-20",
+        "terminator": {
+          "endDate": "2022-01-01",
+          "noOfOccurance": 0
+        },
+        "timeSlots": [
+          {
+            "sTime": "09:00 AM",
+            "eTime": "08:00 PM"
+          }
+        ]
+      },
+      "deliveryOtpVerification": true,
+      "deliveryRadius": 5,
+      "scheduledHomeDeliveryAllowed": true,
+      "asapHomeDeliveryAllowed": true
+    },
+    "showPrice": true,
+    "paymentType": "FIXED",
+    "advanceAmount": 0,
+    "showContactInfo": true,
+    "howFar": 3,
+    "howSoon": 2,
+    "preInfo": {
+      "preInfoEnabled": true,
+      "preInfoTitle": "nothing",
+      "preInfoText": "more"
+    },
+    "postInfo": {
+      "postInfoEnabled": true,
+      "postInfoTitle": "nothing",
+      "postInfoText": "less"
+    },
+    "orderStatuses": [
+      "Accepted",
+      "Rejected",
+      "Preparing",
+      "onTheWay",
+      "Delivered"
+    ],
+    "location": {
+      "id": 1,
+      "place": "chalakudy",
+      "address": "we",
+      "longitude": "77.5945627",
+      "lattitude": "12.9715987",
+      "googleMapUrl": "https://www.google.com/maps/place/12.9715987,77.5945627/@12.9715987,77.5945627,15z",
+      "status": "ACTIVE",
+      "parkingType": "none",
+      "open24hours": false
+    },
+    "catalogItem": [
+      {
+        "itemId": 11,
+        "displayName": "Brocolli on White",
+        "shortDesc": "Brocolli is very good for health.",
+        "itemDesc": "tragedy ",
+        "price": 200.0,
+        "taxable": false,
+        "status": "ACTIVE",
+        "adhoc": false,
+        "itemName": "Hamlet1",
+        "itemNameInLocal": "Hamlet-William Shakespeare",
+        "isShowOnLandingpage": false,
+        "isStockAvailable": false,
+        "promotionalPriceType": "FIXED",
+        "promotionalPrice": 100.0,
+        "notes": [
+          {
+            "note": "Book-tragedy Hamlet-William Shakespeare",
+            "noteBy": "anirudhan chakochan",
+            "date": "2020-11-18"
+          }
+        ],
+        "itemImages": [
+          {
+            "keyName": "1606273732586.png",
+            "prefix": "item/3",
+            "url": "https://s3.amazonaws.com/img.mynetdiary.com/blog/broccoli-on-white.jpeg",
+            "thumbUrl": "https://s3.amazonaws.com/img.mynetdiary.com/blog/broccoli-on-white.jpeg",
+            "type": ".png",
+            "imageSize": 0,
+            "displayImage": true
+          }
+        ],
+        "promotionalPrcnt": 0.0,
+        "showPromotionalPrice": true
+      },
+      {
+        "itemId": 12,
+        "displayName": "Orange",
+        "shortDesc": "Source of Vitamin C",
+        "itemDesc": "tragedy ",
+        "price": 100.0,
+        "taxable": false,
+        "status": "ACTIVE",
+        "adhoc": false,
+        "itemName": "Hamlet2",
+        "itemNameInLocal": "Hamlet-William Shakespeare",
+        "isShowOnLandingpage": false,
+        "isStockAvailable": false,
+        "promotionalPriceType": "FIXED",
+        "promotionalPrice": 100.0,
+        "notes": [
+          {
+            "note": "Book-tragedy Hamlet-William Shakespeare",
+            "noteBy": "anirudhan chakochan",
+            "date": "2020-11-18"
+          }
+        ],
+        "itemImages": [
+          {
+            "keyName": "1606273732586.png",
+            "prefix": "item/3",
+            "url": "https://www.austinchronicle.com/binary/71dd/orange.jpg",
+            "thumbUrl": "https://www.austinchronicle.com/binary/71dd/orange.jpg",
+            "type": ".png",
+            "imageSize": 0,
+            "displayImage": true
+          }
+        ],
+        "promotionalPrcnt": 0.0,
+        "showPromotionalPrice": true
+      },
+      {
+        "itemId": 13,
+        "displayName": "Masala Dosa",
+        "shortDesc": "Super duper Masala Dosa.",
+        "itemDesc": "tragedy ",
+        "price": 300.0,
+        "taxable": false,
+        "status": "ACTIVE",
+        "adhoc": false,
+        "itemName": "Hamlet3",
+        "itemNameInLocal": "Hamlet-William Shakespeare",
+        "isShowOnLandingpage": false,
+        "isStockAvailable": false,
+        "promotionalPriceType": "FIXED",
+        "promotionalPrice": 100.0,
+        "notes": [
+          {
+            "note": "Book-tragedy Hamlet-William Shakespeare",
+            "noteBy": "anirudhan chakochan",
+            "date": "2020-11-18"
+          }
+        ],
+        "itemImages": [
+          {
+            "keyName": "1606273732586.png",
+            "prefix": "item/3",
+            "url": "https://www.holidify.com/images/cmsuploads/compressed/indian-1768906_1920_20180322173733.jpg",
+            "thumbUrl": "https://www.holidify.com/images/cmsuploads/compressed/indian-1768906_1920_20180322173733.jpg",
+            "type": ".png",
+            "imageSize": 0,
+            "displayImage": true
+          }
+        ],
+        "promotionalPrcnt": 0.0,
+        "showPromotionalPrice": true
+      }
+    ],
+    "minNumberItem": 100,
+    "maxNumberItem": 100
+  }
+]

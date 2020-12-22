@@ -1,0 +1,98 @@
+<section class="container consumer-appthistory no-padding-small">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading top-row ">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <app-header *ngIf="shared_functions.checkLogin()"></app-header>
+                </div>
+            </div>
+            <div class="panel-body no-padding">
+                <div class="c-outer">
+                    <div class="c-body">
+                        <div class="card title-gb">
+                            <h5 class="mgn-up-10">
+                                <!-- Check-ins/Tokens -->
+                                History <a class="pull-left mgn-rt-20 back-btn" (click)="goback()"><i
+                                        class="fa fa-arrow-left"></i></a></h5>
+                        </div>
+                        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+                        <div class="card history one" *ngIf="!loading">
+                            <div class="table-outer history-tbl no-padding"
+                                >
+                                <table class="table" *ngIf="entire_history && entire_history.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th class="th3">{{date_cap}} & Time</th>
+                                            <!-- <th class="th1">{{service_provider_cap}}</th>
+                                            <th class="th2">{{location_cap}}</th> -->
+                                            <th> Order for</th>
+                                            <th class="th6">Order Number</th>
+                                            <th class="th4">{{status_cap}}</th>
+                                            <th class="th5"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Checkin + Appointment -->
+                                        <tr *ngFor="let his_wait of entire_history">
+                                            <ng-container *ngIf="his_wait.orderStatus">
+                                                <td data-title="Date & Time" class="td3">
+                                                    <div class="disp-flex">
+                                                        <div class="circle-htokens" *ngIf="!small_device_display">
+                                                            <i class="fa appt-icon"></i>
+                                                        </div>
+                                                        <span> &nbsp;{{his_wait.orderDate | date: dateFormat }},<br>
+                                                            {{his_wait.timeSlot.sTime}} -
+                                                            {{his_wait.timeSlot.eTime}}</span>
+                                                    </div>
+                                                </td>
+                                                <!-- <td data-title="Service Provider" 
+                                                    (click)="providerDetail(his_wait.providerAccount)"
+                                                    class="td1 provider-name pointer-cursor">
+                                                    <span
+                                                        class="name">{{his_wait.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                </td>
+                                                <td data-title="Location" class="td2">
+                                                    {{his_wait.providerAccount.location.place || '' | capitalizeFirst}}</td> -->
+                                                <td data-title="Order for">
+                                                    {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
+                                                    {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>
+                                                <td data-title="Order Numder" class="td6">
+                                                    <span>{{his_wait.orderNumber || '' | capitalizeFirst}}0</span>
+                                                </td>
+                                                <td data-title="Status" class="td4">
+                                                    <span>{{his_wait.orderStatus}}</span>
+                                                </td>
+                                                <td data-title="" class="td5">
+                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #appMenu="matMenu">
+                                                        <button mat-menu-item   (click)="addOrderMessage(his_wait)">
+                                                            <i class="fa chat-icon"></i>
+                                                            {{send_message_cap}}</button>
+
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus"
+                                                            (click)="getOrderBill(his_wait)">
+                                                            <i class="bill-icon-history"></i>
+                                                            Bill</button>
+                                                        <button mat-menu-item *ngIf="his_wait.orderStatus == 'Shipped'"
+                                                            [class.rated]="isRated(his_wait)"
+                                                            (click)="rateOrderService(his_wait)">
+                                                            Rate Order Service</button>
+                                                    </mat-menu>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div *ngIf="entire_history && entire_history.length == 0 && !loading" class="noprevhist">
+                            <p>No previous history available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

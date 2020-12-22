@@ -16,7 +16,7 @@ import { ProviderServices } from '../../ynw_provider/services/provider-services.
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin','jld', 'qrp']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
@@ -402,26 +402,26 @@ export class SharedFunctions {
     return promise;
   }
 
-  getNearByLocation(centerLat: number, centerLon: number, loctype?) {
+  getNearByLocation(centerLat: number, centerLon: number, distanceMetrix , loctype?) {
     let distance = 0;
     switch (loctype) {
       case 'state':
-        distance = projectConstants.DISTANCE_STATE;
+        distance = distanceMetrix['state'];
         break;
       case 'city':
-        distance = projectConstants.DISTANCE_CITY;
+        distance = distanceMetrix['city'];
         break;
       case 'area':
-        distance = projectConstants.DISTANCE_AREA;
+        distance = distanceMetrix['area'];
         break;
       case 'metro':
-        distance = projectConstants.DISTANCE_METRO;
+        distance = distanceMetrix['metro'];
         break;
       case 'capital':
-        distance = projectConstants.DISTANCE_CAPITAL;
+        distance = distanceMetrix['capital'];
         break;
       default:
-        distance = projectConstants.DISTANCE_AREA;
+        distance = distanceMetrix['area'];
         break;
     }
     const distInDegree = distance / 111;

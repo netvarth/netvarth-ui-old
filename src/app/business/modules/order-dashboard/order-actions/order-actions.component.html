@@ -1,0 +1,64 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    Select an action to perform
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button></h1>
+<div class="action-section col-md-12 no-padding">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!mulipleSelection">
+        <p *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
+            Order For : {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</p>
+        <p *ngIf="!orderDetails.orderFor.firstName && !orderDetails.orderFor.lastName">
+            {{customer_label | capitalizeFirst}} id : {{orderDetails.orderFor.jaldeeId}}</p>
+        <p>Order No: {{orderDetails.orderNumber}}</p>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+        <ng-container *ngIf="catalogStatuses.length > 0">
+            <ng-container *ngFor="let status of catalogStatuses">
+                <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)"
+                    *ngIf="orderDetails.orderStatus !== status">
+                    <div class="action-box-sub">
+                        <span class="viewdetails-icon"></span>
+                        <div class="icon-text">{{status}}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <div class="action-box pointer-cursor" (click)="gotoDetails()"
+            *ngIf="!mulipleSelection && data.source !== 'details'">
+            <div class="action-box-sub">
+                <span class="viewdetails-icon"></span>
+                <div class="icon-text">View Details</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="!mulipleSelection" (click)="gotoCustomerDetails()">
+            <div class="action-box-sub">
+                <span class="customerdetails-icon"></span>
+                <div class="icon-text">{{customer_label | capitalizeFirst}} details</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showBill" (click)="gotoBill()">
+            <div class="action-box-sub">
+                <span class="bill-icon"></span>
+                <div class="icon-text">Billing</div>
+            </div>
+        </div>
+        <!-- <div class="action-box pointer-cursor">
+            <div class="action-box-sub">
+                <span class="message-icon"></span>
+                <div class="icon-text">Send Message</div>
+            </div>
+        </div> -->
+        <!-- <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
+            <div class="action-box-sub">
+                <span class="mail-icon"></span>
+                <div class="icon-text">Share Booking Info</div>
+            </div>
+        </div> -->
+        <!-- <div class="action-box pointer-cursor" *ngIf="!mulipleSelection" (click)="addProviderNote()">
+            <div class="action-box-sub">
+                <span class="notes-icon"></span>
+                <div class="icon-text">Private Notes</div>
+            </div>
+        </div> -->
+    </div>
+</div>
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

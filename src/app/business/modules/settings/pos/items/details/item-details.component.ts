@@ -7,6 +7,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     'selector': 'app-item-details',
@@ -33,8 +36,10 @@ export class ItemDetailsComponent implements OnInit {
     parent_id;
     selitem_pic = '';
     char_count = 0;
+    notechar_count = 0;
     max_char_count = 500;
     isfocused = false;
+    isnotefocused = false;
     item_pic = {
         files: [],
         base64: null
@@ -74,10 +79,60 @@ export class ItemDetailsComponent implements OnInit {
     taxDetails: any = [];
     itemname: any;
     itemcaption = 'Add Item';
+    showPromotionalPrice = false;
+    image_list_popup: Image[];
+    mainimage_list_popup: Image[];
+    galleryDialog;
+    gallery_view_caption = Messages.GALLERY_CAP;
+    havent_added_cap = Messages.BPROFILE_HAVE_NOT_ADD_CAP;
+    add_now_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
+    photo_cap = Messages.SERVICE_PHOTO_CAP;
+    delete_btn = Messages.DELETE_BTN;
+    removeimgdialogRef;
+    valueCaption = 'Enter promotional value';
+    curtype = 'FIXED';
+    showCustomlabel = false;
+    selectedMessage = {
+        files: [],
+        base64: [],
+        caption: []
+    };
+    selectedMessageMain = {
+        files: [],
+        base64: [],
+        caption: []
+    };
+    customPlainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+    };
+    customPlainMainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+    };
+    customButtonsFontAwesomeConfig: ButtonsConfig = {
+        visible: true,
+        strategy: ButtonsStrategy.CUSTOM,
+        buttons: [
+            {
+                className: 'inside close-image',
+                type: ButtonType.CLOSE,
+                ariaLabel: 'custom close aria label',
+                title: 'Close',
+                fontSize: '20px'
+            }
+        ]
+    };
+    itmId;
+    data: any;
+    haveMainImg = false;
+    imageList: any = [];
+    mainImage = false;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
         this.activated_route.params.subscribe(
@@ -96,13 +151,20 @@ export class ItemDetailsComponent implements OnInit {
                         this.breadcrumbs = breadcrumbs;
                         this.action = 'add';
                         this.createForm();
+                        this.api_loading = false;
                     } else {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
                                 this.action = qParams.action;
+                                this.itmId = this.item_id;
                                 this.getItem(this.item_id).then(
                                     (item) => {
                                         this.item = item;
+                                        this.api_loading = false;
+                                        if (this.item.itemImages) {
+                                            this.imageList = this.item.itemImages;
+                                            this.loadImages(this.item.itemImages);
+                                        }
                                         this.itemname = this.item.displayName;
                                         if (this.action === 'edit') {
                                             const breadcrumbs = [];
@@ -130,20 +192,51 @@ export class ItemDetailsComponent implements OnInit {
                             }
                         );
                     }
-                    this.api_loading = false;
                 }
             }
         );
     }
+    loadImages(imagelist) {
+        this.image_list_popup = [];
+        this.mainimage_list_popup = [];
+        // this.selectedMessageMain.files = [];
+        // this.selectedMessage.files = [];
+        if (imagelist.length > 0) {
+            for (let i = 0; i < imagelist.length; i++) {
+                if (imagelist[i].displayImage) {
+                    this.haveMainImg = true;
+                    const imgobj = new Image(
+                        i,
+                        { // modal
+                            img: imagelist[i].url,
+                            description: imagelist[i].caption || ''
+                        });
+                    this.mainimage_list_popup.push(imgobj);
+                    // this.selectedMessageMain.files.push(imagelist[i]);
+                    // this.selectedMessageMain.base64.push(imagelist[i].url);
+                } else {
+                    const imgobj = new Image(
+                        i,
+                        { // modal
+                            img: imagelist[i].url,
+                            description: imagelist[i].caption || ''
+                        });
+                    this.image_list_popup.push(imgobj);
+                    // this.selectedMessage.files.push(imagelist[i]);
+                    // this.selectedMessage.base64.push(imagelist[i].url);
+                }
+            }
+        }
+    }
     ngOnInit() {
-        this.getTaxpercentage();
+         this.getTaxpercentage();
     }
     getItem(itemId) {
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderItems(itemId)
                 .subscribe(
-                    data => {
+                    (data) => {
                         resolve(data);
                     },
                     () => {
@@ -160,24 +253,45 @@ export class ItemDetailsComponent implements OnInit {
     createForm() {
         if (this.action === 'add') {
             this.amForm = this.fb.group({
+                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
+                note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                taxable: [false, Validators.compose([Validators.required])],
-                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+                showOnLandingpage: [true],
+                stockAvailable: [true],
+                taxable: [false],
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPriceType: [],
+                promotionallabel: [],
+                customlabel: []
             });
+            this.amForm.get('promotionalPriceType').setValue('FIXED');
+            this.amForm.get('promotionallabel').setValue('ONSALE');
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
+                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDesc: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
+                note: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                showOnLandingpage: [false],
+                stockAvailable: [false],
                 taxable: [false, Validators.compose([Validators.required])],
-                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])]
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPriceType: [],
+                promotionallabel: [],
+                customlabel: []
             });
+            this.amForm.get('promotionalPriceType').setValue('FIXED');
         }
         if (this.action === 'edit') {
-            this.itemcaption = 'Edit Item';
+            this.itemcaption = this.item.displayName;
             this.updateForm();
         }
     }
@@ -191,18 +305,73 @@ export class ItemDetailsComponent implements OnInit {
     setCharCount() {
         this.char_count = this.max_char_count - this.amForm.get('displayDesc').value.length;
     }
+    setnoteFocus() {
+        this.isnotefocused = true;
+        this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
+    }
+    lostnoteFocus() {
+        this.isnotefocused = false;
+    }
+    setnoteCharCount() {
+        this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
+    }
     updateForm() {
-        if (this.item.taxable === true) {
+        console.log(this.item);
+        if (this.item.taxable) {
             // taxable = '1';
             this.holdtaxable = true;
         }
-        this.amForm.setValue({
-            'displayName': this.item.displayName || null,
-            'shortDesc': this.item.shortDesc || null,
-            'displayDesc': this.item.displayDesc || null,
-            'price': this.item.price || null,
-            'taxable': this.holdtaxable
+        let value;
+        if (this.item.promotionalPriceType === 'PCT') {
+            value = this.item.promotionalPrcnt;
+        } else {
+           value = this.item.promotionalPrice;
+        }
+        let note;
+        if (this.item.notes && this.item.notes.length > 0) {
+            note = this.item.notes[0].note;
+        } else {
+            note = '';
+        }
+        // this.amForm.get('itemName').setValue(this.item.itemName);
+        this.amForm.patchValue({
+            'itemCode': this.item.itemCode || '',
+            'itemName': this.item.itemName || '',
+            'displayName': this.item.displayName || '',
+            'shortDec': this.item.shortDesc || '',
+            'displayDesc': this.item.itemDesc || '',
+            'note': note ,
+            'price': this.item.price || '',
+            'taxable': this.holdtaxable,
+            'showOnLandingpage': this.item.isShowOnLandingpage,
+            'stockAvailable': this.item.isStockAvailable,
+            'promotionalPrice': value || 0,
+            'promotionalPriceType': this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType,
+            'promotionallabel': this.item.promotionLabelType || 'ONSALE',
+            'customlabel': this.item.promotionLabel || ''
         });
+        this.showPromotionalPrice = this.item.showPromotionalPrice;
+        this.curtype = this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType;
+        if (this.amForm.get('promotionallabel').value === 'CUSTOM') {
+            this.showCustomlabel = true;
+        }
+
+    }
+    handleTypechange(typ) {
+        if (typ === 'FIXED') {
+            this.valueCaption = 'Enter promotional value';
+            this.curtype = typ;
+        } else {
+            this.curtype = typ;
+            this.valueCaption = 'Enter promotional value';
+        }
+    }
+    handleLabelchange(type) {
+        if (type === 'Other') {
+            this.showCustomlabel = true;
+        } else {
+            this.showCustomlabel = false;
+        }
     }
     handleTaxablechange() {
         this.resetApiErrors();
@@ -228,46 +397,140 @@ export class ItemDetailsComponent implements OnInit {
             'items']);
         this.api_loading = false;
     }
-    onSubmit(form_data) {
+    onSubmit(form_data, isfrom?) {
+        console.log(isfrom);
+        console.log(form_data.promotionalPrice);
+
+        if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
+           // this.api_error = 'Please enter valid promotional value';
+            this.sharedfunctionObj.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (!this.showPromotionalPrice) {
+            form_data.promotionalPrice = '';
+        }
+        if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
+           // this.api_error = 'Please enter custom label';
+           this.sharedfunctionObj.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
+            return;
+        }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
-            this.api_error = 'Please enter valid price';
+           // this.api_error = 'Please enter valid price';
+           this.sharedfunctionObj.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (iprice < 0) {
-            this.api_error = 'Price should not be a negative value';
+            //this.api_error = 'Price should not be a negative value';
+            this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
             return;
         }
+        if (form_data.promotionalPrice) {
+            const proprice = parseFloat(form_data.price);
+            if (proprice < 0) {
+              //  this.api_error = 'Price should not be a negative value';
+              this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+        }
+        //  this.saveImagesForPostinstructions();
         if (this.action === 'add') {
             const post_itemdata = {
+                'itemCode': form_data.itemCode,
+                'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
-                'shortDesc': form_data.shortDesc,
-                'displayDesc': form_data.displayDesc,
+                'shortDesc': form_data.shortDec,
+                'itemDesc': form_data.displayDesc,
+                'note': form_data.note,
                 'taxable': form_data.taxable,
-                'price': form_data.price
+                'price': form_data.price,
+                'showPromotionalPrice': this.showPromotionalPrice,
+                'isShowOnLandingpage': form_data.showOnLandingpage,
+                'isStockAvailable': form_data.stockAvailable,
+                'promotionalPriceType': form_data.promotionalPriceType,
+                'promotionLabelType': form_data.promotionallabel,
+                'promotionLabel': form_data.customlabel || '',
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPrcnt': form_data.promotionalPrice || 0
             };
-            this.addItem(post_itemdata);
+            if (!this.showPromotionalPrice) {
+                post_itemdata['promotionalPriceType'] = 'NONE';
+                post_itemdata['promotionLabelType'] = 'NONE';
+            }
+            // if (form_data.promotionalPriceType === 'FIXED') {
+            //     post_itemdata['promotionalPrice'] = form_data.promotionalPrice || 0;
+            // }
+            // if (form_data.promotionalPriceType === 'PCT') {
+            //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
+            // }
+            this.addItem(post_itemdata, isfrom);
         } else if (this.action === 'edit') {
             const post_itemdata = {
+                'itemCode': form_data.itemCode,
+                'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
-                'shortDesc': form_data.shortDesc,
-                'displayDesc': form_data.displayDesc,
-                'taxable': form_data.taxable,
-                'price': form_data.price
+                'shortDesc': form_data.shortDec || '',
+                'itemDesc': form_data.displayDesc || '',
+                'note': form_data.note || '',
+                'taxable': form_data.taxable || false,
+                'price': form_data.price || 0,
+                'showPromotionalPrice': this.showPromotionalPrice,
+                'isShowOnLandingpage': form_data.showOnLandingpage || false,
+                'isStockAvailable': form_data.stockAvailable || false,
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPriceType': form_data.promotionalPriceType,
+                'promotionLabelType': form_data.promotionallabel,
+                'promotionLabel': form_data.customlabel || '',
+                'promotionalPrcnt': form_data.promotionalPrice || 0,
+                'status': this.item.status
             };
+            if (!this.showPromotionalPrice) {
+                post_itemdata['promotionalPriceType'] = 'NONE';
+                post_itemdata['promotionLabelType'] = 'NONE';
+            }
             this.editItem(post_itemdata);
         }
     }
-    addItem(post_data) {
+    // saveandAdd(form_data) {
+
+    // }
+    addItem(post_data, isFrom?) {
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
         this.provider_services.addItem(post_data)
             .subscribe(
-                () => {
+                (data) => {
+                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && isFrom === 'saveadd') {
+                        this.saveImages(data);
+                    }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    if (isFrom === 'saveadd') {
+                        this.disableButton = false;
+                        this.showPromotionalPrice = false;
+                        this.showCustomlabel = false;
+                        this.amForm.reset();
+                        this.haveMainImg = false;
+                        this.mainImage = false;
+                        this.selectedMessage = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
+                        this.selectedMessageMain = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
+                        this.image_list_popup = [];
+                        this.mainimage_list_popup = [];
+                    } else if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && !isFrom) {
+                        const route = 'list';
+                        this.saveImages(data, route);
+                    } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
+                        this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    }
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -321,7 +584,219 @@ export class ItemDetailsComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
-    redirecToJaldeeBilling() {
-        this.router.navigate(['provider', 'settings', 'pos' , 'items']);
+    redirecToJaldeeOrdermanager() {
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              'message': 'Do you want to exit?'
+            }
+          });
+          dialogrefd.afterClosed().subscribe(result => {
+            if (result) {
+                this.router.navigate(['provider', 'settings', 'pos', 'items']);
+            }
+          });
+    }
+    saveImages(id,routeTo?) {
+        const submit_data: FormData = new FormData();
+        const propertiesDetob = {};
+        let i = 0;
+        console.log(this.selectedMessageMain);
+        console.log(this.selectedMessage);
+        for (const pic of this.selectedMessageMain.files) {
+            submit_data.append('files', pic, pic['name']);
+            let properties = {};
+                properties = {
+                    'caption': this.selectedMessageMain.caption[i] || '',
+                    'displayImage': true
+                };
+            propertiesDetob[i] = properties;
+            i++;
+        }
+        for (const pic of this.selectedMessage.files) {
+            submit_data.append('files', pic, pic['name']);
+            let properties = {};
+                properties = {
+                    'caption': this.selectedMessage.caption[i] || '',
+                    'displayImage': false
+                };
+            propertiesDetob[i] = properties;
+            i++;
+        }
+        console.log(propertiesDetob);
+        const propertiesDet = {
+            'propertiesMap': propertiesDetob
+        };;
+        const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+        submit_data.append('properties', blobPropdata);
+        this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+            if (routeTo === 'list') {
+                this.router.navigate(['provider', 'settings', 'pos', 'items']);
+            }
+            this.getItem(id).then(
+                (item) => {
+                    this.item = item;
+                    if (this.item.itemImages) {
+                        this.imageList = this.item.itemImages;
+                        this.loadImages(this.item.itemImages);
+                    }
+                });
+            this.api_loading = false;
+        },
+            error => {
+                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.getItem(id).then(
+                    (item) => {
+                        this.item = item;
+                        if (this.item.itemImages) {
+                            this.imageList = this.item.itemImages;
+                            this.loadImages(this.item.itemImages);
+                        }
+                        this.api_loading = false;
+                    });
+            });
+    }
+    saveImagesForPostinstructions() {
+        const files = this.selectedMessage.files;
+        const propertiesDetob = {};
+
+        for (let pic of this.selectedMessage.files) {
+
+            const properties = {
+                'caption': this.selectedMessage.caption[pic] || '',
+
+            };
+            propertiesDetob[pic] = properties;
+            pic++;
+        }
+        const propertiesDet = {
+            'propertiesMap': propertiesDetob
+        };
+        const preInstructionGallery = {
+            'files': files,
+            'information': propertiesDet
+        };
+
+        this.data = preInstructionGallery;
+    }
+
+    openImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    }
+    openmainImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.mainimage_list_popup);
+        this.customPlainMainGalleryRowConfig = Object.assign({}, this.customPlainMainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    }
+    private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+        return image ? images.indexOf(image) : -1;
+    }
+    onButtonBeforeHook() {
+    }
+    onButtonAfterHook() { }
+
+    imageSelect(event, type?) {
+        this.api_loading = true;
+        const input = event.target.files;
+        if (input) {
+            for (const file of input) {
+                if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+                    this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+                    this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                } else {
+                    if (type) {
+                    this.selectedMessageMain.files.push(file);
+                    } else {
+                        this.selectedMessage.files.push(file);
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        console.log(this.selectedMessage);
+                        console.log(this.selectedMessageMain);
+                        console.log(this.image_list_popup);
+                        console.log(this.mainimage_list_popup);
+                        if (type) {
+                            this.selectedMessageMain.base64.push(e.target['result']);
+                            this.mainimage_list_popup = [];
+                            for (let i = 0; i < this.selectedMessageMain.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessageMain.base64[i],
+                                        description: ''
+                                    });
+                                this.mainimage_list_popup.push(imgobj);
+                            }
+                        } else {
+                            this.selectedMessage.base64.push(e.target['result']);
+                            this.image_list_popup = [];
+                            for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessage.base64[i],
+                                        description: ''
+                                    });
+                                this.image_list_popup.push(imgobj);
+                            }
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            if (this.itmId && (this.selectedMessageMain.files.length > 0 || this.selectedMessage.files.length > 0)) {
+                this.saveImages(this.itmId);
+            } else {
+                this.api_loading = false;
+                if (type) {
+                    this.mainImage = true;
+                }
+            }
+        }
+    }
+
+    deleteTempImage(img, index, type?) {
+        if (this.action === 'edit') {
+            this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Do you really want to remove the item image?'
+                }
+            });
+            this.removeimgdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
+                    this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
+                        .subscribe((data) => {
+                            if (type) {
+                                this.mainimage_list_popup = [];
+                                this.selectedMessageMain.files.splice(index, 1);
+                                this.selectedMessageMain.base64.splice(index, 1);
+                            } else {
+                                this.image_list_popup.splice(index, 1);
+                                this.selectedMessage.files.splice(index, 1);
+                                this.selectedMessage.base64.splice(index, 1);
+                            }
+                        },
+                            error => {
+                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            });
+                }
+            });
+        } else {
+            this.mainImage = false;
+            if (type) {
+                this.mainimage_list_popup = [];
+                this.selectedMessageMain.files.splice(index, 1);
+                this.selectedMessageMain.base64.splice(index, 1);
+            } else {
+                this.image_list_popup.splice(index, 1);
+                this.selectedMessage.files.splice(index, 1);
+                this.selectedMessage.base64.splice(index, 1);
+            }
+        }
     }
 }

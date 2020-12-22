@@ -104,6 +104,7 @@ export const projectConstantsLocal = {
   POST_DATE_FORMAT: 'YYYY-MM-DD',
   POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
   POST_DATE_FORMAT_WITHTIME_A: 'YYYY-MM-DD HH:mm A',
+  DATE_FORMAT_WITH_MONTH: 'd MMM',
   BASE_SCHEDULE: [
     {
       day: 4,
@@ -252,8 +253,8 @@ export const projectConstantsLocal = {
     { key: 'youtube', iconClass: 'fa fa-youtube-square ytb', iconImg: 'youtube.png', displayName: 'Youtube' },
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
-    { key: 'instagram', iconClass: 'fa fa-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
-    { key: 'bizyGlobe', iconClass: 'BizyGlobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
+    { key: 'instagram', iconClass: 'fa fa-instagram inst', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
@@ -817,14 +818,14 @@ export const projectConstantsLocal = {
     MANDATORY_INFO: { 'name': 'MANDATORY_INFO', 'value': 15 },
     PROFILE_PIC: { 'name': 'PROFILE_PIC', 'value': 5 }
   },
-  COUNTRY_CODES: [    
-    { displayName: '+91', value: '+91' }  
+  COUNTRY_CODES: [
+    { displayName: '+91', value: '+91' }
   ],
   CONSUMER_COUNTRY_CODES: [
-    { displayName: '+91', value: '+91' },
-    { displayName: '+49', value: '+49' },
-    { displayName: '+44', value: '+44' },
-    { displayName: '+1', value: '+1' }
+    { displayName: '+91', value: '+91' },
+    { displayName: '+49', value: '+49' },
+    { displayName: '+44', value: '+44' },
+    { displayName: '+1', value: '+1' }
   ],
   WAITLIST_CANCEL_REASON: [{ title: 'No Show Up', value: 'noshowup', reasonkey: 'noShowUpCancel', type: 2 },
   { title: 'Self', value: 'self', reasonkey: 'selfCancel' },
@@ -839,6 +840,40 @@ export const projectConstantsLocal = {
   REQUIRED_FIELDS_JALDEE_ONLINE: [
     'SPECIALIZATION', 'PROFILE_PIC', 'BUSINESS_NAME', 'BASE_LOCATION', 'LOCATION_SCHEDULE'
   ],
-  PATH: 'https://www.jaldee.com/'
-
+  PATH: 'https://www.jaldee.com/',
+  ORDER_STATUSES_FILTER: [
+    { displayName: 'Accepted', value: 'Accepted' },
+    { displayName: 'Rejected', value: 'Rejected' },
+    { displayName: 'Preparing', value: 'Preparing' },
+    { displayName: 'On the way', value: 'onTheWay' },
+    { displayName: 'Delivered', value: 'Delivered' }
+  ],
+  ORDER_MODES: [
+    { value: 'WALK_IN_ORDER', displayName: 'Walk in Order' },
+    { value: 'PHONE_ORDER', displayName: 'Phone in Order' },
+    { value: 'ONLINE_ORDER', displayName: 'Online Order' },
+  ],
+  PAYMENT_STATUSES: [
+    { value: 'NotPaid', displayName: 'Not Paid' },
+    { value: 'PartiallyPaid', displayName: 'Partially Paid' },
+    { value: 'FullyPaid', displayName: 'Fully Paid' },
+    { value: 'Refund', displayName: 'Refund' }
+  ],
+  PAYMENT_STATUS_CLASS: [
+    { value: 'NotPaid', class: 'red' },
+    { value: 'PartiallyPaid', class: 'orange' },
+    { value: 'FullyPaid', class: 'greenc' },
+    { value: 'Refund', class: 'yellow' },
+    { value: 'PartiallyRefunded', class: 'yellow' },
+    { value: 'FullyRefunded', class: 'yellow' }
+  ],
+  BILL_PAYMENT_STATUS_WITH_DISPLAYNAME: {
+    NotPaid: 'Not Paid',
+    PartiallyPaid: 'Partially Paid',
+    FullyPaid: 'Fully Paid',
+    PartiallyRefunded: 'Partially Refunded',
+    FullyRefunded: 'Fully Refunded',
+    Refund: 'Refund'
+  }
 };
+

@@ -11,12 +11,12 @@ import { Messages } from '../../constants/project-messages';
 
 export class ConfirmBoxComponent implements OnInit {
 
-  
+
   ok_btn_cap = Messages.YES_BTN;
   cancel_btn_cap = Messages.NO_BTN;
   deptName;
   showError = false;
-  okCancelBtn = false
+  okCancelBtn = false;
   constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -25,7 +25,7 @@ export class ConfirmBoxComponent implements OnInit {
       this.ok_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;
     }
-    if (this.data.buttons == 'okCancel') {
+    if (this.data.buttons === 'okCancel') {
       this.ok_btn_cap = Messages.OK_BTN;
       this.cancel_btn_cap = Messages.CANCEL_BTN;
     }

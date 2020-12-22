@@ -1,0 +1,109 @@
+
+<section class="">
+  <div class="card title-gb">
+      <h5 class="mgn-up-10"> 
+          <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToJaldeeIordermanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Catalog 
+          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> </h5>
+  </div>
+</section>
+<section>
+  <div class="content comn-cls">
+      <div class="col-md-12 no-padding-small">
+          <div class="row">
+              <div class="card">
+                  <p class="form-level-settings">{{frm_items_cap}}</p>
+                  <div class="no-dta" *ngIf="catalog_list.length ==0 && query_executed == true">
+                      <p>{{emptyMsg}}</p>
+                      <span class="cs-btn bt3" (click)="addCatalog()">{{add_item_cap}}</span>
+                  </div>
+                  <div class="w-dta" *ngIf="catalog_list.length>0">
+                      <div class="row">
+                          <div class="copy">
+                              <div class="table-outer q-itm">
+                                  <table class="table">
+                                      <thead>
+                                          <tr>
+                                              <th>Catalog Name</th>
+                                              <th>Store Pickup</th>
+                                              <th>Home Delivery</th>
+                                              <th>Start Date</th>
+                                              <th>End Date</th>
+                                              <!-- <th>Payment Type</th> -->
+                                              <th>Status</th>
+                                              <th>  
+                                                  <!-- <span class="addbt" (click)="addCatalog()"></span> -->
+                                            </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let catalog of catalog_list | orderBy: order"
+                                              [class.disabled-row]="catalog.catalogStatus=='INACTIVE'">                                       
+                                              <td data-title="Name" class="td2" class="pointer-cursor"
+                                                  (click)="editCatalog(catalog)"
+                                                  [class.itemdisabled]="catalog.catalogStatus=='INACTIVE'"><span
+                                                      [matTooltipClass]="tooltipcls"
+                                                      [matTooltip]="itemnameTooltip">{{catalog.catalogName}}</span>
+                                              </td>
+                                              <td data-title="Store Pickup" class="td3 ">{{(catalog.pickUp && catalog.pickUp.orderPickUp) ? 'Yes' : 'No'}}</td>
+                                              <td data-title="Home Delivery" class="td3 ">{{(catalog.homeDelivery && catalog.homeDelivery.homeDelivery) ? 'Yes' : 'No'}}</td>
+                                              <td data-title="Start Date" class="td4 ">{{catalog.catalogSchedule.startDate | date: dateFormat}}</td>
+                                              <td data-title="End Date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: dateFormat}}</td>
+                                              <!-- <td data-title="Payment Type" class="td3">{{catalog.paymentType}} 
+                                              </td>-->
+                                              <td data-title="Status"
+                                                  [ngClass]="{'green-text' : catalog.catalogStatus=='ACTIVE'}">
+                                                  {{catalog.catalogStatus}}</td>
+                                              <td class="action">
+                                                  <span class="mbt">
+                                                      <button type="button" mat-icon-button
+                                                          [matMenuTriggerFor]="menu">
+                                                          <mat-icon>more_vert</mat-icon>
+                                                      </button>
+                                                      <mat-menu #menu="matMenu">
+                                                          <button type="button" (click)="editCatalog(catalog)" mat-menu-item
+                                                              *ngIf="catalog.catalogStatus=='ACTIVE'">
+                                                              <i class="icon-edit"></i>
+                                                              {{edit_btn}}
+                                                          </button>
+                                                          <button type="button" (click)="dochangeStatus(catalog)"
+                                                              mat-menu-item>
+                                                              <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
+                                                                  class="icon-enable"></i>
+                                                              <i *ngIf="catalog.catalogStatus=='ACTIVE'"
+                                                                  class="icon-disable"></i>
+                                                              {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}
+                                                          </button>
+                                                          <!-- <button type="button" (click)="doRemoveCatalog(catalog)"
+                                                              mat-menu-item>
+                                                              <i class="icon-delete"></i>
+                                                              {{delete_btn}}
+                                                          </button> -->
+                                                      </mat-menu>
+                                                  </span>
+                                                  <span class="mbt-mobile-show">
+                                                      <button class="editcls" type="button"
+                                                          (click)="editCatalog(catalog)">{{edit_btn}}</button>
+                                                      <button class="status tel-serv-flex" type="button"
+                                                          (click)="dochangeStatus(catalog)">
+                                                          <i *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"
+                                                              class="icon-enable icon-disable1"></i>
+                                                          <i *ngIf="catalog.catalogStatus=='ACTIVE'" class="icon-disable icon-disable1"></i>
+                                                          {{(catalog.catalogStatus=='ACTIVE') ? 'Disable' :'Enable'}}</button>
+                                                      <!-- <button class="deletecls" type="button"
+                                                          (click)="doRemoveCatalog(catalog)">{{delete_btn}}</button> -->
+                                                  </span>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  <!-- <span class="addbt d-block d-md-none" (click)="addCatalog()"></span> -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

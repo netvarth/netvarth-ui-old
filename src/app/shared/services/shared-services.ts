@@ -5,6 +5,8 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 export class SharedServices {
 
+  accountId: any;
+  orderdata: any;
   licenseMetrics: any = [];
   constructor(private servicemeta: ServiceMeta) {
   }
@@ -516,6 +518,9 @@ export class SharedServices {
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     }
+    else if (type === 'order') {
+      path = 'consumer/order/rating';
+    }
     return this.servicemeta.httpGet(path, null, params);
   }
   postConsumerRateService(params, data, type) {
@@ -524,6 +529,9 @@ export class SharedServices {
       path = 'consumer/waitlist/rating';
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
+    }
+    else if (type === 'order') {
+      path = 'consumer/order/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
   }
@@ -691,6 +699,10 @@ export class SharedServices {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
+  addConsumerOrderNote(accountid, uuid, body){
+    const url = 'consumer/order/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
+  }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
@@ -716,6 +728,10 @@ export class SharedServices {
   }
   getApptbyEncId(encId) {
     const url = 'consumer/appointment/enc/' + encId;
+    return this.servicemeta.httpGet(url);
+  }
+  getOrderbyEncId(encId) {
+    const url = 'consumer/orders/enc/' + encId;
     return this.servicemeta.httpGet(url);
   }
   getServicesforAppontmntByLocationId(locid) {
@@ -832,5 +848,56 @@ export class SharedServices {
   callHealth(message) {
     const url = 'health/browser';
     return this.servicemeta.httpPost(url, message);
+  }
+  getOrderByConsumerUUID(uuid, accountid) {
+    const url = 'consumer/orders/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+  // getConsumerCatalogs() {
+  //   const url = 'http://localhost:4200/assets/json/item.json';
+  //   return this.servicemeta.httpGet(url);
+  // }
+  getConsumerCatalogs(accountid) {
+    const url = 'consumer/orders/catalogs/'   + accountid;
+    return this.servicemeta.httpGet(url);
+  }
+  getItemDetails(itemId?) {
+    console.log(itemId);
+    const url = 'http://localhost:4200/assets/json/item-details.json';
+    return this.servicemeta.httpGet(url);
+  }
+  setOrderDetails(data) {
+    this.orderdata = data;
+    console.log(this.orderdata);
+  }
+  getOrderDetails() {
+    return this.orderdata;
+  }
+  setaccountId(data) {
+    this.accountId = data;
+    console.log(this.accountId);
+  }
+  getaccountId() {
+    return this.accountId;
+  }
+  getConsumeraddress() {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpGet(url);
+  }
+  updateConsumeraddress(data) {
+    const url = 'consumer/deliveryAddress';
+    return this.servicemeta.httpPut(url , data);
+  }
+  CreateConsumerOrder(accountid, postData) {
+    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
+  }
+  getAvailableDatesForPickup(catalogid , accountid?){
+    return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid +  '?account=' + accountid);
+  }
+  getAvailableDatesForHome(catalogid , accountid?){
+    return this.servicemeta.httpGet('consumer/orders/catalogs/delivery/dates/' + catalogid +  '?account=' + accountid);
+  }
+  getStoreContact(accountid?) {
+    return this.servicemeta.httpGet('consumer/orders/settings/store/contact/info/' + accountid);
   }
 }

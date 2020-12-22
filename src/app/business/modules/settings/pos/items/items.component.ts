@@ -5,11 +5,11 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 
 @Component({
-    selector: 'app-items',
+    selector: 'app-orderitems',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.css']
 })
@@ -34,12 +34,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
             title: 'Settings'
         },
         {
-            title: 'Jaldee Billing',
-            url: '/provider/settings/pos'
+            title: 'Jaldee Order',
+            url: '/provider/settings/ordermanager'
         },
         {
             title: 'Items',
-            url: '/provider/settings/pos/items'
+            url: '/provider/settings/ordermanager/items'
         }
     ];
     item_status = projectConstants.ITEM_STATUS;
@@ -52,15 +52,25 @@ export class ItemsComponent implements OnInit, OnDestroy {
     isCheckin;
     active_user;
     order = 'status';
+    items: any[];
+    itemHead: { type: string; };
+    actions: any = [];
+    isFrom;
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
+        private activated_route: ActivatedRoute,
         private sharedfunctionObj: SharedFunctions) {
+            this.activated_route.queryParams.subscribe(
+                (qParams) => {
+                    this.isFrom = qParams.type;
+                });
         this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
     }
 
     ngOnInit() {
+        this.itemHead = {type: 'item-head'}
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
@@ -90,12 +100,52 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
 
     getitems() {
+        this.items = [];
         this.provider_servicesobj.getProviderItems()
             .subscribe(data => {
                 this.item_list = data;
-                this.query_executed = true;
+                this.query_executed = true;             
+                const items = [];
+                for (let itemIndex = 0; itemIndex < this.item_list.length; itemIndex++) {
+                    const actions = []; 
+                    if (this.item_list[itemIndex].status === 'ACTIVE') {
+                        actions.push({
+                            'displayName' : 'Disable',
+                            'action': 'disable',
+                            'iconClass': ''
+                        })
+                    } else {
+                        actions.push({
+                            'displayName' : 'Enable',
+                            'action': 'enable',
+                            'iconClass': ''
+                        })
+                    }                    
+                    items.push({ 'type': 'pitem', 'id': this.item_list[itemIndex].itemId, 'item': this.item_list[itemIndex], 'actions':actions });                
+                }
+                // }
+                this.items = items;
+                console.log(this.items);
+
             });
     }
+    cardClicked(actionObj) {
+        if (actionObj['type'] === 'pitem') {
+          if (actionObj['action'] === 'disable' || actionObj['action'] === 'enable') {
+            this.dochangeStatus(actionObj['service']['item']);
+          } else {
+              this.editItem(actionObj['service']['item']);
+          }
+        //     this.itemDetails(actionObj['service']);
+        //   } else if (actionObj['action'] === 'add') {
+        //     this.increment(actionObj['service']);
+        //   } else if (actionObj['action'] === 'remove') {
+        //     this.decrement(actionObj['service']);
+        //   }
+        } else {
+            this.addItem();
+        }
+      }
     getItemPic(img) {
         return this.sharedfunctionObj.showlogoicon(img);
     }
@@ -154,7 +204,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
         };
         this.router.navigate(['provider', 'settings', 'pos', 'items', id], navigationExtras);
     }
-
+    editViewedItem(id) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit' }
+        };
+        this.router.navigate(['provider', 'settings', 'pos', 'items', id], navigationExtras);
+    }
     doRemoveItem(item) {
         const id = item.itemId;
         if (!id) {
@@ -191,9 +246,29 @@ export class ItemsComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
     }
     redirecToJaldeeBilling() {
-        this.routerobj.navigate(['provider', 'settings' , 'pos']);
+        if (this.isFrom === 'ordermanager') {
+            this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
+        } else {
+            this.routerobj.navigate(['provider', 'settings', 'pos']);
+        }
+        
     }
     redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);
+    }
+    stopprop(event) {
+        event.stopPropagation();
+    }
+    getItemImg(item) {
+        if (item.itemImages) {
+            const img = item.itemImages.filter(image => image.displayImage);
+            if (img[0]) {
+                return img[0].url;
+            } else {
+                return '../../../../assets/images/order/Items.svg';
+            }
+        } else {
+            return '../../../../assets/images/order/Items.svg';
+        }
     }
 }

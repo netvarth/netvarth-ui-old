@@ -69,9 +69,12 @@ export class ConsumerNotificationsComponent implements OnInit {
   wlAddNotificationSettings = { eventType: 'WAITLISTADD', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   apptAddNotificationSettings = { eventType: 'APPOINTMENTADD', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   donatAddNotificationSettings = { eventType: 'DONATIONSERVICE', resourceType: 'DONATION', sms: false, email: false, pushNotification: false };
+  orderAddNotificationSettings = { eventType: 'ORDERCONFIRM', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
+  orderCancelNotificationSettings = { eventType: 'ORDERCANCEL', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
+  orderStatusChangelNotificationSettings = { eventType: 'ORDERSTATUSCHANGE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false };
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false , 'ORDERCONFIRM' : false , 'ORDERCANCEL' : false , 'ORDERSTATUSCHANGE' : false};
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
@@ -84,6 +87,7 @@ export class ConsumerNotificationsComponent implements OnInit {
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
+  order_status: any;
   settings: any = [];
   showToken = false;
   api_loading = true;
@@ -139,6 +143,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.getNotificationList();
     this.getGlobalSettingsStatus();
     this.getSMSCredits();
+    this.getOrderStatus();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     const breadcrumbs = [];
@@ -284,6 +289,15 @@ export class ConsumerNotificationsComponent implements OnInit {
       } else if (notificationObj['eventType'] === 'FINAL' && notificationObj['resourceType'] === 'DONATION') {
         this.cSettings['FINAL_DONAT'] = true;
         this.finalDONATNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'ORDERCONFIRM' && notificationObj['resourceType'] === 'ORDER') {
+        this.cSettings['ORDERCONFIRM'] = true;
+        this.orderAddNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'ORDERCANCEL' && notificationObj['resourceType'] === 'ORDER') {
+        this.cSettings['ORDERCANCEL'] = true;
+        this.orderCancelNotificationSettings = notificationObj;
+      } else if (notificationObj['eventType'] === 'ORDERSTATUSCHANGE' && notificationObj['resourceType'] === 'ORDER') {
+        this.cSettings['ORDERSTATUSCHANGE'] = true;
+        this.orderStatusChangelNotificationSettings = notificationObj;
       }
     });
   }
@@ -342,6 +356,12 @@ export class ConsumerNotificationsComponent implements OnInit {
       activeInput = this.prefinalDONATNotificationSettings;
     } else if (type === 'FINAL_DONAT') {
       activeInput = this.finalDONATNotificationSettings;
+    } else if (type === 'ORDERCONFIRM') {
+      activeInput = this.orderAddNotificationSettings;
+    } else if (type === 'ORDERCANCEL') {
+      activeInput = this.orderCancelNotificationSettings;
+    } else if (type === 'ORDERSTATUSCHANGE') {
+      activeInput = this.orderStatusChangelNotificationSettings;
     }
 
     if (this.cSettings[type]) {
@@ -445,5 +465,10 @@ export class ConsumerNotificationsComponent implements OnInit {
         }
       });
   }
+  }
+  getOrderStatus() {
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.order_status = data.enableOrder;  
+    });
   }
 }

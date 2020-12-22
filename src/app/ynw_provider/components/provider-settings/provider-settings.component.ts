@@ -163,6 +163,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showTakeaTour = false;
   profile: any = [];
   contactInfo: any = [];
+  catalog_list: any = [];
+  orderstatus;
+  orderstatusstr;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -236,6 +239,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   services_hint = '';
   bprofileLoaded = false;
   showIncompleteButton = true;
+  ordermanagertooltip = 'Ordermanager';
   ngOnInit() {
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -289,8 +293,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-  
+this.getOrderStatus();
     this.getSchedulesCount();
+    this.getCatalog();
     // this.getStatusboardLicenseStatus();
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     // Update from footer
@@ -307,13 +312,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
     });
   }
-  
+
   getProviderLocations() {
-   this.provider_services.getProviderLocations()
-        .subscribe(data => {
-            console.log(data);
-            this.loc_list = data; });
-        }
+    this.provider_services.getProviderLocations()
+      .subscribe(data => {
+        console.log(data);
+        this.loc_list = data;
+      });
+  }
   getAccountContactInfo() {
     this.provider_services.getAccountContactInfo().subscribe(
       data => {
@@ -943,6 +949,24 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'donationmanager':
         this.routerobj.navigate(['provider', 'settings', 'donationmanager']);
+        break;
+      case 'ordermanager':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
+        break;
+      case 'catalogs':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
+        break;
+      case 'storedetails':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
+        break;
+      case 'orderitems':
+          const navigatExtras: NavigationExtras = {
+            queryParams: {
+              type: 'ordermanager'
+            }
+          };
+        this.routerobj.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
+        break;
     }
   }
   getLocationCount() {
@@ -996,7 +1020,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getQueuesCount(filter)
       .subscribe(
         data => {
-        this.queues_count = data;
+          this.queues_count = data;
         });
   }
   getDiscounts() {
@@ -1248,6 +1272,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           this.schedules_count = data;
         });
   }
+  getCatalog() {
+    this.provider_services.getProviderCatalogs()
+        .subscribe(data => {
+            this.catalog_list = data;
+        });
+}
 
   // mandatory fields
   getDomainVirtualFields() {
@@ -1426,5 +1456,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
         }
       );
+  }
+  getOrderStatus() {
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.orderstatus = data.enableOrder;
+      this.orderstatusstr = (this.orderstatus) ? 'On' : 'Off';
+    });
   }
 }

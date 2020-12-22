@@ -19,15 +19,15 @@
     </div>
   </div>
 </section>
-<section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !api_loading">
+<section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !order_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
     <div class="token-appt">
-      To setup 'Notifications', Appointment manager/QManager/Donations need to be enabled from your settings.
+      To setup 'Notifications', Appointment manager/QManager/Order manager/Donations need to be enabled from your settings.
     </div>
   </div>
 </section>
 <section class="content comn-cls lic-page notifications"
-  *ngIf="(waitlistStatus || appointment_status || donations_status) && !api_loading">
+  *ngIf="(waitlistStatus || appointment_status || donations_status || order_status) && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small  ynw-common-form-nm">
     <div class="row">
       <div class="card w-dta p0">
@@ -639,7 +639,126 @@
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-
+        <mat-accordion  *ngIf="order_status">
+            <mat-expansion-panel [expanded]="false">
+              <mat-expansion-panel-header class="mgn-bt-10">
+                <mat-panel-title class="block-level">Order Notifications<br>
+                  <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified
+                    about their Orders</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
+                <mat-accordion class="acc-btn">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                      <mat-panel-title class="block-level"> orders Confirmation Notifications
+                        <br> <span class="form-level-settings">Notify {{customer_label}} when order is
+                          confirmed.</span>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="notifications">
+                      <li class="mgn-lt-10">
+                        <span class="notification"> via SMS </span>
+                        <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderAddNotificationSettings.sms"
+                          (change)="showSubmit('ORDERCONFIRM')">
+                        </mat-slide-toggle>
+                        <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                      </li>
+                      <li class="mgn-lt-10">
+                        <span class="notification"> via Email</span>
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="orderAddNotificationSettings.email"
+                          (change)="showSubmit('ORDERCONFIRM')">
+                        </mat-slide-toggle>
+                      </li>
+                      <li class="mgn-lt-10">
+                        <span class="notification">App notification</span>
+                        <mat-slide-toggle class="example-margin"
+                          [(ngModel)]="orderAddNotificationSettings.pushNotification"
+                          (change)="showSubmit('ORDERCONFIRM')">
+                        </mat-slide-toggle>
+                      </li>
+                    </ul>
+                    <button *ngIf="showButton['ORDERCONFIRM']"
+                      (click)="changeNotificationSettings('ORDERCONFIRM')" type="button" mat-button
+                      class="cs-btn bt1 notifyOk">OK</button>
+                  </mat-expansion-panel>
+                </mat-accordion>
+                <div class="clearfix"></div>
+                <mat-accordion class="acc-btn">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                        <mat-panel-title class="block-level"> orders Cancel Notifications
+                          <br> <span class="form-level-settings">Notify {{customer_label}} when order is
+                              cancel.</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <ul class="notifications">
+                        <li class="mgn-lt-10">
+                          <span class="notification"> via SMS </span>
+                          <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderCancelNotificationSettings.sms"
+                            (change)="showSubmit('ORDERCANCEL')">
+                          </mat-slide-toggle>
+                          <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                        </li>
+                        <li class="mgn-lt-10">
+                          <span class="notification"> via Email</span>
+                          <mat-slide-toggle class="example-margin" [(ngModel)]="orderCancelNotificationSettings.email"
+                            (change)="showSubmit('ORDERCANCEL')">
+                          </mat-slide-toggle>
+                        </li>
+                        <li class="mgn-lt-10">
+                          <span class="notification">App notification</span>
+                          <mat-slide-toggle class="example-margin"
+                            [(ngModel)]="orderCancelNotificationSettings.pushNotification"
+                            (change)="showSubmit('ORDERCANCEL')">
+                          </mat-slide-toggle>
+                        </li>
+                      </ul>
+                      <button *ngIf="showButton['ORDERCANCEL']"
+                        (click)="changeNotificationSettings('ORDERCANCEL')" type="button" mat-button
+                        class="cs-btn bt1 notifyOk">OK</button>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="clearfix"></div>
+                <mat-accordion class="acc-btn">
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                        <mat-panel-title class="block-level"> orders Status Change Notifications
+                          <br> <span class="form-level-settings">Notify {{customer_label}} when order 
+                              Status Change.</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <ul class="notifications">
+                        <li class="mgn-lt-10">
+                          <span class="notification"> via SMS </span>
+                          <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderStatusChangelNotificationSettings.sms"
+                            (change)="showSubmit('ORDERSTATUSCHANGE')">
+                          </mat-slide-toggle>
+                          <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                        </li>
+                        <li class="mgn-lt-10">
+                          <span class="notification"> via Email</span>
+                          <mat-slide-toggle class="example-margin" [(ngModel)]="orderStatusChangelNotificationSettings.email"
+                            (change)="showSubmit('ORDERSTATUSCHANGE')">
+                          </mat-slide-toggle>
+                        </li>
+                        <li class="mgn-lt-10">
+                          <span class="notification">App notification</span>
+                          <mat-slide-toggle class="example-margin"
+                            [(ngModel)]="orderStatusChangelNotificationSettings.pushNotification"
+                            (change)="showSubmit('ORDERSTATUSCHANGE')">
+                          </mat-slide-toggle>
+                        </li>
+                      </ul>
+                      <button *ngIf="showButton['ORDERSTATUSCHANGE']"
+                        (click)="changeNotificationSettings('ORDERSTATUSCHANGE')" type="button" mat-button
+                        class="cs-btn bt1 notifyOk">OK</button>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <div class="clearfix"></div>
+              </div>
+            </mat-expansion-panel>
+        </mat-accordion>
         <mat-accordion *ngIf="donations_status">
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">

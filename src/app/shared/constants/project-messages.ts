@@ -25,7 +25,9 @@ export const Messages = {
   'ITEM_LISTEMPTY': 'No items found',
   'ITEM_IMGREMOVED': 'Image removed successfully',
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
-
+  //Catalog
+  'CATALOG_CREATED': 'Catalog added successfully',
+  'CATALOG_UPDATED': 'Catalog updated successfully',
   // Bill Discount
   'DISCOUNT_CREATED': 'Discount created successfully',
   'DISCOUNT_UPDATED': 'Discount updated successfully',
@@ -1150,6 +1152,7 @@ export const Messages = {
   'SEARCH_PRI_PROF_NAME_SUMMARY_CAP': 'Profile Name and Description',
   'SEARCH_PRI_BUISINESS_NAME_CAP': 'Business Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP': 'Description',
+  'SEARCH_PRI_BUISINESS_USER_NAME_CAP': 'Business User Name',
 
   // App-ynw_provider-components-provider-bwizard
   'WIZ_CONGRATULATIONS_CAP': 'Congratulations,',
@@ -1548,6 +1551,9 @@ export const Messages = {
 
   // SMS credits warning
   'NO_SMS_CREDIT': 'You dont have enough credits to send SMS.',
-  'LOW_SMS_CREDIT': 'Your SMS credits are running low.'
+  'LOW_SMS_CREDIT': 'Your SMS credits are running low.',
+
+  // Store details
+  'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
 };
 

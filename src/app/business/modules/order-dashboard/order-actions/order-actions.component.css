@@ -1,0 +1,42 @@
+.action-box {
+    width: 150px;
+    height: 100px;
+    margin: 15px;
+    text-align: center;
+    float: left;
+    display: table;
+    box-shadow: 10px 10px 15px 0px #cccccc9c;
+  }
+  @media (max-width: 970px) {
+    .action-box {
+      width: 140px;
+    }
+  }
+  @media (max-width: 864px) {
+    .action-box {
+      width: 125px;
+      height: 90px;
+    }
+  }
+  @media (max-width: 520px) {
+    .action-box {
+      width: 100px;
+      margin: 10px;
+    }
+}
+@media (max-width: 400px) {
+    .action-box {
+      width: 130px;
+      height: 90px;
+      margin: 10px;
+    }
+}
+@media (max-width: 330px) {
+    .action-box {
+        width: 120px !important;
+    }
+}
+.action-box-sub {
+    display: table-cell;
+    vertical-align: middle;
+}

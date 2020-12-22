@@ -103,7 +103,7 @@ export class ForgotPasswordComponent {
       console.log(this.consumerlogin);
       console.log(this.fpForm.get('phone').value.e164Number);
       console.log(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1]);
-      if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number.startsWith(this.fpForm.get('phone').value.dialCode + '55'))) {
+      if (this.fpForm.valid || (!this.fpForm.valid && this.fpForm.get('phone').value.e164Number)) {
         console.log(this.fpForm.get('phone').value.e164Number);
         const dialCode = this.fpForm.get('phone').value.dialCode;
         

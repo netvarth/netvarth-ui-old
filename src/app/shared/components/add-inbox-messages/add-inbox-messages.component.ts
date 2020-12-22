@@ -80,7 +80,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (this.source !== 'customer-list') {
       if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
         this.type = 'appt';
-      } else {
+      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order'){
+        this.type = 'order';
+      }
+      else{
         this.type = 'wl';
       }
     }
@@ -419,8 +422,23 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.sharedfunctionObj.apiErrorAutoHide(this, error);
             }
           );
-      } else {
-        this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
+      } else if (this.type === 'order'){
+        this.shared_services.addConsumerOrderNote(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            }
+          );
+      }
+      else{
+         this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
             () => {

@@ -73,6 +73,9 @@ export class RazorpayService {
         } else if (checkin_type === 'waitlist') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        } else if (checkin_type === 'order') {
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
         } else if (checkin_type === 'appt_historybill') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
@@ -96,6 +99,9 @@ export class RazorpayService {
         } else if (checkin_type === 'appt_prepayment') {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { 'uuid': uuid, 'account_id': account_id, 'prepayment': prepayment } }));
+        } else if (checkin_type === 'order_prepayment') {
+          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+          this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
         }
       } else {
         this.router.navigate(['provider', 'license', 'payments'], navigationExtras);

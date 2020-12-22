@@ -9,7 +9,11 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+<<<<<<< HEAD
     "target": "es5",
+=======
+    "target": "esnext",
+>>>>>>> refs/remotes/origin/1.7-order
     "typeRoots": [
       "node_modules/@types"
     ],

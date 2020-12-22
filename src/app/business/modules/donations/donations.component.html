@@ -210,7 +210,7 @@
           </div>
         </div>
         <div class="search_paging" *ngIf="loadComplete">
-          <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+          <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
             (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
         </div>
       </div>

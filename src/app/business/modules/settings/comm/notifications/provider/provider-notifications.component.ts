@@ -39,6 +39,9 @@ export class ProviderNotificationsComponent implements OnInit {
   smsAppt = false;
   emailAppt = false;
   apptPushph = false;
+  smsOrder = false;
+  emailOrder = false;
+  orderPushph = false;
   apptcancelPushph = false;
   // apptPush = false;
   smsDonate = false;
@@ -52,6 +55,9 @@ export class ProviderNotificationsComponent implements OnInit {
   cancelsmsAppt = false;
   cancelemailAppt = false;
   cancelpushAppt = false;
+  cancelemailOrder = false;
+  cancelsmsOrder = false;
+  OrdercancelPushph = false;
   cancelsms = false;
   cancelemail = false;
   cancelpush = false;
@@ -63,11 +69,17 @@ export class ProviderNotificationsComponent implements OnInit {
   notifycanclphonenumber = '';
   notifycanclemail = '';
   notifyApptphonenumber = '';
+  notifyOrderphonenumber = '';
   notifyApptemail = '';
+  notifyOrderemail = '';
   notifyapptPushphonenumber = '';
+  notifyorderPushphonenumber = '';
   notifyApptcanclphonenumber = '';
+  notifyOrdercanclphonenumber = '';
   notifyapptcancelPushphonenumber = '';
+  notifyOrdercancelPushphonenumber = '';
   notifyApptcanclemail = '';
+  notifyOrdercanclemail = '';
   notifyDonatephonenumber = '';
   notifypushDonatephonenumber = '';
   notifySystemphonenumber = '';
@@ -88,9 +100,15 @@ export class ProviderNotificationsComponent implements OnInit {
   apptph_arr: any = [];
   apptem_arr: any = [];
   apptPushph_arr: any = [];
+  orderem_arr = [];
+  orderph_arr = [];
+  orderPushph_arr = [];
   apptcancelPushph_arr: any = [];
+  ordercancelPushph_arr: any = [];
   apptph1_arr: any = [];
   apptem1_arr: any = [];
+  orderph1_arr: any = [];
+  orderem1_arr: any = [];
   donateem_arr: any = [];
   donateph_arr: any = [];
   donatepushph_arr: any = [];
@@ -106,11 +124,15 @@ export class ProviderNotificationsComponent implements OnInit {
   okCheckinStatus = false;
   okCancelStatus = false;
   okApptCancelStatus = false;
+  okOrderCancelStatus = false;
   okApptStatus = false;
+  okOrderStatus = false;
   okDonateStatus = false;
   okSystemStatus = false;
   selApptNotify = false;
+  selOrderNotify = false;
   selApptCancelNotify = false;
+  selOrderCancelNotify = false;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
   selDonatnNotify = false;
@@ -120,6 +142,7 @@ export class ProviderNotificationsComponent implements OnInit {
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
+  order_status:any;
   settings: any = [];
   showToken = false;
   api_loading = true;
@@ -155,6 +178,7 @@ export class ProviderNotificationsComponent implements OnInit {
     this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.getSMSCredits();
+    this.getOrderStatus();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     // console.log(this.crumbtitle);
     if (this.crumbtitle === 'Hospital') {
@@ -290,7 +314,59 @@ export class ProviderNotificationsComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
-        } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
+        }  else if (notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+            this.selOrderNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length !== 0) {
+            this.orderem_arr = notifyList.email;
+            this.selOrderNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+          if (notifyList.sms && notifyList.sms.length !== 0) {
+            this.orderph_arr = notifyList.sms;
+            this.selOrderNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
+            this.orderPushph_arr = notifyList.pushMsg;
+            this.selOrderNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+        }  else if (notifyList.eventType && notifyList.eventType ===  'ORDERCANCEL') {
+          if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
+            this.selOrderCancelNotify = false;
+          }
+          if (notifyList.email && notifyList.email.length !== 0) {
+            this.orderem1_arr = notifyList.email;
+            this.selOrderCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+          if (notifyList.sms && notifyList.sms.length !== 0) {
+            this.orderph1_arr = notifyList.sms;
+            this.selOrderCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+
+          if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
+            this.ordercancelPushph_arr = notifyList.pushMsg;
+            this.selOrderCancelNotify = true;
+          }
+          // else {
+          //   this.SelchkinNotify = false;
+          // }
+        }    else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selApptCancelNotify = false;
           }
@@ -316,7 +392,8 @@ export class ProviderNotificationsComponent implements OnInit {
           // else {
           //   this.SelchkinNotify = false;
           // }
-        } else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
+        }
+         else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selDonatnNotify = false;
           }
@@ -383,10 +460,22 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptNotifications('newappointment');
     }
   }
+  selectOrderNotify(event) {
+    this.selOrderNotify = event.checked;
+    if (!this.selOrderNotify) {
+      this.orderNotifications('neworder');
+    }
+  }
   selectApptCanclNotify(event) {
     this.selApptCancelNotify = event.checked;
     if (!this.selApptCancelNotify) {
       this.apptCancelNotifications('cancelappointment');
+    }
+  }
+  selectOrderCanclNotify(event) {
+    this.selOrderCancelNotify = event.checked;
+    if (!this.selOrderCancelNotify) {
+      this.OrderCancelNotifications('cancelorder');
     }
   }
   selectDonatinNotify(event) {
@@ -625,6 +714,40 @@ export class ProviderNotificationsComponent implements OnInit {
       this.notifyApptphonenumber = '';
     }
   }
+  addOrderPh() {
+    this.resetApiErrors();
+    if (this.notifyOrderphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyOrderphonenumber !== '') {
+      const curphone = this.notifyOrderphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.orderph_arr.indexOf(curphone) === -1) {
+        this.orderph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okOrderStatus = true;
+      this.notifyOrderphonenumber = '';
+    }
+  }
   addapptPushPh() {
     this.resetApiErrors();
     if (this.notifyapptPushphonenumber === '') {
@@ -660,6 +783,40 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptPushph = false;
     }
   }
+  addorderPushPh() {
+    this.resetApiErrors();
+    if (this.notifyorderPushphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyorderPushphonenumber !== '') {
+      const curphone = this.notifyorderPushphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.orderPushph_arr.indexOf(curphone) === -1) {
+        this.orderPushph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okOrderStatus = true;
+      this.notifyorderPushphonenumber = '';
+    }
+  }
   addApptemail() {
     this.resetApiErrors();
     if (this.notifyApptemail === '') {
@@ -684,6 +841,32 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.okApptStatus = true;
       this.notifyApptemail = '';
+    }
+  }
+  addOrderemail() {
+    this.resetApiErrors();
+    if (this.notifyOrderemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter a valid email id';
+      return;
+    }
+    if (this.notifyOrderemail !== '') {
+      const curemail = this.notifyOrderemail.trim();
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const result2 = pattern2.test(curemail);
+      if (!result2) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid email id';
+        return;
+      }
+      if (this.orderem_arr.indexOf(curemail) === -1) {
+        this.orderem_arr.push(curemail);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
+      this.okOrderStatus = true;
+      this.notifyOrderemail = '';
     }
   }
   addApptCanclph() {
@@ -718,6 +901,40 @@ export class ProviderNotificationsComponent implements OnInit {
       // this.ph1_arr.push(curphone1);
       this.okApptCancelStatus = true;
       this.notifyApptcanclphonenumber = '';
+    }
+  }
+  addOrderCanclph() {
+    this.resetApiErrors();
+    if (this.notifyOrdercanclphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyOrdercanclphonenumber !== '') {
+      const curphone1 = this.notifyOrdercanclphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone1);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone1);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+      if (this.orderph1_arr.indexOf(curphone1) === -1) {
+        this.orderph1_arr.push(curphone1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      // this.ph1_arr.push(curphone1);
+      this.okOrderCancelStatus = true;
+      this.notifyOrdercanclphonenumber = '';
     }
   }
   addapptcancelPushPh() {
@@ -755,6 +972,40 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptcancelPushph = false;
     }
   }
+  addOrdercancelPushPh() {
+    this.resetApiErrors();
+    if (this.notifyOrdercancelPushphonenumber === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      // 'Please enter mobile phone number';
+      return;
+    }
+    if (this.notifyOrdercancelPushphonenumber !== '') {
+      const curphone = this.notifyOrdercancelPushphonenumber;
+      const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const result = pattern.test(curphone);
+      if (!result) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        // 'Please enter a valid mobile phone number';
+        return;
+      }
+      const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const result1 = pattern1.test(curphone);
+      if (!result1) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        // 'Mobile number should have 10 digits';
+        return;
+      }
+
+      if (this.ordercancelPushph_arr.indexOf(curphone) === -1) {
+        this.ordercancelPushph_arr.push(curphone);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Phone number already exists'
+      }
+      this.okOrderCancelStatus = true;
+      this.notifyOrdercancelPushphonenumber = '';
+    }
+  }
   addApptCancelemail() {
     this.resetApiErrors();
     if (this.notifyApptcanclemail === '') {
@@ -777,6 +1028,30 @@ export class ProviderNotificationsComponent implements OnInit {
       }
       this.notifyApptcanclemail = '';
       this.okApptCancelStatus = true;
+    }
+  }
+  addOrderCancelemail() {
+    this.resetApiErrors();
+    if (this.notifyOrdercanclemail === '') {
+      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      return;
+    }
+    if (this.notifyOrdercanclemail !== '') {
+      const curemail1 = this.notifyOrdercanclemail.trim();
+      const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const result2 = pattern2.test(curemail1);
+      if (!result2) {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        return;
+      }
+      if (this.orderem1_arr.indexOf(curemail1) === -1) {
+        this.orderem1_arr.push(curemail1);
+      } else {
+        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        // 'Email already exists'
+      }
+      this.notifyOrdercanclemail = '';
+      this.okOrderCancelStatus = true;
     }
   }
   addDonatePh() {
@@ -1052,6 +1327,31 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
+  orderNotifications(source) {
+    this.savechekinNotification_json = {};
+    let chekinMode = 'ADD';
+    if (this.notificationList.length === 0) {
+      chekinMode = 'ADD';
+    }
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM') {
+        chekinMode = 'UPDATE';
+      }
+    }
+    if (!this.selOrderNotify) {
+      this.orderem_arr = [];
+      this.orderph_arr = [];
+      this.orderPushph_arr = [];     
+      // this.apptPush = false;
+    }
+    this.savechekinNotification_json.resourceType = 'ORDER';
+    this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
+    this.savechekinNotification_json.sms = this.orderph_arr;
+    this.savechekinNotification_json.email = this.orderem_arr;
+    this.savechekinNotification_json.pushMsg = this.orderPushph_arr;
+    this.savechekinNotification_json.providerId = 0;
+    this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
+  }
 
   apptCancelNotifications(source) {
     this.savecancelNotification_json = {};
@@ -1075,6 +1375,32 @@ export class ProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.apptph1_arr;
     this.savecancelNotification_json.email = this.apptem1_arr;
     this.savecancelNotification_json.pushMsg = this.apptcancelPushph_arr;
+    this.savecancelNotification_json.providerId = 0;
+    this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
+  }
+  OrderCancelNotifications(source) {
+    this.savecancelNotification_json = {};
+    let chekincancelMode = 'ADD';
+    if (this.notificationList.length === 0) {
+      chekincancelMode = 'ADD';
+    }
+    for (const notifyList of this.notificationList) {
+      if (notifyList.eventType && notifyList.eventType === 'ORDERCANCEL') {
+        chekincancelMode = 'UPDATE';
+      }
+    }
+    if (!this.selOrderCancelNotify) {
+      this.orderph1_arr  = [];
+      this.orderem1_arr  = [];
+      this.ordercancelPushph_arr = [];
+    
+      // this.cancelpushAppt = false;
+    }
+    this.savecancelNotification_json.resourceType = 'ORDER';
+    this.savecancelNotification_json.eventType = 'ORDERCANCEL';
+    this.savecancelNotification_json.sms = this.orderph1_arr;
+    this.savecancelNotification_json.email = this.orderem1_arr;
+    this.savecancelNotification_json.pushMsg = this.ordercancelPushph_arr;
     this.savecancelNotification_json.providerId = 0;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
@@ -1147,6 +1473,12 @@ export class ProviderNotificationsComponent implements OnInit {
     this.emailsystem = false;
     this.cancelemailAppt = false;
     this.cancelsmsAppt = false;
+    this.cancelemailOrder = false;
+    this.cancelsmsOrder = false;
+    this.OrdercancelPushph = false;
+    this.smsOrder = false;
+    this.emailOrder = false;
+    this.orderPushph = false;
     if (mode === 'ADD') {
       this.provider_services.addNotificationList(saveNotification_json)
         .subscribe(
@@ -1161,8 +1493,14 @@ export class ProviderNotificationsComponent implements OnInit {
             if (source === 'newappointment') {
               this.okApptStatus = false;
             }
+            if (source === 'neworder') {
+              this.okOrderStatus = false;
+            }
             if (source === 'cancelappointment') {
               this.okApptCancelStatus = false;
+            }
+            if (source === 'cancelorder') {
+              this.okOrderCancelStatus = false;
             }
             if (source === 'newdonation') {
               this.okDonateStatus = true;
@@ -1191,8 +1529,14 @@ export class ProviderNotificationsComponent implements OnInit {
             if (source === 'newappointment') {
               this.okApptStatus = false;
             }
+            if (source === 'neworder') {
+              this.okOrderStatus = false;
+            }
             if (source === 'cancelappointment') {
               this.okApptCancelStatus = false;
+            }
+            if (source === 'cancelorder') {
+              this.okOrderCancelStatus = false;
             }
             if (source === 'newdonation') {
               this.okDonateStatus = true;
@@ -1221,9 +1565,15 @@ export class ProviderNotificationsComponent implements OnInit {
     }
     if (source === 'newappointment') {
       this.okApptStatus = true;
+    } 
+    if (source === 'neworder') {
+      this.okOrderStatus = true;
     }
     if (source === 'cancelappointment') {
       this.okApptCancelStatus = true;
+    }
+    if (source === 'cancelorder') {
+      this.okOrderCancelStatus = true;
     }
     if (source === 'newdonation') {
       this.okDonateStatus = true;
@@ -1267,6 +1617,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.smsAppt = true;
     }
   }
+  smsOrderAddClicked() {
+    if (this.smsOrder) {
+      this.smsOrder = false;
+    } else {
+      this.smsOrder = true;
+    }
+  }
   apptPushAddClicked() {
     if (this.apptPushph) {
       this.apptPushph = false;
@@ -1274,11 +1631,25 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptPushph = true;
     }
   }
+  orderPushAddClicked() {
+    if (this.orderPushph) {
+      this.orderPushph = false;
+    } else {
+      this.orderPushph = true;
+    }
+  }
   apptcancelPushAddClicked() {
     if (this.apptcancelPushph) {
       this.apptcancelPushph = false;
     } else {
       this.apptcancelPushph = true;
+    }
+  }
+  ordercancelPushAddClicked() {
+    if (this.OrdercancelPushph) {
+      this.OrdercancelPushph = false;
+    } else {
+      this.OrdercancelPushph = true;
     }
   }
   smsDonateAddClicked() {
@@ -1317,6 +1688,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.cancelsmsAppt = true;
     }
   }
+  cancelleOrdersmsAddClicked() {
+    if (this.cancelsmsOrder) {
+      this.cancelsmsOrder = false;
+    } else {
+      this.cancelsmsOrder = true;
+    }
+  }
   emailAddClicked() {
     if (this.email) {
       this.email = false;
@@ -1338,6 +1716,13 @@ export class ProviderNotificationsComponent implements OnInit {
       this.emailAppt = true;
     }
   }
+  emailOrderAddClicked() {
+    if (this.emailOrder) {
+      this.emailOrder = false;
+    } else {
+      this.emailOrder = true;
+    }
+  }
   cancelledApptemailAddClicked() {
     if (this.cancelemailAppt) {
       this.cancelemailAppt = false;
@@ -1345,6 +1730,14 @@ export class ProviderNotificationsComponent implements OnInit {
       this.cancelemailAppt = true;
     }
   }
+  cancelledOrderemailAddClicked() {
+    if (this.cancelemailOrder) {
+      this.cancelemailOrder = false;
+    } else {
+      this.cancelemailOrder = true;
+    }
+  }
+   
   emaildonateAddClicked() {
     if (this.emaildonate) {
       this.emaildonate = false;
@@ -1369,8 +1762,14 @@ export class ProviderNotificationsComponent implements OnInit {
     if (source === 'cancelappointment') {
       this.okApptCancelStatus = true;
     }
+    if (source === 'cancelorder') {
+      this.okOrderCancelStatus = true;
+    }
     if (source === 'newappointment') {
       this.okApptStatus = true;
+    }
+    if (source === 'neworder') {
+      this.okOrderStatus = true;
     }
     if (source === 'newdonation') {
       this.okDonateStatus = true;
@@ -1433,5 +1832,10 @@ export class ProviderNotificationsComponent implements OnInit {
         }
       });
   }
+  }
+  getOrderStatus() {
+    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      this.order_status = data.enableOrder;  
+    });
   }
 }

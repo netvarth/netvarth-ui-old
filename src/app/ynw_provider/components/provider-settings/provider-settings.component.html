@@ -429,8 +429,92 @@
                       </div>
                   </div>
               </div>
+
+ <!--Jaldee OrderManager-->
+ <div class="col-md-6 col-lg-4 col-12 no-padding-small">
+    <!-- Widget: user widget style 1 -->
+    <div class="box box-widget widget-user-2">
+        <div class="widget-user-header bg-blue">
+            <h4 (click)="redirecTo('ordermanager')" class="pointer-cursor"
+                [matTooltipClass]="tooltipcls" [matTooltip]="ordermanagertooltip">
+                Jaldee Order Manager
+                <i class="fa fa-gears fl-right lnk"></i>
+                <!-- <div>
+                    <div joyrideStep="step3" [stepContent]="text3" title="Jaldee Appointment Manager">
+                    </div>
+                    <ng-template #text3>
+                        <div>
+                            Use the Jaldee appointment manager to set up your appointment system.<br>
+                            <br>
+                            Features of the Jaldee Appointment Manager:<br>
+                            <br>
+                            <span style="color: white;">*</span> Specify the time when you want to offer services. Customers can select these time slots and book appointments.<br>
+                            <br>
+                            <span style="color: white;">*</span> Jaldee will send reminders to customers so they don't miss their appointments<br>
+                            <br>
+                            <span style="color: white;">***</span> PLEASE NOTE: Unlike the Virtual Queue Sytem, the appointment system does not send out alerts for information like up-to-date waiting time and service delays.<span style="color: white;">***</span>
+                        </div>
+                    </ng-template>
+                </div> -->
+            </h4>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked set-block-3">
+                <li class="form-level-settings">
+                    <a><strong>Order management </strong>system . <strong>Take orders .
+                        </strong></a>
+                </li>
+                <li (click)="redirecTo('ordermanager')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Order Manager
+                            <span class="pull-right">
+                                {{orderstatusstr}} </span></span>
+                        <p class="settings_info" *ngIf="orderstatus">
+                            {{custs_name|capitalizeFirst}}<strong> can</strong> take orders for
+                            your services.</p>
+                        <p class="settings_info" *ngIf="!orderstatus">
+                            {{custs_name|capitalizeFirst}}<strong> cannot</strong> take orders for
+                            your services.
+                        </p>
+                    </a>
+                </li>
+               
+                <li (click)="redirecTo('storedetails')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Store detail
+                            <!-- <span class="pull-right badge bg-blue">{{service_count}}</span> -->
+                        </span>
+                        <p class="settings_info">store information,contact details</p>
+                    </a>
+                </li>
+                <li (click)="redirecTo('catalogs')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Order catalogs
+                            <!-- <span class="pull-right badge bg-blue">{{schedules_count}}</span> -->
+                        </span>
+                        <p *ngIf="catalog_list.length == 0" class="req-flds-cap">
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Catalogs are
+                            not created</p>
+                        <p class="settings_info">Set when you want to accept orders.</p>
+                    </a>
+                </li>
+                <li (click)="redirecTo('orderitems')">
+                    <a class="pointer-cursor">
+                        <span class="lnk setings">Items
+                            <span class="pull-right badge bg-blue">{{item_count}}</span>
+                        </span>
+                        <p class="settings_info">Items you want to sell.</p>
+                    </a>
+                </li>
+               
+
+            </ul>
+        </div>
+    </div>
+</div>
+
               <!-- General -->
-              <div class="col-md-6 col-lg-4 col-12  no-padding-small box-hght">
+              <div class="col-md-6 col-lg-4 col-12  no-padding-small ">
                   <!-- Widget: user widget style 1 -->
                   <div class="box box-widget widget-user-2">
                       <div class="widget-user-header bg-blue">
@@ -649,7 +733,7 @@
                       </div>
                   </div>
               </div>
-              <div class="col-md-6 col-lg-4 col-12  no-padding-small box-hght">
+              <div class="col-md-6 col-lg-4 col-12  no-padding-small ">
                   <!-- Widget: user widget style 1 -->
                   <div class="box box-widget widget-user-2">
                       <div class="widget-user-header bg-blue">

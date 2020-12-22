@@ -1,0 +1,86 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Order
+        </h5>
+    </div>
+</section>
+
+<section>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding order" *ngIf="!loading">
+        <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
+            <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
+                <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
+                <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
+                <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
+                    {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
+                <div> {{orderDetails.orderNumber}}</div>
+                <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
+                        aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
+                <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
+                </div>
+                <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
+                    {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
+                    {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
+                <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
+                        *ngIf="orderDetails.homeDelivery"></i>
+                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
+                </div>
+                <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
+                        class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem">
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
+                <div class="pull-left bold font11">
+                    Order Items
+                </div>
+                <div class="pull-right viewtypes">
+                    View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
+                        (click)="selectViewType('list')" [matTooltipClass]="tooltipcls" [matTooltip]="'List View'"></i>
+                    <i class="fa fa-th-large pointer-cursor" [class.selectedView]="selectedType==='grid'"
+                        (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
+                </div>
+            </div>
+            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
+                *ngIf="selectedType==='grid'">
+                <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
+                    <div class="itemimg-sec">
+                        <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
+                        </div>
+                    </div>
+                    <h4>{{item.name}}</h4>
+                    <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
+                    <div> Qty - {{item.quantity}}</div>
+                </div>
+            </div>
+            <div class="itemlist col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="selectedType==='list'">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Item Name</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orderDetails.orderItem;let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td><span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="clearfix"></div>
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

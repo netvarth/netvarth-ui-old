@@ -197,3 +197,9 @@
 .yourProfile .mgn-up-100 {
     margin-top: 100px !important;
 }
+.yourProfile .busns-usr-name {
+    text-align: center;
+    font-size: 1rem;
+    color: #3c8dbc;
+    font-weight: 600;
+}

@@ -1,0 +1,91 @@
+.order {
+    background: white;
+}
+.viewtypes i {
+    color: #334b99;
+    padding: 5px;
+    border-radius: 5px;
+}
+.selectedView {
+    background: #334b99 !important;
+    color: white !important;
+}
+.itemlist th {
+    padding: 5px;
+}
+.itemlist {
+    margin: 20px 20px 50px;
+    padding: 10px;
+    border: 1px solid #cccc !important
+}
+.itemlist td {
+    padding: 5px;
+}
+.orderdetails {
+    margin: 20px;
+    padding: 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.fa-phone, .fa-map-marker {
+    color: #334b99;
+    margin-right: 10px;
+}
+.gridlist .order-item {
+    float: left;
+    margin: auto;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    min-height: 250px;
+    width: 20%;
+    height: 280px;
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccc !important;
+}
+@media(max-width: 550px) {
+    .gridlist .order-item {
+        width: 45%;
+    }
+}
+@media (min-width: 1200px) {
+    .gridlist .order-item {
+        width: 18%;
+    }
+}
+@media(min-width: 551px) and (max-width: 1200px){
+    .gridlist .order-item {
+        width: 28%;
+    }
+}
+.orderdetails .storepickup-icon,
+.orderdetails .delivery-icon {
+    width: 50px;
+}
+@media (max-width: 768px) {
+    .itemlist, .orderdetails {
+        margin: 20px 0 !important;
+    }
+}
+.item-img {
+    height: 100%;
+    width: 100%;
+}
+.itemimg-sec {
+    height: 130px;
+    width: 130px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+@media (max-width: 365px) {
+    .itemimg-sec {
+        height: 100px;
+        width: 100px;
+    }
+    .gridlist .order-item {
+        height: 200px;
+    }
+}
+.personal {
+    line-height: 1.6;
+}
