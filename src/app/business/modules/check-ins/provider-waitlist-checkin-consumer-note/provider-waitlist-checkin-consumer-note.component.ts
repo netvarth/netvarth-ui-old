@@ -28,7 +28,7 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
     if (this.checkin.service && this.checkin.service.consumerNoteTitle) {
       this.noteTitle = this.checkin.service.consumerNoteTitle;
     } else {
-      if (this.type) {
+      if (this.type === 'order-details') {
         this.noteTitle = 'Item Notes';
       } else {
         this.noteTitle = 'Notes';
