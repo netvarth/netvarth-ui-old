@@ -216,6 +216,15 @@
                                                 currency:'&#8377; '}}</div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="c-row two section-two"
+                                                                                *ngIf="bill_data.deliveryCharges > 0">
+                                                                                <div class="discount-row two-col">
+                                                                                    <div class="name">
+                                                                                        Delivery Charge
+                                                                                    </div>
+                                                                                    <div class="price rupee-font"> (+){{bill_data.deliveryCharges}} </div>
+                                                                                </div>
+                                                                            </div>
                                                                                 <div class="c-row one two-col"
                                                                                     *ngIf="bill_data.netRate > 0">
                                                                                     <div class="name">

@@ -1686,7 +1686,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else {
+        } else if (passParam['callback'] === 'order'){
+          this.checkout();
+        }  else {
           this.getFavProviders();
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -1721,6 +1723,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
+        } else if(passParam['callback'] === 'order'){
+          this.checkout();
         } else {
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -2542,6 +2546,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   checkout() {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place
@@ -2556,6 +2562,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     };
     this.router.navigate(['order/shoppingcart'], navigationExtras);
+   }
+    else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam );
+    }
   }
   itemDetails(item) {
     const businessObject = {
