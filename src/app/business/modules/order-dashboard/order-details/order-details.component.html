@@ -24,7 +24,8 @@
                 <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
-                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10" [innerHTML]="orderDetails.orderNote | nl2br">
+                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10"
+                    [innerHTML]="orderDetails.orderNote | nl2br">
                 </div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
