@@ -41,7 +41,10 @@ export class ForgotPasswordComponent {
   api_success = null;
   otp = null;
   submit_data = {};
+  country_code = {};
   is_provider = 'true';
+  post_data;
+
   @Input() consumerlogin;
   @Input() business;
   @Output() retonChangePassword: EventEmitter<any> = new EventEmitter();
@@ -98,7 +101,6 @@ export class ForgotPasswordComponent {
   onPhoneSubmit(submit_data) {
 
     this.resetApiErrors();
-    let post_data;
     if(this.consumerlogin){
       console.log(this.consumerlogin);
       console.log(this.fpForm.get('phone').value.e164Number);
@@ -107,15 +109,15 @@ export class ForgotPasswordComponent {
         console.log(this.fpForm.get('phone').value.e164Number);
         const dialCode = this.fpForm.get('phone').value.dialCode;
         
-         post_data = dialCode;
-        this.sendOtpApi(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1], post_data);
+         this.post_data = dialCode;
+        this.sendOtpApi(this.fpForm.get('phone').value.e164Number.split(this.fpForm.get('phone').value.dialCode)[1], this.post_data);
       } else{
         console.log("else")
         this.fed_service.validateAllFormFields(this.fpForm);
       }
     } else {
-       post_data = '+91';
-      this.sendOtpApi(this.fpForm.get('phonenumber').value, post_data);
+       this.post_data = '+91';
+      this.sendOtpApi(this.fpForm.get('phonenumber').value, this.post_data);
     }
   }
 
@@ -156,7 +158,8 @@ export class ForgotPasswordComponent {
   }
 
   resendOtp(phonenumber) {
-    this.sendOtpApi(phonenumber);
+    console.log(this.post_data)
+    this.sendOtpApi(phonenumber, this.post_data);
   }
 
   sendOtpApi(phonenumber, post_data?) {
@@ -168,6 +171,8 @@ export class ForgotPasswordComponent {
           this.createForm(2);
           // this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
           this.submit_data = phonenumber;
+          this.country_code = post_data;
+          console.log(this.country_code)
           setTimeout(() => {
             this.api_success = '';
           }, projectConstants.TIMEOUT_DELAY_LARGE6);

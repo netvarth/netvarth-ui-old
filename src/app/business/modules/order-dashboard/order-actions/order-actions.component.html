@@ -8,7 +8,7 @@
             Order For : {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</p>
         <p *ngIf="!orderDetails.orderFor.firstName && !orderDetails.orderFor.lastName">
             {{customer_label | capitalizeFirst}} id : {{orderDetails.orderFor.jaldeeId}}</p>
-        <p>Order No: {{orderDetails.orderNumber}}</p>
+        <p>Order Id: {{orderDetails.orderNumber}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
         <ng-container *ngIf="catalogStatuses.length > 0">

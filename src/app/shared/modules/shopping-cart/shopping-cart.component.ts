@@ -464,6 +464,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   changeTime() {
     this.action = 'timeChange';
+    this.getAvailabilityByDate(this.sel_checkindate);
     console.log(this.choose_type);
   }
   calculateDate(days) {
@@ -542,7 +543,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.isFuturedate = false;
     }
     this.handleFuturetoggle();
-    // this.getAvailabilityByDate(this.sel_checkindate);
+     this.getAvailabilityByDate(this.sel_checkindate);
   }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
@@ -555,12 +556,14 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.storeChecked = true;
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
       this.storeChecked = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
     }
 
     if (this.todaydate === this.sel_checkindate) {

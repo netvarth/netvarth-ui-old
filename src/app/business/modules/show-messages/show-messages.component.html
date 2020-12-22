@@ -45,3 +45,13 @@
         <button type="button" class="cs-btn bt1" (click)="closeDialog()">Ok</button>
     </div>
 </div>
+<div class="col-md-12" mat-dialog-content *ngIf="data.type === 'order'">
+    <div class="waitlist-hint"> If you want to enable the Order Manager, first create a catalog </div>
+    To create a catalog:
+    <div class="mgn-up-5"> 1. Click on 'Order catalog' below<br>
+        2. Click on 'Add catalog' <br>
+        3. Configure the catalog the way you want to and then click on 'SAVE'.</div>
+    <div class="locate-customer mgtop40">
+        <button type="button" class="cs-btn bt1" (click)="closeDialog()">Ok</button>
+    </div>
+</div>

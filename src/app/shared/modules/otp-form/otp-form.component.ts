@@ -42,6 +42,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   otp_mobile = null;
   @Input() actionstarted;
   @Input() submitdata;
+  @Input() country_code;
   @Input() consumerlogin;
   @Input() type;
   @Input() resendemailotpsuccess;
@@ -57,6 +58,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     console.log(this.submitdata);
+    console.log(this.country_code);
     this.createForm();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -109,8 +111,11 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   resendOTPMobile() {
+    console.log(this.type);
+    console.log("Otp resend")
     console.log(this.submitdata);
-    if (this.submitdata.userProfile.countryCode === '+91') {
+    if ((this.submitdata.userProfile && this.submitdata.userProfile.countryCode === '+91') || (this.type === 'forgot_password' && this.country_code ==='+91')) {
+      console.log("Otp resend")
       this.resendOTPEmail.emit(false);
       this.resetCounter(this.refreshTime);
       if (this.submitdata.userProfile !== undefined) {

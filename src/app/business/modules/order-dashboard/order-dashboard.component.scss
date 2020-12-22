@@ -67,3 +67,8 @@
 .icon-filter-one, .fa-refresh {
     color: black;
 }
+@media (max-width: 550px) {
+    .checkfilter {
+        height: 550px !important;
+    }
+}

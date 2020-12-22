@@ -138,10 +138,15 @@
                            <mat-label> Contact Phone Number</mat-label>
                           <input matInput placeholder="Enter your phone number" value="" formControlName="phone">
                         </mat-form-field> -->
-                        <div class="ph-outline">
-                          <input class="ph-ip" formControlName="phone" required>
+                        <div class="ph-outline" style="display: flex;" >
+                            <div class="input-group">
+                                <!-- <span class="input-group-addon">+91</span> -->
+                          <input class="ph-ip mgn-lt-20" formControlName="phone" required id="youridhere">
+                          <label for="youridhere" class="static-value">+91</label>
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
+                          </div>
                         </div>
+
                         <div class="ph-outline">
                           <input class="ph-ip" formControlName="email">
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
@@ -170,7 +175,7 @@
                         <i class="fa fa-map-marker"></i> {{storeContactNw.address}}
                       </span>
                       <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}}{{storeContactNw.phone}}</span>
-                      <span class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
+                      <span *ngIf="storeContactNw.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
                     </div>
                   </aside>
                 </div>
@@ -224,7 +229,7 @@
                                           <div class="c-row one width-100">
                                             <div class="name cart-flex">
                                               <i class="fa fa-stop-circle"></i>
-                                              <span class="item-name">{{item.item.itemName}}</span>
+                                              <span class="item-name">{{item.item.displayName}}</span>
                                             </div>
                                             <div class="quantity item-qty">{{getItemQty(item)}}</div>
                                             <div class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
@@ -271,7 +276,7 @@
 
                           </div>
                         </div>
-                          <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
+                          <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
                   </div>

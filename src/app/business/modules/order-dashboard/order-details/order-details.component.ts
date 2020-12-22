@@ -6,6 +6,7 @@ import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { OrderActionsComponent } from '../order-actions/order-actions.component';
 
 @Component({
@@ -82,5 +83,20 @@ export class OrderDetailsComponent implements OnInit {
     } else {
       return '../../../../assets/images/order/Items.svg';
     }
+  }
+  showConsumerNote(item) {
+    const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin: item,
+        type: 'order-details'
+      }
+    });
+    notedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
   }
 }

@@ -1,8 +1,10 @@
-<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{(checkin.service.consumerNoteTitle) ? checkin.service.consumerNoteTitle : 'Notes'}} from
-  <span *ngIf="type === 'checkin'">{{checkin.waitlistingFor[0].firstName}}
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">{{noteTitle}}
+  <span *ngIf="type === 'checkin'"> from {{checkin.waitlistingFor[0].firstName}}
     {{checkin.waitlistingFor[0].lastName}}</span>
-  <span *ngIf="type === 'appt'">{{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}}</span>
-  <span *ngIf="type === 'donation'">{{checkin.donor.firstName}}</span>
+  <span *ngIf="type === 'appt'"> from {{checkin.appmtFor[0].firstName}} {{checkin.appmtFor[0].lastName}}</span>
+  <span *ngIf="type === 'donation'"> from {{checkin.donor.firstName}}</span>
+  <span *ngIf="type === 'order'"> from {{checkin.orderFor.firstName}}
+    {{checkin.orderFor.lastName}}</span>
   <button #queue mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
@@ -15,8 +17,11 @@
     <p>Appointment Time : {{getSingleTime(checkin.appmtTime)}}
     </p>
   </div>
-  <div *ngIf="type != 'donation'" class="prov-wtlst-note-border" [innerHTML]="checkin.consumerNote | nl2br">
+  <div *ngIf="type == 'appt' || type == 'checkin' || type == 'order-details'" class="prov-wtlst-note-border"
+    [innerHTML]="checkin.consumerNote | nl2br">
   </div>
   <div *ngIf="type == 'donation'" class="prov-wtlst-note-border" [innerHTML]="checkin.note | nl2br">
+  </div>
+  <div *ngIf="type == 'order'" class="prov-wtlst-note-border" [innerHTML]="checkin.orderNote | nl2br">
   </div>
 </mat-dialog-content>

@@ -1464,12 +1464,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '<td width="50%"	style="text-align:right;color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.changedDate + '</td>';
     bill_html += '	</tr>';
     bill_html += '	<tr>';
-    bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill #' + this.bill_data.billId + '</td>';
+    bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Bill # ' + this.bill_data.billId + '</td>';
     bill_html += '<td style="text-align:right;color:#000000; font-size:10pt;font-family:Ubuntu, Arial,sans-serif;">';
     if (this.bill_data.gstNumber) {
       bill_html += 'GSTIN ' + this.bill_data.gstNumber;
     }
     bill_html += '</td>';
+    bill_html += '	</tr>';
+    bill_html += '	<tr>';
+    if (this.source === 'order') {
+      bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Order Id ' + this.checkin.orderNumber + '</td>';
+    }
     bill_html += '	</tr>';
     bill_html += '</table>';
     bill_html += '	</td></tr>';
@@ -1528,12 +1533,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       bill_html += '	</tr>';
       // List<Discount> itemDiscounts = mapper.readValue(item.getDiscount().toString(), new TypeReference<List<Discount>>(){};
       if (item.discount && item.discount.length > 0) {
-      for (const itemDiscount of item.discount) {
-        bill_html += '	<tr style="color:#aaa">';
-        bill_html += '<td style="text-align:right" colspan="2">' + itemDiscount.name + '</td>';
-        bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(itemDiscount.discountValue).toFixed(2) + '</td>';
-        bill_html += '	</tr>';
-      }
+        for (const itemDiscount of item.discount) {
+          bill_html += '	<tr style="color:#aaa">';
+          bill_html += '<td style="text-align:right" colspan="2">' + itemDiscount.name + '</td>';
+          bill_html += '<td style="text-align:right">(-) &#x20b9;' + parseFloat(itemDiscount.discountValue).toFixed(2) + '</td>';
+          bill_html += '	</tr>';
+        }
         bill_html += '	<tr style="line-height:0;">';
         bill_html += '<td style="text-align:right" colspan="2"></td>';
         bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Ã‚Â </td>';

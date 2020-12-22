@@ -85,7 +85,7 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order Id">
                         </li>
                       </div>
 
@@ -150,6 +150,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
@@ -226,7 +228,7 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order Id">
                         </li>
                       </div>
 
@@ -291,6 +293,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
@@ -350,7 +354,7 @@
                       <div class="filterTextinput">
                         <li class="filterli">
                           <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (blur)="doSearch()"
-                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order No">
+                            (keyup)="keyPressed($event)" class="filterTextbox" placeholder="Order Id">
                         </li>
                       </div>
 
@@ -430,6 +434,8 @@
                 </div>
                 <div class="darkblue bold">
                   {{order.orderStatus}}
+                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                    (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span

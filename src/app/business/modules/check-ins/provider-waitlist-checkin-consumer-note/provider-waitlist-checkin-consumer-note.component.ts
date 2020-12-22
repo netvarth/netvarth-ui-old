@@ -15,15 +15,25 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
   checkin;
   consumer_label = '';
   type;
-
+  noteTitle;
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInConsumerNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public sharedfunctionObj: SharedFunctions
 
   ) {
+    console.log(data);
     this.checkin = data.checkin;
     this.type = data.type;
+    if (this.checkin.service && this.checkin.service.consumerNoteTitle) {
+      this.noteTitle = this.checkin.service.consumerNoteTitle;
+    } else {
+      if (this.type) {
+        this.noteTitle = 'Item Notes';
+      } else {
+        this.noteTitle = 'Notes';
+      }
+    }
     this.consumer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
   }
 

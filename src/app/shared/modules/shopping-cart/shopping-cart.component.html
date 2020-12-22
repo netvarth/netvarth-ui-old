@@ -29,7 +29,7 @@
                         *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
-                        <div class="itm-nme"> {{item.item.itemName}}</div>
+                        <div class="itm-nme"> {{item.item.displayName}}</div>
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div class="add_nte" (click)="addNotes(item,i)">
@@ -70,7 +70,7 @@
                         <i class="fa fa-map-marker"></i> {{storeContact.address}}
                       </span>
                       <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}}{{storeContact.phone}}</span>
-                      <span class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                      <span *ngIf="storeContact.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
                     </div>
                   </aside>
                 </div>

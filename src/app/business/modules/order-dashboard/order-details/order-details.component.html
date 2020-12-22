@@ -17,13 +17,16 @@
                     {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
                 <div> {{orderDetails.orderNumber}}</div>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
-                        aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
+                        aria-hidden="true"></i>{{orderDetails.phoneNumber}}</div>
                 <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>
                     <span [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
                 </div>
                 <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}},
                     {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
                     {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}</div>
+                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10"
+                    [innerHTML]="orderDetails.orderNote | nl2br">
+                </div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
                 <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
@@ -56,7 +59,10 @@
                     </div>
                     <h4>{{item.name}}</h4>
                     <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
-                    <div> Qty - {{item.quantity}}</div>
+                    <div> Qty - {{item.quantity}}
+                        <i *ngIf="item.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                            (click)="showConsumerNote(item)"></i>
+                    </div>
                 </div>
             </div>
             <div class="itemlist col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="selectedType==='list'">
@@ -73,8 +79,12 @@
                         <tr *ngFor="let item of orderDetails.orderItem;let i = index">
                             <td>{{i+1}}</td>
                             <td>{{item.name}}</td>
-                            <td>{{item.quantity}}</td>
-                            <td><span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></td>
+                            <td>{{item.quantity}}
+                            </td>
+                            <td><span class="rupee-font">{{item.price|currency:'&#8377;'}}</span>
+                                <i *ngIf="item.consumerNote" [matTooltip]="'Notes'"
+                                    class="icon-note pointer-cursor pull-right" (click)="showConsumerNote(item)"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

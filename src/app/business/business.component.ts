@@ -50,6 +50,8 @@ export class BusinessComponent implements OnInit {
                         router.navigate(['provider', 'check-ins']);
                       } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
+                      } else if (settings.order) {
+                        router.navigate(['provider', 'orders']);
                       } else {
                         router.navigate(['provider', 'settings']);
                       }

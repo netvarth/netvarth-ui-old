@@ -67,17 +67,23 @@
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span *ngIf="spname">
-															<span
-																class="title">{{provider_label | capitalizeFirst}}:</span>
+															<span class="title">{{provider_label |
+																capitalizeFirst}}:</span>
 															<span class="dynamic">{{spname}}</span>
+														</span>
+														<span *ngIf="source === 'order'"
+															[class.red]="bill_data.billStatus === 'Cancel'">
+															<span class="title">Order Id </span>
+															<span class="dynamic">{{checkin.orderNumber}}</span>
+															<div *ngIf="bill_data.billStatus === 'Cancel'">Cancelled
+															</div>
 														</span>
 													</div>
 												</div>
 											</div>
 										</div>
 										<ng-container *ngIf="bill_data.billStatus!='Settled'">
-											<div class="workbench mat-form-field-wrapper"
-												*ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || 
+											<div class="workbench mat-form-field-wrapper" *ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || 
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
 												<ng-container
@@ -156,7 +162,9 @@
 																								[value]="value"
 																								(onSelectionChange)="itemServiceSelected(group.type,value)">
 																								{{ value }} <span
-																									class="bill_item_service">{{(group.type=='Items')? 'Item' : 'Service'}}</span>
+																									class="bill_item_service">{{(group.type=='Items')?
+																									'Item' :
+																									'Service'}}</span>
 																							</mat-option>
 																						</ng-container>
 																						<mat-option
@@ -213,8 +221,10 @@
 																</div>
 																<div class="spr col-md-4 col-sm-4">
 																	<button class="cs-btn bt1"
-																		(click)="addService_Item()">{{(actiontype=='adjustService' ||
-													actiontype=='adjustItem')?'Change': add_btn_cap}}</button>
+																		(click)="addService_Item()">{{(actiontype=='adjustService'
+																		||
+																		actiontype=='adjustItem')?'Change':
+																		add_btn_cap}}</button>
 																	<button class="cs-btn bt2"
 																		(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 																</div>
@@ -324,9 +334,10 @@
 																									placeholder="{{select_discount_cap}}">
 																									<mat-option
 																										*ngFor="let discount of discounts; let i = index"
-																										[value]="discount"> {{
-																					discount.name
-																					}}
+																										[value]="discount">
+																										{{
+																										discount.name
+																										}}
 																									</mat-option>
 																								</mat-select>
 																							</mat-form-field>
@@ -344,7 +355,8 @@
 																									<mat-option
 																										*ngFor="let coupon of coupons; let i = index"
 																										[value]="coupon">
-																										{{ coupon.name }}
+																										{{ coupon.name
+																										}}
 																									</mat-option>
 																								</mat-select>
 																							</mat-form-field>
@@ -425,7 +437,8 @@
 																					class="col-md-12 col-sm-12 col-lg-12 notes">
 																					<button
 																						*ngIf="discounts.length >0 && showDiscountSection"
-																						class="cs-btn bt1" [class.grey-bg]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
+																						class="cs-btn bt1"
+																						[class.grey-bg]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
 																						[disabled]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
 																						(click)="applyOrderDiscount()">{{apply_cap}}</button>
 																					<button
@@ -528,8 +541,8 @@
 															<div class="c-row one">
 																<div class="name">
 																	{{service.serviceName | capitalizeFirst}}
-																	<span
-																		class="rupee-font">{{service.price | currency:'&#8377;'}}</span>
+																	<span class="rupee-font">{{service.price |
+																		currency:'&#8377;'}}</span>
 																	<sup [matTooltipClass]="tooltipcls"
 																		[matTooltip]="'Taxable'"
 																		*ngIf="service.GSTpercentage > 0">Tax</sup>
@@ -547,8 +560,9 @@
 																<div class="price"
 																	*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 																(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-																	<span class="rupee-font">{{(service.quantity * service.price) |
-																	currency:'&#8377;'}}</span>
+																	<span class="rupee-font">{{(service.quantity *
+																		service.price) |
+																		currency:'&#8377;'}}</span>
 
 																</div>
 																<div class="price"
@@ -556,7 +570,7 @@
 											((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 																	<span class="rupee-font">
 																		{{(service.quantity * service.price) |
-												currency:'&#8377;'}}
+																		currency:'&#8377;'}}
 																	</span>
 																</div>
 																<div class="price"
@@ -635,17 +649,21 @@
 																	*ngFor="let discount of service.discount">
 																	<div class="name">{{discount.name}}</div>
 																	<div class="price">
-																		<span class="rupee-font">(-){{discount.discountValue |
-																			currency:'&#8377;'}}</span> <i (click)="removeServiceDiscount(service.serviceId, discount.id)"
+																		<span
+																			class="rupee-font">(-){{discount.discountValue
+																			|
+																			currency:'&#8377;'}}</span> <i
+																			(click)="removeServiceDiscount(service.serviceId, discount.id)"
 																			class="fa fa-window-close"
-																			aria-hidden="true"></i></div>
+																			aria-hidden="true"></i>
+																	</div>
 																</div>
 															</div>
 															<div class="c-row three"
 																*ngIf="service.discount && service.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price rupee-font">{{service.netRate |
-												currency:'&#8377;'}}</div>
+																	currency:'&#8377;'}}</div>
 															</div>
 														</div>
 														<div class="more"
@@ -707,8 +725,9 @@
 																<div class="quantity">
 																	{{qnty_cap}}
 																	{{item.quantity}}</div>
-																<div class="price rupee-font">{{(item.quantity * item.price) |
-													currency:'&#8377;'}}</div>
+																<div class="price rupee-font">{{(item.quantity *
+																	item.price) |
+																	currency:'&#8377;'}}</div>
 															</div>
 															<div class="c-row two section-two">
 																<!--When click MENU this section shows-->
@@ -762,8 +781,11 @@
 																<div class="discount-row"
 																	*ngFor="let discount of item.discount">
 																	<div class="name">{{discount.name}}</div>
-																	<div class="price rupee-font">(-){{discount.discountValue |
-													currency:'&#8377;'}} <i (click)="removeItemDiscount(item.itemId, discount.id)" class="fa fa-window-close"
+																	<div class="price rupee-font">
+																		(-){{discount.discountValue |
+																		currency:'&#8377;'}} <i
+																			(click)="removeItemDiscount(item.itemId, discount.id)"
+																			class="fa fa-window-close"
 																			aria-hidden="true"></i></div>
 																</div>
 															</div>
@@ -771,7 +793,7 @@
 																*ngIf="item.discount &&item.discount.length > 0">
 																<div class="name">{{sub_tot_cap}}</div>
 																<div class="price rupee-font">{{item.netRate |
-												currency:'&#8377;'}}</div>
+																	currency:'&#8377;'}}</div>
 															</div>
 														</div>
 														<div class="more"
@@ -810,22 +832,29 @@
 																<tr class="amt discount"
 																	*ngIf="bill_data.jdn && bill_data.jdn.discount">
 																	<td class="name">JDN</td>
-																	<td class="price rupee-font">(-){{bill_data.jdn.discount|
-													currency:'&#8377;'}} </td>
+																	<td class="price rupee-font">
+																		(-){{bill_data.jdn.discount|
+																		currency:'&#8377;'}} </td>
 																</tr>
 																<tr class="amt discount"
 																	*ngFor="let discount of bill_data.discount">
 																	<td class="name">{{discount.name}}</td>
-																	<td class="price rupee-font">(-){{discount.discValue |
-													currency:'&#8377;'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
+																	<td class="price rupee-font">(-){{discount.discValue
+																		|
+																		currency:'&#8377;'}} <i
+																			*ngIf="bill_data.billStatus!='Settled'"
+																			(click)="removeOrderDiscount(discount)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
 																</tr>
 																<tr class="amt coupon"
 																	*ngFor="let coupon of bill_data.providerCoupon">
 																	<td class="name">{{coupon.name}}</td>
-																	<td class="price rupee-font">(-){{coupon.couponValue |
-													currency:'&#8377;'}} <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
+																	<td class="price rupee-font">(-){{coupon.couponValue
+																		|
+																		currency:'&#8377;'}} <i
+																			*ngIf="bill_data.billStatus!='Settled'"
+																			(click)="removeProviderCoupon(coupon)"
 																			class="fa fa-window-close"
 																			aria-hidden="true"></i></td>
 																</tr>
@@ -836,11 +865,14 @@
 																	<td class="price rupee-font">(-)
 																		<span (click)="showJCCouponNote(jcoupon)"
 																			[class.couponAmt]="jcoupon.value.value === '0.0'"
-																			style="margin-right: 5px">{{jcoupon.value.value |
-													currency:'&#8377;'}}</span> <i *ngIf="bill_data.billStatus!='Settled'"
+																			style="margin-right: 5px">{{jcoupon.value.value
+																			|
+																			currency:'&#8377;'}}</span> <i
+																			*ngIf="bill_data.billStatus!='Settled'"
 																			(click)="removeJCoupon(jcoupon.key)"
 																			class="fa fa-window-close"
-																			aria-hidden="true"></i></td>
+																			aria-hidden="true"></i>
+																	</td>
 																</tr>
 																<tr class="amt tax" *ngIf="bill_data.taxableTotal">
 																	<td class="name"><span class="tax-top">Tax
@@ -848,13 +880,14 @@
 
 																			<span class="rupee-font">
 																				{{bill_data.taxableTotal |
-															currency:'&#8377;'}}
+																				currency:'&#8377;'}}
 																			</span> </span><span
 																			class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
 																			SGST-{{bill_data.taxPercentage/2}}%)</span>
 																	</td>
-																	<td class="price rupee-font">(+){{bill_data.totalTaxAmount |
-													currency:'&#8377;'}}</td>
+																	<td class="price rupee-font">
+																		(+){{bill_data.totalTaxAmount |
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt discount"
 																	*ngIf="bill_data.deliveryCharges > 0">
@@ -867,43 +900,47 @@
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
 																	<td class="price  rupee-font">{{bill_data.netRate |
-													currency:'&#8377;'}}</td>
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt paid"
 																	*ngIf="bill_data.totalAmountPaid > 0">
 																	<td class="name"><span class="link"
 																			(click)="showpaidSection()">{{amount_paid_cap}}</span>
 																	</td>
-																	<td class="price rupee-font">{{bill_data.totalAmountPaid |
-													currency:'&#8377;'}}</td>
+																	<td class="price rupee-font">
+																		{{bill_data.totalAmountPaid |
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue >= 0">
 																	<td class="name">{{amountdue_cap}}</td>
 																	<td class="price rupee-font">{{bill_data.amountDue |
-													currency:'&#8377;'}}</td>
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="bill_data.amountDue < 0">
 																	<td class="name">Refund</td>
 																	<td class="price rupee-font">{{refund_value |
-													currency:'&#8377;'}}</td>
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt total" *ngIf="refundedAmount > 0">
 																	<td class="name">Amount Refunded</td>
 																	<td class="price rupee-font">{{refundedAmount |
-													currency:'&#8377;'}}</td>
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
-																	<td class="price rupee-font">{{customer_label | capitalizeFirst}} will
+																	<td class="price rupee-font">{{customer_label |
+																		capitalizeFirst}} will
 																		save
-																		{{bill_data.totalAmountSaved | currency:'&#8377;'}}
+																		{{bill_data.totalAmountSaved |
+																		currency:'&#8377;'}}
 																	</td>
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
 																	<td class="price rupee-font">{{customer_label}} have
 																		saved
-																		{{bill_data.totalAmountSaved | currency:'&#8377;'}}
+																		{{bill_data.totalAmountSaved |
+																		currency:'&#8377;'}}
 																	</td>
 																</tr>
 															</tbody>
@@ -952,26 +989,31 @@
 														<div class="table-th">
 															<div class="th one">{{date_cap}}</div>
 															<div class="th two">{{amount_cap}}</div>
-															<div class="th three" *ngIf="bill_data.billStatus!='Settled'">{{refundable_cap}}</div>
+															<div class="th three"
+																*ngIf="bill_data.billStatus!='Settled'">
+																{{refundable_cap}}</div>
 														</div>
 														<div class="listing"
 															*ngFor="let payment of pre_payment_log; let i = index">
 															<div class="wrap">
 																<div class="td one">
 
-																	<span class="date">{{payment.paymentOn | date: dateFormat}}</span>
-																		<span class="time">{{payment.paymentTime}}</span>
+																	<span class="date">{{payment.paymentOn | date:
+																		dateFormat}}</span>
+																	<span class="time">{{payment.paymentTime}}</span>
 																</div>
 																<div class="td two">
 																	<span class="amt rupee-font">{{payment.amount |
-													currency:'&#8377;'}}</span> <span class="others"> <span class="status"> <span
+																		currency:'&#8377;'}}</span> <span
+																		class="others"> <span class="status"> <span
 																				class="title">{{status_cap}}</span>
 																			<span><span
 																					[class]="payment.status | lowercase">{{payment.status
-																| capitalizeFirst}}</span></span>
+																					| capitalizeFirst}}</span></span>
 																		</span> <span class="mode"> <span
 																				class="title">{{mode_cap}}</span>
-																			<span>{{payment.acceptPaymentBy | capitalizeFirst }}</span>
+																			<span>{{payment.acceptPaymentBy |
+																				capitalizeFirst }}</span>
 																		</span>
 																		<span class="mode" *ngIf="payment.paymentMode">
 																			<span class="title">Payment Mode</span>
@@ -984,10 +1026,12 @@
 																		</span>
 																	</span>
 																</div>
-																<div class="td three" *ngIf="bill_data.billStatus!='Settled'">
+																<div class="td three"
+																	*ngIf="bill_data.billStatus!='Settled'">
 																	<span class="amt rupee-font"
-																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount |
-													currency:'&#8377; '}}</span>
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount
+																		|
+																		currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
 																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">Refund</button>
@@ -1006,13 +1050,14 @@
 																<div class="tbody"
 																	*ngFor="let refund of payment.refundDetails">
 																	<div class="td one">
-																		<span [class]="refund.status | lowercase">{{refund.status
-														| capitalizeFirst}}</span>
+																		<span
+																			[class]="refund.status | lowercase">{{refund.status
+																			| capitalizeFirst}}</span>
 																	</div>
 																	<div class="td two">
 																		{{refund.refundMode | capitalizeFirst }}</div>
 																	<div class="td three rupee-font">{{refund.amount |
-													currency:'&#8377;' }}</div>
+																		currency:'&#8377;' }}</div>
 																</div>
 															</div>
 														</div>
@@ -1046,7 +1091,8 @@
 													<div class *ngFor="let discount of bill_data.discount">
 														<li *ngIf="discount.privateNote">
 															<span style="font-weight: 600"> {{discount.name}} - </span>
-															{{discount.privateNote}}</li>
+															{{discount.privateNote}}
+														</li>
 													</div>
 												</ul>
 											</div>
@@ -1128,7 +1174,8 @@
 												<div>
 													<button type="button" mat-button class="cs-btn bt1 accept"
 														(click)="refundPayment('cash')">{{paybycashothers_cap}}</button>
-													<button type="button" *ngIf="selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
+													<button type="button"
+														*ngIf="selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
 														mat-button class="cs-btn bt1 accept"
 														(click)="refundPayment('online')">Pay Online</button>
 													<button type="button" mat-button class="cs-btn bt2 cancel"
