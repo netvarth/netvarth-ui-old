@@ -21,8 +21,8 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  checkoutDisabled=false;
-  userEmail: any;
+  checkoutDisabled = false;
+  userEmail = '';
   orderNote: any;
   phonenumber: any;
   customer_countrycode: any;
@@ -148,12 +148,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
+      this.getProfile();
       const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
-      this.getProfile();
+
       this.getaddress();
     } else {
       this.doLogin('consumer');
@@ -167,7 +168,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loginForm = this._formBuilder.group({
       phone: [this.customer_phoneNumber, Validators.required]
     });
+
     this.storeContact = this._formBuilder.group({
+
       phone: [this.phonenumber, Validators.required],
       email: ['', Validators.required]
     });
@@ -217,7 +220,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .then(
         (data: any) => {
           console.log(data);
-          this.userEmail = data;
+          this.userEmail = data.userProfile.email;
+          console.log(this.userEmail);
+          this.storeContact.get('email').setValue(this.userEmail);
         },
 
     );

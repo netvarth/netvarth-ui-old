@@ -73,6 +73,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   isPromotionalpriceFixed;
   isPromotionalpricePertage;
   isPrice;
+  loading = true;
   // imagesRect: Image[] = [
   //   new Image(
   //     0,
@@ -170,6 +171,7 @@ export class ItemDetailsSharedComponent implements OnInit {
       this.imagesRect = [... this.imagesRect, imgobj];
       console.log(this.imagesRect);
     }
+    this.loading = false;
   }
 
   // this.customOptions = {

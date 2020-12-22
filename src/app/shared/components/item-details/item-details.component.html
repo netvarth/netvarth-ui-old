@@ -19,7 +19,8 @@
                     (click)="checkout()"><sup class="blue"> {{updateCartCount()}}</sup></i></span> -->
               </h5>
             </div>
-            <div class="container">
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div class="container" *ngIf="!loading">
               <div class="row">
                 <div class="col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
                   <!-- <ks-carousel [id]="1" [images]="imagesRect"
