@@ -3,7 +3,7 @@
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToBprofile()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Social Media Links and Visiting Sites
+            Social Media Links and Listing Sites
         </h5>
     </div>
 </section>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-xs-10 col-sm-9 input-sec">
                     <div class="disp-flex">
-                    <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keypress)="keyPressed(i)"
+                    <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)"
                         placeholder="Insert your link here">
                     <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="showDelete(social.key)">
                         <mat-icon>more_vert</mat-icon>

@@ -23,12 +23,12 @@
                                     <div class="col-md-9 col-xs-10 col-sm-10 no-padding glbl-seting-heder">
                                         <div class="col-md-10 col-sm-10 col-xs-10 no-padding">
                                             <mat-form-field>
-                                                <input matInput placeholder="Enter Phone Number/Id/email" type="text"
+                                                <input matInput placeholder="Enter Phone #/Id/Email" type="text"
                                                     class="form-control" formControlName="search_input"
                                                     (keypress)="findCustomer(searchForm.value, $event)">
                                             </mat-form-field>
                                             <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                                values</span>
+                                                {{customer_label | capitalizeFirst}} Phone#/Id/Email</span>
                                         </div>
                                         <div class="col-md-2 col-sm-2 col-xs-10 no-padding">
                                             <!-- <i class="fa fa-search pointer-cursor" (click)="searchForm.valid &&
