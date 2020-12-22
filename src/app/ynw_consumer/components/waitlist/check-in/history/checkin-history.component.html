@@ -235,6 +235,21 @@
                                                 <td data-title="Status" class="td4">
                                                     <span>{{his_wait.orderStatus}}</span>
                                                 </td>
+
+                                                <td data-title="" class="td5">
+                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #appMenu="matMenu">
+                                                        <!-- <button mat-menu-item   (click)="addApptMessage(his_wait)">
+                                                            <i class="fa chat-icon"></i>
+                                                            {{send_message_cap}}</button> -->
+                                                        <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show'"
+                                                            (click)="getOrderBill(his_wait)">
+                                                            <i class="bill-icon-history"></i>
+                                                            Bill</button>
+                                                    </mat-menu>
+                                                </td>
                                             </ng-container>
 
 

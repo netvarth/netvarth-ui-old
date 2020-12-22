@@ -231,6 +231,45 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         }
       );
   }
+  getOrderBill(orders) {
+    console.log(orders);
+    const params = {
+      account: orders.providerAccount.id
+    };
+    this.consumer_checkin_history_service.getWaitlistBill(params, orders.uid)
+      .subscribe(
+        data => {
+          console.log(data);
+          const bill_data = data;
+          this.viewOrderBill(orders, bill_data);
+        },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  viewOrderBill(order, type, ) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          uuid: order.uid,
+          accountId: order.providerAccount.id,
+          type: 'order',
+          'paidStatus': false
+        }      };
+      this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
+    
+  }
+
+//   const navigationExtras: NavigationExtras = {
+//     queryParams: {
+//       uuid: checkin.uid,
+//       accountId: checkin.providerAccount.id,
+//       type: 'order',
+//       'paidStatus': false
+//     }
+//   };
+//   this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
+// }
 
   viewBill(checkin, bill_data) {
     const navigationExtras: NavigationExtras = {
