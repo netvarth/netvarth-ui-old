@@ -253,7 +253,7 @@ export class ItemDetailsComponent implements OnInit {
     createForm() {
         if (this.action === 'add') {
             this.amForm = this.fb.group({
-                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
@@ -273,7 +273,7 @@ export class ItemDetailsComponent implements OnInit {
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
-                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
