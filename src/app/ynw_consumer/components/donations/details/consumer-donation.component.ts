@@ -495,8 +495,14 @@ export class ConsumerDonationComponent implements OnInit {
             },
             'countryCode': this.dialCode,
             'donorPhoneNumber': this.userPhone,
-            'note': this.consumerNote
+            'note': this.consumerNote,
+            'donorEmail': this.userEmail
         };
+        // if (this.userData.userProfile.email === this.payEmail) {
+        //     post_Data['donorEmail'] = this.userData.userProfile.email;
+        // }else {
+        //     post_Data['donorEmail'] = this.payEmail;
+        // }
         if (this.api_error === null && this.donationAmount) {
             console.log(post_Data);
             this.addDonationConsumer(post_Data, paymentWay);
