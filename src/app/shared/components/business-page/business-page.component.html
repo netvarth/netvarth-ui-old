@@ -46,11 +46,11 @@
                             <div class="no-padding"
                                 [ngClass]="{'col-md-9 col-sm-9':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
+                                <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
+                                </h3>
                                 <h6 class="font_user_size" *ngIf="businessjson.businessUserName">
                                     {{businessjson.businessUserName | capitalizeFirst}}
                                 </h6>
-                                <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
-                                </h3>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"

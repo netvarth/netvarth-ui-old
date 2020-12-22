@@ -1152,7 +1152,7 @@ export const Messages = {
   'SEARCH_PRI_PROF_NAME_SUMMARY_CAP': 'Profile Name and Description',
   'SEARCH_PRI_BUISINESS_NAME_CAP': 'Business Name *',
   'SEARCH_PRI_PROF_SUMMARY_CAP': 'Description',
-  'SEARCH_PRI_BUISINESS_USER_NAME_CAP': 'Business User Name',
+  'SEARCH_PRI_BUISINESS_USER_NAME_CAP': 'Your Name',
 
   // App-ynw_provider-components-provider-bwizard
   'WIZ_CONGRATULATIONS_CAP': 'Congratulations,',
