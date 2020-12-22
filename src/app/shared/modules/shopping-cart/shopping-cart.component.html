@@ -29,7 +29,7 @@
                         *ngIf="item.item.itemImages"
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
-                        <div class="itm-nme"> {{item.item.itemName}}</div>
+                        <div class="itm-nme"> {{item.item.displayName}}</div>
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div class="add_nte" (click)="addNotes(item,i)">

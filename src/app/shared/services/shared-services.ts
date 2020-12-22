@@ -181,7 +181,7 @@ export class SharedServices {
   }
   verifyNewPhone(phonenumber, origin?, countryCode?) {
     // const path = 'consumers/login/verifyLogin/' + phonenumber;
-    const path = origin + '/login/verifyLogin/' + phonenumber +'?countryCode=' + countryCode;
+    const path = origin + '/login/verifyLogin/' + phonenumber + '?countryCode=' + countryCode;
     return this.servicemeta.httpPost(path);
   }
   verifyNewPhoneOTP(otp, body, origin?) {
@@ -517,8 +517,7 @@ export class SharedServices {
       path = 'consumer/waitlist/rating';
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
-    }
-    else if (type === 'order') {
+    } else if (type === 'order') {
       path = 'consumer/order/rating';
     }
     return this.servicemeta.httpGet(path, null, params);
@@ -529,8 +528,7 @@ export class SharedServices {
       path = 'consumer/waitlist/rating';
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
-    }
-    else if (type === 'order') {
+    } else if (type === 'order') {
       path = 'consumer/order/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
@@ -699,7 +697,7 @@ export class SharedServices {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-  addConsumerOrderNote(accountid, uuid, body){
+  addConsumerOrderNote(accountid, uuid, body) {
     const url = 'consumer/order/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
@@ -858,11 +856,7 @@ export class SharedServices {
   //   return this.servicemeta.httpGet(url);
   // }
   getConsumerCatalogs(accountid) {
-    const url = 'consumer/orders/catalogs/'   + accountid;
-    return this.servicemeta.httpGet(url);
-  }
-  getOrderSettings(accountid) {
-    const url = 'consumer/orders/settings/'   + '?account=' + accountid;
+    const url = 'consumer/orders/catalogs/' + accountid;
     return this.servicemeta.httpGet(url);
   }
   getItemDetails(itemId?) {
@@ -890,18 +884,21 @@ export class SharedServices {
   }
   updateConsumeraddress(data) {
     const url = 'consumer/deliveryAddress';
-    return this.servicemeta.httpPut(url , data);
+    return this.servicemeta.httpPut(url, data);
   }
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
   }
-  getAvailableDatesForPickup(catalogid , accountid?){
-    return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid +  '?account=' + accountid);
+  getAvailableDatesForPickup(catalogid, accountid?) {
+    return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid + '?account=' + accountid);
   }
-  getAvailableDatesForHome(catalogid , accountid?){
-    return this.servicemeta.httpGet('consumer/orders/catalogs/delivery/dates/' + catalogid +  '?account=' + accountid);
+  getAvailableDatesForHome(catalogid, accountid?) {
+    return this.servicemeta.httpGet('consumer/orders/catalogs/delivery/dates/' + catalogid + '?account=' + accountid);
   }
   getStoreContact(accountid?) {
     return this.servicemeta.httpGet('consumer/orders/settings/store/contact/info/' + accountid);
+  }
+  CreateConsumerEmail(uuid, accountid, post_Data) {
+    return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
 }

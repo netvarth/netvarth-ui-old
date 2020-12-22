@@ -229,7 +229,7 @@
                                           <div class="c-row one width-100">
                                             <div class="name cart-flex">
                                               <i class="fa fa-stop-circle"></i>
-                                              <span class="item-name">{{item.item.itemName}}</span>
+                                              <span class="item-name">{{item.item.displayName}}</span>
                                             </div>
                                             <div class="quantity item-qty">{{getItemQty(item)}}</div>
                                             <div class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
@@ -276,7 +276,7 @@
 
                           </div>
                         </div>
-                          <button mat-flat-button (click)="confirm()" class="chekout-btn">CHECKOUT &nbsp; → </button>
+                          <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
                   </div>

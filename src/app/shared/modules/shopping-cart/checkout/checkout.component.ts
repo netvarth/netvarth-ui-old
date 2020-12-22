@@ -21,6 +21,8 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  checkoutDisabled=false;
+  userEmail: any;
   orderNote: any;
   phonenumber: any;
   customer_countrycode: any;
@@ -92,6 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ) {
 
+
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
@@ -150,6 +153,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.phonenumber = activeUser.primaryPhoneNumber;
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
+      this.getProfile();
       this.getaddress();
     } else {
       this.doLogin('consumer');
@@ -208,7 +212,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
   }
+  getProfile() {
+    this.sharedFunctionobj.getProfile()
+      .then(
+        (data: any) => {
+          console.log(data);
+          this.userEmail = data;
+        },
 
+    );
+  }
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -342,6 +355,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
+    this.checkoutDisabled = true;
     // if(this.choose_type === 'home') {
     //   if (this.added_address.length === 0) {
     //     // this.disablecheck = true
@@ -355,9 +369,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
       if (this.added_address.length === 0) {
+        this.checkoutDisabled = false;
         this.sharedFunctionobj.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
+        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+          this.emailId = this.customer_email;
+        }
         const post_Data = {
           'homeDelivery': true,
           'homeDeliveryAddress': this.selectedAddress,
@@ -383,11 +401,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     if (this.delivery_type === 'store') {
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
+        this.checkoutDisabled = false;
         this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
+
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
+        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+          this.emailId = contact_email;
+        }
         const post_Data = {
           'storePickup': true,
           'catalog': {
@@ -468,6 +491,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
         const retData = data;
+        this.checkoutDisabled = false;
         let prepayAmount;
         const uuidList = [];
         Object.keys(retData).forEach(key => {
@@ -489,7 +513,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         };
 
         if (this.catalog_details.advanceAmount) {
-          this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+
+          this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+            .subscribe(res => {
+              console.log(res);
+              this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+            });
+
+
         } else {
 
           this.orderList = [];
@@ -507,6 +538,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         //     this.api_loading = false;
         // }
         error => {
+          this.checkoutDisabled = false;
           this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
 
@@ -541,7 +573,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         consumerNote = item.consumerNote;
       }
 
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote':consumerNote });
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
     });
     return this.orderSummary;
   }
