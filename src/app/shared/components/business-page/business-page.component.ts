@@ -1686,9 +1686,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else if (passParam['callback'] === 'order'){
+        } else if (passParam['callback'] === 'order') {
           this.checkout();
-        }  else {
+        } else {
           this.getFavProviders();
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -1723,7 +1723,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else if(passParam['callback'] === 'order'){
+        } else if (passParam['callback'] === 'order') {
           this.checkout();
         } else {
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
@@ -2343,13 +2343,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.showDepartments) {
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }
@@ -2458,12 +2458,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         //   }
         // } else if (catalogs.length === 1) {
         this.shared_services.setOrderDetails(this.activeCatalog);
-        for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-          const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
-          const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
-          const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-          orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
-          this.itemCount++;
+        if (this.activeCatalog && this.activeCatalog.catalogItem) {
+          for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+            const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+            const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
+            this.itemCount++;
+          }
         }
         // }
         this.orderItems = orderItems;
@@ -2482,10 +2484,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
-         if (this.getConfirmation()) {
-          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          if (this.getConfirmation()) {
+            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          }
         }
-      }
       }
     }
     this.orderList.push(itemObj);
@@ -2508,7 +2510,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         can_remove = true;
-       this.orderList=[];
+        this.orderList = [];
         this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
         this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
         this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
@@ -2548,24 +2550,24 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-    const businessObject = {
-      'bname': this.businessjson.businessName,
-      'blocation': this.locationjson[0].place
-    };
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        account_id: this.provider_bussiness_id
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place
+      };
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account_id: this.provider_bussiness_id
 
-      }
+        }
 
-    };
-    this.router.navigate(['order/shoppingcart'], navigationExtras);
-   }
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
+    }
     else if (this.userType === '') {
       const passParam = { callback: 'order' };
-      this.doLogin('consumer', passParam );
+      this.doLogin('consumer', passParam);
     }
   }
   itemDetails(item) {

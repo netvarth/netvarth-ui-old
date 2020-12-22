@@ -89,3 +89,7 @@
 .personal {
     line-height: 1.6;
 }
+.scro {
+    max-height: 500px;
+    overflow-y: scroll;
+}
