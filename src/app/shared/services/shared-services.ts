@@ -861,6 +861,10 @@ export class SharedServices {
     const url = 'consumer/orders/catalogs/'   + accountid;
     return this.servicemeta.httpGet(url);
   }
+  getOrderSettings(accountid) {
+    const url = 'consumer/orders/settings/'   + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   getItemDetails(itemId?) {
     console.log(itemId);
     const url = 'http://localhost:4200/assets/json/item-details.json';
