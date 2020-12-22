@@ -444,3 +444,14 @@ display: grid !important;
   ::ng-deep .order-checkout .fa-asterisk {
       font-size: 0.4rem;
   }
+  .order-checkout .static-value {
+    position: absolute;
+    left: 10px;
+    color: #444;
+    top: 34.4px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .order-checkout .mgn-lt-20 {
+    margin-left: 20px !important;
+  }

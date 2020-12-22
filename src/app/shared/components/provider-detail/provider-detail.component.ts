@@ -245,6 +245,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   itemQty: number;
   activeCatalog: any;
   service_cap = 'Services and Consultations';
+  orderstatus: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -487,6 +488,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.business_exists = true;
 
             this.provider_bussiness_id = this.businessjson.id;
+            this.getOrderSettings();
             if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
               if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
                 this.bLogo = this.businessjson.logo.url + '?' + new Date();
@@ -1942,8 +1944,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
    * Order Related Code
    */
 
+  getOrderSettings(){
+    const account_Id = this.provider_bussiness_id;
+    console.log(account_Id);
+    this.shared_services.getOrderSettings(account_Id).subscribe(
+      (settings: any) => {
+        this.orderstatus = settings.enableOrder
+        console.log(this.orderstatus)
+        console.log(settings);
+      }
+      );
+  }
+
   getCatalogs(bprovider_id) {
     const account_Id = this.provider_bussiness_id;
+     console.log(account_Id);
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
     const orderItems = [];
