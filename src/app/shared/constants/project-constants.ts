@@ -882,7 +882,7 @@ export const projectConstantsLocal = {
     { value: 'Preparing', class: 'preparing-icon' },
     { value: 'Packing', class: 'packing-icon' },
     { value: 'Payment Required', class: 'payment-required-icon' },
-    { value: 'Ready For Pickup', class: 'readyfor-pay-icon' },
+    { value: 'Ready For Pickup', class: 'readyfor-pickup-icon' },
     { value: 'Ready For Shipment', class: 'readyfor-ship-icon' },
     { value: 'Ready For Delivery', class: 'readyfor-delivery-icon' },
     { value: 'Completed', class: 'order-completed-icon' },
