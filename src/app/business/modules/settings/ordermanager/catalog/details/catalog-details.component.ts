@@ -283,12 +283,15 @@ export class CatalogdetailComponent implements OnInit {
         //     daystr.push(cday);
         // }
         let endDate;
+        console.log(form_data.startdate);
         const startDate = this.convertDate(form_data.startdate);
+        console.log(startDate);
         if (form_data.enddate) {
             endDate = this.convertDate(form_data.enddate);
         } else {
             endDate = '';
         }
+        console.log(endDate);
         // const curdate = new Date();
         // curdate.setHours(this.dstart_time.hour);
         // curdate.setMinutes(this.dstart_time.minute);
@@ -1050,6 +1053,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
+        console.log(this.prefillData.catalogSchedule.terminator.endDate);
         this.amForm.setValue({
             'catalogName': this.prefillData.catalogName,
             'catalogDesc': this.prefillData.catalogDesc || '',
@@ -1528,6 +1532,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         let cdate;
         if (date) {
             cdate = new Date(date);
+            console.log(cdate);
         } else {
             cdate = new Date();
         }
@@ -1535,7 +1540,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         if (mon < 10) {
             mon = '0' + mon;
         }
-        return (cdate.getFullYear() + '-' + mon + '-' + cdate.getDate());
+        return (cdate.getFullYear() + '-' + mon + '-' + ('0' + cdate.getDate()).slice(-2));
     }
     getProviderLocations() {
         this.provider_services.getProviderLocations()
