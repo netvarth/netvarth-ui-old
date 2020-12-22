@@ -119,14 +119,17 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
-    this.getitems();
-    if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
-      this.heading = 'Edit catalog items';
-      this.getCatalog();
-    } else {
-      this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
-      console.log(this.addCatalogItems);
-    }
+    this.getitems().then(
+      (data) => {
+        if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
+          this.heading = 'Edit catalog items';
+          this.getCatalog();
+        } else {
+          this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
+          console.log(this.addCatalogItems);
+        }
+      }
+    );
   }
   ngOnDestroy() {
   }
@@ -151,9 +154,13 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       });
   }
   getitems() {
-    this.provider_servicesobj.getProviderItems()
-      .subscribe((data) => {
-        this.catalogItem = data;
+    const apiFilter = {};
+    apiFilter['itemStatus-eq'] = 'ACTIVE';
+    return new Promise((resolve, reject) => {
+      this.provider_servicesobj.getProviderfilterItems(apiFilter)
+        .subscribe(
+          data => {
+                 this.catalogItem = data;
         for (const itm of this.catalogItem) {
           itm.minQuantity = '1';
           itm.maxQuantity = '5';
@@ -172,7 +179,35 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         }
          }
          this.api_loading = false;
-      });
+            resolve(data);
+          },
+          error => {
+            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    });
+    // this.provider_servicesobj.getProviderfilterItems(apiFilter)
+    //   .subscribe((data) => {
+    //     this.catalogItem = data;
+    //     for (const itm of this.catalogItem) {
+    //       itm.minQuantity = '1';
+    //       itm.maxQuantity = '5';
+    //      }
+    //      if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+    //       this.selectedCount = this.addCatalogItems.length;
+    //      for (const itm of this.catalogItem) {
+    //         for (const selitem of this.addCatalogItems) {
+    //            if (itm.itemId === selitem.item.itemId) {
+    //             itm.selected = true;
+    //             itm.id = selitem.id;
+    //             itm.minQuantity = selitem.minQuantity;
+    //             itm.maxQuantity = selitem.maxQuantity;
+    //            }
+    //       }
+    //     }
+    //      }
+    //      this.api_loading = false;
+    //   });
   }
   selectItem(index) {
     console.log(this.catalogItem[index].selected);
