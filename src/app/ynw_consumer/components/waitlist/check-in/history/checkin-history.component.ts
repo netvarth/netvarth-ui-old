@@ -60,7 +60,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   screenWidth;
   viewrxdialogRef;
   accountId;
-  showOrderHist = true;
+  showOrderHist = false;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
