@@ -258,7 +258,9 @@ export class CatalogdetailComponent implements OnInit {
         this.getItems();
     }
     getItems() {
-        this.provider_services.getProviderItems()
+        const apiFilter = {};
+    apiFilter['itemStatus-eq'] = 'ACTIVE';
+        this.provider_services.getProviderfilterItems(apiFilter)
           .subscribe(data => {
             this.item_list = data;
             this.item_count = this.item_list.length;

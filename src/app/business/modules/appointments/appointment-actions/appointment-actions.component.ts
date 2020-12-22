@@ -141,7 +141,7 @@ export class AppointmentActionsComponent implements OnInit {
             checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.appt.location.place + '</td></tr>';
             checkin_html += '</thead><tbody>';
             if (fname !== '' || lname !== '') {
-                checkin_html += '<tr><td width="48%" align="right">Customer</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+                checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
             }
             if (this.appt.service && this.appt.service.deptName) {
                 checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.appt.service.deptName + '</td></tr>';

@@ -39,6 +39,10 @@ export class ProviderServices {
          return this.servicemeta.httpGet('provider/items');
       }
    }
+   getProviderfilterItems(filter) {
+      const url = 'provider/items';
+      return this.servicemeta.httpGet(url, null, filter);
+   }
    addItem(data) {
       return this.servicemeta.httpPost('provider/items', data);
    }

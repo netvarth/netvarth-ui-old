@@ -874,6 +874,21 @@ export const projectConstantsLocal = {
     PartiallyRefunded: 'Partially Refunded',
     FullyRefunded: 'Fully Refunded',
     Refund: 'Refund'
-  }
+  },
+  ORDER_STATUS_CLASS: [
+    { value: 'Order Received', class: 'order-received-icon' },
+    { value: 'Order Acknowledged', class: 'order-ack-icon' },
+    { value: 'Order Confirmed', class: 'order-confirmed-icon' },
+    { value: 'Preparing', class: 'preparing-icon' },
+    { value: 'Packing', class: 'packing-icon' },
+    { value: 'Payment Required', class: 'payment-required-icon' },
+    { value: 'Ready For Pickup', class: 'readyfor-pay-icon' },
+    { value: 'Ready For Shipment', class: 'readyfor-ship-icon' },
+    { value: 'Ready For Delivery', class: 'readyfor-delivery-icon' },
+    { value: 'Completed', class: 'order-completed-icon' },
+    { value: 'In Transit', class: 'intransit-icon' },
+    { value: 'Shipped', class: 'shipped-icon' },
+    { value: 'Cancelled', class: 'order-cancelled-icon' }
+  ]
 };
 

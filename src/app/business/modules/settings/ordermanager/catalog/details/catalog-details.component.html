@@ -27,7 +27,7 @@
                   <mat-expansion-panel [expanded]="step == 1">
                     <mat-expansion-panel-header>
                       <mat-panel-title class="block-level">
-                        Basic Info <i *ngIf="basic" class="fa fa-check-circle  catalog-grn fl-right"
+                        Catalog information <i *ngIf="basic" class="fa fa-check-circle  catalog-grn fl-right"
                         aria-hidden="true"></i>
                         <i *ngIf="!basic" class="fa fa-exclamation-circle catalog-red fl-right"
                         aria-hidden="true"></i>
@@ -345,7 +345,7 @@
                             (click)="handleselectnonestorepickup()">
                             {{select_All}}</i>
                         </div> -->
-                        <p>Select your date and time</p>
+                        <p>Store pickup availability</p>
                         <section class="schedule-section leftselectAll start-endtime-wrap">
                           <div *ngFor="let wday of weekdays; index as i">
                             <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
@@ -435,7 +435,7 @@
                             (click)="handleselectnonehomedelivery()">
                             {{select_All}}</i>
                         </div> -->
-                        <p>Select your date and time</p>
+                        <p>Home delivery availability</p>
                         <section class="schedule-section leftselectAll start-endtime-wrap">
                           <div *ngFor="let wday of weekdays; index as i">
                             <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
@@ -499,7 +499,7 @@
                         <div class="form-group">
                           <mat-form-field>
                             <input matInput type="text" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="deliverykms"
-                              placeholder="Delivery range in Kms" formControlName="deliverykms" autocomplete="off"
+                              placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
                               maxlength="50">
                           </mat-form-field>
                         </div>

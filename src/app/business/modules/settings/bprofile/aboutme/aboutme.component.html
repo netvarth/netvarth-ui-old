@@ -50,15 +50,7 @@
                       (ngSubmit)="aboutmeForm.valid && onSubmit(aboutmeForm.value)" (keyup)="resetApiErrors()"
                       class="ynw-common-form-nm">
 
-                      <div class="form-group">
-                        <mat-form-field>
-                          <input type="text" matInput class="form-control" id="busername" #busername formControlName="busername"
-                            autocomplete="off" placeholder="{{business_user_name_cap}}">
-                        </mat-form-field>
-                        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(aboutmeForm,'busername')"
-                          errorMsg="Please enter the business name">
-                        </app-field-error-display> -->
-                      </div>
+                     
 
                       <div class="form-group">
                         <mat-form-field>
@@ -68,6 +60,12 @@
                         <app-field-error-display [displayError]="fed_service.isFieldValid(aboutmeForm,'bname')"
                           errorMsg="Please enter the business name">
                         </app-field-error-display>
+                      </div>
+                      <div class="form-group">
+                        <mat-form-field>
+                          <input type="text" matInput class="form-control" id="busername" #busername formControlName="busername"
+                            autocomplete="off" placeholder="{{business_user_name_cap}}">
+                        </mat-form-field>
                       </div>
                       <div class="form-group">
                         <mat-form-field>

@@ -89,7 +89,7 @@ export class ItemDetailsComponent implements OnInit {
     photo_cap = Messages.SERVICE_PHOTO_CAP;
     delete_btn = Messages.DELETE_BTN;
     removeimgdialogRef;
-    valueCaption = 'Enter promotional value';
+    valueCaption = 'Enter the discounted price you offer';
     curtype = 'FIXED';
     showCustomlabel = false;
     selectedMessage = {
@@ -253,7 +253,7 @@ export class ItemDetailsComponent implements OnInit {
     createForm() {
         if (this.action === 'add') {
             this.amForm = this.fb.group({
-                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
@@ -273,7 +273,7 @@ export class ItemDetailsComponent implements OnInit {
         } else {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
-                itemCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
@@ -359,11 +359,11 @@ export class ItemDetailsComponent implements OnInit {
     }
     handleTypechange(typ) {
         if (typ === 'FIXED') {
-            this.valueCaption = 'Enter promotional value';
+            this.valueCaption = 'Enter the discounted price you offer';
             this.curtype = typ;
         } else {
             this.curtype = typ;
-            this.valueCaption = 'Enter promotional value';
+            this.valueCaption = 'Enter the discounted price you offer';
         }
     }
     handleLabelchange(type) {

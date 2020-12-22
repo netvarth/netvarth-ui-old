@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 
@@ -19,6 +20,7 @@ export class OrderActionsComponent implements OnInit {
   loading = false;
   catalog_list: any = [];
   catalogStatuses: any = [];
+  orderStatusClasses = projectConstantsLocal.ORDER_STATUS_CLASS;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -94,5 +96,11 @@ export class OrderActionsComponent implements OnInit {
         }
         this.loading = false;
       });
+  }
+  getOrderActionClass(status) {
+    const retdet = this.orderStatusClasses.filter(
+      soc => soc.value === status);
+    const returndet = retdet[0].class;
+    return returndet;
   }
 }
