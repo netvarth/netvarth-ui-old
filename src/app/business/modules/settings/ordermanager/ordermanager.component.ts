@@ -3,6 +3,9 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowMessageComponent } from '../../show-messages/show-messages.component';
+
 
 @Component({
   selector: 'app-ordermanager',
@@ -38,9 +41,11 @@ export class OrdermanagerComponent implements OnInit {
   item_count = 0;
   breadcrumb_moreoptions: any = [];
   pos;
+  catalog_list: any = [];
   constructor(private router: Router,
     private shared_functions: SharedFunctions,
     private routerobj: Router,
+    private dialog: MatDialog,
     private provider_services: ProviderServices) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
   }
@@ -51,9 +56,10 @@ export class OrdermanagerComponent implements OnInit {
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.getOrderStatus();
-    this.getDiscounts();
+    this.getCatalog();
+    //this.getDiscounts();
     this.getitems();
-    this.getPOSSettings();
+    //this.getPOSSettings();
   }
 
   getDiscounts() {
@@ -69,7 +75,12 @@ export class OrdermanagerComponent implements OnInit {
         }
       );
   }
-
+  getCatalog() {
+    this.provider_services.getProviderCatalogs()
+        .subscribe(data => {
+            this.catalog_list = data;
+        });
+}
   getitems() {
     this.provider_services.getProviderItems()
       .subscribe(data => {
@@ -102,6 +113,19 @@ export class OrdermanagerComponent implements OnInit {
   }
   handleOrderStatus(event) {
     const status = (event.checked) ? 'enabled' : 'disabled';
+    if (event.checked && this.catalog_list.length === 0) {
+      const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            'type': 'order'
+          }
+        });
+      confirmdialogRef.afterClosed().subscribe(result => {
+        this.getOrderStatus();
+      });
+  } else {
     this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
       this.shared_functions.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getOrderStatus();
@@ -110,6 +134,11 @@ export class OrdermanagerComponent implements OnInit {
       this.getOrderStatus();
     });
   }
+}
+
+
+
+
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
       this.orderstatus = data.enableOrder;
