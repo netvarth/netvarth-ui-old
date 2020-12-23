@@ -2395,13 +2395,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               const servicesAndProviders = [];
               if (this.userId) {
                 for (let aptIndex = 0; aptIndex < apptServices.length; aptIndex++) {
-                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === this.userId && apptServices[aptIndex].serviceAvailability) {
+                  if (apptServices[aptIndex]['provider'] && apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && apptServices[aptIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'appt', 'item': apptServices[aptIndex] });
                     this.serviceCount++;
                   }
                 }
                 for (let wlIndex = 0; wlIndex < wlServices.length; wlIndex++) {
-                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === this.userId && wlServices[wlIndex].serviceAvailability) {
+                  if (wlServices[wlIndex]['provider'] && wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && wlServices[wlIndex].serviceAvailability) {
                     servicesAndProviders.push({ 'type': 'waitlist', 'item': wlServices[wlIndex] });
                     this.serviceCount++;
                   }

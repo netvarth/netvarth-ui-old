@@ -349,7 +349,7 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems.length > 0">
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0">
                     <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
                         <h5 class="mgn-bt-5 primary-color">{{activeCatalog.catalogName}}</h5>
                         <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
