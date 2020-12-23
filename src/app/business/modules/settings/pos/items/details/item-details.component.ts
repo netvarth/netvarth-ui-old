@@ -128,6 +128,7 @@ export class ItemDetailsComponent implements OnInit {
     haveMainImg = false;
     imageList: any = [];
     mainImage = false;
+    iscmFrom;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -135,6 +136,10 @@ export class ItemDetailsComponent implements OnInit {
         public dialog: MatDialog,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
+            this.activated_route.queryParams.subscribe(
+                (qParams) => {
+                    this.iscmFrom = qParams.type;
+                });
         this.activated_route.params.subscribe(
             (params) => {
                 this.item_id = params.id;
@@ -246,8 +251,17 @@ export class ItemDetailsComponent implements OnInit {
         });
     }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'pos',
-            'items']);
+        if (this.iscmFrom === 'ordermanager') {
+            const navigatExtras: NavigationExtras = {
+                queryParams: {
+                  type: this.iscmFrom ? this.iscmFrom : ''
+                }
+              };
+              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+        } else {
+            this.router.navigate(['provider', 'settings', 'pos', 'items']);
+        }
+        
         this.api_loading = false;
     }
     createForm() {
@@ -393,8 +407,16 @@ export class ItemDetailsComponent implements OnInit {
         }
     }
     onCancel() {
-        this.router.navigate(['provider', 'settings', 'pos',
-            'items']);
+        if (this.iscmFrom === 'ordermanager') {
+            const navigatExtras: NavigationExtras = {
+                queryParams: {
+                  type: this.iscmFrom ? this.iscmFrom : ''
+                }
+              };
+              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+        } else {
+            this.router.navigate(['provider', 'settings', 'pos', 'items']);
+        }
         this.api_loading = false;
     }
     onSubmit(form_data, isfrom?) {
@@ -529,7 +551,16 @@ export class ItemDetailsComponent implements OnInit {
                         const route = 'list';
                         this.saveImages(data, route);
                     } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
-                        this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                        if (this.iscmFrom === 'ordermanager') {
+                            const navigatExtras: NavigationExtras = {
+                                queryParams: {
+                                  type: this.iscmFrom ? this.iscmFrom : ''
+                                }
+                              };
+                              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                        } else {
+                            this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                        }
                     }
                 },
                 error => {
@@ -549,7 +580,16 @@ export class ItemDetailsComponent implements OnInit {
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    if (this.iscmFrom === 'ordermanager') {
+                        const navigatExtras: NavigationExtras = {
+                            queryParams: {
+                              type: this.iscmFrom ? this.iscmFrom : ''
+                            }
+                          };
+                          this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                    } else {
+                        this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    }
                 },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -595,7 +635,16 @@ export class ItemDetailsComponent implements OnInit {
           });
           dialogrefd.afterClosed().subscribe(result => {
             if (result) {
-                this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                if (this.iscmFrom === 'ordermanager') {
+                    const navigatExtras: NavigationExtras = {
+                        queryParams: {
+                          type: this.iscmFrom ? this.iscmFrom : ''
+                        }
+                      };
+                      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                } else {
+                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                }
             }
           });
     }
@@ -645,7 +694,16 @@ export class ItemDetailsComponent implements OnInit {
             this.image_list_popup = [];
             this.mainimage_list_popup = [];
             if (routeTo === 'list') {
-                this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                if (this.iscmFrom === 'ordermanager') {
+                    const navigatExtras: NavigationExtras = {
+                        queryParams: {
+                          type: this.iscmFrom ? this.iscmFrom : ''
+                        }
+                      };
+                      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                } else {
+                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                }
             }
             this.getItem(id).then(
                 (item) => {

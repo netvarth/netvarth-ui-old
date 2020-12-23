@@ -154,11 +154,18 @@ export class ItemsComponent implements OnInit, OnDestroy {
         return this.sharedfunctionObj.print_PricewithCurrency(price);
     }
     addItem() {
-        this.router.navigate(['provider', 'settings', 'pos', 'items', 'add']);
+        const navigatExtras: NavigationExtras = {
+            queryParams: {
+              type: this.isFrom ? this.isFrom : ''
+            }
+          };
+        this.router.navigate(['provider', 'settings', 'pos', 'items', 'add'], navigatExtras);
     }
     editItem(item) {
         const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'edit' }
+            queryParams: { action: 'edit',
+            type: this.isFrom ? this.isFrom : ''
+         }
         };
         this.router.navigate(['provider', 'settings', 'pos', 'items', item.itemId], navigationExtras);
     }
