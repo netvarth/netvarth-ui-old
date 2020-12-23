@@ -43,6 +43,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
+  catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   clear_cart_dialogRef: any;
   spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
@@ -1956,6 +1957,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];
+          if(this.activeCatalog.catalogImages[0]){
+            this.catalogImage = this.activeCatalog.catalogImages[0].url;
+          }
+
           this.catlogArry();
           // if(catalogs.length > 1) {
           //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
