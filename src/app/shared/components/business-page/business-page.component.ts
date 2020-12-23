@@ -42,6 +42,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
   more_cap = Messages.MORE_CAP;
@@ -2455,6 +2456,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shared_services.getConsumerCatalogs(account_Id).subscribe(
       (catalogs: any) => {
         this.activeCatalog = catalogs[0];
+        if(this.activeCatalog.catalogImages[0]){
+          this.catalogImage = this.activeCatalog.catalogImages[0].url;
+        }
         this.catlogArry();
         console.log(this.activeCatalog);
         // console.log(cat)
