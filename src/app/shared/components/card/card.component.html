@@ -52,7 +52,7 @@
             <button mat-menu-item *ngFor="let action of item.actions" (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
                 <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>                                                
         </mat-menu>
-        <img class="card-img img-responsive"  [src]="service.itemImages[0].thumbUrl" alt="Profile Pic" />
+        <img class="card-img img-responsive"  [src]="getItemImg(service)" alt="Profile Pic" />
     </div>
     <div class="card-item-content">
         <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!service.itemImages && item.actions" (click)="stopProp($event)">
