@@ -3,6 +3,8 @@ import { Image, ImageEvent, AccessibilityConfig } from '@ks89/angular-modal-gall
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-item-details',
@@ -10,6 +12,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsSharedComponent implements OnInit {
+
+  provider_bussiness_id: any;
   currentItemObject: any;
   price: number;
   order_count: number;
@@ -129,10 +133,12 @@ export class ItemDetailsSharedComponent implements OnInit {
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
     public route: ActivatedRoute,
+    private dialog: MatDialog,
     private router: Router) {
     this.route.queryParams.subscribe(
       params => {
         this.item = params.item;
+        this.provider_bussiness_id = parseInt(params.providerId, 0);
         console.log(this.item);
       });
   }
@@ -156,21 +162,24 @@ export class ItemDetailsSharedComponent implements OnInit {
     } else {
       this.isPrice = true;
     }
-    this.itemImages = this.currentItem.itemImages;
-    for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
-      const imgobj = new Image(this.itemImages[imgIndex].id,
-        {
-          img: this.itemImages[imgIndex].url,
-          description: this.itemImages[imgIndex].title
-        },
-        {
-          img: this.itemImages[imgIndex].url,
-          title: this.itemImages[imgIndex].title
-        },
-      );
-      this.imagesRect = [... this.imagesRect, imgobj];
-      console.log(this.imagesRect);
+    if (this.currentItem.itemImages) {
+      this.itemImages = this.currentItem.itemImages;
+      for (let imgIndex = 0; imgIndex < this.itemImages.length; imgIndex++) {
+        const imgobj = new Image(this.itemImages[imgIndex].id,
+          {
+            img: this.itemImages[imgIndex].url,
+            description: this.itemImages[imgIndex].title
+          },
+          {
+            img: this.itemImages[imgIndex].url,
+            title: this.itemImages[imgIndex].title
+          },
+        );
+        this.imagesRect = [... this.imagesRect, imgobj];
+        console.log(this.imagesRect);
+      }
     }
+
     this.loading = false;
   }
 
@@ -218,6 +227,18 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.removeFromCart();
   }
   addToCart() {
+    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+          if (this.getConfirmation()) {
+            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          }
+        }
+      }
+    }
     this.orderList.push(this.currentItemObject);
     console.log(this.orderList);
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
@@ -225,6 +246,33 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.updateCartCount();
 
   }
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+        this.orderList = [];
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        return true;
+      } else {
+        can_remove = false;
+
+      }
+    });
+    return can_remove;
+  }
+
   removeFromCart() {
     console.log(this.orderList);
     for (const i in this.orderList) {

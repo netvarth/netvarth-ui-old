@@ -443,7 +443,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     let all_itemsSet = true;
     this.orders.forEach(item => {
       if (this.getItemQty(item) < item.minqty) {
-        this.sharedFunctionobj.openSnackBar(item.item.itemName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
+        this.sharedFunctionobj.openSnackBar(item.item.displayName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
         all_itemsSet = false;
       }
     });
