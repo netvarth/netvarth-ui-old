@@ -301,8 +301,8 @@ export class TeleServiceComponent implements OnInit {
                             // const path = this.callingModes === 'Phone' ? 'tel:' + this.starting_url : this.starting_url;
                             // window.open(path, '_blank');
                             // this.shared_functions.openWindow(path);
-                            // } else 
-                            if (this.callingModes !== 'VideoCall') {
+                            // } else
+                            if (this.callingModes === 'VideoCall') {
                                 const startIndex = this.starting_url.lastIndexOf('/');
                                 const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
                                 this.router.navigate(['video', videoId]);

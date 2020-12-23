@@ -922,9 +922,9 @@
 																	<td class="price rupee-font">{{refund_value |
 																		currency:'&#8377;'}}</td>
 																</tr>
-																<tr class="amt total" *ngIf="refundedAmount > 0">
+																<tr class="amt total" *ngIf="bill_data.refundedAmount > 0">
 																	<td class="name">Amount Refunded</td>
-																	<td class="price rupee-font">{{refundedAmount |
+																	<td class="price rupee-font">{{bill_data.refundedAmount |
 																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amountSaved"

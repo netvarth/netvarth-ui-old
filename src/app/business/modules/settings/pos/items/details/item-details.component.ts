@@ -628,10 +628,22 @@ export class ItemDetailsComponent implements OnInit {
         console.log(propertiesDetob);
         const propertiesDet = {
             'propertiesMap': propertiesDetob
-        };;
+        };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+            this.selectedMessage = {
+                files: [],
+                base64: [],
+                caption: []
+            };
+            this.selectedMessageMain = {
+                files: [],
+                base64: [],
+                caption: []
+            };
+            this.image_list_popup = [];
+            this.mainimage_list_popup = [];
             if (routeTo === 'list') {
                 this.router.navigate(['provider', 'settings', 'pos', 'items']);
             }

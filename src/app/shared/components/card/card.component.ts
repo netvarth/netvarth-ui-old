@@ -201,4 +201,16 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return 'assets/images/img-null.svg';
     }
+    getItemImg(item) {
+        if (item.itemImages) {
+            const img = item.itemImages.filter(image => image.displayImage);
+            if (img[0]) {
+                return img[0].url;
+            } else {
+                return '../../../../assets/images/order/Items.svg';
+            }
+        } else {
+            return '../../../../assets/images/order/Items.svg';
+        }
+    }
 }
