@@ -761,7 +761,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getSelectedItemId(itemName) {
     let itemId = 0;
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].displayName === itemName.trim()) {
+      if (this.items[i].displayName.trim() === itemName.trim()) {
         itemId = this.items[i].itemId;
         break;
       }
@@ -771,7 +771,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   getSelectedItemPrice(itemName) {
     let itemPrice = 0;
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].displayName === itemName) {
+      if (this.items[i].displayName.trim() === itemName.trim()) {
         itemPrice = (this.items[i].promotionalPrice) ? this.items[i].promotionalPrice : this.items[i].price;
         break;
       }
