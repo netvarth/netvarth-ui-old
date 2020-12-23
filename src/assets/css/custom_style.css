@@ -26750,8 +26750,8 @@ color: #fff !important;
   content: url(../images/order/paymentrequired.svg);
   width: 40px;
 }
-.readyfor-pay-icon {
-  content: url(../images/order/paymentrequired.svg);
+.readyfor-pickup-icon {
+  content: url(../images/order/pickup.svg);
   width: 40px;
 }
 .readyfor-ship-icon {
