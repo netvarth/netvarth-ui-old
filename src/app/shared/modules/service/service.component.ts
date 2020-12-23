@@ -353,6 +353,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectToolTypeHandler(event) {
         this.getVirtualCallingModesList();
         this.selctd_tool = event;
+        this.tool_id = '';
         this.is_tool = true;
         this.provider_services.getvirtualServiceInstructions().subscribe(
             (data: any) => {
@@ -787,5 +788,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.postInfoTitle = this.tempPostInfoTitle;
         this.showInfo = false;
         this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
+    }
+    checkUrl(urlData) {
+        if (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom') {
+            const tempvar = urlData.substring( 0 , 4 );
+            if (tempvar !== 'http') {
+                this.tool_id = '';
+                this.tool_id = 'https://' + urlData;
+            }
+        }
     }
 }
