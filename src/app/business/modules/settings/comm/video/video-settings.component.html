@@ -62,7 +62,7 @@
                                                     <!-- {{callingMode.key}} -->
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                            <div class="col-md-12 mgn-up-10 no-padding">
+                                            <div class="col-md-12 mgn-up-10 no-padding" style="display: flex;">
                                                 <!-- {{callingMode.value.displayName}} -->
 
                                                 <!-- <mat-slide-toggle
@@ -70,6 +70,9 @@
                                                     [(ngModel)]="callingMode.value.enabled"
                                                     (change)="triggerChange(callingMode, callingMode.key)">
                                                 </mat-slide-toggle> -->
+                                                <div *ngIf = "callingMode.value.value === 'WhatsApp'" class="input-group-prepend mob-prefix" style="margin-bottom:6px;" #mobPrefix>
+                                                    <span class="input-group-text" style="margin-top:auto;">+91</span>
+                                                </div>
                                                 <mat-form-field>
                                                     <div class="input-group">
                                                         <input [(ngModel)]="callingMode.value.actualValue" matInput
@@ -116,7 +119,7 @@
                                                         class="form-level-settings">{{callingMode.value.titleHelp}}</span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                            <div class="col-md-12 mgn-up-10 no-padding">
+                                            <div class="col-md-12 mgn-up-10 no-padding" style="display: flex;">
                                                 <!-- {{callingMode.value.displayName}} -->
 
                                                 <!-- <mat-slide-toggle
@@ -124,6 +127,9 @@
                                                     [(ngModel)]="callingMode.value.enabled"
                                                     (change)="triggerChange(callingMode, callingMode.key)">
                                                 </mat-slide-toggle> -->
+                                                <div  class="input-group-prepend mob-prefix" style="margin-bottom:6px;" #mobPrefix>
+                                                    <span class="input-group-text" style="margin-top:auto;">+91</span>
+                                                </div>
                                                 <mat-form-field>
                                                     <div class="input-group">
                                                         <input [(ngModel)]="callingMode.value.actualValue" matInput
