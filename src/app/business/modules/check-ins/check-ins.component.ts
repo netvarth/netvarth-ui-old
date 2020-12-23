@@ -1687,9 +1687,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    // if (this.filter.waitlist_status === 'all') {
-    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    // }
+    if (this.filter.waitlist_status === 'all') {
+      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1957,7 +1957,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all' && this.time_type !== 3) {
+    if (this.filter.waitlist_status === 'all') {
       api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     if (this.labelFilterData !== '') {
