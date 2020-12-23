@@ -335,10 +335,10 @@ export class ConsumerCheckinComponent implements OnInit {
         this.get_token_cap = Messages.GET_TOKEN;
         this.maxsize = 1;
         this.step = 1;
-        this.getProfile();
+       
         // this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
         this.gets3curl();
-        this.getFamilyMembers();
+       
         // this.getCurrentLocation();
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -387,6 +387,9 @@ export class ConsumerCheckinComponent implements OnInit {
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
+        this.getProfile().then(
+            () => {
+        this.getFamilyMembers();
         this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         // if (this.data.moreparams.terminologies) {
         //     this.terminologiesjson = this.data.moreparams.terminologies;
@@ -408,7 +411,9 @@ export class ConsumerCheckinComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
         this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
-    }
+        }
+    );
+}
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
@@ -601,7 +606,10 @@ export class ConsumerCheckinComponent implements OnInit {
                                 this.currentPhone = this.waitlist.waitlistPhoneNumber;
                             }
                         } else {
-                            this.callingModes = this.customer_data.primaryPhoneNumber;
+                            const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                            this.callingModes = unChangedPhnoCountryCode+''+this.customer_data.primaryPhoneNumber;
+                            console.log(this.callingModes)
+                            // this.callingModes = this.customer_data.primaryPhoneNumber;
                         }
                     }
                 }
@@ -1692,33 +1700,39 @@ export class ConsumerCheckinComponent implements OnInit {
         this.apptTime = slot;
     }
     getProfile() {
-        this.sharedFunctionobj.getProfile()
+
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.sharedFunctionobj.getProfile()
             .then(
                 data => {
-                    this.userData = data;
-                    this.countryCode = this.userData.userProfile.countryCode;
-                    if (this.selectedCountryCode) {
-                        if (this.countryCode != this.selectedCountryCode) {
-                            this.countryCode = this.selectedCountryCode;
-                            console.log(this.countryCode)
+                    _this.userData = data;
+                    _this.countryCode = _this.userData.userProfile.countryCode;
+                    if (_this.selectedCountryCode) {
+                        if (_this.countryCode != _this.selectedCountryCode) {
+                            _this.countryCode = _this.selectedCountryCode;
+                            // console.log(this.countryCode)
                         }
                     } else {
-                        this.selectedCountryCode = this.countryCode;
+                        _this.selectedCountryCode = _this.countryCode;
                     }
-                    if (this.userData.userProfile !== undefined) {
-                        this.userEmail = this.userData.userProfile.email || '';
-                        if (this.type !== 'waitlistreschedule') {
-                            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                    if (_this.userData.userProfile !== undefined) {
+                        _this.userEmail = _this.userData.userProfile.email || '';
+                        if (_this.type !== 'waitlistreschedule') {
+                            _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
                         }
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.consumerPhoneNo = this.userPhone;
+                        _this.consumerPhoneNo = _this.userPhone;
                     }
-                    if (this.userEmail) {
-                        this.emailExist = true;
+                    if (_this.userEmail) {
+                        _this.emailExist = true;
                     } else {
-                        this.emailExist = false;
+                        _this.emailExist = false;
                     }
+                    resolve(true);
                 });
+            });
+
     }
     gets3curl() {
         this.api_loading1 = true;

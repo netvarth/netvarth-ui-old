@@ -319,9 +319,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.get_token_cap = Messages.GET_TOKEN;
         this.maxsize = 1;
         this.step = 1;
-        this.getProfile();
         this.gets3curl();
-        this.getFamilyMembers();
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -366,18 +364,25 @@ export class ConsumerAppointmentComponent implements OnInit {
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
-        this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date1 = new Date(dt1);
-        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-        const date2 = new Date(dt2);
-        if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-            this.isFuturedate = true;
-        }
-        this.showfuturediv = false;
-        this.revealphonenumber = true;
-        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+        this.getProfile().then(
+            () => {
+                this.getFamilyMembers();
 
+                this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                const date1 = new Date(dt1);
+                const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                const date2 = new Date(dt2);
+                if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+                    this.isFuturedate = true;
+                }
+                this.showfuturediv = false;
+                this.revealphonenumber = true;
+                this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
+        
+            }
+        );
+        
     }
     getRescheduleApptDet() {
         this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
@@ -545,7 +550,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                                 this.currentPhone = this.appointment.phoneNumber;
                             }
                         } else {
-                            this.callingModes = this.customer_data.primaryPhoneNumber;
+                            const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                            this.callingModes = unChangedPhnoCountryCode+''+this.customer_data.primaryPhoneNumber;
+                            console.log(this.callingModes)
                         }
                     }
                 }
@@ -771,7 +778,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                 } else {
-                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    // if(!this.changePhno){
+                    //     const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    //     console.log(unChangedPhnoCountryCode)
+                    //     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = `${unChangedPhnoCountryCode}${this.callingModes}`;
+                    // } else {
+                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                    
                 }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -1506,11 +1519,13 @@ export class ConsumerAppointmentComponent implements OnInit {
         // this.action = '';
     }
     getProfile() {
-        this.sharedFunctionobj.getProfile()
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.sharedFunctionobj.getProfile()
             .then(
                 data => {
-                    this.userData = data;
-                    this.countryCode = this.userData.userProfile.countryCode;
+                    _this.userData = data;
+                    _this.countryCode = _this.userData.userProfile.countryCode;
                     // if (this.selectedCountryCode) {
                     //     if (this.countryCode != this.selectedCountryCode) {
                     //         this.countryCode = this.selectedCountryCode;
@@ -1519,19 +1534,22 @@ export class ConsumerAppointmentComponent implements OnInit {
                     // } else {
                     //     this.selectedCountryCode = this.countryCode;
                     // }
-                    if (this.userData.userProfile !== undefined) {
-                        this.userEmail = this.userData.userProfile.email || '';
-                        if (this.type !== 'reschedule') {
-                            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+                    if (_this.userData.userProfile !== undefined) {
+                        _this.userEmail = _this.userData.userProfile.email || '';
+                        if (_this.type !== 'reschedule') {
+                            _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
                         }
                         // this.currentPhone = this.userPhone;
                     }
-                    if (this.userEmail) {
-                        this.emailExist = true;
+                    if (_this.userEmail) {
+                        _this.emailExist = true;
                     } else {
-                        this.emailExist = false;
+                        _this.emailExist = false;
                     }
+                    resolve(true);
                 });
+        });
+       
     }
     gets3curl() {
         this.api_loading1 = true;
