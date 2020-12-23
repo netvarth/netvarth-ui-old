@@ -830,15 +830,6 @@
 																	</td>
 																</tr>
 																<tr class="amt discount"
-																	*ngIf="bill_data.deliveryCharges > 0">
-																	<td class="name"><span class="tax-top">Delivery
-																			Charge </span>
-																	</td>
-																	<td class="price rupee-font">
-																		(+){{bill_data.deliveryCharges |
-																			currency:'&#8377;'}}</td>
-																</tr>
-																<tr class="amt discount"
 																	*ngIf="bill_data.jdn && bill_data.jdn.discount">
 																	<td class="name">JDN</td>
 																	<td class="price rupee-font">
@@ -897,6 +888,15 @@
 																	<td class="price rupee-font">
 																		(+){{bill_data.totalTaxAmount |
 																		currency:'&#8377;'}}</td>
+																</tr>
+																<tr class="amt discount"
+																	*ngIf="bill_data.deliveryCharges > 0">
+																	<td class="name"><span class="tax-top">Delivery
+																			Charge </span>
+																	</td>
+																	<td class="price rupee-font">
+																		(+){{bill_data.deliveryCharges |
+																			currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
@@ -1109,7 +1109,7 @@
 																<span class="number">
 																	<mat-form-field class="example-full-width">
 																		<span matPrefix class="rupee-font"
-																			style="font-size: larger;"> ₹ &nbsp;</span>
+																			style="font-size: larger;"> â‚¹ &nbsp;</span>
 																		<mat-form-field class="bill-ip">
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
@@ -1156,7 +1156,7 @@
 																<span class="number">
 																	<mat-form-field class="example-full-width">
 																		<span matPrefix class="rupee-font"
-																			style="font-size: larger;"> ₹ &nbsp;</span>
+																			style="font-size: larger;"> â‚¹ &nbsp;</span>
 																		<mat-form-field class="bill-ip">
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
