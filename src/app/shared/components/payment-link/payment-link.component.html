@@ -372,6 +372,23 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
+
+                                                                                        <div class="c-row two section-two"
+                                                                                        *ngIf="bill_data.refundedAmount > 0">
+                                                                                        <div
+                                                                                            class="discount-row two-col">
+                                                                                            <div
+                                                                                                class="name st paymentlink-color">
+                                                                                                Amount Refunded
+                                                                                            </div>
+                                                                                            <div class="price paymentlink-color rupee-font"
+                                                                                                style="flex-basis:30% !important">
+                                                                                                {{bill_data.refundedAmount
+                                                                                                |
+                                                                                                currency:'&#8377;
+                                                                                                '}}</div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     </div>
                                                                                 </div>
 

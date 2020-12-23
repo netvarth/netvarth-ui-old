@@ -108,7 +108,6 @@ export class OrderBillComponent implements OnInit {
   razorpay_order_id: any;
   razorpay_payment_id: any;
   razorpayDetails: any = [];
-  refundedAmount;
   constructor(
     //   private consumer_services: ConsumerServices,
       public consumer_checkin_history_service: CheckInHistoryServices,
@@ -264,14 +263,6 @@ export class OrderBillComponent implements OnInit {
           .subscribe(
               data => {
                   this.pre_payment_log = data;
-                  this.refundedAmount = 0;
-                  for (let i = 0; i < this.pre_payment_log.length; i++) {
-                      if (this.pre_payment_log[i].refundDetails.length > 0) {
-                          for (const payment of this.pre_payment_log[i].refundDetails) {
-                              this.refundedAmount = this.refundedAmount + payment.amount;
-                          }
-                      }
-                  }
               },
               () => {
 
@@ -626,13 +617,13 @@ export class OrderBillComponent implements OnInit {
           bill_html += '</table>';
           bill_html += '	</td></tr>';
       }
-      if (this.refundedAmount > 0) {
+      if (this.bill_data.refundedAmount > 0) {
           bill_html += '	<tr><td>';
           bill_html += '<table width="100%"';
           bill_html += '	style="color:#000000; font-size:10pt; font-family:Ubuntu, Arial,sans-serif; ;padding-bottom:5px">';
           bill_html += '	<tr style="font-weight: bold;"> ';
           bill_html += '<td width="70%" style="text-align:right">Amount refunded</td>';
-          bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.refundedAmount).toFixed(2) + '</td>';
+          bill_html += '<td width="30%" style="text-align:right">&#x20b9;' + parseFloat(this.bill_data.refundedAmount).toFixed(2) + '</td>';
           bill_html += '	</tr>                                                                           ';
           bill_html += '</table>';
           bill_html += '	</td></tr>';

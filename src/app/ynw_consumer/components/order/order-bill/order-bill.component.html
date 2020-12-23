@@ -259,10 +259,10 @@
 											currency:'&#8377; '}}</div>
                                                                                 </div>
                                                                                 <div class="c-row one two-col"
-                                                                                    *ngIf="refundedAmount > 0">
+                                                                                    *ngIf="bill_data.refundedAmount > 0">
                                                                                     <div class="name">Amount Refunded
                                                                                     </div>
-                                                                                    <div class="price rupee-font">{{refundedAmount |
+                                                                                    <div class="price rupee-font">{{bill_data.refundedAmount |
                                         currency:'&#8377; '}}</div>
                                                                                 </div>
                                                                                 <div class="amountSaved"
