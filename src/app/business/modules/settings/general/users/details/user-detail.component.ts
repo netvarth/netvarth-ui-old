@@ -192,7 +192,7 @@ export class BranchUserDetailComponent implements OnInit {
             first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
             gender: [''],
-            phonenumber: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
+            phonenumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10)])],
             dob: [''],
             email: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
             //  password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
@@ -303,8 +303,8 @@ export class BranchUserDetailComponent implements OnInit {
             'dob': date_format || null,
             'gender': input.gender || null,
             'email': input.email || '',
-            'countryCode': '+91',
-            'mobileNo': input.phonenumber,
+            // 'countryCode': '+91',
+            // 'mobileNo': input.phonenumber,
             // 'address': input.address,
             // 'city': input.city,
             // 'state': input.state,
@@ -312,9 +312,14 @@ export class BranchUserDetailComponent implements OnInit {
             // 'isAdmin' :
             'userType': input.selectedUserType
         };
+        if(input.phonenumber !==''){
+            post_data1['countryCode'] = '+91',
+            post_data1['mobileNo'] = input.phonenumber;
+        }
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['admin'] = input.privileges;
+            console.log(input.privileges);
             // post_data1['subdomain'] = input.selectedSubDomain;
             post_data1['subdomain'] = this.selectedsubDomain[0].id || 0;
         }
