@@ -147,22 +147,17 @@ export class ProvidersignupComponent implements OnInit {
   };
   scInfo;
   scCode_Ph;
-  claimDetails;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices, public activatedRoute: ActivatedRoute,
     private router: Router, private provider_services: ProviderServices,
-<<<<<<< HEAD
     public shared_functions: SharedFunctions,
-    public dialog: MatDialog) { }
-=======
-    public shared_functions: SharedFunctions) {
-    this.activatedRoute.queryParams.subscribe(params => {
+    public dialog: MatDialog) { 
+     this.activatedRoute.queryParams.subscribe(params => {
       this.claimDetails = params;
     });
-  }
->>>>>>> refs/remotes/origin/1.7-order
+    }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
@@ -788,10 +783,7 @@ export class ProvidersignupComponent implements OnInit {
   //   }
   // }
   handleDomainSelection() {
-<<<<<<< HEAD
-    this.selectedSubDomain = this.selectedDomain.subDomains[0];
-=======
-    if (this.claimDetails.subSector) {
+     if (this.claimDetails.subSector) {
       const subdomains = this.selectedDomain.subDomains.filter(subdom => subdom.subDomain === this.claimDetails.subSector.toString());
       if (subdomains[0]) {
         this.selectedSubDomain = subdomains[0];
@@ -801,7 +793,6 @@ export class ProvidersignupComponent implements OnInit {
     } else {
       this.selectedSubDomain = this.selectedDomain.subDomains[0];
     }
->>>>>>> refs/remotes/origin/1.7-order
     this.user_details['sector'] = this.selectedDomain.domain;
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.user_details['licPkgId'] = 9;
