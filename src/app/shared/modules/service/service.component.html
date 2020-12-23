@@ -65,6 +65,7 @@
             ID</span>
           <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone'" class=" ttle">Phone Number
           </span>
+          <span *ngIf="service_data.virtualCallingModes[0].callingMode === 'Phone' || service_data.virtualCallingModes[0].callingMode === 'WhatsApp'">+91</span>&nbsp;
           <span>{{service_data.virtualCallingModes[0].value}}</span>
         </div>
 
