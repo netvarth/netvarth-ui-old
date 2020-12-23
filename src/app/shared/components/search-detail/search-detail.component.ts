@@ -189,7 +189,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   //     }
   //   ]
   // };
-  futureAllowed = true; 
+  futureAllowed = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   constructor(private routerobj: Router,
     private location: Location,
@@ -1695,17 +1695,18 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
+    // this.claimdialogRef = this.dialog.open(SignUpComponent, {
+    //   width: '50%',
+    //   panelClass: ['signupmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     is_provider: 'true',
+    //     claimData: passData
+    //   }
+    // });
+    // this.claimdialogRef.afterClosed().subscribe(result => {
+    // });
+    this.router.navigate(['business', 'providersignup'], { queryParams: { claimable: true, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector } });
   }
 
   checkinClicked(obj, chdatereq) {
