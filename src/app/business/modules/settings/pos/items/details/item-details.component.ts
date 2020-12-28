@@ -293,8 +293,8 @@ export class ItemDetailsComponent implements OnInit {
                 shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [false],
-                stockAvailable: [false],
+                showOnLandingpage: [true],
+                stockAvailable: [true],
                 taxable: [false, Validators.compose([Validators.required])],
                 price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
                 promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
@@ -524,7 +524,7 @@ export class ItemDetailsComponent implements OnInit {
             .subscribe(
                 (data) => {
                     if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && isFrom === 'saveadd') {
-                        this.saveImages(data);
+                        this.saveImages(data, isFrom);
                     }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
@@ -535,18 +535,19 @@ export class ItemDetailsComponent implements OnInit {
                         this.amForm.reset();
                         this.haveMainImg = false;
                         this.mainImage = false;
-                        this.selectedMessage = {
-                            files: [],
-                            base64: [],
-                            caption: []
-                        };
-                        this.selectedMessageMain = {
-                            files: [],
-                            base64: [],
-                            caption: []
-                        };
-                        this.image_list_popup = [];
-                        this.mainimage_list_popup = [];
+                        // this.selectedMessage = {
+                        //     files: [],
+                        //     base64: [],
+                        //     caption: []
+                        // };
+                        // this.selectedMessageMain = {
+                        //     files: [],
+                        //     base64: [],
+                        //     caption: []
+                        // };
+                        // this.image_list_popup = [];
+                        // this.mainimage_list_popup = [];
+                        console.log("add");
                     } else if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && !isFrom) {
                         const route = 'list';
                         this.saveImages(data, route);
@@ -693,6 +694,7 @@ export class ItemDetailsComponent implements OnInit {
             };
             this.image_list_popup = [];
             this.mainimage_list_popup = [];
+            console.log("uploadadd");
             if (routeTo === 'list') {
                 if (this.iscmFrom === 'ordermanager') {
                     const navigatExtras: NavigationExtras = {
@@ -705,14 +707,16 @@ export class ItemDetailsComponent implements OnInit {
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 }
             }
-            this.getItem(id).then(
-                (item) => {
-                    this.item = item;
-                    if (this.item.itemImages) {
-                        this.imageList = this.item.itemImages;
-                        this.loadImages(this.item.itemImages);
-                    }
-                });
+            if (routeTo !== 'saveadd') {
+                this.getItem(id).then(
+                    (item) => {
+                        this.item = item;
+                        if (this.item.itemImages) {
+                            this.imageList = this.item.itemImages;
+                            this.loadImages(this.item.itemImages);
+                        }
+                    });
+            }
             this.api_loading = false;
         },
             error => {
