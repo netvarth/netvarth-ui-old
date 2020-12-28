@@ -1493,9 +1493,9 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         this.provider_services.addCatalog(post_data)
             .subscribe(
                 (data) => {
-                    if (this.selectedMessage.files.length > 0) {
-                        this.saveImages(data);
-                    }
+                    // if (this.selectedMessage.files.length > 0) {
+                    //     this.saveImages(data);
+                    // }
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
                     this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
@@ -1650,11 +1650,16 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
-            this.getCatalog(this.catalog_id).then(
+            this.getCatalog(id).then(
                 (catalog) => {
                     this.catalog = catalog;
                     if (this.catalog.catalogImages) {
                         this.uploadcatalogImages = this.catalog.catalogImages;
+                        this.selectedMessage = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
                         this.image_list_popup = [];
                         for (const pic of this.uploadcatalogImages) {
                             this.selectedMessage.files.push(pic);
@@ -1747,6 +1752,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                     this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
                         .subscribe((data) => {
                             this.selectedMessage.files.splice(index, 1);
+                            this.selectedMessage.base64.splice(index, 1);
                             this.image_list_popup.splice(index, 1);
                         },
                             error => {
