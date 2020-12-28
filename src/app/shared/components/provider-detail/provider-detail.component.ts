@@ -1957,10 +1957,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];
-          if(this.activeCatalog.catalogImages[0]){
+          if (this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
           }
-
+          //this.updateLocalStorageItems();
           this.catlogArry();
           // if(catalogs.length > 1) {
           //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
@@ -1990,20 +1990,27 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const item = itemObj.item;
     const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
     if (spId === null) {
+      this.orderList = [];
       this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.orderList.push(itemObj);
+      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.getTotalItemAndPrice();
+      this.getItemQty(item);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
             this.sharedFunctionobj.removeitemfromLocalStorage('order');
           }
+        } else {
+          this.orderList.push(itemObj);
+          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+          this.getTotalItemAndPrice();
+          this.getItemQty(item);
         }
       }
     }
-    this.orderList.push(itemObj);
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.getTotalItemAndPrice();
-    this.getItemQty(item);
+
   }
 
 
