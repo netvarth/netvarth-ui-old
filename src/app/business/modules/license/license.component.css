@@ -27,3 +27,62 @@
     width:10%;
     font-weight: bold;
 }
+
+/* revamp css */
+.lic_revamp .ln-ht-3 {
+    line-height: 3;
+}
+.lic_revamp .txt_sub_plan {
+    font-size: 0.8rem;
+    color: grey;
+    font-weight: 600;
+}
+.lic_revamp .txt_plan {
+    font-size: 1.5rem;
+    color: #194179;
+}
+.lic_revamp .btn_upgrde {
+    background: #194179;
+    border-radius: 20px;
+    color: white;
+}
+.lic_revamp .clr_grey {
+    color: grey;
+}
+.lic_revamp .clr_pitch_blu {
+    color: #194179 !important;
+}
+.lic_revamp .btn_switch {
+    color: #194179;
+    border-radius: 20px;
+    border: 2px solid #194179;
+}
+.lic_revamp .txt_off {
+    margin-left: 10px;
+    color: #4CAF50;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.lic_revamp .card_addon {
+    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+}
+.lic_revamp .txt_adon {
+    color: grey;
+    font-size: 1rem;
+}
+.lic_revamp .fnt-weig-600 {
+    font-weight: 600;
+}
+.lic_revamp .bill_due_card {
+    font-family: -webkit-pictograph;
+    margin-top: 40px;
+}
+.lic_revamp .txt_centr {
+    text-align: center;
+}
+.lic_revamp .btn_pay {
+    background: #194179;
+    color: white;
+    padding: 2px 15px 2px 15px;
+    border-radius: 15px;
+}
