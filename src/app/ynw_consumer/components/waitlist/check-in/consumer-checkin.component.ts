@@ -913,13 +913,13 @@ export class ConsumerCheckinComponent implements OnInit {
         } else {
             phNumber = this.userPhone;
         }
-        let selCountryCode;
-        if (this.countryCode != this.selectedCountryCode) {
-            selCountryCode = this.selectedCountryCode;
-            console.log(selCountryCode);
-        } else {
-            selCountryCode = this.countryCode;
-        }
+        // let selCountryCode;
+        // if (this.countryCode != this.selectedCountryCode) {
+        //     selCountryCode = this.selectedCountryCode;
+        //     console.log(selCountryCode);
+        // } else {
+        //     selCountryCode = this.countryCode;
+        // }
 
         // }
         const post_Data = {
@@ -932,7 +932,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 'serviceType': this.sel_ser_det.serviceType
             },
             'consumerNote': this.consumerNote,
-            'countryCode': selCountryCode,
+            'countryCode': this.countryCode,
             'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
             'coupons': this.selected_coupons
         };
