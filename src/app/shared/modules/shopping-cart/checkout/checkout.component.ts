@@ -21,7 +21,9 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  checkoutDisabled = false;
+  checkoutDisabled: boolean;
+  loading = true;
+  disabled = false;
   userEmail = '';
   orderNote: any;
   phonenumber: any;
@@ -37,8 +39,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   minDate;
   maxDate;
   todaydate;
-  home_delivery: boolean;
-  store_pickup: boolean;
+  home_delivery = false;
+  store_pickup = false;
   nextAvailableTime: string;
   customer_email: any;
   customer_phoneNumber: any;
@@ -101,11 +103,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.catalog_Id = this.chosenDateDetails.catlog_id;
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
-    if (this.delivery_type === 'store') {
+    if (this.choose_type === 'store') {
       this.store_pickup = true;
       this.storeChecked = true;
 
-    } else if (this.delivery_type === 'home') {
+    } else if (this.choose_type === 'home') {
       this.home_delivery = true;
       this.storeChecked = false;
     }
@@ -162,7 +164,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       this.advance_amount = this.catalog_details.advanceAmount;
+      this.loading = false;
       console.log(this.catalog_details);
+      if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
+        this.store_pickup = true;
+        this.storeChecked = true;
+        this.getOrderAvailableDatesForPickup();
+      }
+      if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
+        console.log('inisde home');
+        this.home_delivery = true;
+        this.storeChecked = false;
+        this.getOrderAvailableDatesForHome();
+      }
+      this.getAvailabilityByDate(this.sel_checkindate);
     });
     this.getStoreContact();
     this.loginForm = this._formBuilder.group({
@@ -204,9 +219,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.isFuturedate = true;
     }
-    this.getOrderAvailableDatesForPickup();
-    this.getOrderAvailableDatesForHome();
-    this.getAvailabilityByDate(this.sel_checkindate);
+
+
   }
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);

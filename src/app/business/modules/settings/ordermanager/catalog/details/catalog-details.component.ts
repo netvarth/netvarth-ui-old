@@ -12,6 +12,7 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import * as moment from 'moment';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { AddcatalogimageComponent } from '../addcatalogimage/addcatalogimage.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -182,6 +183,8 @@ export class CatalogdetailComponent implements OnInit {
     paymentinformation = true;
     storepickupinfo = false;
     homedeliveryinfo = false;
+    addcataimgdialogRef;
+    addcatalogimagedialogRef;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -1489,18 +1492,29 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
     addCatalog(post_data) {
         this.disableButton = true;
         this.resetApiErrors();
-        this.api_loading = true;
+        console.log('add');
+       this.api_loading = true;
         this.provider_services.addCatalog(post_data)
             .subscribe(
                 (data) => {
-                    if (this.selectedMessage.files.length > 0) {
-                        this.saveImages(data);
-                    }
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
+                   // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
                     this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
-                    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
-                },
+                            this.addcatalogimagedialogRef = this.dialog.open(AddcatalogimageComponent, {
+                                width: '50%',
+                                panelClass: ['popup-class', 'commonpopupmainclass'],
+                                disableClose: true,
+                                data: {
+                                    source_id: data
+                                }
+                            });
+                            this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
+                                if (result === 1) {
+                                 console.log(result);
+                                 this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
+                                }
+                              });
+               },
                 error => {
                     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
@@ -1650,11 +1664,16 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
-            this.getCatalog(this.catalog_id).then(
+            this.getCatalog(id).then(
                 (catalog) => {
                     this.catalog = catalog;
                     if (this.catalog.catalogImages) {
                         this.uploadcatalogImages = this.catalog.catalogImages;
+                        this.selectedMessage = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
                         this.image_list_popup = [];
                         for (const pic of this.uploadcatalogImages) {
                             this.selectedMessage.files.push(pic);
@@ -1747,6 +1766,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                     this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
                         .subscribe((data) => {
                             this.selectedMessage.files.splice(index, 1);
+                            this.selectedMessage.base64.splice(index, 1);
                             this.image_list_popup.splice(index, 1);
                         },
                             error => {

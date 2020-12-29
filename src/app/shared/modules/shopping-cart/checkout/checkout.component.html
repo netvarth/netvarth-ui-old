@@ -50,7 +50,7 @@
                     <mat-step label="Step 2">
                       <ng-template matStepLabel>Delivery options</ng-template>
                       <div>
-                        <span *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type</span>
+                        <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>
                         <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                           <mat-radio-button [value]="'store'" [checked]="storeChecked">
                             Store pick up
@@ -59,7 +59,7 @@
                             Home delivery
                           </mat-radio-button>
                         </mat-radio-group>
-
+                      </div>
                         <div *ngIf="store_pickup && !home_delivery">
                           Store Pick Up
                         </div>
@@ -174,8 +174,10 @@
                       <span *ngIf="storeContactNw.address">
                         <i class="fa fa-map-marker"></i> {{storeContactNw.address}}
                       </span>
-                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}}{{storeContactNw.phone}}</span>
+                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.primCountryCode}} {{storeContactNw.phone}}</span>
+                      <span *ngIf= "storeContactNw.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContactNw.secCountryCode}} {{storeContactNw.alternatePhone}}</span>
                       <span [matTooltip]="storeContactNw.email" *ngIf="storeContactNw.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.email}}</span>
+                      <span *ngIf= "storeContactNw.alternateEmail" class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContactNw.alternateEmail}}</span>
                     </div>
                   </aside>
                 </div>

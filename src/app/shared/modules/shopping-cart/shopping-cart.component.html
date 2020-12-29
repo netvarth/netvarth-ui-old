@@ -21,7 +21,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="action==''">
               <div class="col-sm-7 col-md-7 col-lg-7 col-xs-12 pad-10">
                 <div class="card col-xs-12">
-                  <div *ngIf="orders.length === 0">Your cart is empty</div>
+                  <div *ngIf="orderCount === 0">Your cart is empty</div>
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2 no-padding-small"
                     *ngFor="let item of orders;  let i = index">
                     <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding disp-flex">
@@ -69,8 +69,11 @@
                       <span *ngIf="storeContact.address">
                         <i class="fa fa-map-marker"></i> {{storeContact.address}}
                       </span>
-                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}}{{storeContact.phone}}</span>
+                      <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</span>
+                      <span *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</span>
                       <span [matTooltip]="storeContact.email" *ngIf="storeContact.email" class="wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                      <span *ngIf= "storeContact.alternateEmail" class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.alternateEmail}}</span>
+
                     </div>
                   </aside>
                 </div>
@@ -212,7 +215,7 @@
 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                        <button (click)="goBackCart(futureAvailableTime)" class="btn bt3 btn-default coupon-apply-btn"
+                        <button (click)="goBackCart(futureAvailableTime)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Ok</button>
                           <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Cancel</button> -->

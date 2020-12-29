@@ -121,12 +121,25 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
     this.getitems().then(
       (data) => {
+        console.log(this.cataId);
         if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
           this.heading = 'Edit catalog items';
           this.getCatalog();
         } else {
           this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
-          console.log(this.addCatalogItems);
+          if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+            this.selectedCount = this.addCatalogItems.length;
+           for (const itm of this.catalogItem) {
+              for (const selitem of this.addCatalogItems) {
+                 if (itm.itemId === selitem.item.itemId) {
+                  itm.selected = true;
+                  itm.id = selitem.id;
+                  itm.minQuantity = selitem.minQuantity;
+                  itm.maxQuantity = selitem.maxQuantity;
+                 }
+            }
+          }
+           }
         }
       }
     );
@@ -165,19 +178,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           itm.minQuantity = '1';
           itm.maxQuantity = '5';
          }
-         if (this.addCatalogItems && this.addCatalogItems.length > 0) {
-          this.selectedCount = this.addCatalogItems.length;
-         for (const itm of this.catalogItem) {
-            for (const selitem of this.addCatalogItems) {
-               if (itm.itemId === selitem.item.itemId) {
-                itm.selected = true;
-                itm.id = selitem.id;
-                itm.minQuantity = selitem.minQuantity;
-                itm.maxQuantity = selitem.maxQuantity;
-               }
-          }
-        }
-         }
+        
          this.api_loading = false;
             resolve(data);
           },

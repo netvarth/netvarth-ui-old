@@ -122,7 +122,7 @@ export class TeleServiceShareComponent implements OnInit {
           }
           break;
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on ' + this.meetingLink + '.';
+          this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on +' + this.meetingLink + '.';
           break;
         case 'Zoom':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.zoomWaitFor;

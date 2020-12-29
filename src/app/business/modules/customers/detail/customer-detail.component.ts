@@ -620,11 +620,13 @@ export class CustomerDetailComponent implements OnInit {
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
+            const showtoken = (this.source === 'checkin') ? false : true;
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     checkin_type: this.checkin_type,
                     haveMobile: this.haveMobile,
-                    thirdParty: this.thirdParty
+                    thirdParty: this.thirdParty,
+                    showtoken: showtoken
                 }
             };
             this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
@@ -873,6 +875,11 @@ export class CustomerDetailComponent implements OnInit {
         notedialogRef.afterClosed().subscribe(result => {
             if (result === 'edit') {
                 this.editCustomer();
+            } else {
+                this.getCustomers(this.customerId).then(
+                    (customer) => {
+                        this.customer = customer;
+                    });
             }
         });
     }
