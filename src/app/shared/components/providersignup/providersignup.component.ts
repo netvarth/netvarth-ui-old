@@ -147,6 +147,7 @@ export class ProvidersignupComponent implements OnInit {
   };
   scInfo;
   scCode_Ph;
+  claimDetails;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
