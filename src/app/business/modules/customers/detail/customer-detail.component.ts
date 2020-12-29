@@ -876,7 +876,10 @@ export class CustomerDetailComponent implements OnInit {
             if (result === 'edit') {
                 this.editCustomer();
             } else {
-                this.getCustomers(this.customerId);
+                this.getCustomers(this.customerId).then(
+                    (customer) => {
+                        this.customer = customer;
+                    });
             }
         });
     }
