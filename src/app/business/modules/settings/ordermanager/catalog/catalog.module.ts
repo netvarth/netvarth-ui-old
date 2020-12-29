@@ -17,6 +17,7 @@ import { TruncateModule } from '../../../../../shared/pipes/limitTo.module';
 import { CapitalizeFirstPipeModule } from '../../../../../shared/pipes/capitalize.module';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalogitempopup.component';
+import { AddcatalogimageComponent } from './addcatalogimage/addcatalogimage.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalo
         CatalogComponent,
         CatalogdetailComponent,
         AddItemsComponent,
-        EditcatalogitemPopupComponent
+        EditcatalogitemPopupComponent,
+        AddcatalogimageComponent
       ],
     imports: [
         CatalogRoutingModule,
@@ -44,7 +46,8 @@ import { EditcatalogitemPopupComponent } from './editcatalogitempopup/editcatalo
         NgbTimepickerModule
     ],
     entryComponents: [
-        EditcatalogitemPopupComponent
+        EditcatalogitemPopupComponent,
+        AddcatalogimageComponent
         ],
     exports: [CatalogComponent]
 })
