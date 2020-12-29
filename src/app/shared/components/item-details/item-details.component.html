@@ -73,7 +73,7 @@
                     </p>
                   </div>
                   <div class="col-md-12  mr-area">
-                    <p class="m0 question-header">Description</p>
+                    <p *ngIf = "currentItem.itemDesc" class="m0 question-header">Description</p>
                     <p>{{currentItem.itemDesc}}</p>
                     <!-- <textarea name="paragraph_text" maxlength="500" cols="10" rows="2"></textarea> -->
                   </div>
