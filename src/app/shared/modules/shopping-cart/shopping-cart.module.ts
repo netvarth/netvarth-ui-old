@@ -15,6 +15,7 @@ import { NgBootstrapModule } from '../common/ngbootstrap.module';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../common/material.module';
+import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
 @NgModule({
     imports: [
       ShoppingCartRoutingModule,
@@ -29,7 +30,8 @@ import { MaterialModule } from '../common/material.module';
       MatGridListModule,
       FormsModule,
       ReactiveFormsModule,
-      MaterialModule
+      MaterialModule,
+      FormMessageDisplayModule
     ],
     exports: [
       ShoppingCartRoutingModule,
