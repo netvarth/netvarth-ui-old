@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-addons',
-    templateUrl: './addons.component.html'
+    templateUrl: './addons.component.html',
+    styleUrls: ['./addons.component.css']
 })
 
 export class AddonsComponent implements OnInit, OnDestroy {
@@ -42,6 +43,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     ];
     addonDescription = '';
     corpSettings: any;
+    addon_metric: any;
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
@@ -57,7 +59,16 @@ export class AddonsComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
+        this.getUpgradableaddonPackages();
     }
+    getUpgradableaddonPackages() {
+        this.provider_servicesobj.getUpgradableAddonPackages()
+          .subscribe((data: any) => {
+            console.log(data);
+            this.addon_metric = data;
+          });
+      }
+
     getLicenseCorpSettings() {
         this.provider_servicesobj.getLicenseCorpSettings().subscribe(
             (data: any) => {
@@ -131,5 +142,8 @@ export class AddonsComponent implements OnInit, OnDestroy {
     }
     redirecToLicenseInvoice() {
         this.routerobj.navigate(['provider', 'license']);
+    }
+    gotoAddonDetail() {
+        this.routerobj.navigate(['provider', 'license', 'addon-detail']);
     }
 }

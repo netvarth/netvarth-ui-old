@@ -1,149 +1,109 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToLicenseInvoice()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToLicenseInvoice()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Add-ons</h5>
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToLicenseInvoice()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Add-ons
+        </h5>
     </div>
- </section>
-<section>
+</section>
+
+
+<section class="revamp_addon">
     <div class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
                 <div class="row">
+                    <!-- Revamped -->
+                    <div class="copy addons one  col-xs-12 col-sm-12 card no-padding">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-30">
+                            <div>
+                                <p class="form-level-settings">{{frm_addon_cap}}<a
+                                    class="learnmore-pointer" id="customer-help"
+                                    (click)="learnmore_clicked('addon', $event)">{{learn_more}}</a>
+                            </div>
+                            <div *ngFor="let adon_item of addon_metric" class="col-xs-12 col-sm-5 col-md-5 col-lg-5 pad-30 bx-shadw txt_disp_name custId-cursor" (click)="gotoAddonDetail()">
+                                {{adon_item.metricDisplayName}}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <!-- Old code -->
                     <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
                         <div class=" row no-padding">
 
-                            <div class="col-md-6 no-padding"> 
+                            <div class="col-md-6 no-padding">
                                 <div class="pay-section card left">
-                                   <div class="lc22">
-                                    <div class="lc2-1 lcd custom-help">
-                                        <div class="ttle block-level">
-                                            <span [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">
-                                                {{addon_cap}}<span class="addbt"
-                                                    (click)="showadd_addons()"></span></span>
-                                            <p class="form-level-settings">{{frm_addon_cap}}<a
-                                                    class="learnmore-pointer" id="customer-help"
-                                                    (click)="learnmore_clicked('addon', $event)">{{learn_more}}</a>
-                                            </p>
+                                    <div class="lc22">
+                                        <div class="lc2-1 lcd custom-help">
+                                            <div class="ttle block-level">
+                                                <span [matTooltipClass]="tooltipcls" [matTooltip]="addonTooltip">
+                                                    {{addon_cap}}<span class="addbt"
+                                                        (click)="showadd_addons()"></span></span>
+                                                <p class="form-level-settings">{{frm_addon_cap}}<a
+                                                        class="learnmore-pointer" id="customer-help"
+                                                        (click)="learnmore_clicked('addon', $event)">{{learn_more}}</a>
+                                                </p>
+                                            </div>
                                         </div>
+
+                                        <ng-container
+                                            *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+                                            <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">
+                                                <a class="learnmore-pointer" (click)="addondetails(addon)">
+                                                    {{addon.name}}</a>
+                                            </div>
+                                        </ng-container>
+
+                                        <ng-container
+                                            *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
+                                            <div class="lc2-2 lcd">
+                                                <div class="ttle">{{no_addon_cap}}</div>
+                                            </div>
+                                        </ng-container>
+
                                     </div>
-
-                                    <ng-container
-                                        *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
-                                        <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons">                                            
-                                            <a class= "learnmore-pointer" (click) =  "addondetails(addon)"> {{addon.name}}</a>
-                                          </div>
-                                    </ng-container>
-
-                                    <ng-container
-                                        *ngIf="currentlicense_details.addons && currentlicense_details.addons.length == 0">
-                                        <div class="lc2-2 lcd">
-                                            <div class="ttle">{{no_addon_cap}}</div>
-                                        </div>
-                                    </ng-container>
-
-                                   </div>                                  
-                                        <span class="mbt">
-                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu1">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu1="matMenu">
-                                        <button type="button" (click)="goAddonHistory()" mat-menu-item>
-                                            <span>{{history_cap}}</span>
+                                    <span class="mbt">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu1">
+                                            <mat-icon>more_vert</mat-icon>
                                         </button>
-                                    </mat-menu>
-                                       </span> 
+                                        <mat-menu #menu1="matMenu">
+                                            <button type="button" (click)="goAddonHistory()" mat-menu-item>
+                                                <span>{{history_cap}}</span>
+                                            </button>
+                                        </mat-menu>
+                                    </span>
 
-                               </div>                             
-                           </div>    
-                           <div class="col-md-6 no-padding">
+                                </div>
+                            </div>
+                            <div class="col-md-6 no-padding">
                                 <div class="pay-section left">
                                     <div class="lc22">
-                                      <div  *ngIf= "showaddondetails" class="lc2-1 lcd custom-help">   
+                                        <div *ngIf="showaddondetails" class="lc2-1 lcd custom-help">
 
-                                        <ng-container 
-                                        *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
-                                          <div class="col-md-12">                                       
-                                               <!-- <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons"> -->
-                                              <div  class="add-details">{{addonDescription}}</div>
-                                        <!-- </div> -->
+                                            <ng-container
+                                                *ngIf="currentlicense_details.addons && currentlicense_details.addons.length>0">
+                                                <div class="col-md-12">
+                                                    <!-- <div class="lc2-2 lcd" *ngFor="let addon of currentlicense_details.addons"> -->
+                                                    <div class="add-details">{{addonDescription}}</div>
+                                                    <!-- </div> -->
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
                                     </div>
-                                       </ng-container>
-
-                                      </div>
-                                     </div>                          
-                                </div>                             
-                           </div>                             
-                     </div>                  
-                 </div>  
-              </div>
-           </div>
-       </div>
-   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
