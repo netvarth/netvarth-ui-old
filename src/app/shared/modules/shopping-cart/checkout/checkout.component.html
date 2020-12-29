@@ -181,8 +181,10 @@
                     </div>
                   </aside>
                 </div>
-
-                <div [class.opacty]="showSide" class="card mgn-up-30">
+                <div class="card" *ngIf="loading">
+                  <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                </div>
+                <div [class.opacty]="showSide" class="card mgn-up-30" *ngIf="!loading">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                     <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
                     <div class="prov-name">

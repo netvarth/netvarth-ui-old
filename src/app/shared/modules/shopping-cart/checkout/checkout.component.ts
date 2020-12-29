@@ -296,11 +296,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.shared_services.getConsumeraddress()
       .subscribe(
         data => {
-          this.added_address = data;
-          if (this.added_address.length > 0) {
-            this.highlight(0, this.added_address[0]);
-          }
+          if (data !== null) {
+            this.added_address = data;
+            if (this.added_address.length > 0 && this.added_address !== null) {
+              this.highlight(0, this.added_address[0]);
+            }
 
+          }
         },
         error => {
           this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -387,7 +389,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // }
     console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
-      if (this.added_address.length === 0) {
+      if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
         this.sharedFunctionobj.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;

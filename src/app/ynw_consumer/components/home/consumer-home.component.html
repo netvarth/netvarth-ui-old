@@ -40,13 +40,13 @@
                                             [matTooltip]="'Orders'">
                                             <i class="fa ordr_ico"></i>
                                         </button>
-    
+
                                         <button *ngIf="showOrder" class="flat-btn full-wdth" mat-flat-button
-                                            (click)="showBookings()">My Bookings</button> 
+                                            (click)="showBookings()">My Bookings</button>
                                         <button *ngIf="showOrder" class="flat-icon-btn" mat-flat-button (click)="showBookings()"
                                             [matTooltip]="'Bookings'">
                                             <i class="fa bookin_ico"></i>
-                                        </button>  
+                                        </button>
                                     </div>
                                 <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
                                     <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>My
@@ -1416,7 +1416,7 @@
                     </h2> -->
 
                     <!-- If there is no order -->
-                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order.length == 0) && !loading) && showOrder"
+                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == undefined) && !loading) && showOrder"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No Active Orders</p>
                     </div>
@@ -1465,7 +1465,7 @@
                                                 &#8377;{{oder.amountDue}}</button>
                                         </span>
                                         <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
-                                          <button class="bt3 cust-btn cursor-auto">Paid 
+                                          <button class="bt3 cust-btn cursor-auto">Paid
                                                 &#8377;{{oder.bill.amountPaid}}
                                           </button>
                                         </span>
@@ -1540,7 +1540,7 @@
                                                    &#8377;{{oder.amountDue}}</button>
                                             </span>
                                              <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
-                                               <button class="bt3 cust-btn cursor-auto">Paid 
+                                               <button class="bt3 cust-btn cursor-auto">Paid
                                                   &#8377;{{oder.bill.amountPaid}}
                                                </button>
                                              </span>
@@ -1599,6 +1599,9 @@
                                             </span>
                                         </h4>
                                     </td>
+                                    <td>
+                                     {{ oder.orderDate | date: dateFormat}}
+                                    </td>
                                     <td class="tdisplay-block">
                                         <h4 (click)="providerDetail(oder.providerAccount,$event)">{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <div class="userName">
@@ -1621,7 +1624,7 @@
                                                &#8377;{{oder.amountDue}}</button>
                                         </span>
                                         <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
-                                            <button class="bt3 cust-btn cursor-auto">Paid 
+                                            <button class="bt3 cust-btn cursor-auto">Paid
                                                 &#8377;{{oder.bill.amountPaid}}
                                             </button>
                                         </span>
@@ -1694,7 +1697,7 @@
                                                     &#8377;{{oder.amountDue}}</button>
                                             </span>
                                             <span *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'">
-                                                 <button class="bt3 cust-btn cursor-auto">Paid 
+                                                 <button class="bt3 cust-btn cursor-auto">Paid
                                                       &#8377;{{oder.bill.amountPaid}}
                                                   </button>
                                              </span>
