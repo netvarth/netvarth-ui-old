@@ -816,6 +816,10 @@ export class ItemDetailsComponent implements OnInit {
                                 this.image_list_popup.push(imgobj);
                             }
                         }
+                        console.log(this.selectedMessage);
+                        console.log(this.selectedMessageMain);
+                        console.log(this.image_list_popup);
+                        console.log(this.mainimage_list_popup);
                     };
                     reader.readAsDataURL(file);
                 }
@@ -850,6 +854,7 @@ export class ItemDetailsComponent implements OnInit {
                                 this.mainimage_list_popup = [];
                                 this.selectedMessageMain.files.splice(index, 1);
                                 this.selectedMessageMain.base64.splice(index, 1);
+                                this.haveMainImg = false;
                             } else {
                                 this.image_list_popup.splice(index, 1);
                                 this.selectedMessage.files.splice(index, 1);
