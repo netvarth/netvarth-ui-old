@@ -411,7 +411,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
           'countryCode': this.customer_countrycode,
-          'phoneNumber': this.phonenumber,
+          'phoneNumber': this.customer_phoneNumber,
           'email': this.customer_email,
           'orderNote': this.orderNote
         };
