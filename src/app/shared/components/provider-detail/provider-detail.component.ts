@@ -1957,7 +1957,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];
-          if (this.activeCatalog.catalogImages[0]) {
+          if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
           }
           //this.updateLocalStorageItems();
@@ -2123,8 +2123,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   getItemQty(itemObj) {
     let qty = 0;
-    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.item.itemId)) {
-      qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
+    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
+      qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
     }
     return qty;
   }

@@ -149,7 +149,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   orderList: any = [];
   counter = 0;
   itemCount: any;
-  orderItems: any[];
+  orderItems: any = [];
   itemQty: number;
   activeCatalog: any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -2456,7 +2456,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shared_services.getConsumerCatalogs(account_Id).subscribe(
       (catalogs: any) => {
         this.activeCatalog = catalogs[0];
-        if(this.activeCatalog.catalogImages[0]){
+        if(this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
           this.catalogImage = this.activeCatalog.catalogImages[0].url;
         }
         this.catlogArry();

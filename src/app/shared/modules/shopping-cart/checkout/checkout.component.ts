@@ -96,7 +96,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ) {
 
-
+    this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
@@ -146,7 +146,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-    this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
+
     // this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -165,17 +165,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.catalog_details = data;
       this.advance_amount = this.catalog_details.advanceAmount;
       this.loading = false;
-      console.log(this.catalog_details);
-      if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
-        this.store_pickup = true;
-        this.storeChecked = true;
-        this.getOrderAvailableDatesForPickup();
-      }
-      if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
-        console.log('inisde home');
-        this.home_delivery = true;
-        this.storeChecked = false;
-        this.getOrderAvailableDatesForHome();
+      if (this.catalog_details.pickUp) {
+        if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
+          this.store_pickup = true;
+          this.storeChecked = true;
+          this.getOrderAvailableDatesForPickup();
+        }
+      } if (this.catalog_details.homeDelivery) {
+        if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
+          console.log('inisde home');
+          this.home_delivery = true;
+          this.storeChecked = false;
+          this.getOrderAvailableDatesForHome();
+        }
       }
       this.getAvailabilityByDate(this.sel_checkindate);
     });
@@ -280,7 +282,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return deliveryCharge.toFixed(2);
   }
   getOrderFinalAmountToPay() {
-    const amount = this.price + parseInt(this.getTaxCharges(),0);
+    const amount = this.price + parseInt(this.getTaxCharges(), 0);
     return amount.toFixed(2);
   }
   getItemQty(item) {
