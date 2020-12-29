@@ -136,10 +136,10 @@ export class ItemDetailsComponent implements OnInit {
         public dialog: MatDialog,
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService) {
-            this.activated_route.queryParams.subscribe(
-                (qParams) => {
-                    this.iscmFrom = qParams.type;
-                });
+        this.activated_route.queryParams.subscribe(
+            (qParams) => {
+                this.iscmFrom = qParams.type;
+            });
         this.activated_route.params.subscribe(
             (params) => {
                 this.item_id = params.id;
@@ -204,8 +204,6 @@ export class ItemDetailsComponent implements OnInit {
     loadImages(imagelist) {
         this.image_list_popup = [];
         this.mainimage_list_popup = [];
-        // this.selectedMessageMain.files = [];
-        // this.selectedMessage.files = [];
         if (imagelist.length > 0) {
             for (let i = 0; i < imagelist.length; i++) {
                 if (imagelist[i].displayImage) {
@@ -217,8 +215,6 @@ export class ItemDetailsComponent implements OnInit {
                             description: imagelist[i].caption || ''
                         });
                     this.mainimage_list_popup.push(imgobj);
-                    // this.selectedMessageMain.files.push(imagelist[i]);
-                    // this.selectedMessageMain.base64.push(imagelist[i].url);
                 } else {
                     const imgobj = new Image(
                         i,
@@ -227,14 +223,12 @@ export class ItemDetailsComponent implements OnInit {
                             description: imagelist[i].caption || ''
                         });
                     this.image_list_popup.push(imgobj);
-                    // this.selectedMessage.files.push(imagelist[i]);
-                    // this.selectedMessage.base64.push(imagelist[i].url);
                 }
             }
         }
     }
     ngOnInit() {
-         this.getTaxpercentage();
+        this.getTaxpercentage();
     }
     getItem(itemId) {
         const _this = this;
@@ -254,14 +248,14 @@ export class ItemDetailsComponent implements OnInit {
         if (this.iscmFrom === 'ordermanager') {
             const navigatExtras: NavigationExtras = {
                 queryParams: {
-                  type: this.iscmFrom ? this.iscmFrom : ''
+                    type: this.iscmFrom ? this.iscmFrom : ''
                 }
-              };
-              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+            };
+            this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
         } else {
             this.router.navigate(['provider', 'settings', 'pos', 'items']);
         }
-        
+
         this.api_loading = false;
     }
     createForm() {
@@ -270,7 +264,7 @@ export class ItemDetailsComponent implements OnInit {
                 itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [true],
@@ -290,7 +284,7 @@ export class ItemDetailsComponent implements OnInit {
                 itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
                 itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.required,Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 showOnLandingpage: [true],
@@ -330,7 +324,6 @@ export class ItemDetailsComponent implements OnInit {
         this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
     }
     updateForm() {
-        console.log(this.item);
         if (this.item.taxable) {
             // taxable = '1';
             this.holdtaxable = true;
@@ -339,7 +332,7 @@ export class ItemDetailsComponent implements OnInit {
         if (this.item.promotionalPriceType === 'PCT') {
             value = this.item.promotionalPrcnt;
         } else {
-           value = this.item.promotionalPrice;
+            value = this.item.promotionalPrice;
         }
         let note;
         if (this.item.notes && this.item.notes.length > 0) {
@@ -354,7 +347,7 @@ export class ItemDetailsComponent implements OnInit {
             'displayName': this.item.displayName || '',
             'shortDec': this.item.shortDesc || '',
             'displayDesc': this.item.itemDesc || '',
-            'note': note ,
+            'note': note,
             'price': this.item.price || '',
             'taxable': this.holdtaxable,
             'showOnLandingpage': this.item.isShowOnLandingpage,
@@ -410,21 +403,18 @@ export class ItemDetailsComponent implements OnInit {
         if (this.iscmFrom === 'ordermanager') {
             const navigatExtras: NavigationExtras = {
                 queryParams: {
-                  type: this.iscmFrom ? this.iscmFrom : ''
+                    type: this.iscmFrom ? this.iscmFrom : ''
                 }
-              };
-              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+            };
+            this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
         } else {
             this.router.navigate(['provider', 'settings', 'pos', 'items']);
         }
         this.api_loading = false;
     }
     onSubmit(form_data, isfrom?) {
-        console.log(isfrom);
-        console.log(form_data.promotionalPrice);
-
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
-           // this.api_error = 'Please enter valid promotional value';
+            // this.api_error = 'Please enter valid promotional value';
             this.sharedfunctionObj.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -432,14 +422,14 @@ export class ItemDetailsComponent implements OnInit {
             form_data.promotionalPrice = '';
         }
         if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
-           // this.api_error = 'Please enter custom label';
-           this.sharedfunctionObj.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
+            // this.api_error = 'Please enter custom label';
+            this.sharedfunctionObj.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
             return;
         }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
-           // this.api_error = 'Please enter valid price';
-           this.sharedfunctionObj.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
+            // this.api_error = 'Please enter valid price';
+            this.sharedfunctionObj.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (iprice < 0) {
@@ -450,8 +440,8 @@ export class ItemDetailsComponent implements OnInit {
         if (form_data.promotionalPrice) {
             const proprice = parseFloat(form_data.price);
             if (proprice < 0) {
-              //  this.api_error = 'Price should not be a negative value';
-              this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+                //  this.api_error = 'Price should not be a negative value';
+                this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }
@@ -535,19 +525,6 @@ export class ItemDetailsComponent implements OnInit {
                         this.amForm.reset();
                         this.haveMainImg = false;
                         this.mainImage = false;
-                        // this.selectedMessage = {
-                        //     files: [],
-                        //     base64: [],
-                        //     caption: []
-                        // };
-                        // this.selectedMessageMain = {
-                        //     files: [],
-                        //     base64: [],
-                        //     caption: []
-                        // };
-                        // this.image_list_popup = [];
-                        // this.mainimage_list_popup = [];
-                        console.log("add");
                     } else if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0 && !isFrom) {
                         const route = 'list';
                         this.saveImages(data, route);
@@ -555,10 +532,10 @@ export class ItemDetailsComponent implements OnInit {
                         if (this.iscmFrom === 'ordermanager') {
                             const navigatExtras: NavigationExtras = {
                                 queryParams: {
-                                  type: this.iscmFrom ? this.iscmFrom : ''
+                                    type: this.iscmFrom ? this.iscmFrom : ''
                                 }
-                              };
-                              this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                            };
+                            this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
                         } else {
                             this.router.navigate(['provider', 'settings', 'pos', 'items']);
                         }
@@ -584,10 +561,10 @@ export class ItemDetailsComponent implements OnInit {
                     if (this.iscmFrom === 'ordermanager') {
                         const navigatExtras: NavigationExtras = {
                             queryParams: {
-                              type: this.iscmFrom ? this.iscmFrom : ''
+                                type: this.iscmFrom ? this.iscmFrom : ''
                             }
-                          };
-                          this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                        };
+                        this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
                     } else {
                         this.router.navigate(['provider', 'settings', 'pos', 'items']);
                     }
@@ -632,51 +609,48 @@ export class ItemDetailsComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-              'message': 'Do you want to exit?'
+                'message': 'Do you want to exit?'
             }
-          });
-          dialogrefd.afterClosed().subscribe(result => {
+        });
+        dialogrefd.afterClosed().subscribe(result => {
             if (result) {
                 if (this.iscmFrom === 'ordermanager') {
                     const navigatExtras: NavigationExtras = {
                         queryParams: {
-                          type: this.iscmFrom ? this.iscmFrom : ''
+                            type: this.iscmFrom ? this.iscmFrom : ''
                         }
-                      };
-                      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                    };
+                    this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
                 } else {
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 }
             }
-          });
+        });
     }
-    saveImages(id,routeTo?) {
+    saveImages(id, routeTo?) {
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
-        console.log(this.selectedMessageMain);
-        console.log(this.selectedMessage);
         for (const pic of this.selectedMessageMain.files) {
             submit_data.append('files', pic, pic['name']);
             let properties = {};
-                properties = {
-                    'caption': this.selectedMessageMain.caption[i] || '',
-                    'displayImage': true
-                };
+            properties = {
+                'caption': this.selectedMessageMain.caption[i] || '',
+                'displayImage': true
+            };
             propertiesDetob[i] = properties;
             i++;
         }
         for (const pic of this.selectedMessage.files) {
             submit_data.append('files', pic, pic['name']);
             let properties = {};
-                properties = {
-                    'caption': this.selectedMessage.caption[i] || '',
-                    'displayImage': false
-                };
+            properties = {
+                'caption': this.selectedMessage.caption[i] || '',
+                'displayImage': false
+            };
             propertiesDetob[i] = properties;
             i++;
         }
-        console.log(propertiesDetob);
         const propertiesDet = {
             'propertiesMap': propertiesDetob
         };
@@ -695,15 +669,14 @@ export class ItemDetailsComponent implements OnInit {
             };
             this.image_list_popup = [];
             this.mainimage_list_popup = [];
-            console.log("uploadadd");
             if (routeTo === 'list') {
                 if (this.iscmFrom === 'ordermanager') {
                     const navigatExtras: NavigationExtras = {
                         queryParams: {
-                          type: this.iscmFrom ? this.iscmFrom : ''
+                            type: this.iscmFrom ? this.iscmFrom : ''
                         }
-                      };
-                      this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
+                    };
+                    this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
                 } else {
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 }
@@ -783,16 +756,12 @@ export class ItemDetailsComponent implements OnInit {
                     this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     if (type) {
-                    this.selectedMessageMain.files.push(file);
+                        this.selectedMessageMain.files.push(file);
                     } else {
                         this.selectedMessage.files.push(file);
                     }
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        console.log(this.selectedMessage);
-                        console.log(this.selectedMessageMain);
-                        console.log(this.image_list_popup);
-                        console.log(this.mainimage_list_popup);
                         if (type) {
                             this.selectedMessageMain.base64.push(e.target['result']);
                             this.mainimage_list_popup = [];
@@ -816,10 +785,6 @@ export class ItemDetailsComponent implements OnInit {
                                 this.image_list_popup.push(imgobj);
                             }
                         }
-                        console.log(this.selectedMessage);
-                        console.log(this.selectedMessageMain);
-                        console.log(this.image_list_popup);
-                        console.log(this.mainimage_list_popup);
                     };
                     reader.readAsDataURL(file);
                 }
