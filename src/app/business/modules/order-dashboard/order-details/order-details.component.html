@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <h4>{{item.name}}</h4>
-                    <div> Price - <span class="rupee-font">{{item.price|currency:'&#8377;'}}</span></div>
+                    <div> Price - <span class="rupee-font">{{item.totalPrice|currency:'&#8377;'}}</span></div>
                     <div> Qty - {{item.quantity}}
                         <i *ngIf="item.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
                             (click)="showConsumerNote(item)"></i>
@@ -81,7 +81,7 @@
                             <td>{{item.name}}</td>
                             <td>{{item.quantity}}
                             </td>
-                            <td><span class="rupee-font">{{item.price|currency:'&#8377;'}}</span>
+                            <td><span class="rupee-font">{{item.totalPrice|currency:'&#8377;'}}</span>
                                 <i *ngIf="item.consumerNote" [matTooltip]="'Notes'"
                                     class="icon-note pointer-cursor pull-right" (click)="showConsumerNote(item)"></i>
                             </td>
