@@ -50,7 +50,7 @@
                     <mat-step label="Step 2">
                       <ng-template matStepLabel>Delivery options</ng-template>
                       <div>
-                        <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type
+                        <div *ngIf="home_delivery && store_pickup" class="d-type">Choose delivery type <br>
                         <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                           <mat-radio-button [value]="'store'" [checked]="storeChecked">
                             Store pick up
