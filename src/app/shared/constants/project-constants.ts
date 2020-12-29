@@ -752,7 +752,7 @@ export const projectConstantsLocal = {
     { displayName: 'Check-in/Token', value: 'Waitlist' },
     { displayName: 'Appointment', value: 'Appointment' },
     { displayName: 'Donation', value: 'Donation' },
-    // {displayName: 'Order', value: 'Order'}
+    { displayName: 'Order', value: 'Order' }
     // {displayName: 'License', value: 'License'},
 
   ],
