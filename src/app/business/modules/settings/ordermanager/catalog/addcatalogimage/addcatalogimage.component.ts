@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 
 export class AddcatalogimageComponent implements OnInit, OnChanges {
-    header_caption = 'Catalog created successfully,Do you want to upload catalog image now';
+    header_caption = 'Catalog created successfully,you can upload catalog image now';
     select_image_cap = Messages.SELECT_IMAGE_CAP;
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;
