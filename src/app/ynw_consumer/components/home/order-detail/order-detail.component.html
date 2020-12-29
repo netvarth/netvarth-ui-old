@@ -37,7 +37,9 @@
                                             <i class="fa fa-map-marker"></i> {{storeContact.address}}
                                           </span>
                                           <span><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</span>
+                                          <span *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</span>
                                           <span class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.email}}</span>
+                                          <span *ngIf= "storeContact.alternateEmail" class="content_wrap"><i class="fa fa-envelope mgn-rt-6"></i>{{storeContact.alternateEmail}}</span>
                                         </div>
                                       </aside>
                                 </div>
