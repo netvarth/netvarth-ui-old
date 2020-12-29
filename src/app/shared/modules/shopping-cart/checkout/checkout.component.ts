@@ -277,10 +277,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge;
+    return deliveryCharge.toFixed(2);
   }
   getOrderFinalAmountToPay() {
-    const amount = this.price + this.getTaxCharges();
+    const amount = this.price + parseInt(this.getTaxCharges(),0);
     return amount.toFixed(2);
   }
   getItemQty(item) {
