@@ -602,6 +602,7 @@ export class ItemDetailsComponent implements OnInit {
     resetApiErrors() {
         this.api_error = null;
         this.api_success = null;
+        this.disableButton = false;
     }
     isNumeric(evt) {
         return this.sharedfunctionObj.isNumeric(evt);

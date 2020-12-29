@@ -139,8 +139,8 @@
                     <td width="48%" align="right">Time window </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.orderDate | date: dateFormat }},
-                      {{statusInfo.orderTimeWindow.timeSlots[0].eTime}} -
-                      {{statusInfo.orderTimeWindow.timeSlots[0].sTime}}</td>
+                      {{statusInfo.orderTimeWindow.timeSlots[0].sTime}} -
+                      {{statusInfo.orderTimeWindow.timeSlots[0].eTime}}</td>
                   </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
