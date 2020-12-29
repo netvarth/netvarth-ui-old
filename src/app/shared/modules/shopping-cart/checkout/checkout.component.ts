@@ -21,7 +21,9 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  checkoutDisabled = false;
+  checkoutDisabled: boolean;
+  loading = true;
+  disabled = false;
   userEmail = '';
   orderNote: any;
   phonenumber: any;
@@ -162,6 +164,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       this.advance_amount = this.catalog_details.advanceAmount;
+      this.loading = false;
       console.log(this.catalog_details);
       if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
         this.store_pickup = true;
@@ -172,7 +175,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('inisde home');
         this.home_delivery = true;
         this.storeChecked = false;
-       this.getOrderAvailableDatesForHome();
+        this.getOrderAvailableDatesForHome();
       }
       this.getAvailabilityByDate(this.sel_checkindate);
     });

@@ -18,6 +18,7 @@ import { Messages } from '../../constants/project-messages';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
+  orderCount: number;
   disabledConfirmbtn = false;
   isfutureAvailableTime: boolean;
   selectedQeTime: any;
@@ -113,7 +114,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
-          if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails ) {
+          if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
@@ -139,6 +140,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.fillDateFromLocalStorage();
       this.orderList = JSON.parse(localStorage.getItem('order'));
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+      this.orderCount = this.orders.length;
       this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
       this.getStoreContact();
       this.showfuturediv = false;
@@ -543,7 +545,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.isFuturedate = false;
     }
     this.handleFuturetoggle();
-     this.getAvailabilityByDate(this.sel_checkindate);
+    this.getAvailabilityByDate(this.sel_checkindate);
   }
   handleFuturetoggle() {
     this.showfuturediv = !this.showfuturediv;
