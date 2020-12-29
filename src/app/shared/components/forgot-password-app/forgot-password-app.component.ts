@@ -137,7 +137,7 @@ export class ForgotPasswordAppComponent {
       .subscribe(
         () => {
           this.createForm(2);
-          this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
+          // this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', phonenumber);
           this.submit_data = phonenumber;
           setTimeout(() => {
             this.api_success = '';
@@ -158,5 +158,7 @@ export class ForgotPasswordAppComponent {
     this.api_error = null;
     this.api_success = null;
   }
-
+  goBack() {
+    this.step = 1;
+  }
 }
