@@ -156,3 +156,6 @@
 .name-line-ht {
   line-height: 1 !important;
 }
+.book-details-sub tbody {
+  vertical-align: baseline !important;
+}
