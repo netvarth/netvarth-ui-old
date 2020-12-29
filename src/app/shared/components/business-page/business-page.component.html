@@ -349,7 +349,7 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0">
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
                       <h5 class="mgn-bt-5 primary-color"><img  [src]="catalogImage" width="50" height="50" id="catalog-image1"
                         class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
@@ -357,14 +357,14 @@
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
                         <span class="pull-left">
-                            <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery"><img class="ordericon home"
+                            <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails"><img class="ordericon home"
                                     src="../../../../assets/images/Delivery.svg" />&nbsp;Home Delivery</span>
-                            <span class=""  *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp"><img class="ordericon pickup"
+                            <span class=""  *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp  && activeCatalog.nextAvailablePickUpDetails"><img class="ordericon pickup"
                                     src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
                         </span>
                     </div>
                 </div>
-                <ng-container *ngIf="orderItems.length >0">
+                <ng-container *ngIf="orderItems.length >0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>

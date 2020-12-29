@@ -113,7 +113,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
-          if (this.catalog_details.pickUp.orderPickUp) {
+          if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails ) {
             this.store_pickup = true;
             this.choose_type = 'store';
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
@@ -121,7 +121,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           }
         }
         if (this.catalog_details.homeDelivery) {
-          if (this.catalog_details.homeDelivery.homeDelivery) {
+          if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
             this.home_delivery = true;
 
             if (!this.store_pickup) {

@@ -163,6 +163,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.catalog_details = data;
       this.advance_amount = this.catalog_details.advanceAmount;
       console.log(this.catalog_details);
+      if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails ) {
+        this.store_pickup = true;
+        this.storeChecked = true;
+      }
+      if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
+        this.home_delivery = true;
+        this.storeChecked = false;
+      }
     });
     this.getStoreContact();
     this.loginForm = this._formBuilder.group({
