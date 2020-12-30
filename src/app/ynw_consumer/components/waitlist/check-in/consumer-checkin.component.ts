@@ -1137,9 +1137,17 @@ export class ConsumerCheckinComponent implements OnInit {
         this.resetApi();
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
+        if(this.userData.userProfile.email){
+            this.waitlist_for[0]['email'] = this.userData.userProfile.email ;
+            console.log(this.waitlist_for);
+        }
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
+        if(this.userData.userProfile.email){
+            this.waitlist_for[0]['email'] = this.userData.userProfile.email ;
+            console.log(this.waitlist_for);
+        }
         if (this.waitlist_for.length === 0) {
             this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
         } else {
@@ -1723,6 +1731,10 @@ export class ConsumerCheckinComponent implements OnInit {
                         }
                         // this.currentPhone = this.userData.userProfile.primaryMobileNo || '';
                         _this.consumerPhoneNo = _this.userPhone;
+                    }
+                    if(_this.userData.userProfile.email){
+                        _this.waitlist_for[0]['email'] = _this.userData.userProfile.email ;
+                        console.log(_this.waitlist_for);
                     }
                     if (_this.userEmail) {
                         _this.emailExist = true;

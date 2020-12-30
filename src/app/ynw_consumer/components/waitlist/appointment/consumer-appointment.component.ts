@@ -344,6 +344,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         if (this.type !== 'reschedule') {
             this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            console.log(this.waitlist_for)
         }
         this.minDate = this.todaydate;
         if (this.change_date === 'true') {
@@ -1024,6 +1025,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.resetApi();
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
+        if(this.userData.userProfile.email){
+            this.waitlist_for[0]['email'] = this.userData.userProfile.email ;
+            console.log(this.waitlist_for);
+        }
+
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1540,6 +1546,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                             _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
                         }
                         // this.currentPhone = this.userPhone;
+                    }
+                    if(_this.userData.userProfile.email){
+                        _this.waitlist_for[0]['email'] = _this.userData.userProfile.email ;
+                        console.log(_this.waitlist_for);
                     }
                     if (_this.userEmail) {
                         _this.emailExist = true;
@@ -2093,6 +2103,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     
     updateEmail (post_data) {
+        console.log(post_data)
         const _this = this;
         const passtyp = 'consumer';
         return new Promise(function (resolve, reject) {

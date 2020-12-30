@@ -604,7 +604,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark +  ',' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
     console.log(this.selectedAddress);
   }
   // handleFuturetoggle() {
