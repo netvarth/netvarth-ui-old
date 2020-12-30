@@ -14,6 +14,7 @@ export class DonationDetailsComponent {
     uid;
     donationDetails: any = [];
     display_dateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT;
+    loading = false;
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
@@ -24,8 +25,10 @@ export class DonationDetailsComponent {
         });
     }
     getDonationDetails(uid) {
+        this.loading = true;
         this.providerservices.getDonationByUid(uid).subscribe(data => {
             this.donationDetails = data;
+            this.loading = false;
         });
     }
     goBack() {

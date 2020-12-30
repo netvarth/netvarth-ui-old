@@ -8,7 +8,8 @@
 </section>
 
 <section>
-    <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding min-hght">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding min-hght" *ngIf="!loading">
         <div class="donationdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
                 <div class="bold font11" *ngIf="donationDetails.donor.firstName">
@@ -23,8 +24,8 @@
                 <div> {{donationDetails.date | date: display_dateFormat}}</div>
                 <div class="rupee-font">
                     Amount: <span class="bold">{{donationDetails.donationAmount | currency:'&#8377;' }}</span></div>
-                <div> Service: <span class="bold"> {{donationDetails.service.name}}</span></div>
-                <div *ngIf="donationDetails.note" class="prov-wtlst-note-border shadow-none mgn-bt-10"
+                <div> Cause: <span class="bold"> {{donationDetails.service.name}}</span></div>
+                <div *ngIf="donationDetails.note" class="prov-wtlst-note-border shadow-none mgn-bt-10 mgn-up-20"
                     [innerHTML]="donationDetails.note | nl2br">
                 </div>
             </div>
