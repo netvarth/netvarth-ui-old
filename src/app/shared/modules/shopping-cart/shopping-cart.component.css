@@ -262,7 +262,7 @@ flex-basis: 50% !important;
   font-size: 1.4rem;
 }
 .shop-cart .contact-outer .addrs {
-  display: grid;
+  /* display: grid; */
   line-height: 2;
   font-family: monospace !important;
 }
