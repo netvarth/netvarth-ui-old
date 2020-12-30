@@ -1953,7 +1953,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
     const orderItems = [];
-    if (this.orderstatus) {
+    if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];

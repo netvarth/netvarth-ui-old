@@ -805,7 +805,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.orderstatus = settings.enableOrder;
         this.getCatalogs(this.provider_bussiness_id);
       }
-      );
+    );
   }
   // private getUserWaitingTime(provids_locid) {
   //   if (provids_locid.length > 0) {
@@ -2452,37 +2452,37 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(locationId);
     this.orderItems = [];
     const orderItems = [];
-    if(this.orderstatus) {
-    this.shared_services.getConsumerCatalogs(account_Id).subscribe(
-      (catalogs: any) => {
-        this.activeCatalog = catalogs[0];
-        if(this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
-          this.catalogImage = this.activeCatalog.catalogImages[0].url;
-        }
-        this.catlogArry();
-        console.log(this.activeCatalog);
-        // console.log(cat)
-        // if(catalogs.length > 1) {
-        //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
-        //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
-        //     this.itemCount++;
-        //   }
-        // } else if (catalogs.length === 1) {
-        this.shared_services.setOrderDetails(this.activeCatalog);
-        if (this.activeCatalog && this.activeCatalog.catalogItem) {
-          for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
-            const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
-            const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
-            this.itemCount++;
+    if (this.orderstatus && this.userId == null) {
+      this.shared_services.getConsumerCatalogs(account_Id).subscribe(
+        (catalogs: any) => {
+          this.activeCatalog = catalogs[0];
+          if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
+            this.catalogImage = this.activeCatalog.catalogImages[0].url;
           }
+          this.catlogArry();
+          console.log(this.activeCatalog);
+          // console.log(cat)
+          // if(catalogs.length > 1) {
+          //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
+          //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
+          //     this.itemCount++;
+          //   }
+          // } else if (catalogs.length === 1) {
+          this.shared_services.setOrderDetails(this.activeCatalog);
+          if (this.activeCatalog && this.activeCatalog.catalogItem) {
+            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+              const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+              const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+              orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
+              this.itemCount++;
+            }
+          }
+          // }
+          this.orderItems = orderItems;
+          console.log(this.orderItems);
         }
-        // }
-        this.orderItems = orderItems;
-        console.log(this.orderItems);
-      }
-    );
+      );
     }
   }
 
