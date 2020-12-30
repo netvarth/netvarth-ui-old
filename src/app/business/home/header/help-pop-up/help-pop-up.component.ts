@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class HelpPopUpComponent implements OnInit {
   screenWidth;
-  no_of_grids;
+  no_of_grids = 3;
   constructor(public dialogRef: MatDialogRef<HelpPopUpComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly joyrideService: JoyrideService,
@@ -25,8 +25,6 @@ export class HelpPopUpComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth < 375) {
       this.no_of_grids = 2;
-    } else {
-      this.no_of_grids = 3;
     }
   }
   tourIconClicked() {
