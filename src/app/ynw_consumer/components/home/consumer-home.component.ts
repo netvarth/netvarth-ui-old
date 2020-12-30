@@ -352,7 +352,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           providerId: booking.providerAccount.id
         }
       };
-     this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
+      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
   }
 
@@ -936,7 +936,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureOrderslst_more = [];
             this.getTdyOrder();
             this.getFutureOrder();
-           }
+          }
 
         },
         error => {
@@ -1306,7 +1306,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getWaitlist();
       } else if (result === 'reloadlist' && type === 'appointment') {
         this.getApptlist();
-      } else if(result === 'reloadlist' && type === 'order') {
+      } else if (result === 'reloadlist' && type === 'order') {
         this.getTdyOrder();
       }
     });
@@ -1679,7 +1679,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(this.showOrder);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        is_orderShow : this.showOrder
+        is_orderShow: this.showOrder
       }
     };
     this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras);
@@ -1875,6 +1875,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         this.getFutureOrder();
       }
       // show more
+      this.todayOrderslst = [];
+      this.todayOrderslst_more = [];
       for (let i = 0; i < this.total_tdy_order.length; i++) {
         if (i <= 2) {
           this.todayOrderslst.push(this.total_tdy_order[i]);
@@ -1890,20 +1892,22 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
     // const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-   // const serverdate = moment(server).format();
-   // const servdate = new Date(serverdate);
-   // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-  //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-  //   const params = {
-  //     'orderDate-gt': this.tDate
-  //   };
+    // const serverdate = moment(server).format();
+    // const servdate = new Date(serverdate);
+    // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+    //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
+    //   const params = {
+    //     'orderDate-gt': this.tDate
+    //   };
     this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
-      if ((this.today_totalbookings.length === 0 &&  this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0 )) {
+      if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
         this.showOrder = true;
       }
       // show more
+      this.futureOrderslst = [];
+      this.futureOrderslst_more = [];
       for (let i = 0; i < this.total_future_order.length; i++) {
         if (i <= 2) {
           this.futureOrderslst.push(this.total_future_order[i]);
