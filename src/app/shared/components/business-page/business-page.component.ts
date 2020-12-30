@@ -2510,6 +2510,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.getTotalItemAndPrice();
           this.getItemQty(item);
         }
+      } else {
+        this.orderList.push(itemObj);
+        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.getTotalItemAndPrice();
+        this.getItemQty(item);
       }
     }
 
