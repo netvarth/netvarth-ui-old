@@ -2159,7 +2159,7 @@ export class ConsumerCheckinComponent implements OnInit {
             } else {
                 if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value!="") {
                     whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number;
-                    if (this.bookingForm.get('newPhone').value.e164Number.startsWith('+')) {
+                    if (this.bookingForm.get('newWhatsapp').value.e164Number.startsWith('+')) {
                         whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
                         this.callingModes = whatsAppNum;
                     }
