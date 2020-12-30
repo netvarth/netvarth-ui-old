@@ -148,8 +148,13 @@ flex-basis: 50% !important;
     position: relative !important;
     transform: translateZ(0) !important;
     border-bottom: 1px solid #d4d5d9 !important;
-    width: 350px !important;
+    width: 350px;
     margin-bottom: 20px !important;
+}
+@media (max-width: 420px) {
+    .ph-outline {
+        width: 100% !important;
+    }
 }
 ::ng-deep .ph-outline .ph-ip {
     background-color: transparent;
