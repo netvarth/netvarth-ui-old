@@ -20,6 +20,51 @@
                         <div class="card">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30 mgn-bt-40">
                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <!-- Sidenav for annual -->
+                                    <div class="anual_side" *ngIf="changelicence" [ngStyle]="{ 'margin-top' : height+'px'}">
+                                        <aside>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Subscription Plan</div>
+                                                <div>Annual</div>
+                                            </div>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Period</div>
+                                                <div>1 year</div>
+                                            </div>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Effective
+                                                    From</div>
+                                                <div>{{effectivedate | date:dateFormat}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Package</div>
+                                                <div>{{currentlicense_details.accountLicense.displayName}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Grand Total</div>
+                                                <div class="rupee-font">{{grandTotal| currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Applied Discount</div>
+                                                <div class="rupee-font">{{appliedDiscount | currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Net Total</div>
+                                                <div class="rupee-font">{{netTotal | currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="mgn-up-10">
+                                                <div class="actions">
+                                                    <button mat-flat-button
+                                                        (click)="cancelAssignServices()">Cancel</button>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <button mat-flat-button
+                                                        (click)="doUpgradeSubcription('ANNUAL')">Ok</button>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                    </div>
+
+
                                     <div class="txt_sub_plan">YOUR SUBSCRIPTION PLAN</div>
                                     <div class="txt_plan">{{currentlicense_details.accountLicense.displayName}}</div>
                                     <div class="mgn-up-10" *ngIf="upgradablepackages.length > 0">
@@ -36,10 +81,21 @@
                                         <span>
                                             Billed Every {{licenseDisplayName}}</span>
                                     </div>
-                                    <div *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0">
+                                    <div class="cancel_an" *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0 && showAmounts">
                                         <button class="btn_switch" mat-flat-button (click)="openAnnualSection()">Switch
                                             to Annual</button>
                                         <sup class="txt_off">{{annualdiscount}}% OFF</sup>
+                                    </div>
+                                    <div *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 1">
+                                        <div class="cancel_an">
+                                            <div class="fnt-san_serif">
+                                                You changed your license subscription type to
+                                                <strong>Annual.</strong>
+                                                The subscription license statement will be generated on
+                                                {{effectivedate | date: dateFormat}}.
+                                            </div>
+                                            <button class="btn_switch mgn-up-10" mat-flat-button (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
+                                        </div>
                                     </div>
                                     <div class="mgn-up-20">
                                         <div class="card card_addon">

@@ -100,6 +100,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     temp1: any;
     refnumber: any;
     corpSettings: any;
+    height: number;
 
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
@@ -214,6 +215,11 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getUpgradableLicensePackages()
             .subscribe((data: any) => {
                 this.upgradablepackages = data;
+                if (this.upgradablepackages.length > 0) {
+                    this.height = 180;
+                } else {
+                    this.height = 140;
+                }
             });
     }
     showupgradeLicense() {

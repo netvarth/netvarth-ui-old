@@ -22,8 +22,15 @@
                                     class="learnmore-pointer" id="customer-help"
                                     (click)="learnmore_clicked('addon', $event)">{{learn_more}}</a>
                             </div>
-                            <div *ngFor="let adon_item of addon_metric" class="col-xs-12 col-sm-5 col-md-5 col-lg-5 pad-30 bx-shadw txt_disp_name custId-cursor" (click)="gotoAddonDetail()">
-                                {{adon_item.metricDisplayName}}
+                            <div *ngFor="let adon_item of addon_metric" class="col-xs-12 col-sm-12 col-md-8 col-lg-5 pad-30 bx-shadw txt_disp_name custId-cursor" (click)="gotoAddonDetail(adon_item.metricDisplayName)">
+                                <div class="disp-flex">
+                                    <div class="flx_8">
+                                         {{adon_item.metricDisplayName}}
+                                    </div>
+                                    <div>
+                                        <i [class]="getAddonClass(adon_item.metricDisplayName)"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-addons',
@@ -44,6 +45,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     addonDescription = '';
     corpSettings: any;
     addon_metric: any;
+    addonIconClasses = projectConstantsLocal.ADDON_ICON_CLASS;
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
@@ -143,7 +145,16 @@ export class AddonsComponent implements OnInit, OnDestroy {
     redirecToLicenseInvoice() {
         this.routerobj.navigate(['provider', 'license']);
     }
-    gotoAddonDetail() {
-        this.routerobj.navigate(['provider', 'license', 'addon-detail']);
+    gotoAddonDetail(dispname) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { disp_name: dispname }
+        };
+        this.routerobj.navigate(['provider', 'license', 'addon-detail'], navigationExtras);
+    }
+    getAddonClass(adon) {
+        const retdet = this.addonIconClasses.filter(
+        soc => soc.value === adon);
+        const returndet = retdet[0].class;
+        return returndet;
     }
 }

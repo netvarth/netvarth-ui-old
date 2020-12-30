@@ -889,5 +889,12 @@ export const projectConstantsLocal = {
     { value: 'In Transit', class: 'intransit-icon' },
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
+  ],
+  ADDON_ICON_CLASS: [
+    { value: 'Cloud Storage', class: 'fa ico_cloud' },
+    { value: 'Jaldee Search Keywords', class: 'fa ico_searchky' },
+    { value: 'QBoards', class: 'fa ico_qbods' },
+    { value: 'Jaldee Messaging', class: 'fa ico_sms' },
+    { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
   ]
 };

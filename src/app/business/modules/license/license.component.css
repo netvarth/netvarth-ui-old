@@ -64,7 +64,9 @@
     font-weight: 600;
 }
 .lic_revamp .card_addon {
-    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+    /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important; */
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccc !important;
 }
 .lic_revamp .txt_adon {
     color: grey;
@@ -85,4 +87,48 @@
     color: white;
     padding: 2px 15px 2px 15px;
     border-radius: 15px;
+}
+.lic_revamp .anual_side::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 100%;
+    left: 1.5em;
+    border: 0.75rem solid transparent;
+    border-top: none;
+    border-bottom-color: #194179;
+    filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
+}
+.lic_revamp .anual_side {
+    /* background: #8CA8D8; */
+    background: #194179;
+    position: absolute;
+    z-index: 4;
+    color: white;
+    line-height: 2;
+    padding: 20px;
+    width: 70%;
+    /* margin-top: 140px; */
+}
+.lic_revamp .anual_outr {
+    display: flex;
+    width: 100%;
+}
+.lic_revamp .inside_anual {
+    flex: 1;
+    font-weight: 600;
+}
+.lic_revamp .anual_side .mat-flat-button {
+    line-height: 25px !important;
+}
+.lic_revamp .anual_side .actions {
+    width: fit-content;
+    float: right;
+}
+.lic_revamp .cancel_an .mat-flat-button {
+    line-height: 26px !important;
+}
+.lic_revamp .fnt-san_serif {
+    font-family: sans-serif;
 }

@@ -1,0 +1,42 @@
+.revamp_addonDetail .pad-30 {
+    padding: 30px;
+}
+.revamp_addonDetail .mat-grid-tile {
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccccc !important;
+    border-radius: 10px;
+}
+.revamp_addonDetail .mat-grid-tile:hover {
+    background: #20467e38;
+}
+.revamp_addonDetail .disp_name_st {
+    padding: 0px 0px 20px 0px;
+    font-size: 1.2rem;
+    color: #1e4079;
+}
+.revamp_addonDetail .ad_price {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #1e4079;
+}
+.revamp_addonDetail .ad_name {
+    font-size: 1rem;
+    color: grey;
+    font-weight: 600;
+}
+.revamp_addonDetail .mgn-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+.revamp_addonDetail .add_btn {
+    background: #1d407985;
+    color: white;
+    margin-top: 10px;
+}
+.revamp_addonDetail .mat-flat-button {
+    line-height: 26px !important;
+}
+.revamp_addonDetail .mat-grid-tile-footer {
+    background: none !important;
+}
