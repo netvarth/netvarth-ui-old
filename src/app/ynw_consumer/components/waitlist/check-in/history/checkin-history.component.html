@@ -236,8 +236,8 @@
                                                     <span>{{his_wait.orderStatus}}</span>
                                                 </td>
 
-                                                <td data-title="" class="td5">
-                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                                <td data-title="" class="td5" >
+                                                    <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show'">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #appMenu="matMenu">
