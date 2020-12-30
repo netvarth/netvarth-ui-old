@@ -1992,6 +1992,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         phoneNum = this.bookingForm.get('newPhone').value.e164Number.split(this.bookingForm.get('newPhone').value.dialCode)[1];
                         this.countryCode = this.bookingForm.get('newPhone').value.dialCode;
                         this.userPhone = phoneNum;
+                        this.currentPhone = phoneNum;
                         this.selected_phone = phoneNum;
                     }
                 }
