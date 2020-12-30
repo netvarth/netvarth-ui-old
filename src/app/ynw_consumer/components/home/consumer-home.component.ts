@@ -208,7 +208,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }, 8000);
       }
       if (qparams && qparams.source) {
-        this.showOrder = true;        
+        this.showOrder = true;
       }
     });
   }
@@ -927,7 +927,17 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.getAppointmentFuture();
             //  this.getWaitlist();
             // this.getWaitlistFuture();
-          }
+          } else if (data === 'reloadlist' && type === 'order') {
+            this.total_tdy_order = [];
+            this.todayOrderslst = [];
+            this.todayOrderslst_more = [];
+            this.total_future_order = [];
+            this.futureOrderslst = [];
+            this.futureOrderslst_more = [];
+            this.getTdyOrder();
+            this.getFutureOrder();
+           }
+
         },
         error => {
           this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

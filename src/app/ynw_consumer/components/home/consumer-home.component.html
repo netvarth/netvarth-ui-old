@@ -1438,7 +1438,7 @@
                                                     [matTooltip]="'Home Delivery'"></i>
                                             </div>
                                             <span class="mgn-up-10">
-                                                Order :<br> #{{oder.orderNumber}}
+                                              {{oder.orderNumber}}
                                             </span>
                                         </h4>
                                     </td>
@@ -1479,23 +1479,20 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
-                                     </button> -->
-                                        <!-- <mat-menu #appMenu="matMenu">
-                                         <button mat-menu-item>
-                                             <i class="fa cross-icon"></i>
-                                             Cancel</button>
-                                             <button mat-menu-item (click)="addWaitlistMessage(oder,'order')">
-                                                <i class="fa chat-icon"></i>
-                                                {{send_msg_cap}}
-                                            </button>
-                                         <button mat-menu-item>
-                                            <span class="rate-service" [class.rated]="isRated(oder)"
-                                                (click)="rateService(oder,'order')">{{rate_visit}}</span>
-                                        </button>
-                                     </mat-menu> -->
+                                     </button>
+                                         <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item  *ngIf="oder.orderStatus=='Order Received' || oder.orderStatus=='Order Acknowledged' || oder.orderStatus=='Order Confirmed'" (click)="doCancelWaitlist(oder,'order')">
+                                                <i class="fa cross-icon"></i>
+                                                Cancel</button>
+
+                                             <button mat-menu-item
+                                                     (click)="showBookingDetails(oder)">
+                                                     <i class="fa fa-sticky-note-o"></i>Order details
+                                                 </button>
+                                     </mat-menu>
                                     </td>
                                 </tr>
 
@@ -1514,7 +1511,7 @@
                                                         [matTooltip]="'Home Delivery'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    Order :<br> #{{oder.orderNumber}}
+                                                  {{oder.orderNumber}}
                                                 </span>
                                             </h4>
                                         </td>
@@ -1554,22 +1551,20 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
-                                         </button> -->
-                                            <!-- <mat-menu #appMenu="matMenu">
-                                             <button mat-menu-item>
-                                                 <i class="fa cross-icon"></i>
-                                                 Cancel</button>
-                                             <button mat-menu-item>
-                                                 <i class="fa chat-icon"></i>
-                                                 {{send_msg_cap}}
-                                             </button>
-                                             <button mat-menu-item>
-                                                 <span>{{rate_visit}}</span>
-                                             </button>
-                                         </mat-menu> -->
+                                         </button>
+                                             <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item  *ngIf="oder.orderStatus=='Order Received' || oder.orderStatus=='Order Acknowledged' || oder.orderStatus=='Order Confirmed'" (click)="doCancelWaitlist(oder,'order')">
+                                                    <i class="fa cross-icon"></i>
+                                                    Cancel</button>
+
+                                                 <button mat-menu-item
+                                                         (click)="showBookingDetails(oder)">
+                                                         <i class="fa fa-sticky-note-o"></i>Order details
+                                                     </button>
+                                         </mat-menu>
                                         </td>
                                     </tr>
                                     <tr *ngIf="more_tdyOrdersShow" (click)="showlessTdyOrders()">
@@ -1595,13 +1590,13 @@
                                                     [matTooltip]="'Home Delivery'"></i>
                                             </div>
                                             <span class="mgn-up-10">
-                                                Order :<br> #{{oder.orderNumber}}
+                                               <span style="color:green">{{ oder.orderDate | date: dateFormat}}</span> <br>
+                                               {{oder.orderNumber}}
+
                                             </span>
                                         </h4>
                                     </td>
-                                    <td>
-                                     {{ oder.orderDate | date: dateFormat}}
-                                    </td>
+
                                     <td class="tdisplay-block">
                                         <h4 (click)="providerDetail(oder.providerAccount,$event)">{{oder.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                         <div class="userName">
@@ -1638,22 +1633,20 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                        <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                          (click)="stopprop($event)">
                                          <mat-icon>more_vert</mat-icon>
-                                     </button> -->
-                                        <!-- <mat-menu #appMenu="matMenu">
-                                         <button mat-menu-item>
-                                             <i class="fa cross-icon"></i>
-                                             Cancel</button>
-                                         <button mat-menu-item>
-                                             <i class="fa chat-icon"></i>
-                                             {{send_msg_cap}}
-                                         </button>
-                                         <button mat-menu-item>
-                                             <span>{{rate_visit}}</span>
-                                         </button>
-                                     </mat-menu> -->
+                                     </button>
+                                         <mat-menu #appMenu="matMenu">
+                                            <button mat-menu-item  *ngIf="oder.orderStatus=='Order Received' || oder.orderStatus=='Order Acknowledged' || oder.orderStatus=='Order Confirmed'" (click)="doCancelWaitlist(oder,'order')">
+                                                <i class="fa cross-icon"></i>
+                                                Cancel</button>
+
+                                             <button mat-menu-item
+                                                     (click)="showBookingDetails(oder)">
+                                                     <i class="fa fa-sticky-note-o"></i>Order details
+                                                 </button>
+                                     </mat-menu>
                                     </td>
                                 </tr>
                                 <tr *ngIf="!more_futrOrdersShow && total_future_order.length > 3"
@@ -1671,7 +1664,8 @@
                                                         [matTooltip]="'Home Delivery'"></i>
                                                 </div>
                                                 <span class="mgn-up-10">
-                                                    Order :<br> #{{oder.orderNumber}}
+                                                  {{oder.orderNumber}} <br>
+                                                  {{ oder.orderDate | date: dateFormat}}
                                                 </span>
                                             </h4>
                                         </td>
@@ -1711,22 +1705,20 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu"
+                                            <button mat-icon-button [matMenuTriggerFor]="appMenu"
                                              (click)="stopprop($event)">
                                              <mat-icon>more_vert</mat-icon>
-                                         </button> -->
-                                            <!-- <mat-menu #appMenu="matMenu">
-                                             <button mat-menu-item>
-                                                 <i class="fa cross-icon"></i>
-                                                 Cancel</button>
-                                             <button mat-menu-item>
-                                                 <i class="fa chat-icon"></i>
-                                                 {{send_msg_cap}}
-                                             </button>
-                                             <button mat-menu-item>
-                                                 <span>{{rate_visit}}</span>
-                                             </button>
-                                         </mat-menu> -->
+                                         </button>
+                                             <mat-menu #appMenu="matMenu">
+                                                <button mat-menu-item  *ngIf="oder.orderStatus=='Order Received' || oder.orderStatus=='Order Acknowledged' || oder.orderStatus=='Order Confirmed'" (click)="doCancelWaitlist(oder,'order')">
+                                                    <i class="fa cross-icon"></i>
+                                                    Cancel</button>
+
+                                                 <button mat-menu-item
+                                                         (click)="showBookingDetails(oder)">
+                                                         <i class="fa fa-sticky-note-o"></i>Order details
+                                                     </button>
+                                         </mat-menu>
                                         </td>
                                     </tr>
                                     <tr *ngIf="more_futrOrdersShow" (click)="showlessFutOrders()">
