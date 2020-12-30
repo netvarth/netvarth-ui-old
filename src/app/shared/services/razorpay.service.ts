@@ -100,6 +100,10 @@ export class RazorpayService {
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { 'uuid': uuid, 'account_id': account_id, 'prepayment': prepayment } }));
         } else if (checkin_type === 'order_prepayment') {
+          this.shared_functions.removeitemfromLocalStorage('order_sp');
+          this.shared_functions.removeitemfromLocalStorage('chosenDateTime');
+          this.shared_functions.removeitemfromLocalStorage('order_spId');
+          this.shared_functions.removeitemfromLocalStorage('order');
           this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}}));
         }
