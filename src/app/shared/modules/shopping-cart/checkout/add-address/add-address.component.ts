@@ -64,6 +64,7 @@ export class AddAddressComponent implements OnInit {
       city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       postalCode: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       landMark: ['', Validators.compose([Validators.required])],
+      countryCode: ['+91'],
     });
     if (this.formMode === 'edit') {
       this.updateForm();
@@ -79,6 +80,7 @@ export class AddAddressComponent implements OnInit {
       'city': this.edit_address.city || null,
       'postalCode': this.edit_address.postalCode || null,
       'landMark': this.edit_address.landMark || null,
+      'countryCode': '+91',
     });
   }
   close() {
