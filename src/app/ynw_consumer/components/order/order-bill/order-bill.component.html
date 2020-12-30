@@ -55,12 +55,18 @@
                                                                             *ngIf="billnumber"> <span
                                                                                 class="dynamic">{{bill_no_cap}} </span>
                                                                             <span class="dynamic">{{billnumber}}</span>
-                                                                        </span> <span class="columns rightalign"
+                                                                        </span> 
+                                                                        <span class="columns rightalign" *ngIf="checkin.orderNumber"> <span
+                                                                            class="dynamic">Order Id </span>
+                                                                        <span class="dynamic">{{checkin.orderNumber}}</span>
+                                                                    </span>
+                                                                        <span class="columns rightalign"
                                                                             *ngIf="gstnumber">
                                                                             <span class="dynamic">{{gstin_cap}} </span>
                                                                             <span
                                                                                 class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                                         </span>
+                                                                     
                                                                     </div>
                                                                 </div>
                                                             </div>
