@@ -67,8 +67,14 @@ export class AddonDetailComponent implements OnInit {
           if (data) {
             this.sharedfunctionObj.openSnackBar('Addon added');
             this.getUpgradableaddonPackages();
+            this.routerobj.navigate(['provider', 'license']);
           }
-        });
+        },
+          error => {
+            // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
   }
 
 }

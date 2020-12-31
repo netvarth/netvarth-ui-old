@@ -66,7 +66,7 @@
 
 
                                     <div class="txt_sub_plan">YOUR SUBSCRIPTION PLAN</div>
-                                    <div class="txt_plan">{{currentlicense_details.accountLicense.displayName}}</div>
+                                    <div class="txt_plan">{{current_lic}}</div>
                                     <div class="mgn-up-10" *ngIf="upgradablepackages.length > 0">
                                         <button mat-flat-button class="btn_upgrde"
                                             (click)="showupgradeLicense()">Upgrade your plan</button>
@@ -99,9 +99,21 @@
                                     </div>
                                     <div class="mgn-up-20">
                                         <div class="card card_addon">
-                                            <span class="txt_adon">Add-Ons&nbsp;&nbsp;<i (click)="gotoAddOns()"
+                                            <span class="txt_adon">Add-Ons&nbsp;&nbsp;<i *ngIf="adon_list && adon_list.length === 0" (click)="gotoAddOns()"
                                                     class="fa fa-plus-circle custId-cursor"
-                                                    aria-hidden="true"></i></span>
+                                                    aria-hidden="true"></i>
+                                                <span *ngIf="adon_list && adon_list.length > 0" class="btn_ad_more" (click)="gotoAddOns()">Add more</span>
+                                                </span>
+                                             <div class="adon_lst" *ngIf="adon_list && adon_list.length > 0">
+                                                <div *ngFor="let adon of adon_list">
+                                                    {{adon.name}}
+                                                </div>
+                                             </div>       
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="card card_addon custId-cursor" (click)="gotoJaldeeKeywords()">
+                                            <span class="txt_adon">Jaldee Search Keywords</span>
                                         </div>
                                     </div>
                                     <div class="fnt-weig-600">

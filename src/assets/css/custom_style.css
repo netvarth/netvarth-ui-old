@@ -26789,7 +26789,7 @@ color: #fff !important;
 .ico_cloud {
   content: url(../images/addons/Cloud.svg);
   position: absolute;
-  padding-right: 1px;
+  padding-right: 5px;
   width: 56px;
   margin-top: -14px;
 }
@@ -26810,7 +26810,7 @@ color: #fff !important;
   content: url(../images/addons/Users.svg);
   position: absolute;
   padding-right: 1px;
-  width: 26px;
+  width: 30px;
 }
 .ico_sms {
   content: url(../images/addons/SMS.svg);

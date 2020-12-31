@@ -896,5 +896,6 @@ export const projectConstantsLocal = {
     { value: 'QBoards', class: 'fa ico_qbods' },
     { value: 'Jaldee Messaging', class: 'fa ico_sms' },
     { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
+    { value: 'Multi User', class: 'fa ico_usr' },
   ]
 };
