@@ -1,0 +1,22 @@
+.notification-box {
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.wtsapaud-icon, .zoom-icon {
+    width: 100px;
+}
+.toggle-label {
+    display: flex;
+    font-weight: normal;
+    color: #999999 !important;
+    font-size: .9rem;
+}
+.act-btn {
+    padding: 3px 25px;
+    border: 2px solid;
+    border-radius: 20px;
+    color: #334b99;
+    cursor: pointer;
+    font-weight: bold;
+}

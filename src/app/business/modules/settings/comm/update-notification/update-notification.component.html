@@ -1,0 +1,25 @@
+<h1 class="mat-dialog-title">
+    <span class="mgn-lt-10">{{callingmodes[mode].title}}</span>
+    <button mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+    <div class="disp-flex">
+        <div class="input-group-prepend mob-prefix" #mobPrefix>
+            <span class="input-group-text" style="margin-top:auto;">+91</span>
+        </div>
+        <mat-form-field>
+            <div class="input-group">
+                <input [(ngModel)]="callingMode" matInput type="text" class="form-control" placeholder="{{callingmodes[mode].placeHolder}}"
+                    autocomplete="off">
+                <div class="update-btn" (click)="updateVideoSettings()"
+                [class.disabled]="callingMode == ''">
+                Update
+                    <!-- <span class="update-btn" (click)="updateVideoSettings()"
+                        [class.disabled]="callingMode == ''">Update</span> -->
+                </div>
+            </div>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>

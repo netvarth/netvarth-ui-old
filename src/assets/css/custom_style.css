@@ -5549,6 +5549,9 @@ i.notavail {
   .adjustdelay .mat-checkbox-inner-container {
     margin-top: 4px
   }
+  .no-margin-small {
+    padding: 0 !important;
+  }
 }
 
 .queuelist {
@@ -26800,4 +26803,10 @@ color: #fff !important;
 }
 .word-break-all {
   word-break: break-all;
+}
+.dark-blue {
+  color: #334b99;
+}
+.updatenotificationclass {
+  width: 400px !important;
 }
