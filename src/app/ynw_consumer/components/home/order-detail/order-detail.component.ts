@@ -302,7 +302,9 @@ export class OrderDetailComponent implements OnInit {
    // throw new Error('Method not implemented.');
   }
   gotoPrev() {
-    this.locationobj.back();
+    // this.locationobj.back();
+    this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}});
+
   }
   providerDetail(provider) {
     this.router.navigate(['searchdetail', provider.uniqueId]);
