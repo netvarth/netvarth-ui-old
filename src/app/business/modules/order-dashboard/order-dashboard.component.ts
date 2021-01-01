@@ -76,6 +76,7 @@ export class OrderDashboardComponent implements OnInit {
     } else {
       this.selectedTab = 1;
     }
+    this.getPos();
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderTodayOrdersCount();
@@ -352,6 +353,8 @@ export class OrderDashboardComponent implements OnInit {
             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
+    } else {
+      this.gotoDetails(order);
     }
   }
   getPaymentTooltip(order) {
