@@ -27,15 +27,15 @@
                 <div class="disp-flex">
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
-                        <div>{{getName('WhatsApp')}}</div>
+                        <div class="tele-connect" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('GoogleMeet')">
                         <span class="meet-icon" aria-hidden="true"></span>
-                        <div>{{getName('GoogleMeet')}}</div>
+                        <div class="tele-connect" [class.greenc]="getName('GoogleMeet') === 'Connected'" [class.red]="getName('GoogleMeet') !== 'Connected'">{{getName('GoogleMeet')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Zoom')">
                         <span class="zoom-icon" aria-hidden="true"></span>
-                        <div>{{getName('Zoom')}}</div>
+                        <div class="tele-connect" [class.greenc]="getName('Zoom') === 'Connected'" [class.red]="getName('Zoom') !== 'Connected'">{{getName('Zoom')}}</div>
                     </div>
                 </div>
             </div>
@@ -44,11 +44,11 @@
                 <div class="disp-flex">
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
-                        <div>{{getName('WhatsApp')}}</div>
+                        <div class="tele-connect" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Phone')">
                         <span class="phon-icon" aria-hidden="true"></span>
-                        <div>{{getName('Phone')}}</div>
+                        <div class="tele-connect" [class.greenc]="getName('Phone') === 'Connected'" [class.red]="getName('Phone') !== 'Connected'">{{getName('Phone')}}</div>
                     </div>
                 </div>
             </div>
