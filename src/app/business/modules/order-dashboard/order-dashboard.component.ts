@@ -59,6 +59,7 @@ export class OrderDashboardComponent implements OnInit {
   futureOrdersCount;
   payStatusClassList = projectConstantsLocal.PAYMENT_STATUS_CLASS;
   billPaymentStatuses = projectConstantsLocal.BILL_PAYMENT_STATUS_WITH_DISPLAYNAME;
+  pos: any;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -341,15 +342,17 @@ export class OrderDashboardComponent implements OnInit {
     }
   }
   gotoBill(order) {
-    this.providerservices.getWaitlistBill(order.uid)
-      .subscribe(
-        data => {
-          this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+    if (this.pos && (order.orderStatus !== 'Cancelled' || (order.orderStatus === 'Cancelled' && order.bill && order.bill.billPaymentStatus !== 'NotPaid'))) {
+      this.providerservices.getWaitlistBill(order.uid)
+        .subscribe(
+          data => {
+            this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
+          },
+          error => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
   }
   getPaymentTooltip(order) {
     if (order.bill && order.bill.billPaymentStatus) {
@@ -371,6 +374,11 @@ export class OrderDashboardComponent implements OnInit {
     notedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
       }
+    });
+  }
+  getPos() {
+    this.providerservices.getProviderPOSStatus().subscribe(data => {
+      this.pos = data['enablepos'];
     });
   }
 }

@@ -755,7 +755,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
           let user_mandatorySubDomainFilled = false;
           let user_additionalInfoFilledStatus = false;
           this.subdomain_fields = data['fields'];
-          this.domain_fields_nonmandatory = this.domain_fields.filter(dom => dom.mandatory === false);
+          this.subdomain_fields_nonmandatory = this.subdomain_fields.filter(dom => dom.mandatory === false);
           this.subdomain_questions = data['questions'] || [];
           if (this.userMandatoryfieldArray.length !== 0 && this.subdomain_fields.some(subdomain => subdomain.mandatory === true)) {
             user_mandatorysubdomain = true;
