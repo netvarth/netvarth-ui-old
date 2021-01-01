@@ -1,12 +1,6 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <!-- <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Communications And notifications
@@ -15,10 +9,8 @@
     </div>
 </section>
 <section>
-
     <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
-
             <i class="fa fa-television dark-blue" aria-hidden="true"></i>
             Teleservice
             <div class="pull-right">
@@ -30,36 +22,38 @@
                     class="learnmore-pointer" id="customer-help"
                     (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
                     More</a></div>
-
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-bt-20">
                 <div class="mgn-lt-20 mgn-up-20 bold"> Video Calling Modes</div>
                 <div class="disp-flex">
-                    <div class="notification-box no-padding pointer-cursor" (click)="showPopup('WhatsApp')">
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
+                        <div>{{getName('WhatsApp')}}</div>
                     </div>
-                    <div class="notification-box no-padding pointer-cursor" (click)="showPopup('GoogleMeet')">
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('GoogleMeet')">
                         <span class="meet-icon" aria-hidden="true"></span>
+                        <div>{{getName('GoogleMeet')}}</div>
                     </div>
-                    <div class="notification-box no-padding pointer-cursor" (click)="showPopup('Zoom')">
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Zoom')">
                         <span class="zoom-icon" aria-hidden="true"></span>
+                        <div>{{getName('Zoom')}}</div>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                 <div class="mgn-lt-20 mgn-up-20 bold"> Voice Calling Modes</div>
                 <div class="disp-flex">
-                    <div class="notification-box no-padding pointer-cursor" (click)="showPopup('WhatsApp')">
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
+                        <div>{{getName('WhatsApp')}}</div>
                     </div>
-                    <div class="notification-box no-padding pointer-cursor" (click)="showPopup('Phone')">
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Phone')">
                         <span class="phon-icon" aria-hidden="true"></span>
+                        <div>{{getName('Phone')}}</div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
-
             <div class="col-md-6 col-xs-8 col-sm-8 col-lg-8">
                 <i class="fa fa-bell dark-blue" aria-hidden="true"></i>
                 Notifications
@@ -103,8 +97,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- <div class="content w-manager settings comn-cls">
         <div class="col-md-12 no-padding-small">
             <div class="row">

@@ -1,15 +1,9 @@
-<!-- <section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"
-    (performAction)="performActions($event)"></app-breadcrumb>
-</section> -->
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      <!-- <button type="button" class="btn default profile-back" (click)="goBack()">
-        <span class="fa fa-chevron-left">&nbsp;Back</span>
-      </button>&nbsp;&nbsp;&nbsp; -->
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{customer_label | capitalizeFirst}}</h5>
+      {{customer_label | capitalizeFirst}}
+    </h5>
   </div>
 </section>
 <section>
@@ -22,7 +16,8 @@
 <section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !order_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
     <div class="token-appt">
-      To setup 'Notifications', Appointment manager/QManager/Order manager/Donations need to be enabled from your settings.
+      To setup 'Notifications', Appointment manager/QManager/Order manager/Donations need to be enabled from your
+      settings.
     </div>
   </div>
 </section>
@@ -51,8 +46,102 @@
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
-              <mat-accordion class="acc-btn">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Early Notifications
+                <div class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
+                  him/her
+                  in line via SMS/Email/Notifications</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <div class="disp-flex">
+                  <div class="notify-phead disp-flex mgn-rt-20">
+                    <div [class.box-sh]="earlyWLNotificatonSettings.personsAhead > 1"
+                      (click)="earlyWLNotificatonSettings.personsAhead > 1 && decrement('earlyWLNotificatonSettings')"
+                      class="bodr-lft pointer-cursor">-
+                    </div>
+                    <div class="person-ahead">{{earlyWLNotificatonSettings.personsAhead}}
+                    </div>
+                    <div (click)="increment('earlyWLNotificatonSettings')"
+                      class="bodr-rht pointer-cursor box-sh">+
+                    </div>
+                  </div>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.sms"
+                    (change)="showSubmit('EARLY_WL', 'sms', $event)" class="mgn-rt-20">
+                    Via SMS</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.email"
+                    (change)="showSubmit('EARLY_WL', 'email', $event)" class="mgn-rt-20">
+                    Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
+                    (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
+                    Via App</mat-checkbox>
+                  <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead != 0"
+                    (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
+                </div>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Pre final Notifications
+                <div class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
+                  SMS/Email/Notifications.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="prefinalWLNotificationSettings.sms"
+                  (change)="showSubmit('PREFINAL_WL', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="prefinalWLNotificationSettings.email"
+                  (change)="showSubmit('PREFINAL_WL', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="prefinalWLNotificationSettings.pushNotification"
+                  (change)="showSubmit('PREFINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['PREFINAL_WL']" (click)="changeNotificationSettings('PREFINAL_WL')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Final Notifications
+                <div class="form-level-settings">Notify a {{customer_label}} when he is next in line via
+                  SMS/Email/Notifications.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="finalWLNotificationSettings.sms"
+                  (change)="showSubmit('FINAL_WL', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="finalWLNotificationSettings.email"
+                  (change)="showSubmit('FINAL_WL', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="finalWLNotificationSettings.pushNotification"
+                  (change)="showSubmit('FINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['FINAL_WL']" (click)="changeNotificationSettings('FINAL_WL')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <div *ngIf="showToken">Add token Notifications</div>
+                <div *ngIf="!showToken"> Add checkin Notifications</div>
+                <div class="form-level-settings">Notify a {{customer_label}} via
+                  SMS/Email/Notifications when a Check-in happens.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="wlAddNotificationSettings.sms"
+                  (change)="showSubmit('WAITLISTADD', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="wlAddNotificationSettings.email"
+                  (change)="showSubmit('WAITLISTADD', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="wlAddNotificationSettings.pushNotification"
+                  (change)="showSubmit('WAITLISTADD', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['WAITLISTADD']" (click)="changeNotificationSettings('WAITLISTADD')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <!-- <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
                     <mat-panel-title class="block-level"> Early Notifications<br>
@@ -213,8 +302,8 @@
                     type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
-              <div class="clearfix"></div>
-            </div>
+              <div class="clearfix"></div> -->
+            <!-- </div> -->
           </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion *ngIf="appointment_status">
@@ -225,130 +314,28 @@
                   about their appointment</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Appointment Confirmation Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when appointment is
+                  confirmed.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="apptAddNotificationSettings.sms"
+                  (change)="showSubmit('APPOINTMENTADD', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="apptAddNotificationSettings.email"
+                  (change)="showSubmit('APPOINTMENTADD', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="apptAddNotificationSettings.pushNotification"
+                  (change)="showSubmit('APPOINTMENTADD', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
               <!-- <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Early Notifications<br>
-                      <span class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
-                        him/her
-                        in line via SMS/Email/Notifications</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="form-group col-md-3 col-xs-7 col-sm-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
-                        [(ngModel)]="earlyAPPTNotificatonSettings.personsAhead"
-                        placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('EARLY_APPT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="!earlyAPPTNotificatonSettings.personsAhead && apptPersonsahead"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
-                      <span>
-                        <ul class="info-lst form-level-early-hint">
-                          <li style="padding-top: 6px;">
-                            The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                            be sent.
-                          </li>
-                        </ul>
-                      </span>
-                    </mat-form-field>
-                  </div>
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyAPPTNotificatonSettings.sms"
-                        (change)="showSubmit('EARLY_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyAPPTNotificatonSettings.email"
-                        (change)="showSubmit('EARLY_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="earlyAPPTNotificatonSettings.pushNotification" (change)="showSubmit('EARLY_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['EARLY_APPT'] && earlyAPPTNotificatonSettings.personsAhead"
-                    (click)="changeNotificationSettings('EARLY_APPT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion> -->
-              <!-- <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Pre Final Notifications <br>
-                      <span class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
-                        SMS/Email/Notifications.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalAPPTNotificationSettings.sms"
-                        (change)="showSubmit('PREFINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalAPPTNotificationSettings.email"
-                        (change)="showSubmit('PREFINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('PREFINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['PREFINAL_APPT']" (click)="changeNotificationSettings('PREFINAL_APPT')"
-                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Final Notifications
-                      <br> <span class="form-level-settings">Notify a {{customer_label}} when he is next in line via
-                        SMS/Email/Notifications.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalAPPTNotificationSettings.sms"
-                        (change)="showSubmit('FINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalAPPTNotificationSettings.email"
-                        (change)="showSubmit('FINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="finalAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('FINAL_APPT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['FINAL_APPT']" (click)="changeNotificationSettings('FINAL_APPT')"
-                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div> -->
-              <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
                     <mat-panel-title class="block-level"> Appointment Confirmation Notifications
@@ -359,10 +346,12 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="apptAddNotificationSettings.sms"
-                        (change)="showSubmit('APPOINTMENTADD')">
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                        [(ngModel)]="apptAddNotificationSettings.sms" (change)="showSubmit('APPOINTMENTADD')">
                       </mat-slide-toggle>
-                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                          (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to
+                        avoid undelivered SMS'}}</div>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
@@ -378,48 +367,205 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['APPOINTMENTADD']"
-                    (click)="changeNotificationSettings('APPOINTMENTADD')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
-              <div class="clearfix"></div>
-              <!-- <div class="block-level">Appointment Reminders notification
-                <span class="form-level-settings">Setup upto 4 reminder notifications to be sent to your {{customer_label}} prior to his/her appointment.</span>
-              </div> -->
+              <div class="clearfix"></div> -->
               <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
                     <mat-panel-title class="block-level">Appointment Reminder Notifications<br>
-                      <span class="form-level-settings">Jaldee allows you to send 4 reminders to your {{customer_label}}s before their appointment.</span>
+                      <span class="form-level-settings">Jaldee allows you to send 4 reminders to your
+                        {{customer_label}}s before their appointment.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
-                    <mat-accordion class="acc-btn">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-5 no-padding">
+                      First Reminder
+                      <div class="form-level-settings">Specify when the 1st reminder should be sent to your
+                        {{customer_label}}</div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                      <div class="disp-flex">
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="f_selected_hr > 0"
+                            (click)="f_selected_hr > 0 && decrement('f_selected_hr')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{f_selected_hr}}
+                          </div>
+                          <div (click)="f_selected_hr < 24 && increment('f_selected_hr')" class="bodr-rht pointer-cursor" [class.box-sh]="f_selected_hr < 24">+
+                          </div>
+                        </div>
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="f_selected_min > 0"
+                            (click)="f_selected_min > 0 && decrement('f_selected_min')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{f_selected_min}}
+                          </div>
+                          <div (click)="f_selected_min < 60 && increment(f_selected_min)" class="bodr-rht pointer-cursor" [class.box-sh]="f_selected_min < 60">+
+                          </div>
+                        </div>
+                        <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
+                          (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
+                          Via SMS</mat-checkbox>
+                        <mat-checkbox [checked]="firstAPPTNotificationSettings.email"
+                          (change)="showSubmit('FIRST_APPT', 'email', $event)" class="mgn-rt-20">
+                          Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
+                          (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                          Via App</mat-checkbox>
+                        <span *ngIf="showButton['FIRST_APPT']" (click)="changeNotificationSettings('FIRST_APPT')"
+                          class="notify-ok-btn">OK</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-5 no-padding">
+                      Second Reminder
+                      <div class="form-level-settings">Specify when the 2nd reminder should be sent to your
+                        {{customer_label}}</div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                      <div class="disp-flex">
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="s_selected_hr > 0"
+                            (click)="s_selected_hr > 0 && decrement('s_selected_hr')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{s_selected_hr}}
+                          </div>
+                          <div (click)="s_selected_hr < 24 && increment(s_selected_hr)" class="bodr-rht pointer-cursor" [class.box-sh]="s_selected_hr < 24">+
+                          </div>
+                        </div>
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="s_selected_min > 0"
+                            (click)="s_selected_min > 0 && decrement('s_selected_min')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{s_selected_min}}
+                          </div>
+                          <div (click)="s_selected_min < 60 && increment(s_selected_min)" class="bodr-rht pointer-cursor" [class.box-sh]="s_selected_min < 60">+
+                          </div>
+                        </div>
+                        <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
+                          (change)="showSubmit('SECOND_APPT', 'sms', $event)" class="mgn-rt-20">
+                          Via SMS</mat-checkbox>
+                        <mat-checkbox [checked]="secondAPPTNotificationSettings.email"
+                          (change)="showSubmit('SECOND_APPT', 'email', $event)" class="mgn-rt-20">
+                          Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="secondAPPTNotificationSettings.pushNotification"
+                          (change)="showSubmit('SECOND_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                          Via App</mat-checkbox>
+                        <span *ngIf="showButton['SECOND_APPT']" (click)="changeNotificationSettings('SECOND_APPT')"
+                          class="notify-ok-btn">OK</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-5 no-padding">
+                      Third Reminder
+                      <div class="form-level-settings">Specify when the 3rd reminder should be sent to your
+                        {{customer_label}}</div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                      <div class="disp-flex">
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="t_selected_hr > 0"
+                            (click)="t_selected_hr > 0 && decrement('t_selected_hr')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{t_selected_hr}}
+                          </div>
+                          <div (click)="t_selected_hr < 24 && increment('t_selected_hr')" class="bodr-rht pointer-cursor" [class.box-sh]="t_selected_hr < 24">+
+                          </div>
+                        </div>
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="t_selected_min > 0"
+                            (click)="t_selected_min > 0 && decrement('t_selected_min')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{t_selected_min}}
+                          </div>
+                          <div (click)="t_selected_min < 60 && increment(t_selected_min)" class="bodr-rht pointer-cursor" [class.box-sh]="t_selected_min < 60">+
+                          </div>
+                        </div>
+                        <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
+                          (change)="showSubmit('THIRD_APPT', 'sms', $event)" class="mgn-rt-20">
+                          Via SMS</mat-checkbox>
+                        <mat-checkbox [checked]="thirdAPPTNotificationSettings.email"
+                          (change)="showSubmit('THIRD_APPT', 'email', $event)" class="mgn-rt-20">
+                          Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="thirdAPPTNotificationSettings.pushNotification"
+                          (change)="showSubmit('THIRD_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                          Via App</mat-checkbox>
+                        <span *ngIf="showButton['THIRD_APPT']" (click)="changeNotificationSettings('THIRD_APPT')"
+                          class="notify-ok-btn">OK</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-5 no-padding">
+                      Fourth Reminder
+                      <div class="form-level-settings">Specify when the 4th reminder should be sent to your
+                        {{customer_label}}</div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                      <div class="disp-flex">
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="ft_selected_hr > 0"
+                            (click)="ft_selected_hr > 0 && decrement('ft_selected_hr')" class="bodr-lft pointer-cursor">-
+                          </div>
+                          <div class="person-ahead">{{ft_selected_hr}}
+                          </div>
+                          <div (click)="ft_selected_hr < 24 && increment('ft_selected_hr')" class="bodr-rht pointer-cursor" [class.box-sh]="ft_selected_hr < 24">+
+                          </div>
+                        </div>
+                        <div class="notify-phead disp-flex mgn-rt-20">
+                          <div [class.box-sh]="ft_selected_min > 0"
+                            (click)="ft_selected_min > 0 && decrement('ft_selected_min')" class="bodr-lft pointer-cursor">
+                            -
+                          </div>
+                          <div class="person-ahead">{{ft_selected_min}}
+                          </div>
+                          <div (click)="ft_selected_min < 60 && increment(ft_selected_min)" class="bodr-rht pointer-cursor" [class.box-sh]="ft_selected_min < 60">+
+                          </div>
+                        </div>
+                        <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
+                          (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
+                          Via SMS</mat-checkbox>
+                        <mat-checkbox [checked]="fourthAPPTNotificationSettings.email"
+                          (change)="showSubmit('FOURTH_APPT', 'email', $event)" class="mgn-rt-20">
+                          Via Email</mat-checkbox>
+                        <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
+                          (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                          Via App</mat-checkbox>
+                        <span *ngIf="showButton['FOURTH_APPT']" (click)="changeNotificationSettings('FOURTH_APPT')"
+                          class="notify-ok-btn">OK</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
+                  <!-- <mat-accordion class="acc-btn">
                       <mat-expansion-panel>
                         <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
                           class="acc-header">
                           <mat-panel-title class="block-level">First Reminder<br>
-                            <span class="form-level-settings">Specify when the 1st reminder should be sent to your {{customer_label}}</span>
+                            <span class="form-level-settings">Specify when the 1st reminder should be sent to your
+                              {{customer_label}}</span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="form-group col-md-12 col-xs-12 col-sm-12">
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
-                              <!-- <div style="display: flex;"> -->
-                                  <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
-                                    (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
-                                    <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                                      {{hr}}
-                                    </mat-option>
-                                  </mat-select>
-                               <!-- </div> -->
-                              </mat-form-field>
+                              <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
+                                (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
+                                <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                                  {{hr}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
                           </div>
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
-                              (selectionChange)="handleMinSelction(f_minsel.value,'first')">
+                                (selectionChange)="handleMinSelction(f_minsel.value,'first')">
                                 <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                                   {{min}}
                                 </mat-option>
@@ -432,10 +578,12 @@
                         <ul class="notifications">
                           <li class="mgn-lt-10">
                             <span class="notification"> via SMS </span>
-                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="firstAPPTNotificationSettings.sms"
-                              (change)="showSubmit('FIRST_APPT')">
+                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                              [(ngModel)]="firstAPPTNotificationSettings.sms" (change)="showSubmit('FIRST_APPT')">
                             </mat-slide-toggle>
-                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' :
+                              ' to avoid undelivered SMS'}}</div>
                           </li>
                           <li class="mgn-lt-10">
                             <span class="notification"> via Email</span>
@@ -455,13 +603,14 @@
                           class="cs-btn bt1 notifyOk">OK</button>
                       </mat-expansion-panel>
                     </mat-accordion>
-                    <div class="clearfix"></div>
-                    <mat-accordion class="acc-btn">
+                    <div class="clearfix"></div> -->
+                  <!-- <mat-accordion class="acc-btn">
                       <mat-expansion-panel>
                         <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
                           class="acc-header">
                           <mat-panel-title class="block-level"> Second Reminder<br>
-                            <span class="form-level-settings">Specify when the 2nd reminder should be sent to your {{customer_label}}
+                            <span class="form-level-settings">Specify when the 2nd reminder should be sent to your
+                              {{customer_label}}
                             </span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -469,17 +618,17 @@
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
-                                  (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
-                                  <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                                    {{hr}}
-                                  </mat-option>
-                                </mat-select>
+                                (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
+                                <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                                  {{hr}}
+                                </mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
-                              (selectionChange)="handleMinSelction(s_minsel.value,'second')">
+                                (selectionChange)="handleMinSelction(s_minsel.value,'second')">
                                 <mat-option *ngFor="let min of appt_remind_min" [value]="min">
                                   {{min}}
                                 </mat-option>
@@ -491,10 +640,12 @@
                         <ul class="notifications">
                           <li class="mgn-lt-10">
                             <span class="notification"> via SMS </span>
-                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="secondAPPTNotificationSettings.sms"
-                              (change)="showSubmit('SECOND_APPT')">
+                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                              [(ngModel)]="secondAPPTNotificationSettings.sms" (change)="showSubmit('SECOND_APPT')">
                             </mat-slide-toggle>
-                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' :
+                              ' to avoid undelivered SMS'}}</div>
                           </li>
                           <li class="mgn-lt-10">
                             <span class="notification"> via Email</span>
@@ -514,14 +665,14 @@
                           class="cs-btn bt1 notifyOk">OK</button>
                       </mat-expansion-panel>
                     </mat-accordion>
-                    <div class="clearfix"></div>
-
-                    <mat-accordion class="acc-btn">
+                    <div class="clearfix"></div> -->
+                  <!-- <mat-accordion class="acc-btn">
                       <mat-expansion-panel>
                         <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
                           class="acc-header">
                           <mat-panel-title class="block-level"> Third Reminder<br>
-                            <span class="form-level-settings">Specify when the 3rd reminder should be sent to your {{customer_label}}
+                            <span class="form-level-settings">Specify when the 3rd reminder should be sent to your
+                              {{customer_label}}
                             </span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -529,21 +680,21 @@
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
-                              (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
-                              <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                                {{hr}}
-                              </mat-option>
-                            </mat-select>
+                                (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
+                                <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                                  {{hr}}
+                                </mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
                                 (selectionChange)="handleMinSelction(t_minsel.value,'third')">
-                                  <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                                    {{min}}
-                                  </mat-option>
-                                </mat-select>
+                                <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                                  {{min}}
+                                </mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
@@ -551,10 +702,12 @@
                         <ul class="notifications">
                           <li class="mgn-lt-10">
                             <span class="notification"> via SMS </span>
-                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="thirdAPPTNotificationSettings.sms"
-                              (change)="showSubmit('THIRD_APPT')">
+                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                              [(ngModel)]="thirdAPPTNotificationSettings.sms" (change)="showSubmit('THIRD_APPT')">
                             </mat-slide-toggle>
-                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' :
+                              ' to avoid undelivered SMS'}}</div>
                           </li>
                           <li class="mgn-lt-10">
                             <span class="notification"> via Email</span>
@@ -574,34 +727,35 @@
                           class="cs-btn bt1 notifyOk">OK</button>
                       </mat-expansion-panel>
                     </mat-accordion>
-                    <div class="clearfix"></div>
-                    <mat-accordion class="acc-btn">
+                    <div class="clearfix"></div> -->
+                  <!-- <mat-accordion class="acc-btn">
                       <mat-expansion-panel>
                         <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'"
                           class="acc-header">
                           <mat-panel-title class="block-level"> Fourth Reminder<br>
-                            <span class="form-level-settings">Specify when the 4th reminder should be sent to your {{customer_label}}</span>
+                            <span class="form-level-settings">Specify when the 4th reminder should be sent to your
+                              {{customer_label}}</span>
                           </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="form-group col-md-12 col-xs-12 col-sm-12">
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
-                              (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
-                              <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                                {{hr}}
-                              </mat-option>
-                            </mat-select>
+                                (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
+                                <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                                  {{hr}}
+                                </mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                           <div class="col-md-6 col-xs-6 col-sm-6">
                             <mat-form-field>
                               <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
                                 (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
-                                  <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                                    {{min}}
-                                  </mat-option>
-                                </mat-select>
+                                <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                                  {{min}}
+                                </mat-option>
+                              </mat-select>
                             </mat-form-field>
                           </div>
                         </div>
@@ -609,10 +763,12 @@
                         <ul class="notifications">
                           <li class="mgn-lt-10">
                             <span class="notification"> via SMS </span>
-                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="fourthAPPTNotificationSettings.sms"
-                              (change)="showSubmit('FOURTH_APPT')">
+                            <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                              [(ngModel)]="fourthAPPTNotificationSettings.sms" (change)="showSubmit('FOURTH_APPT')">
                             </mat-slide-toggle>
-                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                            <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' :
+                              ' to avoid undelivered SMS'}}</div>
                           </li>
                           <li class="mgn-lt-10">
                             <span class="notification"> via Email</span>
@@ -631,133 +787,198 @@
                         <button (click)="changeNotificationSettings('FOURTH_APPT')" type="button" mat-button
                           class="cs-btn bt1 notifyOk">OK</button>
                       </mat-expansion-panel>
-                    </mat-accordion>
-                  </div>
+                    </mat-accordion> -->
+                  <!-- </div> -->
                 </mat-expansion-panel>
               </mat-accordion>
-
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion  *ngIf="order_status">
-            <mat-expansion-panel [expanded]="false">
-              <mat-expansion-panel-header class="mgn-bt-10">
-                <mat-panel-title class="block-level">Order Notifications<br>
-                  <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified
-                    about their Orders</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
-                <mat-accordion class="acc-btn">
-                  <mat-expansion-panel>
-                    <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                      <mat-panel-title class="block-level"> orders Confirmation Notifications
-                        <br> <span class="form-level-settings">Notify {{customer_label}} when order is
-                          confirmed.</span>
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <ul class="notifications">
-                      <li class="mgn-lt-10">
-                        <span class="notification"> via SMS </span>
-                        <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderAddNotificationSettings.sms"
-                          (change)="showSubmit('ORDERCONFIRM')">
-                        </mat-slide-toggle>
-                        <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
-                      </li>
-                      <li class="mgn-lt-10">
-                        <span class="notification"> via Email</span>
-                        <mat-slide-toggle class="example-margin" [(ngModel)]="orderAddNotificationSettings.email"
-                          (change)="showSubmit('ORDERCONFIRM')">
-                        </mat-slide-toggle>
-                      </li>
-                      <li class="mgn-lt-10">
-                        <span class="notification">App notification</span>
-                        <mat-slide-toggle class="example-margin"
-                          [(ngModel)]="orderAddNotificationSettings.pushNotification"
-                          (change)="showSubmit('ORDERCONFIRM')">
-                        </mat-slide-toggle>
-                      </li>
-                    </ul>
-                    <button *ngIf="showButton['ORDERCONFIRM']"
-                      (click)="changeNotificationSettings('ORDERCONFIRM')" type="button" mat-button
-                      class="cs-btn bt1 notifyOk">OK</button>
-                  </mat-expansion-panel>
-                </mat-accordion>
-                <div class="clearfix"></div>
-                <mat-accordion class="acc-btn">
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                        <mat-panel-title class="block-level"> orders Cancel Notifications
-                          <br> <span class="form-level-settings">Notify {{customer_label}} when order is
-                              cancel.</span>
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <ul class="notifications">
-                        <li class="mgn-lt-10">
-                          <span class="notification"> via SMS </span>
-                          <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderCancelNotificationSettings.sms"
-                            (change)="showSubmit('ORDERCANCEL')">
-                          </mat-slide-toggle>
-                          <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
-                        </li>
-                        <li class="mgn-lt-10">
-                          <span class="notification"> via Email</span>
-                          <mat-slide-toggle class="example-margin" [(ngModel)]="orderCancelNotificationSettings.email"
-                            (change)="showSubmit('ORDERCANCEL')">
-                          </mat-slide-toggle>
-                        </li>
-                        <li class="mgn-lt-10">
-                          <span class="notification">App notification</span>
-                          <mat-slide-toggle class="example-margin"
-                            [(ngModel)]="orderCancelNotificationSettings.pushNotification"
-                            (change)="showSubmit('ORDERCANCEL')">
-                          </mat-slide-toggle>
-                        </li>
-                      </ul>
-                      <button *ngIf="showButton['ORDERCANCEL']"
-                        (click)="changeNotificationSettings('ORDERCANCEL')" type="button" mat-button
-                        class="cs-btn bt1 notifyOk">OK</button>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <div class="clearfix"></div>
-                <mat-accordion class="acc-btn">
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                        <mat-panel-title class="block-level"> orders Status Change Notifications
-                          <br> <span class="form-level-settings">Notify {{customer_label}} when order 
-                              Status Change.</span>
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <ul class="notifications">
-                        <li class="mgn-lt-10">
-                          <span class="notification"> via SMS </span>
-                          <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="orderStatusChangelNotificationSettings.sms"
-                            (change)="showSubmit('ORDERSTATUSCHANGE')">
-                          </mat-slide-toggle>
-                          <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
-                        </li>
-                        <li class="mgn-lt-10">
-                          <span class="notification"> via Email</span>
-                          <mat-slide-toggle class="example-margin" [(ngModel)]="orderStatusChangelNotificationSettings.email"
-                            (change)="showSubmit('ORDERSTATUSCHANGE')">
-                          </mat-slide-toggle>
-                        </li>
-                        <li class="mgn-lt-10">
-                          <span class="notification">App notification</span>
-                          <mat-slide-toggle class="example-margin"
-                            [(ngModel)]="orderStatusChangelNotificationSettings.pushNotification"
-                            (change)="showSubmit('ORDERSTATUSCHANGE')">
-                          </mat-slide-toggle>
-                        </li>
-                      </ul>
-                      <button *ngIf="showButton['ORDERSTATUSCHANGE']"
-                        (click)="changeNotificationSettings('ORDERSTATUSCHANGE')" type="button" mat-button
-                        class="cs-btn bt1 notifyOk">OK</button>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <div class="clearfix"></div>
+        <mat-accordion *ngIf="order_status">
+          <mat-expansion-panel [expanded]="false">
+            <mat-expansion-panel-header class="mgn-bt-10">
+              <mat-panel-title class="block-level">Order Notifications<br>
+                <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified
+                  about their Orders</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Orders Confirmation Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when order is
+                  confirmed.</div>
               </div>
-            </mat-expansion-panel>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="orderAddNotificationSettings.sms"
+                  (change)="showSubmit('ORDERCONFIRM', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="orderAddNotificationSettings.email"
+                  (change)="showSubmit('ORDERCONFIRM', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="orderAddNotificationSettings.pushNotification"
+                  (change)="showSubmit('ORDERCONFIRM', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['ORDERCONFIRM']" (click)="changeNotificationSettings('ORDERCONFIRM')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Orders Cancel Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when order is
+                  cancel.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="orderCancelNotificationSettings.sms"
+                  (change)="showSubmit('ORDERCANCEL', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="orderCancelNotificationSettings.email"
+                  (change)="showSubmit('ORDERCANCEL', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="orderCancelNotificationSettings.pushNotification"
+                  (change)="showSubmit('ORDERCANCEL', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['ORDERCANCEL']" (click)="changeNotificationSettings('ORDERCANCEL')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Orders Status Change Notifications
+                <div class="form-level-settings">Notify {{customer_label}} when order is
+                  Status Change.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="orderStatusChangelNotificationSettings.sms"
+                  (change)="showSubmit('ORDERSTATUSCHANGE', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="orderStatusChangelNotificationSettings.email"
+                  (change)="showSubmit('ORDERSTATUSCHANGE', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="orderStatusChangelNotificationSettings.pushNotification"
+                  (change)="showSubmit('ORDERSTATUSCHANGE', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['ORDERSTATUSCHANGE']" (click)="changeNotificationSettings('ORDERSTATUSCHANGE')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
+            <!-- <mat-accordion class="acc-btn">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                    <mat-panel-title class="block-level"> orders Confirmation Notifications
+                      <br> <span class="form-level-settings">Notify {{customer_label}} when order is
+                        confirmed.</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul class="notifications">
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via SMS </span>
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                        [(ngModel)]="orderAddNotificationSettings.sms" (change)="showSubmit('ORDERCONFIRM')">
+                      </mat-slide-toggle>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                          (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to
+                        avoid undelivered SMS'}}</div>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via Email</span>
+                      <mat-slide-toggle class="example-margin" [(ngModel)]="orderAddNotificationSettings.email"
+                        (change)="showSubmit('ORDERCONFIRM')">
+                      </mat-slide-toggle>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification">App notification</span>
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="orderAddNotificationSettings.pushNotification"
+                        (change)="showSubmit('ORDERCONFIRM')">
+                      </mat-slide-toggle>
+                    </li>
+                  </ul>
+                  <button *ngIf="showButton['ORDERCONFIRM']" (click)="changeNotificationSettings('ORDERCONFIRM')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div class="clearfix"></div> -->
+            <!-- <mat-accordion class="acc-btn">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                    <mat-panel-title class="block-level"> orders Cancel Notifications
+                      <br> <span class="form-level-settings">Notify {{customer_label}} when order is
+                        cancel.</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul class="notifications">
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via SMS </span>
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                        [(ngModel)]="orderCancelNotificationSettings.sms" (change)="showSubmit('ORDERCANCEL')">
+                      </mat-slide-toggle>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                          (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to
+                        avoid undelivered SMS'}}</div>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via Email</span>
+                      <mat-slide-toggle class="example-margin" [(ngModel)]="orderCancelNotificationSettings.email"
+                        (change)="showSubmit('ORDERCANCEL')">
+                      </mat-slide-toggle>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification">App notification</span>
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="orderCancelNotificationSettings.pushNotification"
+                        (change)="showSubmit('ORDERCANCEL')">
+                      </mat-slide-toggle>
+                    </li>
+                  </ul>
+                  <button *ngIf="showButton['ORDERCANCEL']" (click)="changeNotificationSettings('ORDERCANCEL')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div class="clearfix"></div> -->
+            <!-- <mat-accordion class="acc-btn">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
+                    <mat-panel-title class="block-level"> orders Status Change Notifications
+                      <br> <span class="form-level-settings">Notify {{customer_label}} when order
+                        Status Change.</span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul class="notifications">
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via SMS </span>
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                        [(ngModel)]="orderStatusChangelNotificationSettings.sms"
+                        (change)="showSubmit('ORDERSTATUSCHANGE')">
+                      </mat-slide-toggle>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                          (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to
+                        avoid undelivered SMS'}}</div>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification"> via Email</span>
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="orderStatusChangelNotificationSettings.email"
+                        (change)="showSubmit('ORDERSTATUSCHANGE')">
+                      </mat-slide-toggle>
+                    </li>
+                    <li class="mgn-lt-10">
+                      <span class="notification">App notification</span>
+                      <mat-slide-toggle class="example-margin"
+                        [(ngModel)]="orderStatusChangelNotificationSettings.pushNotification"
+                        (change)="showSubmit('ORDERSTATUSCHANGE')">
+                      </mat-slide-toggle>
+                    </li>
+                  </ul>
+                  <button *ngIf="showButton['ORDERSTATUSCHANGE']"
+                    (click)="changeNotificationSettings('ORDERSTATUSCHANGE')" type="button" mat-button
+                    class="cs-btn bt1 notifyOk">OK</button>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div class="clearfix"></div> -->
+            <!-- </div> -->
+          </mat-expansion-panel>
         </mat-accordion>
         <mat-accordion *ngIf="donations_status">
           <mat-expansion-panel [expanded]="false">
@@ -766,129 +987,27 @@
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
-              <!-- <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Early Notifications<br>
-                      <span class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
-                        him/her
-                        in line via SMS/Email/Notifications</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="form-group col-md-3 col-xs-7 col-sm-4">
-                    <mat-form-field class="example-full-width">
-                      <input matInput min="0" max="1000" type="text"
-                        [(ngModel)]="earlyDONATNotificatonSettings.personsAhead"
-                        placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
-                        (keypress)="showSubmit('EARLY_DONAT');numberOnly($event)" (keyup)="isvalid($event)"><br>
-                      <div class="mgn-up-5" *ngIf="!earlyDONATNotificatonSettings.personsAhead && donatPersonsahead"
-                        style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
-                      <span>
-                        <ul class="info-lst form-level-early-hint">
-                          <li style="padding-top: 6px;">
-                            The n<sup style="color: black;">th</sup> {{customer_label}} to whom the notification should
-                            be sent.
-                          </li>
-                        </ul>
-                      </span>
-                    </mat-form-field>
-                  </div>
-                  <div class="clearfix"></div>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyDONATNotificatonSettings.sms"
-                        (change)="showSubmit('EARLY_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="earlyDONATNotificatonSettings.email"
-                        (change)="showSubmit('EARLY_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="earlyDONATNotificatonSettings.pushNotification" (change)="showSubmit('EARLY_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['EARLY_DONAT'] && earlyDONATNotificatonSettings.personsAhead"
-                    (click)="changeNotificationSettings('EARLY_DONAT')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Pre Final Notifications <br>
-                      <span class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
-                        SMS/Email/Notifications.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalDONATNotificationSettings.sms"
-                        (change)="showSubmit('PREFINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="prefinalDONATNotificationSettings.email"
-                        (change)="showSubmit('PREFINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="prefinalDONATNotificationSettings.pushNotification"
-                        (change)="showSubmit('PREFINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['PREFINAL_DONAT']" (click)="changeNotificationSettings('PREFINAL_DONAT')"
-                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div>
-              <mat-accordion class="acc-btn">
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
-                    <mat-panel-title class="block-level"> Final Notifications
-                      <br> <span class="form-level-settings">Notify a {{customer_label}} when he is next in line via
-                        SMS/Email/Notifications.</span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul class="notifications">
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via SMS </span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalDONATNotificationSettings.sms"
-                        (change)="showSubmit('FINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification"> via Email</span>
-                      <mat-slide-toggle class="example-margin" [(ngModel)]="finalDONATNotificationSettings.email"
-                        (change)="showSubmit('FINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                    <li class="mgn-lt-10">
-                      <span class="notification">App notification</span>
-                      <mat-slide-toggle class="example-margin"
-                        [(ngModel)]="finalDONATNotificationSettings.pushNotification"
-                        (change)="showSubmit('FINAL_DONAT')">
-                      </mat-slide-toggle>
-                    </li>
-                  </ul>
-                  <button *ngIf="showButton['FINAL_DONAT']" (click)="changeNotificationSettings('FINAL_DONAT')"
-                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
-                </mat-expansion-panel>
-              </mat-accordion>
-              <div class="clearfix"></div> -->
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                Notify when a donation is made
+                <div class="form-level-settings">Notify a {{customer_label}} via
+                  SMS/Email/Notifications when a Donation accept.</div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                <mat-checkbox [checked]="donatAddNotificationSettings.sms"
+                  (change)="showSubmit('DONATIONSERVICE', 'sms', $event)" class="mgn-rt-20">
+                  Via SMS</mat-checkbox>
+                <mat-checkbox [checked]="donatAddNotificationSettings.email"
+                  (change)="showSubmit('DONATIONSERVICE', 'email', $event)" class="mgn-rt-20">
+                  Via Email</mat-checkbox>
+                <mat-checkbox [checked]="donatAddNotificationSettings.pushNotification"
+                  (change)="showSubmit('DONATIONSERVICE', 'pushNotification', $event)" class="mgn-rt-20">
+                  Via App</mat-checkbox>
+                <span *ngIf="showButton['DONATIONSERVICE']" (click)="changeNotificationSettings('DONATIONSERVICE')"
+                  class="notify-ok-btn">OK</span>
+              </div>
+            </div>
+            <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
               <mat-accordion class="acc-btn">
                 <mat-expansion-panel>
                   <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" class="acc-header">
@@ -900,10 +1019,12 @@
                   <ul class="notifications">
                     <li class="mgn-lt-10">
                       <span class="notification"> via SMS </span>
-                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin" [(ngModel)]="donatAddNotificationSettings.sms"
-                        (change)="showSubmit('DONATIONSERVICE')">
+                      <mat-slide-toggle [disabled]="is_noSMS" class="example-margin"
+                        [(ngModel)]="donatAddNotificationSettings.sms" (change)="showSubmit('DONATIONSERVICE')">
                       </mat-slide-toggle>
-                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+                      <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                          (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to
+                        avoid undelivered SMS'}}</div>
                     </li>
                     <li class="mgn-lt-10">
                       <span class="notification"> via Email</span>
@@ -919,12 +1040,11 @@
                       </mat-slide-toggle>
                     </li>
                   </ul>
-                  <button *ngIf="showButton['DONATIONSERVICE']"
-                    (click)="changeNotificationSettings('DONATIONSERVICE')" type="button" mat-button
-                    class="cs-btn bt1 notifyOk">OK</button>
+                  <button *ngIf="showButton['DONATIONSERVICE']" (click)="changeNotificationSettings('DONATIONSERVICE')"
+                    type="button" mat-button class="cs-btn bt1 notifyOk">OK</button>
                 </mat-expansion-panel>
               </mat-accordion>
-            </div>
+            </div> -->
           </mat-expansion-panel>
         </mat-accordion>
       </div>
