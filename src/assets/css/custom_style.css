@@ -5550,7 +5550,7 @@ i.notavail {
     margin-top: 4px
   }
   .no-margin-small {
-    padding: 0 !important;
+    margin: 0 !important;
   }
 }
 
