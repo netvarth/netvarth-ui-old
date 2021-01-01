@@ -62,7 +62,7 @@ export class AddAddressComponent implements OnInit {
 
       address: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-      postalCode: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      postalCode: ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       landMark: ['', Validators.compose([Validators.required])],
       countryCode: ['+91'],
     });
