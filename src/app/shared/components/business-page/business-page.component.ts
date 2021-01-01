@@ -2549,11 +2549,19 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
-    console.log(this.orderList);
+
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        if (this.orderList.length > 0 && this.orderList !== null) {
+          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        } else {
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        }
+
         break;
       }
     }
