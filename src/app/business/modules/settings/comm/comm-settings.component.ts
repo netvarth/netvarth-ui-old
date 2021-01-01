@@ -157,4 +157,12 @@ export class CommSettingsComponent implements OnInit {
     gotoCustomerNotification() {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
     }
+    getName(type) {
+        const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === type);
+        if (filtererList && filtererList[0] && filtererList[0].value) {
+            return 'Connected';
+        } else {
+            return 'Not Connected';
+        }
+    }
 }
