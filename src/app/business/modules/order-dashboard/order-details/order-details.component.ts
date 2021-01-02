@@ -18,6 +18,7 @@ export class OrderDetailsComponent implements OnInit {
   uid;
   loading = false;
   orderDetails: any = [];
+  orderItems: any = [];
   selectedType = 'list';
   customerLabel = '';
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
@@ -49,6 +50,9 @@ export class OrderDetailsComponent implements OnInit {
     this.loading = true;
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
+      for (let item of this.orderDetails.orderItem) {
+        this.orderItems.push({ 'type': 'order-details-item', 'item': item });
+      }
       this.loading = false;
     });
   }

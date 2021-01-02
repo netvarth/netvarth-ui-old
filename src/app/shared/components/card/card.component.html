@@ -1,5 +1,6 @@
 <!-- Card -->
-<div class="card booking-card pointer-cursor service" *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
+<div class="card booking-card pointer-cursor service"
+    *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
     (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
     <!-- Card content -->
     <div class="card-body">
@@ -21,7 +22,8 @@
             <div class="module line-clamp"
                 [ngClass]="{'col-xs-10 no-padding':service.serviceType && service.serviceType == 'virtualService'}">
                 <h4 class="card-title font-weight-bold">
-                    <a>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</a></h4>
+                    <a>{{service.name | capitalizeFirst | limitTo: [35, '...']}}</a>
+                </h4>
             </div>
         </div>
         <div class="card-content">
@@ -43,24 +45,31 @@
         </div>
     </div>
 </div>
-<div class="card booking-card pointer-cursor order" [class.disabled]="service['status'] && service['status']=='INACTIVE'"  *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'" (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+<div class="card booking-card pointer-cursor order"
+    [class.disabled]="service['status'] && service['status']=='INACTIVE'"
+    *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
+    (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
     <div class="card-item-head" *ngIf="service.itemImages">
-        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions" (click)="stopProp($event)">
+        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
+            (click)="stopProp($event)">
             <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #appMenu="matMenu" >
-            <button mat-menu-item *ngFor="let action of item.actions" (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
-                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>                                                
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item *ngFor="let action of item.actions"
+                (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
         </mat-menu>
-        <img class="card-img img-responsive"  [src]="getItemImg(service)" alt="Profile Pic" />
+        <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
     </div>
     <div class="card-item-content">
-        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!service.itemImages && item.actions" (click)="stopProp($event)">
+        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!service.itemImages && item.actions"
+            (click)="stopProp($event)">
             <mat-icon>more_vert</mat-icon>
         </button>
-        <mat-menu #appMenu="matMenu" >
-            <button mat-menu-item *ngFor="let action of item.actions" (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
-                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>                                                
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item *ngFor="let action of item.actions"
+                (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
         </mat-menu>
         <h4 class="card-title font-weight-bold d-block">
             <a class="d-block name module1 line-clamp1">{{service.displayName}}</a>
@@ -71,8 +80,11 @@
 
             </div> -->
             <div class="col-md-12 no-padding">
-                <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice" class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice: service.price}}</span> </a>
-                <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right" *ngIf="item.type=='item'">
+                <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice"
+                        class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice:
+                        service.price}}</span> </a>
+                <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right"
+                    *ngIf="item.type=='item'">
                     <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
                 </div>
                 <div class="count-o pull-right" *ngIf="item.type=='item'">
@@ -93,10 +105,10 @@
     <div class="card-item-content">
         <h4 class="card-title font-weight-bold module line-clamp">
             <a *ngIf="user.businessName">{{user.businessName}}</a>
-            <a
-                *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName | capitalizeFirst}}</a>
-            <a
-                *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName | capitalizeFirst}}</a>
+            <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
+                capitalizeFirst}}</a>
+            <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
+                capitalizeFirst}}</a>
         </h4>
     </div>
 </div>
@@ -108,7 +120,25 @@
     <div class="card-item-content">
         <h4 class="card-title font-weight-bold text-center">
             <a class="pointer-cursor"><b>Add Item</b> </a>
-        </h4>                                                                                
+        </h4>
+    </div>
+</div>
+<div class="card booking-card order" *ngIf="item.type=='order-details-item'">
+    <div class="card-item-head" *ngIf="service.itemImages">
+        <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
+    </div>
+    <div class="card-item-content">
+        <h4 class="card-title font-weight-bold d-block">
+            <a class="d-block name module1 line-clamp1">{{service.name}}</a>
+            <p class="module1 line-clamp1">Qty - {{service.quantity}}</p>
+        </h4>
+        <div class="col-md-12 no-padding">
+            <div class="col-md-12 no-padding">
+                <span class="price rupee-font pull-left">&#8377;{{service.totalPrice}}</span>
+                <i *ngIf="service.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor pull-right"
+                    (click)="showConsumerNote(service)"></i>
+            </div>
+        </div>
     </div>
 </div>
 <!-- Card -->

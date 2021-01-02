@@ -13,6 +13,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() loc;
     @Input() extras;
     @Output() actionPerformed = new EventEmitter<any>();
+    @Output() noteClicked = new EventEmitter<any>();
     service: any;
     user: any;
     timingCaption: string;
@@ -74,6 +75,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.service);
                 console.log(this.actions);
                 break;
+            case 'order-details-item':
+                this.service = this.item.item;
+                break;
             case 'item-head':
                 break;
             default:
@@ -116,6 +120,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             actionObj['userId'] = userId;
         }
         this.actionPerformed.emit(actionObj);
+    }
+    showConsumerNote(item) {
+        this.noteClicked.emit(item);
     }
     getTerminologyTerm(term) {
         const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
