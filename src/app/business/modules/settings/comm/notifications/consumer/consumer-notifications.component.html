@@ -47,15 +47,26 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                Early Notifications
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
+                                    </div>
+                <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                  {{customer_label | capitalizeFirst}} Ahead
+                                    </div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              Channels
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
+              <div class="font1">  Early Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
                   him/her
                   in line via SMS/Email/Notifications</div>
-              </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                <div class="disp-flex">
-                  <div class="notify-phead disp-flex mgn-rt-20">
+                </div>
+                  <div class="notify-phead disp-flex col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                     <div [class.box-sh]="earlyWLNotificatonSettings.personsAhead > 1"
                       (click)="earlyWLNotificatonSettings.personsAhead > 1 && decrement('earlyWLNotificatonSettings')"
                       class="bodr-lft pointer-cursor">-
@@ -66,6 +77,8 @@
                       class="bodr-rht pointer-cursor box-sh">+
                     </div>
                   </div>
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                   <mat-checkbox [checked]="earlyWLNotificatonSettings.sms"
                     (change)="showSubmit('EARLY_WL', 'sms', $event)" class="mgn-rt-20">
                     Via SMS</mat-checkbox>
@@ -77,16 +90,15 @@
                     Via App</mat-checkbox>
                   <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead != 0"
                     (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
-                </div>
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                Pre final Notifications
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="font1">    Pre final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
                   SMS/Email/Notifications.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.sms"
                   (change)="showSubmit('PREFINAL_WL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -101,12 +113,12 @@
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                Final Notifications
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="font1">   Final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is next in line via
                   SMS/Email/Notifications.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="finalWLNotificationSettings.sms"
                   (change)="showSubmit('FINAL_WL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -121,13 +133,13 @@
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                <div *ngIf="showToken">Add token Notifications</div>
-                <div *ngIf="!showToken"> Add checkin Notifications</div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                <div class="font1" *ngIf="showToken">Add token Notifications</div>
+                <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} via
                   SMS/Email/Notifications when a Check-in happens.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="wlAddNotificationSettings.sms"
                   (change)="showSubmit('WAITLISTADD', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -315,12 +327,19 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+              </div>
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              Channels
+              </div>
+            </div>
+            <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Appointment Confirmation Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when appointment is
                   confirmed.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="apptAddNotificationSettings.sms"
                   (change)="showSubmit('APPOINTMENTADD', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -380,14 +399,31 @@
                         {{customer_label}}s before their appointment.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
+
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
+                      <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                                          </div>
+                      <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                        Hour
+                                          </div>
+                                          <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                                            Minutes
+                                                              </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                    Channels
+                    </div>
+                  </div>
+
                   <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
                     <div class="col-md-4 col-xs-12 col-sm-12 col-lg-5 no-padding">
+                      <div class="col-md-9 col-xs-12 col-sm-12 col-lg-6 no-padding">
                       First Reminder
                       <div class="form-level-settings">Specify when the 1st reminder should be sent to your
                         {{customer_label}}</div>
-                    </div>
-                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
-                      <div class="disp-flex">
+                      </div>
+                      <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                         <div class="notify-phead disp-flex mgn-rt-20">
                           <div [class.box-sh]="f_selected_hr > 0"
                             (click)="f_selected_hr > 0 && decrement('f_selected_hr')" class="bodr-lft pointer-cursor">-
@@ -397,6 +433,8 @@
                           <div (click)="f_selected_hr < 24 && increment('f_selected_hr')" class="bodr-rht pointer-cursor" [class.box-sh]="f_selected_hr < 24">+
                           </div>
                         </div>
+                      </div>
+                      <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                         <div class="notify-phead disp-flex mgn-rt-20">
                           <div [class.box-sh]="f_selected_min > 0"
                             (click)="f_selected_min > 0 && decrement('f_selected_min')" class="bodr-lft pointer-cursor">-
@@ -406,6 +444,11 @@
                           <div (click)="f_selected_min < 60 && increment(f_selected_min)" class="bodr-rht pointer-cursor" [class.box-sh]="f_selected_min < 60">+
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-6 no-padding">
+                        
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                         <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
                           (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
                           Via SMS</mat-checkbox>
@@ -417,7 +460,7 @@
                           Via App</mat-checkbox>
                         <span *ngIf="showButton['FIRST_APPT']" (click)="changeNotificationSettings('FIRST_APPT')"
                           class="notify-ok-btn">OK</span>
-                      </div>
+                          </div>
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small mgn-bt-10">
@@ -1050,4 +1093,5 @@
       </div>
     </div>
   </div>
+  <div class="clearfix"></div>
 </section>
