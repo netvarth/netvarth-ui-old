@@ -40,7 +40,7 @@
                             (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
                         to
                         avoid undelivered SMS'}}</div>
-                    <div class="form-group" *ngIf="sms">
+                    <div class="form-group mgn-up-10" *ngIf="sms">
                         <div class="input-group mb-3 phadd">
                             <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91">
@@ -61,7 +61,7 @@
                     <span class="notification"> via Email</span>
                     <!-- <span [class.icon-add]="!email" [class.icon-minus]="email" (click)="emailAddClicked()"></span> -->
                     <span class="noti-add-btn" (click)="emailAddClicked()">Add</span>
-                    <div class="form-group" *ngIf="email">
+                    <div class="form-group mgn-up-10" *ngIf="email">
                         <div class="input-group mb-3 emadd">
                             <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
                             <div class="input-group-append">
@@ -82,7 +82,7 @@
                     <span class="noti-add-btn"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknPushph_arr.length === 0)"
                         (click)="cheknCancelPushAddClicked()">Add</span>
-                    <div class="form-group" *ngIf="cheknPushph">
+                    <div class="form-group mgn-up-10" *ngIf="cheknPushph">
                         <div class="input-group mb-3 phadd">
                             <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91">
@@ -137,7 +137,7 @@
                             (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
                         to
                         avoid undelivered SMS'}}</div>
-                    <div class="form-group" *ngIf="cancelsms">
+                    <div class="form-group mgn-up-10" *ngIf="cancelsms">
                         <div class="input-group mb-3 phadd">
                             <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91">
@@ -160,7 +160,7 @@
                     <!-- <span [class.icon-add]="!cancelemail" [class.icon-minus]="cancelemail"
                         (click)="cancelledCheckinemailAddClicked()"></span> -->
                     <span class="noti-add-btn" (click)="cancelledCheckinemailAddClicked()">Add</span>
-                    <div class="form-group" *ngIf="cancelemail">
+                    <div class="form-group mgn-up-10" *ngIf="cancelemail">
                         <div class="input-group mb-3 emadd">
                             <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
                             <div class="input-group-append">
@@ -183,7 +183,7 @@
                     <span class="noti-add-btn"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknCancelPushph_arr.length === 0)"
                         (click)="cheknCancelPushAddClicked()">Add</span>
-                    <div class="form-group" *ngIf="cheknCancelPushph">
+                    <div class="form-group mgn-up-10" *ngIf="cheknCancelPushph">
                         <div class="input-group mb-3 phadd">
                             <input class="form-control" style="max-width: 50px !important;" type="text" readonly
                                 value="+91">
