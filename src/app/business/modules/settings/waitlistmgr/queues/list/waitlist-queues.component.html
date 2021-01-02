@@ -264,8 +264,11 @@
                                                                                 </div>
                                                                                 <div
                                                                                         class="col-md-6 col-xs-12 mg-small-10 no-padding">
-                                                                                        <label class="ttle">Same day
-                                                                                                Online
+                                                                                        <label class = "ttle" *ngIf="queuedata[0].showToken">
+                                                                                                Same day online tokens
+                                                                                        </label>
+                                                                                        <label class="ttle" *ngIf="!queuedata[0].showToken">Same day
+                                                                                                online
                                                                                                 check-ins</label>
                                                                                         <mat-slide-toggle
                                                                                                 class="example-margin"

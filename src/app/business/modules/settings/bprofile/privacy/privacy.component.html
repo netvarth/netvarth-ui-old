@@ -56,9 +56,9 @@
                                                 &nbsp;{{show_privacyText(phone.permission)}}</td>
                                             <td class="actions" *ngIf="!small_device_display">
                                                 <i class="fa fa-trash pad-rt-10 pointer-cursor" aria-hidden="true"
-                                                    (click)="deletePrivacysettingsConfirm('phone', i)"></i>
+                                                    (click)="deletePrivacysettingsConfirm('phone', i)" [matTooltip]="'Delete'"></i>
                                                 <i class="fa fa-pencil-square-o pointer-cursor" aria-hidden="true"
-                                                    (click)="handlePrivacysettings('phone', i)"></i>
+                                                    (click)="handlePrivacysettings('phone', i)" [matTooltip]="'Edit'"></i>
                                             </td>
                                             <td *ngIf="small_device_display">
                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -172,9 +172,9 @@
                                                 &nbsp;{{show_privacyText(email.permission)}}</td>
                                             <td class="actions" *ngIf="!small_device_display">
                                                 <i class="fa fa-trash pad-rt-10 pointer-cursor" aria-hidden="true"
-                                                    (click)="deletePrivacysettingsConfirm('email', i)"></i>
+                                                    (click)="deletePrivacysettingsConfirm('email', i)" [matTooltip]="'Delete'"></i>
                                                 <i class="fa fa-pencil-square-o pointer-cursor" aria-hidden="true"
-                                                    (click)="handlePrivacysettings('email', i)"></i>
+                                                    (click)="handlePrivacysettings('email', i)" [matTooltip]="'Edit'"></i>
                                             </td>
                                             <td *ngIf="small_device_display">
                                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">

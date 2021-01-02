@@ -94,6 +94,8 @@
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
       {
         'required' : 'Please enter Postal Code ',
+        'minlength' : 'Enter a 6 digit Postal Code',
+        'maxlength' : 'Enter a 6 digit Postal Code',
         'pattern' : 'Only numbers are allowed'
       })">
           </app-field-error-display>
