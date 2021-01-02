@@ -5,31 +5,16 @@
     </button>
 </h1>
 <mat-dialog-content>
-    <!-- <div class="disp-flex">
-        <div class="input-group-prepend mob-prefix" *ngIf="mode === 'WhatsApp' || mode === 'Phone'">
-            <span class="input-group-text mgn-up-10">+91</span>
-        </div>
-        <div class="input-group">
-            <mat-form-field>
-                <input [(ngModel)]="callingMode" matInput type="text" class="form-control"
-                    autocomplete="off" style="width: 60%;">
-                <span class="update-btn mgn-lt-10" (click)="updateVideoSettings()" [class.disabled]="callingMode == ''">
-                    Update
-                </span>
-            </mat-form-field>
-        </div>
-    </div> -->
-
     <div class="col-md-12 mgn-up-10 no-padding" style="display: flex;">
         <div class="input-group-prepend mob-prefix" *ngIf="mode === 'WhatsApp' || mode === 'Phone'">
             <span class="input-group-text mgn-up-10">+91</span>
         </div>
         <mat-form-field>
             <div class="input-group">
-                <input [(ngModel)]="callingMode" matInput
-                    type="text" class="form-control" autocomplete="off">
+                <input [(ngModel)]="callingMode" matInput type="text" class="form-control" autocomplete="off">
                 <div class="input-group-append mgn-up-10">
-                    <span class="update-btn mgn-lt-10" (click)="updateVideoSettings()" [class.disabled]="callingMode == ''">
+                    <span class="update-btn mgn-lt-10" (click)="updateVideoSettings()"
+                        [class.disabled]="callingMode == ''">
                         Update
                     </span>
                 </div>

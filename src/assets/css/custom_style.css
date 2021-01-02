@@ -26838,3 +26838,12 @@ color: #fff !important;
   font-weight: bold;
   color: white;
 }
+.pro-notify-box {
+  float: left;
+  width: 300px;
+  margin: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  padding: 20px;
+  width: 300px;
+  cursor: pointer;
+}

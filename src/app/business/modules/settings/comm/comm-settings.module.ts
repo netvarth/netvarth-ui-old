@@ -12,7 +12,6 @@ import { CommSettingsComponent } from './comm-settings.component';
 import { VideoSettingsComponent } from './video/video-settings.component';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
 
-
 @NgModule({
     imports: [
         CommonModule,

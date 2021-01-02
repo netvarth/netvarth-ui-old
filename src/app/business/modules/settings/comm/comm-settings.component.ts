@@ -147,7 +147,7 @@ export class CommSettingsComponent implements OnInit {
         });
         dialogref.afterClosed().subscribe(
             result => {
-                    this.getVirtualCallingModesList();
+                this.getVirtualCallingModesList();
             }
         );
     }
@@ -158,11 +158,13 @@ export class CommSettingsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
     }
     getName(type) {
-        const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === type);
-        if (filtererList && filtererList[0] && filtererList[0].value) {
-            return 'Connected';
-        } else {
-            return 'Not Connected';
+        if (this.virtualCallModesList) {
+            const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === type);
+            if (filtererList && filtererList[0] && filtererList[0].value) {
+                return 'Connected';
+            } else {
+                return 'Not Connected';
+            }
         }
     }
 }
