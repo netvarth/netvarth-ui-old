@@ -1053,10 +1053,14 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else {
+            } else if(!this.thirdParty) {
                 const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode+''+this.callingModes;
                 console.log(this.callingModes)
+            } else {
+                console.log("third party")
+                const thirdparty_countrycode = '91';
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode+''+this.callingModes;
             }
         }
         // }
