@@ -1,0 +1,15 @@
+.donationdetails {
+    margin: 20px;
+    padding: 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.fa-phone, .fa-map-marker {
+    color: #334b99;
+    margin-right: 10px;
+}
+.personal {
+    line-height: 1.6;
+}
+.min-hght {
+    min-height: 500px;
+}

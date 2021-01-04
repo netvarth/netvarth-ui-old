@@ -9,6 +9,7 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
         LoadingSpinnerModule,
         PagerModule,
         SharedModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule
     ],
     exports: [DonationsComponent]
 })

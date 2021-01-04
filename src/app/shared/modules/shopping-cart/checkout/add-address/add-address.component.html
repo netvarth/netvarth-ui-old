@@ -39,27 +39,26 @@
         </div>
         <div class="form-group">
             <mat-form-field>
-          <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
-   </mat-form-field>
-          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
-                                  {
-                                    'required' : 'Email is required',
-                                    'pattern' : 'Please enter valid email'
-                                  })">
-          </app-field-error-display>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field>
           <input matInput type="text" class="form-control" placeholder="Last name" formControlName="lastName">
             </mat-form-field>
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                     {
-                                      'required' : 'First name is required',
+                                      'required' : 'Last name is required',
                                       'pattern' : 'Only alphabets are allowed'
                                     })">
           </app-field-error-display>
         </div>
+        <div class="form-group">
+          <mat-form-field>
+        <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+ </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
+                                {
+                                  'required' : 'Email is required',
+                                  'pattern' : 'Please enter valid email'
+                                })">
+        </app-field-error-display>
+      </div>
 
 
 
@@ -95,6 +94,8 @@
           <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
       {
         'required' : 'Please enter Postal Code ',
+        'minlength' : 'Enter a 6 digit Postal Code',
+        'maxlength' : 'Enter a 6 digit Postal Code',
         'pattern' : 'Only numbers are allowed'
       })">
           </app-field-error-display>

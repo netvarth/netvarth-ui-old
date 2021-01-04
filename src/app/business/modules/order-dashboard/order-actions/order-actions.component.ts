@@ -38,7 +38,7 @@ export class OrderActionsComponent implements OnInit {
   setActions() {
     if (!this.mulipleSelection) {
       this.showSendDetails = true;
-      if (this.pos) {
+      if (this.pos && (this.orderDetails.orderStatus !== 'Cancelled' || (this.orderDetails.orderStatus === 'Cancelled' && this.orderDetails.bill && this.orderDetails.bill.billPaymentStatus !== 'NotPaid'))) {
         this.showBill = true;
       }
       this.getCatalog();

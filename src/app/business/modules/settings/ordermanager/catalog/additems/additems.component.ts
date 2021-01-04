@@ -102,8 +102,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     let divider;
     const divident = this.screenWidth / 37.8;
-    if (this.screenWidth > 1000) {
-       divider = divident / 4;
+    if (this.screenWidth > 1500) {
+      divider = divident / 4;
+    } else if (this.screenWidth > 1000 && this.screenWidth < 1500) {
+       divider = divident / 3;
     } else if (this.screenWidth > 400 && this.screenWidth < 1000) {
       divider = divident / 2;
     }  else if (this.screenWidth < 400) {

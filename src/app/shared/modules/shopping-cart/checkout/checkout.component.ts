@@ -13,6 +13,7 @@ import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consu
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
 
 
 @Component({
@@ -85,6 +86,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   isfutureAvailableTime = false;
   storeContactNw: any;
   showSide = false;
+  canceldialogRef: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -325,9 +327,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.getaddress();
     });
   }
-
-
-
   updateAddress(address, index) {
     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
@@ -343,9 +342,33 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
       this.getaddress();
-
     });
-
+  }
+  deleteAddress(address, index) {
+      this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+           'message': 'Do you want to Delete this address?',
+       }
+       });
+    this.canceldialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.added_address.splice(index ,1);
+      this.shared_services.updateConsumeraddress(this.added_address)
+      .subscribe(
+        data => {
+         this.sharedFunctionobj.openSnackBar('Address Updated successfully');     
+        },
+        error => {
+          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+      this.getaddress();
+      }
+    });
   }
   goBack() {
     if (this.action === 'changeTime') {
@@ -604,7 +627,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.city + ',' + address.phoneNumber + '</br>' + address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark +  ',' + address.city + ',' + address.countryCode +  ' ' + address.phoneNumber + '</br>' + address.email;
     console.log(this.selectedAddress);
   }
   // handleFuturetoggle() {

@@ -7,12 +7,14 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 
 @Component({
     'selector': 'app-donation-details',
-    'templateUrl': './donation-details.component.html'
+    'templateUrl': './donation-details.component.html',
+    styleUrls: ['./donation-details.component.css']
 })
 export class DonationDetailsComponent {
     uid;
     donationDetails: any = [];
-    display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
+    display_dateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT;
+    loading = false;
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,
         public providerservices: ProviderServices,
@@ -23,8 +25,10 @@ export class DonationDetailsComponent {
         });
     }
     getDonationDetails(uid) {
+        this.loading = true;
         this.providerservices.getDonationByUid(uid).subscribe(data => {
             this.donationDetails = data;
+            this.loading = false;
         });
     }
     goBack() {

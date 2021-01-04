@@ -509,6 +509,8 @@ export class SharedServices {
       return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
     } else if (type === 'appointment') {
       return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account']);
+    } else if (type === 'order') {
+      return this.servicemeta.httpPut('consumer/orders/' + id + '?account=' + params['account']);
     }
   }
   getConsumerRateService(params, type) {

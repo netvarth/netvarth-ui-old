@@ -14,7 +14,7 @@
         </div>
         <div class="panel-body no-padding">
           <div class="c-outer m0">
-            <div class="c-body">
+            <div class="c-body width-100">
               <div class="card title-gb m0">
                 <h5 class="mgn-up-10">
                   <a class="back-btn" (click)="goBack()">
@@ -109,13 +109,16 @@
                           <div class="adrs-data">
                             <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
                             <div>{{address.address}}</div>
-                            <div>{{address.city}} , {{address.postalCode}}</div>
+                            <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
                             <div> +91 {{address.phoneNumber}}</div>
                             <div> {{address.email}}</div>
                           </div>
                           <mat-grid-tile-footer>
                             <button class="add-adrs-btn" mat-flat-button (click)="updateAddress(address,i)">
                               Edit
+                            </button> &nbsp;
+                            <button class="add-adrs-btn" mat-flat-button (click)="deleteAddress(address,i)">
+                             Delete
                             </button>
                           </mat-grid-tile-footer>
                         </mat-grid-tile>

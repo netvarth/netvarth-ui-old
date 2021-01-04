@@ -16,7 +16,7 @@ import { ProviderServices } from '../../ynw_provider/services/provider-services.
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin','jld', 'qrp']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
@@ -49,7 +49,7 @@ export class SharedFunctions {
       );
   }
 
-  callMaintanance () {
+  callMaintanance() {
     const promise = new Promise((resolve) => {
       resolve();
     });
@@ -402,7 +402,7 @@ export class SharedFunctions {
     return promise;
   }
 
-  getNearByLocation(centerLat: number, centerLon: number, distanceMetrix , loctype?) {
+  getNearByLocation(centerLat: number, centerLon: number, distanceMetrix, loctype?) {
     let distance = 0;
     switch (loctype) {
       case 'state':
@@ -1259,6 +1259,8 @@ export class SharedFunctions {
       }
     } else if (type === 'appointment') {
       msg = 'Appointment';
+    } else if (type === 'order') {
+      msg = 'Order';
     }
     return new Promise((resolve, reject) => {
       cthis.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -1278,6 +1280,8 @@ export class SharedFunctions {
           if (type === 'checkin') {
             id = waitlist.ynwUuid;
           } else if (type === 'appointment') {
+            id = waitlist.uid;
+          } else if (type === 'order') {
             id = waitlist.uid;
           }
           this.cancelWaitlist(id, waitlist.providerAccount.id, type)
