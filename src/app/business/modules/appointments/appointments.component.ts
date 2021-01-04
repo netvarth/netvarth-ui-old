@@ -337,6 +337,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
   qloading: boolean;
+  firstTime = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1525,7 +1526,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
-    if (this.filter.apptStatus === 'all' && this.time_type === 3) {
+    if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
       api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     }
     return api_filter;
@@ -1802,6 +1803,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (type === 'apptStatus') {
+      this.firstTime = false;
       if (value === 'all') {
         this.apptStatuses = [];
         this.allApptStatusSelected = false;

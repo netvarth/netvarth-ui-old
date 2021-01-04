@@ -327,6 +327,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   voicedialogRef: any;
   addCustomerTooltip = '';
   qloading: boolean;
+  firstTime = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -689,6 +690,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (type === 'waitlist_status') {
+      this.firstTime = false;
       if (value === 'all') {
         this.apptStatuses = [];
         this.allApptStatusSelected = false;
@@ -1870,7 +1872,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setFilterForApi() {
     const api_filter = {};
-    if (this.filter.waitlist_status === 'all' && this.time_type === 3) {
+    if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
       api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     }
     if (this.time_type === 1) {
