@@ -105,8 +105,9 @@
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span class="doctrnme" *ngIf="booking.provider">
-                                                Provider : {{booking.provider.firstName}}
-                                                {{booking.provider.lastName}}<br>
+                                                <!-- Provider : {{booking.provider.firstName}}
+                                                {{booking.provider.lastName}}<br> -->
+                                                Provider : {{booking.provider.businessName}}<br>
                                             </span>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -468,9 +469,10 @@
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span class="doctrnme" *ngIf="booking.provider">
-                                                    Provider :
+                                                    <!-- Provider :
                                                     {{booking.provider.firstName}}
-                                                    {{booking.provider.lastName}}<br>
+                                                    {{booking.provider.lastName}}<br> -->
+                                                    Provider : {{booking.provider.businessName}}<br>
                                                 </span>
                                                 <span>
                                                     <i class="fa phon-icon"
@@ -845,8 +847,9 @@
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
                                                 {{booking.providerAccount.businessName || '' | capitalizeFirst}}</h4>
                                             <span class="doctrnme" *ngIf="booking.provider">
-                                                Provider : {{booking.provider.firstName}}
-                                                {{booking.provider.lastName}}<br>
+                                                <!-- Provider : {{booking.provider.firstName}}
+                                                {{booking.provider.lastName}}<br> -->
+                                                Provider : {{booking.provider.businessName}}<br>
                                             </span>
                                             <span>
                                                 <i class="fa phon-icon"
@@ -1119,9 +1122,10 @@
                                                     {{booking.providerAccount.businessName || '' | capitalizeFirst}}
                                                 </h4>
                                                 <span class="doctrnme" *ngIf="booking.provider">
-                                                    Provider :
+                                                    <!-- Provider :
                                                     {{booking.provider.firstName}}
-                                                    {{booking.provider.lastName}}<br>
+                                                    {{booking.provider.lastName}}<br> -->
+                                                    Provider : {{booking.provider.businessName}}<br>
                                                 </span>
                                                 <span>
                                                     <i class="fa phon-icon"
