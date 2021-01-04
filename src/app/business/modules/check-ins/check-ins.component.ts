@@ -1687,9 +1687,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1870,6 +1870,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setFilterForApi() {
     const api_filter = {};
+    if (this.filter.waitlist_status === 'all' && this.time_type === 3) {
+      api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    }
     if (this.time_type === 1) {
       // api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
@@ -1957,9 +1960,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all') {
-      api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
@@ -3162,5 +3165,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return false;
     }
+  }
+  setWaitlistStatusFilterForHistory() {
+    for (const apptStatus of this.check_in_statuses_filter) {
+      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+        this.apptStatuses.push(apptStatus.value);
+      }
+    }
+    return this.apptStatuses.toString();
   }
 }
