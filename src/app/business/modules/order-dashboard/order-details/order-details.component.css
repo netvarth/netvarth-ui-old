@@ -89,3 +89,32 @@
 .personal {
     line-height: 1.6;
 }
+.bus-item-O {
+    width: 35%;
+    float: left !important;
+    margin-bottom: 10px !important;
+    padding: 0 5px 0 5px !important;
+  }
+  @media(max-width: 1200px) {
+    .bus-item-O {
+      width: 45%;
+    }
+  }
+  @media(max-width: 991px) {
+    .bus-item-O {
+      width: 33.3%;
+      float: left !important;
+  
+    }
+  }
+  @media(max-width: 700px) {
+    .bus-item-O {
+      width: 50%;
+    }
+  }
+  @media(max-width: 450px) {
+    .bus-item-O {
+      width: 100%;
+      padding: 0 40px !important;
+    }
+  }

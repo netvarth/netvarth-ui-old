@@ -50,9 +50,9 @@
                         (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
                 </div>
             </div>
-            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20"
+            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20 mgn-up-20"
                 *ngIf="selectedType==='grid'">
-                <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
+                <!-- <div class="card order-item" *ngFor="let item of orderDetails.orderItem">
                     <div class="itemimg-sec">
                         <div class="item-img" [ngStyle]="{ 'content': 'url(' + getItemImg(item) + ')'}">
                         </div>
@@ -63,6 +63,9 @@
                         <i *ngIf="item.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
                             (click)="showConsumerNote(item)"></i>
                     </div>
+                </div> -->
+                <div class="bus-item-O" *ngFor="let item of orderItems">
+                    <app-card [item]="item" (noteClicked)="showConsumerNote($event)"></app-card>
                 </div>
             </div>
             <div class="itemlist col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="selectedType==='list'">
