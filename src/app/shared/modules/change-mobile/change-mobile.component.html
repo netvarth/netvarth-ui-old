@@ -49,7 +49,7 @@
               </div>
 
               <div class="example-container otpouter" *ngIf="step==2">
-                <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data"
+                <app-otp-form [type]="'change-mobile'" [submitdata]="submit_data"
                   (retonOtpSubmit)="onOtpSubmit($event)" (resetApiErrors)="resetApiErrors()"
                   (resendOtp)="resendOtp($event)"></app-otp-form>
               </div>
@@ -120,7 +120,7 @@
           </div>
 
           <div class="example-container otpouter" *ngIf="step==2">
-            <app-otp-form [type]="'forgot_password'" [submitdata]="submit_data" (retonOtpSubmit)="onOtpSubmit($event)"
+            <app-otp-form [type]="'change-mobile'" [submitdata]="submit_data" (retonOtpSubmit)="onOtpSubmit($event)"
               (resetApiErrors)="resetApiErrors()" (resendOtp)="resendOtp($event)"></app-otp-form>
           </div>
 

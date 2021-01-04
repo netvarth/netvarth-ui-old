@@ -57,8 +57,6 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     public shared_functions: SharedFunctions) { }
 
   ngOnInit() {
-    console.log(this.submitdata);
-    console.log(this.country_code);
     this.createForm();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
@@ -111,11 +109,8 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   resendOTPMobile() {
-    console.log(this.type);
-    console.log("Otp resend")
-    console.log(this.submitdata);
-    if ((this.submitdata.userProfile && this.submitdata.userProfile.countryCode === '+91') || (this.type === 'forgot_password' && this.country_code ==='+91')) {
-      console.log("Otp resend")
+    if ((this.submitdata.userProfile && this.submitdata.userProfile.countryCode === '+91') ||
+      (this.type === 'forgot_password' && this.country_code === '+91') || this.type === 'change-mobile') {
       this.resendOTPEmail.emit(false);
       this.resetCounter(this.refreshTime);
       if (this.submitdata.userProfile !== undefined) {
@@ -164,7 +159,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     if (this.type === 'change_email') {
       this.setMessage('email', this.submitdata.email);
     } else {
-      if (this.submitdata.userProfile.countryCode && this.submitdata.userProfile.countryCode !== '+91') {
+      if (this.submitdata.userProfile && this.submitdata.userProfile.countryCode && this.submitdata.userProfile.countryCode !== '+91') {
         this.setMessage('email', this.submitdata.userProfile.email);
       } else {
         this.setMessage('mobile', this.submitdata.userProfile.primaryMobileNo);
