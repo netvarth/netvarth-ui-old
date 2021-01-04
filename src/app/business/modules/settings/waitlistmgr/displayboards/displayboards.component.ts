@@ -4,6 +4,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
 
 @Component({
     selector: 'app-displayboards',
@@ -58,11 +60,19 @@ export class DisplayboardsComponent implements OnInit {
     sel_QBoard: any;
     activeGroup: any;
     qBoardscaption = 'QBoards';
+    usage_metric;
+    qbrd_total: any;
+    qbrd_info: any;
+    qbrd_used: any;
+    use_metric;
+    warningdialogRef: any;
+    disply_name: any;
     constructor(
         private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions
+        private shared_functions: SharedFunctions,
+        private dialog: MatDialog
     ) { }
     ngOnInit() {
         this.breadcrumb_moreoptions = {
@@ -74,6 +84,7 @@ export class DisplayboardsComponent implements OnInit {
         this.accountType = user.accountType;
         this.accountId = this.shared_functions.getitemFromGroupStorage('accountId');
         this.domain = user.sector;
+        this.getLicenseUsage();
     }
     getDisplayboardLayouts() {
         this.api_loading = true;
@@ -108,7 +119,21 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     addDisplayboardLayout() {
-        this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
+        if (this.qbrd_total === this.qbrd_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
+            this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'add']);
+        }
     }
 
     addDisplayboardGroup() {
@@ -364,5 +389,21 @@ export class DisplayboardsComponent implements OnInit {
     }
       redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-q-boards']);
+    }
+    getLicenseUsage() {
+        this.provider_services.getLicenseUsage()
+            .subscribe(
+                data => {
+                   this.use_metric = data;
+                   this.usage_metric = this.use_metric.metricUsageInfo;
+                   this.qbrd_info = this.usage_metric.filter(sch => sch.metricName === 'QBoards');
+                   this.qbrd_total = this.qbrd_info[0].total;
+                   this.qbrd_used = this.qbrd_info[0].used;
+                   this.disply_name = this.qbrd_info[0].metricName;
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
 }
