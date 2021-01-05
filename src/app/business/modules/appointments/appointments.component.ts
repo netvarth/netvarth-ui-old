@@ -501,6 +501,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               _this.views.push(appointmentViewList[i]);
             }
           }
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           let selected_view;
           if (source === 'changeLocation') {
@@ -647,9 +650,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (date === 'all') {
       filterEnum['location-eq'] = this.selected_location.id;
     }
-    if (this.selectedUser && this.selectedUser.id !== 'all') {
-      filterEnum['provider-eq'] = this.selectedUser.id;
-    }
+    // if (this.selectedUser && this.selectedUser.id !== 'all') {
+    //   filterEnum['provider-eq'] = this.selectedUser.id;
+    // }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
@@ -2125,8 +2128,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleViewSel(view) {
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
-    this.selectedView = view;
-    this.initView(this.selectedView, 'reloadAPIs');
+    if (!view.userType) {
+      this.initView(this.selectedView, 'reloadAPIs');
+    } else {
+      this.handleUserSelection(view);
+    }
   }
   clearApptIdsFromStorage() {
     this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
@@ -2195,14 +2201,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      const tempUser = {};
-      tempUser['firstName'] = 'All';
-      tempUser['id'] = 'all';
-      this.users.push(tempUser);
+      // const tempUser = {};
+      // tempUser['firstName'] = 'All';
+      // tempUser['id'] = 'all';
+      // this.users.push(tempUser);
       if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
       } else {
-        this.selectedUser = tempUser;
+        // this.selectedUser = tempUser;
       }
     });
   }

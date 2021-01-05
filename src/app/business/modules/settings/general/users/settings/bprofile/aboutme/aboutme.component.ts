@@ -87,6 +87,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   dynamicdialogRef;
   logoExist = false;
   change_cap = Messages.BPROFILE_CHANGE_CAP;
+  provider_label = '';
   constructor(
     private fb: FormBuilder,
     private service: QuestionService,
@@ -110,6 +111,8 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     this.createForm();
     // this.getBusinessProfile();
     const user = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+    this.provider_label = this.sharedfunctionobj.firstToUpper(this.sharedfunctionobj.getTerminologyTerm('provider'));
+this.business_name_cap = this.provider_label + '\'s  Name *';
     this.domain = user.sector;
     this.domainList = this.sharedfunctionobj.getitemfromLocalStorage('ynw-bconf');
     // const bConfig = this.sharedfunctionobj.getitemfromLocalStorage('ynw-bconf');
