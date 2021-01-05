@@ -63,8 +63,7 @@
         Warning Message {{data.warn}}
     </div>
     <mat-dialog-actions>
-        <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
-        <button type="submit" mat-button 
-            class="cs-btn bt1" (click)="gotoPurchase()">Purchase</button>
+        <button mat-flat-button mat-dialog-close class="btn_close" >Cancel</button>
+        <button mat-flat-button class="btn_buy" (click)="gotoPurchase()">Purchase</button>
     </mat-dialog-actions>
 </section>

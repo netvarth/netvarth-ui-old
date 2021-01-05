@@ -104,9 +104,9 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     userId: any;
     use_metric;
     usage_metric: any;
-    qbrd_info: any;
-    qbrd_total: any;
-    qbrd_used: any;
+    adon_info: any;
+    adon_total: any;
+    adon_used: any;
     disply_name: any;
     warningdialogRef: any;
     constructor(
@@ -992,7 +992,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->schedules']);
     }
     addschedules() {
-        if (this.qbrd_total === this.qbrd_used) {
+        if (this.adon_total === this.adon_used) {
             this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
                 width: '50%',
                 panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -1014,10 +1014,10 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                 data => {
                    this.use_metric = data;
                    this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.qbrd_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
-                   this.qbrd_total = this.qbrd_info[0].total;
-                   this.qbrd_used = this.qbrd_info[0].used;
-                   this.disply_name = this.qbrd_info[0].metricName;
+                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
+                   this.adon_total = this.adon_info[0].total;
+                   this.adon_used = this.adon_info[0].used;
+                   this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });

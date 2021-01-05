@@ -26833,3 +26833,10 @@ color: #fff !important;
   padding-right: 1px;
   width: 36px;
 }
+.addon_warn .btn_buy {
+  background: #1e4079;
+  color: white;
+}
+.addon_warn .btn_close {
+  background: #80808078;
+}

@@ -8,6 +8,7 @@ import { LinkProfileComponent } from './linkProfile/linkProfile.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
 
 @Component({
 
@@ -76,6 +77,13 @@ export class BranchUsersComponent implements OnInit {
     assistant_label = '';
     changeUserStatusdialogRef;
     order = 'status';
+    use_metric;
+    usage_metric: any;
+    adon_info: any;
+    adon_total: any;
+    adon_used: any;
+    disply_name: any;
+    warningdialogRef: any;
     constructor(
         private router: Router,
         private routerobj: Router,
@@ -92,13 +100,28 @@ export class BranchUsersComponent implements OnInit {
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         this.assistant_label = this.shared_functions.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
+        this.getLicenseUsage();
     }
 
     addBranchSP() {
+        if (this.adon_total === this.adon_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
         const navigationExtras: NavigationExtras = {
             queryParams: { type: 'Add' }
         };
         this.router.navigate(['provider', 'settings', 'general', 'users', 'add'], navigationExtras);
+        }
     }
     personalProfile(user) {
         const navigationExtras: NavigationExtras = {
@@ -358,6 +381,22 @@ export class BranchUsersComponent implements OnInit {
       }
       redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/general->branchsps']);
+    }
+    getLicenseUsage() {
+        this.provider_services.getLicenseUsage()
+            .subscribe(
+                data => {
+                   this.use_metric = data;
+                   this.usage_metric = this.use_metric.metricUsageInfo;
+                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Multi User');
+                   this.adon_total = this.adon_info[0].total;
+                   this.adon_used = this.adon_info[0].used;
+                   this.disply_name = this.adon_info[0].metricName;
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
 
 }

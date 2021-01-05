@@ -61,9 +61,9 @@ export class DisplayboardsComponent implements OnInit {
     activeGroup: any;
     qBoardscaption = 'QBoards';
     usage_metric;
-    qbrd_total: any;
-    qbrd_info: any;
-    qbrd_used: any;
+    adon_total: any;
+    adon_info: any;
+    adon_used: any;
     use_metric;
     warningdialogRef: any;
     disply_name: any;
@@ -119,7 +119,7 @@ export class DisplayboardsComponent implements OnInit {
         }
     }
     addDisplayboardLayout() {
-        if (this.qbrd_total === this.qbrd_used) {
+        if (this.adon_total === this.adon_used) {
             this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
                 width: '50%',
                 panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -396,10 +396,10 @@ export class DisplayboardsComponent implements OnInit {
                 data => {
                    this.use_metric = data;
                    this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.qbrd_info = this.usage_metric.filter(sch => sch.metricName === 'QBoards');
-                   this.qbrd_total = this.qbrd_info[0].total;
-                   this.qbrd_used = this.qbrd_info[0].used;
-                   this.disply_name = this.qbrd_info[0].metricName;
+                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'QBoards');
+                   this.adon_total = this.adon_info[0].total;
+                   this.adon_used = this.adon_info[0].used;
+                   this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
