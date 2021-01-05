@@ -3,10 +3,13 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { UpdateNotificationComponent } from './update-notification/update-notification.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     'selector': 'app-comm-settings',
-    'templateUrl': './comm-settings.component.html'
+    'templateUrl': './comm-settings.component.html',
+    styleUrls: ['./comm-settings.component.css']
 })
 export class CommSettingsComponent implements OnInit {
     domain: any;
@@ -26,7 +29,12 @@ export class CommSettingsComponent implements OnInit {
     cust_domain_name = '';
     provider_domain_name = '';
     breadcrumb_moreoptions: any = [];
-    constructor(private router: Router,
+    smsGlobalStatus: any;
+    notificationStatus: any;
+    smsCredits: ArrayBuffer;
+    genrl_notification_cap = '';
+    virtualCallModesList: any;
+    constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
@@ -37,7 +45,11 @@ export class CommSettingsComponent implements OnInit {
         this.domain = user.sector;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
+        this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
         this.getGlobalSettingsStatus();
+        this.getSMSCredits();
+        this.getSMSglobalSettings();
+        this.getVirtualCallingModesList();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getGlobalSettingsStatus() {
@@ -72,7 +84,7 @@ export class CommSettingsComponent implements OnInit {
                 () => {
                     this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
-                }, 
+                },
                 error => {
                     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
@@ -81,5 +93,78 @@ export class CommSettingsComponent implements OnInit {
     }
     redirecToSettings() {
         this.router.navigate(['provider', 'settings']);
+    }
+    handlenotificationSettings(event) {
+        const value = (event.checked) ? true : false;
+        const status = (value) ? 'enabled' : 'disabled';
+        const state = (value) ? 'Enable' : 'Disable';
+        this.provider_services.setNotificationSettings(state).subscribe(data => {
+            this.shared_functions.openSnackBar('Send notification  ' + status + ' successfully');
+            this.getSMSglobalSettings();
+        }, (error) => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.getSMSglobalSettings();
+        });
+    }
+    handleGlobalSMSSettings(event) {
+        const value = (event.checked) ? true : false;
+        const status = (value) ? 'enabled' : 'disabled';
+        const state = (value) ? 'Enable' : 'Disable';
+        this.provider_services.setSMSglobalSettings(state).subscribe(data => {
+            this.shared_functions.openSnackBar('SMS settings ' + status + ' successfully');
+            this.getSMSglobalSettings();
+        }, (error) => {
+            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.getSMSglobalSettings();
+        });
+    }
+    getSMSglobalSettings() {
+        this.provider_services.getSMSglobalSettings().subscribe(data => {
+            this.smsGlobalStatus = data['enableSms'];
+            this.notificationStatus = data['sendNotification'];
+        });
+    }
+    getSMSCredits() {
+        this.provider_services.getSMSCredits().subscribe(data => {
+            this.smsCredits = data;
+        });
+    }
+    getVirtualCallingModesList() {
+        this.provider_services.getVirtualCallingModes().subscribe(
+            (data: any) => {
+                this.virtualCallModesList = data.virtualCallingModes;
+            });
+    }
+    showPopup(mode) {
+        const dialogref = this.dialog.open(UpdateNotificationComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'updatenotificationclass'],
+            disableClose: true,
+            data: {
+                mode: mode,
+                callingmodeList: this.virtualCallModesList
+            }
+        });
+        dialogref.afterClosed().subscribe(
+            result => {
+                this.getVirtualCallingModesList();
+            }
+        );
+    }
+    gotoProviderNotification() {
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider']);
+    }
+    gotoCustomerNotification() {
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
+    }
+    getName(type) {
+        if (this.virtualCallModesList) {
+            const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === type);
+            if (filtererList && filtererList[0] && filtererList[0].value) {
+                return 'Connected';
+            } else {
+                return 'Not Connected';
+            }
+        }
     }
 }

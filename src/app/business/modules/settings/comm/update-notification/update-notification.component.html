@@ -1,0 +1,24 @@
+<h1 class="mat-dialog-title">
+    <span class="mgn-lt-10">{{callingmodes[mode].title}}</span>
+    <button mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+    <div class="col-md-12 mgn-up-10 no-padding" style="display: flex;">
+        <div class="input-group-prepend mob-prefix" *ngIf="mode === 'WhatsApp' || mode === 'Phone'">
+            <span class="input-group-text mgn-up-10">+91</span>
+        </div>
+        <mat-form-field>
+            <div class="input-group">
+                <input [(ngModel)]="callingMode" matInput type="text" class="form-control" autocomplete="off">
+                <div class="input-group-append mgn-up-10">
+                    <span class="update-btn mgn-lt-10" (click)="updateVideoSettings()"
+                        [class.disabled]="callingMode == ''">
+                        Update
+                    </span>
+                </div>
+            </div>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>

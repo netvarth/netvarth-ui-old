@@ -889,5 +889,11 @@ export const projectConstantsLocal = {
     { value: 'In Transit', class: 'intransit-icon' },
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
-  ]
+  ],
+  videoModes: {
+    WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
+    Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
+    GoogleMeet: { displayName: 'Google Meet', placeHolder: 'Update Meet ID', title: 'Configure Google Meet' },
+    Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' }
+  }
 };

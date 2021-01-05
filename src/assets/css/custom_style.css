@@ -16984,7 +16984,7 @@ footer.dashb .stp-box .alerts .stp-tbl .table tr.high td .pointr {
 }
 
 .notifications li {
-  margin-bottom: 10px !important;
+  margin-bottom: 20px !important;
   margin-top: 10px !important;
 }
 
@@ -26804,6 +26804,46 @@ color: #fff !important;
 .word-break-all {
   word-break: break-all;
 }
-.mgn-20 {
+.dark-blue {
+  color: #334b99;
+}
+.updatenotificationclass {
+  width: 400px !important;
+}
+.notify-phead .box-sh:hover {
+  box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+}
+.notify-phead .bodr-lft,
+.notify-phead .bodr-rht,
+.notify-phead .person-ahead {
+  padding: 5px 10px;
+}
+.notify-phead .bodr-lft {
+  border: 1px solid;
+  border-right: none;
+}
+.notify-phead .bodr-rht {
+  border: 1px solid;
+  border-left: none;
+}
+.notify-phead .person-ahead {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+.notify-ok-btn {
+  padding: 5px 20px;
+  border: 2px solid;
+  background: #334b99;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+.pro-notify-box {
+  float: left;
+  width: 300px;
   margin: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  padding: 20px;
+  width: 300px;
+  cursor: pointer;
 }
