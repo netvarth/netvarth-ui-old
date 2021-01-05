@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -117,6 +117,8 @@ export class ConsumerNotificationsComponent implements OnInit {
   dialogRef: any;
   addondialogRef: any;
   is_noSMS = false;
+  screenWidth;
+  small_device_display = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -155,6 +157,19 @@ export class ConsumerNotificationsComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()

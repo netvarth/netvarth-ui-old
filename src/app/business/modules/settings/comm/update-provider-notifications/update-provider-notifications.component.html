@@ -81,7 +81,7 @@
                         (click)="cheknPushAddClicked()"></span> -->
                     <span class="noti-add-btn"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknPushph_arr.length === 0)"
-                        (click)="cheknCancelPushAddClicked()">Add</span>
+                        (click)="cheknPushAddClicked()">Add</span>
                     <div class="form-group mgn-up-10" *ngIf="cheknPushph">
                         <div class="input-group mb-3 phadd">
                             <input class="form-control" style="max-width: 50px !important;" type="text" readonly
@@ -90,8 +90,7 @@
                                 (keypress)="isNumeric($event)" [(ngModel)]="notifycheknPushphonenumber" minlength="0"
                                 maxlength="10">
                             <div class="input-group-append">
-                                <button class="btn bt3 btn-default" (click)="addcheknPushPh()"
-                                    type="button">Ok</button>
+                                <button class="btn bt3 btn-default" (click)="addcheknPushPh()" type="button">Ok</button>
                             </div>
                         </div>
                     </div>

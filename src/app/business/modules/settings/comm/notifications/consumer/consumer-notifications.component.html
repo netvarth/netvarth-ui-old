@@ -46,7 +46,7 @@
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
                 </div>
@@ -66,7 +66,9 @@
                     him/her
                     in line via SMS/Email/Notifications</div>
                 </div>
-                <div class="notify-phead disp-flex col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                <div class="notify-phead col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
+                  <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">{{customer_label | capitalizeFirst}} Ahead</div>
+                  <div class="disp-flex">
                   <div [class.box-sh]="earlyWLNotificatonSettings.personsAhead > 1"
                     (click)="earlyWLNotificatonSettings.personsAhead > 1 && decrement('earlyWLNotificatonSettings')"
                     class="bodr-lft pointer-cursor">-
@@ -76,8 +78,11 @@
                   <div (click)="increment('earlyWLNotificatonSettings')" class="bodr-rht pointer-cursor box-sh">+
                   </div>
                 </div>
+                </div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
                 <mat-checkbox [checked]="earlyWLNotificatonSettings.sms"
                   (change)="showSubmit('EARLY_WL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -90,6 +95,7 @@
                 <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead != 0"
                   (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
               </div>
+            </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
@@ -325,7 +331,7 @@
                   about their appointment</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
@@ -339,6 +345,8 @@
                   confirmed.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
                 <mat-checkbox [checked]="apptAddNotificationSettings.sms"
                   (change)="showSubmit('APPOINTMENTADD', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -350,6 +358,7 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD')"
                   class="notify-ok-btn">OK</span>
+                  </div>
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
@@ -398,7 +407,7 @@
                         {{customer_label}}s before their appointment.</span>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       </div>
@@ -447,6 +456,8 @@
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                      <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                      <div>
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
                         (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -458,6 +469,7 @@
                         Via App</mat-checkbox>
                       <span *ngIf="showButton['FIRST_APPT']" (click)="changeNotificationSettings('FIRST_APPT')"
                         class="notify-ok-btn">OK</span>
+                        </div>
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
@@ -494,6 +506,8 @@
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                      <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                      <div>
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
                         (change)="showSubmit('SECOND_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -505,6 +519,7 @@
                         Via App</mat-checkbox>
                       <span *ngIf="showButton['SECOND_APPT']" (click)="changeNotificationSettings('SECOND_APPT')"
                         class="notify-ok-btn">OK</span>
+                        </div>
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
@@ -541,6 +556,8 @@
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                      <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                      <div>
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
                         (change)="showSubmit('THIRD_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -552,6 +569,7 @@
                         Via App</mat-checkbox>
                       <span *ngIf="showButton['THIRD_APPT']" (click)="changeNotificationSettings('THIRD_APPT')"
                         class="notify-ok-btn">OK</span>
+                        </div>
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
@@ -590,6 +608,8 @@
                       </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                      <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                      <div>
                       <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
                         (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
@@ -601,6 +621,7 @@
                         Via App</mat-checkbox>
                       <span *ngIf="showButton['FOURTH_APPT']" (click)="changeNotificationSettings('FOURTH_APPT')"
                         class="notify-ok-btn">OK</span>
+                        </div>
                     </div>
                   </div>
                   <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
@@ -864,7 +885,7 @@
                   about their Orders</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
@@ -878,6 +899,8 @@
                   confirmed.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
                 <mat-checkbox [checked]="orderAddNotificationSettings.sms"
                   (change)="showSubmit('ORDERCONFIRM', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -889,6 +912,7 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['ORDERCONFIRM']" (click)="changeNotificationSettings('ORDERCONFIRM')"
                   class="notify-ok-btn">OK</span>
+                  </div>
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
@@ -898,6 +922,8 @@
                   cancel.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
                 <mat-checkbox [checked]="orderCancelNotificationSettings.sms"
                   (change)="showSubmit('ORDERCANCEL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -909,6 +935,7 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['ORDERCANCEL']" (click)="changeNotificationSettings('ORDERCANCEL')"
                   class="notify-ok-btn">OK</span>
+                  </div>
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
@@ -918,7 +945,9 @@
                   Status Change.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
-                <mat-checkbox [checked]="orderStatusChangelNotificationSettings.sms"
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
+                                  <mat-checkbox [checked]="orderStatusChangelNotificationSettings.sms"
                   (change)="showSubmit('ORDERSTATUSCHANGE', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
                 <mat-checkbox [checked]="orderStatusChangelNotificationSettings.email"
@@ -929,6 +958,7 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['ORDERSTATUSCHANGE']" (click)="changeNotificationSettings('ORDERSTATUSCHANGE')"
                   class="notify-ok-btn">OK</span>
+                  </div>
               </div>
             </div>
             <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
@@ -1056,7 +1086,7 @@
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
@@ -1070,6 +1100,8 @@
                   SMS/Email/Notifications when a Donation accept.</div>
               </div>
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                <div class="mgn-up-10 mgn-bt-5" *ngIf="small_device_display">Channels</div>
+                <div>
                 <mat-checkbox [checked]="donatAddNotificationSettings.sms"
                   (change)="showSubmit('DONATIONSERVICE', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -1081,6 +1113,7 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['DONATIONSERVICE']" (click)="changeNotificationSettings('DONATIONSERVICE')"
                   class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
             <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
