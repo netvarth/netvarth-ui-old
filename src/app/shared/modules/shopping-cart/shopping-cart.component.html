@@ -32,10 +32,17 @@
                         <div class="itm-nme"> {{item.item.displayName}}</div>
                         <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
-                        <div class="add_nte" (click)="addNotes(item,i)">
-                        {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                        </div>
+                        <div>
+                           <span class="add_nte" (click)="addNotes(item,i)">
+                               {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                           </span> &nbsp; 
+                           <span class="add_nte" (click)="deleteNotes(item,i)">
+                              <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                           </span>
+                        </div>                    
+
                       </div>
+                      
                     </div>
 
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
