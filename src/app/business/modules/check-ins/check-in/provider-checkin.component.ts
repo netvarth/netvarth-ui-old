@@ -218,7 +218,7 @@ export class ProviderCheckinComponent implements OnInit {
     virtualServicenumber;
     emptyFielderror = false;
     countryCode;
-
+checkin_label;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -669,6 +669,7 @@ export class ProviderCheckinComponent implements OnInit {
     }
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
+        this.checkin_label = this.sharedFunctionobj.getTerminologyTerm('waitlist');
         this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
