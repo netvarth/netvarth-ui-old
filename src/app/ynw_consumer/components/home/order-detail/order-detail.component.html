@@ -72,6 +72,10 @@
                                                     <div class="txt-addrs content_wrap">
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
+                                                        <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
+                                                            <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
+                                                        </div>
+                                                        
 
                                             </div>
                                             <div
@@ -81,10 +85,19 @@
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
                                                 <!-- <div><button mat-raised-button class="action-btn">ACTIONS</button></div> -->
                                                 <!-- <div class="mgn-up-10"><button mat-raised-button class="cancel-btn">CANCEL</button></div> -->
+
+                                                <div>
+                                                    <span class="item-head chk-stats">Check your status <i
+                                                            class="fa fa-hand-o-down"></i></span>
+                                                    <div class="mgn-up-10">
+                                                        <ngx-qrcode id="print-section" [elementType]="elementType"
+                                                            [value]="qr_value">
+                                                        </ngx-qrcode>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
-                                            <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
-                                                <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
-                                            </div>
+                                         
 
                                         </div>
                                     </div>

@@ -289,13 +289,22 @@ export class OrderDetailComponent implements OnInit {
       (data) => {
         this.waitlist = data;
         console.log(this.waitlist);
+        this.generateQR();
       },
       (error) => {
         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.getStoreContact();
 
+
+
    // this.getFavouriteProvider();
+  }
+  generateQR() {
+    console.log(this.waitlist);
+    console.log(this.waitlist.orderNumber);
+    this.qr_value = this.path + 'status/' + this.waitlist.orderNumber;
+    console.log(this.qr_value);
   }
 
   getCommunicationHistory() {
