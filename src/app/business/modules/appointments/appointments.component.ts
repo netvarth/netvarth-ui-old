@@ -337,6 +337,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
   qloading: boolean;
+  firstTime = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1199,9 +1200,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {};
     }
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1353,9 +1354,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     let Mfilter = this.setFilterForApi();
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1524,6 +1525,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
+    }
+    if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
+      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     }
     return api_filter;
   }
@@ -1799,6 +1803,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (type === 'apptStatus') {
+      this.firstTime = false;
       if (value === 'all') {
         this.apptStatuses = [];
         this.allApptStatusSelected = false;
@@ -2631,5 +2636,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return false;
     }
+  }
+  setWaitlistStatusFilterForHistory() {
+    for (const apptStatus of this.check_in_statuses_filter) {
+      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+        this.apptStatuses.push(apptStatus.value);
+      }
+    }
+    return this.apptStatuses.toString();
   }
 }

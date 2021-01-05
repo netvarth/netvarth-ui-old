@@ -2031,6 +2031,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         error => {
                             this.api_error = error.error;
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.payEmail = this.userData.userProfile.email;
                             return false;
                         }
                     )

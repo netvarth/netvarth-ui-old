@@ -177,10 +177,10 @@
                     </div>
 
                     <div class="listing" *ngFor="let donation of donations; let i = index">
-                      <div class="wrap">
+                      <div class="wrap pointer-cursor" (click)="gotoDonation(donation)">
                         <div class="td one">
                           <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
-                            (change)="selectDonations(i)" />
+                            (change)="selectDonations(i)" (click)="stopprop($event)" />
                           <span class="date">{{stringtoDate(donation.date,
                             'date')}}</span>
                         </div>
@@ -195,7 +195,7 @@
                           currency:'&#8377;' }}
                           <span class="pull-right">
                             <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
-                              (click)="showConsumerNote(donation)"></i>
+                              (click)="stopprop($event);showConsumerNote(donation)"></i>
                           </span>
                         </div>
                       </div>
@@ -210,8 +210,9 @@
           </div>
         </div>
         <div class="search_paging" *ngIf="loadComplete">
-          <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-            (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+          <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt"
+            [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+          </app-pager>
         </div>
       </div>
     </div>

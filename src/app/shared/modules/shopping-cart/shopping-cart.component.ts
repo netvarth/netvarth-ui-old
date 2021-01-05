@@ -402,7 +402,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.price = this.price + item_price;
     }
-    return this.price;
+    return this.price.toFixed(2);
   }
   getDeliveryCharge() {
     let deliveryCharge = 0;
@@ -420,7 +420,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
     }
     subtotal = subtotal + this.price + deliveryCharge;
-    return subtotal;
+    return subtotal.toFixed(2);
   }
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {

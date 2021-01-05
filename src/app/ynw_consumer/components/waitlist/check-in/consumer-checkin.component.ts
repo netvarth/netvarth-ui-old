@@ -1715,6 +1715,7 @@ export class ConsumerCheckinComponent implements OnInit {
             .then(
                 data => {
                     _this.userData = data;
+
                     _this.countryCode = _this.userData.userProfile.countryCode;
                     if (_this.selectedCountryCode) {
                         if (_this.countryCode != _this.selectedCountryCode) {
@@ -2187,6 +2188,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         error => {
                             this.api_error = error.error;
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.payEmail = this.userData.userProfile.email;
                             return false;
                         }
                     )
@@ -2298,7 +2300,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         _this.getProfile();
                         resolve(true);
                     },
-                    error => {
+                    error => { 
                         reject(error);                                
                     });
           });

@@ -26804,6 +26804,7 @@ color: #fff !important;
 .word-break-all {
   word-break: break-all;
 }
+<<<<<<< HEAD
 .dark-blue {
   color: #334b99;
 }
@@ -26846,4 +26847,8 @@ color: #fff !important;
   padding: 20px;
   width: 300px;
   cursor: pointer;
+=======
+.mgn-20 {
+  margin: 20px;
+>>>>>>> refs/remotes/origin/1.7-order
 }
