@@ -322,8 +322,9 @@ export class ConsumerNotificationsComponent implements OnInit {
       this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
-  showSubmit(type, value, event) {
+  showSubmit(type, value, event?) {
     this.showButton[type] = true;
+    if (value !== 'phead') {
     if (type === 'EARLY_WL') {
       this.earlyWLNotificatonSettings[value] = event.checked;
     } else if (type === 'WAITLISTADD') {
@@ -352,47 +353,6 @@ export class ConsumerNotificationsComponent implements OnInit {
       this.donatAddNotificationSettings[value] = event.checked;
     }
   }
-  decrement(value) {
-    if (value === 'earlyWLNotificatonSettings') {
-      this.earlyWLNotificatonSettings.personsAhead--;
-    } else if (value === 'f_selected_hr') {
-      this.f_selected_hr--;
-    } else if (value === 'f_selected_min') {
-      this.f_selected_min--;
-    } else if (value === 's_selected_hr') {
-      this.s_selected_hr--;
-    } else if (value === 's_selected_min') {
-      this.s_selected_min--;
-    } else if (value === 't_selected_hr') {
-      this.t_selected_hr--;
-    } else if (value === 't_selected_min') {
-      this.t_selected_min--;
-    } else if (value === 'ft_selected_hr') {
-      this.ft_selected_hr--;
-    } else if (value === 'ft_selected_min') {
-      this.ft_selected_min--;
-    }
-  }
-  increment(value) {
-    if (value === 'earlyWLNotificatonSettings') {
-      this.earlyWLNotificatonSettings.personsAhead++;
-    } else if (value === 'f_selected_hr') {
-      this.f_selected_hr++;
-    } else if (value === 'f_selected_min') {
-      this.f_selected_min++;
-    } else if (value === 's_selected_hr') {
-      this.s_selected_hr++;
-    } else if (value === 's_selected_min') {
-      this.s_selected_min++;
-    } else if (value === 't_selected_hr') {
-      this.t_selected_hr++;
-    } else if (value === 't_selected_min') {
-      this.t_selected_min++;
-    } else if (value === 'ft_selected_hr') {
-      this.ft_selected_hr++;
-    } else if (value === 'ft_selected_min') {
-      this.ft_selected_min++;
-    }
   }
   changeNotificationSettings(type) {
     let activeInput;
