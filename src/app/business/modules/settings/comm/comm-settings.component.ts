@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
@@ -34,6 +34,9 @@ export class CommSettingsComponent implements OnInit {
     smsCredits: ArrayBuffer;
     genrl_notification_cap = '';
     virtualCallModesList: any;
+    sub_domain;
+    accountType;
+    isMultilevel;
     constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions) {
@@ -43,6 +46,8 @@ export class CommSettingsComponent implements OnInit {
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
+        this.sub_domain = user.subSector || null;
+        this.accountType = user.accountType;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.genrl_notification_cap = Messages.GENRL_NOTIFICATION_MSG.replace('[provider]', this.provider_label);
@@ -50,6 +55,7 @@ export class CommSettingsComponent implements OnInit {
         this.getSMSCredits();
         this.getSMSglobalSettings();
         this.getVirtualCallingModesList();
+        this.getDomainSubdomainSettings();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     }
     getGlobalSettingsStatus() {
@@ -152,7 +158,12 @@ export class CommSettingsComponent implements OnInit {
         );
     }
     gotoProviderNotification() {
-        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                type: this.provider_label
+            }
+        };
+        this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'provider'], navigationExtras);
     }
     gotoCustomerNotification() {
         this.router.navigate(['provider', 'settings', 'comm', 'notifications', 'consumer']);
@@ -166,5 +177,21 @@ export class CommSettingsComponent implements OnInit {
                 return 'Not Connected';
             }
         }
+    }
+    getDomainSubdomainSettings() {
+        return new Promise((resolve, reject) => {
+            this.provider_services.domainSubdomainSettings(this.domain, this.sub_domain)
+                .subscribe(
+                    (data: any) => {
+                        this.isMultilevel = data.isMultilevel;
+                        if (this.sub_domain === ('hospital' || 'dentalHosp' || 'alternateMedicineHosp' || 'veterinaryhospital') && this.accountType === 'BRANCH' && this.isMultilevel) {
+                            this.provider_label = 'Hospital';
+                        }
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+        });
     }
 }

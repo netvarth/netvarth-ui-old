@@ -13,9 +13,9 @@
             <div class="input-group">
                 <input [(ngModel)]="callingMode" matInput type="text" class="form-control" autocomplete="off">
                 <div class="input-group-append mgn-up-10">
-                    <span class="update-btn mgn-lt-10" (click)="updateVideoSettings()"
+                    <span class="update-btn mgn-lt-10" (click)="callingMode != '' && updateVideoSettings()"
                         [class.disabled]="callingMode == ''">
-                        Update
+                        {{btn_name}}
                     </span>
                 </div>
             </div>

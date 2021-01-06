@@ -2854,24 +2854,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeQs) {
         qids.push(q.id);
       }
-      const selQids = [];
-      if (qids.length > 0) {
-        if (this.selQIds && this.selQIds.length > 0) {
-          for (const id of this.selQIds) {
-            const qArr = qids.filter(qid => qid === id);
-            if (qArr.length > 0) {
-              selQids.push(id);
-            }
-          }
-          if (selQids.length === 0) {
-            this.selQIds = qids;
-          }
-        } else {
-          this.selQIds = qids;
-        }
-      } else {
-        this.selQIds.push(this.activeQs[0].id);
-      }
+      // const selQids = [];
+      // if (qids.length > 0) {
+      //   if (this.selQIds && this.selQIds.length > 0) {
+      //     for (const id of this.selQIds) {
+      //       const qArr = qids.filter(qid => qid === id);
+      //       if (qArr.length > 0) {
+      //         selQids.push(id);
+      //       }
+      //     }
+      //     if (selQids.length === 0) {
+      //       this.selQIds = qids;
+      //     }
+      //   } else {
+      //     this.selQIds = qids;
+      //   }
+      // } else {
+      //   this.selQIds.push(this.activeQs[0].id);
+      // }
+      this.selQIds = qids;
     }
     setTimeout(() => {
       this.qloading = false;

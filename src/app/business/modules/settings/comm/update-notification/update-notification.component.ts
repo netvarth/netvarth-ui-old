@@ -11,19 +11,20 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 })
 export class UpdateNotificationComponent implements OnInit {
     virtualCallModesList;
-    callingMode;
+    callingMode = '';
     mode;
     callingmodes = projectConstantsLocal.videoModes;
+    btn_name = 'Add';
     constructor(public dialogRef: MatDialogRef<UpdateNotificationComponent>,
         private provider_services: ProviderServices,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public shared_functions: SharedFunctions) {
-        console.log(this.data);
         this.virtualCallModesList = this.data.callingmodeList;
         this.mode = this.data.mode;
         const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === this.mode);
         if (filtererList && filtererList[0]) {
             this.callingMode = filtererList[0].value;
+            this.btn_name = 'Update';
         }
     }
 

@@ -69,9 +69,9 @@
                 <div class="notify-phead col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                   <mat-form-field class="example-full-width mgn-rt-10">
                     <input matInput min="0" max="1000" type="number"
-                      [(ngModel)]="earlyWLNotificatonSettings.personsAhead"
+                      [(ngModel)]="earlyWLNotificatonSettings.personsAhead" (change)="showSubmit('EARLY_WL', 'phead');"
                       placeholder="{{customer_label | capitalizeFirst}}s ahead *" autocomplete="off" pattern="[0-9]"
-                      (keypress)="showSubmit('EARLY_WL', 'phead');numberOnly($event)" (keyup)="isvalid($event)"><br>
+                      (keypress)="numberOnly($event)" (keyup)="isvalid($event)"><br>
                     <div class="mgn-up-5" *ngIf="wltstPersonsahead && !earlyWLNotificatonSettings.personsAhead"
                       style="color: red;">{{customer_label | capitalizeFirst}}s ahead is required</div>
                   </mat-form-field>

@@ -2246,24 +2246,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeSchedules) {
         qids.push(q.id);
       }
-      const selQids = [];
-      if (qids.length > 0) {
-        if (qids.length > this.selQIds.length) {
-          for (const id of this.selQIds) {
-            const qArr = qids.filter(qid => qid === id);
-            if (qArr.length > 0) {
-              selQids.push(id);
-            }
-          }
-          if (selQids.length === 0) {
-            this.selQIds = qids;
-          }
-        } else {
-          this.selQIds = qids;
-        }
-      } else {
-        this.selQIds.push(this.activeSchedules[0].id);
-      }
+      // const selQids = [];
+      // if (qids.length > 0) {
+      //   if (qids.length > this.selQIds.length) {
+      //     for (const id of this.selQIds) {
+      //       const qArr = qids.filter(qid => qid === id);
+      //       if (qArr.length > 0) {
+      //         selQids.push(id);
+      //       }
+      //     }
+      //     if (selQids.length === 0) {
+      //       this.selQIds = qids;
+      //     }
+      //   } else {
+      //     this.selQIds = qids;
+      //   }
+      // } else {
+      //   this.selQIds.push(this.activeSchedules[0].id);
+      // }
+      this.selQIds = qids;
     }
     setTimeout(() => {
       this.qloading = false;

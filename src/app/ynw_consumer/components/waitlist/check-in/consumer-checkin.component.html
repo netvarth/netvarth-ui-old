@@ -975,7 +975,7 @@
                                             <p class="m0 mgn-up-10-m"
                                                 *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <i class="fa wtsapaud-icon wtsap-cal"></i> <span>WhatsApp#:
-                                                    <b>{{countryCode}} {{callingModes}}</b></span></p>
+                                                    <b>+{{callingModes}}</b></span></p>
                                             <p class="mgn-up-5 mgn-lt-10">Email : <b>{{payEmail}}</b></p>
                                             <p class="mgn-up-5 mgn-lt-10" *ngIf="!editBookingFields">To Change the
                                                 Number/Email <a class="bold" (click)="changeBookingFields()">Click
