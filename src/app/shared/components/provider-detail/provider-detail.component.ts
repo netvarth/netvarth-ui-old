@@ -2013,7 +2013,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
             const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
+            const showpric = this.activeCatalog.showPrice;
+            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item ,'showpric':showpric});
             this.itemCount++;
           }
           // }
@@ -2161,7 +2162,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item),
-        providerId: this.provider_bussiness_id
+        providerId: this.provider_bussiness_id,
+        showpric : this.activeCatalog.showPrice 
 
       }
 

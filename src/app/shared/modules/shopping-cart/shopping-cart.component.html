@@ -30,7 +30,7 @@
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.displayName}}</div>
-                        <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                        <div  *ngIf="catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div>
                            <span class="add_nte" (click)="addNotes(item,i)">
@@ -142,7 +142,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">
                     <div class="oder-sumary-txt">Order Summary</div>
                     <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
                       *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
@@ -160,7 +160,7 @@
                     </div>
                   </ng-container>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_details.showPrice">
                     <div class="flex1">SUB TOTAL</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>

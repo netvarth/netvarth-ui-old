@@ -380,7 +380,7 @@
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
                         <div>Your Order ({{ order_count }})
-                            <span class="rupee-font">SubTotal : {{price | currency:'&#8377;'}}&nbsp;</span>
+                            <span *ngIf="activeCatalog.showPrice" class="rupee-font">SubTotal : {{price | currency:'&#8377;'}}&nbsp;</span>
                             <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
                         </div>
                     </div>

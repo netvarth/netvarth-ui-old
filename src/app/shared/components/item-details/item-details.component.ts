@@ -78,6 +78,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   isPromotionalpricePertage;
   isPrice;
   loading = true;
+  showitemprice;
   // imagesRect: Image[] = [
   //   new Image(
   //     0,
@@ -139,7 +140,8 @@ export class ItemDetailsSharedComponent implements OnInit {
       params => {
         this.item = params.item;
         this.provider_bussiness_id = parseInt(params.providerId, 0);
-        console.log(this.item);
+        this.showitemprice = params.showpric;
+        console.log(this.showitemprice);
       });
   }
   updateCartCount() {

@@ -116,7 +116,7 @@ export class CatalogdetailComponent implements OnInit {
     loc_list: any = [];
     selected_location;
     selected_locationId;
-    //itemPriceInfo = true;
+    itemPriceInfo = true;
     advancePaymentStat = false;
     cancelationPolicyStatus = true;
     advancePayment;
@@ -425,7 +425,7 @@ export class CatalogdetailComponent implements OnInit {
                 'deliveryRadius': form_data.deliverykms || '',
                 'deliveryCharge': form_data.deliverycharge || ''
             },
-            'showPrice': true,
+            'showPrice': form_data.itemPriceInfo,
             'paymentType': this.payAdvance,
             'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
             'preInfo': {
@@ -491,7 +491,7 @@ export class CatalogdetailComponent implements OnInit {
               //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                // orderType: [],
                 orderStatuses: [''],
-               // itemPriceInfo: [true],
+               itemPriceInfo: [true],
                 advancePaymentStatus: [false],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
@@ -534,7 +534,7 @@ export class CatalogdetailComponent implements OnInit {
                // qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 //orderType: [],
                 orderStatuses: [''],
-               // itemPriceInfo: [true],
+               itemPriceInfo: [true],
                 advancePaymentStatus: [false],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
@@ -841,7 +841,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             //'qendtime': edtime,
            // 'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
-            //'itemPriceInfo': this.catalog.showPrice,
+            'itemPriceInfo': this.catalog.showPrice,
             'advancePaymentStatus': status,
             'advancePayment': this.catalog.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1068,7 +1068,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
           //  'qendtime': edtime,
             // 'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
-           // 'itemPriceInfo': this.prefillData.showPrice,
+           'itemPriceInfo': this.prefillData.showPrice,
             'advancePaymentStatus': status,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1459,7 +1459,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                 'asapHomeDeliveryAllowed': false,
                 'deliveryCharge': form_data.deliverycharge
             },
-            'showPrice': true,
+            'showPrice': form_data.itemPriceInfo,
             'paymentType': this.payAdvance,
             'advanceAmount': this.payAdvance === 'FIXED' ? form_data.advancePayment : '',
             'preInfo': {

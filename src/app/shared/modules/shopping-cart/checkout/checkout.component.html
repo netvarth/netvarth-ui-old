@@ -223,7 +223,7 @@
                                               <span style="font-weight: 400;">Product</span>
                                             </div>
                                             <div class="quantity">Qty</div>
-                                            <div class="price rupee-font">Price</div>
+                                            <div  *ngIf="catalog_details.showPrice" class="price rupee-font">Price</div>
                                           </div>
                                         </div>
                                       </div>
@@ -243,7 +243,7 @@
                                               <span class="item-name">{{item.item.displayName}}</span>
                                             </div>
                                             <div class="quantity item-qty">{{getItemQty(item)}}</div>
-                                            <div class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
+                                            <div *ngIf="catalog_details.showPrice" class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
                                           </div>
                                         </div>
   
@@ -261,7 +261,7 @@
   
                             </div>
                             
-                            <div class="" >
+                            <div class="" *ngIf="catalog_details.showPrice" >
                               <div class="bill-details-txt">
                                 Bill Details
                               </div>
