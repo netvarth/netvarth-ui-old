@@ -148,15 +148,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div *ngIf="sel_ser_det.preInfoEnabled">
-                                                        <div class="lnk">{{sel_ser_det.preInfoTitle}}</div>
-                                                        <div class="preinfo-text mgn-up-5">
+                                                        <a class="lnk" (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
+                                                        <!-- <div class="preinfo-text mgn-up-5">
                                                             <span [innerHTML]="sel_ser_det.preInfoText"></span>
                                                         </div>
                                                         <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()"
                                                             class="pull-right pointer-cursor mgn-up-5">
                                                             See more
-                                                        </a>
+                                                        </a> -->
                                                     </div>
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>

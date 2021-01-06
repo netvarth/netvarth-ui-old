@@ -2128,6 +2128,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleViewSel(view) {
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.selectedView = view;
     if (!view.userType) {
       this.initView(this.selectedView, 'reloadAPIs');
     } else {
@@ -2218,14 +2219,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
-    this.getQsByProvider();
+    this.getQsByProvider(user);
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-  getQsByProvider() {
+  getQsByProvider(user?) {
     const qs = [];
-    if (this.selectedUser && this.selectedUser.id === 'all') {
+    if (!user || (user && user === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
