@@ -2123,8 +2123,7 @@ export class ConsumerAppointmentComponent implements OnInit {
 
     showConfirmPopup(post_Data) {
         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-
-            this.sharedFunctionobj.openSnackBar('Please provide your notes here', { 'panelClass': 'snackbarerror' });
+            this.sharedFunctionobj.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
             this.apptdisable = false
         } else {
             const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {
