@@ -18,7 +18,13 @@
                     <!-- New Revamp -->
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30 mgn-bt-40">
+                            <div>
+                                <p class="form-level-settings">{{frm_lic_cap}}<a class="learnmore-pointer"
+                                        id="customer-help"
+                                        (click)="learnmore_clicked('upgradelicense', $event)">{{learn_more}}</a> </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-40">
+                                
                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                                     <!-- Sidenav for annual -->
                                     <div class="anual_side" *ngIf="changelicence" [ngStyle]="{ 'margin-top' : height+'px'}">
