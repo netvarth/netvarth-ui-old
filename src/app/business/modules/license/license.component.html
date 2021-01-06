@@ -120,7 +120,11 @@
                                         <span><a (click)="showLicenseUsage()"
                                                 class="clr_pitch_blu custId-cursor">USAGE</a></span>&nbsp;&nbsp;
                                         <span><a (click)="showLicenceHistory()"
-                                                class="clr_pitch_blu custId-cursor">HISTORY</a></span>
+                                                class="clr_pitch_blu custId-cursor">LICENCE HISTORY</a></span><br><br>
+                                        <span><a (click)="gotoPaymentHistory()"
+                                                    class="clr_pitch_blu custId-cursor">PAYMENT HISTORY</a></span>&nbsp;&nbsp;
+                                        <span><a (click)="showInvoiceStatus()"
+                                                        class="clr_pitch_blu custId-cursor">LICENCE STATEMENT</a></span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -148,6 +152,7 @@
 
 
                     <!-- old code -->
+
                     <!-- <div class="copy one col-xs-12 col-sm-12 no-padding">
                         <div class="pay-section card" *ngIf="loading">
                             <app-common-innerloading-spinner></app-common-innerloading-spinner>
