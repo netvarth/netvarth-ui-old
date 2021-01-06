@@ -937,6 +937,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve(_this.selectedView);
         },
         error => {
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
           resolve(_this.selectedView);

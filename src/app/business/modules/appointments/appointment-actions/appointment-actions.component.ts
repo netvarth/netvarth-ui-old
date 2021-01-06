@@ -72,6 +72,7 @@ export class AppointmentActionsComponent implements OnInit {
     subdomain;
     availableDates: any = [];
     accountid;
+    apiloading = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -81,6 +82,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     ngOnInit() {
         this.setMinMaxDate();
+        this.apiloading = true;
         this.appt = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.getPos();
@@ -305,6 +307,7 @@ export class AppointmentActionsComponent implements OnInit {
                 });
     }
     setActions() {
+        this.apiloading = false;
         if (this.data.timetype !== 3 && this.appt.apptStatus !== 'Completed' && this.appt.apptStatus !== 'Confirmed' && this.appt.apptStatus !== 'blocked') {
             this.showUndo = true;
         }

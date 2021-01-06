@@ -247,6 +247,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
   orderstatus: any;
+  dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,

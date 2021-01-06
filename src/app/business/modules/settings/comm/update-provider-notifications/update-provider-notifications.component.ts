@@ -401,14 +401,14 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.cheknCancelPushph_arr = [];
     }
     if (this.data.type === 'Token' || this.data.type === 'Check-in') {
-      this.savechekinNotification_json.resourceType = 'CHECKIN';
-      this.savechekinNotification_json.eventType = 'WAITLISTCANCEL';
+      this.savecancelNotification_json.resourceType = 'CHECKIN';
+      this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
     } else if (this.data.type === 'Appointment') {
-      this.savechekinNotification_json.resourceType = 'APPOINTMENT';
-      this.savechekinNotification_json.eventType = 'APPOINTMENTCANCEL';
+      this.savecancelNotification_json.resourceType = 'APPOINTMENT';
+      this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
     } else if (this.data.type === 'Order') {
-      this.savechekinNotification_json.resourceType = 'ORDER';
-      this.savechekinNotification_json.eventType = 'ORDERCANCEL';
+      this.savecancelNotification_json.resourceType = 'ORDER';
+      this.savecancelNotification_json.eventType = 'ORDERCANCEL';
     }
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;

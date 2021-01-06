@@ -256,6 +256,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   nextAvailableTime;
   advance_amount: any;
   orderType = '';
+  dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,

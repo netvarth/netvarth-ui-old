@@ -210,6 +210,7 @@ export class ProviderNotificationsComponent implements OnInit {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        this.order_status = data.order;
         this.api_loading = false;
       });
   }
@@ -1758,26 +1759,26 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   showNotificationPopup(type) {
     if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages('Jaldee QManager in disabled in your settings'), { 'panelClass': 'snackbarerror' });
-    } else if (type === 'Appintment' && !this.appointment_status) {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages('Jaldee Appointment Manager in disabled in your settings'), { 'panelClass': 'snackbarerror' });
+      this.sharedfunctionObj.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else if (type === 'Appointment' && !this.appointment_status) {
+      this.sharedfunctionObj.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Order' && !this.order_status) {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages('Jaldee Order Manager in disabled in your settings'), { 'panelClass': 'snackbarerror' });
+      this.sharedfunctionObj.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Donation' && !this.donations_status) {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages('Donation Manager in disabled in your settings'), { 'panelClass': 'snackbarerror' });
+      this.sharedfunctionObj.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
-    const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
-      width: '40%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        type: type
-      }
-    });
-    dialogref.afterClosed().subscribe(
-      result => {
-        
+      const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          type: type
+        }
       });
+      dialogref.afterClosed().subscribe(
+        result => {
+
+        });
     }
   }
 }
