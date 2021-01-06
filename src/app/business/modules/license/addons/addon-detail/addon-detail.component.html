@@ -14,7 +14,7 @@
                     <div class="copy addons one  col-xs-12 col-sm-12 card no-padding">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-30">
                             <div class="disp_name_st">{{disp_name}}</div>
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="160px" [gutterSize]="'10px'">
+                            <mat-grid-list *ngIf="adon_list.length > 0" cols="{{no_of_grids}}" rowHeight="160px" [gutterSize]="'10px'">
                                 <mat-grid-tile  *ngFor="let adon of final_list">
                                     <div class="disp-grid" style="height: 100%;">
                                         <div class="mgn-up-40 ad_name">{{adon.addonName.split('-')[1]}}
@@ -28,6 +28,9 @@
                                     
                                 </mat-grid-tile>
                             </mat-grid-list>
+                            <div class="red" *ngIf="adon_list.length === 0">
+                                {{adwords_exceed}}
+                            </div>
                         </div>
                     </div>
                 </div>

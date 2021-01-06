@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { Messages } from '../../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-addon-detail',
@@ -15,6 +16,7 @@ export class AddonDetailComponent implements OnInit {
   screenWidth: number;
   no_of_grids: number;
   final_list: any;
+  adwords_exceed = Messages.ADWORD_EXCEED_LIMIT;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -54,8 +56,10 @@ export class AddonDetailComponent implements OnInit {
         this.adon_metric = data;
         this.adon_list = this.adon_metric.filter(sch => sch.metricDisplayName === this.disp_name);
         console.log(this.adon_list);
-        this.final_list = this.adon_list[0].addons;
-        console.log(this.final_list);
+        if (this.adon_list.length > 0) {
+          this.final_list = this.adon_list[0].addons;
+          console.log(this.final_list);
+        }
       });
   }
   redirecToAddon() {
