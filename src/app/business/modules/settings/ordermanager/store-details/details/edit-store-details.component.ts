@@ -8,7 +8,7 @@ import { ProviderServices } from '../../../../../../../../src/app/ynw_provider/s
     templateUrl: './edit-store-details.component.html'
 })
 export class EditStoreDetailsComponent implements OnInit {
-    api_loading: boolean;
+    api_loading = true;
     data: any;
     firstName;
     lastName;
@@ -34,18 +34,21 @@ export class EditStoreDetailsComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             if (this.router.getCurrentNavigation().extras.state) {
                 this.data = this.router.getCurrentNavigation().extras.state.contact_info;
+                this.api_loading = false;
             }
         });
     }
     ngOnInit() {
-        this.firstName = this.data.firstName;
-        this.lastName = this.data.lastName;
-        this.phone = this.data.phone;
-        this.email = this.data.email;
-        this.address = this.data.address;
-        this.alternatePhone = this.data.alternatePhone;
-        this.alternateEmail = this.data.alternateEmail;
-        this.whatsappNo = this.data.whatsappNo;
+        if (this.data) {
+            this.firstName = this.data.firstName;
+            this.lastName = this.data.lastName;
+            this.phone = this.data.phone;
+            this.email = this.data.email;
+            this.address = this.data.address;
+            this.alternatePhone = this.data.alternatePhone;
+            this.alternateEmail = this.data.alternateEmail;
+            this.whatsappNo = this.data.whatsappNo;
+        }
     }
 
     onSubmit() {
@@ -64,8 +67,7 @@ export class EditStoreDetailsComponent implements OnInit {
         };
         if (this.email === this.alternateEmail) {
             this.shared_Functionsobj.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
-        }
-        else if (this.phone === this.alternatePhone) {
+        } else if (this.phone === this.alternatePhone) {
             this.shared_Functionsobj.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
         } else {
             this.editInfo(data);

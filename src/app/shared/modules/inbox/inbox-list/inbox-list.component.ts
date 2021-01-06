@@ -99,7 +99,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
 
     if (this.usertype === 'consumer') {
-      name = message.owner.userName || null;
+      name = message.accountName || null;
     }
 
     pass_ob['source'] = source;

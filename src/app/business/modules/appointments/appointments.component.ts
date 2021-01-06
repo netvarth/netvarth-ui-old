@@ -338,6 +338,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
   qloading: boolean;
+  firstTime = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -501,6 +502,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               _this.views.push(appointmentViewList[i]);
             }
           }
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           let selected_view;
           if (source === 'changeLocation') {
@@ -522,6 +526,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve(_this.selectedView);
         },
         error => {
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           _this.shared_functions.setitemToGroupStorage('appt-selectedView', _this.selectedView);
           resolve(_this.selectedView);
@@ -647,9 +654,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (date === 'all') {
       filterEnum['location-eq'] = this.selected_location.id;
     }
-    if (this.selectedUser && this.selectedUser.id !== 'all') {
-      filterEnum['provider-eq'] = this.selectedUser.id;
-    }
+    // if (this.selectedUser && this.selectedUser.id !== 'all') {
+    //   filterEnum['provider-eq'] = this.selectedUser.id;
+    // }
     return new Promise((resolve) => {
       _this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
@@ -1200,9 +1207,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!Mfilter) {
       Mfilter = {};
     }
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getHistoryAppointmentsCount(Mfilter)
         .subscribe(
@@ -1354,9 +1361,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getHistoryAppointments() {
     let Mfilter = this.setFilterForApi();
-    if (this.filter.apptStatus === 'all') {
-      Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.apptStatus === 'all') {
+    //   Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
+    // }
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
@@ -1525,6 +1532,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
+    }
+    if (this.filter.apptStatus === 'all' && this.time_type === 3 && this.firstTime) {
+      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
     }
     return api_filter;
   }
@@ -1800,6 +1810,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (type === 'apptStatus') {
+      this.firstTime = false;
       if (value === 'all') {
         this.apptStatuses = [];
         this.allApptStatusSelected = false;
@@ -2122,7 +2133,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
-    this.initView(this.selectedView, 'reloadAPIs');
+    if (!view.userType) {
+      this.initView(this.selectedView, 'reloadAPIs');
+    } else {
+      this.handleUserSelection(view);
+    }
   }
   clearApptIdsFromStorage() {
     this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
@@ -2191,14 +2206,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      const tempUser = {};
-      tempUser['firstName'] = 'All';
-      tempUser['id'] = 'all';
-      this.users.push(tempUser);
+      // const tempUser = {};
+      // tempUser['firstName'] = 'All';
+      // tempUser['id'] = 'all';
+      // this.users.push(tempUser);
       if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
       } else {
-        this.selectedUser = tempUser;
+        // this.selectedUser = tempUser;
       }
     });
   }
@@ -2208,14 +2223,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
-    this.getQsByProvider();
+    this.getQsByProvider(user);
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-  getQsByProvider() {
+  getQsByProvider(user?) {
     const qs = [];
-    if (this.selectedUser && this.selectedUser.id === 'all') {
+    if (!user || (user && user === 'all')) {
       this.activeSchedules = this.tempActiveSchedules;
     } else {
       for (let i = 0; i < this.tempActiveSchedules.length; i++) {
@@ -2232,24 +2247,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeSchedules) {
         qids.push(q.id);
       }
-      const selQids = [];
-      if (qids.length > 0) {
-        if (qids.length > this.selQIds.length) {
-          for (const id of this.selQIds) {
-            const qArr = qids.filter(qid => qid === id);
-            if (qArr.length > 0) {
-              selQids.push(id);
-            }
-          }
-          if (selQids.length === 0) {
-            this.selQIds = qids;
-          }
-        } else {
-          this.selQIds = qids;
-        }
-      } else {
-        this.selQIds.push(this.activeSchedules[0].id);
-      }
+      // const selQids = [];
+      // if (qids.length > 0) {
+      //   if (qids.length > this.selQIds.length) {
+      //     for (const id of this.selQIds) {
+      //       const qArr = qids.filter(qid => qid === id);
+      //       if (qArr.length > 0) {
+      //         selQids.push(id);
+      //       }
+      //     }
+      //     if (selQids.length === 0) {
+      //       this.selQIds = qids;
+      //     }
+      //   } else {
+      //     this.selQIds = qids;
+      //   }
+      // } else {
+      //   this.selQIds.push(this.activeSchedules[0].id);
+      // }
+      this.selQIds = qids;
     }
     setTimeout(() => {
       this.qloading = false;
@@ -2591,7 +2607,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
-              if (this.apptByTimeSlot[data[i].availableSlots[j].time] || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
+              if ((this.selected_type === 'all' && this.apptByTimeSlot[data[i].availableSlots[j].time] && this.apptByTimeSlot[data[i].availableSlots[j].time][0].schedule.id === data[i].scheduleId) || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
                 data[i].availableSlots[j]['scheduleId'] = data[i].scheduleId;
                 if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
                   this.scheduleSlots.push(data[i].availableSlots[j]);
@@ -2632,5 +2648,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return false;
     }
+  }
+  setWaitlistStatusFilterForHistory() {
+    for (const apptStatus of this.check_in_statuses_filter) {
+      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+        this.apptStatuses.push(apptStatus.value);
+      }
+    }
+    return this.apptStatuses.toString();
   }
 }

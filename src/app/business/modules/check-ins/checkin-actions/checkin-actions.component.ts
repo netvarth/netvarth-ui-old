@@ -84,6 +84,7 @@ export class CheckinActionsComponent implements OnInit {
     pastDate;
     subdomain;
     availableDates: any = [];
+    apiloading = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -95,6 +96,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     ngOnInit() {
         console.log(this.data);
+        this.apiloading = true;
         this.setMinMaxDate();
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
@@ -445,6 +447,7 @@ export class CheckinActionsComponent implements OnInit {
                 });
     }
     setActions() {
+        this.apiloading = false;
         if (this.data.timetype !== 3 && this.checkin.waitlistStatus !== 'done' && this.checkin.waitlistStatus !== 'checkedIn' && this.checkin.waitlistStatus !== 'blocked') {
             this.showUndo = true;
         }

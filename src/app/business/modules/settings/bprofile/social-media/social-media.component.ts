@@ -31,7 +31,7 @@ export class SocialMediaComponent implements OnInit {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelclass': 'snackbarerror' });
+            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
         const filteredList = this.social_arr.filter(social => social.Sockey === media);

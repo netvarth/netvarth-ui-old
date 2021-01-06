@@ -80,7 +80,7 @@
 
             </div> -->
             <div class="col-md-12 no-padding">
-                <a class="price rupee-font pull-left"><span *ngIf="service.showPromotionalPrice"
+                <a class="price rupee-font pull-left" *ngIf="item.showpric"><span *ngIf="service.showPromotionalPrice"
                         class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice:
                         service.price}}</span> </a>
                 <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right"

@@ -28,10 +28,13 @@
     margin: 10px;
   }
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
-  .message-icon, .notes-icon, .printer-icon, .customerdetails-icon , .viewdetails-icon, .reschedule-icon,
+  .message-icon, .notes-icon, .printer-icon, .viewdetails-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon,
-  .action-box .meet-icon, .action-box .phon-icon, .medicalrecord-icon, .mr-rx-icon {
+  .meet-icon, .phon-icon, .reschedule-icon, .mr-rx-icon, .medicalrecord-icon {
     width: 25px !important;
+  }
+  .customerdetails-icon {
+    width: 20px !important;
   }
   .action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
     width: 50px !important;

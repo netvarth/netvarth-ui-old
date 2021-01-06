@@ -9,6 +9,7 @@ import { AddItemNotesComponent } from './add-item-notes/add-item-notes.component
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../constants/project-messages';
+import { ConfirmBoxComponent } from '../../components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -79,6 +80,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   coupon_status = null;
   showSide = false;
   storeContact: any;
+  canceldialogRef: any;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -90,7 +92,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       params => {
         this.account_id = params.account_id;
         this.provider_id = params.unique_id;
-        console.log(this.account_id);
       });
 
   }
@@ -110,7 +111,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -167,7 +167,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       const dtoday = yyyy + '-' + cmon + '-' + cday;
       this.todaydate = dtoday;
       this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-      console.log(this.todaydate);
       if (this.todaydate === this.sel_checkindate) {
         this.isFuturedate = false;
       } else {
@@ -191,7 +190,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.storeChecked = false;
       }
       this.sel_checkindate = this.chosenDateDetails.order_date;
-      console.log(this.sel_checkindate);
       this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
     } else {
       this.storeChecked = true;
@@ -204,7 +202,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       _this.shared_services.getConsumerCatalogs(accountId)
         .subscribe(
           (data: any) => {
-            console.log(JSON.stringify(data[0]));
             resolve(data[0]);
           },
           () => {
@@ -221,7 +218,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
   }
   getItemQty(item) {
-    console.log(item);
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     if (qty === 0) {
       this.removeItemFromCart(item);
@@ -287,8 +283,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   applyCoupons(jCoupon) {
-    console.log(jCoupon);
-
     this.api_cp_error = null;
     this.couponvalid = true;
     const couponInfo = {
@@ -356,7 +350,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   removeFromCart(itemObj) {
     const item = itemObj.item;
-    console.log(this.orderList);
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
@@ -382,12 +375,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return this.price;
   }
   removeItemFromCart(item) {
-    console.log(item);
-    console.log('hai');
+
+
     this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
-    console.log(this.orderList);
+
     this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
-    console.log(this.orders);
+
     if (this.orders.length === 0) {
       this.disabledConfirmbtn = true;
     }
@@ -402,7 +395,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.price = this.price + item_price;
     }
-    return this.price;
+    return this.price.toFixed(2);
   }
   getDeliveryCharge() {
     let deliveryCharge = 0;
@@ -420,7 +413,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
     }
     subtotal = subtotal + this.price + deliveryCharge;
-    return subtotal;
+    return subtotal.toFixed(2);
   }
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {
@@ -452,7 +445,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
-    console.log(this.action);
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
@@ -467,10 +459,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   changeTime() {
     this.action = 'timeChange';
     this.getAvailabilityByDate(this.sel_checkindate);
-    console.log(this.choose_type);
   }
   calculateDate(days) {
-    console.log(this.todaydate);
     // this.resetApi();
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
@@ -610,7 +600,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
     const currentday = (cday.getDay() + 1);
-    console.log(currentday);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
 
@@ -662,17 +651,44 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           }
         });
       }
-      console.log(this.orderList);
+      // console.log(this.orderList);
     });
   }
-
+  deleteNotes(item, index){
+    console.log(this.orderList);
+    this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+         'message': 'Do you want to Delete this Note?',
+     }
+     });
+  this.canceldialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      console.log(this.orderList);
+      this.orderList.map((Item, i) => {
+        if (Item.item.itemId === item.item.itemId) {
+          console.log(Item.consumerNote);
+          Item['consumerNote'] = Item.consumerNote.splice;
+        }
+      });
+      // this.orders.map((Item, i) => {
+      //   if (Item.item.itemId === item.item.itemId) {
+      //     Item['consumerNote'] = Item.consumerNote.splice;
+      //   }
+      // });
+      console.log(this.orderList);
+  
+    }
+  });
+  }
   sidebar() {
     this.showSide = !this.showSide;
   }
   getStoreContact() {
     this.shared_services.getStoreContact(this.account_id)
       .subscribe((data: any) => {
-        console.log(data);
         this.storeContact = data;
       });
   }

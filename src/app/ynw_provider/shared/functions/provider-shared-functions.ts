@@ -342,7 +342,7 @@ export class ProviderSharedFuctions {
             waitlist.disableArrivedbtn = false;
             const errMsg = error.error.replace('[checkedIn]', 'checked-in');
             this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
-            reject();
+            reject(error);
           }
         );
     });

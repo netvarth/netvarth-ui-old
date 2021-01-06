@@ -88,20 +88,19 @@ export class EditcatalogitemPopupComponent implements OnInit {
       this.amForm.get('minquantity').setValue(this.minimumquantity);
   }
 
-  
-
   onSubmit(form_data) {
     this.dialogRef.close(form_data);
 
   }
+  isNumeric(evt) {
+    return this.sharedfunctionObj.isNumeric(evt);
+}
+isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
+}
   close() {
       this.dialogRef.close();
   }
-  
-
-
-
-
 }
 
 

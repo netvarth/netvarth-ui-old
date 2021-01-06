@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
@@ -53,9 +53,9 @@ export class ConsumerNotificationsComponent implements OnInit {
   notificationList: any = [];
   okCheckinStatus = false;
   okCancelStatus = false;
-  earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: '' };
-  earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: '' };
-  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: '' };
+  earlyWLNotificatonSettings = { eventType: 'EARLY', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false, personsAhead: 0 };
+  earlyAPPTNotificatonSettings = { eventType: 'EARLY', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, personsAhead: 0 };
+  earlyDONATNotificatonSettings = { eventType: 'EARLY', resourceType: 'DONATION', sms: false, email: false, pushNotification: false, personsAhead: 0 };
   prefinalWLNotificationSettings = { eventType: 'PREFINAL', resourceType: 'CHECKIN', sms: false, email: false, pushNotification: false };
   prefinalAPPTNotificationSettings = { eventType: 'PREFINAL', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false };
   firstAPPTNotificationSettings = { eventType: 'FIRSTNOTIFICATION', resourceType: 'APPOINTMENT', sms: false, email: false, pushNotification: false, time: '1440' };
@@ -74,7 +74,7 @@ export class ConsumerNotificationsComponent implements OnInit {
   orderStatusChangelNotificationSettings = { eventType: 'ORDERSTATUSCHANGE', resourceType: 'ORDER', sms: false, email: false, pushNotification: false };
   showButton: any = {};
   customer_label = '';
-  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false , 'ORDERCONFIRM' : false , 'ORDERCANCEL' : false , 'ORDERSTATUSCHANGE' : false};
+  cSettings: any = { 'EARLY_WL': false, 'EARLY_APPT': false, 'FIRST_APPT': false, 'SECOND_APPT': false, 'THIRD_APPT': false, 'FOURTH_APPT': false, 'EARLY_DONAT': false, 'PREFINAL_WL': false, 'PREFINAL_APPT': false, 'PREFINAL_DONAT': false, 'FINAL_WL': false, 'FINAL_APPT': false, 'FINAL_DONAT': false, 'WAITLISTADD': false, 'APPOINTMENTADD': false, 'DONATIONSERVICE': false, 'ORDERCONFIRM': false, 'ORDERCANCEL': false, 'ORDERSTATUSCHANGE': false };
   consumerNotification;
   notification_statusstr: string;
   wltstPersonsahead;
@@ -117,6 +117,8 @@ export class ConsumerNotificationsComponent implements OnInit {
   dialogRef: any;
   addondialogRef: any;
   is_noSMS = false;
+  screenWidth;
+  small_device_display = false;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -130,10 +132,10 @@ export class ConsumerNotificationsComponent implements OnInit {
   ngOnInit() {
     console.log('consumer notify big');
     for (let j = 0; j <= 60; j++) {
-      this.appt_remind_min[j] = j ;
+      this.appt_remind_min[j] = j;
     }
     for (let i = 0; i <= 24; i++) {
-      this.appt_remind_hr[i] = i ;
+      this.appt_remind_hr[i] = i;
     }
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -155,6 +157,19 @@ export class ConsumerNotificationsComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -307,8 +322,37 @@ export class ConsumerNotificationsComponent implements OnInit {
       this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
-  showSubmit(type) {
+  showSubmit(type, value, event?) {
     this.showButton[type] = true;
+    if (value !== 'phead') {
+    if (type === 'EARLY_WL') {
+      this.earlyWLNotificatonSettings[value] = event.checked;
+    } else if (type === 'WAITLISTADD') {
+      this.wlAddNotificationSettings[value] = event.checked;
+    } else if (type === 'PREFINAL_WL') {
+      this.prefinalWLNotificationSettings[value] = event.checked;
+    } else if (type === 'FINAL_WL') {
+      this.finalWLNotificationSettings[value] = event.checked;
+    } else if (type === 'APPOINTMENTADD') {
+      this.apptAddNotificationSettings[value] = event.checked;
+    } else if (type === 'SECOND_APPT') {
+      this.secondAPPTNotificationSettings[value] = event.checked;
+    } else if (type === 'FIRST_APPT') {
+      this.firstAPPTNotificationSettings[value] = event.checked;
+    } else if (type === 'THIRD_APPT') {
+      this.thirdAPPTNotificationSettings[value] = event.checked;
+    } else if (type === 'FOURTH_APPT') {
+      this.fourthAPPTNotificationSettings[value] = event.checked;
+    } else if (type === 'ORDERCONFIRM') {
+      this.orderAddNotificationSettings[value] = event.checked;
+    } else if (type === 'ORDERCANCEL') {
+      this.orderCancelNotificationSettings[value] = event.checked;
+    } else if (type === 'ORDERSTATUSCHANGE') {
+      this.orderStatusChangelNotificationSettings[value] = event.checked;
+    } else if (type === 'DONATIONSERVICE') {
+      this.donatAddNotificationSettings[value] = event.checked;
+    }
+  }
   }
   changeNotificationSettings(type) {
     let activeInput;
@@ -403,72 +447,72 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
   goBack() {
-    this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+    this.routerobj.navigate(['provider', 'settings', 'comm']);
   }
   handleHrSelction(obj, atempt) {
-     switch (atempt) {
-      case 'first' : this.f_selected_hr = obj; break;
-      case 'second' : this.s_selected_hr = obj; break;
-      case 'third' : this.t_selected_hr = obj; break;
-      case 'fourth' : this.ft_selected_hr = obj; break;
-     }
+    switch (atempt) {
+      case 'first': this.f_selected_hr = obj; break;
+      case 'second': this.s_selected_hr = obj; break;
+      case 'third': this.t_selected_hr = obj; break;
+      case 'fourth': this.ft_selected_hr = obj; break;
+    }
   }
   handleMinSelction(obj, atempt) {
-     switch (atempt) {
-      case 'first' : this.f_selected_min = obj; break;
-      case 'second' : this.s_selected_min = obj; break;
-      case 'third' : this.t_selected_min = obj; break;
-      case 'fourth' : this.ft_selected_min = obj; break;
-     }
+    switch (atempt) {
+      case 'first': this.f_selected_min = obj; break;
+      case 'second': this.s_selected_min = obj; break;
+      case 'third': this.t_selected_min = obj; break;
+      case 'fourth': this.ft_selected_min = obj; break;
+    }
   }
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_servicesobj.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
-      this.order_status = data.enableOrder;  
+      this.order_status = data.enableOrder;
     });
   }
 }

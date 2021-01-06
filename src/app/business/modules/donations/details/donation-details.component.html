@@ -10,7 +10,7 @@
 <section>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding min-hght" *ngIf="!loading">
-        <div class="donationdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
+        <div class="donationdetails col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
                 <div class="bold font11" *ngIf="donationDetails.donor.firstName">
                     {{donationDetails.donor.firstName}}</div>
@@ -21,19 +21,33 @@
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                     {{donationDetails.location.place}}
                 </div>
-                <div> {{donationDetails.date | date: display_dateFormat}}</div>
-                <div class="rupee-font">
-                    Amount: <span class="bold">{{donationDetails.donationAmount | currency:'&#8377;' }}</span></div>
-                <div> Cause: <span class="bold"> {{donationDetails.service.name}}</span></div>
-                <div *ngIf="donationDetails.note" class="prov-wtlst-note-border shadow-none mgn-bt-10 mgn-up-20"
-                    [innerHTML]="donationDetails.note | nl2br">
-                </div>
+                    <span class="customer-action-btn pointer-cursor pull-left mgn-rt-10 mgn-up-20" (click)="addInboxMessage()">
+                        <i class="fa fa-comments-o"></i> Send message</span>
+                    <span *ngIf="donationDetails.note" class="customer-action-btn pointer-cursor pull-left mgn-up-20"
+                        (click)="showConsumerNote()">
+                        <i class="icon-note mgn-rt-5"></i>Notes</span>
             </div>
         </div>
-        <!-- <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9">
-            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
+        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding mgn-20 no-margin-small">
+            <div class="recentactivity mgn-up-10">
+                <table class="width-100">
+                    <thead>
+                        <tr>
+                            <th class="pad-10">Date</th>
+                            <th class="pad-10">Cause</th>
+                            <th class="pad-10">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pad-10">{{donationDetails.date | date: display_dateFormat}}</td>
+                            <td class="pad-10">{{donationDetails.service.name}}</td>
+                            <td class="pad-10 rupee-font">{{donationDetails.donationAmount | currency:'&#8377;' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div> -->
+        </div>
     </div>
     <div class="clearfix"></div>
 </section>

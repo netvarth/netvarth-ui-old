@@ -59,8 +59,8 @@
                   <div>{{customer_data.email}}</div>
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.phoneNo">
-                  <div><b>PhoneNo:</b></div>
-                  <div>{{customer_data.phoneNo}}</div>
+                  <div><b>Phone#:</b></div>
+                  <div>{{customer_data.countryCode}} {{customer_data.phoneNo}}</div>
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin" *ngIf="customer_data.dob">
                   <div><b>DOB</b></div>
@@ -444,11 +444,11 @@
                         <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}
                         </ng-container>
                         {{for_whom_the_cap}}
-                        <span *ngIf="settingsjson['calculationMode'] === 'NoCalc' && settingsjson['showTokenId']">
+                        <span *ngIf="settingsjson['showTokenId']">
                           token
                         </span>
                         <span
-                          *ngIf="settingsjson['calculationMode'] !== 'NoCalc' || (settingsjson['calculationMode'] === 'NoCalc' && !settingsjson['showTokenId'])">{{checkinLabel}}
+                          *ngIf="!settingsjson['showTokenId']">{{checkin_label}}
                         </span>
                         {{is_beingmade_cap}}
                       </div>

@@ -6,6 +6,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { AddproviderAddonComponent } from '../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UpdateProviderNotificationsComponent } from '../../update-provider-notifications/update-provider-notifications.component';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -142,7 +143,7 @@ export class ProviderNotificationsComponent implements OnInit {
   appointment_status: any;
   waitlistStatus: any;
   donations_status: any;
-  order_status:any;
+  order_status: any;
   settings: any = [];
   showToken = false;
   api_loading = true;
@@ -176,17 +177,15 @@ export class ProviderNotificationsComponent implements OnInit {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
     this.getGlobalSettingsStatus();
-    this.getNotificationList();
-    this.getSMSCredits();
+    // this.getNotificationList();
+    // this.getSMSCredits();
     this.getOrderStatus();
     this.provdr_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
-    // console.log(this.crumbtitle);
     if (this.crumbtitle === 'Hospital') {
-      this.breadcrmbTitle = 'Hospital';
+      this.breadcrmbTitle = 'Hospital Notifications';
     } else {
-      this.breadcrmbTitle = this.provider_label;
+      this.breadcrmbTitle = this.provider_label + ' Notifications';
     }
-    // console.log(this.breadcrmbTitle);
     const breadcrumbs = [];
     this.breadcrumbs_init.map((e) => {
       breadcrumbs.push(e);
@@ -211,6 +210,7 @@ export class ProviderNotificationsComponent implements OnInit {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        this.order_status = data.order;
         this.api_loading = false;
       });
   }
@@ -244,50 +244,30 @@ export class ProviderNotificationsComponent implements OnInit {
             this.em_arr = notifyList.email;
             this.SelchkinNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.ph_arr = notifyList.sms;
             this.SelchkinNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.cheknPushph_arr = notifyList.pushMsg;
             this.SelchkinNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
         } else if (notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
-            // console.log(this.SelchkincnclNotify);
             this.SelchkincnclNotify = false;
           }
           if (notifyList.email && notifyList.email.length !== 0) {
             this.em1_arr = notifyList.email;
             this.SelchkincnclNotify = true;
           }
-          // else {
-          //   this.SelchkincnclNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.ph1_arr = notifyList.sms;
             this.SelchkincnclNotify = true;
           }
-          // else {
-          //   this.SelchkincnclNotify = false;
-          // }
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.cheknCancelPushph_arr = notifyList.pushMsg;
             this.SelchkincnclNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
         } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selApptNotify = false;
@@ -296,25 +276,15 @@ export class ProviderNotificationsComponent implements OnInit {
             this.apptem_arr = notifyList.email;
             this.selApptNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.apptph_arr = notifyList.sms;
             this.selApptNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.apptPushph_arr = notifyList.pushMsg;
             this.selApptNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-        }  else if (notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM') {
+        } else if (notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selOrderNotify = false;
           }
@@ -322,25 +292,15 @@ export class ProviderNotificationsComponent implements OnInit {
             this.orderem_arr = notifyList.email;
             this.selOrderNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.orderph_arr = notifyList.sms;
             this.selOrderNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.orderPushph_arr = notifyList.pushMsg;
             this.selOrderNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-        }  else if (notifyList.eventType && notifyList.eventType ===  'ORDERCANCEL') {
+        } else if (notifyList.eventType && notifyList.eventType === 'ORDERCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selOrderCancelNotify = false;
           }
@@ -348,25 +308,15 @@ export class ProviderNotificationsComponent implements OnInit {
             this.orderem1_arr = notifyList.email;
             this.selOrderCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.orderph1_arr = notifyList.sms;
             this.selOrderCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.ordercancelPushph_arr = notifyList.pushMsg;
             this.selOrderCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-        }    else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
+        } else if (notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selApptCancelNotify = false;
           }
@@ -374,26 +324,16 @@ export class ProviderNotificationsComponent implements OnInit {
             this.apptem1_arr = notifyList.email;
             this.selApptCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.apptph1_arr = notifyList.sms;
             this.selApptCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.apptcancelPushph_arr = notifyList.pushMsg;
             this.selApptCancelNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
         }
-         else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
+        else if (notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selDonatnNotify = false;
           }
@@ -401,24 +341,14 @@ export class ProviderNotificationsComponent implements OnInit {
             this.donateem_arr = notifyList.email;
             this.selDonatnNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
           if (notifyList.sms && notifyList.sms.length !== 0) {
             this.donateph_arr = notifyList.sms;
             this.selDonatnNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.donatepushph_arr = notifyList.pushMsg;
             this.selDonatnNotify = true;
           }
-          // else {
-          //   this.SelchkinNotify = false;
-          // }
         } else if (notifyList.eventType && notifyList.eventType === 'LICENSE') {
           if (notifyList.email.length === 0 && notifyList.sms.length === 0 && notifyList.pushMsg.length === 0) {
             this.selSystemNotify = false;
@@ -431,7 +361,6 @@ export class ProviderNotificationsComponent implements OnInit {
             this.systemph_arr = notifyList.sms;
             this.selSystemNotify = true;
           }
-
           if (notifyList.pushMsg && notifyList.pushMsg.length !== 0) {
             this.pushsystemph_arr = notifyList.pushMsg;
             this.selSystemNotify = true;
@@ -447,9 +376,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   selectChekinCanclNotify(event) {
-    // console.log(this.SelchkincnclNotify);
     this.SelchkincnclNotify = event.checked;
-    // console.log(this.SelchkincnclNotify);
     if (!this.SelchkincnclNotify) {
       this.checkinCancelNotifications('cancelcheckin');
     }
@@ -1317,7 +1244,6 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptem_arr = [];
       this.apptph_arr = [];
       this.apptPushph_arr = [];
-      // this.apptPush = false;
     }
     this.savechekinNotification_json.resourceType = 'APPOINTMENT';
     this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
@@ -1341,8 +1267,7 @@ export class ProviderNotificationsComponent implements OnInit {
     if (!this.selOrderNotify) {
       this.orderem_arr = [];
       this.orderph_arr = [];
-      this.orderPushph_arr = [];     
-      // this.apptPush = false;
+      this.orderPushph_arr = [];
     }
     this.savechekinNotification_json.resourceType = 'ORDER';
     this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
@@ -1368,7 +1293,6 @@ export class ProviderNotificationsComponent implements OnInit {
       this.apptem1_arr = [];
       this.apptph1_arr = [];
       this.apptcancelPushph_arr = [];
-      // this.cancelpushAppt = false;
     }
     this.savecancelNotification_json.resourceType = 'APPOINTMENT';
     this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
@@ -1390,11 +1314,9 @@ export class ProviderNotificationsComponent implements OnInit {
       }
     }
     if (!this.selOrderCancelNotify) {
-      this.orderph1_arr  = [];
-      this.orderem1_arr  = [];
+      this.orderph1_arr = [];
+      this.orderem1_arr = [];
       this.ordercancelPushph_arr = [];
-    
-      // this.cancelpushAppt = false;
     }
     this.savecancelNotification_json.resourceType = 'ORDER';
     this.savecancelNotification_json.eventType = 'ORDERCANCEL';
@@ -1419,7 +1341,6 @@ export class ProviderNotificationsComponent implements OnInit {
       this.donateem_arr = [];
       this.donateph_arr = [];
       this.donatepushph_arr = [];
-      // this.donatePush = false;
     }
     this.savechekinNotification_json.resourceType = 'DONATION';
     this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
@@ -1444,7 +1365,6 @@ export class ProviderNotificationsComponent implements OnInit {
       this.systemem_arr = [];
       this.systemph_arr = [];
       this.pushsystemph_arr = [];
-      //  this.systemPush = false;
     }
     this.savechekinNotification_json.resourceType = 'ACCOUNT';
     this.savechekinNotification_json.eventType = 'LICENSE';
@@ -1508,7 +1428,6 @@ export class ProviderNotificationsComponent implements OnInit {
             if (source === 'newsystem') {
               this.okSystemStatus = true;
             }
-            // this.okCancelStatus = false;
             this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
           },
           error => {
@@ -1565,7 +1484,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
     if (source === 'newappointment') {
       this.okApptStatus = true;
-    } 
+    }
     if (source === 'neworder') {
       this.okOrderStatus = true;
     }
@@ -1737,7 +1656,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.cancelemailOrder = true;
     }
   }
-   
+
   emaildonateAddClicked() {
     if (this.emaildonate) {
       this.emaildonate = false;
@@ -1786,56 +1705,80 @@ export class ProviderNotificationsComponent implements OnInit {
     return this.sharedfunctionObj.isNumeric(evt);
   }
   goBack() {
-    this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+    this.routerobj.navigate(['provider', 'settings', 'comm']);
   }
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_services.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
-      this.order_status = data.enableOrder;  
+      this.order_status = data.enableOrder;
     });
+  }
+  showNotificationPopup(type) {
+    if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
+      this.sharedfunctionObj.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else if (type === 'Appointment' && !this.appointment_status) {
+      this.sharedfunctionObj.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else if (type === 'Order' && !this.order_status) {
+      this.sharedfunctionObj.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else if (type === 'Donation' && !this.donations_status) {
+      this.sharedfunctionObj.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else {
+      const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          type: type
+        }
+      });
+      dialogref.afterClosed().subscribe(
+        result => {
+
+        });
+    }
   }
 }

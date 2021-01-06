@@ -938,7 +938,7 @@
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
-																	<td class="price rupee-font">{{customer_label}} have
+																	<td class="price rupee-font">{{customer_label | capitalizeFirst}} have
 																		saved
 																		{{bill_data.totalAmountSaved |
 																		currency:'&#8377;'}}

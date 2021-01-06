@@ -328,6 +328,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   voicedialogRef: any;
   addCustomerTooltip = '';
   qloading: boolean;
+  firstTime = true;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -690,6 +691,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if (type === 'waitlist_status') {
+      this.firstTime = false;
       if (value === 'all') {
         this.apptStatuses = [];
         this.allApptStatusSelected = false;
@@ -912,6 +914,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               _this.views.push(qViewList[i]);
             }
           }
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           let selected_view;
           if (source === 'changeLocation') {
@@ -933,6 +938,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           resolve(_this.selectedView);
         },
         error => {
+          for (let i = 0; i < _this.users.length; i++) {
+            _this.views.push(_this.users[i]);
+          }
           _this.views.push(tempView);
           _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
           resolve(_this.selectedView);
@@ -1144,11 +1152,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQs(date?) {
     const _this = this;
-    const filterEnum = {};
+    // const filterEnum = {};
     if (date === 'all') {
-      if (this.selectedUser && this.selectedUser.id !== 'all') {
-        filterEnum['provider-eq'] = this.selectedUser.id;
-      }
+      // if (this.selectedUser && this.selectedUser.id !== 'all') {
+      //   filterEnum['provider-eq'] = this.selectedUser.id;
+      // }
       return new Promise((resolve) => {
         _this.provider_services.getProviderLocationQueues(_this.selected_location.id).subscribe(
           (queues: any) => {
@@ -1220,8 +1228,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
-    this.initView(this.selectedView, 'reloadAPIs');
-
+    if (!view.userType) {
+      this.initView(this.selectedView, 'reloadAPIs');
+    } else {
+      this.handleUserSelection(view);
+    }
   }
   resetCheckList() {
     this.selectedAppt = [];
@@ -1688,9 +1699,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // no_filter = true;
     }
-    if (this.filter.waitlist_status === 'all') {
-      Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
@@ -1871,6 +1882,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setFilterForApi() {
     const api_filter = {};
+    if (this.filter.waitlist_status === 'all' && this.time_type === 3 && this.firstTime) {
+      api_filter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    }
     if (this.time_type === 1) {
       // api_filter['queue-eq'] = this.selected_queue.id;
       if (this.token && this.time_type === 1) {
@@ -1958,9 +1972,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['location-eq'] = this.selected_location.id;
       }
     }
-    if (this.filter.waitlist_status === 'all') {
-      api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
-    }
+    // if (this.filter.waitlist_status === 'all') {
+    //   api_filter['waitlistStatus-neq'] = 'prepaymentPending,failed';
+    // }
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
@@ -2799,14 +2813,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // let filter = 'userType-neq :"assistant"'
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
-        const tempUser = {};
-        tempUser['firstName'] = 'All';
-        tempUser['id'] = 'all';
-        _this.users.push(tempUser);
+        // const tempUser = {};
+        // tempUser['firstName'] = 'All';
+        // tempUser['id'] = 'all';
+        // _this.users.push(tempUser);
         if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
           _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
         } else {
-          _this.selectedUser = tempUser;
+          // _this.selectedUser = tempUser;
         }
         resolve();
       },
@@ -2821,11 +2835,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetFields();
     this.shared_functions.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
-    this.getQsByProvider();
+    this.getQsByProvider(user);
   }
-  getQsByProvider() {
+  getQsByProvider(user?) {
     const qs = [];
-    if (!this.selectedUser || (this.selectedUser && this.selectedUser.id === 'all')) {
+    if (!user || (user && user === 'all')) {
       this.activeQs = this.tempActiveQs;
     } else {
       for (let i = 0; i < this.tempActiveQs.length; i++) {
@@ -2842,24 +2856,25 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       for (const q of this.activeQs) {
         qids.push(q.id);
       }
-      const selQids = [];
-      if (qids.length > 0) {
-        if (this.selQIds && this.selQIds.length > 0) {
-          for (const id of this.selQIds) {
-            const qArr = qids.filter(qid => qid === id);
-            if (qArr.length > 0) {
-              selQids.push(id);
-            }
-          }
-          if (selQids.length === 0) {
-            this.selQIds = qids;
-          }
-        } else {
-          this.selQIds = qids;
-        }
-      } else {
-        this.selQIds.push(this.activeQs[0].id);
-      }
+      // const selQids = [];
+      // if (qids.length > 0) {
+      //   if (this.selQIds && this.selQIds.length > 0) {
+      //     for (const id of this.selQIds) {
+      //       const qArr = qids.filter(qid => qid === id);
+      //       if (qArr.length > 0) {
+      //         selQids.push(id);
+      //       }
+      //     }
+      //     if (selQids.length === 0) {
+      //       this.selQIds = qids;
+      //     }
+      //   } else {
+      //     this.selQIds = qids;
+      //   }
+      // } else {
+      //   this.selQIds.push(this.activeQs[0].id);
+      // }
+      this.selQIds = qids;
     }
     setTimeout(() => {
       this.qloading = false;
@@ -3164,5 +3179,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return false;
     }
+  }
+  setWaitlistStatusFilterForHistory() {
+    for (const apptStatus of this.check_in_statuses_filter) {
+      if (this.apptStatuses.indexOf(apptStatus.value) === -1 && apptStatus.value !== 'prepaymentPending' && apptStatus.value !== 'failed') {
+        this.apptStatuses.push(apptStatus.value);
+      }
+    }
+    return this.apptStatuses.toString();
   }
 }

@@ -66,9 +66,18 @@
                       <ul class="menu">
                         <li *ngFor="let view of views" [ngClass]="{'active': (view.id == selectedView.id)}">
                           <a class="pointer-cursor" (click)="handleViewSel(view)">
-                            <h4 *ngIf="view.name.length>='27'">
-                              {{view.name.substring(0,24) }}...</h4>
-                            <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
+                            <ng-container *ngIf="view.name">
+                              <h4 *ngIf="view.name.length>='27'">
+                                {{view.name.substring(0,24) }}...</h4>
+                              <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
+                            </ng-container>
+                            <ng-container *ngIf="view.firstName">
+                              <h4 *ngIf="view.firstName.length>='27'">
+                                {{ view.firstName.substring(0,24) }}...</h4>
+                              <h4 *ngIf="view.firstName.length<'27'">
+                                {{(view.businessName) ? view.businessName : view.firstName}}
+                              </h4>
+                            </ng-container>
                           </a>
                         </li>
                       </ul>
@@ -76,7 +85,7 @@
                     <li class="footer"><a class="pointer-cursor" (click)="gotoCustomViews()">Manage Views</a></li>
                   </ul>
                 </li>
-                <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right drop-width"
+                <!-- <li class="pl5 dropdown messages-menu queue-menu tok-db pull-right drop-width"
                   *ngIf="account_type === 'BRANCH' && admin && time_type !==3">
                   <i class="fa fa-user dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
@@ -100,7 +109,7 @@
                     </li>
                     <li class="footer"><a class="pointer-cursor" (click)="gotoUser()">Manage Users</a></li>
                   </ul>
-                </li>
+                </li> -->
                 <li class="dropdown notifications-menu">
                   <a (click)="checkinClicked('WALK_IN_CHECKIN')"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"

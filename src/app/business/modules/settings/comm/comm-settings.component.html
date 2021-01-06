@@ -1,38 +1,101 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" (performAction)="performActions($event)" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-             <!-- <button type="button" class="btn default profile-back" (click)="redirecToSettings()">
-                <span class="fa fa-chevron-left">&nbsp;Back</span>
-            </button>&nbsp;&nbsp;&nbsp; -->
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Communications And notifications
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </h5>   
+        </h5>
     </div>
 </section>
 <section>
-    <div class="content w-manager settings comn-cls">
-        <div class="col-md-12 no-padding-small">
-            <!-- <div class="row">
-                <div class="card pos">
-                    <div class="lbl col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 10px">
-                        <label>Teleservice
-                            <span class="ctrl">
-                                <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
-                                    (change)="handle_virtualCallingModeStatus($event)">
-                                </mat-slide-toggle>&nbsp;{{virtualCallingMode_statusstr}}
-                            </span>
-                        </label>
-                        <p class="form-level-settings">Please select and set the preferable way of calling your
-                            customer.<a class="learnmore-pointer" id="customer-help"
-                                (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
-                                More</a></p>
+    <div class="card col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
+            <i class="fa fa-television dark-blue" aria-hidden="true"></i>
+            Teleservice
+            <div class="pull-right">
+                {{virtualCallingMode_statusstr}}&nbsp; <mat-slide-toggle [(ngModel)]="virtualCallingMode_status"
+                    (change)="handle_virtualCallingModeStatus($event)">
+                </mat-slide-toggle>
+            </div>
+            <div class="form-level-settings mgn-lt-20">Configure your video call preferences here. <a
+                    class="learnmore-pointer" id="customer-help"
+                    (click)="learnmore_clicked('virtualcallingmode', $event)">Learn
+                    More</a></div>
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-bt-20">
+                <div class="mgn-up-20 bold"> Video Calling Modes</div>
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
+                        <span class="wtsapaud-icon" aria-hidden="true"></span>
+                        <div class="tele-connect textcenter" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
                     </div>
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('GoogleMeet')">
+                        <span class="meet-icon" aria-hidden="true"></span>
+                        <div class="tele-connect textcenter mgn-up-25" [class.greenc]="getName('GoogleMeet') === 'Connected'" [class.red]="getName('GoogleMeet') !== 'Connected'">{{getName('GoogleMeet')}}</div>
+                    </div>
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Zoom')">
+                        <span class="zoom-icon" aria-hidden="true"></span>
+                        <div class="tele-connect textcenter mgn-up-10" [class.greenc]="getName('Zoom') === 'Connected'" [class.red]="getName('Zoom') !== 'Connected'">{{getName('Zoom')}}</div>
+                    </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                <div class="mgn-up-20 bold"> Voice Calling Modes</div>
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
+                        <span class="wtsapaud-icon" aria-hidden="true"></span>
+                        <div class="tele-connect textcenter" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
+                    </div>
+                    <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Phone')">
+                        <span class="phon-icon" aria-hidden="true"></span>
+                        <div class="tele-connect textcenter mgn-up-30" [class.greenc]="getName('Phone') === 'Connected'" [class.red]="getName('Phone') !== 'Connected'">{{getName('Phone')}}</div>
+                    </div>
+            </div>
+        </div>
+        <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
+            <div class="col-md-6 col-xs-12 col-sm-7 col-lg-9 no-padding">
+                <i class="fa fa-bell dark-blue" aria-hidden="true"></i>
+                Notifications
+                <div class="form-level-settings mgn-lt-20"> {{cust_domain_name | capitalizeFirst}} and {{provider_domain_name}}
+                    notification settings<a class="learnmore-pointer" id="customer-help"
+                        (click)="learnmore_clicked('notifications', $event)">Learn
+                        More</a></div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-5 col-lg-3 no-padding small-device-style">
+                <div class="send-notify">
+                    <label class="toggle-label">Send Notifications&nbsp;&nbsp;
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="notificationStatus"
+                            (change)="handlenotificationSettings($event)">
+                        </mat-slide-toggle>
+                    </label>
                 </div>
-            </div> -->
+                <div class="sms-notify">
+                    <label class="toggle-label">Send SMS&nbsp;&nbsp;
+                        <mat-slide-toggle class="example-margin" [(ngModel)]="smsGlobalStatus"
+                            (change)="handleGlobalSMSSettings($event)">
+                        </mat-slide-toggle>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 no-padding" style="padding-bottom: 10px;">
+                <label style="display: flex">Remaining SMS Credits: <span class="bold">
+                        &nbsp;{{smsCredits}}</span> </label>
+                <ul class="info-lst serviceadd-info">
+                    <li>{{genrl_notification_cap}} <a class="pointlist" matTooltip="Go to Add-ons"
+                            routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 no-padding">
+                <span class="act-btn mgn-rt-10" (click)="gotoProviderNotification()">
+                    {{provider_label | capitalizeFirst}}
+                </span>
+                <span class="act-btn" (click)="gotoCustomerNotification()">
+                    {{customer_label | capitalizeFirst}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <!-- <div class="content w-manager settings comn-cls">
+        <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoVideoSettings()">
@@ -57,5 +120,5 @@
             </div>
         </div>
         <div class="clearfix"></div>
-    </div>
+    </div> -->
 </section>

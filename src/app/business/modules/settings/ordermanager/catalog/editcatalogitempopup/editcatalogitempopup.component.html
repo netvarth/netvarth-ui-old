@@ -7,7 +7,7 @@
     <mat-dialog-content>
       <div class="form-group">
         <mat-form-field>
-          <input matInput type="number" min="1" class="form-control" placeholder="Maximum quantity" formControlName="maxquantity">
+          <input matInput type="number" min="1" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control" placeholder="Maximum quantity" formControlName="maxquantity">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'maxquantity')" [errorMsgs]="fed_service.getErrorMessage(amForm,'maxquantity',
   {
@@ -19,12 +19,11 @@
   
       <div class="form-group">
         <mat-form-field>
-          <input matInput type="number" min="1" class="form-control" formControlName="minquantity" placeholder="Minimum quantity">
+          <input matInput type="number" min="1" class="form-control" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" formControlName="minquantity" placeholder="Minimum quantity">
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'minquantity')" errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'minquantity',
   {
   'required' : 'Please enter the minimum quantity.',
-  'pattern' : 'Please enter valid duration',
   'maxlength' : 'Duration can have only ' + maxNumbers + ' digits'
   })">
         </app-field-error-display>

@@ -218,7 +218,7 @@ export class ProviderCheckinComponent implements OnInit {
     virtualServicenumber;
     emptyFielderror = false;
     countryCode;
-
+checkin_label;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -669,6 +669,7 @@ export class ProviderCheckinComponent implements OnInit {
     }
     setTerminologyLabels() {
         this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
+        this.checkin_label = this.sharedFunctionobj.getTerminologyTerm('waitlist');
         this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
@@ -1053,10 +1054,14 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else {
+            } else if(!this.thirdParty) {
                 const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode+''+this.callingModes;
                 console.log(this.callingModes)
+            } else {
+                console.log("third party")
+                const thirdparty_countrycode = '91';
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode+''+this.callingModes;
             }
         }
         // }

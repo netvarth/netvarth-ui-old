@@ -30,12 +30,19 @@
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.displayName}}</div>
-                        <div class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                        <div  *ngIf="catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
-                        <div class="add_nte" (click)="addNotes(item,i)">
-                        {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                        </div>
+                        <div>
+                           <span class="add_nte" (click)="addNotes(item,i)">
+                               {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                           </span> &nbsp; 
+                           <span class="add_nte" (click)="deleteNotes(item,i)">
+                              <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                           </span>
+                        </div>                    
+
                       </div>
+                      
                     </div>
 
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
@@ -73,6 +80,8 @@
                       <div *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</div>
                       <div *ngIf="storeContact.email" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.email}}</div>
                       <div *ngIf= "storeContact.alternateEmail" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.alternateEmail}}</div>
+                      <div *ngIf= "storeContact.whatsappNo"><i class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}} {{storeContact.whatsappNo}}</div>
+
 
                     </div>
                   </aside>
@@ -133,7 +142,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">
                     <div class="oder-sumary-txt">Order Summary</div>
                     <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
                       *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
@@ -151,7 +160,7 @@
                     </div>
                   </ng-container>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_details.showPrice">
                     <div class="flex1">SUB TOTAL</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>

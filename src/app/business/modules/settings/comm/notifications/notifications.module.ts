@@ -10,12 +10,14 @@ import { NotificationsComponent } from './notifications.component';
 import { NotificationsRoutingModule } from './notifications.routing.module';
 import { ConsumerNotificationsComponent } from './consumer/consumer-notifications.component';
 import { ProviderNotificationsComponent } from './provider/provider-notifications.component';
+import { UpdateProviderNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
 
 @NgModule({
     declarations: [
       NotificationsComponent,
       ProviderNotificationsComponent,
-      ConsumerNotificationsComponent
+      ConsumerNotificationsComponent,
+      UpdateProviderNotificationsComponent
     ],
     imports: [
         NotificationsRoutingModule,
