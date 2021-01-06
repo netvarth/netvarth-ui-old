@@ -26853,3 +26853,62 @@ color: #fff !important;
 .mgn-up-minus-20 {
   margin-top: -20px;
 }
+.shoppinglist-gal{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: space-around;
+  margin: 0 0 20px 0;
+  padding: 0;
+  width: 100%;
+  }
+  .shoppinglist-li{
+    list-style: none;
+    margin-right: 10px;
+    background: #f8f8f8;
+    margin-top: 10px;
+    width: 30%;
+  }
+  .shoppinglistbx{
+    position: relative;
+    width: 100%;
+    height: 100px;
+  }
+  .shoppinglistmbt{
+    position: absolute;
+  right: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 4;
+  opacity: 0;
+  color: #fff;
+  transition: all 300ms;
+  }
+  .shoppinglistimg-h{
+    position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  }
+  .shoppinglistoverlay-y{
+    position: absolute;
+  opacity: 0;
+  transition: all 300ms;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  }
+  .shoppinglistimg{
+  width: 100%;
+  height: 100%;
+  }
+  .shoppinglistoverlay-y:hover {
+    opacity: unset;
+  }
+  img:hover,.shoppinglistmbt{
+    opacity: unset;
+  }

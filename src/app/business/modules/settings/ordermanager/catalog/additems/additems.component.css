@@ -300,6 +300,8 @@
   }
   .itemselected{
       background-color: gainsboro !important;
+      border: solid 1px deepskyblue;
+      border-radius: 10px;
   }
  /* New item grid style */
  .add_item_  mat-grid-tile {

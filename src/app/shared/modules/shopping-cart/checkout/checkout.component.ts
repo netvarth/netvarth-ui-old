@@ -13,6 +13,8 @@ import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consu
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
 
 
@@ -27,6 +29,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   disabled = false;
   userEmail = '';
   orderNote: any;
+  orderlistNote: any;
   phonenumber: any;
   customer_countrycode: any;
   notfutureAvailableTime = false;
@@ -86,6 +89,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   isfutureAvailableTime = false;
   storeContactNw: any;
   showSide = false;
+  orderType = '';
+  image_list_popup: Image[];
+  selectedImagelist = {
+        files: [],
+        base64: [],
+        caption: []
+    };
+  shoppinglistdialogRef;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+};
+customButtonsFontAwesomeConfig: ButtonsConfig = {
+  visible: true,
+  strategy: ButtonsStrategy.CUSTOM,
+  buttons: [
+      {
+          className: 'inside close-image',
+          type: ButtonType.CLOSE,
+          ariaLabel: 'custom close aria label',
+          title: 'Close',
+          fontSize: '20px'
+      }
+  ]
+};
   canceldialogRef: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
@@ -97,7 +125,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder
 
   ) {
-
+    // this.route.queryParams.subscribe(
+    //   qParams => {
+    //    this.selectedImagelist = qParams.uploadlist;
+    //     console.log(this.selectedImagelist);
+    //   });
     this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
     this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
@@ -116,13 +148,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.sel_checkindate = this.chosenDateDetails.order_date;
     this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
     console.log(this.sel_checkindate);
-
-
-
-
-
-
-
     this.onResize();
   }
   @HostListener('window:resize', ['$event'])
@@ -147,8 +172,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
-    this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-
+    if (this.orderList) {
+      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+    }
     // this.catlogArry();
     const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -158,13 +184,41 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.phonenumber = activeUser.primaryPhoneNumber;
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
       console.log(this.customer_phoneNumber);
-
       this.getaddress();
     } else {
       this.doLogin('consumer');
     }
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      this.orderType = this.catalog_details.orderType;
+      if (this.orderType === 'SHOPPINGLIST') {
+          this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+              // source_id: data
+            }
+        });
+        this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            console.log(result);
+            this.selectedImagelist = result;
+            this.image_list_popup = [];
+            if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                  {
+                      img: this.selectedImagelist.base64[i],
+                      description: ''
+                  });
+              this.image_list_popup.push(imgobj);
+          }
+
+            }
+          }
+          });
+      }
       this.advance_amount = this.catalog_details.advanceAmount;
       this.loading = false;
       if (this.catalog_details.pickUp) {
@@ -402,16 +456,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   confirm() {
     this.checkoutDisabled = true;
-    // if(this.choose_type === 'home') {
-    //   if (this.added_address.length === 0) {
-    //     // this.disablecheck = true
-    //   }
-    // }
-    // if(this.choose_type === 'store') {
-    //   if (!this.storeContact.value.phone  || !this.storeContact.value.email ) {
-    //     // this.disablecheck = true
-    //   }
-    // }
     console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
@@ -422,6 +466,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
           this.emailId = this.customer_email;
         }
+        if (this.orderType === 'SHOPPINGLIST') {
+          const post_Data = {
+            'homeDelivery': true,
+            'homeDeliveryAddress': this.selectedAddress,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': 0
+            },
+            'timeSlot': {
+              'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+              'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+            },
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'phoneNumber': this.customer_phoneNumber,
+            'email': this.customer_email,
+            'orderNote': this.orderlistNote
+          };
+          this.confirmOrder(post_Data);
+        } else {
         const post_Data = {
           'homeDelivery': true,
           'homeDeliveryAddress': this.selectedAddress,
@@ -445,18 +511,39 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.confirmOrder(post_Data);
       }
     }
+    }
     if (this.delivery_type === 'store') {
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
         this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
-
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
           this.emailId = contact_email;
         }
+        if (this.orderType === 'SHOPPINGLIST') {
+          const post_Data = {
+            'storePickup': true,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': 0
+            },
+            'timeSlot': {
+              'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+              'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+            },
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'phoneNumber': contactNumber,
+            'email': contact_email,
+            'orderNote': this.orderlistNote
+          };
+          this.confirmOrder(post_Data);
+        } else {
         const post_Data = {
           'storePickup': true,
           'catalog': {
@@ -475,10 +562,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           'phoneNumber': contactNumber,
           'email': contact_email,
           'orderNote': this.orderNote
-
         };
         this.confirmOrder(post_Data);
-
+       }
       }
     }
 
@@ -533,7 +619,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   confirmOrder(post_Data) {
     console.log(post_Data);
+    console.log(this.selectedImagelist.files);
+    const dataToSend: FormData = new FormData();
+    if (this.orderType === 'SHOPPINGLIST') {
+      const captions = {};
+      let i = 0;
+      if (this.selectedImagelist) {
+        console.log(dataToSend);
+        for (const pic of this.selectedImagelist.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
+      this.shared_services.CreateConsumerOrderlist(this.account_id, post_Data, dataToSend)
+      .subscribe(data => {
+      },
+      error => {
+        this.checkoutDisabled = false;
+        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
 
+    );
+    } else {
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
         const retData = data;
@@ -557,18 +667,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             uuid: this.trackUuid
           }
         };
-
         if (this.catalog_details.advanceAmount) {
-
           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
             .subscribe(res => {
               console.log(res);
               this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
             });
-
-
         } else {
-
           this.orderList = [];
           this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
           this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
@@ -578,17 +683,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
         }
       },
-        // error => {
-        //     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-        //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //     this.api_loading = false;
-        // }
         error => {
           this.checkoutDisabled = false;
           this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
 
       );
+    }
   }
   goBackToCheckout(selectesTimeslot) {
     this.action = '';
@@ -814,7 +915,54 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   closeNav() {
     this.showSide = false;
   }
-
-
+  deleteTempImage(img, index) {
+            this.image_list_popup.splice(index, 1);
+            this.selectedImagelist.files.splice(index, 1);
+            this.selectedImagelist.base64.splice(index, 1);
 }
+openImageModalRow(image: Image) {
+  console.log(image);
+  console.log(this.image_list_popup);
+  const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+  this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+}
+
+private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+  return image ? images.indexOf(image) : -1;
+}
+
+onButtonBeforeHook() {
+}
+onButtonAfterHook() { }
+
+imageSelect(event) {
+    const input = event.target.files;
+    if (input) {
+        for (const file of input) {
+            if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+                this.sharedFunctionobj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+            } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+                this.sharedFunctionobj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+            } else {
+                    this.selectedImagelist.files.push(file);
+                     const reader = new FileReader();
+                      reader.onload = (e) => {
+                        this.selectedImagelist.base64.push(e.target['result']);
+                        this.image_list_popup = [];
+                        for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+                            const imgobj = new Image(i,
+                                {
+                                    img: this.selectedImagelist.base64[i],
+                                    description: ''
+                                });
+                            this.image_list_popup.push(imgobj);
+                        }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+                }
+    }
+}
+
 

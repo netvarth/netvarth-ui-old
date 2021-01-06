@@ -16,6 +16,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../common/material.module';
 import { FormMessageDisplayModule } from '../form-message-display/form-message-display.module';
+import { GalleryModule } from '@ks89/angular-modal-gallery';
 @NgModule({
     imports: [
       ShoppingCartRoutingModule,
@@ -31,7 +32,8 @@ import { FormMessageDisplayModule } from '../form-message-display/form-message-d
       FormsModule,
       ReactiveFormsModule,
       MaterialModule,
-      FormMessageDisplayModule
+      FormMessageDisplayModule,
+      GalleryModule
     ],
     exports: [
       ShoppingCartRoutingModule,

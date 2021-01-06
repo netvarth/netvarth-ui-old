@@ -51,6 +51,7 @@ import { ProviderStartTourComponent } from '../ynw_provider/components/provider-
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
 import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.component';
+import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistupload/shoppinglistupload.component';
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         UpdateEmailComponent,
         InboxListComponent,
         HelpPopUpComponent,
+        ShoppinglistuploadComponent
     ],
     imports: [
         BusinessRoutingModule,
@@ -110,7 +112,8 @@ import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.compon
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        HelpPopUpComponent
+        HelpPopUpComponent,
+        ShoppinglistuploadComponent
     ],
     providers: [
         AuthGuardProviderHome,

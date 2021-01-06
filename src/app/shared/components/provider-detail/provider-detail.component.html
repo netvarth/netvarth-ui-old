@@ -361,10 +361,9 @@
                 <!-- Order Catalog-->
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
-
                         <h5 class="mgn-bt-5 primary-color"><img  [src]="catalogImage" width="50" height="50" id="catalog-image1"
                           class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
-                        <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
+                        <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>                        
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
                         <span class="pull-left">
@@ -375,7 +374,7 @@
                         </span>
                     </div>
                 </div>
-                <ng-container *ngIf="orderItems && orderItems.length >0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                <ng-container *ngIf="orderItems && orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
@@ -387,6 +386,13 @@
                         </div>
                     </div>
                 </ng-container>
+                <ng-container *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                    <div class="bus-item-O" >
+                        <span (click)="shoppinglistupload()">Upload shoppinglist</span>
+                    </div>
+                   
+                </ng-container>
+
             </div>
         </div>
         <!-- order starts-->
