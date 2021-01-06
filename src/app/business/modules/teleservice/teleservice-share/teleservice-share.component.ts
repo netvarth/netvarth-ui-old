@@ -157,8 +157,8 @@ export class TeleServiceShareComponent implements OnInit {
         }
         break;
       case 'Phone':
-        this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink;
-        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no- ' + this.meetingLink;
+        this.msg_to_user = 'When it is time for your phone call, you will receive a call on +' + this.meetingLink;
+        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no- +' + this.meetingLink;
         break;
       case 'Zoom':
         this.msg_to_user = this.videocall_msg + this.instalZoom + this.waitFor;
