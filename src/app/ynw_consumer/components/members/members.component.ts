@@ -9,6 +9,8 @@ import { AddMembersHolderComponent } from '../../components/add-members-holder/a
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+
 
 @Component({
   selector: 'app-consumer-members',
@@ -16,6 +18,7 @@ import { Location } from '@angular/common';
 })
 export class MembersComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   dashboard_cap = Messages.DASHBOARD_TITLE;
   add_fam_memb_cap = Messages.ADD_FAMILY_MEMBER;
   first_name_cap = Messages.FIRST_NAME_CAP;

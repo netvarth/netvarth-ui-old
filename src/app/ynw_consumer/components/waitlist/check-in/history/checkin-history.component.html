@@ -42,7 +42,7 @@
                                                             <i *ngIf="his_wait.token" class="fa token-icon"></i>
                                                             <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
                                                         </div>
-                                                        <span>&nbsp;{{his_wait.date | date: dateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
+                                                        <span>&nbsp;{{his_wait.date | date: newDateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
                                                             -
                                                             {{his_wait.queue.queueEndTime}}</span>
                                                     </div>
@@ -129,7 +129,7 @@
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i class="fa appt-icon"></i>
                                                         </div>
-                                                        <span> &nbsp;{{his_wait.date | date: dateFormat }},<br>
+                                                        <span> &nbsp;{{his_wait.date | date: newDateFormat }},<br>
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].sTime}} -
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].eTime}}</span>
                                                     </div>
@@ -213,7 +213,7 @@
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i class="fa fa-shopping-cart shop_cart_icon"></i>
                                                         </div>
-                                                        <span> &nbsp;{{his_wait.orderDate | date: dateFormat }},<br>
+                                                        <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }},<br>
                                                             {{his_wait.timeSlot.sTime}} -
                                                             {{his_wait.timeSlot.eTime}}</span>
                                                     </div>

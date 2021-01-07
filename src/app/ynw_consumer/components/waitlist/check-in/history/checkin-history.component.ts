@@ -14,6 +14,7 @@ import { AddInboxMessagesComponent } from '../../../../../shared/components/add-
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { ViewRxComponent } from '../../../home/view-rx/view-rx.component';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 // import * as moment from 'moment';
 
 
@@ -56,6 +57,8 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   appt_count: any = [];
   entire_count: any = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   small_device_display = false;
   screenWidth;
   viewrxdialogRef;
