@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-confirm-page',
@@ -23,6 +24,8 @@ export class ConfirmPageComponent implements OnInit {
   waitlist: any = [];
   path = projectConstants.PATH;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+
   email;
   apiloading = true;
   provider_label;
