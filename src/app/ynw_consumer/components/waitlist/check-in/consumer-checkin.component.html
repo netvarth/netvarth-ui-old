@@ -210,7 +210,7 @@
                                                 <span *ngIf="!isFuturedate">
                                                     {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                 </span>
-                                                <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                                                <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
                                                 </span>
                                                 <span *ngIf="isFuturedate">
                                                     {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}

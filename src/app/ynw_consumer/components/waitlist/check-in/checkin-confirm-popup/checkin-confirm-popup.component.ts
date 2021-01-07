@@ -7,6 +7,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { NavigationExtras, Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstants } from '../../../../../app.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -54,6 +55,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
     noEmailError = false;
     countryCode;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public shared_services: SharedServices,

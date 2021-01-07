@@ -118,7 +118,7 @@
       <h6 class="card-title serv-time border-style waitinginLine">
         <span *ngIf="!isFuturedate">Today, {{getSingleTime(appTimeSlot)}} </span><span *ngIf="!isFuturedate"></span>
         <span *ngIf="isFuturedate" style="display: block;">
-            {{post_Data.appmtDate | date: dateFormat}}, {{getSingleTime(appTimeSlot)}}</span><span *ngIf="isFuturedate"></span>
+            {{post_Data.appmtDate | date: newDateFormat}}, {{getSingleTime(appTimeSlot)}}</span><span *ngIf="isFuturedate"></span>
         <!-- <span style="display: block;">
             {{post_Data.appmtDate | date: dateFormat}}</span><span>{{getSingleTime(appTimeSlot)}}</span> -->
     </h6>
