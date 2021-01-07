@@ -131,21 +131,21 @@
                   <tr *ngIf="type=='wl'">
                     <td width="48%" align="right">Time window </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.date | date: dateFormat }},
+                    <td> {{statusInfo.date | date: newDateFormat }},
                       {{statusInfo.queue.queueStartTime}} -
                       {{statusInfo.queue.queueEndTime}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
                     <td width="48%" align="right">Time window </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.orderDate | date: dateFormat }},
+                    <td> {{statusInfo.orderDate | date: newDateFormat }},
                       {{statusInfo.orderTimeWindow.timeSlots[0].sTime}} -
                       {{statusInfo.orderTimeWindow.timeSlots[0].eTime}}</td>
                   </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td> {{statusInfo.appmtDate | date: dateFormat }},
+                    <td> {{statusInfo.appmtDate | date: newDateFormat }},
                       {{getSingleTime(statusInfo.appmtTime)}}</td>
                   </tr>
                   <tr *ngIf="type!='order'">

@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
+import { projectConstantsLocal } from '../../constants/project-constants';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
@@ -35,6 +36,7 @@ export class CheckYourStatusComponent implements OnInit {
   ];
   provider_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   source = '';
   history = false;
   storeContactInfo: any = [];
