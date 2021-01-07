@@ -58,7 +58,7 @@
                 Channels
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
                   <div class="font1"> Early Notifications</div>
@@ -87,11 +87,15 @@
                 <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
                   (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead"
+                <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead && !small_device_display"
                   (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10"
+                  *ngIf="showButton['EARLY_WL'] && small_device_display && earlyWLNotificatonSettings.personsAhead">
+                  <span (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1"> Pre final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
@@ -107,11 +111,14 @@
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('PREFINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['PREFINAL_WL']" (click)="changeNotificationSettings('PREFINAL_WL')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['PREFINAL_WL'] && !small_device_display"
+                  (click)="changeNotificationSettings('PREFINAL_WL')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['PREFINAL_WL'] && small_device_display">
+                  <span (click)="changeNotificationSettings('PREFINAL_WL')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1"> Final Notifications</div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is next in line via
@@ -127,11 +134,14 @@
                 <mat-checkbox [checked]="finalWLNotificationSettings.pushNotification"
                   (change)="showSubmit('FINAL_WL', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['FINAL_WL']" (click)="changeNotificationSettings('FINAL_WL')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['FINAL_WL'] && !small_device_display"
+                  (click)="changeNotificationSettings('FINAL_WL')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['FINAL_WL'] && small_device_display">
+                  <span (click)="changeNotificationSettings('FINAL_WL')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="font1" *ngIf="showToken">Add token Notifications</div>
                 <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
@@ -148,8 +158,11 @@
                 <mat-checkbox [checked]="wlAddNotificationSettings.pushNotification"
                   (change)="showSubmit('WAITLISTADD', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['WAITLISTADD']" (click)="changeNotificationSettings('WAITLISTADD')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['WAITLISTADD'] && !small_device_display"
+                  (click)="changeNotificationSettings('WAITLISTADD')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['WAITLISTADD'] && small_device_display">
+                  <span (click)="changeNotificationSettings('WAITLISTADD')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
             <!-- <mat-accordion class="acc-btn">
@@ -332,7 +345,7 @@
                 Channels
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Appointment Confirmation Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when appointment is
@@ -348,8 +361,11 @@
                 <mat-checkbox [checked]="apptAddNotificationSettings.pushNotification"
                   (change)="showSubmit('APPOINTMENTADD', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['APPOINTMENTADD']" (click)="changeNotificationSettings('APPOINTMENTADD')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['APPOINTMENTADD'] && !small_device_display"
+                  (click)="changeNotificationSettings('APPOINTMENTADD')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['APPOINTMENTADD'] && small_device_display">
+                  <span (click)="changeNotificationSettings('APPOINTMENTADD')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">
@@ -413,14 +429,15 @@
                       Channels
                     </div>
                   </div>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                         First Reminder
                         <div class="form-level-settings">Specify when the 1st reminder should be sent to your
                           {{customer_label}}</div>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
                             (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
@@ -430,7 +447,8 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
                             (selectionChange)="handleMinSelction(f_minsel.value,'first')">
@@ -451,18 +469,22 @@
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox>
-                      <span (click)="changeNotificationSettings('FIRST_APPT')"
+                      <span *ngIf="!small_device_display" (click)="changeNotificationSettings('FIRST_APPT')"
                         class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                         Second Reminder
                         <div class="form-level-settings">Specify when the 2nd reminder should be sent to your
                           {{customer_label}}</div>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
                             (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
@@ -472,7 +494,8 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
                             (selectionChange)="handleMinSelction(s_minsel.value,'second')">
@@ -493,18 +516,22 @@
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('SECOND_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox>
-                      <span (click)="changeNotificationSettings('SECOND_APPT')"
+                      <span *ngIf="!small_device_display" (click)="changeNotificationSettings('SECOND_APPT')"
                         class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                         Third Reminder
                         <div class="form-level-settings">Specify when the 3rd reminder should be sent to your
                           {{customer_label}}</div>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
                             (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
@@ -514,7 +541,8 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
                             (selectionChange)="handleMinSelction(t_minsel.value,'third')">
@@ -535,18 +563,22 @@
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('THIRD_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox>
-                      <span (click)="changeNotificationSettings('THIRD_APPT')"
+                      <span *ngIf="!small_device_display" (click)="changeNotificationSettings('THIRD_APPT')"
                         class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
+                  <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                       <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                         Fourth Reminder
                         <div class="form-level-settings">Specify when the 4th reminder should be sent to your
                           {{customer_label}}</div>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
                             (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
@@ -556,7 +588,8 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding mgn-up-minus-20">
+                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
                         <mat-form-field class="mgn-rt-10">
                           <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
                             (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
@@ -577,8 +610,11 @@
                       <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
                         (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
                         Via App</mat-checkbox>
-                      <span (click)="changeNotificationSettings('FOURTH_APPT')"
+                      <span *ngIf="!small_device_display" (click)="changeNotificationSettings('FOURTH_APPT')"
                         class="notify-ok-btn">OK</span>
+                      <div class="mgn-up-10" *ngIf="small_device_display">
+                        <span (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                      </div>
                     </div>
                   </div>
                   <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
@@ -849,7 +885,7 @@
                 Channels
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Orders Confirmation Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when order is
@@ -865,11 +901,14 @@
                 <mat-checkbox [checked]="orderAddNotificationSettings.pushNotification"
                   (change)="showSubmit('ORDERCONFIRM', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['ORDERCONFIRM']" (click)="changeNotificationSettings('ORDERCONFIRM')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['ORDERCONFIRM'] && !small_device_display"
+                  (click)="changeNotificationSettings('ORDERCONFIRM')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['ORDERCONFIRM'] && small_device_display">
+                  <span (click)="changeNotificationSettings('ORDERCONFIRM')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Orders Cancel Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when order is
@@ -886,12 +925,15 @@
                   <mat-checkbox [checked]="orderCancelNotificationSettings.pushNotification"
                     (change)="showSubmit('ORDERCANCEL', 'pushNotification', $event)" class="mgn-rt-20">
                     Via App</mat-checkbox>
-                  <span *ngIf="showButton['ORDERCANCEL']" (click)="changeNotificationSettings('ORDERCANCEL')"
-                    class="notify-ok-btn">OK</span>
+                  <span *ngIf="showButton['ORDERCANCEL'] && !small_device_display"
+                    (click)="changeNotificationSettings('ORDERCANCEL')" class="notify-ok-btn">OK</span>
+                  <div class="mgn-up-10" *ngIf="showButton['ORDERCANCEL'] && small_device_display">
+                    <span (click)="changeNotificationSettings('ORDERCANCEL')" class="notify-ok-btn">OK</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Orders Status Change Notifications
                 <div class="form-level-settings">Notify {{customer_label}} when order is
@@ -907,8 +949,11 @@
                 <mat-checkbox [checked]="orderStatusChangelNotificationSettings.pushNotification"
                   (change)="showSubmit('ORDERSTATUSCHANGE', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['ORDERSTATUSCHANGE']" (click)="changeNotificationSettings('ORDERSTATUSCHANGE')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['ORDERSTATUSCHANGE'] && !small_device_display"
+                  (click)="changeNotificationSettings('ORDERSTATUSCHANGE')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['ORDERSTATUSCHANGE'] && small_device_display">
+                  <span (click)="changeNotificationSettings('ORDERSTATUSCHANGE')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
             <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small"> -->
@@ -1043,7 +1088,7 @@
                 Channels
               </div>
             </div>
-            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10">
+            <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 Notify when a donation is made
                 <div class="form-level-settings">Notify a {{customer_label}} via
@@ -1059,8 +1104,11 @@
                 <mat-checkbox [checked]="donatAddNotificationSettings.pushNotification"
                   (change)="showSubmit('DONATIONSERVICE', 'pushNotification', $event)" class="mgn-rt-20">
                   Via App</mat-checkbox>
-                <span *ngIf="showButton['DONATIONSERVICE']" (click)="changeNotificationSettings('DONATIONSERVICE')"
-                  class="notify-ok-btn">OK</span>
+                <span *ngIf="showButton['DONATIONSERVICE'] && !small_device_display"
+                  (click)="changeNotificationSettings('DONATIONSERVICE')" class="notify-ok-btn">OK</span>
+                <div class="mgn-up-10" *ngIf="showButton['DONATIONSERVICE'] && small_device_display">
+                  <span (click)="changeNotificationSettings('DONATIONSERVICE')" class="notify-ok-btn">OK</span>
+                </div>
               </div>
             </div>
             <!-- <div class="rw col-md-12 col-xs-12 col-sm-12 no-padding-small">

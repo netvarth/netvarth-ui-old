@@ -115,6 +115,7 @@ export class CheckinActionsComponent implements OnInit {
             this.getLabel();
         } else {
             this.showMsg = true;
+            this.apiloading = false;
         }
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

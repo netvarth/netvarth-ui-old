@@ -10,6 +10,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../constants/project-messages';
 import { ConfirmBoxComponent } from '../../components/confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -44,6 +45,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   currentcatlog: any;
   isFuturedate = false;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   sel_checkindate;
   showfuturediv;
   today;
