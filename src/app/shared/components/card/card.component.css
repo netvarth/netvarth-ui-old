@@ -67,10 +67,10 @@ font-weight: 500;
     cursor: default !important;
 }
 
-.booking-card .card-img, .booking-card .card-img-top {
+/* .booking-card .card-img, .booking-card .card-img-top {
     border-top-left-radius: calc(0.25rem - 1px) !important;
     border-top-right-radius: calc(0.25rem - 1px) !important;
-}
+} */
 
 .booking-card .card-img, .booking-card .card-img-top, .booking-card .card-img-bottom {
     -ms-flex-negative: 0 !important;
@@ -325,10 +325,15 @@ font-weight: 500;
 }
 
 .booking-card-user .card-img, .booking-card-user .card-img-top {
-    border-top-left-radius: calc(0.25rem - 1px) !important;
-    border-top-right-radius: calc(0.25rem - 1px) !important;
-    height: 100px !important;
-    max-width: 100px !important;
+    /* border-top-left-radius: calc(0.25rem - 1px) !important;
+    border-top-right-radius: calc(0.25rem - 1px) !important; */
+    /* height: 100px !important;
+    max-width: 100px !important; */
+    width: 90px !important;
+    height: 90px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    vertical-align: middle;
 }
 
 .booking-card h4.card-title a {
