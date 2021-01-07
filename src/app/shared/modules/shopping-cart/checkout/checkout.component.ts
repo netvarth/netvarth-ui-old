@@ -16,6 +16,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -69,6 +70,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   storeChecked = true;
   emailId;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
 
   linear: boolean;
   catalog_details: any;
