@@ -90,6 +90,7 @@ export class AppointmentActionsComponent implements OnInit {
             this.setData();
         } else {
             this.showMsg = true;
+            this.apiloading = false;
         }
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
