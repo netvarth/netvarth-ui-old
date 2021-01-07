@@ -3,7 +3,7 @@
         (performAction)="performActions($event)"></app-breadcrumb>
 </section> -->
 <section class="">
-    <div class="title-gb no-padding">
+    <div class="card title-gb">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
             License & Subscriptions
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
@@ -16,18 +16,28 @@
             <div class="w-dta">
                 <div class="row">
                     <!-- New Revamp -->
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-                        <div class="card">
-                            <div>
-                                <p class="form-level-settings">{{frm_lic_cap}}<a class="learnmore-pointer"
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 no-padding">
+                        <div class="card no-padding-small">
+                            <div class="disp-flex">
+                                <p class="form-level-settings flx_1 mgn-lt-10">{{frm_lic_cap}}<a class="learnmore-pointer"
                                         id="customer-help"
                                         (click)="learnmore_clicked('upgradelicense', $event)">{{learn_more}}</a> </p>
+                                       <button mat-flat-button [matMenuTriggerFor]="menu">
+                                        <i  class="fa fa-ellipsis-v"></i>
+                                       </button>
+                                        <mat-menu #menu="matMenu">
+                                          <button mat-menu-item (click)="showLicenseUsage()">Usage</button>
+                                          <button mat-menu-item (click)="showLicenceHistory()">License History</button>
+                                          <button mat-menu-item (click)="gotoPaymentHistory()">Payment History</button>
+                                          <button mat-menu-item (click)="showInvoiceStatus()">License Statement</button>
+                                        </mat-menu>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-40">
-                                
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding-small">
+
                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                                     <!-- Sidenav for annual -->
-                                    <div class="anual_side" *ngIf="changelicence" [ngStyle]="{ 'margin-top' : height+'px'}">
+                                    <div class="anual_side" *ngIf="changelicence"
+                                        [ngStyle]="{ 'margin-top' : height+'px'}">
                                         <aside>
                                             <div class="anual_outr">
                                                 <div class="inside_anual">Subscription Plan</div>
@@ -71,11 +81,13 @@
                                     </div>
 
 
-                                    <div class="txt_sub_plan">YOUR SUBSCRIPTION PLAN</div>
-                                    <div class="txt_plan">{{current_lic}}</div>
+                                    <div class="txt_sub_plan">Your Subscription Plan</div>
+                                    <div>
+                                        <h3>{{current_lic}}</h3>
+                                    </div>
                                     <div class="mgn-up-10" *ngIf="upgradablepackages.length > 0">
-                                        <button mat-flat-button class="btn_upgrde"
-                                            (click)="showupgradeLicense()">Upgrade your plan</button>
+                                        <button class="cs-btn bt3" (click)="showupgradeLicense()">Upgrade your
+                                            plan</button>
                                     </div>
 
                                     <div class="ln-ht-3 clr_grey">
@@ -84,11 +96,14 @@
                                             <span class="clr_pitch_blu">{{license_message}}
                                             </span> |
                                         </span>
-                                        <span>
+                                        <span *ngIf="licenseDisplayName === 'Monthly'">
                                             Billed Every {{licenseDisplayName}}</span>
+                                        <span *ngIf="licenseDisplayName === 'Annual'">
+                                            {{licenseDisplayName}} Subscription</span>
                                     </div>
-                                    <div class="cancel_an" *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0 && showAmounts">
-                                        <button class="btn_switch" mat-flat-button (click)="openAnnualSection()">Switch
+                                    <div class="cancel_an"
+                                        *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0 && showAmounts">
+                                        <button class="cs-btn bt3" (click)="openAnnualSection()">Switch
                                             to Annual</button>
                                         <sup class="txt_off">{{annualdiscount}}% OFF</sup>
                                     </div>
@@ -100,44 +115,16 @@
                                                 The subscription license statement will be generated on
                                                 {{effectivedate | date: dateFormat}}.
                                             </div>
-                                            <button class="btn_switch mgn-up-10" mat-flat-button (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
+                                            <button class="cs-btn bt3 mgn-up-10" 
+                                                (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
                                         </div>
-                                    </div>
-                                    <div class="mgn-up-20">
-                                        <div class="card card_addon">
-                                            <span class="txt_adon">Add-Ons&nbsp;&nbsp;<i *ngIf="adon_list && adon_list.length === 0" (click)="gotoAddOns()"
-                                                    class="fa fa-plus-circle custId-cursor"
-                                                    aria-hidden="true"></i>
-                                                <span *ngIf="adon_list && adon_list.length > 0" class="btn_ad_more" (click)="gotoAddOns()">Add more</span>
-                                                </span>
-                                             <div class="adon_lst" *ngIf="adon_list && adon_list.length > 0">
-                                                <div *ngFor="let adon of adon_list">
-                                                    {{adon.name}}
-                                                </div>
-                                             </div>       
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="card card_addon custId-cursor" (click)="gotoJaldeeKeywords()">
-                                            <span class="txt_adon">Jaldee Search Keywords</span>
-                                        </div>
-                                    </div>
-                                    <div class="fnt-weig-600">
-                                        <span><a (click)="showLicenseUsage()"
-                                                class="clr_pitch_blu custId-cursor">USAGE</a></span>&nbsp;&nbsp;
-                                        <span><a (click)="showLicenceHistory()"
-                                                class="clr_pitch_blu custId-cursor">LICENCE HISTORY</a></span><br><br>
-                                        <span><a (click)="gotoPaymentHistory()"
-                                                    class="clr_pitch_blu custId-cursor">PAYMENT HISTORY</a></span>&nbsp;&nbsp;
-                                        <span><a (click)="showInvoiceStatus()"
-                                                        class="clr_pitch_blu custId-cursor">LICENCE STATEMENT</a></span>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div *ngIf="currentlicense_details.dueAmount > 0"
-                                        class="card card_addon bill_due_card clr_grey txt_centr">
-                                        <div class="fnt-weig-600">Bill Due</div>
-                                        <div>Amount - <span class="clr_pitch_blu">{{currentlicense_details.dueAmount
+                                        class="card no-mgn-bt card_addon txt_centr">
+                                        <div class="txt_adon">Bill Due</div>
+                                        <div>Amount - <span class="clr_pitch_blu rupee-font">{{currentlicense_details.dueAmount
                                                 | currency:'&#8377;'}}</span></div>
                                         <div *ngIf="invoices.length != 0">Due Date - <span
                                                 class="clr_pitch_blu">{{currentlicense_details.nextPaymentOn
@@ -145,6 +132,28 @@
                                         <div *ngIf="invoices.length != 0" class="mgn-up-10"><span
                                                 class="btn_pay custId-cursor" (click)="showUnpaidInvoice()">PAY</span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  mgn-bt-10 no-padding-small">
+                                <div class="mgn-up-20">
+                                    <div class="card card_addon">
+                                        <span class="txt_adon">Add-ons&nbsp;&nbsp;<i
+                                                *ngIf="adon_list && adon_list.length === 0" (click)="gotoAddOns()"
+                                                class="fa fa-plus-circle custId-cursor" aria-hidden="true"></i>
+                                            <span *ngIf="adon_list && adon_list.length > 0"
+                                                class="addbt btn_ad_more" (click)="gotoAddOns()"></span>
+                                        </span>
+                                        <div class="adon_lst" *ngIf="adon_list && adon_list.length > 0">
+                                            <div *ngFor="let adon of adon_list">
+                                                {{adon.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="card card_addon custId-cursor" (click)="gotoJaldeeKeywords()">
+                                        <span class="txt_adon">Jaldee Search Keywords</span>
                                     </div>
                                 </div>
                             </div>

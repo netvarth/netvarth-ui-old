@@ -8,6 +8,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-addons',
@@ -51,7 +52,8 @@ export class AddonsComponent implements OnInit, OnDestroy {
         private provider_servicesobj: ProviderServices,
         private shared_functions: SharedFunctions,
         private routerobj: Router,
-        private sharedfunctionObj: SharedFunctions
+        private sharedfunctionObj: SharedFunctions,
+        private location: Location,
     ) { }
 
     ngOnInit() {
@@ -143,7 +145,8 @@ export class AddonsComponent implements OnInit, OnDestroy {
         }
     }
     redirecToLicenseInvoice() {
-        this.routerobj.navigate(['provider', 'license']);
+       // this.routerobj.navigate(['provider', 'license']);
+       this.location.back();
     }
     gotoAddonDetail(dispname) {
         const navigationExtras: NavigationExtras = {

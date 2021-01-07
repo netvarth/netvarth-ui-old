@@ -3,11 +3,16 @@
 }
 .revamp_addonDetail .mat-grid-tile {
     box-shadow: 5px 5px 5px 0px #cccccc60 !important;
-    border: 1px solid #cccccc !important;
+    /* border: 1px solid #cccccc !important; */
     border-radius: 10px;
+    /* background: #3c8dbcd9;
+    color: white; */
+    background: #ffffff;
+    color: #222d32;
 }
 .revamp_addonDetail .mat-grid-tile:hover {
-    background: #20467e38;
+    /* background: #20467e38; */
+    cursor: pointer;
 }
 .revamp_addonDetail .disp_name_st {
     padding: 0px 0px 20px 0px;
@@ -15,10 +20,11 @@
     color: #1e4079;
 }
 .revamp_addonDetail .ad_price {
-    margin-top: 20px;
+    /* margin-top: 20px;
     text-align: center;
-    font-size: 1.1rem;
-    color: #1e4079;
+    font-size: 1.1rem; */
+    font-size: 2rem;
+    color: #3c8dbc;
 }
 .revamp_addonDetail .ad_name {
     font-size: 1rem;
@@ -39,4 +45,33 @@
 }
 .revamp_addonDetail .mat-grid-tile-footer {
     background: none !important;
+}
+.revamp_addonDetail .wrap_div {
+    display: grid;
+    padding: 10px;
+    height: 100%;
+}
+.revamp_addonDetail .fa-chevron-circle-right {
+    float: right;
+    font-size: 18px;
+    color: #3c8dbc;
+}
+.revamp_addonDetail .flx_1 {
+    flex: 1;
+    word-break: break-all;
+    font-size: small;
+}
+.revamp_addonDetail .wrd_brk {
+    font-size: 0.8rem;
+    color: dimgrey;
+    text-align: start;
+}
+.revamp_addonDetail .remov_bg {
+    background: none !important;
+    box-shadow: none !important;
+}
+.revamp_addonDetail .adon_count {
+    font-weight: 600;
+    color: #1e4079;
+    font-size: 0.9rem;
 }

@@ -26790,7 +26790,7 @@ color: #fff !important;
   content: url(../images/addons/Cloud.svg);
   position: absolute;
   padding-right: 5px;
-  width: 56px;
+  width: 46px;
   margin-top: -14px;
 }
 .ico_que {
@@ -26810,13 +26810,14 @@ color: #fff !important;
   content: url(../images/addons/Users.svg);
   position: absolute;
   padding-right: 1px;
-  width: 30px;
+  width: 36px;
+  margin-top: -6px;
 }
 .ico_sms {
   content: url(../images/addons/SMS.svg);
   position: absolute;
   padding-right: 1px;
-  width: 46px;
+  width: 40px;
   margin-top: -11px;
 }
 .ico_qbods {
@@ -26838,5 +26839,5 @@ color: #fff !important;
   color: white;
 }
 .addon_warn .btn_close {
-  background: #80808078;
+  background: #80808059;
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-addon-detail',
@@ -21,8 +24,10 @@ export class AddonDetailComponent implements OnInit {
   constructor(
     private activaterouterobj: ActivatedRoute,
     private provider_servicesobj: ProviderServices,
-    private routerobj: Router,
-    private sharedfunctionObj: SharedFunctions
+    // private routerobj: Router,
+    private sharedfunctionObj: SharedFunctions,
+    private dialog: MatDialog,
+    private location: Location,
   ) {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       this.disp_name = qparams.disp_name;
@@ -34,16 +39,21 @@ export class AddonDetailComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     let divider;
     const divident = this.screenWidth / 37.8;
-    if (this.screenWidth > 1000) {
-       divider = divident / 6;
-    } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
-      divider = divident / 4;
-    } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+    if (this.screenWidth > 1700) {
+      divider = divident / 5;
+    } else if (this.screenWidth > 1000 && this.screenWidth < 1700) {
+       divider = divident / 4;
+    } else if (this.screenWidth > 900 && this.screenWidth < 1000) {
       divider = divident / 3;
-    } else if (this.screenWidth < 375) {
+    } else if (this.screenWidth > 375 && this.screenWidth < 900) {
       divider = divident / 2;
+    } else if (this.screenWidth < 375) {
+      divider = divident / 1;
     }
+    console.log(divident);
+    console.log(divider);
     this.no_of_grids = Math.round(divident / divider);
+    console.log(this.no_of_grids);
    }
 
   ngOnInit() {
@@ -63,15 +73,19 @@ export class AddonDetailComponent implements OnInit {
       });
   }
   redirecToAddon() {
-    this.routerobj.navigate(['provider', 'license', 'addons']);
-}
+   // this.routerobj.navigate(['provider', 'license', 'addons']);
+   this.location.back();
+  }
   addAdon(id) {
     this.provider_servicesobj.addAddonPackage(id)
         .subscribe((data) => {
           if (data) {
             this.sharedfunctionObj.openSnackBar('Addon added');
             this.getUpgradableaddonPackages();
-            this.routerobj.navigate(['provider', 'license']);
+            // this.routerobj.navigate(['provider', 'license']);
+            setTimeout(() => {
+              this.location.back();
+            }, 2000);
           }
         },
           error => {
@@ -79,6 +93,24 @@ export class AddonDetailComponent implements OnInit {
             this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
+  }
+
+  askConfirm(id) {
+    console.log(id);
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Are you sure to add this Add-on?'
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result === 1) {
+        this.addAdon(id);
+      }
+    });
   }
 
 }
