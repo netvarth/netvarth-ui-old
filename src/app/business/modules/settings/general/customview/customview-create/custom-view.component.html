@@ -3,12 +3,13 @@
 </section> -->
 <section class="">
   <div class="card title-gb">
-      <h5 class="mgn-up-10"> 
-        <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
+    <h5 class="mgn-up-10">
+      <!-- <button type="button" class="btn default profile-back" (click)="redirecToGeneral()">
               <span class="fa fa-chevron-left">&nbsp;Back</span>
           </button>&nbsp;&nbsp;&nbsp; -->
-          <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          Custom View</h5>
+      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToGeneral()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Custom View
+    </h5>
   </div>
 </section>
 <section>
@@ -18,41 +19,38 @@
         <div class="row">
           <div class="copy addons one  col-xs-12 col-sm-12 card no-padding ">
             <div class="row no-padding">
-
               <div class="col-md-12" *ngIf="waitlist_status == false && appointment_status == false">
                 <div class="row">
-                    <div class="no-dta">
-                        <p>Enable <a class="underline" (click)="gotoAppt()">Appointment Manager</a>/ <a class="underline" (click)="gotoWaitlistMngr()">Queue Manager</a> to create/ manage custom view</p>
-                        
-                    </div>
+                  <div class="no-dta">
+                    <p>Enable <a class="underline" (click)="gotoAppt()">Appointment Manager</a>/ <a class="underline"
+                        (click)="gotoWaitlistMngr()">Queue Manager</a> to create/ manage custom view</p>
+                  </div>
                 </div>
-            </div>
-
+              </div>
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-              <div class="ynw-common-form-nm" *ngIf="!loading && waitlist_status == true || appointment_status == true">
-                
+              <div class="ynw-common-form-nm" *ngIf="!loading && (waitlist_status || appointment_status)">
                 <div class="form-group col-md-6 mgn-lt-20">
                   <mat-form-field>
                     <input [(ngModel)]="customViewName" matInput type="text" class="form-control"
                       placeholder="Custom view name *" autocomplete="off">
                   </mat-form-field>
                 </div>
-                
                 <div class="form-group col-md-12">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Custom View For
                   </label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <div>
-                    <mat-form-field>
-                      <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor">
-                        <mat-option *ngIf="waitlist_status == true" [value]="'Waitlist'">
-                          Check-in/Token
-                        </mat-option>
-                        <mat-option *ngIf="appointment_status == true" [value]="'Appointment'">
-                          Appointment
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                      <mat-form-field>
+                        <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor"
+                          (selectionChange)="changeType()">
+                          <mat-option *ngIf="waitlist_status == true" [value]="'Waitlist'">
+                            Check-in/Token
+                          </mat-option>
+                          <mat-option *ngIf="appointment_status == true" [value]="'Appointment'">
+                            Appointment
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
                   </div>
                 </div>
@@ -82,12 +80,14 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="filterUsersList.length > 0 && account_type !== 'INDEPENDENT_SP'">
+                <div class="form-group col-md-12 col-xs-12 col-sm-12"
+                  *ngIf="filterUsersList.length > 0 && account_type !== 'INDEPENDENT_SP'">
                   <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
                     {{provider_label | capitalizeFirst}}s</label>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="filterUsersList.length > 0">
-                      <mat-select placeholder="{{provider_label | capitalizeFirst}}s" [(ngModel)]="selectedUsers" [multiple]="true">
+                      <mat-select placeholder="{{provider_label | capitalizeFirst}}s" [(ngModel)]="selectedUsers"
+                        [multiple]="true">
                         <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
                           placeholderLabel="Search {{provider_label}}s"
                           noEntriesFoundLabel="no matching {{provider_label}} found">
@@ -104,7 +104,7 @@
                   </div>
                   <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="selectedUsers.length > 0">
                     <p>
-                      Selected  {{provider_label | capitalizeFirst}}s:
+                      Selected {{provider_label | capitalizeFirst}}s:
                     </p>
                     <ul *ngFor="let users of selectedUsers">
                       <li>
@@ -211,7 +211,6 @@
                   <button type="button" class="cs-btn bt2" (click)="onCancel()">Cancel</button> &nbsp;&nbsp;&nbsp;
                   <button mat-button type="submit" class="cs-btn bt1" (click)="createCustomView()">Save</button>
                 </div>
-              
               </div>
             </div>
           </div>

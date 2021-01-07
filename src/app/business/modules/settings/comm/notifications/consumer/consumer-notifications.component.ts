@@ -127,8 +127,22 @@ export class ConsumerNotificationsComponent implements OnInit {
     private dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.onResize();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   ngOnInit() {
     console.log('consumer notify big');
     for (let j = 0; j <= 60; j++) {
@@ -157,19 +171,6 @@ export class ConsumerNotificationsComponent implements OnInit {
     });
     this.breadcrumbs = breadcrumbs;
     this.getProviderSettings();
-  }
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 767) {
-    } else {
-      this.small_device_display = false;
-    }
-    if (this.screenWidth <= 1040) {
-      this.small_device_display = true;
-    } else {
-      this.small_device_display = false;
-    }
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()

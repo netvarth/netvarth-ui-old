@@ -77,8 +77,9 @@ export class CustomViewComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices) {
         this.activated_route.queryParams.subscribe((qparams) => {
-            // this.loading = true;
+            this.loading = true;
             this.viewId = qparams.id;
+            this.resetFields();
             this.getWaitlistMgr();
             this.getDepartments();
             this.getUsers();
@@ -118,12 +119,11 @@ export class CustomViewComponent implements OnInit {
             });
         setTimeout(() => {
             if (this.viewId) {
-                this.resetFields();
                 this.getView(this.viewId);
             } else {
                 this.loading = false;
             }
-        }, 1000);
+        }, 1500);
         this.getOnlinePresence();
     }
     getProviderServices() {
@@ -139,7 +139,7 @@ export class CustomViewComponent implements OnInit {
                 .subscribe(data => {
                     this.service_list = data;
                     this.filterServiicesList = this.service_list;
-                    resolve();
+                    resolve(data);
                 });
         });
     }
@@ -340,6 +340,9 @@ export class CustomViewComponent implements OnInit {
                             }
                         }
                     }
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 500);
                     // console.log(this.users_list);
                     // else {
                     //     this.departmentSelection();
@@ -742,7 +745,6 @@ export class CustomViewComponent implements OnInit {
     getOnlinePresence() {
         this.provider_services.getGlobalSettings().subscribe(
             (data: any) => {
-                console.log(data);
                 this.appointment_status = data.appointment;
                 this.waitlist_status = data.waitlist;
             });
@@ -755,8 +757,18 @@ export class CustomViewComponent implements OnInit {
     }
     gotoAppt() {
         this.router.navigate(['/provider/settings/appointmentmanager']);
-      }
-      gotoWaitlistMngr() {
+    }
+    gotoWaitlistMngr() {
         this.router.navigate(['/provider/settings/q-manager']);
+    }
+    changeType() {
+        this.resetFields();
+        this.getUsers();
+        this.getProviderServices();
+        if (this.customViewFor === 'Appointment') {
+            this.getAppointmentSchedules();
+        } else {
+            this.getAccountQs();
+        }
     }
 }
