@@ -89,7 +89,8 @@
                   Via App</mat-checkbox>
                 <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead && !small_device_display"
                   (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
-                <div class="mgn-up-10" *ngIf="showButton['EARLY_WL'] && small_device_display && earlyWLNotificatonSettings.personsAhead">
+                <div class="mgn-up-10"
+                  *ngIf="showButton['EARLY_WL'] && small_device_display && earlyWLNotificatonSettings.personsAhead">
                   <span (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
                 </div>
               </div>
