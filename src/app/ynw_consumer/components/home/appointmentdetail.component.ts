@@ -36,6 +36,7 @@ export class ApptDetailComponent implements OnInit {
   checkin_label = '';
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;

@@ -39,6 +39,7 @@ export class CheckinDetailComponent implements OnInit {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
   addnotedialogRef: any;
   customer_label: any;
