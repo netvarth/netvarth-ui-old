@@ -123,7 +123,7 @@ export class CustomViewComponent implements OnInit {
             } else {
                 this.loading = false;
             }
-        }, 1000);
+        }, 1500);
         this.getOnlinePresence();
     }
     getProviderServices() {

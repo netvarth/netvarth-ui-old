@@ -161,6 +161,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
   createForm() {
     this.formfields = {
       bname: ['', Validators.compose([Validators.required])],
+      username: [''],
       bdesc: ['', Validators.compose([Validators.required])]
     };
     this.amForm = this.fb.group(this.formfields);
@@ -173,6 +174,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
   updateForm() {
     this.amForm.setValue({
       'bname': this.bProfile.businessName || '',
+      'username': this.bProfile.businessUserName || '',
       'bdesc': this.bProfile.businessDesc || ''
     });
   }
@@ -195,6 +197,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
+        'businessUserName': form_data.username,
         'businessDesc': form_data.bdesc
       };
       if (this.user_arr.userType === 'PROVIDER') {
