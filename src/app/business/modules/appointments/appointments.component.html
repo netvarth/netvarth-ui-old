@@ -58,8 +58,14 @@
                   <i class="fa fa-eye dropdown-toggle " data-toggle="dropdown"></i>
                   <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
                     *ngIf="selectedView" style="padding-top: 12px !important;">
-                    <span *ngIf="!small_device_display">
+                    <span *ngIf="!small_device_display && selectedView.name">
                       {{selectedView.name}}</span>
+                    <span *ngIf="!small_device_display && !selectedView.name">
+                      <ng-container *ngIf="selectedView.businessName">
+                        {{selectedView.businessName}}</ng-container>
+                      <ng-container *ngIf="!selectedView.businessName">
+                        {{selectedView.firstName}}</ng-container>
+                    </span>
                   </a>
                   <ul class="dropdown-menu">
                     <li>
@@ -71,11 +77,22 @@
                                 {{view.name.substring(0,24) }}...</h4>
                               <h4 *ngIf="view.name.length<'27'">{{view.name}}</h4>
                             </ng-container>
-                            <ng-container *ngIf="view.firstName">
-                              <h4 *ngIf="view.firstName.length>='27'">
-                                {{ view.firstName.substring(0,24) }}...</h4>
-                              <h4 *ngIf="view.firstName.length<'27'">
-                                {{(view.businessName) ? view.businessName : view.firstName}}
+                            <ng-container *ngIf="!view.name">
+                              <h4 *ngIf="!view.businessName">
+                                <ng-container *ngIf="view.firstName.length>='27'">
+                                  {{ view.firstName.substring(0,24) }}...
+                                </ng-container>
+                                <ng-container *ngIf="view.firstName.length<'27'">
+                                  {{ view.firstName}}
+                                </ng-container>
+                              </h4>
+                              <h4 *ngIf="view.businessName">
+                                <ng-container *ngIf="view.businessName.length>='27'">
+                                  {{ view.businessName.substring(0,24) }}...
+                                </ng-container>
+                                <ng-container *ngIf="view.businessName.length<'27'">
+                                  {{ view.businessName}}
+                                </ng-container>
                               </h4>
                             </ng-container>
                           </a>
