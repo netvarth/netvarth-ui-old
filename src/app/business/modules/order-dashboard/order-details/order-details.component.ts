@@ -48,6 +48,7 @@ export class OrderDetailsComponent implements OnInit {
   }
   getOrderDetails(uid) {
     this.loading = true;
+    this.orderItems = [];
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
       for (let item of this.orderDetails.orderItem) {

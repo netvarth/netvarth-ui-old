@@ -242,7 +242,10 @@ export class PaymentLinkComponent implements OnInit {
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(data);
         }
-      });
+      },
+        error => {
+          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+        });
   }
   paywithRazorpay(data: any) {
     this.prefillmodel.name = data.consumerName;
