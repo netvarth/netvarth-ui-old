@@ -19,6 +19,7 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-business-page',
@@ -256,7 +257,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
-    private locationobj: Location
+    private locationobj: Location,
+    private titleService: Title,
+    private metaService: Meta
   ) {
     this.getDomainList();
     // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
@@ -456,6 +459,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           if (this.userId) {
             this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
           } else {
+            this.titleService.setTitle(this.businessjson.businessName);
+            this.metaService.addTags([
+              // {name: 'keywords', content: 'Angular, Universal, Example'},
+              {name: 'description', content: this.businessjson.businessDesc}
+              // {name: 'robots', content: 'index, follow'}
+            ]);
             this.getbusinessprofiledetails_json('virtualFields', true);
             this.getbusinessprofiledetails_json('services', true);
             this.getbusinessprofiledetails_json('apptServices', true);
@@ -983,9 +992,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shared_services.getUserbusinessprofiledetails_json(this.provider_id, userId, this.s3url, section, UTCstring)
       .subscribe((res: any) => {
         switch (section) {
-          case 'providerBusinessProfile': {
+          case 'providerBusinessProfile': {            
             this.socialMedialist = [];
             this.businessjson = res;
+            this.titleService.setTitle(this.businessjson.businessName);
+            this.metaService.addTags([
+              // {name: 'keywords', content: 'Angular, Universal, Example'},
+              {name: 'description', content: this.businessjson.businessDesc},
+              // {name: 'robots', content: 'index, follow'}
+            ]);
             const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
             this.subDomainList = dom[0].subDomains;
             const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);

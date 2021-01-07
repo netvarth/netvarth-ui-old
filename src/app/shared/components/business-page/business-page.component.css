@@ -1271,3 +1271,7 @@ img.ordericon.home {
   border-radius: 5px;
   font-size: 0.9rem;
 }
+.bus-page .dept-title-h4 {
+	color: #000 !important;
+	text-decoration: underline;
+}
