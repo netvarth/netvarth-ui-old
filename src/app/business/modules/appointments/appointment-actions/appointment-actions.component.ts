@@ -706,3 +706,4 @@ export class AppointmentActionsComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }
+
