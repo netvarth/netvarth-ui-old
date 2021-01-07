@@ -21,6 +21,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MeetingDetailsComponent } from '../meeting-details/meeting-details.component';
 import { ViewRxComponent } from './view-rx/view-rx.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-consumer-home',
@@ -78,6 +79,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   history;
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };

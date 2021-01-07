@@ -840,7 +840,7 @@
                                                     {{getSingleTime(booking.appmtTime)}}
                                                 </span>
                                             </h4>
-                                            <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
+                                            <span class="datefont">{{booking.appmtDate | date: newDateFormat}}</span>
 
                                         </td>
                                         <td class="tdisplay-block">
@@ -969,7 +969,7 @@
                                                     Token #{{booking.token}}
                                                 </span>
                                             </h4>
-                                            <span class="datefont">{{booking.date | date: dateFormat}}</span>
+                                            <span class="datefont">{{booking.date | date: newDateFormat}}</span>
                                         </td>
                                         <td class="tdisplay-block">
                                             <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -1115,7 +1115,7 @@
                                                         {{getSingleTime(booking.appmtTime)}}
                                                     </span>
                                                 </h4>
-                                                <span class="datefont">{{booking.appmtDate | date: dateFormat}}</span>
+                                                <span class="datefont">{{booking.appmtDate | date: newDateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -1246,7 +1246,7 @@
                                                     </div>
                                                     <span class="mgn-up-10">Token #{{booking.token}}</span>
                                                 </h4>
-                                                <span class="datefont">{{booking.date | date: dateFormat}}</span>
+                                                <span class="datefont">{{booking.date | date: newDateFormat}}</span>
                                             </td>
                                             <td class="tdisplay-block">
                                                 <h4 (click)="providerDetail(booking.providerAccount,$event)">
@@ -1594,7 +1594,7 @@
                                                     [matTooltip]="'Home Delivery'"></i>
                                             </div>
                                             <span class="mgn-up-10">
-                                               <span style="color:green">{{ oder.orderDate | date: dateFormat}}</span> <br>
+                                               <span style="color:green">{{ oder.orderDate | date: newDateFormat}}</span> <br>
                                                {{oder.orderNumber}}
 
                                             </span>
@@ -1669,7 +1669,7 @@
                                                 </div>
                                                 <span class="mgn-up-10">
                                                   {{oder.orderNumber}} <br>
-                                                  {{ oder.orderDate | date: dateFormat}}
+                                                  {{ oder.orderDate | date: newDateFormat}}
                                                 </span>
                                             </h4>
                                         </td>
