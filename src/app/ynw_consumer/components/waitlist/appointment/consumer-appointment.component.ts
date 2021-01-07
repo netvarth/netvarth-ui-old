@@ -120,6 +120,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     userN = { 'id': 0, 'firstName': Messages.NOUSERCAP, 'lastName': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;

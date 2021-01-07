@@ -131,7 +131,7 @@
                 {{selectedQsTime}} - {{selectedQeTime}}
                 <!-- {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}} -->
             </span>
-            <span *ngIf="isFuturedate">{{post_Data.date | date: dateFormat}},
+            <span *ngIf="isFuturedate">{{post_Data.date | date: newDateFormat}},
             </span>
             <span *ngIf="isFuturedate">
                 {{selectedQsTime}} - {{selectedQeTime}}

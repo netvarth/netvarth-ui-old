@@ -202,7 +202,7 @@
                                                 <span *ngIf="!isFuturedate">Today, </span><span
                                                     *ngIf="!isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
                                                 <span *ngIf="isFuturedate" style="display: block;">
-                                                    {{sel_checkindate | date: dateFormat}}</span><span
+                                                    {{sel_checkindate | date: newDateFormat}}</span><span
                                                     *ngIf="isFuturedate">{{getSingleTime(apptTime['time'])}}</span>
                                             </h6>
                                         </div>
