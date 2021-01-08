@@ -50,7 +50,7 @@
                                             <div class="anual_outr">
                                                 <div class="inside_anual">Effective
                                                     From</div>
-                                                <div>{{effectivedate | date:dateFormat}}</div>
+                                                <div>{{effectivedate | date:newDateFormat}}</div>
                                             </div>
                                             <div class="anual_outr" *ngIf="showAmounts">
                                                 <div class="inside_anual">Package</div>
@@ -113,7 +113,7 @@
                                                 You changed your license subscription type to
                                                 <strong>Annual.</strong>
                                                 The subscription license statement will be generated on
-                                                {{effectivedate | date: dateFormat}}.
+                                                {{effectivedate | date: newDateFormat}}.
                                             </div>
                                             <button class="cs-btn bt3 mgn-up-10" 
                                                 (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
@@ -128,7 +128,7 @@
                                                 | currency:'&#8377;'}}</span></div>
                                         <div *ngIf="invoices.length != 0">Due Date - <span
                                                 class="clr_pitch_blu">{{currentlicense_details.nextPaymentOn
-                                                | date: dateFormat }}</span></div>
+                                                | date: newDateFormat }}</span></div>
                                         <div *ngIf="invoices.length != 0" class="mgn-up-10"><span
                                                 class="btn_pay custId-cursor" (click)="showUnpaidInvoice()">PAY</span>
                                         </div>
