@@ -670,6 +670,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getSchedulesFromView(view, schedules) {
+    console.log(view);
+    console.log(schedules);
     const qs = [];
     if (view && view.name !== Messages.DEFAULTVIEWCAP) {
       for (let i = 0; i < schedules.length; i++) {
@@ -777,28 +779,32 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return qIds;
   }
   initView(view, source?) {
-    this.activeSchedules = this.tempActiveSchedules = [];
+    this.activeSchedules = [];
     const groupbyQs = this.shared_functions.groupBy(this.getSchedulesFromView(view, this.schedules), 'apptState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeSchedules = this.tempActiveSchedules = groupbyQs['ENABLED'];
+      this.activeSchedules = groupbyQs['ENABLED'];
     }
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
-        this.activeSchedules = this.tempActiveSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
+        this.activeSchedules = this.activeSchedules.concat(groupbyQs['DISABLED']);
       }
     }
-    // this.getQsByProvider();
+    const qids = [];
+    for (const q of this.activeSchedules) {
+      qids.push(q.id);
+    }
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
     } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_selQ');
     } else if (this.activeSchedules.length > 0) {
       if (this.time_type === 3) {
-        const qIds = this.getQIdsFromView(view);
-        this.selQidsforHistory = qIds;
+        // const qIds = this.getQIdsFromView(view);
+        this.selQidsforHistory = qids;
         this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
-      this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
+      // this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
+      this.selQIds = qids;
       if (this.time_type === 1) {
         this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
       }
@@ -806,8 +812,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
-
-    this.getQsByProvider();
+    setTimeout(() => {
+      this.qloading = false;
+    }, 1000);
+    // this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   resetAll() {
@@ -2119,7 +2127,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.getSchedules('all').then(
         (queues: any) => {
-          _this.schedules = queues;
+          _this.schedules = _this.tempActiveSchedules = queues;
           resolve(queues);
         },
         () => {
