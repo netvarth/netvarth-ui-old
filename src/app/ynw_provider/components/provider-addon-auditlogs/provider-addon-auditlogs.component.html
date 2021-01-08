@@ -16,7 +16,7 @@
                 <tr *ngFor="let auditlog of addon_auditlog_details">
                     <td>{{auditlog.name}}</td>
                     <td>{{auditlog.description}}</td>
-                    <td>{{auditlog.dateApplied | date: dateFormat }}</td>
+                    <td>{{auditlog.dateApplied | date: newDateFormat }}</td>
                     <td>{{auditlog.status}}</td>
                 </tr>
             </table>

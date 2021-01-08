@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-addon-auditlogs',
@@ -18,6 +19,7 @@ export class ProviderAddonAuditlogsComponent implements OnInit {
   no_history_msg = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
   addon_auditlog_details: any = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(private provider_servicesobj: ProviderServices
   ) { }
 
