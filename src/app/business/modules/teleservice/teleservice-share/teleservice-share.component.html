@@ -21,13 +21,13 @@
     </div>
   </div>
   <div class="mgn-bt-10 reminder">
-    <mat-form-field id="reminder">
+    <mat-form-field>
       <textarea matInput class="form-control tel_srv_txtarea" id="message" placeholder="{{msg_to_user === ''? ' Enter your message here':''}}" [(ngModel)]="msg_to_user"
-        (ngModelChange)="dataChanged($event)">
+        (ngModelChange)="dataChanged($event)" #reminder>
         </textarea>
     </mat-form-field>
     <div *ngIf="!data.status" class="btn-primary-n custId-cursor delteTC"
-      (click)="copyMessageInfo('reminder','Reminder')">
+      (click)="copyMessageInfo(reminder,'Reminder')">
       <i class="fa fa-clone" aria-hidden="true"></i> Copy this message
     </div>
   </div>
@@ -50,24 +50,24 @@
 <div mat-dialog-content class="meetingdetail" *ngIf="data.meetingDetail">
   <mat-tab-group (selectedTabChange)="tabClick($event)">
     <mat-tab label="For me">
-      <mat-form-field id="mymeetDetails">
+      <mat-form-field>
         <textarea class="form-control tel_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_me"
-          (ngModelChange)="dataChanged($event)">
+          (ngModelChange)="dataChanged($event)" #myinput>
               </textarea>
       </mat-form-field>
       <div class="btn-primary-n custId-cursor delteTC bx-shdw-none"
-        (click)="copyMessageInfo('mymeetDetails','Meeting Details')">
+        (click)="copyMessageInfo(myinput,'Meeting Details')">
         <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
       </div>
     </mat-tab>
     <mat-tab label="For {{data.custmerLabel}}">
-      <mat-form-field id="usr_meetingDetails">
+      <mat-form-field>
         <textarea class="form-control tel_srv_txtarea" matInput placeholder="" [(ngModel)]="msg_to_user"
-          (ngModelChange)="dataChanged($event)">
+          (ngModelChange)="dataChanged($event)" #userinput>
           </textarea>
       </mat-form-field>
       <div class="btn-primary-n custId-cursor delteTC bx-shdw-none"
-        (click)="copyMessageInfo('usr_meetingDetails','Meeting Details')">
+        (click)="copyMessageInfo(userinput,'Meeting Details')">
         <i class="fa fa-clone" aria-hidden="true"></i> Copy Meeting Details
       </div>
     </mat-tab>
