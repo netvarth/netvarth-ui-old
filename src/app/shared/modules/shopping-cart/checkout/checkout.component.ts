@@ -1007,4 +1007,3 @@ imageSelect(event) {
     }
 }
 
-
