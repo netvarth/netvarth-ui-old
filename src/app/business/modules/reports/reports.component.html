@@ -148,6 +148,40 @@
           </mat-accordion>
           </div>
       </div>
+              <!-- Orders -->
+              <div class="row">
+                <div class="card p0">
+                  <mat-accordion class="report">
+                    <mat-expansion-panel  [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="report_title">
+                               Orders
+                               <div class="width100pc" *ngIf="order_criteria.length > 0">
+                                <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
+                               </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ng-container *ngIf="orderReports.length===0">
+                          <div *ngIf="order_criteria.length === 0">
+                            <p class="font-italic col-lg-5 col-md-6 col-sm-6 col-xs-6">You haven't created any reports.  </p>
+                            <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
+                          </div>
+                          <table style="width:300px" *ngIf="order_criteria.length > 0">
+                            <div class="savd-report">Saved Reports
+                              <i class="fa fa-chevron-circle-down"></i>
+                            </div>
+                            <tr *ngFor="let order_cr of order_criteria">
+                              <td>{{order_cr.reportName}}</td>
+                              <td><a (click)="recreateReport(order_cr)">Generate</a></td>
+                              <td><a (click)="viewCriteria(order_cr)">View</a></td>
+                              <td><a (click)="deletCriteria(order_cr)">Delete</a></td>
+                            </tr>
+                          </table>
+                      </ng-container>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                </div>
+            </div>
       </div>
       <div class="clearfix"></div>
   </div>
