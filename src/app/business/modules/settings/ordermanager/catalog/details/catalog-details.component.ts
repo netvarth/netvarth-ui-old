@@ -387,7 +387,7 @@ export class CatalogdetailComponent implements OnInit {
                     }
                 ]
             },
-           // 'orderType': form_data.orderType,
+            'orderType': form_data.orderType,
             'orderStatuses': form_data.orderStatuses,
             'pickUp': {
                 'orderPickUp': form_data.storepickup,
@@ -489,7 +489,7 @@ export class CatalogdetailComponent implements OnInit {
                 enddate: [''],
                // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
               //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
-               // orderType: [],
+                orderType: [],
                 orderStatuses: [''],
                itemPriceInfo: [true],
                 advancePaymentStatus: [false],
@@ -511,7 +511,7 @@ export class CatalogdetailComponent implements OnInit {
                 deliverykms: [''],
                 deliverycharge: ['']
             });
-           // this.amForm.get('orderType').setValue('SHOPPINGCART');
+            this.amForm.get('orderType').setValue('SHOPPINGCART');
            const dt = new Date();
            dt.setFullYear(dt.getFullYear() + 2);
             this.amForm.get('startdate').setValue(new Date());
@@ -532,7 +532,7 @@ export class CatalogdetailComponent implements OnInit {
                 enddate: [''],
                 //qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                // qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                //orderType: [],
+                orderType: [],
                 orderStatuses: [''],
                itemPriceInfo: [true],
                 advancePaymentStatus: [false],
@@ -839,7 +839,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
             //'qstarttime': sttime,
             //'qendtime': edtime,
-           // 'orderType': this.catalog.orderType,
+            'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
             'advancePaymentStatus': status,
@@ -861,6 +861,9 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
+        if (this.catalog.orderType === 'SHOPPINGLIST') {
+            this.showadditems = false;
+        }
         if (this.catalog.pickUp && this.catalog.pickUp.orderPickUp) {
             this.storepickupStat = true;
         }
@@ -1066,7 +1069,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'enddate': this.prefillData.catalogSchedule.terminator.endDate || '',
           //  'qstarttime': sttime,
           //  'qendtime': edtime,
-            // 'orderType': this.prefillData.orderType,
+            'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
            'itemPriceInfo': this.prefillData.showPrice,
             'advancePaymentStatus': status,
@@ -1088,6 +1091,9 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
+        if (this.prefillData.orderType === 'SHOPPINGLIST') {
+            this.showadditems = false;
+        }
         if (this.prefillData.pickUp && this.prefillData.pickUp.orderPickUp) {
             this.storepickupStat = true;
         }
@@ -1413,7 +1419,7 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                 ]
             },
             'catalogStatus': 'ACTIVE',
-            'orderType': 'SHOPPINGCART',
+            'orderType': form_data.orderType,
             'orderStatuses': form_data.orderStatuses,
             'pickUp': {
                 'orderPickUp': form_data.storepickup,
