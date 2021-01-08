@@ -910,4 +910,16 @@ export class SharedServices {
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
+  getVideoList(phonenumber) {
+    const url = 'consumer/appointment/meeting/' + phonenumber;
+    return this.servicemeta.httpGet(url);
+  }
+  getVideoCall(uuid) {
+    const url = 'provider/appointment/videocall/ready/' + uuid;
+    return this.servicemeta.httpPut(url);
+  }
+  getApptMeetingDetailsProvider(uuid) {
+    const path = 'provider/appointment/videocall/ready/' + uuid;
+    return this.servicemeta.httpPut(path);
+  }
 }

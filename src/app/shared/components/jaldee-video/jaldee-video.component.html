@@ -1,0 +1,133 @@
+<header class="header-color">
+    <div class="container">
+        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">
+            <div class="lgo col-md-3 col-xs-5 pull-left">
+                <a routerLink="/"><img class="busN-logo" src="assets/images/jaldee-businesslogo.png"
+                        alt="Jaldee Logo"></a>
+            </div>
+        </div>
+    </div>
+    
+</header>
+<section>
+    <div class="content settings">
+        <div class="row">
+            <div class="col-md-12 no-padding">
+                <div class="col-md-3 no-padding-small video">
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    <h1 class="tel-serv-a">Telehealth</h1>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="settings_info">{{videoCall?.service.description}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lgo col-md-3 col-xs-5 pull-left">
+                        <a routerLink="/"><img style="width: 180px; height: 400px;"  src="assets/images/video-conference.png"
+                                ></a>
+                    </div>
+                </div>
+                <div class="col-md-5 no-padding-small video">
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    <strong>{{videoCall?.appmtDate | date: newDateFormat}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    {{videoCall?.apptTakenTime}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div class="videocall">
+                                {{videoCall?.service.name}}
+                            </div>
+                            <div class="yellow">
+                                <span>In Progress Doctor is Waiting</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                           
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{videoCall?.providerAccount.businessName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="settings_info">{{videoCall?.service.description}}</span>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            
+                            <span><button type="button" class="btn btn-video pull-right"
+                                    (click)="startVideo()"> START
+                                </button></span>
+                        <span><button type="button" class="btn btn-video-cancel pull-right">
+                                    Appointment Cancel </button></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 no-padding-small">
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    <strong class="status">Upcoming Meetings</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div><br>
+                    <div *ngFor="let video of videoList">
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    <strong>{{video?.appmtDate | date: newDateFormat}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20 mgn-up-10" 
+                        >
+                        <div class="col-md-4 inpro-box-video">{{video?.apptTakenTime}}</div>
+                        <div class="col-md-6">
+                            <span>{{video?.providerAccount.businessName}}</span><br>
+                            <h5>{{video?.service.name}}</h5>                        
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

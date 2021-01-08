@@ -89,6 +89,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -122,6 +123,7 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
+    JaldeeVideoComponent,
     JaldeeBlogComponent,
     CheckoutSharedComponent,
     AddAddressComponent,

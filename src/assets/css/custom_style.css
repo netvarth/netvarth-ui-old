@@ -26924,4 +26924,34 @@ color: #fff !important;
     margin-bottom: 20px !important;
     margin-top: 10px !important;
   }
+  
+}
+.video {
+  border-right: .1px solid #ccc;
+  height: 500px;
+}
+.videocall{
+  font-size: 50px !important;
+}
+.btn-video {
+  color: white;
+  background-color:  #191d96;
+  border-color:  #191d96;
+  margin-right: 20px;
+}
+.btn-video-cancel {
+  color: #191d96;
+  background-color:  white;
+  border-color:  grey;
+  margin-right: 30px;
+}
+.inpro-box-video {
+  border-right: .1px solid #191d96;
+  height: 50px;
+}
+.header-color{
+  background-color:  #f1b51c;
+}
+.status{
+  color: #191d96;
 }
