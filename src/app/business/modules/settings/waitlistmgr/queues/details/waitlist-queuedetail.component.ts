@@ -397,7 +397,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-        tokennum: [''],
+        tokennum: ['' , Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)],
         startdate: [''],
         enddate: [''],
         // timeSlot: [0],
@@ -414,7 +414,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
-        tokennum: [''],
+        tokennum: ['' ,  Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)],
         startdate: [''],
         enddate: [''],
         // timeSlot: [0]
