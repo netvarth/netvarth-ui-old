@@ -177,16 +177,21 @@ export class TeleServiceShareComponent implements OnInit {
 
   // Copy textarea content
   copyMessageInfo(elementId, Message) {
-    const info = document.getElementById(elementId);
-    if (window.getSelection) {
-      const selection = window.getSelection();
-      const range = document.createRange();
-      range.selectNodeContents(info);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand('Copy');
-      this.shared_functions.openSnackBar(Message + ' copied to clipboard');
-    }
+    console.log(elementId);
+    elementId.select();
+    document.execCommand('copy');
+    elementId.setSelectionRange(0, 0);
+    this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    // const info = document.getElementById(elementId);
+    // if (window.getSelection) {
+    //   const selection = window.getSelection();
+    //   const range = document.createRange();
+    //   range.selectNodeContents(info);
+    //   selection.removeAllRanges();
+    //   selection.addRange(range);
+    //   document.execCommand('Copy');
+    //   this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    // }
   }
 
   // Mass communication
