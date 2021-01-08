@@ -18,8 +18,8 @@
                       </tr>
                       <tr *ngFor="let auditlog of auditlog_details">
                           <td>{{auditlog.displayName}}</td>
-                          <td>{{auditlog.dateApplied | date: dateFormat }}</td>
-                          <td>{{auditlog.expiryDate | date: dateFormat }}</td>
+                          <td>{{auditlog.dateApplied | date: newDateFormat }}</td>
+                          <td>{{auditlog.expiryDate | date: newDateFormat }}</td>
                           <td>{{auditlog.status}}</td>
                       </tr>
                   </table>
