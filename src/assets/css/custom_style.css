@@ -26925,3 +26925,71 @@ color: #fff !important;
     margin-top: 10px !important;
   }
 }
+.parentpromolabel {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .imagepromolabel1 {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .imagepromolabel2 {
+    position: absolute;
+    top: -50px;
+  }
+  .labelpromo{
+    position: absolute;
+    top: 100px;
+    right: 100px;
+  }
+  .shoppinglistuploadspan{
+    width: 200px;
+    margin-left: 30px;
+    margin-top: -10px;
+  }
+  .shoppinglistmre{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .morethanthreeimg{
+    margin-top: 10px;
+    width: 30%;
+  }
+  .orderdetailgalul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: wrap;
+    }
+  .orderdetailgalul li {
+    list-style: none;
+    width: 33.3333%;
+   }
+  .orderdetailgalimg_outer {
+   position: relative;
+   padding: 5px;
+   }
+   @media only screen and (max-width: 575px){
+   .orderdetailgalul li {
+   width: 50%;
+   }
+  }
+   /* .orderdetailgal_img img {
+    width: 100%;
+    } */
+    @media only screen and (max-width: 575px){
+      .orderdetailgal_img img {
+      height: 100px;
+      } 
+    }
