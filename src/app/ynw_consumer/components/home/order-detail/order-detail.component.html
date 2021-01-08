@@ -104,7 +104,7 @@
                                     </div>
 
                                     <!-- Toggle -->
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20" *ngIf="waitlist.orderItem">
                                         <span style="padding-left: 3px !important;">ORDERED ITEMS</span>
                                     <div class="pull-right" style="font-size: large;display: flex;">
                                       <div class="view_as">
@@ -122,10 +122,26 @@
                                         </mat-button-toggle-group>
                                     </div>
                                     </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20" *ngIf="waitlist.shoppingList">
+                                        <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="waitlist.shoppingList">
+                                       
+                                            <ul class="orderdetailgalul">
+                                            <li *ngFor="let file of waitlist.shoppingList;let i = index "style="list-style: none;">
+                                              <div class="orderdetailgalimg_outer">
+                                              <div class="orderdetailgal_img">
+                                                <img [src]="file.s3path" *ngIf="file.s3path">
+                                              </div>
+                                            </div>
+                                            </li>
+                                            </ul>
+                                          
+                                    </div>
 
                                     <!-- Item list -->
                                     <div
-                                        class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
+                                        class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="waitlist.orderItem">
                                         <!-- Grid View -->
                                         <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
                                             *ngIf="showView === 'grid'">

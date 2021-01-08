@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { OrderActionsComponent } from '../order-actions/order-actions.component';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-order-details',
@@ -25,6 +26,25 @@ export class OrderDetailsComponent implements OnInit {
   screenWidth;
   small_device_display = false;
   tooltipcls = projectConstants.TOOLTIP_CLS;
+  image_list_popup: Image[];
+  imagelist: any = [];
+customPlainGalleryRowConfig: PlainGalleryConfig = {
+  strategy: PlainGalleryStrategy.CUSTOM,
+  layout: new AdvancedLayout(-1, true)
+};
+customButtonsFontAwesomeConfig: ButtonsConfig = {
+visible: true,
+strategy: ButtonsStrategy.CUSTOM,
+buttons: [
+    {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+    }
+]
+};
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions) {
@@ -49,10 +69,25 @@ export class OrderDetailsComponent implements OnInit {
   getOrderDetails(uid) {
     this.loading = true;
     this.orderItems = [];
+    this.image_list_popup = [];
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
-      for (let item of this.orderDetails.orderItem) {
-        this.orderItems.push({ 'type': 'order-details-item', 'item': item });
+      if (this.orderDetails && this.orderDetails.orderItem) {
+        for (const item of this.orderDetails.orderItem) {
+          this.orderItems.push({ 'type': 'order-details-item', 'item': item });
+        }
+      }
+      if (this.orderDetails && this.orderDetails.shoppingList) {
+        this.imagelist = this.orderDetails.shoppingList;
+        for (let i = 0; i < this.imagelist.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+                img: this.imagelist[i].s3path,
+                description: ''
+            });
+        this.image_list_popup.push(imgobj);
+        }
       }
       this.loading = false;
     });
@@ -104,4 +139,17 @@ export class OrderDetailsComponent implements OnInit {
       }
     });
   }
+  openImageModalRow(image: Image) {
+    console.log(image);
+    console.log(this.image_list_popup);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
 }
