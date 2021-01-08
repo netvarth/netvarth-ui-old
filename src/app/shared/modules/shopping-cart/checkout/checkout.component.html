@@ -206,8 +206,8 @@
                       </div>
                     </div>
                   </div>
-                  <span class="shoppinglistuploadspan"(click)="filed.click()"  *ngIf="this.orderType === 'SHOPPINGLIST'">
-                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist
+                  <span class="shoppinglistuploadspan popular_more"(click)="filed.click()"  *ngIf="this.orderType === 'SHOPPINGLIST'">
+                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">upload shoppinglist
                   </span>
                   <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                     <div class="bill-section-content">

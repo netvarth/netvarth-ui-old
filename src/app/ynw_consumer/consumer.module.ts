@@ -52,6 +52,7 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { OrderDetailComponent } from './components/home/order-detail/order-detai
     ConsumerFooterModule,
     NgxQRCodeModule,
     ShareButtonsModule,
-    ShareIconsModule
+    ShareIconsModule,
+    ModalGalleryModule
   ],
   declarations: [
     ConsumerComponent,

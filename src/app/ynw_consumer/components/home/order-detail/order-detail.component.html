@@ -122,10 +122,57 @@
                                         </mat-button-toggle-group>
                                     </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-bt-20" *ngIf="waitlist.shoppingList">
-                                        <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
+                                    <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="image_list_popup && waitlist.shoppingList">
+                                            <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
+                                        </div>
+                                        <div  class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="waitlist.shoppingList">
+                                                <div  class="col-sm-10 col-md-8 col-lg-6 col-xl-4 col-xs-12" >
+                                            <ul class="shoppinglist-gal">
+                                                <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                                    <li *ngIf="i<2" class="shoppinglist-li">
+                                                        <div class="shoppinglistbx">
+                                                            <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                                                                <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                                                    *ngIf="file.modal.img" />
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                                <li *ngIf="image_list_popup && image_list_popup.length>2" class="shoppinglist-li">
+                                                    <div class="shoppinglistbx">
+                                                        <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                                                            *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                        <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                                                                *ngIf="image_list_popup[2].modal.img"
+                                                                [src]="image_list_popup[2].modal.img" /></div>
+                                                       
+                                                        <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                                                            *ngIf="(image_list_popup.length-3)==0">
+                                                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                                                                *ngIf="image_list_popup[2].modal.img"
+                                                                [src]="image_list_popup[2].modal.img" />
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                            [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                            [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                            (buttonBeforeHook)="onButtonBeforeHook()"
+                                            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                                <!-- <ul class="galul">
+                                                <li *ngFor="let file of orderDetails.shoppingList;let i = index "style="list-style: none;">
+                                                  <div class="galimg_outer">
+                                                  <div class="gal_img">
+                                                    <img [src]="file.s3path" *ngIf="file.s3path">
+                                                  </div>
+                                                </div>
+                                                </li>
+                                                </ul> -->
+                                              
+                                        </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="waitlist.shoppingList">
+                                    <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="waitlist.shoppingList">
                                        
                                             <ul class="orderdetailgalul">
                                             <li *ngFor="let file of waitlist.shoppingList;let i = index "style="list-style: none;">
@@ -137,7 +184,7 @@
                                             </li>
                                             </ul>
                                           
-                                    </div>
+                                    </div> -->
 
                                     <!-- Item list -->
                                     <div
