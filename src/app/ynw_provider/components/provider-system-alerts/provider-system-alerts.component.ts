@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-system-alerts',
   templateUrl: './provider-system-alerts.component.html'
@@ -29,6 +30,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   alert_details: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   alertSelAck = [];
   alertStartdate = null;
   alertEnddate = null;
