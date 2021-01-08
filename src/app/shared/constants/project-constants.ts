@@ -472,6 +472,10 @@ export const projectConstantsLocal = {
     { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Cancelled', value: 'cancelled' }
   ],
+  DELIVERY_STATUS: [
+    { displayName: 'Home Delivery', value: 'homeDelivery' },
+    { displayName: 'Store Pickup', value: 'storePickup' }
+  ],
   JCOUPON_STATES: {
     NEW: 'New - Available for Use',
     EXPIRED: 'Expired',
