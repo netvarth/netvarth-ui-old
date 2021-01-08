@@ -22,6 +22,7 @@ import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
 import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
 import { PaymentComponent } from './payments/licensepayment.component';
+import { AddonDetailComponent } from './addons/addon-detail/addon-detail.component';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { PaymentComponent } from './payments/licensepayment.component';
         ProviderAuditLogComponent,
         ProviderLicenceInvoiceDetailComponent,
         StatementsComponent,
-        ViewPrevStatementComponent
+        ViewPrevStatementComponent,
+        AddonDetailComponent
     ],
     entryComponents: [
         AddproviderAddonComponent,

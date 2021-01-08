@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
 
 @Component({
   selector: 'app-provider-bprofile-search-adwords',
@@ -39,6 +40,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   customer_label = '';
   frm_adword_cap = '';
   domain;
+  warningdialogRef: any;
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
@@ -126,7 +128,18 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         }
       });
     } else {
-      this.sharedfunctionObj.openSnackBar(Messages.ADWORD_EXCEED_LIMIT, { 'panelClass': 'snackbarerror' });
+      // this.sharedfunctionObj.openSnackBar(Messages.ADWORD_EXCEED_LIMIT, { 'panelClass': 'snackbarerror' });
+      this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'popup-class'],
+        disableClose: true,
+        data: {
+          warn: 'Jaldee Search Keywords'
+        }
+      });
+      this.warningdialogRef.afterClosed().subscribe(result => {
+
+      });
     }
 
   }
@@ -181,7 +194,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
     // this.routerobj.navigate(['/provider/learnmore/license->' + mod]);
     // const pdata = { 'ttype': 'learn_more', 'target': this.getMode(mod) };
     // this.sharedfunctionObj.sendMessage(pdata);
-}
+  }
   // getMode(mod) {
   //   let moreOptions = {};
   //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'license', 'subKey': mod };

@@ -1,0 +1,50 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span (click)="redirecToAddon()"
+                class="fa fa-arrow-left pointer-cursor"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Add-ons
+        </h5>
+    </div>
+</section>
+<section class="revamp_addonDetail">
+    <div class="content w-manager settings comn-cls lic-page">
+        <div class="col-md-12 no-padding-small">
+            <div class="w-dta">
+                <div class="row">
+                    <div class="copy addons one  col-xs-12 col-sm-12 card no-padding remov_bg">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-10">
+                            <!-- <div class="disp_name_st">{{disp_name}}</div> -->
+                            <mat-grid-list *ngIf="adon_list.length > 0" cols="{{no_of_grids}}" rowHeight="170px"
+                                [gutterSize]="'10px'">
+                                <mat-grid-tile (click)="askConfirm(adon.addonId)" *ngFor="let adon of final_list">
+                                    <div class="wrap_div">
+                                        <div class="disp-flex">
+                                            <div class="flx_1">
+                                                {{adon.addonName.split('-')[0]}}
+                                            </div>
+                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="adon_count">
+                                            {{adon.addonName.split('-')[1]}}
+                                        </div>
+
+                                        <div class="rupee-font ad_price">
+                                            &#8377; {{adon.price}}
+                                        </div>
+                                        <div class="wrd_brk">
+                                            {{adon.addonDesc}}
+                                        </div>
+                                    </div>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                            <div class="red" *ngIf="adon_list.length === 0">
+                                {{adwords_exceed}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

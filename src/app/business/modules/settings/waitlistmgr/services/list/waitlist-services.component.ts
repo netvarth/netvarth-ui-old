@@ -5,6 +5,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
+import { ShowMessageComponent } from '../../../../show-messages/show-messages.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -34,8 +36,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         startpageval: 1,
         totalCnt: 0,
         perPage: this.page_count
-      };
-      breadcrumbs_init = [
+    };
+    breadcrumbs_init = [
         {
             title: 'Settings',
             url: '/provider/settings'
@@ -46,10 +48,18 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         },
     ];
     order = 'status';
+    use_metric;
+    usage_metric: any;
+    adon_info: any;
+    adon_total: any;
+    adon_used: any;
+    disply_name: any;
+    warningdialogRef: any;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
+        private dialog: MatDialog,
         public router: Router) { }
 
     ngOnInit() {
@@ -84,7 +94,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.api_loading = true;
         this.getDomainSubdomainSettings();
         this.getServiceCount();
-       // this.getServices();
+        this.getLicenseUsage();
+        // this.getServices();
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'q-manager->settings-services', 'classname': 'b-service',
             'actions': [{ 'title': this.add_new_serv_cap, 'type': 'addservice' },
@@ -104,7 +115,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     }
     getServices(pgefilter?) {
         this.api_loading = true;
-      //  const filter = { 'scope-eq': 'account' };
+        //  const filter = { 'scope-eq': 'account' };
         this.provider_services.getProviderServices(pgefilter)
             .subscribe(
                 data => {
@@ -128,16 +139,16 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
             this.trackStatus = 'Disable';
         }
         this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
-      .subscribe(
-        () => {
-           this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
-           this.service_list = [];
-           this.getServices();
-        },
-        error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.service_list = [];
+                    this.getServices();
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
 
     }
 
@@ -204,40 +215,71 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.pagination.startpageval = pg;
         this.page = pg;
         const pgefilter = {
-            'from' : this.pagination.startpageval,
+            'from': this.pagination.startpageval,
             'count': this.pagination.totalCnt,
             'serviceType-neq': 'donationService'
-          };
-          this.setPaginationFilter(pgefilter);
-          this.getServices(pgefilter);
-      }
-      setPaginationFilter(api_filter) {
+        };
+        this.setPaginationFilter(pgefilter);
+        this.getServices(pgefilter);
+    }
+    setPaginationFilter(api_filter) {
         api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.page_count : 0;
         api_filter['count'] = this.page_count;
         return api_filter;
-      }
-      getServiceCount() {
-        const filter = {  'serviceType-neq': 'donationService' };
+    }
+    getServiceCount() {
+        const filter = { 'serviceType-neq': 'donationService' };
         this.provider_services.getServiceCount(filter)
-          .subscribe(
-            data => {
-              this.pagination.totalCnt = data;
-              const pgefilter = {
-                'from' : 0,
-                'count': this.pagination.totalCnt,
-                'serviceType-neq': 'donationService'
-              };
-              this.setPaginationFilter(pgefilter);
-              this.getServices(pgefilter);
-            });
-      }
-      redirecToQmanager() {
-        this.routerobj.navigate(['provider', 'settings' , 'q-manager' ]);
-      }
-      redirecToHelp() {
+            .subscribe(
+                data => {
+                    this.pagination.totalCnt = data;
+                    const pgefilter = {
+                        'from': 0,
+                        'count': this.pagination.totalCnt,
+                        'serviceType-neq': 'donationService'
+                    };
+                    this.setPaginationFilter(pgefilter);
+                    this.getServices(pgefilter);
+                });
+    }
+    redirecToQmanager() {
+        this.routerobj.navigate(['provider', 'settings', 'q-manager']);
+    }
+    redirecToHelp() {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-services']);
-      }
-      addservice() {
+    }
+    addservice() {
+        if (this.adon_total === this.adon_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
         this.router.navigate(['provider', 'settings', 'q-manager', 'services', 'add']);
-       }
+        }
+    }
+
+    getLicenseUsage() {
+        this.provider_services.getLicenseUsage()
+            .subscribe(
+                data => {
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MedicalrecordRoutingModule } from './medicalrecord.routing.module';
@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
-import { SignaturePadModule } from 'angular2-signaturepad';
+import { SignaturePadModule } from 'angular2-signature-pad';
 import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
 import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
@@ -76,6 +76,10 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
   ],
   providers: [
     MedicalrecordService
-  ]
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],
 })
 export class MedicalrecordModule { }

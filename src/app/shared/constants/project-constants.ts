@@ -897,6 +897,14 @@ export const projectConstantsLocal = {
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
   ],
+  ADDON_ICON_CLASS: [
+    { value: 'Cloud Storage', class: 'fa ico_cloud' },
+    { value: 'Jaldee Search Keywords', class: 'fa ico_searchky' },
+    { value: 'QBoards', class: 'fa ico_qbods' },
+    { value: 'Jaldee Messaging', class: 'fa ico_sms' },
+    { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
+    { value: 'Multi User', class: 'fa ico_usr' },
+  ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
