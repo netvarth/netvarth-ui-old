@@ -1829,11 +1829,11 @@ export class ProviderServices {
       return this.servicemeta.httpPut('provider/order/settings/contact/info', data);
    }
    addLabeltoMultipleCheckin(data) {
-      const url = 'provider/waitlist/labelbatch';
+      const url = 'provider/waitlist/labelBatch';
       return this.servicemeta.httpPost(url, data);
    }
    addLabeltoMultipleAppt(data) {
-      const url = 'provider/appointment/labelbatch';
+      const url = 'provider/appointment/labelBatch';
       return this.servicemeta.httpPost(url, data);
    }
 }

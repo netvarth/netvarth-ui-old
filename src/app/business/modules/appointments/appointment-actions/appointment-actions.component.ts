@@ -349,7 +349,9 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             this.loading = false;
-            this.labelselection();
+            if (!this.data.multiSelection) {
+                this.labelselection();
+            }
         });
     }
     deleteLabel(label, checkinId) {

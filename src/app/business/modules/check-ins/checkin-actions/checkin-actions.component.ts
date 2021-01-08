@@ -485,7 +485,9 @@ export class CheckinActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
-            this.labelselection();
+            if (!this.data.multiSelection) {
+                this.labelselection();
+            }
             this.loading = false;
         });
     }
