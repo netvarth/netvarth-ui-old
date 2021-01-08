@@ -432,7 +432,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
   }
   gotoPricing() {
-    this.router.navigate(['business', 'jaldeepricing']);
+    this.router.navigate(['business', 'pricing']);
 
   }
   gotocontactus() {

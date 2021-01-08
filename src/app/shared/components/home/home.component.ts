@@ -8,6 +8,7 @@ import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -47,10 +48,16 @@ export class HomeComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public dialog: MatDialog,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    private titleService: Title,
+    private metaService: Meta
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Jaldee - Avoid Waiting in Line');
+    this.metaService.addTags([
+      { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }
+    ]);
     this.setSystemDate();
     // calling the method to get the list of domains
     this.getDomainList();
@@ -106,7 +113,7 @@ export class HomeComponent implements OnInit {
           items: 1
         },
         992: {
-          items: 1,
+          items: 3,
           center: true,
         }
       }

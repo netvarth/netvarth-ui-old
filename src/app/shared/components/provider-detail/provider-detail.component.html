@@ -333,7 +333,7 @@
                 <div class="clearfix"></div>
                 <ng-container *ngIf="showDepartments && !this.userId">
                     <ng-container *ngFor="let sps of servicesAndProviders">
-                        <h4 class="p-2 d-block m0 sp-head mgn-bt-10" *ngIf="sps['departmentItems'].length > 0">
+                        <h4 class="p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4" *ngIf="sps['departmentItems'].length > 0">
                             {{sps.departmentName}}
                         </h4>
                         <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
