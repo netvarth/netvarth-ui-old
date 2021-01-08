@@ -125,7 +125,8 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       (data) => {
         console.log(this.cataId);
         if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
-          this.heading = 'Edit catalog items';
+          // this.heading = 'Edit catalog items';
+          this.heading = 'Edit'; 
           this.getCatalog();
         } else {
           this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
