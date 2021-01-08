@@ -6,6 +6,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'
@@ -29,6 +30,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   load_complete = 0;
   api_loading = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   logCategories = projectConstants.AUDITLOG_FILTER_CATEGORIES;
   logSubcategories: any = [];
   logActions = projectConstants.AUDITLOG_FILTER_ACTION;
