@@ -90,7 +90,7 @@
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
                   <span>
-                    {{waitlist_data.date | date:dateFormatSp}}<br>
+                    {{waitlist_data.date | date:newDateFormat}}<br>
                     {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}
                   </span>
                 </div>
@@ -126,7 +126,7 @@
                     <span>
                       <div class="pnotes" *ngFor="let note of waitlist_notes">
                         <p [innerHTML]="note.note | nl2br"></p>
-                        <p>{{note.timeStamp | date: dateTimeFormat}}</p>
+                        <p>{{note.timeStamp | date: newTimeDateFormat}}</p>
                       </div>
                     </span>
                     <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
@@ -155,7 +155,7 @@
             <div class="c-history-outer">
               <ul class="c-history">
                 <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                  <div class="time">{{ history.time | date: dateTimeFormat }}</div>
+                  <div class="time">{{ history.time | date: newTimeDateFormat }}</div>
                   <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>

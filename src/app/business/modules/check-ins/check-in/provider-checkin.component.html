@@ -315,7 +315,7 @@
                               </strong>
                             </span>
                             <span *ngIf="isFuturedate">
-                              <strong>{{sel_checkindate | date: dateFormat}}</strong>
+                              <strong>{{sel_checkindate | date: newDateFormat}}</strong>
                             </span>
                           </span>
                         </div>
@@ -337,7 +337,7 @@
                             <ng-container *ngIf="isFuturedate">
                               <span class="checkin-footer-date">
                                 <strong>{{nextavailableCaption}}
-                                  <span class="queue-avail-date">{{sel_checkindate | date: dateFormat}},
+                                  <span class="queue-avail-date">{{sel_checkindate | date: newDateFormat}},
                                     {{sel_queue_servicetime}}
                                   </span>
                                 </strong>
