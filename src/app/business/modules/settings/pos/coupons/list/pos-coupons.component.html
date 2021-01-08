@@ -60,9 +60,9 @@
                                                         </td>
                                                         <td data-title="Name">{{jCoupon.couponName}}</td>
                                                         <td data-title="Valid From">
-                                                            {{formatDateDisplay(jCoupon.couponRules.startDate)}}</td>
+                                                            {{jCoupon.couponRules.startDate | date: newDateFormat}}</td>
                                                         <td data-title="Valid To">
-                                                            {{formatDateDisplay(jCoupon.couponRules.endDate)}}</td>
+                                                            {{jCoupon.couponRules.endDate | date: newDateFormat}}</td>
                                                         <td data-title="Status" class="status"
                                                             [ngClass]="{'green-text' :jCoupon.couponState=='ENABLED','red-text' :jCoupon.couponState=='EXPIRED','blue-text' :jCoupon.couponState=='NEW'}">
                                                             {{jcoupon_states[jCoupon.couponState]}}

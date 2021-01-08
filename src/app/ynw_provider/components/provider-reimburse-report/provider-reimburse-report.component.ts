@@ -8,6 +8,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html'
@@ -20,6 +21,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   status_cap = Messages.PRO_STATUS_CAP;
   all_cap = Messages.ALL_CAP;
   reimburse_report_cap = Messages.REIMBUSE_REPORT_CAP;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   report_id_cap = Messages.REPORT_ID_CAP;
   time_period_cap = Messages.TIME_PERIOD_CAP;
   coup_use_cap = Messages.COUP_USE_CAP;

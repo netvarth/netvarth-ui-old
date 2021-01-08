@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-pos-coupon',
@@ -30,6 +31,8 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   enable_cap = Messages.ENABLE_CAP;
   disable_cap = Messages.DISABLE_CAP;
   jcoupon_states = projectConstants.JCOUPON_STATES;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   upgrade_license = Messages.COUPON_UPGRADE_LICENSE;
   coupon_list: any = [];
   jaldeeCoupons: any = [];

@@ -145,8 +145,8 @@
                   <tr *ngFor="let report of couponreport">
                     <td data-title="Report" class="name pointer-cursor" (click)="reportView(report.invoiceId)">
                       {{report.invoiceId}}</td>
-                    <td data-title="Time Period">{{formatDateDisplay(report.reportFromDate)}}
-                      - {{formatDateDisplay(report.reportEndDate)}}</td>
+                    <td data-title="Time Period">{{report.reportFromDate | date: newDateFormat}}
+                      - {{report.reportEndDate | date: newDateFormat}}</td>
                     <td data-title="Coupons Used">
                       <span *ngIf="!report.listOfJaldeeCoupons"></span>
                       <span *ngIf="report.listOfJaldeeCoupons">
