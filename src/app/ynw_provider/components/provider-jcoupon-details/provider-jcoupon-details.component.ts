@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OnInit, Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 @Component({
   selector: 'app-provider-jcoupon-details',
   templateUrl: './provider-jcoupon-details.component.html',
@@ -38,6 +39,8 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   disbale_cap = Messages.DISABLE_CAP;
   jCoupon;
   jCouponStat;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   breadcrumbs_init = [
     {
       url: '/provider/settings',
