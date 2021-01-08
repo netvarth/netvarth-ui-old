@@ -33,14 +33,14 @@
                                     <tbody>
                                         <tr *ngFor="let invoice of payment_history">
                                                 <td><i *ngIf="invoice.isPeriodic" class="fa fa-calendar" aria-hidden="true"></i></td>
-                                            <td class="td1" data-title="Date">{{invoice.paymentDate | date: dateFormat
+                                            <td class="td1" data-title="Date">{{invoice.paymentDate | date: newDateFormat
                                                 }}</td>
                                             <td class="td2  rupee-font" data-title="Amount">
                                                 <strong>{{invoice.amount | currency:'&#8377;'}}</strong>
                                             </td>
                                             <td class="td3" data-title="Period">
-                                                {{invoice.periodFrom | date: dateFormat }} - {{invoice.periodTo | date:
-                                                dateFormat }}
+                                                {{invoice.periodFrom | date: newDateFormat }} - {{invoice.periodTo | date:
+                                                    newDateFormat }}
                                             </td>
                                             <td class="td4" data-title="Invoice">
                                                 <span class="icon-invoice" (click)="getInvoice(invoice)"></span>
