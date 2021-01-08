@@ -547,7 +547,7 @@ export class CheckinActionsComponent implements OnInit {
         const postData = {
             'labelName': label,
             'labelValue': 'true',
-            'uuids': ids
+            'uuid': ids
         };
         this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
             this.dialogRef.close('reload');

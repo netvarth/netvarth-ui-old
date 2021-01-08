@@ -1833,7 +1833,7 @@ export class ProviderServices {
       return this.servicemeta.httpPost(url, data);
    }
    addLabeltoMultipleAppt(data) {
-      const url = 'provider/appointment/addLabel';
+      const url = 'provider/appointment/labelbatch';
       return this.servicemeta.httpPost(url, data);
    }
 }

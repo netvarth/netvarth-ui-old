@@ -410,7 +410,7 @@ export class AppointmentActionsComponent implements OnInit {
         const postData = {
             'labelName': label,
             'labelValue': 'true',
-            'uuids': ids
+            'uuid': ids
         };
         this.provider_services.addLabeltoMultipleAppt(postData).subscribe(data => {
             this.dialogRef.close('reload');
