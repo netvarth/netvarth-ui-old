@@ -472,7 +472,12 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
-                            this.countryCode = this.customer_data.countryCode;
+                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                            // this.countryCode = this.customer_data.countryCode;
                             console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;

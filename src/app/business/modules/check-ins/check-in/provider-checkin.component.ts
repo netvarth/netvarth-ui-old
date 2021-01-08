@@ -475,7 +475,12 @@ checkin_label;
                                 this.customer_data = data[0];
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
-                            this.countryCode = this.customer_data.countryCode;
+                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                           
                             if (this.source === 'waitlist-block') {
                                 this.showBlockHint = true;
                                 if (this.showtoken) {
