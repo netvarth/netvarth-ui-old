@@ -1,0 +1,55 @@
+.socialmedia .social-box {
+    float: left;
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    width: 40%;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.fb {
+    color: #627aac;
+    font-size: 5rem;
+}
+.tw {
+    color: #5eb0fb;
+    font-size: 5rem;
+}
+.ytb {
+    color: #ef452f;
+    font-size: 5rem;
+}
+.lkd {
+    color: #02a2c2;
+    font-size: 5rem;
+}
+.pntr {
+    color: #ef452f;
+    font-size: 5rem;
+}
+.inst, .site {
+    font-size: 5rem;
+}
+.bglobe {
+    width: 75px;
+}
+@media(max-width: 550px) {
+    .socialmedia .social-box {
+        width: 85%;
+    }
+    .bglobe {
+        width: 50px;
+    }
+    .inst, .site, .fb, .tw, .ytb, .lkd, .pntr {
+        font-size: 4rem;
+    }
+}
+.input-sec input{
+    width: 100%; 
+    font-size: .9rem; 
+}
+::placeholder {
+    font-style: italic;
+}
+.mat-icon-button {
+    width: 0px !important;
+}
