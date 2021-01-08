@@ -17,6 +17,8 @@ export class DonationDetailsComponent {
     uid;
     donationDetails: any = [];
     display_dateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
     loading = false;
     constructor(public activaterouter: ActivatedRoute,
         public sharedFunctions: SharedFunctions,

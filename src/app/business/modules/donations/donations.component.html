@@ -181,8 +181,7 @@
                         <div class="td one">
                           <input [checked]="donationsSelected[i]" type="checkbox" class="ckbx pull-left"
                             (change)="selectDonations(i)" (click)="stopprop($event)" />
-                          <span class="date">{{stringtoDate(donation.date,
-                            'date')}}</span>
+                          <span class="date">{{donation.date | date: newDateFormat}}</span>
                         </div>
                         <div class="td two">
                           <span>{{donation.service.name |
