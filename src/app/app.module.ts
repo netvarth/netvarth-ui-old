@@ -33,7 +33,6 @@ import { CapitalizeFirstPipeModule } from './shared/pipes/capitalize.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import 'hammerjs';
 import { HashLocationStrategy, LocationStrategy } from '../../node_modules/@angular/common';
-import { CouponsComponent } from './shared/components/coupons/coupons.component';
 import { RequestForComponent } from './ynw_provider/components/request-for/request-for.component';
 import { ProviderAppModule } from './ynw_provider/provider-app.module';
 import { MaintenanceModule } from './shared/modules/maintenance/maintenance.module';
@@ -77,7 +76,6 @@ export function init_app(globalService: GlobalService) {
     ConfirmBoxComponent,
     ReturnPaymentComponent,
     AddInboxMessagesComponent,
-    CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
     ConsumerPaymentmodeComponent,
@@ -90,7 +88,6 @@ export function init_app(globalService: GlobalService) {
     ConfirmBoxComponent,
     AddInboxMessagesComponent,
     VoicecallDetailsSendComponent,
-    CouponsComponent,
     RequestForComponent,
     ForceDialogComponent,
     ConsumerPaymentmodeComponent
