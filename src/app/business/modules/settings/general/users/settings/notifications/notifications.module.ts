@@ -10,24 +10,26 @@ import { NotificationsUserComponent } from './notifications.component';
 import { NotificationsRoutingUserModule } from './notifications.routing.module';
 import { ConsumerNotificationUserComponent } from './consumer/consumer-notifications.component';
 import { ProviderNotificationUserComponent } from './provider/provider-notifications.component';
+import { UpdateProviderNotificationsComponent } from './update-provider-notifications/update-provider-notifications.component';
 
 @NgModule({
-    declarations: [
-      NotificationsUserComponent,
-      ProviderNotificationUserComponent,
-      ConsumerNotificationUserComponent
-    ],
-    imports: [
-      NotificationsRoutingUserModule,
-        BreadCrumbModule,
-        MaterialModule,
-        FormMessageDisplayModule,
-        FormsModule,
-        ReactiveFormsModule,
-        LoadingSpinnerModule,
-        CapitalizeFirstPipeModule,
-        CommonModule
-    ],
-    exports: [NotificationsUserComponent]
+  declarations: [
+    NotificationsUserComponent,
+    ProviderNotificationUserComponent,
+    ConsumerNotificationUserComponent,
+    UpdateProviderNotificationsComponent
+  ],
+  imports: [
+    NotificationsRoutingUserModule,
+    BreadCrumbModule,
+    MaterialModule,
+    FormMessageDisplayModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LoadingSpinnerModule,
+    CapitalizeFirstPipeModule,
+    CommonModule
+  ],
+  exports: [NotificationsUserComponent]
 })
-export class NotificationUserModule {}
+export class NotificationUserModule { }

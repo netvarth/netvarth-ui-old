@@ -5,7 +5,8 @@ import { ProviderServices } from '../../../../../../../ynw_provider/services/pro
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 @Component({
     selector: 'app-notifications',
-    templateUrl: './notifications.component.html'
+    templateUrl: './notifications.component.html',
+    styleUrls: ['./notifications.component.css']
 })
 export class NotificationsUserComponent implements OnInit {
     smsGlobalStatus;

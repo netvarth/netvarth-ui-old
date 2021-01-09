@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { AddproviderAddonComponent } from '../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
-import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { Messages } from '../../../../../../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
+import { AddproviderAddonComponent } from '../../../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 
 @Component({
   selector: 'app-update-provider-notifications',
@@ -39,10 +39,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   okCancelStatus = false;
   SelchkinNotify = false;
   SelchkincnclNotify = false;
-  appointment_status: any;
-  waitlistStatus: any;
-  donations_status: any;
-  order_status: any;
   settings: any = [];
   api_loading = false;
   smsCredits;
@@ -62,22 +58,12 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   ngOnInit() {
     const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
-    this.getGlobalSettingsStatus();
     this.getNotificationList();
     this.getSMSCredits();
   }
-  getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
-      (data: any) => {
-        this.appointment_status = data.appointment;
-        this.waitlistStatus = data.waitlist;
-        this.donations_status = data.donationFundRaising;
-        this.order_status = data.order;
-      });
-  }
   getNotificationList() {
     this.api_loading = true;
-    this.provider_services.getUserNotificationList(0)
+    this.provider_services.getUserNotificationList(this.data.userId)
       .subscribe(
         data => {
           this.notificationList = data;
@@ -98,13 +84,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       } else if (this.data.type === 'Appointment') {
         addList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTADD');
         cancelList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTCANCEL');
-      } else if (this.data.type === 'Donation') {
-        addList = notificationList.filter(notification => notification.eventType === 'DONATIONSERVICE');
-      } else if (this.data.type === 'Account') {
-        addList = notificationList.filter(notification => notification.eventType === 'LICENSE');
-      } else if (this.data.type === 'Order') {
-        addList = notificationList.filter(notification => notification.eventType === 'ORDERCONFIRM');
-        cancelList = notificationList.filter(notification => notification.eventType === 'ORDERCANCEL');
       }
       if (addList && addList[0]) {
         if (addList[0].email.length === 0 && addList[0].sms.length === 0 && addList[0].pushMsg.length === 0) {
@@ -155,7 +134,6 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.checkinCancelNotifications('cancelcheckin');
     }
   }
-
 
   addChkinPh() {
     if (this.notifyphonenumber === '') {
@@ -378,7 +356,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.savechekinNotification_json.sms = this.ph_arr;
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMsg = this.cheknPushph_arr;
-    this.savechekinNotification_json.providerId = 0;
+    this.savechekinNotification_json.providerId = this.data.userId;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -413,15 +391,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.savecancelNotification_json.sms = this.ph1_arr;
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.pushMsg = this.cheknCancelPushph_arr;
-    this.savecancelNotification_json.providerId = 0;
+    this.savecancelNotification_json.providerId = this.data.userId;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
 
   saveNotifctnJson(saveNotification_json, mode, source) {
     this.sms = false;
     this.email = false;
-    this.cheknPushph = false;
-    this.cheknCancelPushph = false;
     this.cancelemail = false;
     this.cancelsms = false;
     if (mode === 'ADD') {
@@ -435,6 +411,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
             if (source === 'cancelcheckin') {
               this.okCancelStatus = false;
             }
+            this.okCancelStatus = false;
             this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
             this.dialogRef.close();
           },

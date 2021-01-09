@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
@@ -109,6 +109,8 @@ export class ConsumerNotificationUserComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  small_device_display = false;
+  screenWidth;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -118,14 +120,27 @@ export class ConsumerNotificationUserComponent implements OnInit {
     private dialog: MatDialog,
     private provider_datastorage: ProviderDataStorageService) {
     this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.onResize();
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
   ngOnInit() {
     for (let j = 0; j <= 60; j++) {
-      this.appt_remind_min[j] = j ;
+      this.appt_remind_min[j] = j;
     }
     for (let i = 0; i <= 24; i++) {
-      this.appt_remind_hr[i] = i ;
+      this.appt_remind_hr[i] = i;
     }
     const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -199,7 +214,6 @@ export class ConsumerNotificationUserComponent implements OnInit {
     this.provider_services.getUserConsumerNotificationSettings(this.userId)
       .subscribe(
         data => {
-          console.log(data);
           this.notificationList = data;
           if (this.notificationList) {
             this.setNotifications(this.notificationList);
@@ -253,7 +267,6 @@ export class ConsumerNotificationUserComponent implements OnInit {
         this.earlyAPPTNotificatonSettings = notificationObj;
         this.apptPersonsahead = (notificationObj['personsAhead']) ? true : false;
       } else if (notificationObj['eventType'] === 'FIRSTNOTIFICATION' && notificationObj['resourceType'] === 'APPOINTMENT') {
-        console.log(notificationObj);
         this.cSettings['FIRST_APPT'] = true;
         this.firstapp_time = this.timeinHrMin(notificationObj.time);
         this.f_selected_hr = this.firstapp_time[0];
@@ -296,8 +309,29 @@ export class ConsumerNotificationUserComponent implements OnInit {
       this.routerobj.navigate(['/provider/' + this.domain + '/comm->notifications']);
     }
   }
-  showSubmit(type) {
+  showSubmit(type, value, event?) {
     this.showButton[type] = true;
+    if (value !== 'phead') {
+      if (type === 'EARLY_WL') {
+        this.earlyWLNotificatonSettings[value] = event.checked;
+      } else if (type === 'WAITLISTADD') {
+        this.wlAddNotificationSettings[value] = event.checked;
+      } else if (type === 'PREFINAL_WL') {
+        this.prefinalWLNotificationSettings[value] = event.checked;
+      } else if (type === 'FINAL_WL') {
+        this.finalWLNotificationSettings[value] = event.checked;
+      } else if (type === 'APPOINTMENTADD') {
+        this.apptAddNotificationSettings[value] = event.checked;
+      } else if (type === 'SECOND_APPT') {
+        this.secondAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'FIRST_APPT') {
+        this.firstAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'THIRD_APPT') {
+        this.thirdAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'FOURTH_APPT') {
+        this.fourthAPPTNotificationSettings[value] = event.checked;
+      }
+    }
   }
   changeNotificationSettings(type) {
     let activeInput;
@@ -374,7 +408,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     // return hours + ' Hr ' + minutes + ' min';
   }
   redirecToUserNotifications() {
-    this.routerobj.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings' , 'notifications']);
+    this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'notifications']);
   }
   learnmore_clicked(mod, e) {
     e.stopPropagation();
@@ -382,67 +416,67 @@ export class ConsumerNotificationUserComponent implements OnInit {
   }
   handleHrSelction(obj, atempt) {
     switch (atempt) {
-     case 'first' : this.f_selected_hr = obj; break;
-     case 'second' : this.s_selected_hr = obj; break;
-     case 'third' : this.t_selected_hr = obj; break;
-     case 'fourth' : this.ft_selected_hr = obj; break;
+      case 'first': this.f_selected_hr = obj; break;
+      case 'second': this.s_selected_hr = obj; break;
+      case 'third': this.t_selected_hr = obj; break;
+      case 'fourth': this.ft_selected_hr = obj; break;
     }
- }
- handleMinSelction(obj, atempt) {
+  }
+  handleMinSelction(obj, atempt) {
     switch (atempt) {
-     case 'first' : this.f_selected_min = obj; break;
-     case 'second' : this.s_selected_min = obj; break;
-     case 'third' : this.t_selected_min = obj; break;
-     case 'fourth' : this.ft_selected_min = obj; break;
+      case 'first': this.f_selected_min = obj; break;
+      case 'second': this.s_selected_min = obj; break;
+      case 'third': this.t_selected_min = obj; break;
+      case 'fourth': this.ft_selected_min = obj; break;
     }
- }
- hourtoMin(val) {
-  const minutes = val * 60;
-  return minutes;
+  }
+  hourtoMin(val) {
+    const minutes = val * 60;
+    return minutes;
   }
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_servicesobj.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
 }
