@@ -2245,28 +2245,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '1') {
         return 'order';
       } else {
-         if (searchData.fields.order_enabled === '1') {
+        if (searchData.fields.order_enabled === '1') {
           return 'book';
-         } else {
+        } else {
           return 'bookservice';
-         }
+        }
       }
-      //  else if (searchData.fields.waitlist && searchData.fields.apptAllowed
-      //   && searchData.fields.donation_status === '0' && searchData.fields.order_enabled === '0') {
-      //   return 'bookservice';
-      // } else {
-      //   return 'book';
-      // }
     } else {
       return false;
     }
-
-    // if (searchData.fields.online_profile === '1' && (searchData.fields.waitlist || searchData.fields.apptAllowed
-    //   || searchData.fields.donation_status === '1')) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
   bookServiceClicked(searchData) {
     if (searchData.fields.waitlist && !searchData.fields.apptAllowed

@@ -40,6 +40,10 @@ export class CheckYourStatusComponent implements OnInit {
   source = '';
   history = false;
   storeContactInfo: any = [];
+  s3url;
+  retval;
+  provider_id;
+  terminologiesjson: ArrayBuffer;
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
     private shared_functions: SharedFunctions) {
@@ -97,6 +101,37 @@ export class CheckYourStatusComponent implements OnInit {
       }
     } else {
       this.api_loading = false;
+    }
+  }
+  gets3curl() {
+    this.retval = this.shared_functions.getS3Url()
+      .then(
+        res => {
+          this.s3url = res;
+          this.getbusinessprofiledetails_json('terminologies', true);
+        });
+  }
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        switch (section) {
+          case 'terminologies': {
+            this.terminologiesjson = res;
+            break;
+          }
+        }
+      });
+  }
+  getTerminologyTerm(term) {
+    const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+    if (this.terminologiesjson) {
+      return this.shared_functions.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+    } else {
+      return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
     }
   }
   getAppxTime(waitlist) {
@@ -218,6 +253,8 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
+          this.provider_id = this.statusInfo.providerAccount.uniqueId;
+          this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
             this.history = true;
           }
@@ -289,6 +326,8 @@ export class CheckYourStatusComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.statusInfo = data;
+          this.provider_id = this.statusInfo.providerAccount.uniqueId;
+          this.gets3curl();
           this.foundDetails = true;
           this.type = 'order';
           this.api_loading = false;
@@ -340,6 +379,8 @@ export class CheckYourStatusComponent implements OnInit {
           wlInfo.cancelled_time = retval.cancelled_time;
           this.api_loading = false;
           this.statusInfo = wlInfo;
+          this.provider_id = this.statusInfo.providerAccount.uniqueId;
+          this.gets3curl();
           this.api_loading = false;
         },
         (error) => {
