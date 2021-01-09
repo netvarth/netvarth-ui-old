@@ -210,7 +210,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                         </div> -->
                                         <div class="form-group">
                                             <mat-form-field>
-                                                <input class="number-ip-sm" matInput placeholder="Enter OTP"
+                                                <input class="number-ip-sm no-padding" matInput placeholder="Enter OTP"
                                                     [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
                                                     autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
                                             </mat-form-field>
