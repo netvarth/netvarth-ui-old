@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
     'templateUrl': './comm-settings.component.html',
     styleUrls: ['./comm-settings.component.css']
 })
-export class CommSettingsComponent implements OnInit {
+export class CommSettingsComponent implements OnInit, AfterViewInit {
     domain: any;
     breadcrumbs = [
         {
@@ -37,11 +37,29 @@ export class CommSettingsComponent implements OnInit {
     sub_domain;
     accountType;
     isMultilevel;
+    type;
+    @ViewChild('teleservice') scrollFrame: ElementRef;
+    scrollContainer;
     constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) {
+        private shared_functions: SharedFunctions,
+        public route: ActivatedRoute) {
         this.customer_label = this.shared_functions.getTerminologyTerm('customer');
         this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        this.route.queryParams.subscribe(
+            params => {
+                this.type = params.type;
+            });
+    }
+    ngAfterViewInit() {
+        var height = this.scrollFrame.nativeElement.offsetHeight;
+        if (this.type) {
+            window.scroll({
+                top: height,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
     }
     ngOnInit() {
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');

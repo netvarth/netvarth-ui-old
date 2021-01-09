@@ -381,10 +381,10 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.showfuturediv = false;
                 this.revealphonenumber = true;
                 this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.selectedService, this.account_id);
-        
+
             }
         );
-        
+
     }
     getRescheduleApptDet() {
         this.shared_services.getAppointmentByConsumerUUID(this.rescheduleUserId, this.account_id).subscribe(
@@ -393,9 +393,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.type === 'reschedule') {
                     this.waitlist_for.push({ id: this.appointment.appmtFor[0].id, firstName: this.appointment.appmtFor[0].firstName, lastName: this.appointment.appmtFor[0].lastName, phoneNo: this.appointment.phoneNumber });
                     this.userPhone = this.appointment.phoneNumber;
-                    // this.countryCode = this.appointment.countryCode;
+                    this.countryCode = this.appointment.countryCode;
                 }
-
                 this.sel_loc = this.appointment.location.id;
                 this.selectedService = this.appointment.service.id;
                 this.sel_checkindate = this.hold_sel_checkindate = this.appointment.appmtDate;
@@ -553,7 +552,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                             }
                         } else {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                            this.callingModes = unChangedPhnoCountryCode+''+this.customer_data.primaryPhoneNumber;
+                            this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             console.log(this.callingModes)
                         }
                     }
@@ -785,8 +784,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                     //     console.log(unChangedPhnoCountryCode)
                     //     this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = `${unChangedPhnoCountryCode}${this.callingModes}`;
                     // } else {
-                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
-                    
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+
                 }
             }
         } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -1026,8 +1025,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.resetApi();
         this.waitlist_for = [];
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime['time'] });
-        if(this.userData.userProfile.email){
-            this.waitlist_for[0]['email'] = this.userData.userProfile.email ;
+        if (this.userData.userProfile.email) {
+            this.waitlist_for[0]['email'] = this.userData.userProfile.email;
             console.log(this.waitlist_for);
         }
 
@@ -1529,38 +1528,40 @@ export class ConsumerAppointmentComponent implements OnInit {
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.sharedFunctionobj.getProfile()
-            .then(
-                data => {
-                    _this.userData = data;
-                    _this.countryCode = _this.userData.userProfile.countryCode;
-                    // if (this.selectedCountryCode) {
-                    //     if (this.countryCode != this.selectedCountryCode) {
-                    //         this.countryCode = this.selectedCountryCode;
-                    //         console.log(this.countryCode)
-                    //     }
-                    // } else {
-                    //     this.selectedCountryCode = this.countryCode;
-                    // }
-                    if (_this.userData.userProfile !== undefined) {
-                        _this.userEmail = _this.userData.userProfile.email || '';
+                .then(
+                    data => {
+                        _this.userData = data;
                         if (_this.type !== 'reschedule') {
-                            _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
+                            _this.countryCode = _this.userData.userProfile.countryCode;
                         }
-                        // this.currentPhone = this.userPhone;
-                    }
-                    if(_this.userData.userProfile.email){
-                        _this.waitlist_for[0]['email'] = _this.userData.userProfile.email ;
-                        console.log(_this.waitlist_for);
-                    }
-                    if (_this.userEmail) {
-                        _this.emailExist = true;
-                    } else {
-                        _this.emailExist = false;
-                    }
-                    resolve(true);
-                });
+                        // if (this.selectedCountryCode) {
+                        //     if (this.countryCode != this.selectedCountryCode) {
+                        //         this.countryCode = this.selectedCountryCode;
+                        //         console.log(this.countryCode)
+                        //     }
+                        // } else {
+                        //     this.selectedCountryCode = this.countryCode;
+                        // }
+                        if (_this.userData.userProfile !== undefined) {
+                            _this.userEmail = _this.userData.userProfile.email || '';
+                            if (_this.type !== 'reschedule') {
+                                _this.userPhone = _this.userData.userProfile.primaryMobileNo || '';
+                            }
+                            // this.currentPhone = this.userPhone;
+                        }
+                        if (_this.userData.userProfile.email) {
+                            _this.waitlist_for[0]['email'] = _this.userData.userProfile.email;
+                            console.log(_this.waitlist_for);
+                        }
+                        if (_this.userEmail) {
+                            _this.emailExist = true;
+                        } else {
+                            _this.emailExist = false;
+                        }
+                        resolve(true);
+                    });
         });
-       
+
     }
     gets3curl() {
         this.api_loading1 = true;
@@ -2002,7 +2003,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.whatsapperror = 'WhatsApp number is invalid';
                 return false;
             } else {
-                if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value!="") {
+                if (this.bookingForm.get('newWhatsapp') && this.bookingForm.get('newWhatsapp').value && this.bookingForm.get('newWhatsapp').value != "") {
                     whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number;
                     if (this.bookingForm.get('newWhatsapp').value.e164Number.startsWith('+')) {
                         whatsAppNum = this.bookingForm.get('newWhatsapp').value.e164Number.split('+')[1];
@@ -2028,7 +2029,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.updateEmail(post_data).then(
                         () => {
                             this.action = '';
-                        }, 
+                        },
                         error => {
                             this.api_error = error.error;
                             this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -2104,8 +2105,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         //     this.action = '';
         // }
     }
-    
-    updateEmail (post_data) {
+
+    updateEmail(post_data) {
         console.log(post_data)
         const _this = this;
         const passtyp = 'consumer';
@@ -2117,9 +2118,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                         resolve(true);
                     },
                     error => {
-                        reject(error);                                
+                        reject(error);
                     });
-          });
+        });
     }
 
     showConfirmPopup(post_Data) {
