@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../../../app.component';
-import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout} from '@ks89/angular-modal-gallery';
+import { Image, PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout } from '@ks89/angular-modal-gallery';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
@@ -9,9 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-usermedia',
-    templateUrl: './media.component.html'
+    templateUrl: './media.component.html',
+    styleUrls: ['./media.component.css']
 })
 export class MediaComponent implements OnInit, OnDestroy {
     bProfile = null;
@@ -74,7 +75,9 @@ export class MediaComponent implements OnInit, OnDestroy {
     breadcrumbs = this.breadcrumbs_init;
     subscription: Subscription;
     userId: any;
-
+    showSave: any = [];
+    socialLink: any = [];
+    loading = false;
     constructor(
         private provider_services: ProviderServices,
         private sharedfunctionobj: SharedFunctions,
@@ -91,13 +94,14 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
     }
     ngOnInit() {
+        this.loading = true;
         this.getUser();
         const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
-        this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+        this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
         // this.getGalleryImages();
         this.getBusinessProfile();
     }
@@ -108,7 +112,7 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     redirecToBprofile() {
         this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
-        }
+    }
     ngOnDestroy() {
         if (this.socialdialogRef) {
             this.socialdialogRef.close();
@@ -131,7 +135,7 @@ export class MediaComponent implements OnInit, OnDestroy {
                 breadcrumbs.push({
                     title: 'Settings',
                     url: '/provider/settings/general/users/' + this.userId + '/settings'
-                  });
+                });
                 breadcrumbs.push({
                     title: 'Online Profile',
                     url: '/provider/settings/general/users/' + this.userId + '/settings/bprofile',
@@ -152,12 +156,18 @@ export class MediaComponent implements OnInit, OnDestroy {
                     this.provider_datastorage.set('bProfile', data);
                     this.normal_socialmedia_show = 2;
                     this.social_arr = [];
+                    this.socialLink = [];
                     if (this.bProfile.socialMedia) {
                         if (this.bProfile.socialMedia.length > 0) {
                             this.normal_socialmedia_show = 3;
                             for (let i = 0; i < this.bProfile.socialMedia.length; i++) {
                                 if (this.bProfile.socialMedia[i].resource !== '') {
                                     this.social_arr.push({ 'Sockey': this.bProfile.socialMedia[i].resource, 'Socurl': this.bProfile.socialMedia[i].value });
+                                    const filteredList = this.orgsocial_list.filter(social => social.key === this.bProfile.socialMedia[i].resource);
+                                    if (filteredList && filteredList[0]) {
+                                        const indx = this.orgsocial_list.indexOf(filteredList[0]);
+                                        this.socialLink[indx] = this.bProfile.socialMedia[i].value;
+                                    }
                                 }
                             }
                         }
@@ -165,7 +175,7 @@ export class MediaComponent implements OnInit, OnDestroy {
                     if (this.social_arr.length < this.orgsocial_list.length) {
                         this.showaddsocialmedia = true;
                     }
-
+                    this.loading = false;
                 },
 
                 () => {
@@ -254,5 +264,58 @@ export class MediaComponent implements OnInit, OnDestroy {
     }
     editSocialmedia(key) {
         this.handleSocialmedia(key);
+    }
+    saveSocial(media, socialUrl) {
+        const curlabel = socialUrl;
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
+        const result = pattern.test(curlabel);
+        if (!result) {
+            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        const filteredList = this.social_arr.filter(social => social.Sockey === media);
+        if (filteredList.length === 0) {
+            this.social_arr.push({ 'Sockey': media, 'Socurl': socialUrl });
+        } else {
+            for (let i = 0; i < this.social_arr.length; i++) {
+                if (this.social_arr[i].Sockey === media) {
+                    this.social_arr[i].Socurl = socialUrl;
+                }
+            }
+        }
+        this.saveSocialmedia();
+    }
+    saveSocialmedia() {
+        const post_data: any = [];
+        for (let i = 0; i < this.social_arr.length; i++) {
+            if (this.social_arr[i].Socurl !== '') {
+                post_data.push({ 'resource': this.social_arr[i].Sockey, 'value': this.social_arr[i].Socurl });
+            }
+        }
+        const submit_data = {
+            'socialMedia': post_data
+        };
+        this.provider_services.updateUserSocialMediaLinks(submit_data, this.userId)
+            .subscribe(
+                () => {
+                    this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIALMEDIA_SAVED, { 'panelclass': 'snackbarerror' });
+                    this.showSave = [];
+                    this.getBusinessProfile();
+                },
+                (error) => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    }
+    keyPressed(index) {
+        this.showSave[index] = true;
+    }
+    showDelete(key) {
+        const filteredList = this.social_arr.filter(social => social.Sockey === key);
+        if (filteredList.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

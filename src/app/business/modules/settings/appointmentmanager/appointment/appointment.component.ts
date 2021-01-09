@@ -223,6 +223,7 @@ export class AppointmentComponent implements OnInit {
     virtualServicemode;
     virtualServicenumber;
     emptyFielderror = false;
+    provider_label = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -231,6 +232,7 @@ export class AppointmentComponent implements OnInit {
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
+        this.provider_label = this.sharedFunctionobj.getTerminologyTerm('provider');
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
@@ -472,7 +474,12 @@ export class AppointmentComponent implements OnInit {
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
-                            this.countryCode = this.customer_data.countryCode;
+                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                            // this.countryCode = this.customer_data.countryCode;
                             console.log(this.countryCode);
                             if (this.source === 'appt-block') {
                                 this.showBlockHint = true;

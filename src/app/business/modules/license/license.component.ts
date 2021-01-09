@@ -12,6 +12,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 // import { constants } from 'fs';
 @Component({
     selector: 'app-license',
@@ -70,6 +71,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     license_message = '';
     unpaid_invoice_show = 0;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     tooltipcls = projectConstants.TOOLTIP_CLS;
     reload_adword_api = { status: true };
     type = null;
@@ -100,6 +102,8 @@ export class LicenseComponent implements OnInit, OnDestroy {
     temp1: any;
     refnumber: any;
     corpSettings: any;
+    height: number;
+    adon_list: any;
 
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
@@ -187,6 +191,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getLicenseDetails()
             .subscribe(data => {
                 this.currentlicense_details = data;
+                console.log(this.currentlicense_details);
+                if (this.currentlicense_details.addons) {
+                    this.adon_list = this.currentlicense_details.addons;
+                }
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
                 const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
@@ -214,6 +222,11 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getUpgradableLicensePackages()
             .subscribe((data: any) => {
                 this.upgradablepackages = data;
+                if (this.upgradablepackages.length > 0) {
+                    this.height = 160;
+                } else {
+                    this.height = 140;
+                }
             });
     }
     showupgradeLicense() {

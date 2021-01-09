@@ -1828,6 +1828,12 @@ export class ProviderServices {
    editContactInfo(data) {
       return this.servicemeta.httpPut('provider/order/settings/contact/info', data);
    }
+   addLabeltoMultipleCheckin(data) {
+      const url = 'provider/waitlist/labelBatch';
+      return this.servicemeta.httpPost(url, data);
+   }
+   addLabeltoMultipleAppt(data) {
+      const url = 'provider/appointment/labelBatch';
+      return this.servicemeta.httpPost(url, data);
+   }
 }
-
-

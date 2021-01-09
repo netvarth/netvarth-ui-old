@@ -83,11 +83,11 @@ export class AppointmentActionsComponent implements OnInit {
     }
     ngOnInit() {
         this.setMinMaxDate();
+        this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.getPos();
-            this.getLabel();
             this.setData();
         } else {
             this.showMsg = true;
@@ -351,29 +351,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             this.loading = false;
-            this.labelselection();
-        });
-    }
-    changeLabelvalue(labelname, value) {
-        this.labelMap = new Object();
-        this.labelMap[labelname] = value;
-        for (let i = 0; i < this.providerLabels.length; i++) {
-            for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-                if (this.providerLabels[i].valueSet[j].value === value) {
-                    if (!this.providerLabels[i].valueSet[j].selected) {
-                        this.providerLabels[i].valueSet[j].selected = true;
-                        this.addLabel();
-                    } else {
-                        this.providerLabels[i].valueSet[j].selected = false;
-                        this.deleteLabel(labelname, this.appt.uid);
-                    }
-                } else {
-                    if (this.providerLabels[i].label === labelname) {
-                        this.providerLabels[i].valueSet[j].selected = false;
-                    }
-                }
+            if (!this.data.multiSelection) {
+                this.labelselection();
             }
-        }
+        });
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
@@ -401,7 +382,7 @@ export class AppointmentActionsComponent implements OnInit {
                 // this.labels();
                 this.labelMap = new Object();
                 this.labelMap[data.label] = data.value;
-                this.addLabel();
+                this.addLabel(data.label);
                 this.getDisplayname(data.label);
                 // }, 500);
             }
@@ -415,8 +396,27 @@ export class AppointmentActionsComponent implements OnInit {
             }
         }
     }
-    addLabel() {
-        this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
+    addLabel(label) {
+        // this.provider_services.addLabeltoAppointment(this.appt.uid, this.labelMap).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        const ids = [];
+        if (this.data.multiSelection) {
+            for (const checkin of this.appt) {
+                ids.push(checkin.uid);
+            }
+        } else {
+            ids.push(this.appt.uid);
+        }
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'uuid': ids
+        };
+        this.provider_services.addLabeltoMultipleAppt(postData).subscribe(data => {
             this.dialogRef.close('reload');
         },
             error => {
@@ -611,7 +611,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.labelMap = new Object();
         if (event.checked) {
             this.labelMap[label] = true;
-            this.addLabel();
+            this.addLabel(label);
         } else {
             this.deleteLabel(label, this.appt.uid);
         }
@@ -694,18 +694,17 @@ export class AppointmentActionsComponent implements OnInit {
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.availableSlots);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.availableSlots);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
 }
-

@@ -472,6 +472,10 @@ export const projectConstantsLocal = {
     { displayName: 'Checked in', value: 'checkedIn' },
     { displayName: 'Cancelled', value: 'cancelled' }
   ],
+  DELIVERY_STATUS: [
+    { displayName: 'Home Delivery', value: 'homeDelivery' },
+    { displayName: 'Store Pickup', value: 'storePickup' }
+  ],
   JCOUPON_STATES: {
     NEW: 'New - Available for Use',
     EXPIRED: 'Expired',
@@ -892,6 +896,14 @@ export const projectConstantsLocal = {
     { value: 'In Transit', class: 'intransit-icon' },
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
+  ],
+  ADDON_ICON_CLASS: [
+    { value: 'Cloud Storage', class: 'fa ico_cloud' },
+    { value: 'Jaldee Search Keywords', class: 'fa ico_searchky' },
+    { value: 'QBoards', class: 'fa ico_qbods' },
+    { value: 'Jaldee Messaging', class: 'fa ico_sms' },
+    { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
+    { value: 'Multi User', class: 'fa ico_usr' },
   ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },

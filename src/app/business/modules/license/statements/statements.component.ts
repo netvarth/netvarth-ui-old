@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-statements',
@@ -47,6 +48,8 @@ export class StatementsComponent implements OnInit {
   discounts: any = [];
   loading = true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   pay_data = {
     amount: 0,
     //  paymentMode: 'DC', // 'null', changes as per request from Manikandan

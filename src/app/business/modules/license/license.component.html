@@ -3,19 +3,172 @@
         (performAction)="performActions($event)"></app-breadcrumb>
 </section> -->
 <section class="">
-    <div class="title-gb no-padding">
+    <div class="card title-gb">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            License & Invoice
-          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+            License & Subscriptions
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>
-  </section>
-<section>
+</section>
+<section class="lic_revamp">
     <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
                 <div class="row">
-                    <div class="copy one col-xs-12 col-sm-12 no-padding">
+                    <!-- New Revamp -->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 no-padding">
+                        <div class="card no-padding-small">
+                            <div class="disp-flex">
+                                <p class="form-level-settings flx_1 mgn-lt-10">{{frm_lic_cap}}<a class="learnmore-pointer"
+                                        id="customer-help"
+                                        (click)="learnmore_clicked('upgradelicense', $event)">{{learn_more}}</a> </p>
+                                       <button mat-flat-button [matMenuTriggerFor]="menu">
+                                        <i  class="fa fa-ellipsis-v"></i>
+                                       </button>
+                                        <mat-menu #menu="matMenu">
+                                          <button mat-menu-item (click)="showLicenseUsage()">Usage</button>
+                                          <button mat-menu-item (click)="showLicenceHistory()">License History</button>
+                                          <button mat-menu-item (click)="gotoPaymentHistory()">Payment History</button>
+                                          <button mat-menu-item (click)="showInvoiceStatus()">License Statement</button>
+                                        </mat-menu>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding-small">
+
+                                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <!-- Sidenav for annual -->
+                                    <div class="anual_side" *ngIf="changelicence"
+                                        [ngStyle]="{ 'margin-top' : height+'px'}">
+                                        <aside>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Subscription Plan</div>
+                                                <div>Annual</div>
+                                            </div>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Period</div>
+                                                <div>1 year</div>
+                                            </div>
+                                            <div class="anual_outr">
+                                                <div class="inside_anual">Effective
+                                                    From</div>
+                                                <div>{{effectivedate | date:newDateFormat}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Package</div>
+                                                <div>{{currentlicense_details.accountLicense.displayName}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Grand Total</div>
+                                                <div class="rupee-font">{{grandTotal| currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Applied Discount</div>
+                                                <div class="rupee-font">{{appliedDiscount | currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="anual_outr" *ngIf="showAmounts">
+                                                <div class="inside_anual">Net Total</div>
+                                                <div class="rupee-font">{{netTotal | currency:'&#8377;'}}</div>
+                                            </div>
+                                            <div class="mgn-up-10">
+                                                <div class="actions">
+                                                    <button mat-flat-button
+                                                        (click)="cancelAssignServices()">Cancel</button>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <button mat-flat-button
+                                                        (click)="doUpgradeSubcription('ANNUAL')">Ok</button>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                    </div>
+
+
+                                    <div class="txt_sub_plan">Your Subscription Plan</div>
+                                    <div>
+                                        <h3>{{current_lic}}</h3>
+                                    </div>
+                                    <div class="mgn-up-10" *ngIf="upgradablepackages.length > 0">
+                                        <button class="cs-btn bt3" (click)="showupgradeLicense()">Upgrade your
+                                            plan</button>
+                                    </div>
+
+                                    <div class="ln-ht-3 clr_grey">
+                                        <span *ngIf="license_message != ''">
+                                            Valid
+                                            <span class="clr_pitch_blu">{{license_message}}
+                                            </span> |
+                                        </span>
+                                        <span *ngIf="licenseDisplayName === 'Monthly'">
+                                            Billed Every {{licenseDisplayName}}</span>
+                                        <span *ngIf="licenseDisplayName === 'Annual'">
+                                            {{licenseDisplayName}} Subscription</span>
+                                    </div>
+                                    <div class="cancel_an"
+                                        *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0 && showAmounts">
+                                        <button class="cs-btn bt3" (click)="openAnnualSection()">Switch
+                                            to Annual</button>
+                                        <sup class="txt_off">{{annualdiscount}}% OFF</sup>
+                                    </div>
+                                    <div *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 1">
+                                        <div class="cancel_an">
+                                            <div class="fnt-san_serif">
+                                                You changed your license subscription type to
+                                                <strong>Annual.</strong>
+                                                The subscription license statement will be generated on
+                                                {{effectivedate | date: newDateFormat}}.
+                                            </div>
+                                            <button class="cs-btn bt3 mgn-up-10" 
+                                                (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div *ngIf="currentlicense_details.dueAmount > 0"
+                                        class="card line_ht_2 no-mgn-bt card_addon txt_centr">
+                                        <div class="txt_adon">Bill Due</div>
+                                        <div>Amount - <span class="clr_pitch_blu rupee-font">{{currentlicense_details.dueAmount
+                                                | currency:'&#8377;'}}</span></div>
+                                        <div *ngIf="invoices.length != 0">Due Date - <span
+                                                class="clr_pitch_blu">{{currentlicense_details.nextPaymentOn
+                                                | date: newDateFormat }}</span></div>
+                                        <div *ngIf="invoices.length != 0" class="mgn-up-10"><span
+                                                class="btn_pay custId-cursor" (click)="showUnpaidInvoice()">PAY</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  mgn-bt-10">
+                                <div class="mgn-up-20">
+                                    <div class="card card_addon">
+                                        <span class="txt_adon">Add-ons&nbsp;&nbsp;<i
+                                                *ngIf="adon_list && adon_list.length === 0" (click)="gotoAddOns()"
+                                                class="fa fa-plus-circle fa-lg custId-cursor" aria-hidden="true"></i>
+                                            <span *ngIf="adon_list && adon_list.length > 0"
+                                                class="addbt btn_ad_more" (click)="gotoAddOns()"></span>
+                                        </span>
+                                        <div class="adon_lst" *ngIf="adon_list && adon_list.length > 0">
+                                            <div *ngFor="let adon of adon_list">
+                                                {{adon.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="card card_addon custId-cursor" (click)="gotoJaldeeKeywords()">
+                                        <span class="txt_adon">Jaldee Search Keywords</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <!-- old code -->
+
+                    <!-- <div class="copy one col-xs-12 col-sm-12 no-padding">
                         <div class="pay-section card" *ngIf="loading">
                             <app-common-innerloading-spinner></app-common-innerloading-spinner>
                         </div>
@@ -35,11 +188,11 @@
                                     </button>
                                     <button mat-menu-item (click)="showLicenseUsage()">
                                         <span>{{licnse_usage}}</span>
-                                    </button>       
+                                    </button>
                                     <button mat-menu-item (click)="showInvoiceStatus()">
-                                        <span> License Statement</span> 
+                                        <span> License Statement</span>
 
-                                    </button>                            
+                                    </button>
                                 </mat-menu>
                             </span>
                             <div class="lc11" style="padding: 5px;">
@@ -49,8 +202,7 @@
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding-small">
                                                 <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
-                                                        <!-- *ngFor="let invoice of invoices let i=index" -->
-                                                        <div *ngIf="invoices[0]" >
+                                                        <div *ngIf="invoices[0]">
                                                             <span class="amount">License Status:&nbsp;&nbsp; <i
                                                                     class="fa fa-exclamation-triangle"
                                                                     aria-hidden="true"
@@ -70,16 +222,17 @@
                                                     <div class="lt mgn-bt-10">
                                                         <div>
                                                             <span class="amount">{{due_amt}}:&nbsp;&nbsp;<strong>
-                                                                <span class="rupee-font">
-                                                                    {{currentlicense_details.dueAmount
+                                                                    <span class="rupee-font">
+                                                                        {{currentlicense_details.dueAmount
                                                                         | currency:'&#8377;'}}
-                                                                </span>
-                                                               </strong>
+                                                                    </span>
+                                                                </strong>
                                                             </span> <span class="amount" *ngIf="invoices.length != 0">
                                                                 <strong> - {{currentlicense_details.nextPaymentOn
-                                                                        | date: dateFormat }}</strong>
+                                                                    | date: dateFormat }}</strong>
                                                             </span>&nbsp;
-                                                            <span class="cs-btn bt3 pay_statment_btn" (click)="showUnpaidInvoice()"
+                                                            <span class="cs-btn bt3 pay_statment_btn"
+                                                                (click)="showUnpaidInvoice()"
                                                                 *ngIf="invoices.length != 0">{{pay_button}}</span>
                                                         </div>
 
@@ -93,14 +246,14 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </div>                                           
+                                                </div>
                                                 <div class="lc4-1">
                                                     <div class="lt mgn-bt-10">
                                                         <div>
                                                             <span class="amount">Package:
                                                                 <strong>{{currentlicense_details.accountLicense.displayName}}</strong>
                                                             </span><span class="warning"
-                                                            *ngIf="license_message != ''">({{license_message}})</span>
+                                                                *ngIf="license_message != ''">({{license_message}})</span>
                                                             <span class="cs-btn bt3 upgrade_btn"
                                                                 (click)="showupgradeLicense()"
                                                                 *ngIf="upgradablepackages.length > 0">{{upgrade_license}}
@@ -115,8 +268,8 @@
                                                     <div style="margin-top: 10px; margin-right: 10px;">
                                                         <div class="lt"
                                                             *ngIf="licensePlan == 'MONTHLY' && statusOfLicense == 0">
-                                                            Jaldee recommends <span
-                                                                (click)="openAnnualSection()"><span class="bt3 switchanual_btn pointer-cursor">Switch
+                                                            Jaldee recommends <span (click)="openAnnualSection()"><span
+                                                                    class="bt3 switchanual_btn pointer-cursor">Switch
                                                                     to
                                                                     Annual</span> <span> and get
                                                                     <strong>{{annualdiscount}}%</strong>
@@ -131,7 +284,8 @@
                                                             <div class="ln-hgt-24">Period:&nbsp;&nbsp;<strong>1
                                                                     Year</strong> </div>
                                                             <div class="ln-hgt-24">Effective
-                                                                From:&nbsp;&nbsp;<strong>{{effectivedate  | date: dateFormat}}</strong>
+                                                                From:&nbsp;&nbsp;<strong>{{effectivedate | date:
+                                                                    dateFormat}}</strong>
                                                             </div>
                                                             <div class="ln-hgt-24" *ngIf="showAmounts">
                                                                 Package:&nbsp;&nbsp;<strong>{{currentlicense_details.accountLicense.displayName}}</strong>
@@ -146,7 +300,7 @@
                                                                     | currency:'&#8377;'}}</strong></div>
                                                             <div class="ln-hgt-24" *ngIf="showAmounts">Net Total:
                                                                 &nbsp;&nbsp;<strong class="rupee-font">{{netTotal
-                                                                    | currency:'&#8377;'}}</strong></div>                                                          
+                                                                    | currency:'&#8377;'}}</strong></div>
                                                         </div>
                                                         <div>
                                                             <button class="cs-btn bt1"
@@ -179,7 +333,7 @@
                                                         If you need to cancel <span
                                                             (click)="doUpgradeSubcription('ANNUAL')">Click here</span>
                                                     </div>
-                                                </div>                                               
+                                                </div>
                                                 <div>
                                                     <div>
                                                         <span *ngIf="licensePlan == 'ANNUAL' && statusOfLicense == 0">
@@ -211,19 +365,20 @@
                                                         <th class="th-lg" *ngIf="!hide_invoiceperiod">{{period_cap}}
                                                         </th>
                                                         <th class="th-lg">{{invoice_cap}}</th>
-                                                        <!-- <th></th> -->
+                                                        <th></th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let invoice of invoices let i=index">
                                                         <td data-title="Date">{{invoice.createdDate | date: dateFormat
-                                                                }}</td>
+                                                            }}</td>
                                                         <td data-title="Due On">
                                                             {{invoice.dueDate | date: dateFormat }}
                                                         </td>
                                                         <td data-title="Amount">
-                                                            <strong class="rupee-font">{{invoice.amount | currency:'&#8377;'}}</strong>
+                                                            <strong class="rupee-font">{{invoice.amount |
+                                                                currency:'&#8377;'}}</strong>
                                                         </td>
                                                         <td data-title="Period" *ngIf="!hide_invoiceperiod">
                                                             {{invoice.periodFrom | date: dateFormat }} -
@@ -237,14 +392,14 @@
                                                                 class="icon-invoice normal-link pointer-cursor"
                                                                 (click)="getInvoice(invoice)"></span>
                                                         </td>
-                                                        <!-- <td>
+                                                        <td>
                                                             <span *ngIf="(invoices.length-1) == i" class="cs-btn bt3"
                                                                 (click)="makePayment(invoice)">Pay
                                                                 <span class="rupee-font">
                                                                     {{invoice.amount | currency:'&#8377;'}}
                                                                 </span>
-                                                                </span>
-                                                        </td> -->
+                                                            </span>
+                                                        </td>
                                                         <td>
                                                             <p *ngIf="invoice.isPeriodic" class="form-level-settings">
                                                                 Monthly generated invoice</p>
@@ -257,10 +412,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
                 </div>
             </div>
-            <div class="row">
+
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoPaymentHistory()">
                         <h2>Payment History</h2>
@@ -292,7 +449,8 @@
                                 More</a></span>
                     </span>
                 </div>
-            </div>
+            </div> -->
+
         </div>
     </div>
     <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>

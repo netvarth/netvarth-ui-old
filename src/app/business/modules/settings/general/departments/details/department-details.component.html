@@ -94,7 +94,7 @@
                                                 <div class="j-special"
                                                     *ngFor="let user of dept_data.users, index as i">
                                                     <!-- {{user.firstName}} {{user.lastName}} -->
-                                                    {{user.businessName}}
+                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                                                 </div>
                                             </div>
                                         </div>

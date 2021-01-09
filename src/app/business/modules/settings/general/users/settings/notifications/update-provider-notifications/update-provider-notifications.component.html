@@ -1,0 +1,185 @@
+<h1 class="mat-dialog-title">
+    <h3>{{data.type}} Notifications</h3>
+    <button mat-dialog-close class="modal_close" tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+</h1>
+<mat-dialog-content>
+    <div class="rw col-md-12 mgn-bt-20">
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="form-group" *ngIf="!api_loading">
+            <div class="disp-flex">
+                <span *ngIf="data.type === 'Token'" class="notification" style="font-weight: 600">Notify whenever a
+                    token is
+                    generated</span>
+                <span *ngIf="data.type === 'Check-in'" class="notification" style="font-weight: 600"> Notify whenever
+                    check-in
+                    happens</span>
+                <span *ngIf="data.type === 'Appointment'" class="notification" style="font-weight: 600"> Notify whenever
+                    appointment happens</span>
+                <mat-slide-toggle class="example-margin" (change)="selectChekinNotify($event)"
+                    [(ngModel)]="SelchkinNotify">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <section *ngIf="SelchkinNotify">
+            <ul class="notifications pad-left-20">
+                <li>
+                    <span class="notification"> via SMS </span>
+                    <span [class.disabled]="is_noSMS" class="noti-add-btn" (click)="smsAddClicked()">Add</span>
+                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                            (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
+                        to
+                        avoid undelivered SMS'}}</div>
+                    <div class="form-group mgn-up-10" *ngIf="sms">
+                        <div class="input-group mb-3 phadd">
+                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifyphonenumber" minlength="0"
+                                maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addChkinPh()" type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="ph_arr.length > 0">
+                        <li *ngFor="let phne of ph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification"> via Email</span>
+                    <span class="noti-add-btn" (click)="emailAddClicked()">Add</span>
+                    <div class="form-group mgn-up-10" *ngIf="email">
+                        <div class="input-group mb-3 emadd">
+                            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="em_arr.length > 0">
+                        <li *ngFor="let emailval of em_arr">{{emailval}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(emailval, em_arr, 'newcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification">App notification</span>
+                    <span class="noti-add-btn"
+                        *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknPushph_arr.length === 0)"
+                        (click)="cheknPushAddClicked()">Add</span>
+                    <div class="form-group mgn-up-10" *ngIf="cheknPushph">
+                        <div class="input-group mb-3 phadd">
+                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifycheknPushphonenumber" minlength="0"
+                                maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addcheknPushPh()" type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="cheknPushph_arr.length > 0">
+                        <li *ngFor="let phne of cheknPushph_arr">+91 {{phne}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <button *ngIf="okCheckinStatus" (click)="chekinNotifications('newcheckin')" type="button" mat-button
+            class="cs-btn bt1 notifyOk">OK</button>
+    </div>
+    <div class="rw col-md-12" *ngIf="data.type !== 'Donation' && data.type !== 'Account'">
+        <div class="form-group" *ngIf="!api_loading">
+            <div style="display: flex">
+                <span *ngIf="data.type === 'Token'" class="notification" style="font-weight: 600"> Notify whenever a
+                    token gets
+                    cancelled</span>
+                <span *ngIf="data.type === 'Check-in'" class="notification" style="font-weight: 600"> Notify whenever
+                    check-in gets
+                    cancelled</span>
+                <span *ngIf="data.type === 'Appointment'" class="notification" style="font-weight: 600"> Notify whenever
+                    appointment gets
+                    cancelled</span>
+                <mat-slide-toggle class="example-margin" (change)="selectChekinCanclNotify($event)"
+                    [(ngModel)]="SelchkincnclNotify">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <section *ngIf="SelchkincnclNotify">
+            <ul class="notifications pad-left-20">
+                <li>
+                    <span class="notification"> via SMS</span>
+                    <span [class.disabled]="is_noSMS" class="noti-add-btn"
+                        (click)="cancelledCheckinsmsAddClicked()">Add</span>
+                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                            (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
+                        to
+                        avoid undelivered SMS'}}</div>
+                    <div class="form-group mgn-up-10" *ngIf="cancelsms">
+                        <div class="input-group mb-3 phadd">
+                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifycanclphonenumber" minlength="0"
+                                maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addCheknCanclph()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="ph1_arr.length > 0">
+                        <li *ngFor="let phnecancel of ph1_arr">+91 {{phnecancel}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification"> via Email </span>
+                    <span class="noti-add-btn" (click)="cancelledCheckinemailAddClicked()">Add</span>
+                    <div class="form-group mgn-up-10" *ngIf="cancelemail">
+                        <div class="input-group mb-3 emadd">
+                            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addCheknCanclemil()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="em1_arr.length > 0">
+                        <li *ngFor="let emailcancl of em1_arr">{{emailcancl}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i></li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="notification">App notification</span>
+                    <span class="noti-add-btn"
+                        *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknCancelPushph_arr.length === 0)"
+                        (click)="cheknCancelPushAddClicked()">Add</span>
+                    <div class="form-group mgn-up-10" *ngIf="cheknCancelPushph">
+                        <div class="input-group mb-3 phadd">
+                            <input class="form-control" style="max-width: 50px !important;" type="text" readonly
+                                value="+91">
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifycheknCancelPushphonenumber"
+                                minlength="0" maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addcheknCancelPushPh()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pad-left-20" *ngIf="cheknCancelPushph_arr.length > 0">
+                        <li *ngFor="let phne of cheknCancelPushph_arr">+91 {{phne}} <i
+                                class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, cheknCancelPushph_arr, 'newcheckin')"></i></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <button *ngIf="okCancelStatus" (click)="checkinCancelNotifications('cancelcheckin')" type="button" mat-button
+            class="cs-btn bt1 notifyOk">OK</button>
+    </div>
+</mat-dialog-content>

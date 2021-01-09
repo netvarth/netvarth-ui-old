@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-payment-history',
@@ -23,6 +24,8 @@ export class ProviderPaymentHistoryComponent implements OnInit {
   payment_history: any = [];
   load_complete = 0;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   isCheckin;
   breadcrumbs = [
     {

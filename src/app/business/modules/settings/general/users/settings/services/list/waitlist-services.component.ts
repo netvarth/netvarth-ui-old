@@ -6,6 +6,8 @@ import { ProviderServices } from '../../../../../../../../ynw_provider/services/
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { ShowMessageComponent } from '../../../../../../../../business/modules/show-messages/show-messages.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-user-services',
@@ -50,11 +52,19 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         perPage: this.page_count
     };
     order = 'status';
+    use_metric;
+    usage_metric: any;
+    adon_info: any;
+    adon_total: any;
+    adon_used: any;
+    disply_name: any;
+    warningdialogRef: any;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
+        private dialog: MatDialog,
         public router: Router) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
@@ -77,6 +87,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare')  {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
           }
+          this.getLicenseUsage();
     }
 
     ngOnDestroy() {
@@ -219,6 +230,36 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general' , 'users' , this.userId , 'settings']);
       }
       addservice() {
-        this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'services', 'add']);
+        if (this.adon_total === this.adon_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
+            this.router.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'services', 'add']);
+        }
        }
+       getLicenseUsage() {
+        this.provider_services.getLicenseUsage()
+            .subscribe(
+                data => {
+                   this.use_metric = data;
+                   this.usage_metric = this.use_metric.metricUsageInfo;
+                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
+                   this.adon_total = this.adon_info[0].total;
+                   this.adon_used = this.adon_info[0].used;
+                   this.disply_name = this.adon_info[0].metricName;
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    } 
 }

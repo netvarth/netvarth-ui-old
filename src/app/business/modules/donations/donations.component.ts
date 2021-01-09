@@ -8,6 +8,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   'selector': 'app-donations',
@@ -40,6 +41,8 @@ export class DonationsComponent implements OnInit {
   };
   isCheckin;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   loadComplete = false;
   minday = new Date(2015, 0, 1);
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');

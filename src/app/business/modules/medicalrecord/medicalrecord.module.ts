@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MedicalrecordRoutingModule } from './medicalrecord.routing.module';
@@ -76,6 +76,10 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
   ],
   providers: [
     MedicalrecordService
-  ]
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],
 })
 export class MedicalrecordModule { }

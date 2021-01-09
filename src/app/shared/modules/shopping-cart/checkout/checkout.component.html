@@ -78,7 +78,7 @@
                               <span *ngIf="!isFuturedate">
                                   {{nextAvailableTime}}
                               </span>
-                              <span *ngIf="isFuturedate">{{sel_checkindate | date: dateFormat}},
+                              <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
                               </span>
                               <span *ngIf="isFuturedate">
                                   {{nextAvailableTime}}
@@ -206,6 +206,9 @@
                       </div>
                     </div>
                   </div>
+                  <span class="shoppinglistuploadspan popular_more"(click)="filed.click()"  *ngIf="this.orderType === 'SHOPPINGLIST'">
+                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">upload shoppinglist
+                  </span>
                   <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                     <div class="bill-section-content">
                       <div class="bill-wrapper ">
@@ -296,6 +299,7 @@
                     </div>
                   </div>
   
+                  
                   <div *ngIf="image_list_popup && this.orderType === 'SHOPPINGLIST'">
                     <ul class="shoppinglist-gal">
                       <ng-container *ngFor="let file of image_list_popup;let i = index">
@@ -321,9 +325,9 @@
                               </div>
                           </li>
                       </ng-container>
-                      <li *ngIf="image_list_popup.length>2">
+                      <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
                           <div class="shoppinglistbx">
-                              <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
+                              <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
                                   *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
                               <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
                                       *ngIf="image_list_popup[2].modal.img"
@@ -357,15 +361,13 @@
                       [buttonsConfig]="customButtonsFontAwesomeConfig"
                       (buttonBeforeHook)="onButtonBeforeHook()"
                       (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                      <div (click)="filed.click()">
+                      <!-- <div (click)="filed.click()">
                           <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist
-                        </div>
+                        </div> --><br>
                       <div>
                           <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
-                    
-  
                   <!-- <div class="cr1">
                   <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">
                     <h5>upload list</h5>

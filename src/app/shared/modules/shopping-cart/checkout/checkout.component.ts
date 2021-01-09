@@ -16,6 +16,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -69,6 +70,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   storeChecked = true;
   emailId;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
 
   linear: boolean;
   catalog_details: any;
@@ -634,8 +636,46 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      this.shared_services.CreateConsumerOrderlist(this.account_id, post_Data, dataToSend)
+      const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
+      dataToSend.append('order', blobpost_Data);
+      this.shared_services.CreateConsumerOrderlist(this.account_id, dataToSend)
       .subscribe(data => {
+        const retData = data;
+        this.checkoutDisabled = false;
+        let prepayAmount;
+        const uuidList = [];
+        Object.keys(retData).forEach(key => {
+          if (key === '_prepaymentAmount') {
+            prepayAmount = retData['_prepaymentAmount'];
+          } else {
+            this.trackUuid = retData[key];
+            uuidList.push(retData[key]);
+          }
+        });
+
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            account_id: this.account_id,
+            type_check: 'order_prepayment',
+            prepayment: prepayAmount,
+            uuid: this.trackUuid
+          }
+        };
+        if (this.catalog_details.advanceAmount) {
+          this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+            .subscribe(res => {
+              console.log(res);
+              this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+            });
+        } else {
+          this.orderList = [];
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
+          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
+          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
+          this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+        }
       },
       error => {
         this.checkoutDisabled = false;
@@ -644,7 +684,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
     );
     } else {
-    this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
+      const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
+      dataToSend.append('order', blobpost_Data);
+      this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
       .subscribe(data => {
         const retData = data;
         this.checkoutDisabled = false;
@@ -964,5 +1006,4 @@ imageSelect(event) {
                 }
     }
 }
-
 

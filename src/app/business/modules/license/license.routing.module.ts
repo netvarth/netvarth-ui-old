@@ -9,6 +9,7 @@ import { StatementsComponent } from './statements/statements.component';
 import { InvoiceStatusComponent } from './invoicestatus/invoicestatus.component';
 import { ViewPrevStatementComponent } from './statements/viewprevstatement.component';
 import { PaymentComponent } from './payments/licensepayment.component';
+import { AddonDetailComponent } from './addons/addon-detail/addon-detail.component';
 
 
 const routes: Routes = [
@@ -47,6 +48,10 @@ const routes: Routes = [
       {
         path: 'payments',
         component: PaymentComponent
+      },
+      {
+        path: 'addon-detail',
+        component: AddonDetailComponent
       }
     ]
   },

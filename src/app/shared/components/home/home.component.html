@@ -14,8 +14,8 @@
 								class="" /></a>
 					</div> -->
 					<div class="account-links ">
-						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">Business
-								Partner Zone</span></a>
+						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">Service
+								Provider Zone</span></a>
 						<!-- <a href="https://business.jaldee.com/" class="pointer-cursor"><span class="bus-page-rdbtn">Business
 									Partner Zone</span></a> -->
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
@@ -48,7 +48,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
 							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">Business Partner Zone</span></a>
+								<span class="bus-page-rdbtn">Service Provider Zone</span></a>
 							<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
 								<span class="bus-page-rdbtn">Business Partner Zone</span></a> -->
 						</div>
@@ -72,7 +72,7 @@
 					<div class="sa" *ngIf="domain_obtained==true">
 						<div class="account-links">
 							<h2>Avoid Waiting in Queues</h2>
-							<h5>Find Service Provider</h5>
+							<!-- <h5>Find Service Provider</h5> -->
 							<ng-container>
 								<app-search [showopennow]="0" [searchfields]="searchfields"
 									[domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
@@ -139,10 +139,10 @@
 
 			</div>
 		</div>
-		<section id="welcome">
+		<section id="welcome" class="mgn-bt-30">
 			<div class="container">
 				<div class="row no-gutters align-items-end">
-					<div class="col-lg-6 text-block">
+					<div class="col-lg-12 text-block">
 						<!-- <h3>Welcome to</h3>
 						<img src="assets/images/home/logo-blue.png" alt="Jaldee" class="img-fluid" /> -->
 						<!-- <section id="reviews"> -->
@@ -231,9 +231,9 @@
 								has been the industry's standard dummy text ever since the 1500s.</li>
 						</ul> -->
 					</div>
-					<div class="col-lg-6 image-block">
+					<!-- <div class="col-lg-6 image-block">
 						<img src="assets/images/home/welcome-1.png" alt="Jaldee" class="img-fluid" />
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</section>

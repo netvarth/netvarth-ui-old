@@ -3,9 +3,20 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
 declare let cordova: any;
+
+
+export class Group {
+  level = 0;
+  parent: Group;
+  expanded = true;
+  totalCounts = 0;
+  get visible(): boolean {
+    return !this.parent || (this.parent.visible && this.parent.expanded);
+  }
+}
 
 @Component({
   selector: 'app-generated-report',
@@ -15,6 +26,7 @@ declare let cordova: any;
 export class GeneratedReportComponent implements OnInit {
 
 
+  groupByColumns: string[];
   showReport: boolean;
   report_type: any;
   reportConsolidatedInfo: any;
@@ -27,14 +39,16 @@ export class GeneratedReportComponent implements OnInit {
   tableColums: any;
   table_header_columns: any;
   report: any = {};
+  reducedGroups = [];
 
 
   public report_dataSource = new MatTableDataSource<any>([]);
   reprtdialogRef: any;
   hide_criteria_save = false;
+  groupingColumn;
+
 
   constructor(
-
     private report_data_service: ReportDataService,
     private router: Router,
     public dateformat: DateFormatPipe,
@@ -54,6 +68,7 @@ export class GeneratedReportComponent implements OnInit {
       ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
     );
     this.displayedColumns = this.table_header.map(column => column.order);
+    console.log(this.displayedColumns);
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.reportRecreate) {
         this.hide_criteria_save = true;
@@ -72,10 +87,74 @@ export class GeneratedReportComponent implements OnInit {
       this.showReport = true;
     }
 
+    // this.groupingColumn = 'Confirmation Number';
+    this.buildDataSource();
+
   }
   getDateFormat(date) {
     return this.dateformat.transformToMonthlyDate(date);
   }
+
+  buildDataSource() {
+
+    this.report_dataSource = this.groupBy(this.groupingColumn, this.report.reportContent.data, this.reducedGroups);
+  }
+
+  groupBy(column: string, data: any[], reducedGroups?: any[]) {
+    console.log(column);
+    if (!column) { return data; }
+    let collapsedGroups = reducedGroups;
+    if (!reducedGroups) { collapsedGroups = []; }
+    const customReducer = (accumulator, currentValue) => {
+      console.log(currentValue);
+      const currentGroup = currentValue[column];
+      console.log(currentGroup);
+      if (!accumulator[currentGroup]) {
+        accumulator[currentGroup] = [{
+          groupName: `${currentValue[column]}`,
+          value: currentValue[column],
+          isGroup: true,
+          reduced: collapsedGroups.some((group) => group.value === currentValue[column])
+        }];
+      }
+
+      accumulator[currentGroup].push(currentValue);
+
+      return accumulator;
+    }
+    const groups = data.reduce(customReducer, {});
+    const groupArray = Object.keys(groups).map(key => groups[key]);
+    const flatList = groupArray.reduce((a, c) => a.concat(c), []);
+
+    return flatList.filter((rawLine) => {
+      return rawLine.isGroup ||
+        collapsedGroups.every((group) => rawLine[column] !== group.value);
+    });
+  }
+
+  /**
+   * Since groups are on the same level as the data,
+   * this function is used by @input(matRowDefWhen)
+   */
+  isGroup(index, item): boolean {
+    return item.isGroup;
+  }
+
+  /**
+   * Used in the view to collapse a group
+   * Effectively removing it from the displayed datasource
+   */
+  reduceGroup(row) {
+    row.reduced = !row.reduced;
+    if (row.reduced) {
+      this.reducedGroups.push(row);
+    } else {
+      this.reducedGroups = this.reducedGroups.filter((el) => el.value !== row.value);
+    }
+
+    this.buildDataSource();
+  }
+
 
   redirecToReports() {
     if (this.hide_criteria_save) {
@@ -84,6 +163,7 @@ export class GeneratedReportComponent implements OnInit {
       this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.report_type } });
     }
   }
+
   printReport() {
     const printContent = document.getElementById('reportGenerated');
     let printsection = '<html><head><title></title>';
@@ -106,4 +186,7 @@ export class GeneratedReportComponent implements OnInit {
     this.reprtdialogRef.afterClosed().subscribe(result => {
     });
   }
+
+
+
 }

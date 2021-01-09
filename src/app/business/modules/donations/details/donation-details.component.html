@@ -40,7 +40,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="pad-10">{{donationDetails.date | date: display_dateFormat}}</td>
+                            <td class="pad-10">{{donationDetails.date | date: newDateFormat}}</td>
                             <td class="pad-10">{{donationDetails.service.name}}</td>
                             <td class="pad-10 rupee-font">{{donationDetails.donationAmount | currency:'&#8377;' }}</td>
                         </tr>

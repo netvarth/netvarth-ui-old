@@ -893,10 +893,10 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   CreateConsumerOrder(accountid, postData) {
-    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
+    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, postData);
   }
-  CreateConsumerOrderlist(accountid, postData , dataappend) {
-    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData, dataappend);
+  CreateConsumerOrderlist(accountid, dataappend) {
+    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
   }
   getAvailableDatesForPickup(catalogid, accountid?) {
     return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid + '?account=' + accountid);

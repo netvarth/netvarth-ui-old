@@ -19,6 +19,9 @@ import { QueueSelectionComponent } from './queue-selection/queue-selection.compo
 import { GeneratedReportComponent } from './generated-report/generated-report.component';
 import { CustomerSelectionComponent } from './customer-selection/customer-selection.component';
 import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -31,7 +34,10 @@ import { CriteriaDialogComponent } from './generated-report/criteria-dialog/crit
       MatFormFieldModule,
       MatInputModule,
       MatPaginatorModule,
-      MatDatepickerModule
+      MatDatepickerModule,
+      MatListModule,
+      MatSelectModule,
+      MatOptionModule
 
 
   ],
@@ -44,6 +50,7 @@ import { CriteriaDialogComponent } from './generated-report/criteria-dialog/crit
     GeneratedReportComponent,
     CustomerSelectionComponent,
     CriteriaDialogComponent,
+
   ],
   entryComponents: [
     CriteriaDialogComponent

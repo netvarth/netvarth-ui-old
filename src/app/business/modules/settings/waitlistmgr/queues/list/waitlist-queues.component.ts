@@ -10,6 +10,8 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { SharedServices } from '../../../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import * as moment from 'moment';
+import { ShowMessageComponent } from '../../../../../../business/modules/show-messages/show-messages.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-waitlist-queues',
@@ -96,6 +98,13 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     showtoken = false;
     tokenOrcheckinCount;
     tokencount;
+    use_metric;
+    usage_metric: any;
+    adon_info: any;
+    adon_total: any;
+    adon_used: any;
+    disply_name: any;
+    warningdialogRef: any;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -105,6 +114,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         public provider_shared_functions: ProviderSharedFuctions,
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
+        private dialog: MatDialog,
         private fb: FormBuilder) { }
 
     ngOnInit() {
@@ -119,7 +129,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         };
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.initializeQs();
-
+        this.getLicenseUsage();
     }
     ngOnDestroy() {
         if (this.queuedialogRef) {
@@ -977,9 +987,39 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.routerobj.navigate(['/provider/' + this.domain + '/q-manager->settings-time_windows']);
     }
     addqueue() {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
-        };
-        this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
+        if (this.adon_total === this.adon_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { activeQueues: this.provider_shared_functions.getActiveQueues() }
+            };
+            this.router.navigate(['provider', 'settings', 'q-manager', 'queues', 'add'], navigationExtras);
+        }
+    }
+    getLicenseUsage() {
+        this.provider_services.getLicenseUsage()
+            .subscribe(
+                data => {
+                   this.use_metric = data;
+                   this.usage_metric = this.use_metric.metricUsageInfo;
+                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
+                   this.adon_total = this.adon_info[0].total;
+                   this.adon_used = this.adon_info[0].used;
+                   this.disply_name = this.adon_info[0].metricName;
+                },
+                error => {
+                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
     }
 }

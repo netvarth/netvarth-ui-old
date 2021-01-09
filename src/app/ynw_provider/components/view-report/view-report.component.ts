@@ -5,6 +5,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-view-report',
@@ -25,6 +26,8 @@ export class ViewReportComponent implements OnInit {
   service_cap = Messages.PRO_SERVICE_CAP;
   name_cap = Messages.PRO_NAME_CAP;
   period_date_cap = Messages.REPORT_PERIOD_DATE_CAP;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   coupon_amt_cap = Messages.REPORT_COUPON_AMT_CAP;
   reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
   j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;

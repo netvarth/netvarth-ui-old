@@ -98,6 +98,7 @@ export class CheckinActionsComponent implements OnInit {
         console.log(this.data);
         this.apiloading = true;
         this.setMinMaxDate();
+        this.getLabel();
         this.checkin = this.data.checkinData;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
@@ -112,7 +113,6 @@ export class CheckinActionsComponent implements OnInit {
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
             this.getPos();
-            this.getLabel();
         } else {
             this.showMsg = true;
             this.apiloading = false;
@@ -488,30 +488,11 @@ export class CheckinActionsComponent implements OnInit {
         this.providerLabels = [];
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
-            this.labelselection();
+            if (!this.data.multiSelection) {
+                this.labelselection();
+            }
             this.loading = false;
         });
-    }
-    changeLabelvalue(labelname, value) {
-        this.labelMap = new Object();
-        this.labelMap[labelname] = value;
-        for (let i = 0; i < this.providerLabels.length; i++) {
-            for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-                if (this.providerLabels[i].valueSet[j].value === value) {
-                    if (!this.providerLabels[i].valueSet[j].selected) {
-                        this.providerLabels[i].valueSet[j].selected = true;
-                        this.addLabel();
-                    } else {
-                        this.providerLabels[i].valueSet[j].selected = false;
-                        this.deleteLabel(labelname, this.checkin.ynwUuid);
-                    }
-                } else {
-                    if (this.providerLabels[i].label === labelname) {
-                        this.providerLabels[i].valueSet[j].selected = false;
-                    }
-                }
-            }
-        }
     }
     deleteLabel(label, checkinId) {
         this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
@@ -539,7 +520,7 @@ export class CheckinActionsComponent implements OnInit {
                 // this.labels();
                 this.labelMap = new Object();
                 this.labelMap[data.label] = data.value;
-                this.addLabel();
+                this.addLabel(data.label);
                 this.getDisplayname(data.label);
                 // }, 500);
             }
@@ -553,8 +534,27 @@ export class CheckinActionsComponent implements OnInit {
             }
         }
     }
-    addLabel() {
-        this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+    addLabel(label) {
+        // this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        const ids = [];
+        if (this.data.multiSelection) {
+            for (const checkin of this.checkin) {
+                ids.push(checkin.ynwUuid);
+            }
+        } else {
+            ids.push(this.checkin.ynwUuid);
+        }
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'uuid': ids
+        };
+        this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
             this.dialogRef.close('reload');
         },
             error => {
@@ -625,7 +625,7 @@ export class CheckinActionsComponent implements OnInit {
         this.labelMap = new Object();
         if (event.checked) {
             this.labelMap[label] = true;
-            this.addLabel();
+            this.addLabel(label);
         } else {
             this.deleteLabel(label, this.checkin.ynwUuid);
         }

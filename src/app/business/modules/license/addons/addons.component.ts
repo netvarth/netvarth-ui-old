@@ -6,11 +6,14 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-addons',
-    templateUrl: './addons.component.html'
+    templateUrl: './addons.component.html',
+    styleUrls: ['./addons.component.css']
 })
 
 export class AddonsComponent implements OnInit, OnDestroy {
@@ -42,12 +45,15 @@ export class AddonsComponent implements OnInit, OnDestroy {
     ];
     addonDescription = '';
     corpSettings: any;
+    addon_metric: any;
+    addonIconClasses = projectConstantsLocal.ADDON_ICON_CLASS;
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
         private shared_functions: SharedFunctions,
         private routerobj: Router,
-        private sharedfunctionObj: SharedFunctions
+        private sharedfunctionObj: SharedFunctions,
+        private location: Location,
     ) { }
 
     ngOnInit() {
@@ -57,7 +63,16 @@ export class AddonsComponent implements OnInit, OnDestroy {
         this.domain = user.sector;
         this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
+        this.getUpgradableaddonPackages();
     }
+    getUpgradableaddonPackages() {
+        this.provider_servicesobj.getUpgradableAddonPackages()
+          .subscribe((data: any) => {
+            console.log(data);
+            this.addon_metric = data;
+          });
+      }
+
     getLicenseCorpSettings() {
         this.provider_servicesobj.getLicenseCorpSettings().subscribe(
             (data: any) => {
@@ -130,6 +145,19 @@ export class AddonsComponent implements OnInit, OnDestroy {
         }
     }
     redirecToLicenseInvoice() {
-        this.routerobj.navigate(['provider', 'license']);
+       // this.routerobj.navigate(['provider', 'license']);
+       this.location.back();
+    }
+    gotoAddonDetail(dispname) {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { disp_name: dispname }
+        };
+        this.routerobj.navigate(['provider', 'license', 'addon-detail'], navigationExtras);
+    }
+    getAddonClass(adon) {
+        const retdet = this.addonIconClasses.filter(
+        soc => soc.value === adon);
+        const returndet = retdet[0].class;
+        return returndet;
     }
 }

@@ -63,9 +63,9 @@
                                                 <tr>
                                                     <td>{{bname | capitalizeFirst}}</td>
                                                     <td class="previousDue" style="text-align: end;">
-                                                        {{invoice.periodFrom | date: dateFormat}}<span
+                                                        {{invoice.periodFrom | date: newDateFormat}}<span
                                                             *ngIf="invoice.periodTo"> - {{invoice.periodTo | date:
-                                                dateFormat}}</span></td>
+                                                                newDateFormat}}</span></td>
                                                 </tr>
                                                 <tr *ngIf="gstNumber">
                                                     <td>GSTIN: {{gstNumber}}</td>
@@ -82,7 +82,7 @@
                                                     <td class="previousDue" style="text-align: left;">
                                                         {{invoice.invoiceRefNumber}}</td>
                                                     <td class="previousDue" style="text-align: end;">
-                                                        {{invoice.dueDate | date: dateFormat}}</td>
+                                                        {{invoice.dueDate | date: newDateFormat}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -184,7 +184,7 @@
                                                     <div class="pay-det-row">
                                                         <span>{{payment_cap}} {{date_cap}} :
                                                             <span class="result"><b>
-                                                                    {{payment.paymentOn | date: dateFormat}}</b></span></span>
+                                                                    {{payment.paymentOn | date: newDateFormat}}</b></span></span>
                                                     </div>
                                                     <div class="pay-det-row">
                                                         <span>{{payment_cap}} {{ref_id_cap}} :

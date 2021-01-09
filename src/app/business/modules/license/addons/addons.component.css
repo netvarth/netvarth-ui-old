@@ -1,0 +1,21 @@
+.revamp_addon .pad-30 {
+    padding: 20px;
+}
+.revamp_addon .bx-shadw {
+    /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important; */
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccccc7d !important;
+}
+.revamp_addon .txt_disp_name {
+    margin-right: 60px;
+    margin-bottom: 20px;
+    /* font-size: 1rem;
+    color: #1e4079;
+    font-weight: 600; */
+    font-size: medium;
+    color: #1e4079;
+    font-weight: 500;
+}
+.revamp_addon .flx_8 {
+    flex: 0.9;
+}

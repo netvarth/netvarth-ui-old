@@ -12,10 +12,12 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
+  order_criteria: any[];
   appointmentReports = [];
   donationReports = [];
   paymentReports = [];
   checkinReports = [];
+  orderReports = [];
   settings: any = [];
   showToken = false;
   criteria_list;
@@ -60,6 +62,7 @@ export class ReportsComponent implements OnInit {
   getCriteriaList() {
     this.criteria_list = '';
     this.appt_criteria = [];
+    this.order_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -81,6 +84,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'APPOINTMENT': {
             this.appt_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'ORDER': {
+            this.order_criteria.push(this.criteria_list[i]);
             break;
           }
         }

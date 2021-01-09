@@ -5,6 +5,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-auditlogs',
@@ -24,6 +25,8 @@ export class ProviderAuditLogComponent implements OnInit {
   load_complete = 0;
   tday = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,

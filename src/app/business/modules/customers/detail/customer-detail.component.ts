@@ -17,6 +17,8 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 })
 export class CustomerDetailComponent implements OnInit {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
     create_cap = Messages.CREATE_CAP;
     mobile_cap = Messages.MOBILE_CAP;
     f_name_cap = Messages.FIRST_NAME_CAP;

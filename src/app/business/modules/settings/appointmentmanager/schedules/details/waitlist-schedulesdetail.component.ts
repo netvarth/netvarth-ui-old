@@ -96,6 +96,8 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   enddateError = false;
   minDate;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   showBatchFields = false;
   batch = false;
   Schedulescaption = 'Add Schedule';

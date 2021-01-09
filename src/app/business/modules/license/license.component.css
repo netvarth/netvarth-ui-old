@@ -27,3 +27,141 @@
     width:10%;
     font-weight: bold;
 }
+
+/* revamp css */
+.lic_revamp .ln-ht-3 {
+    line-height: 3;
+}
+.lic_revamp .txt_sub_plan {
+    /* font-size: 0.8rem;
+    color: grey;
+    font-weight: 600; */
+    font-weight: 500;
+    font-size: medium;
+}
+.lic_revamp .txt_plan {
+    font-size: 1.5rem;
+    color: #194179;
+}
+.lic_revamp .btn_upgrde {
+    background: #194179;
+    border-radius: 20px;
+    color: white;
+}
+.lic_revamp .clr_grey {
+    color: grey;
+}
+.lic_revamp .clr_pitch_blu {
+    color: #194179 !important;
+}
+.lic_revamp .btn_switch {
+    color: #194179;
+    border-radius: 20px;
+    border: 2px solid #194179;
+}
+.lic_revamp .txt_off {
+    margin-left: 10px;
+    color: #4CAF50;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.lic_revamp .card_addon {
+    /* box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccc !important; */
+    border: 1px solid #33333373 !important;
+    border-radius: 0;
+}
+.lic_revamp .txt_adon {
+    /* color: grey;
+    font-size: 1rem;
+    font-weight: 600; */
+    font-weight: 600;
+    font-size: medium;
+}
+.lic_revamp .fnt-weig-600 {
+    font-weight: 600;
+}
+.lic_revamp .bill_due_card {
+    font-family: -webkit-pictograph;
+    margin-top: 40px;
+}
+.lic_revamp .txt_centr {
+    text-align: center;
+}
+.lic_revamp .btn_pay {
+    /* background: #194179; */
+    background: #2faef2;
+    color: white;
+    padding: 2px 15px 2px 15px;
+    border-radius: 15px;
+}
+.lic_revamp .anual_side::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 100%;
+    left: 1.5em;
+    border: 0.75rem solid transparent;
+    border-top: none;
+    border-bottom-color: #3c8dbc;
+    filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, 0.1));
+}
+.lic_revamp .anual_side {
+    /* background: #8CA8D8; */
+    background: #3c8dbc;
+    position: absolute;
+    z-index: 4;
+    color: white;
+    line-height: 2;
+    padding: 20px;
+    width: 70%;
+    /* margin-top: 140px; */
+}
+.lic_revamp .anual_outr {
+    display: flex;
+    width: 100%;
+}
+.lic_revamp .inside_anual {
+    flex: 1;
+    font-weight: 600;
+}
+.lic_revamp .anual_side .mat-flat-button {
+    line-height: 25px !important;
+}
+.lic_revamp .anual_side .actions {
+    width: fit-content;
+    float: right;
+}
+.lic_revamp .cancel_an .mat-flat-button {
+    line-height: 26px !important;
+}
+.lic_revamp .fnt-san_serif {
+    font-family: sans-serif;
+}
+.lic_revamp .adon_lst {
+    margin-top: 10px;
+    line-height: 2;
+    font-size: 0.8rem;
+}
+.lic_revamp .btn_ad_more {
+    float: right;
+    margin-top: 10px;
+    font-size: 20px;
+}
+.lic_revamp .flx_1 {
+    flex: 1;
+}
+.lic_revamp .fa-ellipsis-v {
+    font-size: 17px;
+    margin-top: -10px;
+}
+.lic_revamp h3 {
+    color: #3c8dbc;
+}
+.lic_revamp .no-mgn-bt {
+    margin-bottom: 0 !important;
+}
+.lic_revamp .line_ht_2 {
+    line-height: 2;
+}

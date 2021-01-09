@@ -68,7 +68,7 @@ export class CustomerSelectionComponent implements OnInit {
 
     let customer_id = '';
     this.customer_selected.forEach(function (customer) {
-      customer_id = customer_id + customer.id + ',';
+      customer_id = customer_id + customer.jaldeeId + ',';
     });
 
     this.customer_selected = customer_id.replace(/,\s*$/, '');

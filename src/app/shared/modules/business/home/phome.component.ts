@@ -1,16 +1,16 @@
-import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { SignUpComponent } from '../signup/signup.component';
+import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SharedServices } from '../../services/shared-services';
-import { SharedFunctions } from '../../functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { LoginComponent } from '../login/login.component';
-import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
-import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
-import { projectConstantsLocal } from '../../constants/project-constants';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { LoginComponent } from '../../../../shared/components/login/login.component';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SharedServices } from '../../../../shared/services/shared-services';
+import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
+import { projectConstants } from '../../../../app.component';
+import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
+import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-phome',
@@ -70,12 +70,14 @@ export class PhomeComponent implements OnInit {
   };
   phOrem_error = '';
   qParams;
+  
   @ViewChild('mobPrefix') mobPrefix: ElementRef;
+  carouselTwo;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
     public shared_functions: SharedFunctions,
-    private routerobj: Router,
+    // private routerobj: Router,
     public shared_services: SharedServices,
     public dialog: MatDialog,
     private _scrollToService: ScrollToService,
@@ -139,6 +141,18 @@ export class PhomeComponent implements OnInit {
       pullDrag: true,
       loop: true,
       responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
+    };
+    this.carouselTwo = {
+      items: 1,
+				nav: true,
+				navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+				dots: false,
+				responsiveClass: true,
+				responsive: {
+					0: {
+						items: 1
+					},
+				} 
     };
     this.createForm();
     this.api_loading = false;
@@ -352,18 +366,18 @@ export class PhomeComponent implements OnInit {
   // checkAccountExists () {
   //   if
   // }
-  doSignuppage() {
-    this.routerobj.navigate(['business/providersignup']);
-  }
+  // doSignuppage() {
+  //   this.routerobj.navigate(['business/signup']);
+  // }
   gotoproducts() {
     const navigationExtras: NavigationExtras = {
       queryParams: { type: 'products' }
     };
     this.router.navigate(['business'], navigationExtras);
   }
-  doLoginpage() {
-    this.routerobj.navigate(['business/providerlogin']);
-  }
+  // doLoginpage() {
+  //   this.routerobj.navigate(['business/login']);
+  // }
   // doForgotPassword() {
   //   const dialogRef = this.dialog.open(ForgotPasswordComponent, {
   //     width: '60%',

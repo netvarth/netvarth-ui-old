@@ -112,7 +112,7 @@
                                 </ng-container>
                                 <ng-container *ngIf="auditStatus==3">
                                     <tr *ngFor="let log of auditlog_details; let i=index">
-                                        <td data-title="Date" class="td1">{{log.date | date:dateFormat}}
+                                        <td data-title="Date" class="td1">{{log.date | date:newDateFormat}},
                                             {{log.time}}</td>
                                         <td data-title="Subject" class="td3">{{log.subject}}</td>
                                         <td data-title="Text" class="td2 desc">{{log.text}}</td>

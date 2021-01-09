@@ -138,8 +138,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'"
-            (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="checkin.waitlistStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -182,28 +181,6 @@
     <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value" style="width: 10px;">
     </ngx-qrcode>
 </div>
-<!-- <div *ngIf="action === 'label'">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <a class="pull-left back-btn mgn-up-5" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
-        <div class="label-caption">Label</div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-30">
-        <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
-            <a class="label-head pointer-cursor" (click)="addLabelvalue('newvalue', label)">
-                {{label.displayName}}</a>
-            <div *ngFor="let value of label.valueSet">
-                <a class="pointer-cursor" style="color: black;padding: 3px 20px;"
-                    (click)="changeLabelvalue(label.label, value.value)">
-                    {{value.shortValue}} <i class="fa fa-check" *ngIf="value.selected"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create label</span>
-        <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage label</span>
-    </div>
-</div> -->
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'label'">
     Labels
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"

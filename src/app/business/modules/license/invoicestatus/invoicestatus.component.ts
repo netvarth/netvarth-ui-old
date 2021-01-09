@@ -56,6 +56,7 @@ export class InvoiceStatusComponent {
   };
   invoice_status_cap = Messages.INVOICE_STATUS_CAP;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(
     private router: Router,
     public provider_services: ProviderServices) {

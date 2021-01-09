@@ -439,7 +439,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
             this.dialogRef.close();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     } else {
@@ -457,7 +457,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
             this.dialogRef.close();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     }

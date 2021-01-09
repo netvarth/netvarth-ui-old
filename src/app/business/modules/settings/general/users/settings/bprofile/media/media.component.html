@@ -1,96 +1,109 @@
-<!-- <section>
-    <app-breadcrumb [breadcrumbs]="breadcrumbs" [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
-</section> -->
-<!-- <section class="">
-    <div class="card title-gb">
-        <h5 class="mgn-up-10"><i class="fa fa-chevron-left mgn-rt-10" aria-hidden="true"
-                (click)="redirecToBprofile()"></i>Social Media</h5>
-    </div>
-</section> -->
 <section class="">
     <div class="card title-gb">
-    <h5 class="mgn-up-10">
-    <!-- <button type="button" class="btn default profile-back" (click)="redirecToBprofile()">
-    <span class="fa fa-chevron-left">&nbsp;Back</span>
-    </button>&nbsp;&nbsp;&nbsp; -->
-    <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToBprofile()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    Social Media</h5>
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToBprofile()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Social Media
+        </h5>
     </div>
-   </section>
+</section>
+
 <section>
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12" *ngIf="!loading">
+        <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12 no-padding">
+            <div class="social-box" *ngFor="let social of orgsocial_list;let i=index">
+                <div class="col-lg-3 col-md-3 no-padding col-xs-2 col-sm-3">
+                    <span [class]="social.iconClass"></span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-xs-10 col-sm-9 input-sec">
+                    <div class="disp-flex">
+                        <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)"
+                            placeholder="Insert your link here">
+                        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu"
+                            *ngIf="showDelete(social.key)">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="deleteSocialmedia(social.key)">
+                                <i class="fa fa-trash"></i>Delete</button>
+                        </mat-menu>
+                    </div>
+                    <button *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"
+                        class="cs-btn bt3 pull-right mgn-up-10">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
+
+<!-- <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
                 <div class="row no-padding">
                     <div class="copy addons col-a col-b one col-xs-12 col-sm-12 col-md-12  no-padding ">
                         <div class="card p0">
-                            <div class="copy locd">                 
-                     
+                            <div class="copy locd">
                                 <div class="lbl col-md-6 col-xs-12 col-sm-12">
                                     <div class="card usermediastyle  w-dta active no-padding">
                                         <mat-accordion>
-                                            <!-- <mat-expansion-panel [expanded]="true">
-                                                <mat-expansion-panel-header class="min100"> -->
-                                                 <div  class="usermedia" > 
-                                                    <mat-panel-title class="block-level">    
-                                                       {{social_media_cap}}                                                     
-                                                    
-                                                        <p class="form-level-settings">{{frm_social_cap}}<a
-                                                                class="learnmore-pointer" id="customer-help"
-                                                                (click)="learnmore_clicked('your-social-media', $event)">Learn
-                                                                More</a></p>
-                                                   </mat-panel-title>
-                                                </div>
-                                                <!-- </mat-expansion-panel-header> -->
-                                                <div class="no-dta" *ngIf="normal_socialmedia_show==1">
-                                                    <app-innerloading-spinner spinnerParams="loadingParams">
-                                                    </app-innerloading-spinner>
-                                                </div>
-                                                <div class="no-dta" *ngIf="normal_socialmedia_show==2">
-                                                    <p>{{no_social_media}}</p>
-                                                    <span class="cs-btn bt3"
-                                                        (click)="handleSocialmedia()">{{add_it_cap}}</span>
-                                                </div>
-                                                <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
-                                                    <div class="sblinks">
-                                                        <ul class="sbl">
-                                                            <li *ngFor="let social of social_arr;let i = index"
-                                                                [class]="getSocialdet(social.Sockey, 'iconClass')">
-                                                                <!-- <a [href]="social.Socurl" class="mbt">222</a> -->
-                                                                <span class="mbt">
-                                                                    <button type="button" mat-icon-button
-                                                                        [matMenuTriggerFor]="menu">
-                                                                        <mat-icon>more_vert</mat-icon>
+                                            <div class="usermedia">
+                                                <mat-panel-title class="block-level">
+                                                    {{social_media_cap}}
+                                                    <p class="form-level-settings">{{frm_social_cap}}<a
+                                                            class="learnmore-pointer" id="customer-help"
+                                                            (click)="learnmore_clicked('your-social-media', $event)">Learn
+                                                            More</a></p>
+                                                </mat-panel-title>
+                                            </div>
+                                            <div class="no-dta" *ngIf="normal_socialmedia_show==1">
+                                                <app-innerloading-spinner spinnerParams="loadingParams">
+                                                </app-innerloading-spinner>
+                                            </div>
+                                            <div class="no-dta" *ngIf="normal_socialmedia_show==2">
+                                                <p>{{no_social_media}}</p>
+                                                <span class="cs-btn bt3"
+                                                    (click)="handleSocialmedia()">{{add_it_cap}}</span>
+                                            </div>
+                                            <div class="cd-t sc-t" *ngIf="normal_socialmedia_show==3">
+                                                <div class="sblinks">
+                                                    <ul class="sbl">
+                                                        <li *ngFor="let social of social_arr;let i = index"
+                                                            [class]="getSocialdet(social.Sockey, 'iconClass')">
+                                                            <span class="mbt">
+                                                                <button type="button" mat-icon-button
+                                                                    [matMenuTriggerFor]="menu">
+                                                                    <mat-icon>more_vert</mat-icon>
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button type="button"
+                                                                        (click)="editSocialmedia(social.Sockey)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-edit"></i>
+                                                                        <span>{{edit_cap}}</span>
                                                                     </button>
-                                                                    <mat-menu #menu="matMenu">
-                                                                        <button type="button"
-                                                                            (click)="editSocialmedia(social.Sockey)"
-                                                                            mat-menu-item>
-                                                                            <i class="icon-edit"></i>
-                                                                            <span>{{edit_cap}}</span>
-                                                                        </button>
-                                                                        <button type="button"
-                                                                            (click)="deleteSocialmedia(social.Sockey)"
-                                                                            mat-menu-item>
-                                                                            <i class="icon-delete"></i>
-                                                                            <span>{{delete_btn}}</span>
-                                                                        </button>
-                                                                    </mat-menu>
-                                                                </span>
-                                                                <a rel="noopener" [href]="social.Socurl"
-                                                                    target="_blank">{{getSocialdet(social.Sockey,
-                                                                                    'displayName')}} </a>
-                                                            </li>
-                                                        </ul>
-                                                        <span (click)="handleSocialmedia()" class="addbt"
-                                                            *ngIf="showaddsocialmedia"></span>
-                                                    </div>
+                                                                    <button type="button"
+                                                                        (click)="deleteSocialmedia(social.Sockey)"
+                                                                        mat-menu-item>
+                                                                        <i class="icon-delete"></i>
+                                                                        <span>{{delete_btn}}</span>
+                                                                    </button>
+                                                                </mat-menu>
+                                                            </span>
+                                                            <a rel="noopener" [href]="social.Socurl"
+                                                                target="_blank">{{getSocialdet(social.Sockey,
+                                                                'displayName')}} </a>
+                                                        </li>
+                                                    </ul>
+                                                    <span (click)="handleSocialmedia()" class="addbt"
+                                                        *ngIf="showaddsocialmedia"></span>
                                                 </div>
-                                            <!-- </mat-expansion-panel> -->
+                                            </div>
                                         </mat-accordion>
                                     </div>
                                 </div>
-
                                 <div class="lbr  col-md-6 col-xs-12 col-sm-12"></div>
                             </div>
                         </div>
@@ -99,4 +112,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->

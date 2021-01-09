@@ -56,6 +56,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   api_error = null;
   userDet;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;

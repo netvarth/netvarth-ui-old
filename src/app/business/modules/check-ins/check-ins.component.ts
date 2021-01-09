@@ -1020,19 +1020,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadApiSwitch('reloadAPIs');
   }
   initView(view, source?) {
-    console.log(view);
-    this.activeQs = this.tempActiveQs = [];
-    console.log(this.getQsFromView(view, this.queues));
+    this.activeQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
-      this.activeQs = this.tempActiveQs = groupbyQs['ENABLED'];
+      this.activeQs = groupbyQs['ENABLED'];
     }
-    console.log(this.activeQs);
-    const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
+    // const activeQ = this.activeQs[this.findCurrentActiveQueue(this.activeQs)];
     if (view.name !== Messages.DEFAULTVIEWCAP) {
       if (groupbyQs['DISABLED'] && groupbyQs['DISABLED'].length > 0) {
-        this.activeQs = this.tempActiveQs = this.activeQs.concat(groupbyQs['DISABLED']);
+        this.activeQs = this.activeQs.concat(groupbyQs['DISABLED']);
       }
+    }
+    const qids = [];
+    for (const q of this.activeQs) {
+      qids.push(q.id);
     }
     if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
@@ -1045,15 +1046,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
-        if (activeQ && activeQ.id) {
-          this.selQIds.push(activeQ.id);
+        // if (activeQ && activeQ.id) {
+        //   this.selQIds.push(activeQ.id);
+        if (qids && qids.length > 0) {
+          this.selQIds = qids;
           this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
         } else {
           this.loading = false;
         }
       }
     }
-    this.getQsByProvider();
+    setTimeout(() => {
+      this.qloading = false;
+    }, 1000);
+    // this.getQsByProvider();
     this.loadApiSwitch(source);
   }
   findCurrentActiveQueue(ques) {
@@ -1199,7 +1205,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.history_waitlist_count = 0;
     this.check_in_filtered_list = [];
     this.activeQs = [];
-    // this.tempActiveQs = [];
     this.scheduled_count = 0;
     this.started_count = 0;
     this.completed_count = 0;
@@ -1215,7 +1220,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise(function (resolve, reject) {
       _this.getQs('all').then(
         (queues: any) => {
-          _this.queues = queues;
+          _this.queues = _this.tempActiveQs = queues;
           resolve(queues);
         },
         () => {
@@ -1514,8 +1519,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showRejected = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
-    if (totalAppointmentsSelected === filterArray.length && totalAppointmentsSelected !== 0) {
+    // const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
+    if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {
@@ -1702,6 +1707,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (this.filter.waitlist_status === 'all') {
     //   Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     // }
+    if (this.filter.waitlist_status === 'all' && this.firstTime) {
+      Mfilter['waitlistStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+    }
     return new Promise((resolve) => {
       this.provider_services.getwaitlistHistoryCount(Mfilter)
         .subscribe(
