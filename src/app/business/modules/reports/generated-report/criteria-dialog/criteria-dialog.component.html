@@ -1,9 +1,9 @@
 <div *ngIf="!for_view" class="dialog-pad">
     <h1 mat-dialog-title class="head-t">Save this report as</h1>
     <div mat-dialog-content class="txt-center">
-        <mat-form-field class="example-full-width width100pc">
+        <div class="example-full-width width100pc">
             <input type="text" [(ngModel)]="criteria_name" placeholder="Type here..." (keyup)="keyPress()">
-        </mat-form-field>
+        </div>
     </div>
     <div mat-dialog-actions>
         <div class="width100pc">
@@ -48,6 +48,6 @@
 <div class="api_succes_msg" *ngIf="api_success">
     {{ api_success_msg }}
 </div>
-<div class="api_error_msg" *ngIf="api_error">{{api_error}}
+<div class="api_error_msg" *ngIf="api_error">
    {{ api_error_msg }}
 </div>
