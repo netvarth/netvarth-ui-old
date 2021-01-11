@@ -213,6 +213,9 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
 
         this.schedules_selected = schedule_id;
       }
+      if (this.schedules_selected === '') {
+        this.schedules_selected = 'All';
+      }
 
       console.log(this.schedules_selected.length + '=' + this.scheduleCount);
 

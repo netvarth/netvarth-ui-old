@@ -212,6 +212,9 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
         });
         this.queues_selected = queue_id;
       }
+      if (this.queues_selected === '') {
+        this.queues_selected = 'All';
+      }
       if (this.queues_selected.length === 0) {
         this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
       } else {
