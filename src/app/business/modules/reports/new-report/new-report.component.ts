@@ -15,6 +15,12 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
 })
 export class NewReportComponent implements OnInit {
 
+  order_customerchosen: string;
+  waitlist_customerchosen: string;
+  appointment_customerchosen: string;
+  donation_customerchosen: string;
+  payment_customerchosen: string;
+  customerchosen: string;
   order_customerId: any;
   order_customer: string;
   order_endDate: any;
@@ -364,14 +370,16 @@ export class NewReportComponent implements OnInit {
 
   }
   setCustomerData(res) {
+    console.log(JSON.stringify(res));
     switch (this.report_type) {
       case 'payment': {
         if (res === '' || res === undefined || res === 'All') {
           this.payment_customer = 'All';
           // this.payment_customerId = 0;
         } else {
-          this.payment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.payment_customerId = res.replace(/,\s*$/, '');
+          this.payment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.payment_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.payment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -381,8 +389,9 @@ export class NewReportComponent implements OnInit {
           this.donation_customer = 'All';
           // this.donation_customerId = 0;
         } else {
-          this.donation_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.donation_customerId = res.replace(/,\s*$/, '');
+          this.donation_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.donation_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.donation_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -393,9 +402,10 @@ export class NewReportComponent implements OnInit {
           // this.appointment_customerId = 0;
         } else {
 
-          this.appointment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
+          this.appointment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.appointment_customerchosen = res.customers.replace(/,\s*$/, '');
 
-          this.appointment_customerId = res.replace(/,\s*$/, '');
+          this.appointment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -404,8 +414,9 @@ export class NewReportComponent implements OnInit {
         if (res === '' || res === undefined || res === 'All') {
           this.waitlist_customer = 'All';
         } else {
-          this.waitlist_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.waitlist_customerId = res.replace(/,\s*$/, '');
+          this.waitlist_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.waitlist_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.waitlist_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
 
@@ -415,8 +426,9 @@ export class NewReportComponent implements OnInit {
         if (res === '' || res === undefined || res === 'All') {
           this.order_customer = 'All';
         } else {
-          this.order_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.order_customerId = res.replace(/,\s*$/, '');
+          this.order_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.order_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.order_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
 
@@ -809,6 +821,7 @@ export class NewReportComponent implements OnInit {
 
   }
   goToSelectionPage(type, selected_id) {
+    console.log(selected_id);
     this.setSelectedData().then(res => {
 
       this.report_data_service.storeSelectedValues(res);
