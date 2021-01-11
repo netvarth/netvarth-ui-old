@@ -83,6 +83,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   futureAppointments = [];
   time_type = 1;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+
   filter = {
     first_name: '',
     last_name: '',
