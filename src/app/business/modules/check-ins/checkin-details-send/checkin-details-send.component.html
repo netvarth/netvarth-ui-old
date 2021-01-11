@@ -12,7 +12,7 @@
                             </p>
                             <p *ngIf = "deptName">Department : {{deptName}}</p>
                             <p *ngIf = "qstarttime">Queue : {{qname}} [{{qstarttime}} - {{qendtime}}]</p>
-                            <p>Date & Time: {{date}}, {{time}}</p>
+                            <p>Date & Time: {{date | date:newDateFormat}}, {{time}}</p>
                             <p *ngIf="tokenno">Token No : {{tokenno}} </p>
                             <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
                             <p>Location: {{location}}</p>
@@ -28,7 +28,7 @@
                             {{serv_name}}
                             
                         </p>
-                        <p>Appointment Date & Time: {{date}}, {{getSingleTime(appttime)}}</p>
+                        <p>Appointment Date & Time: {{date | date:newDateFormat}}, {{getSingleTime(appttime)}}</p>
                         <!-- <p *ngIf = "deptName">Department : {{deptName}}</p> -->
                         <p *ngIf = "Schedulestime">Schedule : {{schedulename}} [{{Schedulestime}} - {{Scheduleetime}}]</p>
                         <p *ngIf = "spfname && splname">Service Provider: {{spfname}} {{splname}}</p>
