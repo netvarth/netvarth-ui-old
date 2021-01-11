@@ -13,6 +13,7 @@ import { ApplyLabelComponent } from '../apply-label/apply-label.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 
 @Component({
@@ -80,6 +81,7 @@ export class CheckinActionsComponent implements OnInit {
     showToken;
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     pastDate;
     subdomain;
     availableDates: any = [];

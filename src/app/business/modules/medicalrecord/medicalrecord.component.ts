@@ -48,6 +48,8 @@ export class MedicalrecordComponent implements OnInit {
   mrlist;
   providerId;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   mrCreatedDate: string;
   consultationMode = 'Out Patient';
   bookingType: any;
