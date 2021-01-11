@@ -26,14 +26,14 @@
               <table class="book-details-sub chkntoknappt-details">
                 <tbody>
                   <tr *ngIf="!statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <tr *ngIf="statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{provider_label | capitalizeFirst}}</td>
+                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td>{{statusInfo.provider.firstName}} {{statusInfo.provider.lastName}},
+                    <td>{{statusInfo.provider.businessName}},
                       {{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <!-- <tr *ngIf="type=='order'">
@@ -149,7 +149,7 @@
                       {{getSingleTime(statusInfo.appmtTime)}}</td>
                   </tr>
                   <tr *ngIf="type!='order'">
-                    <td width="48%" align="right">Booking No</td>
+                    <td width="48%" align="right"> Booking Id</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td *ngIf="type=='wl'"> {{statusInfo.checkinEncId}}</td>
                     <td *ngIf="type=='appt'"> {{statusInfo.appointmentEncId}}</td>

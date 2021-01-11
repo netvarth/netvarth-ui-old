@@ -293,7 +293,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getJaldeeIntegrationSettings();
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
-this.getOrderStatus();
+    this.getOrderStatus();
     this.getSchedulesCount();
     this.getCatalog();
     // this.getStatusboardLicenseStatus();
@@ -812,7 +812,8 @@ this.getOrderStatus();
         this.routerobj.navigate(['provider', 'settings', 'general', 'holidays']);
         break;
       case 'notifications':
-        this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+        // this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+        this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
         break;
       case 'saleschannel':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
@@ -960,11 +961,11 @@ this.getOrderStatus();
         this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
         break;
       case 'orderitems':
-          const navigatExtras: NavigationExtras = {
-            queryParams: {
-              type: 'ordermanager'
-            }
-          };
+        const navigatExtras: NavigationExtras = {
+          queryParams: {
+            type: 'ordermanager'
+          }
+        };
         this.routerobj.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
         break;
     }
@@ -1274,10 +1275,10 @@ this.getOrderStatus();
   }
   getCatalog() {
     this.provider_services.getProviderCatalogs()
-        .subscribe(data => {
-            this.catalog_list = data;
-        });
-}
+      .subscribe(data => {
+        this.catalog_list = data;
+      });
+  }
 
   // mandatory fields
   getDomainVirtualFields() {

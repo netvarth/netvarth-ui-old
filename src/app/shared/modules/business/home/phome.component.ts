@@ -99,7 +99,7 @@ export class PhomeComponent implements OnInit {
     }
   }
   scrollToTop() {
-    this.handleScroll('pro_home');
+    this.handleScroll('prov_home_n');
   }
   doForgotPassword() {
     this.resetApiErrors();
@@ -189,10 +189,10 @@ export class PhomeComponent implements OnInit {
         this.handleScroll(this.qParams.type);
 
       } else {
-        this.handleScroll('pro_home');
+        this.handleScroll('prov_home_n');
 
       }
-    }, 100);
+    }, 200);
   }
   handleScroll(target) {
     this.triggerScrollTo(target);

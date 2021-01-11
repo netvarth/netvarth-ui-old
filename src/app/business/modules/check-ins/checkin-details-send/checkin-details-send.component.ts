@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-checkin-details-send',
@@ -49,6 +50,8 @@ export class CheckinDetailsSendComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private provider_services: ProviderServices,

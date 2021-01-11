@@ -26924,6 +26924,7 @@ color: #fff !important;
     margin-bottom: 20px !important;
     margin-top: 10px !important;
   }
+<<<<<<< HEAD
   
 }
 .video {
@@ -26955,3 +26956,136 @@ color: #fff !important;
 .status{
   color: #191d96;
 }
+=======
+}
+.parentpromolabel {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .imagepromolabel1 {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .imagepromolabel2 {
+    position: absolute;
+    top: -50px;
+  }
+  .labelpromo{
+    position: absolute;
+    top: 100px;
+    right: 100px;
+  }
+  .shoppinglistuploadspan{
+    width: 200px;
+    margin-left: 30px;
+    margin-top: -10px;
+  }
+  .shoppinglistmre{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .morethanthreeimg{
+    margin-top: 10px;
+    width: 30%;
+  }
+  .orderdetailgalul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: wrap;
+    }
+  .orderdetailgalul li {
+    list-style: none;
+    width: 33.3333%;
+   }
+  .orderdetailgalimg_outer {
+   position: relative;
+   padding: 5px;
+   }
+   @media only screen and (max-width: 575px){
+   .orderdetailgalul li {
+   width: 50%;
+   }
+  }
+    @media only screen and (max-width: 575px){
+      .orderdetailgal_img img {
+      height: 100px;
+      } 
+    }
+    .one-service {
+      color: #3f51b5 !important;
+      padding-left: 5px;
+      font-size: .9rem;
+    }
+    .pad-left-5 {
+      padding-left: 5px;
+    }
+
+/* licence */
+.ico_cloud {
+  content: url(../images/addons/Cloud.svg);
+  position: absolute;
+  padding-right: 5px;
+  width: 46px;
+  margin-top: -14px;
+}
+.ico_que {
+  content: url(../images/addons/Queues-services.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -10px;
+}
+.ico_jdn {
+  content: url(../images/addons/JDN.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 26px;
+}
+.ico_usr {
+  content: url(../images/addons/Users.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -6px;
+}
+.ico_sms {
+  content: url(../images/addons/SMS.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 40px;
+  margin-top: -11px;
+}
+.ico_qbods {
+  content: url(../images/addons/Qboards.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -10px;
+
+}
+.ico_searchky {
+  content: url(../images/addons/Search-key.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+}
+.addon_warn .btn_buy {
+  background: #1e4079;
+  color: white;
+}
+.addon_warn .btn_close {
+  background: #80808059;
+}
+>>>>>>> refs/remotes/origin/1.7-order

@@ -8,6 +8,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { DOCUMENT, Location } from '@angular/common';
 import { projectConstants } from '../../../../app.component';
 import { ActionPopupComponent } from '../action-popup/action-popup.component';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-order-detail',
@@ -244,6 +245,25 @@ export class OrderDetailComponent implements OnInit {
   storeContact: any;
   showNteSection = false;
   noteIndex: any;
+  image_list_popup: Image[];
+  imagelist: any = [];
+customPlainGalleryRowConfig: PlainGalleryConfig = {
+  strategy: PlainGalleryStrategy.CUSTOM,
+  layout: new AdvancedLayout(-1, true)
+};
+customButtonsFontAwesomeConfig: ButtonsConfig = {
+visible: true,
+strategy: ButtonsStrategy.CUSTOM,
+buttons: [
+    {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+    }
+]
+};
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -289,6 +309,21 @@ export class OrderDetailComponent implements OnInit {
       (data) => {
         this.waitlist = data;
         console.log(this.waitlist);
+        this.image_list_popup = [];
+        if (this.waitlist && this.waitlist.shoppingList) {
+          this.imagelist = this.waitlist.shoppingList;
+          console.log(this.imagelist);
+          for (let i = 0; i < this.imagelist.length; i++) {
+            const imgobj = new Image(
+              i,
+              { // modal
+                  img: this.imagelist[i].s3path,
+                  description: ''
+              });
+              console.log(imgobj);
+          this.image_list_popup.push(imgobj);
+          }
+        }
         this.generateQR();
       },
       (error) => {
@@ -411,5 +446,18 @@ export class OrderDetailComponent implements OnInit {
     this.noteIndex = index;
     this.showNteSection = !this.showNteSection;
   }
+  openImageModalRow(image: Image) {
+    console.log(image);
+    console.log(this.image_list_popup);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
 
 }

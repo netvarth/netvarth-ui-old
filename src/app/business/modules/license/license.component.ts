@@ -223,7 +223,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
             .subscribe((data: any) => {
                 this.upgradablepackages = data;
                 if (this.upgradablepackages.length > 0) {
-                    this.height = 160;
+                    this.height = 170;
                 } else {
                     this.height = 140;
                 }

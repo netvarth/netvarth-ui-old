@@ -186,7 +186,7 @@
 	z-index: 999 !important;
 }
 
-#cons_home_n .site-header a, #prov_home_n .site-header a {
+#cons_home_n .site-header a {
 	color: inherit !important;
 	text-decoration: none !important;
 }
@@ -2060,7 +2060,7 @@
 	#cons_home_n .download-buttons {
 		margin-right: 5px !important;
 	}
-	#cons_home_n .site-header, #prov_home_n .site-header {
+	#cons_home_n .site-header {
 		margin-bottom: 10px !important;
 	}
 	#cons_home_n .site-header .logo, #prov_home_n .site-header .logo {
@@ -5059,7 +5059,13 @@
 	padding: 5px;
 	margin: 5px;
 }
-
+#prov_home_n .account-links a{
+	font-weight: 500 !important;
+	color: #000 !important;
+}
+#prov_home_n .account-links a.prov_btn_join_top, #prov_home_n .account-links a.prov_btn_login_top {
+color: #fff !important;
+}
 .prov_btn_login_top, .prov_btn_join_top {
 	padding: 5px 0 5px 0 !important;
 	color: #fff !important;
@@ -5399,6 +5405,11 @@ b, strong {
 	background: #1e4079 !important;
 	color: #fff !important;
 }
+@media(max-width:575px) {
+	#prov_home_n #hero {
+		padding-top: 20px !important;
+	}
+}
 
 #prov_home_n #hero .container, #prov_home_n #hero .container p {
 	color: #fff !important;
@@ -5418,8 +5429,13 @@ b, strong {
 	font-weight: 400 !important;
 	margin: 0 !important;
 	color: #fff !important;
+	line-height: 1.75;
 }
-
+@media (max-width:991px) {
+	#prov_home_n .hero-content h2 {
+		line-height: 1 !important;
+	}
+}
 #prov_home_n .hero-content h1 {
 	font-size: 4rem !important;
 	color: #fff !important;
@@ -6061,9 +6077,7 @@ b, strong {
 	padding-top: 20px !important;
 }
 
-#prov_home_n .account-links {
-	font-weight: 500 !important;
-}
+
 
 #prov_home_n .site-header a:active {
 	color: #222223 !important;
@@ -6071,4 +6085,10 @@ b, strong {
 #prov_home_n a.jld-lnk.btn {
 	box-shadow: none !important;
 	cursor: default !important;
+}
+.pad-up-20 {
+	padding-top: 20px !important;
+}
+.pad-bt-50 {
+	padding-bottom: 50px !important;
 }

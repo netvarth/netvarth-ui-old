@@ -10,6 +10,7 @@ import { SharedModule } from '../../../shared/modules/common/shared.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { CardModule } from '../../../shared/components/card/card.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
     LoadingSpinnerModule,
     CapitalizeFirstPipeModule,
     CardModule,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    ModalGalleryModule
   ],
   exports: [
     OrderDashboardComponent

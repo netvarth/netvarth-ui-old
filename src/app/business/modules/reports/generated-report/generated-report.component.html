@@ -4,10 +4,9 @@
       <!-- <button type="button" class="btn default profile-back" (click)="redirecToReports()">
         <span class="fa fa-chevron-left">&nbsp;Back</span>
       </button>&nbsp;&nbsp;&nbsp; -->
-      <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Report
+      <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Report
       <!-- <button type="button" class="btn default" style="float:right;line-height: 15px;" (click)="printReport()"> Print </button> -->
-      </h5>
+    </h5>
   </div>
 </section>
 <section class="report">
@@ -19,87 +18,140 @@
       <div class="card p20">
         <div>
           <div class="criteria-btn-dv pull-right">
-            <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save"  (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
+            <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save" (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
             <button type="button" class="btn default" (click)="printReport()"> Print </button>
           </div>
         </div>
         <div id="reportGenerated">
-        <hr width="100%">
+          <hr width="100%">
 
           <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
 
-        <hr width="100%">
-        <!-- Criteria Header-->
-        <ng-container *ngIf="showReport">
-        <div class="col-md-12 clearfix" >
-          <ng-container  *ngFor="let key of objectKeys(reportCriteriaHeader)">
-          <div class="col-md-4 ">
-
-            <label>{{key}} :&nbsp;</label>
-            <span>{{reportCriteriaHeader[key]}}</span>
-            <br>
-          </div>
-        </ng-container>
-    <div class="clearfix">
-
-    </div>
-        <hr width="100%">
-        </div>
-
-
-
-        <!-- Consolidated Data and Report Generation info-->
-        <div class="row clearfix" >
-          <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix divlftrt mgn-lt-20">
-              <label class="col-md-10 col-form-label lablresponssive " *ngIf="reportHeader.from">Report Time Period :<span> &nbsp;{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }}</span><br></label>
-
-              <label class="col-md-10 col-form-label lablresponssive" *ngIf="reportHeader.date">Report Time Period : <span> &nbsp;{{getDateFormat(reportHeader.date) }}    </span>  <br></label>
-
-            <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label lablresponssive">Report Created On :<span>&nbsp; {{reportHeader.reportGeneratedOn | date:'medium'}}</span><br></label>
-
-            <label class=" col-md-10 col-form-label">Total Records Found :<span> &nbsp;{{reportHeader.count}}</span> <br></label>
-            <label class=" col-md-10 col-form-label"  *ngIf="reportHeader.bank">Bank :<span> &nbsp;{{reportHeader.bank}}</span> <br></label>
-
-          </div>
-
-
-          <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="report.reportContent.dataHeader">
-            <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
-              <label class="col-lg-8 col-sm-8 col-md-8 col-xs-8 col-form-label">{{key}} &nbsp; </label>
-              <label class="col-lg-4 col-md-4 col-sm-4  col-xs-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
-              <br>
-
-            </ng-container>
-          </div>
-          <div class="clearfix">
-
-          </div>
           <hr width="100%">
+          <!-- Criteria Header-->
+          <ng-container *ngIf="showReport">
+            <div class="col-md-12 clearfix">
+              <ng-container *ngFor="let key of objectKeys(reportCriteriaHeader)">
+                <div class="col-md-4 ">
 
-        </div>    
-
-        <!-- Data-->
-        <div class="box" *ngIf="report.reportContent.data.length > 0">
-
-          <div class="box-body table-container table-responsive mat-elevation-z8">
-            <table mat-table [dataSource]="report_dataSource" matSort>
-
-              <ng-container *ngFor="let column of table_header" matColumnDef="{{column.order}}">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.name}}</th>
-                <td mat-cell *matCellDef="let element" > {{element[column.order]}} </td>
+                  <label>{{key}} :&nbsp;</label>
+                  <span>{{reportCriteriaHeader[key]}}</span>
+                  <br>
+                </div>
               </ng-container>
+              <div class="clearfix">
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+              </div>
+              <hr width="100%">
+            </div>
+
+
+
+            <!-- Consolidated Data and Report Generation info-->
+            <div class="row clearfix">
+              <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix divlftrt mgn-lt-20">
+                <label class="col-md-10 col-form-label lablresponssive " *ngIf="reportHeader.from">Report Time Period :
+                  <span> &nbsp;{{ getDateFormat(reportHeader.from) }} to {{ getDateFormat(reportHeader.to) }}</span>
+                  <br>
+                </label>
+
+                <label class="col-md-10 col-form-label lablresponssive" *ngIf="reportHeader.date">Report Time Period :
+                  <span> &nbsp;{{getDateFormat(reportHeader.date) }} </span>
+                  <br>
+                </label>
+
+                <label class=" col-lg-10 col-md-10 col-sm-9 col-form-label lablresponssive">Report Created On :
+                  <span>&nbsp; {{reportHeader.reportGeneratedOn | date:'medium'}}</span>
+                  <br>
+                </label>
+
+                <label class=" col-md-10 col-form-label">Total Records Found :
+                  <span> &nbsp;{{reportHeader.count}}</span>
+                  <br>
+                </label>
+                <label class=" col-md-10 col-form-label" *ngIf="reportHeader.bank">Bank :
+                  <span> &nbsp;{{reportHeader.bank}}</span>
+                  <br>
+                </label>
+
+              </div>
+
+
+              <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="report.reportContent.dataHeader">
+                <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
+                  <label class="col-lg-8 col-sm-8 col-md-8 col-xs-8 col-form-label">{{key}} &nbsp; </label>
+                  <label class="col-lg-4 col-md-4 col-sm-4  col-xs-4 col-form-label">{{reportConsolidatedInfo[key]}}</label>
+                  <br>
+
+                </ng-container>
+              </div>
+              <div class="clearfix">
+
+              </div>
+              <hr width="100%">
+
+            </div>
+
+            <!-- Data-->
+            <div class="box" *ngIf="report.reportContent.data.length > 0">
+
+              <div class="box-body table-container table-responsive mat-elevation-z8">
+
+            <mat-list>
+                    <mat-list-item>Choose a column</mat-list-item>
+                    <ng-container class="col-md-6">
+                    <mat-list-item >
+
+                      <mat-select placeholder="Group by"
+                        [(ngModel)]="groupingColumn" name="item"
+                        (ngModelChange)="buildDataSource()">
+                        <mat-option [value]="null">None</mat-option>
+                        <mat-option *ngFor="let item of table_header" [value]="item.order">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-list-item>
+                  </ng-container>
+
+                  </mat-list>
+                <table mat-table [dataSource]="report_dataSource" matSort>
+
+                  <ng-container *ngFor="let column of table_header" matColumnDef="{{column.order}}">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column.name}}</th>
+                    <td mat-cell *matCellDef="let element"> {{element[column.order]}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+                  <!-- Group header cells-->
+                  <ng-container matColumnDef="groupHeader">
+                    <td colspan="999" mat-cell *matCellDef="let group">
+                      <strong>{{group.groupName}}</strong>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="groupReducer">
+                    <td colspan="1" mat-cell *matCellDef="let group">
+                      <!-- <div fxFill fxLayoutAlign="center center">
+                        <mat-icon *ngIf="!group.reduced">expand_less</mat-icon>
+                        <mat-icon *ngIf="group.reduced">expand_more</mat-icon>
+                      </div> -->
+                    </td>
+                  </ng-container>
+
+                  <!-- Group line -->
+                  <tr mat-row class="clickable" *matRowDef="let row; columns: ['groupReducer','groupHeader']; when: isGroup" (click)="reduceGroup(row)">
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </ng-container>
+
+          <div *ngIf="report.reportContent.data.length===0" style="text-align:center">
+            <b> No Records Found</b>
           </div>
         </div>
-      </ng-container>
-
-          <div  *ngIf="report.reportContent.data.length===0" style="text-align:center">
-           <b> No Records Found</b>
-          </div>
-</div>
       </div>
     </div>
     <div class="clearfix"></div>

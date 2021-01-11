@@ -353,7 +353,7 @@
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
-                          {{checkin.date | date: display_dateFormat}}</div>
+                          {{checkin.date | date: newTimeDateFormat}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
@@ -561,7 +561,7 @@
                           {{checkin.token}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                           [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
-                          {{checkin.date | date: display_dateFormat}}</div>
+                          {{checkin.date | date: newTimeDateFormat}}</div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                           class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                           *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
@@ -893,7 +893,7 @@
                         {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
-                        {{checkin.date | date: display_dateFormat}}</div>
+                        {{checkin.date | date: newTimeDateFormat}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"
@@ -1304,7 +1304,7 @@
                         {{checkin.token}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Date'" class="pull-left mgn-lt-5 date"
                         [ngClass]="{'mgn-up-10' : (time_type==2 && checkin.token?true:false)}" *ngIf="time_type!=1">
-                        {{checkin.date | date: display_dateFormat}}</div>
+                        {{checkin.date | date: newTimeDateFormat}}</div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                         class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                         *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName"

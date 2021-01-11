@@ -554,7 +554,7 @@
                                           <div style="flex-grow:1"></div>
                                           <div class="bottom-actions-root">
                                               <div class="checkin-est nrm"
-                                                  *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' && search_result.fields['estimatedtime_det']['caption'] && search_result.fields['estimatedtime_det']['time']">
+                                                  *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc' && search_result.fields['estimatedtime_det']['caption'] && search_result.fields['estimatedtime_det']['time']">
                                                   <span class="est-time"
                                                       *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                                   <span class="time-data"
@@ -562,7 +562,7 @@
                                                   </span>
                                               </div>
                                               <div class="checkin-est"
-                                                  *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                                  *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                                   <span class=""
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
                                                   <span class=""
@@ -572,7 +572,7 @@
                                                       the first in line</span>
                                               </div>
                                               <div class="checkin-est"
-                                                  *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed">
+                                                  *ngIf="search_result.fields.apptAllowed">
                                                   <span
                                                       class="est-time">{{search_result.fields['appttime_det']['caption']}}</span>
                                                   <span
@@ -612,7 +612,7 @@
                                       <div style="flex-grow:1"></div>
                                       <div class="bottom-actions-root">
                                           <div class="checkin-est nrm"
-                                              *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
+                                              *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']!='NoCalc'">
                                               <span class="est-time"
                                                   *ngIf="search_result.fields['estimatedtime_det']['caption']">{{search_result.fields['estimatedtime_det']['caption']}}</span>
                                               <span class="time-data"
@@ -620,7 +620,7 @@
                                               </span>
                                           </div>
                                           <div class="checkin-est"
-                                              *ngIf="search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
+                                              *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
                                               <span class=""
                                                   *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
                                               <span class=""
@@ -630,7 +630,7 @@
                                                   the first in line</span>
                                           </div>
                                           <div class="checkin-est"
-                                              *ngIf="!search_result.fields.waitlist && search_result.fields.apptAllowed">
+                                              *ngIf="search_result.fields.apptAllowed">
                                               <span
                                                   class="est-time">{{search_result.fields['appttime_det']['caption']}}</span>
                                               <span

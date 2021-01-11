@@ -35,7 +35,7 @@ export class FormMessageDisplayService {
     }
     const keys = Object.keys(error_ob);
     const errors = keys.map(key => {
-      return errorMsgs[key] || 'Validation Error';
+      return errorMsgs[key] || '';
     });
     return errors[0];
   }

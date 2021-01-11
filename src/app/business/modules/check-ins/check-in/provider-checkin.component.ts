@@ -112,6 +112,7 @@ export class ProviderCheckinComponent implements OnInit {
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '', 'jaldeeid': '' };
     payment_popup = null;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
     page_source = null;
@@ -219,6 +220,7 @@ export class ProviderCheckinComponent implements OnInit {
     emptyFielderror = false;
     countryCode;
 checkin_label;
+provider_label = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -227,6 +229,7 @@ checkin_label;
         private activated_route: ActivatedRoute,
         public provider_services: ProviderServices) {
         this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
+        this.provider_label = this.sharedFunctionobj.getTerminologyTerm('provider');
         this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {

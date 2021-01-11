@@ -14,6 +14,20 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
   styleUrls: ['./new-report.component.css']
 })
 export class NewReportComponent implements OnInit {
+
+  order_customerchosen: string;
+  waitlist_customerchosen: string;
+  appointment_customerchosen: string;
+  donation_customerchosen: string;
+  payment_customerchosen: string;
+  customerchosen: string;
+  order_customerId: any;
+  order_customer: string;
+  order_endDate: any;
+  order_startDate: any;
+  order_timePeriod: any;
+  delivery_mode_list: { displayName: string; value: string; }[];
+  delivery_mode: any;
   minDate: Date;
   btn_disabled: boolean;
   report_loading: boolean;
@@ -89,13 +103,15 @@ export class NewReportComponent implements OnInit {
   hide_dateRange = true;
   payment_timePeriod: any;
   customer: string;
-
+  order_status: any;
+  order_status_list: any;
 
   payment_amount: any;
   payment_paymentPurpose: any;
   payment_paymentMode: any;
   payment_paymentStatus: any;
   reportDateCategory: any;
+
 
 
 
@@ -130,7 +146,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -139,14 +155,16 @@ export class NewReportComponent implements OnInit {
     this.appointment_status_list = projectConstantsLocal.APPOINTMENT_STATUS;
     this.waitlist_mode_list = projectConstantsLocal.WAITLIST_MODE;
     this.waitlist_status_list = projectConstantsLocal.WAITLIST_STATUS;
+    this.order_status_list = projectConstantsLocal.ORDER_STATUS_CLASS;
     this.bill_payment_status = projectConstantsLocal.BILL_PAYMENT_STATUS;
     this.transactionType = projectConstantsLocal.REPORT_TRANSACTION_TYPE;
     this.donation_timeperiod_list = projectConstantsLocal.DONATION_TIMEPERIOD;
+    this.delivery_mode_list = projectConstantsLocal.DELIVERY_STATUS;
     this.payment_paymentPurpose = 0;
     this.payment_paymentStatus = this.appointment_paymentStatus = 0;
     this.payment_paymentMode = 0;
-    this.appointment_mode = this.waitlist_mode = 0;
-    this.appointment_status = this.waitlist_status = 0;
+    this.appointment_mode = this.waitlist_mode = this.delivery_mode = 0;
+    this.appointment_status = this.waitlist_status = this.order_status = 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
@@ -224,6 +242,16 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.waitlist_startDate = res.startDate;
             this.waitlist_endDate = res.endDate;
+          }
+          break;
+        }
+        case 'order': {
+          this.order_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.order_startDate = res.startDate;
+            this.order_endDate = res.endDate;
+            this.delivery_mode = res.delivery_mode;
           }
 
         }
@@ -342,14 +370,16 @@ export class NewReportComponent implements OnInit {
 
   }
   setCustomerData(res) {
+    console.log(JSON.stringify(res));
     switch (this.report_type) {
       case 'payment': {
         if (res === '' || res === undefined || res === 'All') {
           this.payment_customer = 'All';
           // this.payment_customerId = 0;
         } else {
-          this.payment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.payment_customerId = res.replace(/,\s*$/, '');
+          this.payment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.payment_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.payment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -359,8 +389,9 @@ export class NewReportComponent implements OnInit {
           this.donation_customer = 'All';
           // this.donation_customerId = 0;
         } else {
-          this.donation_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.donation_customerId = res.replace(/,\s*$/, '');
+          this.donation_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.donation_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.donation_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -371,9 +402,10 @@ export class NewReportComponent implements OnInit {
           // this.appointment_customerId = 0;
         } else {
 
-          this.appointment_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
+          this.appointment_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.appointment_customerchosen = res.customers.replace(/,\s*$/, '');
 
-          this.appointment_customerId = res.replace(/,\s*$/, '');
+          this.appointment_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
         break;
@@ -382,8 +414,21 @@ export class NewReportComponent implements OnInit {
         if (res === '' || res === undefined || res === 'All') {
           this.waitlist_customer = 'All';
         } else {
-          this.waitlist_customer = res.split(',').length + ' ' + this.customer_label + 's selected';
-          this.waitlist_customerId = res.replace(/,\s*$/, '');
+          this.waitlist_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.waitlist_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.waitlist_customerId = res.jaldee_customers.replace(/,\s*$/, '');
+
+        }
+
+        break;
+      }
+      case 'order': {
+        if (res === '' || res === undefined || res === 'All') {
+          this.order_customer = 'All';
+        } else {
+          this.order_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
+          this.order_customerchosen = res.customers.replace(/,\s*$/, '');
+          this.order_customerId = res.jaldee_customers.replace(/,\s*$/, '');
 
         }
 
@@ -675,6 +720,58 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
 
+    } else if (reportType === 'order') {
+      if (this.order_timePeriod === 'DATE_RANGE' && (this.order_startDate === undefined || this.order_endDate === undefined)) {
+        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+
+        this.filterparams = {
+
+          'orderStatus': this.order_status,
+          'homeDelivery': true,
+          'storePickup': true,
+          'providerOwnConsumerId': this.order_customerId
+
+
+        };
+        if (this.order_status === 0) {
+          delete this.filterparams.orderStatus;
+        }
+        if (this.order_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        if (this.delivery_mode === 'homeDelivery') {
+          delete this.filterparams.storePickup;
+
+        } else if (this.delivery_mode === 'storePcikup') {
+          delete this.filterparams.homeDelivery;
+        }
+        if (this.order_status === 'Any') {
+          delete this.filterparams.orderStatus;
+        }
+        if (this.donation_amount === undefined) {
+          delete this.filterparams.amount;
+        }
+
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.order_timePeriod === 'DATE_RANGE') {
+          filter['orderDate-ge'] = this.dateformat.transformTofilterDate(this.order_startDate);
+          filter['orderDate-le'] = this.dateformat.transformTofilterDate(this.order_endDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = this.report_type.toUpperCase();
+        request_payload.reportDateCategory = this.donation_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
     }
   }
 
@@ -724,6 +821,7 @@ export class NewReportComponent implements OnInit {
 
   }
   goToSelectionPage(type, selected_id) {
+    console.log(selected_id);
     this.setSelectedData().then(res => {
 
       this.report_data_service.storeSelectedValues(res);
@@ -790,6 +888,15 @@ export class NewReportComponent implements OnInit {
           'dateRange': this.donation_timePeriod,
           'startDate': this.donation_startDate,
           'endDate': this.donation_endDate
+
+
+        };
+      } if (this.report_type === 'order') {
+        selectedValues = {
+          'delivery_mode': this.delivery_mode,
+          'dateRange': this.order_timePeriod,
+          'startDate': this.order_startDate,
+          'endDate': this.order_endDate
 
 
         };

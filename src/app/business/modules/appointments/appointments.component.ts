@@ -83,6 +83,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   futureAppointments = [];
   time_type = 1;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+
   filter = {
     first_name: '',
     last_name: '',
@@ -1410,8 +1412,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showUndo = false;
     this.showArrived = false;
     const totalAppointmentsSelected = Object.keys(this.appointmentsChecked).length;
-    const filterArray = this.check_in_filtered_list.filter(appt => appt.providerConsumer);
-    if (totalAppointmentsSelected === filterArray.length && totalAppointmentsSelected !== 0) {
+    if (totalAppointmentsSelected === this.check_in_filtered_list.length && totalAppointmentsSelected !== 0) {
       this.chkSelectAppointments = true;
     }
     if (totalAppointmentsSelected === 1) {

@@ -144,7 +144,6 @@ export class ConsumerNotificationsComponent implements OnInit {
     }
   }
   ngOnInit() {
-    console.log('consumer notify big');
     for (let j = 0; j <= 60; j++) {
       this.appt_remind_min[j] = j;
     }
@@ -326,34 +325,34 @@ export class ConsumerNotificationsComponent implements OnInit {
   showSubmit(type, value, event?) {
     this.showButton[type] = true;
     if (value !== 'phead') {
-    if (type === 'EARLY_WL') {
-      this.earlyWLNotificatonSettings[value] = event.checked;
-    } else if (type === 'WAITLISTADD') {
-      this.wlAddNotificationSettings[value] = event.checked;
-    } else if (type === 'PREFINAL_WL') {
-      this.prefinalWLNotificationSettings[value] = event.checked;
-    } else if (type === 'FINAL_WL') {
-      this.finalWLNotificationSettings[value] = event.checked;
-    } else if (type === 'APPOINTMENTADD') {
-      this.apptAddNotificationSettings[value] = event.checked;
-    } else if (type === 'SECOND_APPT') {
-      this.secondAPPTNotificationSettings[value] = event.checked;
-    } else if (type === 'FIRST_APPT') {
-      this.firstAPPTNotificationSettings[value] = event.checked;
-    } else if (type === 'THIRD_APPT') {
-      this.thirdAPPTNotificationSettings[value] = event.checked;
-    } else if (type === 'FOURTH_APPT') {
-      this.fourthAPPTNotificationSettings[value] = event.checked;
-    } else if (type === 'ORDERCONFIRM') {
-      this.orderAddNotificationSettings[value] = event.checked;
-    } else if (type === 'ORDERCANCEL') {
-      this.orderCancelNotificationSettings[value] = event.checked;
-    } else if (type === 'ORDERSTATUSCHANGE') {
-      this.orderStatusChangelNotificationSettings[value] = event.checked;
-    } else if (type === 'DONATIONSERVICE') {
-      this.donatAddNotificationSettings[value] = event.checked;
+      if (type === 'EARLY_WL') {
+        this.earlyWLNotificatonSettings[value] = event.checked;
+      } else if (type === 'WAITLISTADD') {
+        this.wlAddNotificationSettings[value] = event.checked;
+      } else if (type === 'PREFINAL_WL') {
+        this.prefinalWLNotificationSettings[value] = event.checked;
+      } else if (type === 'FINAL_WL') {
+        this.finalWLNotificationSettings[value] = event.checked;
+      } else if (type === 'APPOINTMENTADD') {
+        this.apptAddNotificationSettings[value] = event.checked;
+      } else if (type === 'SECOND_APPT') {
+        this.secondAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'FIRST_APPT') {
+        this.firstAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'THIRD_APPT') {
+        this.thirdAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'FOURTH_APPT') {
+        this.fourthAPPTNotificationSettings[value] = event.checked;
+      } else if (type === 'ORDERCONFIRM') {
+        this.orderAddNotificationSettings[value] = event.checked;
+      } else if (type === 'ORDERCANCEL') {
+        this.orderCancelNotificationSettings[value] = event.checked;
+      } else if (type === 'ORDERSTATUSCHANGE') {
+        this.orderStatusChangelNotificationSettings[value] = event.checked;
+      } else if (type === 'DONATIONSERVICE') {
+        this.donatAddNotificationSettings[value] = event.checked;
+      }
     }
-  }
   }
   changeNotificationSettings(type) {
     let activeInput;
