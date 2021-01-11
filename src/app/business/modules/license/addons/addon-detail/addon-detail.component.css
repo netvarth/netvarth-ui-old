@@ -50,6 +50,7 @@
     display: grid;
     padding: 10px;
     height: 100%;
+    width: 100%;
 }
 .revamp_addonDetail .fa-chevron-circle-right {
     float: right;
