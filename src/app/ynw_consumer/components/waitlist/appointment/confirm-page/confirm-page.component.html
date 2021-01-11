@@ -101,6 +101,9 @@
                                     </tbody>
                                 </table>
                                 <div class="book-status chkntoknappt-details"> Current status </div>
+                                <div  style="text-align: center;" class="green" *ngIf="appointment.apptStatus">
+                                Appointment {{appointment.apptStatus}}
+                                </div>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a></div>
