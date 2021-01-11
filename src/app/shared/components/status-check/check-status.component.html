@@ -26,12 +26,18 @@
               <table class="book-details-sub chkntoknappt-details">
                 <tbody>
                   <tr *ngIf="!statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
+                    <td width="48%" align="right">
+                      <!-- Name of the {{getTerminologyTerm('provider') | capitalizeFirst}} -->
+                      Provider
+                    </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <tr *ngIf="statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
+                    <td width="48%" align="right">
+                      <!-- Name of the {{getTerminologyTerm('provider') | capitalizeFirst}} -->
+                      Provider
+                    </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.provider.businessName}},
                       {{statusInfo.providerAccount?.businessName}}</td>
