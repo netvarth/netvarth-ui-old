@@ -82,6 +82,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   locations: any = [];
   filter = {
     first_name: '',
