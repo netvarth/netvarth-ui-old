@@ -114,7 +114,7 @@
                     <label for="Customer" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s </label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-5 col-xs-5" readonly [(ngModel)]="payment_customer">
                     <div class="input-group-append">
-                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',payment_customerId)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',payment_customerchosen)">Change</button>
                     </div>
                   </div>
 
@@ -247,7 +247,7 @@
                     <label for="Customer"  class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                     <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="appointment_customer">
                     <div class="input-group-append">
-                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',appointment_customerId)">Change</button>
+                      <button class="btn btn-primary " type="button" (click)="goToSelectionPage('customer',appointment_customerchosen)">Change</button>
                     </div>
                   </div>
 
@@ -372,7 +372,7 @@
                         <label for="Customers" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                         <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="waitlist_customer">
                         <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"  (click)="goToSelectionPage('customer',waitlist_customerId)">Change</button>
+                          <button class="btn btn-primary " type="button"  (click)="goToSelectionPage('customer',waitlist_customerchosen)">Change</button>
                         </div>
                       </div>
                     </div>
@@ -540,7 +540,7 @@
                       <label for="Customers" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">{{customer_label |capitalizeFirst}}s</label>
                       <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly [(ngModel)]="order_customer">
                       <div class="input-group-append ">
-                        <button class="btn btn-primary " type="button"  (click)="goToSelectionPage('customer',order_customerId)">Change</button>
+                        <button class="btn btn-primary " type="button"  (click)="goToSelectionPage('customer',order_customerchosen)">Change</button>
                       </div>
                     </div>
                   </div>
