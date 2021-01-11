@@ -14,6 +14,7 @@ import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/
 import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../../shared/services/razorpay.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
@@ -107,6 +108,8 @@ export class ConsumerCheckinBillComponent implements OnInit {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     provider_label = '';
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,

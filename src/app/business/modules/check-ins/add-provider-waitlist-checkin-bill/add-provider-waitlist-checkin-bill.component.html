@@ -36,7 +36,7 @@
 															{{user.lastName | capitalizeFirst}}
 
 														</span>
-														<span class="dynamic fl-right">{{billdate}}
+														<span class="dynamic fl-right">{{billdate | date:newDateFormat}}
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
@@ -52,7 +52,7 @@
 																{{checkin.orderFor.lastName | capitalizeFirst}}
 															</span>
 														</ng-container>
-														<span class="dynamic fl-right">{{billdate}}
+														<span class="dynamic fl-right">{{billdate | date:newDateFormat}}
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">

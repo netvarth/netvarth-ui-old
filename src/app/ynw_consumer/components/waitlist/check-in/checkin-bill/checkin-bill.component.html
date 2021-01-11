@@ -53,7 +53,7 @@
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
-                                                                                class="dynamic">{{billdate}}
+                                                                                class="dynamic">{{billdate | date:newDateFormat}}
                                                                                 {{billtime}}</span>
                                                                         </span> <span class="columns"
                                                                             *ngIf="billnumber"> <span

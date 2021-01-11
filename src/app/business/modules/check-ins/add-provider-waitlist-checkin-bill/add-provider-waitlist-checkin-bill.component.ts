@@ -16,6 +16,7 @@ import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/comp
 import { ActivatedRoute } from '@angular/router';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { ConfirmPatmentLinkComponent } from '../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 export interface ItemServiceGroup {
   type: string;
@@ -109,6 +110,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   message = '';
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
