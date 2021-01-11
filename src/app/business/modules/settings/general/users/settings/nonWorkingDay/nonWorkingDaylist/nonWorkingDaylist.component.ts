@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ConfirmBoxComponent } from '../../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-nonworkingday-list',
@@ -26,6 +27,7 @@ export class NonWorkingDaylistComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   isCheckin;

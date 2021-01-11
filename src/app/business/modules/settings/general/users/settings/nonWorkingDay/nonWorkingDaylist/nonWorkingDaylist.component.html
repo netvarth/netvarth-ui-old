@@ -34,7 +34,7 @@
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let nonworking of nonworking_list">
-                                                <td data-title="Date" class="td1">{{nonworking.startDay | date: dateFormat
+                                                <td data-title="Date" class="td1">{{nonworking.startDay | date: newDateFormat
                                                 }}</td>
                                                 <td data-title="Reason" clas="td2">{{nonworking.description}}</td>
                                                 <td data-title="Time" clas="td3">{{nonworking.nonWorkingHours.sTime}} -
