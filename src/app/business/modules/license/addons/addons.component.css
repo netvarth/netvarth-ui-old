@@ -10,11 +10,10 @@
     margin-right: 60px;
     margin-bottom: 20px;
     /* font-size: 1rem;
-    color: #1e4079;
-    font-weight: 600; */
+    color: #1e4079; */
+    font-weight: 600;
     font-size: medium;
     color: #1e4079;
-    font-weight: 500;
 }
 .revamp_addon .flx_8 {
     flex: 0.9;
