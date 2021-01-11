@@ -769,7 +769,7 @@ export class NewReportComponent implements OnInit {
         }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
-        request_payload.reportDateCategory = this.donation_timePeriod;
+        request_payload.reportDateCategory = this.order_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
