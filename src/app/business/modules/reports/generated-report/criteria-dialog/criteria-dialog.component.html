@@ -46,8 +46,8 @@
     </div>
 </div>
 <div class="api_succes_msg" *ngIf="api_success">
-    Report saved successfully
+    {{ api_success_msg }}
 </div>
-<div class="api_error_msg" *ngIf="api_error">
-    Please enter the report name
+<div class="api_error_msg" *ngIf="api_error">{{api_error}}
+   {{ api_error_msg }}
 </div>

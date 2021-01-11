@@ -142,7 +142,7 @@ export class NewReportComponent implements OnInit {
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
-    this.minDate = new Date(new Date().setDate(new Date().getDate() - 100));
+    this.minDate = new Date(new Date().setDate(new Date().getDate() - 90));
   }
 
   ngOnInit() {
@@ -745,6 +745,9 @@ export class NewReportComponent implements OnInit {
 
         } else if (this.delivery_mode === 'storePcikup') {
           delete this.filterparams.homeDelivery;
+        } else if (this.delivery_mode === 0) {
+          delete this.filterparams.homeDelivery;
+          delete this.filterparams.storePickup;
         }
         if (this.order_status === 'Any') {
           delete this.filterparams.orderStatus;
