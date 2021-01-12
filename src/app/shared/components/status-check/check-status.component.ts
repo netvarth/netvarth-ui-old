@@ -254,7 +254,7 @@ export class CheckYourStatusComponent implements OnInit {
           const wlInfo = data;
           this.statusInfo = data;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
             this.history = true;
           }
@@ -327,7 +327,7 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           this.statusInfo = data;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           this.foundDetails = true;
           this.type = 'order';
           this.api_loading = false;
@@ -380,7 +380,7 @@ export class CheckYourStatusComponent implements OnInit {
           this.api_loading = false;
           this.statusInfo = wlInfo;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           this.api_loading = false;
         },
         (error) => {

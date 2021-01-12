@@ -445,7 +445,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
-    this.customerIdTooltip = this.customer_label + ' id';
+    this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this.getPos();
     this.getLabel();

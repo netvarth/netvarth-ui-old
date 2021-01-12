@@ -172,7 +172,7 @@
                   <ng-container>
                     <mat-form-field *ngIf="users.length == 1">
                       <input matInput *ngFor="let user of users" [readonly]="true" placeholder="{{provider_label | capitalizeFirst}}"
-                        value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
+                        value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="users.length > 1">
                       <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user" #usersel

@@ -1174,7 +1174,9 @@
 												</div>
 												<div>
 													<button type="button" mat-button class="cs-btn bt1 accept"
-														(click)="refundPayment('cash')">{{paybycashothers_cap}}</button>
+														(click)="refundPayment('cash')">Pay by Cash</button>
+														<button type="button" mat-button class="cs-btn bt1 accept"
+														(click)="refundPayment('other')">Pay by Others</button>
 													<button type="button"
 														*ngIf="selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
 														mat-button class="cs-btn bt1 accept"

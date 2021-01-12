@@ -439,7 +439,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 .subscribe(
                     data => {
                         _this.settingsjson = data;
-                        resolve();
+                        resolve(data);
                     },
                     () => {
                         reject();
@@ -565,8 +565,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.selected_dept = null;
         this.selectedUserParam = null;
         this.selectedDeptParam = null;
+        console.log(serv);
         if (serv.provider) {
             this.selectedUserParam = serv.provider.id;
+            console.log(this.selectedUserParam);
             this.setUserDetails(this.selectedUserParam);
         }
         if (this.filterDepart) {
@@ -596,6 +598,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        if (serv.provider) {
+            this.sel_ser_det['providerId'] = serv.provider.id;
+        }
+        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
         this.serviceCost = this.sel_ser_det.price;
     }
@@ -830,6 +836,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         // if (this.apptTime) {
         // post_Data['appointmentTime'] = this.apptTime['time'];
         // }
+        console.log(this.sel_ser_det);
+        console.log(this.selectedUser);
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
@@ -1277,8 +1285,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         return errmsg;
     }
     setUserDetails(selectedUserId) {
+        console.log(selectedUserId);
+        console.log(this.users);
         const userDetail = this.users.filter(user => user.id === selectedUserId);
+        console.log(userDetail);
         this.selectedUser = userDetail[0];
+        console.log(this.selectedUser);
     }
     clearerrorParty() {
         this.partyapi_error = '';

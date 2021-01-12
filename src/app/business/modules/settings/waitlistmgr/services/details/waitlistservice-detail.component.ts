@@ -7,6 +7,7 @@ import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/fu
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-waitlistservice-detail',
@@ -39,7 +40,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private servicesService: ServicesService,
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,
-        private router: Router,
+        private router: Router, public location: Location,
         private provider_shared_functions: ProviderSharedFuctions) {
         const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
@@ -209,7 +210,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 .subscribe(
                     (data: any) => {
                         this.serviceParams['subdomainsettings'] = data;
-                        resolve();
+                        resolve(data);
                     },
                     error => {
                         reject(error);
@@ -223,7 +224,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                 .subscribe(
                     data => {
                         this.serviceParams['paymentsettings'] = data;
-                        resolve();
+                        resolve(data);
                     },
                     error => {
                         reject(error);
@@ -236,7 +237,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             this.provider_services.getTaxpercentage()
                 .subscribe(data => {
                     this.serviceParams['taxsettings'] = data;
-                    resolve();
+                    resolve(data);
                 },
                     error => {
                         reject(error);
@@ -319,6 +320,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.location.back();
                     this.getServiceDetail();
                 },
                 error => {
