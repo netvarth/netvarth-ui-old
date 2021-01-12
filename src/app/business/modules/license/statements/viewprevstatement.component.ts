@@ -6,6 +6,7 @@ import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-viewprevstatement',
@@ -46,7 +47,7 @@ export class ViewPrevStatementComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private providerServices: ProviderServices,
         public shared_functions: SharedFunctions,
-        private router: Router,
+        private router: Router, public location: Location,
         private dialog: MatDialog,
     ) {
         this.activated_route.queryParams.subscribe(
@@ -173,5 +174,8 @@ export class ViewPrevStatementComponent implements OnInit {
             }
         };
         this.router.navigate(['provider', 'license', 'viewstatement'], navigationExtras);
+    }
+    goBack() {
+        this.location.back();
     }
 }

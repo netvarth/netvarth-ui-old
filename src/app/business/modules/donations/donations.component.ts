@@ -45,6 +45,7 @@ export class DonationsComponent implements OnInit {
 
   loadComplete = false;
   minday = new Date(2015, 0, 1);
+  maxday = new Date();
   filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
   filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
