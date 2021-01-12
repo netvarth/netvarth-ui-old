@@ -99,7 +99,10 @@ export class CheckinDetailsSendComponent implements OnInit {
         this.consumer_lname = this.data.qdata.waitlistingFor[0].lastName;
         this.consumer_email = this.data.qdata.waitlistingFor[0].email;
         this.serv_name = this.data.qdata.service.name;
-        this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
+        this.date = this.data.qdata.date;
+        console.log(this.date)
+        // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.date);
+        console.log(this.date)
         this.time = this.data.qdata.checkInTime;
         this.deptName = this.data.qdata.service.deptName;
         this.qname =  this.data.qdata.queue.name;
@@ -119,7 +122,9 @@ export class CheckinDetailsSendComponent implements OnInit {
           this.consumer_email = this.data.qdata.consumer.userProfile.emailVerified;
         }
         this.serv_name = this.data.qdata.service.name;
-        this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
+        this.date = this.data.qdata.appmtDate;
+        console.log(this.date)
+        // this.date = this.shared_functions.formatDateDisplay(this.data.qdata.appmtDate);
         this.time = this.data.qdata.appmtTime;
         this.location = this.data.qdata.location.address;
         this.appttime = this.data.qdata.appmtFor[0].apptTime;
