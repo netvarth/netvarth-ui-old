@@ -21,16 +21,16 @@
                                         <div class="card-body">
                                             <h6 class="card-title service ser-icon">
                                                 <i class="fa phon-icon"
-                                                        *ngIf="activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                        *ngIf="activeWt && activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                     <i class="fa meet-icon"
-                                                        *ngIf="activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                        *ngIf="activeWt && activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
                                                     <i class="fa zoom-icon"
-                                                        *ngIf="activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                        *ngIf="activeWt && activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                     <i class="fa wtsapaud-icon"
-                                                        *ngIf="activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && activeWt.service.virtualServiceType === 'audioService'"></i>
+                                                        *ngIf="activeWt && activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && activeWt.service.virtualServiceType === 'audioService'"></i>
                                                     <i class="fa wtsapvid-icon"
-                                                        *ngIf="activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && activeWt.service.virtualServiceType === 'videoService'"></i>
-                                                {{activeWt.service.name}}
+                                                        *ngIf="activeWt && activeWt.service.virtualCallingModes && activeWt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && activeWt.service.virtualServiceType === 'videoService'"></i>
+                                                {{activeWt?.service.name}}
                                             </h6>
                                         </div>
                                     </div>
