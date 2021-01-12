@@ -389,7 +389,8 @@
                 </ng-container>
                 <ng-container *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-O" >
-                        <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span>
+                        <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
+                        <a (click)="shoppinglistupload()" class="like-btn">Upload shoppinglist</a>
                     </div>
                    
                 </ng-container>

@@ -27055,3 +27055,21 @@ color: #fff !important;
 .addon_warn .btn_close {
   background: #80808059;
 }
+.uploadshoppinglist-btn {
+  border: 1px solid #5f75bc;
+  border-radius: 40px;
+  padding: .45rem .75rem;
+  /* color: #3a3030; */
+  font-weight: 600;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 25px;
+}
+
+
