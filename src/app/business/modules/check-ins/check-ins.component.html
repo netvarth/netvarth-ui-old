@@ -262,6 +262,22 @@
                         </li>
                       </div>
                       <div>
+                        <label class="filterHeaders">Payment Status</label>
+                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allPayStatusSelected"
+                            (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let pay_status of payStatusList">
+                          <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                            (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                            {{pay_status.value}}</mat-checkbox>
+                        </li>
+                      </div>
+                      <div>
                         <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
                         <label *ngIf="showToken" class="filterHeaders">Token booking mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -815,6 +831,22 @@
                           </li>
                         </div>
                         <div>
+                          <label class="filterHeaders">Payment Status</label>
+                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox [checked]="allPayStatusSelected"
+                              (change)="setFilterDataCheckbox('payment_status', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let pay_status of payStatusList">
+                            <mat-checkbox [checked]="paymentStatuses.indexOf(pay_status.pk) !== -1"
+                              (change)="setFilterDataCheckbox('payment_status', pay_status.pk, $event)">
+                              {{pay_status.value}}</mat-checkbox>
+                          </li>
+                        </div>
+                        <div>
                           <label *ngIf="!showToken" class="filterHeaders">Check-in Mode</label>
                           <label *ngIf="showToken" class="filterHeaders">Token booking mode</label>
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -1192,7 +1224,7 @@
                               {{appt_status.displayName}}</mat-checkbox>
                           </li>
                         </div>
-                        <div *ngIf="time_type == 3">
+                        <div>
                           <label class="filterHeaders">Payment Status</label>
                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                           </li>

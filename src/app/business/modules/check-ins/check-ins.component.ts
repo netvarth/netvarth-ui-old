@@ -1942,15 +1942,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       // }
     }
+    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+      api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
+    }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-        api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }
       if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');

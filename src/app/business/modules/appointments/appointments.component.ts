@@ -1500,15 +1500,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
     }
+    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+      api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
+    }
     if (this.time_type === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
         api_filter['schedule-eq'] = this.filteredSchedule.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-        api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
       if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');

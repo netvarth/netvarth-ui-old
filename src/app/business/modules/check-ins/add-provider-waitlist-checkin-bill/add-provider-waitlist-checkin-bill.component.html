@@ -896,7 +896,7 @@
 																	</td>
 																	<td class="price rupee-font">
 																		(+){{bill_data.deliveryCharges |
-																			currency:'&#8377;'}}</td>
+																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amt gross">
 																	<td class="name">{{nettotal_cap}}</td>
@@ -922,9 +922,11 @@
 																	<td class="price rupee-font">{{refund_value |
 																		currency:'&#8377;'}}</td>
 																</tr>
-																<tr class="amt total" *ngIf="bill_data.refundedAmount > 0">
+																<tr class="amt total"
+																	*ngIf="bill_data.refundedAmount > 0">
 																	<td class="name">Amount Refunded</td>
-																	<td class="price rupee-font">{{bill_data.refundedAmount |
+																	<td class="price rupee-font">
+																		{{bill_data.refundedAmount |
 																		currency:'&#8377;'}}</td>
 																</tr>
 																<tr class="amountSaved"
@@ -938,7 +940,8 @@
 																</tr>
 																<tr class="amountSaved"
 																	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
-																	<td class="price rupee-font">{{customer_label | capitalizeFirst}} have
+																	<td class="price rupee-font">{{customer_label |
+																		capitalizeFirst}} have
 																		saved
 																		{{bill_data.totalAmountSaved |
 																		currency:'&#8377;'}}
@@ -1011,14 +1014,19 @@
 																			<span><span
 																					[class]="payment.status | lowercase">{{payment.status
 																					| capitalizeFirst}}</span></span>
-																		</span> <span class="mode"> <span
+																		</span>
+																		<!-- <span class="mode"> <span
 																				class="title">{{mode_cap}}</span>
 																			<span>{{payment.acceptPaymentBy |
 																				capitalizeFirst }}</span>
-																		</span>
-																		<span class="mode" *ngIf="payment.paymentMode">
+																		</span> -->
+																		<span class="mode">
 																			<span class="title">Payment Mode</span>
-																			<span>{{payment.paymentMode}}</span>
+																			<span>{{payment.acceptPaymentBy |
+																				capitalizeFirst}}<ng-container *ngIf="payment.paymentMode && 
+																				payment.acceptPaymentBy != payment.paymentMode.toLowerCase()">/{{payment.paymentMode}}
+																				</ng-container>
+																			</span>
 																		</span>
 																		<span class="mode"
 																			*ngIf="payment.paymentGateway">
@@ -1175,7 +1183,7 @@
 												<div>
 													<button type="button" mat-button class="cs-btn bt1 accept"
 														(click)="refundPayment('cash')">Pay by Cash</button>
-														<button type="button" mat-button class="cs-btn bt1 accept"
+													<button type="button" mat-button class="cs-btn bt1 accept"
 														(click)="refundPayment('other')">Pay by Others</button>
 													<button type="button"
 														*ngIf="selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
