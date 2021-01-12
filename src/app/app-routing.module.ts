@@ -43,7 +43,8 @@ const routes: Routes = [
         canActivate: [AuthGuardProvider]
     },
     // { path: 'client', component: LiveChatClientComponent},
-    {path: 'video/:id',  component: LiveChatComponent},
+    // {path: 'video/:id',  component: LiveChatComponent},
+    {path: 'meeting/:phonenumber/:confirmId', component: LiveChatComponent},
     {path: 'meeting/:phonenumber',  component: JaldeeVideoComponent},
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },

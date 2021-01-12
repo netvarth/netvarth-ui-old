@@ -35,12 +35,12 @@
                                 ></a>
                     </div>
                 </div>
-                <div class="col-md-5 no-padding-small video">
+                <div class="col-md-5 no-padding-small video" *ngIf="showMeetngDetails">
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
                                 <span class="amount">
-                                    <strong>{{videoCall?.appmtDate | date: newDateFormat}}</strong>
+                                    <strong>{{videoList[0]?.appmtDate | date: newDateFormat}}</strong>
                                 </span>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                         <div class="lt mgn-bt-10">
                             <div>
                                 <span class="amount">
-                                    {{videoCall?.apptTakenTime}}
+                                    {{videoList[0]?.apptTakenTime}}
                                 </span>
                             </div>
                         </div>
@@ -59,10 +59,10 @@
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div class="videocall">
-                                {{videoCall?.service.name}}
+                                {{videoList[0]?.service.name}}
                             </div>
                             <div class="yellow">
-                                <span>In Progress Doctor is Waiting</span>
+                                <span>In Progress - Doctor is Waiting</span>
                             </div>
                         </div>
                         
@@ -75,14 +75,14 @@
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
-                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{videoCall?.providerAccount.businessName}}</span>
+                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{videoList[0]?.providerAccount.businessName}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
-                                <span class="settings_info">{{videoCall?.service.description}}</span>
+                                <span class="settings_info">{{videoList[0]?.service.description}}</span>
                             </div>
                         </div>
                     </div><br><br>
@@ -97,6 +97,69 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-5 no-padding-small video" *ngIf="!showMeetngDetails">
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    <strong>{{appmtDate | date: newDateFormat}}</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="amount">
+                                    {{apptTime}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div class="videocall">
+                                {{serviceName}}
+                            </div>
+                            <div class="yellow">
+                                <span>In Progress - Doctor is Waiting</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                           
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{businessName}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            <div>
+                                <span class="settings_info">{{description}}</span>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    <div class="lc4-1">
+                        <div class="lt mgn-bt-10">
+                            
+                            <span><button type="button" class="btn btn-video pull-right"
+                                    (click)="startVideo()"> START
+                                </button></span>
+                        <span><button type="button" class="btn btn-video-cancel pull-right">
+                                    Appointment Cancel </button></span>
+                        </div>
+                    </div>
+                  
+                </div>
                 <div class="col-md-4 no-padding-small">
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
@@ -107,24 +170,28 @@
                             </div>
                         </div>
                     </div><br>
-                    <div *ngFor="let video of videoList">
+                    <div *ngFor="let users of meetingList, let parentIndex = index">
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
                                 <span class="amount">
-                                    <strong>{{video?.appmtDate | date: newDateFormat}}</strong>
+                                    <strong>{{users?.apptDate | date: newDateFormat}}</strong>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20 mgn-up-10" 
+                    <div class="card">
+
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20 mgn-up-10" *ngFor="let data of users.videosList, let childIndex = index"
                         >
-                        <div class="col-md-4 inpro-box-video">{{video?.apptTakenTime}}</div>
+                        <div class="col-md-4 inpro-box-video">{{data.apptTakenTime}}</div>
                         <div class="col-md-6">
-                            <span>{{video?.providerAccount.businessName}}</span><br>
-                            <h5>{{video?.service.name}}</h5>                        
+                            <span>{{data?.providerAccount.businessName}}</span><br>
+                            <h5 style="cursor: pointer;" (click)="showMeetingDetails(data)">{{data?.service.name}}</h5>                        
                         </div>
                     </div>
+                </div>
                 </div>
                 </div>
             </div>

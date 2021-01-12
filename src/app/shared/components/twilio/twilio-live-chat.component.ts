@@ -22,12 +22,15 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     screenHeight: number;
     videoId: any;
     cameraMode = 'user';
+    api_loading = true;
     private renderer: Renderer2;
+    uuid: any;
+    result;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
-        private sharedServices: SharedServices,
         public twilioService: TwilioService,
+        private shared_services: SharedServices,
         public rendererFactory: RendererFactory2
         // private baCustomPreLoader: BaCustomPreLoader
     ) {
@@ -36,6 +39,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         window.addEventListener('unload', () => {
             this.disconnect();
         });
+        this.activateroute.queryParams.subscribe(params => {
+        this.uuid = params.uu_id;
+        console.log(this.uuid);
+    });
     }
     ngAfterViewInit() {
         this.twilioService.previewContainer = this.previewContainer;
@@ -135,19 +142,34 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.twilioService.switchCamera('user');
         }
     }
-    joinRoom() {
-        this.activateroute.params.subscribe(params => {
-            const videoId = params.id;
-            this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
-                (tokenObj: any) => {
-                    console.log(tokenObj);
-                    // this.access_token = tokenObj.token;
-                    this.twilioService.localVideo = this.localVideo;
-                    this.twilioService.remoteVideo = this.remoteVideo;
-                    this.connect(tokenObj);
-                }
-            );
+    joinVideo(){
+        
+         this.shared_services.getVideoCall(this.uuid)
+      .subscribe(data => {
+         this.result = data;
+         if(this.result === null){
+            //  this.joinVideo();
+         }
+        console.log(data)
+        this.api_loading = false;
+      },
+        () => {
+          this.api_loading = false;
         });
     }
+    // joinRoom() {
+    //     this.activateroute.params.subscribe(params => {
+    //         const videoId = params.id;
+    //         this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
+    //             (tokenObj: any) => {
+    //                 console.log(tokenObj);
+    //                 // this.access_token = tokenObj.token;
+    //                 this.twilioService.localVideo = this.localVideo;
+    //                 this.twilioService.remoteVideo = this.remoteVideo;
+    //                 this.connect(tokenObj);
+    //             }
+    //         );
+    //     });
+    // }
     ngOnDestroy() { this.disconnect(); }
 }
