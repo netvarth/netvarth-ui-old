@@ -12,6 +12,9 @@ import { SharedServices } from '../../../../shared/services/shared-services';
   styleUrls: ['./order-actions.component.css']
 })
 export class OrderActionsComponent implements OnInit {
+  orderList: any[];
+  image_list_popup: any[];
+  orderItems: any[];
   orderDetails;
   mulipleSelection = false;
   showBill = false;
@@ -28,7 +31,8 @@ export class OrderActionsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private shared_services: SharedServices,) { }
+    private providerservice: ProviderServices,
+    private shared_services: SharedServices, ) { }
 
   ngOnInit() {
     this.loading = true;
@@ -70,26 +74,64 @@ export class OrderActionsComponent implements OnInit {
   }
   orderEdit() {
     console.log(this.orderDetails);
-    const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
+     const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
     const location = this.shared_functions.getitemFromGroupStorage('location');
     const ynwbp = this.shared_functions.getitemFromGroupStorage('ynwbp');
-    console.log(cuser);
-    console.log(location);
-    console.log(ynwbp);    
-    this.shared_services.getConsumerCatalogs(cuser).subscribe(
-      (catalogs: any) => {
-        this.activeCatalog = catalogs[0];
-        console.log(this.activeCatalog);
-        this.catalog_Id = this.activeCatalog.id;
-        this.getOrderAvailableDatesForPickup();
+    const businessObject = {
+      'bname': ynwbp.bn,
+      'blocation': location,
+      'logo': ''
+    };
+    this.shared_functions.setitemonLocalStorage('order_sp', businessObject);
+    this.loading = true;
+    this.orderList = [];
+    this.image_list_popup = [];
+    this.providerservice.getProviderOrderById(this.orderDetails.uid).subscribe(data => {
+      this.orderDetails = data;
+      if (this.orderDetails && this.orderDetails.orderItem) {
+        for (const item of this.orderDetails.orderItem) {
+          const itemqty: number = item.quantity;
+          for (let i = 0; i <= itemqty; i++) {
+            const itemObj = {
+              'itemId': item.id,
+              'displayName': item.name,
+              'price': item.price,
+              'itemImages': item.itemImages
+
+            };
+            this.orderList.push({'type': 'item', 'item': itemObj});
+          }
+
+        }
       }
-    );
-      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      // this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
-      // this.router.navigate(['order/shoppingcart'], navigationExtras);
-      // this.dialogRef.close();
-      // this.router.navigate(['order/shoppingcart']);
-     
+      console.log(JSON.stringify(this.orderList));
+      this.shared_functions.setitemonLocalStorage('order', this.orderList);
+      // if (this.orderDetails && this.orderDetails.shoppingList) {
+      //   this.imagelist = this.orderDetails.shoppingList;
+      //   for (let i = 0; i < this.imagelist.length; i++) {
+      //     const imgobj = new Image(
+      //       i,
+      //       { // modal
+      //           img: this.imagelist[i].s3path,
+      //           description: ''
+      //       });
+      //   this.image_list_popup.push(imgobj);
+      //   }
+      // }
+      this.loading = false;
+    });   const navigationExtras: NavigationExtras = {
+      queryParams: {
+        account_id: cuser,
+
+      }
+    };
+
+    // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    // this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+     this.router.navigate(['order/shoppingcart'], navigationExtras);
+    // this.dialogRef.close();
+    // this.router.navigate(['order/shoppingcart']);
+
   }
   getOrderAvailableDatesForPickup() {
     const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
