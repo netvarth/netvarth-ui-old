@@ -110,7 +110,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   message = '';
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
@@ -427,12 +427,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
-      const datearr = this.bill_data.createdDate.split(' ');
-      const billdatearr = datearr[0].split('-');
-      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-      this.billtime = datearr[1] + ' ' + datearr[2];
+      console.log(this.bill_data.createdDate)
+      this.billdate = this.bill_data.createdDate;
+      // const datearr = this.bill_data.createdDate.split(' ');
+      // const billdatearr = datearr[0].split('-');
+      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      console.log(this.billdate);
+      // this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
-      this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
+      this.billdate = this.bill_data.createdDate;
+      // this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
       // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
       const gethrs = this.today.getHours();
       const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
