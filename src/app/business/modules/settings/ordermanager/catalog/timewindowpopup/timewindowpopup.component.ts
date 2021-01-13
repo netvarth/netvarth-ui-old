@@ -94,7 +94,7 @@ export class TimewindowPopupComponent implements OnInit {
       });
   }
 
-  onSubmit(form_data) {
+  onSubmit(form_data) { 
     if (!this.dstart_time || !this.dend_time) {
         this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
         return;

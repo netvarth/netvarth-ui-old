@@ -137,7 +137,7 @@ export const Messages = {
   'WAITLIST_QUEUE_UPDATED': 'Queue updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
-  'WAITLIST_WINDOW_STIMEERROR': 'Today\'s timewindow ends at 11:59 PM. Please create a separate timewindow .',
+  'WAITLIST_WINDOW_STIMEERROR': 'Today\'s timewindow ends at 11:59 PM. Please create a separate timewindow.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
   'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
