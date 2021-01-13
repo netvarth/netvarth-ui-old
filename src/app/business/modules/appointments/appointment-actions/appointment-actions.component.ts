@@ -13,7 +13,11 @@ import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { SharedServices } from '../../../../shared/services/shared-services';
+<<<<<<< HEAD
 declare let cordova: any;
+=======
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+>>>>>>> refs/remotes/origin/1.7-order
 
 @Component({
     selector: 'app-appointment-actions',
@@ -64,6 +68,7 @@ export class AppointmentActionsComponent implements OnInit {
     server_date;
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     loading = false;
     apptDate = '';
     domain;

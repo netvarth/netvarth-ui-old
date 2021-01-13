@@ -225,10 +225,11 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
         this.services_selected = service_id;
       }
-
-      console.log(this.services_selected);
-        this.report_data_service.updatedServiceDataSelection(this.services_selected);
-        this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+      if (this.services_selected === '') {
+        this.services_selected = 'All';
+      }
+      this.report_data_service.updatedServiceDataSelection(this.services_selected);
+      this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
     }
 
 

@@ -66,13 +66,23 @@ export class CustomerSelectionComponent implements OnInit {
 
     }
 
+    let jaldee_customer_id = '';
     let customer_id = '';
     this.customer_selected.forEach(function (customer) {
-      customer_id = customer_id + customer.jaldeeId + ',';
+      console.log(customer);
+      customer_id = customer_id + customer.id + ',';
+      jaldee_customer_id = jaldee_customer_id + customer.jaldeeId + ',';
     });
+    console.log(jaldee_customer_id);
 
-    this.customer_selected = customer_id.replace(/,\s*$/, '');
-    this.report_data_service.updateCustomers(this.customer_selected);
+    const jaldee_customers = jaldee_customer_id.replace(/,\s*$/, '');
+    const customers = customer_id.replace(/,\s*$/, '');
+    const customerData = {
+      'jaldee_customers': jaldee_customers,
+      'customers': customers
+    }
+    console.log(JSON.stringify(customerData));
+    this.report_data_service.updateCustomers(customerData);
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
 
@@ -87,14 +97,14 @@ export class CustomerSelectionComponent implements OnInit {
   }
   findPatients(qparamsData) {
 
-      const customerData: any[] = qparamsData.split(',');
-      for (let i = 0; i < customerData.length; i++) {
-        const data = {
-          'id-eq': customerData[i]
-        };
+    const customerData: any[] = qparamsData.split(',');
+    for (let i = 0; i < customerData.length; i++) {
+      const data = {
+        'id-eq': customerData[i]
+      };
 
 
-        this.provider_services.getCustomer(data)
+      this.provider_services.getCustomer(data)
         .subscribe(
           (res: any) => {
             this.patient_array.push(res[0]);
@@ -112,94 +122,94 @@ export class CustomerSelectionComponent implements OnInit {
 
 
 
-}
-/** Whether the number of selected elements matches the total number of rows. */
-isAllSelected() {
-  const numSelected = this.selection.selected.length;
-  const numRows = this.patient_dataSource.data.length;
-  return numSelected === numRows;
-}
+  }
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.patient_dataSource.data.length;
+    return numSelected === numRows;
+  }
 
-/** Selects all rows if they are not all selected; otherwise clear selection. */
-masterToggle() {
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
 
-  this.isAllSelected() ?
-    this.selection.clear() :
-    this.patient_dataSource.data.forEach(row => this.selection.select(row));
-}
-redirecToReports() {
-  this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
-}
-searchCustomer(form_data) {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.patient_dataSource.data.forEach(row => this.selection.select(row));
+  }
+  redirecToReports() {
+    this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+  }
+  searchCustomer(form_data) {
+    this.customer_selected = [];
 
+    let mode = 'id';
+    this.form_data = null;
 
-  let mode = 'id';
-  this.form_data = null;
-
-  let post_data = {};
-  const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-  const isEmail = emailPattern.test(form_data.search_input);
-  if (isEmail) {
-    mode = 'email';
-  } else {
-    const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-    const isNumber = phonepattern.test(form_data.search_input);
-    const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-    const isCount10 = phonecntpattern.test(form_data.search_input);
-    if (isNumber && isCount10) {
-      mode = 'phone';
+    let post_data = {};
+    const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+    const isEmail = emailPattern.test(form_data.search_input);
+    if (isEmail) {
+      mode = 'email';
     } else {
-      mode = 'id';
-    }
-  }
-
-  switch (mode) {
-    case 'phone':
-      post_data = {
-        'phoneNo-eq': form_data.search_input
-      };
-      break;
-    case 'email':
-      post_data = {
-        'email-eq': form_data.search_input
-      };
-      break;
-    case 'id':
-      post_data = {
-        'jaldeeId-eq': form_data.search_input
-      };
-      break;
-  }
-
-  this.provider_services.getCustomer(post_data)
-    .subscribe(
-      (data: any) => {
-        this.patient_dataSource.data = data;
-        this.count = data.length;
-        // this.masterToggle();
-        // if (this.count > 0) {
-
-        // }
-
-        // if (data.length === 0) {
-
-        // } else {
-
-        //   if (data.length > 1) {
-        //     const customer = data.filter(member => !member.parent);
-        //     this.customer_data = customer[0];
-        //   } else {
-        // this.customer_data = data[0];
-        // }
-        // this.jaldeeId = this.customer_data.jaldeeId;
-        // this.getFamilyMembers();
-        // this.initCheckIn();
-        // }
-      },
-      error => {
-        this.shared_functions.apiErrorAutoHide(this, error);
+      const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+      const isNumber = phonepattern.test(form_data.search_input);
+      const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+      const isCount10 = phonecntpattern.test(form_data.search_input);
+      if (isNumber && isCount10) {
+        mode = 'phone';
+      } else {
+        mode = 'id';
       }
-    );
-}
+    }
+
+    switch (mode) {
+      case 'phone':
+        post_data = {
+          'phoneNo-eq': form_data.search_input
+        };
+        break;
+      case 'email':
+        post_data = {
+          'email-eq': form_data.search_input
+        };
+        break;
+      case 'id':
+        post_data = {
+          'jaldeeId-eq': form_data.search_input
+        };
+        break;
+    }
+
+    this.provider_services.getCustomer(post_data)
+      .subscribe(
+        (data: any) => {
+          this.patient_dataSource.data = data;
+          this.count = data.length;
+          // this.masterToggle();
+          // if (this.count > 0) {
+
+          // }
+
+          // if (data.length === 0) {
+
+          // } else {
+
+          //   if (data.length > 1) {
+          //     const customer = data.filter(member => !member.parent);
+          //     this.customer_data = customer[0];
+          //   } else {
+          // this.customer_data = data[0];
+          // }
+          // this.jaldeeId = this.customer_data.jaldeeId;
+          // this.getFamilyMembers();
+          // this.initCheckIn();
+          // }
+        },
+        error => {
+          this.shared_functions.apiErrorAutoHide(this, error);
+        }
+      );
+  }
 
 }

@@ -97,6 +97,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     enddateError = false;
     minDate;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     queuecaption = 'Add Queue';
     constructor(
         private provider_services: ProviderServices,

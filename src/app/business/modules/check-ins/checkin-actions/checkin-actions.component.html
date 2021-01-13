@@ -242,7 +242,7 @@
                     class="fa wtsapvid-icon"></i>
                 {{checkin.service.name}}
             </p>
-            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: dateFormat}},
+            <p>{{(showToken) ? 'Token' : 'Check-in'}} Date/Time: {{checkin.date | date: newDateFormat}},
                 [{{checkin.queue.queueStartTime}}-{{checkin.queue.queueEndTime}}]
             </p>
         </div>

@@ -203,3 +203,7 @@
     color: #3c8dbc;
     font-weight: 600;
 }
+.yourProfile .no_abt_us {
+    border: 1px solid red !important;
+    color: red !important;
+}

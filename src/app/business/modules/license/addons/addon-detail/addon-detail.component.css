@@ -24,7 +24,7 @@
     text-align: center;
     font-size: 1.1rem; */
     font-size: 2rem;
-    color: #3c8dbc;
+    color: #1e4079;
 }
 .revamp_addonDetail .ad_name {
     font-size: 1rem;
@@ -50,11 +50,13 @@
     display: grid;
     padding: 10px;
     height: 100%;
+    width: 100%;
 }
 .revamp_addonDetail .fa-chevron-circle-right {
     float: right;
     font-size: 18px;
-    color: #3c8dbc;
+    /* color: #3c8dbc; */
+    color: #1e4079;
 }
 .revamp_addonDetail .flx_1 {
     flex: 1;
@@ -72,6 +74,6 @@
 }
 .revamp_addonDetail .adon_count {
     font-weight: 600;
-    color: #1e4079;
-    font-size: 0.9rem;
+    color: #1e4079bd;
+    font-size: 1rem;
 }

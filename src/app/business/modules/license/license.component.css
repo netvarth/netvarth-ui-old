@@ -33,11 +33,11 @@
     line-height: 3;
 }
 .lic_revamp .txt_sub_plan {
-    /* font-size: 0.8rem;
+    font-size: 0.8rem;
     color: grey;
-    font-weight: 600; */
-    font-weight: 500;
-    font-size: medium;
+    font-weight: 600;
+    /* font-weight: 500;
+    font-size: medium; */
 }
 .lic_revamp .txt_plan {
     font-size: 1.5rem;
@@ -66,10 +66,10 @@
     font-weight: 600;
 }
 .lic_revamp .card_addon {
-    /* box-shadow: 5px 5px 5px 0px #cccccc60 !important;
-    border: 1px solid #cccc !important; */
-    border: 1px solid #33333373 !important;
-    border-radius: 0;
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    border: 1px solid #cccc !important;
+    /* border: 1px solid #33333373 !important;
+    border-radius: 0; */
 }
 .lic_revamp .txt_adon {
     /* color: grey;
@@ -89,8 +89,8 @@
     text-align: center;
 }
 .lic_revamp .btn_pay {
-    /* background: #194179; */
-    background: #2faef2;
+    background: #194179;
+    /* background: #2faef2; */
     color: white;
     padding: 2px 15px 2px 15px;
     border-radius: 15px;

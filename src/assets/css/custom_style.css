@@ -26998,3 +26998,78 @@ color: #fff !important;
     .pad-left-5 {
       padding-left: 5px;
     }
+
+/* licence */
+.ico_cloud {
+  content: url(../images/addons/Cloud.svg);
+  position: absolute;
+  padding-right: 5px;
+  width: 46px;
+  margin-top: -14px;
+}
+.ico_que {
+  content: url(../images/addons/Queues-services.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -10px;
+}
+.ico_jdn {
+  content: url(../images/addons/JDN.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 26px;
+}
+.ico_usr {
+  content: url(../images/addons/Users.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -6px;
+}
+.ico_sms {
+  content: url(../images/addons/SMS.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 40px;
+  margin-top: -11px;
+}
+.ico_qbods {
+  content: url(../images/addons/Qboards.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+  margin-top: -10px;
+
+}
+.ico_searchky {
+  content: url(../images/addons/Search-key.svg);
+  position: absolute;
+  padding-right: 1px;
+  width: 36px;
+}
+.addon_warn .btn_buy {
+  background: #1e4079;
+  color: white;
+}
+.addon_warn .btn_close {
+  background: #80808059;
+}
+.uploadshoppinglist-btn {
+  border: 1px solid #5f75bc;
+  border-radius: 40px;
+  padding: .45rem .75rem;
+  /* color: #3a3030; */
+  font-weight: 600;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-left: 25px;
+}
+
+

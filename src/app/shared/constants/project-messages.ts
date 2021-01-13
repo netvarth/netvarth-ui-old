@@ -268,6 +268,8 @@ export const Messages = {
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Queue',
+  'SCHEDULENAME_TOOLTIP': 'Click here to edit the Schedule',
+
   'ADD_BUTTON': 'Click to create an instant queue',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',

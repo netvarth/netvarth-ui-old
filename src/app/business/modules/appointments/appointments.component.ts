@@ -84,6 +84,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   futureAppointments = [];
   time_type = 1;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+
   filter = {
     first_name: '',
     last_name: '',
@@ -444,7 +446,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
-    this.customerIdTooltip = this.customer_label + ' id';
+    this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this.getPos();
     this.getLabel();
@@ -1499,15 +1501,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['date-le'] = this.shared_functions.transformToYMDFormat(this.filter.check_in_end_date);
       }
     }
+    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+      api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
+    }
     if (this.time_type === 3) {
       if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
         api_filter['schedule-eq'] = this.filteredSchedule.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-        api_filter['paymentStatus-eq'] = this.paymentStatuses.toString();
       }
       if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
@@ -2137,6 +2139,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    const tempUser = {};
+    tempUser['firstName'] = 'All';
+    tempUser['id'] = 'all';
+    this.selectedUser = tempUser;
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
@@ -2213,14 +2219,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      // const tempUser = {};
-      // tempUser['firstName'] = 'All';
-      // tempUser['id'] = 'all';
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
       // this.users.push(tempUser);
       if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
       } else {
-        // this.selectedUser = tempUser;
+        this.selectedUser = tempUser;
       }
     });
   }

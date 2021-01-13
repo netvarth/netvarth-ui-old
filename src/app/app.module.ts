@@ -60,6 +60,12 @@ import { ShareService } from 'ngx-sharebuttons';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
+<<<<<<< HEAD
+=======
+import { TruncateModule } from './shared/pipes/limitTo.module';
+import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
+import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
+>>>>>>> refs/remotes/origin/1.7-order
 import { CardModule } from './shared/components/card/card.module';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -121,8 +127,16 @@ export function init_app(globalService: GlobalService) {
     ForgotPasswordModule,
     SetPasswwordModule,
     JoyrideModule.forRoot(),
+<<<<<<< HEAD
     SignaturePadModule,
     CardModule
+=======
+    ConsumerFooterModule,
+    TruncateModule,
+    CardModule,
+    MatStepperModule,
+    NgxIntlTelInputModule
+>>>>>>> refs/remotes/origin/1.7-order
   ],
   providers: [
     AuthGuardConsumer,

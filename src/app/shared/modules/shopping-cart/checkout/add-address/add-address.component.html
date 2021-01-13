@@ -1,0 +1,129 @@
+<form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
+    <h1 class="mat-dialog-title">{{address_title}}
+      <button #queue mat-dialog-close class="modal_close" tabindex="-1" (click)="close()">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+
+      <div class="lbl col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small mgn-bt-10">
+
+
+        <div class="form-group" >
+          <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
+            <span class="input-group-text" style="margin-top:auto;">+91</span>
+            <mat-form-field>
+                    <input matInput type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                  </mat-form-field>
+          </div>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
+                                        {
+                                          'required' : 'Mobile number is required',
+                                          'minlength' : 'Enter a 10 digit mobile number',
+                                          'maxlength' : 'Enter a 10 digit mobile number',
+                                          'pattern' : 'Only numbers are allowed'
+                                        })">
+          </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="First name" formControlName="firstName">
+            </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
+                                      {
+                                        'required' : 'First name is required',
+                                        'pattern' : 'Only alphabets are allowed'
+                                      })">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+            <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+            </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
+                                    {
+                                      'required' : 'Last name is required',
+                                      'pattern' : 'Only alphabets are allowed'
+                                    })">
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+        <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+ </mat-form-field>
+        <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
+                                {
+                                  'required' : 'Email is required',
+                                  'pattern' : 'Please enter valid email'
+                                })">
+        </app-field-error-display>
+      </div>
+
+
+
+      </div>
+      <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
+        <div class="form-group">
+            <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Address" formControlName="address">
+            </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
+          {
+            'required' : 'Please enter address'
+          })">
+          </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="City" formControlName="city">
+            </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+        {
+          'required' : 'Please enter city name',
+          'pattern' : 'Only alphabets are allowed'
+        })">
+          </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+            </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
+      {
+        'required' : 'Please enter Postal Code ',
+        'minlength' : 'Enter a 6 digit Postal Code',
+        'maxlength' : 'Enter a 6 digit Postal Code',
+        'pattern' : 'Only numbers are allowed'
+      })">
+          </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+        <mat-form-field>
+          <input matInput type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+        </mat-form-field>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
+    {
+      'required' : 'Please enter landmark'
+    })">
+          </app-field-error-display>
+        </div>
+
+      </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+
+      <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder" disabled="amForm.invalid">
+        <button type="submit" mat-button class="cs-btn bt1 style-button">Save</button>
+      </div>
+
+    </mat-dialog-actions>
+  </form>
+  <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+
+  <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">

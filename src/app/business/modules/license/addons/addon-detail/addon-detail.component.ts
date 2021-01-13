@@ -41,9 +41,9 @@ export class AddonDetailComponent implements OnInit {
     const divident = this.screenWidth / 37.8;
     if (this.screenWidth > 1700) {
       divider = divident / 5;
-    } else if (this.screenWidth > 1000 && this.screenWidth < 1700) {
+    } else if (this.screenWidth > 1111 && this.screenWidth < 1700) {
        divider = divident / 4;
-    } else if (this.screenWidth > 900 && this.screenWidth < 1000) {
+    } else if (this.screenWidth > 900 && this.screenWidth < 1111) {
       divider = divident / 3;
     } else if (this.screenWidth > 375 && this.screenWidth < 900) {
       divider = divident / 2;

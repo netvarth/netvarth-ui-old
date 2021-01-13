@@ -83,6 +83,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
   future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   locations: any = [];
   filter = {
     first_name: '',
@@ -452,7 +453,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
-    this.customerIdTooltip = this.customer_label + ' id';
+    this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
     this.getDisplayboardCount();
@@ -1230,6 +1231,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    const tempUser = {};
+    tempUser['firstName'] = 'All';
+    tempUser['id'] = 'all';
+    this.selectedUser = tempUser;
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
@@ -1942,15 +1947,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       // }
     }
+    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+      api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
+    }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-        api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }
       if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
@@ -2821,14 +2826,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // let filter = 'userType-neq :"assistant"'
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
-        // const tempUser = {};
-        // tempUser['firstName'] = 'All';
-        // tempUser['id'] = 'all';
+        const tempUser = {};
+        tempUser['firstName'] = 'All';
+        tempUser['id'] = 'all';
         // _this.users.push(tempUser);
         if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
           _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
         } else {
-          // _this.selectedUser = tempUser;
+          _this.selectedUser = tempUser;
         }
         resolve();
       },
