@@ -108,7 +108,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
     razorpay_payment_id: any;
     razorpayDetails: any = [];
     provider_label = '';
-    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
 
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
@@ -203,10 +203,11 @@ export class ConsumerCheckinBillComponent implements OnInit {
     }
     getBillDateandTime() {
         if (this.bill_data.hasOwnProperty('createdDate')) {
-            const datearr = this.bill_data.createdDate.split(' ');
-            const billdatearr = datearr[0].split('-');
-            this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-            this.billtime = datearr[1] + ' ' + datearr[2];
+            this.billdate = this.bill_data.createdDate;
+            // const datearr = this.bill_data.createdDate.split(' ');
+            // const billdatearr = datearr[0].split('-');
+            // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+            // this.billtime = datearr[1] + ' ' + datearr[2];
         }
         if (this.bill_data.hasOwnProperty('gstNumber')) {
             this.gstnumber = this.bill_data.gstNumber;
