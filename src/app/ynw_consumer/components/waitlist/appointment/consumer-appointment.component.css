@@ -1237,3 +1237,14 @@ ngx-intl-tel-input input {
   font-size: 13px !important;
   height: 40px !important;
 }
+.prenotes {
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 100px;
+  overflow: auto;
+}
+.preinfo-title {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+}

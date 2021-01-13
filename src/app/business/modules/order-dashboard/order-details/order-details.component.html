@@ -18,6 +18,8 @@
                 <div> {{orderDetails.orderNumber}}</div>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
+                        <div *ngIf="orderDetails.email"> <i class="fa fa-envelope"
+                            aria-hidden="true"></i>{{orderDetails.email}}</div>
                 <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>
                     <span [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
                 </div>
