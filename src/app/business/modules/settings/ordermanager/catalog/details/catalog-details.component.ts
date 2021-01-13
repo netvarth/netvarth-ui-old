@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { AddcatalogimageComponent } from '../addcatalogimage/addcatalogimage.component';
+import { TimewindowPopupComponent } from '../timewindowpopup/timewindowpopup.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -185,6 +186,9 @@ export class CatalogdetailComponent implements OnInit {
     homedeliveryinfo = false;
     addcataimgdialogRef;
     addcatalogimagedialogRef;
+    storetimewindow_list: any = [];
+    hometimewindow_list: any = [];
+    addtimewindowdialogRef;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -321,14 +325,14 @@ export class CatalogdetailComponent implements OnInit {
             storeendDate = '';
         }
 
-        const curdatestore = new Date();
-        curdatestore.setHours(this.dstart_timestore.hour);
-        curdatestore.setMinutes(this.dstart_timestore.minute);
-        const enddatestore = new Date();
-        enddatestore.setHours(this.dend_timestore.hour);
-        enddatestore.setMinutes(this.dend_timestore.minute);
-        const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
-        const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
+        // const curdatestore = new Date();
+        // curdatestore.setHours(this.dstart_timestore.hour);
+        // curdatestore.setMinutes(this.dstart_timestore.minute);
+        // const enddatestore = new Date();
+        // enddatestore.setHours(this.dend_timestore.hour);
+        // enddatestore.setMinutes(this.dend_timestore.minute);
+        // const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
+        // const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
 
         //home delivery
         const homedaystr: any = [];
@@ -345,14 +349,14 @@ export class CatalogdetailComponent implements OnInit {
         }
         // check whether the start and end times are selected
 
-        const curdatehome = new Date();
-        curdatehome.setHours(this.dstart_timehome.hour);
-        curdatehome.setMinutes(this.dstart_timehome.minute);
-        const enddatehome = new Date();
-        enddatehome.setHours(this.dend_timehome.hour);
-        enddatehome.setMinutes(this.dend_timehome.minute);
-        const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
-        const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
+        // const curdatehome = new Date();
+        // curdatehome.setHours(this.dstart_timehome.hour);
+        // curdatehome.setMinutes(this.dstart_timehome.minute);
+        // const enddatehome = new Date();
+        // enddatehome.setHours(this.dend_timehome.hour);
+        // enddatehome.setMinutes(this.dend_timehome.minute);
+        // const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
+        // const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
 
 
         let seltedimg = [];
@@ -397,12 +401,13 @@ export class CatalogdetailComponent implements OnInit {
                     'terminator': {
                         'endDate': storeendDate || ''
                     },
-                    'timeSlots': [
-                        {
-                            'sTime': starttime_formatstore,
-                            'eTime': endtime_formatstore
-                        }
-                    ]
+                    'timeSlots': this.storetimewindow_list
+                    //  [
+                    //     {
+                    //         'sTime': starttime_formatstore,
+                    //         'eTime': endtime_formatstore
+                    //     }
+                    // ]
                 }
                // 'pickUpOtpVerification': form_data.storeotpverify,
             },
@@ -414,12 +419,13 @@ export class CatalogdetailComponent implements OnInit {
                     'terminator': {
                         'endDate': homeendDate || ''
                     },
-                    'timeSlots': [
-                        {
-                            'sTime': starttime_formathome,
-                            'eTime': endtime_formathome
-                        }
-                    ]
+                    'timeSlots': this.hometimewindow_list
+                    // [
+                    //     {
+                    //         'sTime': starttime_formathome,
+                    //         'eTime': endtime_formathome
+                    //     }
+                    // ]
                 },
               //  'deliveryOtpVerification': form_data.homeotpverify,
                 'deliveryRadius': form_data.deliverykms || '',
@@ -499,14 +505,14 @@ export class CatalogdetailComponent implements OnInit {
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
-                qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-                qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
+               // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
+              //  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
               //  storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
-                qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-                qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
+               // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
+               // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: ['']
@@ -542,14 +548,14 @@ export class CatalogdetailComponent implements OnInit {
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
-                qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-                qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
+               // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
+               // qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
                // storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
-                qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-                qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
+               // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
+               // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: ['']
@@ -696,30 +702,32 @@ export class CatalogdetailComponent implements OnInit {
         // }
 
 
-        let sttimestore;
+       // let sttimestore;
+        
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
-            sttimestore = {
-                hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
+            this.storetimewindow_list = this.catalog.pickUp.pickUpSchedule.timeSlots;
+            // sttimestore = {
+            //     hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('HH'), 10),
+            //     minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('mm'), 10)
+            // };
         }
-        console.log(sttimestore);
-        let edtimestore;
-        if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
-            edtimestore = {
-                hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
-        }
-        console.log(edtimestore);
-        this.dstart_timestore = sttimestore ? sttimestore : this.dstart_timestore; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_timestore = edtimestore ? edtimestore : this.dend_timestore; // moment(edtime, ['h:mm A']).format('HH:mm');
-        console.log(this.dstart_timestore);
-        console.log(this.dend_timestore);
+       // console.log(sttimestore);
+        // let edtimestore;
+        // if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
+        //     edtimestore = {
+        //         hour: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('HH'), 10),
+        //         minute: parseInt(moment(this.catalog.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('mm'), 10)
+        //     };
+        // }
+        // console.log(edtimestore);
+        // this.dstart_timestore = sttimestore ? sttimestore : this.dstart_timestore; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_timestore = edtimestore ? edtimestore : this.dend_timestore; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // console.log(this.dstart_timestore);
+        // console.log(this.dend_timestore);
         this.selday_arrstorepickup = [];
         // extracting the selected days
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
@@ -734,29 +742,30 @@ export class CatalogdetailComponent implements OnInit {
             }
         }
 
-        let sttimehome;
+        //let sttimehome;
         if (this.catalog.homeDelivery && this.catalog.homeDelivery.deliverySchedule) {
-            sttimehome = {
-                hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
+            this.hometimewindow_list = this.catalog.homeDelivery.deliverySchedule.timeSlots;
+            // sttimehome = {
+            //     hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('HH'), 10),
+            //     minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('mm'), 10)
+            // };
         }
 
-        let edtimehome;
-        if (this.catalog.homeDelivery && this.catalog.homeDelivery.deliverySchedule) {
-            edtimehome = {
-                hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
-        }
-        this.dstart_timehome = sttimehome ? sttimehome : this.dstart_timehome; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_timehome = edtimehome ? edtimehome : this.dend_timehome; // moment(edtime, ['h:mm A']).format('HH:mm');
-        console.log(this.dstart_timehome);
-        console.log(this.dend_timehome);
+        // let edtimehome;
+        // if (this.catalog.homeDelivery && this.catalog.homeDelivery.deliverySchedule) {
+        //     edtimehome = {
+        //         hour: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('HH'), 10),
+        //         minute: parseInt(moment(this.catalog.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('mm'), 10)
+        //     };
+        // }
+        // this.dstart_timehome = sttimehome ? sttimehome : this.dstart_timehome; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_timehome = edtimehome ? edtimehome : this.dend_timehome; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // console.log(this.dstart_timehome);
+        // console.log(this.dend_timehome);
         this.selday_arrhomedelivery = [];
         // extracting the selected days
         if (this.catalog.homeDelivery && this.catalog.homeDelivery.deliverySchedule) {
@@ -825,10 +834,10 @@ if (this.catalog.cancellationPolicy) {
     this.paymentinformation = true;
 }
 
-if (orderpickUpstartdate && sttimestore && edtimestore && this.selday_arrstorepickup.length > 0) {
+if (orderpickUpstartdate && this.storetimewindow_list.length > 0 && this.selday_arrstorepickup.length > 0) {
     this.storepickupinfo = true;
 }
-if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedelivery.length > 0) {
+if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
     this.homedeliveryinfo = true;
 }
 
@@ -849,14 +858,14 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
-            'qstarttimestore': sttimestore || this.dstart_timestore,
-            'qendtimestore': edtimestore || this.dend_timestore,
+          //  'qstarttimestore': sttimestore || this.dstart_timestore,
+          //  'qendtimestore': edtimestore || this.dend_timestore,
            // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
-            'qstarttimehome': sttimehome || this.dstart_timehome,
-            'qendtimehome': edtimehome || this.dend_timehome,
+           // 'qstarttimehome': sttimehome || this.dstart_timehome,
+            //'qendtimehome': edtimehome || this.dend_timehome,
            // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
@@ -916,30 +925,31 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         // } else {
         //     this.Selall = false;
         // }
-        let sttimestore;
+        //let sttimestore;
         if (this.prefillData.pickUp && this.prefillData.pickUp.pickUpSchedule) {
-            sttimestore = {
-                hour: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
+            this.storetimewindow_list = this.prefillData.pickUp.pickUpSchedule.timeSlots;
+            // sttimestore = {
+            //     hour: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('HH'), 10),
+            //     minute: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('mm'), 10)
+            // };
         }
-        console.log(sttimestore);
-        let edtimestore;
-        if (this.prefillData.pickUp && this.prefillData.pickUp.pickUpSchedule) {
-            edtimestore = {
-                hour: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
-        }
-        console.log(edtimestore);
-        this.dstart_timestore = sttimestore ? sttimestore : this.dstart_timestore; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_timestore = edtimestore ? edtimestore : this.dend_timestore; // moment(edtime, ['h:mm A']).format('HH:mm');
-        console.log(this.dstart_timestore);
-        console.log(this.dend_timestore);
+        // console.log(sttimestore);
+        // let edtimestore;
+        // if (this.prefillData.pickUp && this.prefillData.pickUp.pickUpSchedule) {
+        //     edtimestore = {
+        //         hour: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('HH'), 10),
+        //         minute: parseInt(moment(this.prefillData.pickUp.pickUpSchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('mm'), 10)
+        //     };
+        // }
+        // console.log(edtimestore);
+        // this.dstart_timestore = sttimestore ? sttimestore : this.dstart_timestore; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_timestore = edtimestore ? edtimestore : this.dend_timestore; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // console.log(this.dstart_timestore);
+        // console.log(this.dend_timestore);
         this.selday_arrstorepickup = [];
         // extracting the selected days
         if (this.prefillData.pickUp && this.prefillData.pickUp.pickUpSchedule) {
@@ -954,29 +964,30 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             }
         }
 
-        let sttimehome;
+       // let sttimehome;
         if (this.prefillData.homeDelivery && this.prefillData.homeDelivery.deliverySchedule) {
-            sttimehome = {
-                hour: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].sTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
+            this.hometimewindow_list = this.prefillData.homeDelivery.deliverySchedule.timeSlots;
+            // sttimehome = {
+            //     hour: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('HH'), 10),
+            //     minute: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].sTime,
+            //         ['h:mm A']).format('mm'), 10)
+            // };
         }
 
-        let edtimehome;
-        if (this.prefillData.homeDelivery && this.prefillData.homeDelivery.deliverySchedule) {
-            edtimehome = {
-                hour: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('HH'), 10),
-                minute: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].eTime,
-                    ['h:mm A']).format('mm'), 10)
-            };
-        }
-        this.dstart_timehome = sttimehome ? sttimehome : this.dstart_timehome; // moment(sttime, ['h:mm A']).format('HH:mm');
-        this.dend_timehome = edtimehome ? edtimehome : this.dend_timehome; // moment(edtime, ['h:mm A']).format('HH:mm');
-        console.log(this.dstart_timehome);
-        console.log(this.dend_timehome);
+        // let edtimehome;
+        // if (this.prefillData.homeDelivery && this.prefillData.homeDelivery.deliverySchedule) {
+        //     edtimehome = {
+        //         hour: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('HH'), 10),
+        //         minute: parseInt(moment(this.prefillData.homeDelivery.deliverySchedule.timeSlots[0].eTime,
+        //             ['h:mm A']).format('mm'), 10)
+        //     };
+        // }
+        // this.dstart_timehome = sttimehome ? sttimehome : this.dstart_timehome; // moment(sttime, ['h:mm A']).format('HH:mm');
+        // this.dend_timehome = edtimehome ? edtimehome : this.dend_timehome; // moment(edtime, ['h:mm A']).format('HH:mm');
+        // console.log(this.dstart_timehome);
+        // console.log(this.dend_timehome);
         this.selday_arrhomedelivery = [];
         // extracting the selected days
         if (this.prefillData.homeDelivery && this.prefillData.homeDelivery.deliverySchedule) {
@@ -1055,10 +1066,10 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             this.paymentinformation = true;
         }
         
-        if (orderpickUpstartdate && sttimestore && edtimestore && this.selday_arrstorepickup.length > 0) {
+        if (orderpickUpstartdate && this.storetimewindow_list.length > 0 && this.selday_arrstorepickup.length > 0) {
             this.storepickupinfo = true;
         }
-        if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedelivery.length > 0) {
+        if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
         console.log(this.prefillData.catalogSchedule.terminator.endDate);
@@ -1079,14 +1090,14 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
-            'qstarttimestore': sttimestore || this.dstart_timestore,
-            'qendtimestore': edtimestore || this.dend_timestore,
+           // 'qstarttimestore': sttimestore || this.dstart_timestore,
+            //'qendtimestore': edtimestore || this.dend_timestore,
            // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
-            'qstarttimehome': sttimehome || this.dstart_timehome,
-            'qendtimehome': edtimehome || this.dend_timehome,
+            //'qstarttimehome': sttimehome || this.dstart_timehome,
+            //'qendtimehome': edtimehome || this.dend_timehome,
            // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
@@ -1331,6 +1342,11 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
+        if (this.storepickupStat && this.storetimewindow_list.length === 0) {
+            const error = 'Please add the storepickup timewindow';
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
+        }
         let storeendDate;
         const storestartDate = this.convertDate(form_data.startdatestore);
         if (form_data.enddatestore) {
@@ -1340,23 +1356,23 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
         }
 
         // check whether the start and end times are selected
-        if (!this.dstart_timestore || !this.dend_timestore) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
-            return;
-        }
+        // if (!this.dstart_timestore || !this.dend_timestore) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
         // today
-        if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        const curdatestore = new Date();
-        curdatestore.setHours(this.dstart_timestore.hour);
-        curdatestore.setMinutes(this.dstart_timestore.minute);
-        const enddatestore = new Date();
-        enddatestore.setHours(this.dend_timestore.hour);
-        enddatestore.setMinutes(this.dend_timestore.minute);
-        const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
-        const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
+        // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // const curdatestore = new Date();
+        // curdatestore.setHours(this.dstart_timestore.hour);
+        // curdatestore.setMinutes(this.dstart_timestore.minute);
+        // const enddatestore = new Date();
+        // enddatestore.setHours(this.dend_timestore.hour);
+        // enddatestore.setMinutes(this.dend_timestore.minute);
+        // const starttime_formatstore = moment(curdatestore).format('hh:mm A') || null;
+        // const endtime_formatstore = moment(enddatestore).format('hh:mm A') || null;
 
         //home delivery
         const homedaystr: any = [];
@@ -1368,6 +1384,11 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
+        if (this.homedeliveryStat && this.hometimewindow_list.length === 0) {
+            const error = 'Please add the homedelivery timewindow';
+            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
+        }
         let homeendDate;
         const homestartDate = this.convertDate(form_data.startdatehome);
         if (form_data.enddatehome) {
@@ -1376,23 +1397,23 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             homeendDate = '';
         }
         // check whether the start and end times are selected
-        if (!this.dstart_timehome || !this.dend_timehome) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
-            return;
-        }
+        // if (!this.dstart_timehome || !this.dend_timehome) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
         // today
-        if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
-            this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
-            return;
-        }
-        const curdatehome = new Date();
-        curdatehome.setHours(this.dstart_timehome.hour);
-        curdatehome.setMinutes(this.dstart_timehome.minute);
-        const enddatehome = new Date();
-        enddatehome.setHours(this.dend_timehome.hour);
-        enddatehome.setMinutes(this.dend_timehome.minute);
-        const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
-        const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
+        // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
+        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
+        // const curdatehome = new Date();
+        // curdatehome.setHours(this.dstart_timehome.hour);
+        // curdatehome.setMinutes(this.dstart_timehome.minute);
+        // const enddatehome = new Date();
+        // enddatehome.setHours(this.dend_timehome.hour);
+        // enddatehome.setMinutes(this.dend_timehome.minute);
+        // const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
+        // const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
                 this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
@@ -1431,12 +1452,13 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                         'endDate': storeendDate,
                         'noOfOccurance': 0
                     },
-                    'timeSlots': [
-                        {
-                            'sTime': starttime_formatstore,
-                            'eTime': endtime_formatstore
-                        }
-                    ]
+                    'timeSlots': this.storetimewindow_list
+                    // [
+                    //     {
+                    //         'sTime': starttime_formatstore,
+                    //         'eTime': endtime_formatstore
+                    //     }
+                    // ]
                 },
                 'pickUpOtpVerification': false,
                 'pickUpScheduledAllowed': true,
@@ -1452,12 +1474,13 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
                         'endDate': homeendDate,
                         'noOfOccurance': 0
                     },
-                    'timeSlots': [
-                        {
-                            'sTime': starttime_formathome,
-                            'eTime': endtime_formathome
-                        }
-                    ]
+                    'timeSlots': this.hometimewindow_list
+                    // [
+                    //     {
+                    //         'sTime': starttime_formathome,
+                    //         'eTime': endtime_formathome
+                    //     }
+                    // ]
                 },
                 'deliveryOtpVerification': false,
                 'deliveryRadius': form_data.deliverykms,
@@ -1812,14 +1835,14 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
             this.paymentinformation = true;
         }
     // } else if (step === 6) {
-        if (this.selday_arrstorepickup.length > 0 && form_data.startdatestore && form_data.qstarttimestore && form_data.qendtimestore) {
+        if (this.selday_arrstorepickup.length > 0 && form_data.startdatestore && this.storetimewindow_list.length > 0) {
             this.storepickupinfo = true;
              } else {
                 this.storepickupinfo = false;
              }
 
     // } else if (step === 7) {
-        if (this.selday_arrhomedelivery.length > 0 && form_data.startdatehome && form_data.qstarttimehome && form_data.qendtimehome) {
+        if (this.selday_arrhomedelivery.length > 0 && form_data.startdatehome && this.hometimewindow_list.length > 0) {
             this.homedeliveryinfo = true;
              } else {
                 this.homedeliveryinfo = false;
@@ -1827,4 +1850,35 @@ if (homeDeliverystartdate  && sttimehome && edtimehome && this.selday_arrhomedel
   //  }
         this.step = step;
 }
+showTimewindow(type) {
+    this.addtimewindowdialogRef = this.dialog.open(TimewindowPopupComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+            //source_id: data
+        }
+    });
+    this.addtimewindowdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+         console.log(result);
+         if (type === 'store') {
+         this.storetimewindow_list.push(result);
+         console.log(this.storetimewindow_list);
+         } else {
+            this.hometimewindow_list.push(result);
+            console.log(this.hometimewindow_list);
+         }
+        }
+      });
+}
+    deletetimeslot(type, index) {
+        if (type === 'store') {
+            this.storetimewindow_list.splice(index, 1);
+            console.log(this.storetimewindow_list);
+            } else {
+               this.hometimewindow_list.splice(index, 1);
+               console.log(this.hometimewindow_list);
+            }
+    }
 }
