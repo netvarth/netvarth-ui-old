@@ -47,7 +47,7 @@
                                 <tr *ngFor="let status of statusDetail">
                                     <td>{{status.periodFrom | date:newDateFormat}} to {{status.periodTo |
                                         date:newDateFormat}}</td>
-                                    <td>{{status.amount}}</td>
+                                    <td class="rupee-font">&#8377;{{status.amount}}</td>
                                     <td>{{status.licensePaymentStatus}}</td>
                                     <td>
                                         <button
