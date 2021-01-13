@@ -743,7 +743,7 @@ export class NewReportComponent implements OnInit {
         if (this.delivery_mode === 'homeDelivery') {
           delete this.filterparams.storePickup;
 
-        } else if (this.delivery_mode === 'storePcikup') {
+        } else if (this.delivery_mode === 'storePickup') {
           delete this.filterparams.homeDelivery;
         } else if (this.delivery_mode === 0) {
           delete this.filterparams.homeDelivery;
