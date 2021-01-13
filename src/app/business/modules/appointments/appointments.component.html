@@ -370,6 +370,9 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
+                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{appt.provider.businessName}}
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -613,6 +616,9 @@
                             {{apptByTimeSlot[appt.time][0].providerConsumer.jaldeeId}}</div>
                         </td>
                         <td class="title td-two">
+                          <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                            {{appt.provider.businessName}}
+                          </div>
                           <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                             class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                             <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -812,6 +818,9 @@
                           {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                       </td>
                       <td class="title td-two">
+                        <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                          {{appt.provider.businessName}}
+                        </div>
                         <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                           class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                           <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1147,6 +1156,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
+                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{appt.provider.businessName}}
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"
@@ -1514,6 +1526,9 @@
                         {{customer_label | capitalizeFirst}} id:&nbsp; {{appt.providerConsumer.jaldeeId}}</div>
                     </td>
                     <td class="title td-two">
+                      <div class="bold" *ngIf="selectedUser && selectedUser.id == 'all' && appt.provider">
+                        {{appt.provider.businessName}}
+                      </div>
                       <div [matTooltipClass]="tooltipcls" [matTooltip]="'Service'"
                         class="col-md-12 col-xs-12 col-sm-12 no-padding font-bold font1">
                         <i class="fa meet-icon" [ngClass]="{'tool-pading': (!small_device_display?true:false)}"

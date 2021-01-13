@@ -2138,6 +2138,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    const tempUser = {};
+    tempUser['firstName'] = 'All';
+    tempUser['id'] = 'all';
+    this.selectedUser = tempUser;
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
@@ -2214,14 +2218,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // let filter = 'userType-neq :"assistant"'
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      // const tempUser = {};
-      // tempUser['firstName'] = 'All';
-      // tempUser['id'] = 'all';
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
       // this.users.push(tempUser);
       if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
       } else {
-        // this.selectedUser = tempUser;
+        this.selectedUser = tempUser;
       }
     });
   }

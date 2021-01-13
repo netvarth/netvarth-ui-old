@@ -542,9 +542,15 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (serv.virtualCallingModes) {
                     if (serv.virtualCallingModes[0].callingMode === 'WhatsApp' || serv.virtualCallingModes[0].callingMode === 'Phone') {
                         if (this.type === 'reschedule') {
+                            if (serv.virtualCallingModes[0].callingMode === 'WhatsApp') {
                             this.callingModes = this.appointment.virtualService['WhatsApp'];
+                            } else {
+                                this.callingModes = this.appointment.virtualService['Phone'];
+                            }
                             // this.changePhno = true;
-                            if (serv.virtualCallingModes[0].value === this.appointment.phoneNumber) {
+                            const phNumber = this.appointment.countryCode + this.appointment.phoneNumber;
+                            const callMode = '+' + serv.virtualCallingModes[0].value;
+                            if (callMode === phNumber) {
                                 this.changePhno = false;
                             } else {
                                 this.changePhno = true;

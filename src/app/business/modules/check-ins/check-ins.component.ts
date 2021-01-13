@@ -1230,6 +1230,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    const tempUser = {};
+    tempUser['firstName'] = 'All';
+    tempUser['id'] = 'all';
+    this.selectedUser = tempUser;
     this.qloading = true;
     this.shared_functions.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
@@ -2820,14 +2824,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       // let filter = 'userType-neq :"assistant"'
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
-        // const tempUser = {};
-        // tempUser['firstName'] = 'All';
-        // tempUser['id'] = 'all';
+        const tempUser = {};
+        tempUser['firstName'] = 'All';
+        tempUser['id'] = 'all';
         // _this.users.push(tempUser);
         if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
           _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
         } else {
-          // _this.selectedUser = tempUser;
+          _this.selectedUser = tempUser;
         }
         resolve();
       },
