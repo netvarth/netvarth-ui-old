@@ -101,7 +101,7 @@ export class TimewindowPopupComponent implements OnInit {
     }
     // today
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-        this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_WINDOW_STIMEERROR, { 'panelClass': 'snackbarerror' });
         return;
     }
     const curdatestore = new Date();
