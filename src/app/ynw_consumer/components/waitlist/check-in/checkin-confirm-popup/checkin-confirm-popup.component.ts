@@ -177,7 +177,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
             },
                 error => {
                     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     // this.api_loading = false;
                 });
     }

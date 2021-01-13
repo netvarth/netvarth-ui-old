@@ -74,6 +74,7 @@ export class DonationsComponent implements OnInit {
   selected_location = null;
   screenWidth;
   small_device_display = false;
+  selectAll = false;
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private provider_shared_functions: ProviderSharedFuctions,
     private routerobj: Router, private dialog: MatDialog,
@@ -350,8 +351,26 @@ export class DonationsComponent implements OnInit {
         }
       }
     }
-    console.log(this.selectedDonations);
-    console.log(this.donationsSelected);
+    if (this.donations.length === this.donationsSelected.length) {
+      this.selectAll = true;
+    } else {
+      this.selectAll = false;
+    }
+  }
+  selectAllDonations() {
+    if (!this.selectAll) {
+      this.selectAll = true;
+      for (let i = 0; i < this.donations.length; i++) {
+        this.donationsSelected[i] = true;
+        if (this.selectedDonations.indexOf(this.donations[i]) === -1) {
+          this.selectedDonations.push(this.donations[i]);
+        }
+      }
+    } else {
+      this.selectAll = false;
+      this.donationsSelected = [];
+      this.selectedDonations = [];
+    }
   }
   addInboxMessage() {
     let customerlist = [];
