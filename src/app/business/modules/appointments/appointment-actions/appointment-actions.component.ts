@@ -13,11 +13,8 @@ import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { SharedServices } from '../../../../shared/services/shared-services';
-<<<<<<< HEAD
 declare let cordova: any;
-=======
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
->>>>>>> refs/remotes/origin/1.7-order
 
 @Component({
     selector: 'app-appointment-actions',
