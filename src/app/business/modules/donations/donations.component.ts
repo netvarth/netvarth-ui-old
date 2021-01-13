@@ -351,7 +351,7 @@ export class DonationsComponent implements OnInit {
         }
       }
     }
-    if (this.donations.length === this.donationsSelected.length) {
+    if (this.donations.length === this.selectedDonations.length) {
       this.selectAll = true;
     } else {
       this.selectAll = false;
