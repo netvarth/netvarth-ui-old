@@ -206,8 +206,8 @@
                       </div>
                     </div>
                   </div>
-                  <span class="shoppinglistuploadspan popular_more"(click)="filed.click()"  *ngIf="this.orderType === 'SHOPPINGLIST'">
-                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">upload shoppinglist
+                  <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
+                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">upload shoppinglist</a>
                   </span>
                   <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                     <div class="bill-section-content">
@@ -353,13 +353,17 @@
                           </div>
                       </li>
                   </ul>
+                  <a (click)="filed.click()" class="pointerlist">
+                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
+                  </a>
+                   <!-- <a class="pointerlist" (click)="editshoppinglist()" class="popular_more">Add more</a> -->
                   <div class="snd_msg_outer">
                       <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                     </div>
                       <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                       [plainGalleryConfig]="customPlainGalleryRowConfig"
                       [buttonsConfig]="customButtonsFontAwesomeConfig"
-                      (buttonBeforeHook)="onButtonBeforeHook()"
+                      (buttonBeforeHook)="onButtonBeforeHook($event)"
                       (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                       <!-- <div (click)="filed.click()">
                           <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist

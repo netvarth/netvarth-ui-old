@@ -98,6 +98,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         base64: [],
         caption: []
     };
+    imagelist = {
+      files: [],
+      base64: [],
+      caption: []
+  };
   shoppinglistdialogRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -107,6 +112,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   visible: true,
   strategy: ButtonsStrategy.CUSTOM,
   buttons: [
+    {
+      className: 'fa fa-trash-o',
+      type: ButtonType.DELETE,
+      ariaLabel: 'custom plus aria label',
+      title: 'Delete',
+      fontSize: '20px'
+  },
       {
           className: 'inside close-image',
           type: ButtonType.CLOSE,
@@ -116,6 +128,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       }
   ]
 };
+
+
   canceldialogRef: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
@@ -192,6 +206,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     }
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       if (this.orderType === 'SHOPPINGLIST') {
           this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
@@ -199,7 +214,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
-              // source_id: data
+               source: this.imagelist
             }
         });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
@@ -216,6 +231,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
                   });
               this.image_list_popup.push(imgobj);
           }
+          console.log(this.image_list_popup);
 
             }
           }
@@ -963,8 +979,6 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             this.selectedImagelist.base64.splice(index, 1);
 }
 openImageModalRow(image: Image) {
-  console.log(image);
-  console.log(this.image_list_popup);
   const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
   this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
 }
@@ -973,7 +987,55 @@ private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
   return image ? images.indexOf(image) : -1;
 }
 
-onButtonBeforeHook() {
+onButtonBeforeHook(event) {
+  console.log(event);
+  if (!event || !event.button) {
+    return;
+}
+// Invoked after a click on a button, but before that the related
+// action is applied.
+// For instance: this method will be invoked after a click
+// of 'close' button, but before that the modal gallery
+// will be really closed.
+// if (event.button.type === ButtonType.DELETE) {
+if (event.button.type === ButtonType.DELETE) {
+    // remove the current image and reassign all other to the array of images
+    let name = event.image.modal.img.toString();
+    const knamearr = name.split('/');
+    const kname = knamearr[(knamearr.length - 1)];
+    const file = {
+        id: event.image.id,
+        keyName: kname,
+        modal: {
+            img: event.image.modal.img
+        },
+        plain: undefined
+    };
+    console.log(file);
+    console.log(this.selectedImagelist.files);
+   console.log(this.image_list_popup);
+   this.deletemodelboxImage(event.image.id);
+   // this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
+}
+}
+deletemodelboxImage(index) {
+  console.log(index);
+  this.selectedImagelist.files.splice(index, 1);
+  this.selectedImagelist.base64.splice(index, 1);
+  console.log(this.selectedImagelist.files);
+  this.image_list_popup = [];
+  if (this.selectedImagelist.files.length > 0) {
+  for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+    const imgobj = new Image(i,
+        {
+            img: this.selectedImagelist.base64[i],
+            description: ''
+        });
+    this.image_list_popup.push(imgobj);
+}
+console.log(this.image_list_popup);
+
+  }
 }
 onButtonAfterHook() { }
 
@@ -1004,6 +1066,36 @@ imageSelect(event) {
             }
         }
                 }
+    }
+    editshoppinglist() {
+      this.imagelist = this.selectedImagelist;
+      console.log(this.selectedImagelist);
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+           source: this.imagelist
+        }
+    });
+    this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        console.log(result);
+        this.selectedImagelist = result;
+        this.image_list_popup = [];
+        if (this.selectedImagelist.files.length > 0) {
+        for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+          const imgobj = new Image(i,
+              {
+                  img: this.selectedImagelist.base64[i],
+                  description: ''
+              });
+          this.image_list_popup.push(imgobj);
+      }
+
+        }
+      }
+      });
     }
 }
 
