@@ -19,7 +19,7 @@
         <div>
           <div class="criteria-btn-dv pull-right">
             <button *ngIf="!hide_criteria_save" type="button" class="btn btn-save" (click)="saveCriteria()"> Save this report </button> &nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn default" (click)="printReport()"> Print </button>
+            <button type="button" class="btn default" (click)="exportReport()"> Export to XLS(Excel)</button>
           </div>
         </div>
         <div id="reportGenerated">
@@ -132,11 +132,11 @@
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="groupReducer">
-                    <td colspan="1" mat-cell *matCellDef="let group">
+               <td mat-cell *matCellDef="let group">
                       <!-- <div fxFill fxLayoutAlign="center center">
                         <mat-icon *ngIf="!group.reduced">expand_less</mat-icon>
                         <mat-icon *ngIf="group.reduced">expand_more</mat-icon>
-                      </div> -->
+                      </div>-->
                     </td>
                   </ng-container>
 

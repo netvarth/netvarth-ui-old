@@ -32,7 +32,9 @@ export class CriteriaDialogComponent implements OnInit {
     } else {
       this.for_view = false;
     }
+
   }
+
   saveCriteria() {
     this.api_success = false;
     this.api_error = false;
