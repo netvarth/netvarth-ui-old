@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { OrderComponent } from './order.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { OrderPaymentDetailsComponent } from './order-payment-details/order-payment-details.component';
@@ -13,12 +11,7 @@ const routes: Routes = [
   {
     path: '', component: OrderComponent
   },
-  {
-    path: 'cart', component: ShoppingCartComponent
-  },
-  {
-    path: 'checkout', component: CheckoutComponent
-  },
+
   {
     path: 'item-details', component: ItemDetailsComponent
   },
