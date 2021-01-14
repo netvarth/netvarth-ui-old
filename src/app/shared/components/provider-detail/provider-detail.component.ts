@@ -43,6 +43,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
+  catalogimage_list_popup: any[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   clear_cart_dialogRef: any;
   spId_local_id: any;
@@ -1113,6 +1114,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
+  openCatalogImageModalRow(image: Image){
+    const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
@@ -1978,6 +1984,13 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
+            this.catalogimage_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.activeCatalog.catalogImages[0].url,
+                description: ''
+              });
+            this.catalogimage_list_popup.push(imgobj);
           }
           //this.updateLocalStorageItems();
           this.catlogArry();
@@ -1993,7 +2006,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           if (this.activeCatalog.homeDelivery) {
             if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
               this.home_delivery = true;
-  
+
               if (!this.store_pickup) {
                 this.choose_type = 'home';
                 this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
@@ -2014,7 +2027,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
             const showpric = this.activeCatalog.showPrice;
-            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item ,'showpric':showpric});
+            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
             this.itemCount++;
           }
           // }
@@ -2163,7 +2176,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       queryParams: {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
-        showpric : this.activeCatalog.showPrice 
+        showpric: this.activeCatalog.showPrice
 
       }
 
@@ -2210,8 +2223,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     return showFooter;
   }
+
   shoppinglistupload() {
-    console.log("shoppinglistupload");
     const chosenDateTime = {
       delivery_type: this.choose_type,
       catlog_id: this.activeCatalog.id,
@@ -2236,11 +2249,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-     // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
       this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     } else if (this.userType === '') {
-      console.log("else if");
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);
     }

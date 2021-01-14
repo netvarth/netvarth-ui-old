@@ -360,11 +360,11 @@
                 <!-- Order Catalog-->
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
-                        <h5 class="mgn-bt-5 primary-color"><img  [src]="catalogImage" width="50" height="50" id="catalog-image1"
+                        <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(image_list_popup[0])" [src]="catalogImage" width="50" height="50" id="catalog-image1"
                           class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
                         <!-- <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>    -->
-                        <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>    
-                        <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>                     
+                        <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
+                        <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
                         <span class="pull-left">
@@ -392,7 +392,7 @@
                         <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
                         <a (click)="shoppinglistupload()" class="like-btn">Upload shoppinglist</a>
                     </div>
-                   
+
                 </ng-container>
 
             </div>
