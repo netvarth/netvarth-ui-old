@@ -90,6 +90,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     serviceScheduleCount;
     provider_label = '';
     customer_label = '';
+    accountType;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -99,6 +100,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     ) {
         this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
         this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
+        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
     }
     ngOnInit() {
         this.getBussinessProfile();
@@ -257,7 +260,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                                 this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
                                 this.labelMultiCtrl = this.providerLabels[i];
                                 this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
-                           console.log(this.labelMultiCtrl);
+                                console.log(this.labelMultiCtrl);
                             }
                         }
                     });

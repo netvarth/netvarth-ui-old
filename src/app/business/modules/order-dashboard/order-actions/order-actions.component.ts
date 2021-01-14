@@ -4,8 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedServices } from '../../../../shared/services/shared-services';
-
+  
 @Component({
   selector: 'app-order-actions',
   templateUrl: './order-actions.component.html',
@@ -27,12 +26,12 @@ export class OrderActionsComponent implements OnInit {
   activeCatalog: any;
   catalog_Id: any;
   orderStatusClasses = projectConstantsLocal.ORDER_STATUS_CLASS;
+  choose_type: string;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private providerservice: ProviderServices,
-    private shared_services: SharedServices, ) { }
+    private providerservice: ProviderServices) { }
 
   ngOnInit() {
     this.loading = true;
@@ -119,47 +118,30 @@ export class OrderActionsComponent implements OnInit {
       //   }
       // }
       this.loading = false;
-    });   const navigationExtras: NavigationExtras = {
+    });  
+    if (this.orderDetails.storePickup) {
+      this.choose_type = 'store';
+    }
+    if(this.orderDetails.homeDelivery) {
+      this.choose_type = 'home';
+    }
+     const navigationExtras: NavigationExtras = {
       queryParams: {
         account_id: cuser,
-
+        choosetype:  this.choose_type
       }
     };
-
-    // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    // this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
-     this.router.navigate(['order/shoppingcart'], navigationExtras);
-    // this.dialogRef.close();
-    // this.router.navigate(['order/shoppingcart']);
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      // catlog_id: this.activeCatalog.id,
+     nextAvailableTime: this.orderDetails.timeSlot['sTime'] + ' - ' +  this.orderDetails.timeSlot['eTime'],
+      order_date: this.orderDetails.orderDate,
+    };
+    this.shared_functions.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.router.navigate(['provider', 'orders', 'edit' ], navigationExtras);
+    this.dialogRef.close();
 
   }
-  getOrderAvailableDatesForPickup() {
-    const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
-    console.log(cuser);
-    const _this = this;
-
-    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, cuser)
-      .subscribe((data: any) => {
-        console.log(data);
-        // const availables = data.filter(obj => obj.isAvailable);
-        // const availDates = availables.map(function (a) { return a.date; });
-        // _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
-        //   return index === self.indexOf(elem);
-        // });
-      });
-  }
-  // getOrderAvailableDatesForHome() {
-  //   const _this = this;
-
-  //   _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
-  //     .subscribe((data: any) => {
-  //       const availables = data.filter(obj => obj.isAvailable);
-  //       const availDates = availables.map(function (a) { return a.date; });
-  //       _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
-  //         return index === self.indexOf(elem);
-  //       });
-  //     });
-  // }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
       this.pos = data['enablepos'];

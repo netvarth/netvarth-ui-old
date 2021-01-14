@@ -11,15 +11,17 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { CardModule } from '../../../shared/components/card/card.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { OrderEditComponent } from './order-edit/order-edit.component';
 
 @NgModule({
   declarations: [
     OrderDashboardComponent,
     OrderDetailsComponent,
-    OrderActionsComponent
+    OrderActionsComponent,
+    OrderEditComponent
   ],
   entryComponents: [
-    OrderActionsComponent
+    OrderActionsComponent,
   ],
   imports: [
     CommonModule,

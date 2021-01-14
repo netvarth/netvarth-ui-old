@@ -17,7 +17,7 @@ export class OrderDashboardComponent implements OnInit {
   businessName;
   historyOrders: any = [];
   orders: any = [];
-  display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
+  display_dateFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   historyOrdersCount;
   loading = false;
   orderSelected: any = [];

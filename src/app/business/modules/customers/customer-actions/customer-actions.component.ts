@@ -19,6 +19,7 @@ export class CustomerActionsComponent implements OnInit {
     action = '';
     providerLabels: any = [];
     loading = false;
+    showMessage = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
         private shared_functions: SharedFunctions, private router: Router,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
@@ -27,6 +28,9 @@ export class CustomerActionsComponent implements OnInit {
     ngOnInit() {
         this.getLabel();
         this.customerDetails = this.data.customer;
+        if (this.customerDetails[0].phoneNo || this.customerDetails[0].email) {
+            this.showMessage = true;
+        }
         if (this.data.type && this.data.type === 'label') {
             this.action = 'label';
         }

@@ -19,6 +19,17 @@
             <app-common-innerloading-spinner></app-common-innerloading-spinner>
         </div>
         <div class="col-md-12 no-padding-small" *ngIf="!api_loading">
+            <div class="row" *ngIf="show_addlocationButton">
+                <ul class="nav jd-custom-nav chkn-dash">
+                    <li class="dropdown notifications-menu pull-right">
+                        <a (click) = "addLocation()"
+                            class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                            <span ><i class="fa fa-plus"></i> Add Location
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div class="row" *ngFor="let loc of loc_list | orderBy: order">
                 <div class="card" [class.disabled]="loc.status=='INACTIVE'" [class.bse-lcn]="loc.baseLocation == true">
                     <div class="copy">

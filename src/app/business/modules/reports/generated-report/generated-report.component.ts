@@ -3,9 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
-declare let cordova: any;
+import { ExportReportService } from '../export-report.service';
 
 
 export class Group {
@@ -54,6 +54,7 @@ export class GeneratedReportComponent implements OnInit {
     public dateformat: DateFormatPipe,
     private dialog: MatDialog,
     private activated_route: ActivatedRoute,
+    private exportReportService: ExportReportService
   ) {
     this.report = this.report_data_service.getReport();
     this.report_type = this.report.reportType.toLowerCase();
@@ -101,7 +102,6 @@ export class GeneratedReportComponent implements OnInit {
   }
 
   groupBy(column: string, data: any[], reducedGroups?: any[]) {
-    console.log(column);
     if (!column) { return data; }
     let collapsedGroups = reducedGroups;
     if (!reducedGroups) { collapsedGroups = []; }
@@ -121,7 +121,7 @@ export class GeneratedReportComponent implements OnInit {
       accumulator[currentGroup].push(currentValue);
 
       return accumulator;
-    }
+    };
     const groups = data.reduce(customReducer, {});
     const groupArray = Object.keys(groups).map(key => groups[key]);
     const flatList = groupArray.reduce((a, c) => a.concat(c), []);
@@ -164,16 +164,16 @@ export class GeneratedReportComponent implements OnInit {
     }
   }
 
-  printReport() {
-    const printContent = document.getElementById('reportGenerated');
-    let printsection = '<html><head><title></title>';
-    printsection += '</head><body>';
-    printsection += '<div>';
-    printsection += printContent.innerHTML;
-    printsection += '</div>';
-    printsection += '</body></html>';
-    cordova.plugins.printer.print(printsection);
-  }
+  // printReport() {
+
+  //   const printContent = document.getElementById('reportGenerated');
+  //   const WindowPrt = window.open('', '', 'left=0,top=0,height=900,toolbar=0,scrollbars=0,status=0');
+  //   WindowPrt.document.write(printContent.innerHTML);
+  //   WindowPrt.document.close();
+  //   WindowPrt.focus();
+  //   WindowPrt.print();
+  //   WindowPrt.close();
+  // }
   saveCriteria() {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
       width: '400px',
@@ -186,6 +186,28 @@ export class GeneratedReportComponent implements OnInit {
     this.reprtdialogRef.afterClosed().subscribe(result => {
     });
   }
+
+
+  exportReport() {
+    const reportData = this.report.reportContent.data;
+    const tableHeader = this.tableColums;
+
+    const reportResult = [];
+    reportData.forEach(function (object) {
+      const newSet = {};
+      Object.keys(tableHeader).forEach(function (key) {
+        const newKey = tableHeader[key];
+        const newValue = object[key];
+        newSet[newKey] = newValue;
+
+      });
+      reportResult.push(newSet);
+
+    });
+
+    this.exportReportService.exportExcel(reportResult, this.report_type + '_report');
+  }
+
 
 
 

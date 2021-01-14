@@ -32,12 +32,28 @@
 .bglobe {
     width: 75px;
 }
+.youtube {
+    width: 75px;
+}
+.insta {
+    width: 75px;
+}
 @media(max-width: 550px) {
     .socialmedia .social-box {
         width: 85%;
     }
     .bglobe {
         width: 50px;
+        height: 50px;
+
+    }
+    .youtube {
+        width: 50px;
+        height: 45px;
+    }
+    .insta {
+        width: 50px;
+        height: 50px;
     }
     .inst, .site, .fb, .tw, .ytb, .lkd, .pntr {
         font-size: 4rem;

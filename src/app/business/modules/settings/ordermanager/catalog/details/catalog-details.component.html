@@ -376,8 +376,19 @@
                           </div>
                         </div>
 
-
-                        <div class="form-group schedulesub_outer">
+                        <div class="form-group">
+                          <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="storetimewindow_list.length > 0" (click)="showTimewindow('store')" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          <div *ngIf="storetimewindow_list.length == 0">
+                            Currently no timewindows are added&nbsp; <a class="pointlist" (click)="showTimewindow('store')">Add</a>
+                          </div>
+                        <div *ngIf="storetimewindow_list.length > 0">  <ul *ngFor="let window of storetimewindow_list;let i = index">
+                           <li>
+                            {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('store',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                           </li>
+                         </ul>
+                        </div>
+                        </div>
+                        <!-- <div class="form-group schedulesub_outer">
                           <div class="startendtime" style="display: flex">
                             <div class="starttimediv mgn-rt-20">
                               <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
@@ -397,7 +408,7 @@
                               </app-field-error-display>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-group">
                           <label>Pick up Otp verification </label>
                           <mat-slide-toggle formControlName="storeotpverify">
@@ -464,7 +475,22 @@
                             </mat-form-field>
                           </div>
                         </div>
-                        <div class="form-group schedulesub_outer">
+
+                        <div class="form-group">
+                          <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="hometimewindow_list.length > 0" (click)="showTimewindow('home')"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          <div *ngIf="hometimewindow_list.length == 0">
+                            Currently no timewindows are added &nbsp; <a class="pointlist" (click)="showTimewindow('home')">Add</a>
+                          </div>
+                          <div *ngIf="hometimewindow_list.length > 0">
+                         <ul *ngFor="let window of hometimewindow_list;let i = index">
+                           <li>
+                            {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('home',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                           </li>
+                         </ul>
+                         </div>
+                        </div>
+
+                        <!-- <div class="form-group schedulesub_outer">
                           <div class="startendtime" style="display: flex">
                             <div class="starttimediv mgn-rt-20">
                               <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
@@ -484,7 +510,7 @@
                               </app-field-error-display>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-group">
                           <label>Home Delivery Otp verification </label>
                           <mat-slide-toggle formControlName="homeotpverify">
