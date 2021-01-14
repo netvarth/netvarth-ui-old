@@ -98,14 +98,14 @@ export class CustomerIdSettingsComponent implements OnInit {
                 panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
                 disableClose: true,
                 data: {
-                    'message': 'Once you switch to manual mode, auto generation of customer id won’t be available anymore. Are you sure you want to continue ?'
+                    'message': 'Once you switch to manual mode, auto generation of ' + this.customer_label + ' id won’t be available anymore. Are you sure you want to continue ?'
                 }
             });
             dialogrefd.afterClosed().subscribe(result => {
                 if (result) {
                     this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
                         (data: any) => {
-                            this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                            this.shared_Functionsobj.openSnackBar(this.customer_label_upper +  ' Id Configured Successfully');
                             this.inputChanged = false;
                         },
                         (error) => {
