@@ -538,9 +538,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.phonelist = this.businessjson.phoneNumbers;
               }
               this.getbusinessprofiledetails_json('gallery', true);
-              // if (this.userType === 'consumer') {
-              //   this.getFavProviders();
-              // }
+              if (this.userType === 'consumer') {
+                this.getFavProviders();
+              }
               const holdbName = this.businessjson.businessDesc || '';
               const maxCnt = 120;
               if (holdbName.length > maxCnt) {
@@ -1698,6 +1698,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           // this.getFavProviders();
           this.showCommunicate(passParam['providerId']);
@@ -1712,7 +1713,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'order') {
           this.checkout();
         } else {
-          this.getFavProviders();
+          // this.getFavProviders();
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
@@ -1736,6 +1737,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
