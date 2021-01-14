@@ -221,6 +221,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             if (result) {
             console.log(result);
             this.selectedImagelist = result;
+            console.log(this.selectedImagelist.files);
             this.image_list_popup = [];
             if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -228,7 +229,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
                   {
                       img: this.selectedImagelist.base64[i],
                       description: ''
-                  });
+                  }, this.selectedImagelist.files[i].name);
               this.image_list_popup.push(imgobj);
           }
           console.log(this.image_list_popup);
@@ -974,9 +975,12 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.showSide = false;
   }
   deleteTempImage(img, index) {
-            this.image_list_popup.splice(index, 1);
+    console.log(img);
+    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+          //  this.image_list_popup.splice(index, 1);
             this.selectedImagelist.files.splice(index, 1);
             this.selectedImagelist.base64.splice(index, 1);
+            console.log(this.selectedImagelist.files);
 }
 openImageModalRow(image: Image) {
   const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
@@ -1000,42 +1004,48 @@ onButtonBeforeHook(event) {
 // if (event.button.type === ButtonType.DELETE) {
 if (event.button.type === ButtonType.DELETE) {
     // remove the current image and reassign all other to the array of images
-    let name = event.image.modal.img.toString();
-    const knamearr = name.split('/');
-    const kname = knamearr[(knamearr.length - 1)];
-    const file = {
-        id: event.image.id,
-        keyName: kname,
-        modal: {
-            img: event.image.modal.img
-        },
-        plain: undefined
-    };
-    console.log(file);
+    // let name = event.image.modal.img.toString();
+    // const knamearr = name.split('/');
+    // const kname = knamearr[(knamearr.length - 1)];
+    // const file = {
+    //     id: event.image.id,
+    //     keyName: kname,
+    //     modal: {
+    //         img: event.image.modal.img
+    //     },
+    //     plain: undefined
+    // };
+    console.log(event.image.plain);
     console.log(this.selectedImagelist.files);
    console.log(this.image_list_popup);
-   this.deletemodelboxImage(event.image.id);
-   // this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
+   this.deletemodelboxImage(event.image.plain);
+   this.image_list_popup = this.image_list_popup.filter((val: Image) => event.image && val.id !== event.image.id);
 }
 }
-deletemodelboxImage(index) {
-  console.log(index);
-  this.selectedImagelist.files.splice(index, 1);
-  this.selectedImagelist.base64.splice(index, 1);
+deletemodelboxImage(name) {
+  console.log(name);
+ const position = this.selectedImagelist.files.indexOf(name);
+ const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
+ console.log(position);
+ console.log(idex);
+  this.selectedImagelist.files.splice(idex, 1);
+  this.selectedImagelist.base64.splice(idex, 1);
+  this.image_list_popup.splice(idex, 1);
   console.log(this.selectedImagelist.files);
-  this.image_list_popup = [];
-  if (this.selectedImagelist.files.length > 0) {
-  for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-    const imgobj = new Image(i,
-        {
-            img: this.selectedImagelist.base64[i],
-            description: ''
-        });
-    this.image_list_popup.push(imgobj);
-}
-console.log(this.image_list_popup);
+ // this.image_list_popup = [];
+//   if (this.selectedImagelist.files.length > 0) {
+//   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+//     const imgobj = new Image(i,
+//         {
+//             img: this.selectedImagelist.base64[i],
+//             description: ''
+//         });
+//     this.image_list_popup.push(imgobj);
+// }
+// console.log(this.image_list_popup);
 
-  }
+//   }
+console.log(this.image_list_popup);
 }
 onButtonAfterHook() { }
 
@@ -1058,7 +1068,7 @@ imageSelect(event) {
                                 {
                                     img: this.selectedImagelist.base64[i],
                                     description: ''
-                                });
+                                }, this.selectedImagelist.files[i].name);
                             this.image_list_popup.push(imgobj);
                         }
                 };
