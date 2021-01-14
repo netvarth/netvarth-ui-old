@@ -169,7 +169,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     // });
     // dialogReflog.afterClosed().subscribe(() => {
     // });
-    this.router.navigate(['business/providersignup']);
+    this.router.navigate(['business/signup']);
   }
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {
