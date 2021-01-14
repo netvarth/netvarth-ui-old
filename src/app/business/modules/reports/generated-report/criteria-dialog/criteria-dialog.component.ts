@@ -36,26 +36,27 @@ export class CriteriaDialogComponent implements OnInit {
   }
 
   saveCriteria() {
+
     this.api_success = false;
     this.api_error = false;
     if (this.criteria_name && this.criteria_name.trim() !== '') {
-      if (/[^a-zA-Z0-9\-\/]/.test(this.criteria_name)) {
+      if (/^[A-Za-z0-9\s@]*$/.test(this.criteria_name) !== true) {
         this.api_error = true;
-        this.api_error_msg = 'Report Name is not alphanumeric';
-
-
+        this.api_error_msg = 'Only letters numbers and spacess allowed';
       } else {
-      this.provider_services.saveReportCriteria(this.criteria_name, this.report_criteria_ip).subscribe(data => {
-        this.api_success = true;
-        this.api_success_msg = 'Report saved successfully';
-        setTimeout(() => {
-          this.dialogRef.close();
-        }, 2000);
-      },
-        error => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-    }} else {
+
+        this.provider_services.saveReportCriteria(this.criteria_name, this.report_criteria_ip).subscribe(data => {
+          this.api_success = true;
+          this.api_success_msg = 'Report saved successfully';
+          setTimeout(() => {
+            this.dialogRef.close();
+          }, 2000);
+        },
+          error => {
+            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      }
+    } else {
       this.api_error = true;
       this.api_error_msg = 'Please enter the report name';
     }
