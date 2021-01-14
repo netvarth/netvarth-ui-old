@@ -43,7 +43,7 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
-  catalogimage_list_popup: any[];
+  catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   clear_cart_dialogRef: any;
   spId_local_id: any;
@@ -148,6 +148,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
+  customPlainGallerycatalogRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -374,6 +379,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.image_list_popup = [];
       this.galleryjson = [];
       this.deptUsers = [];
+      this.catalogimage_list_popup = [];
       if (qparams.psource) {
         this.pSource = qparams.psource;
         if (qparams.psource === 'business') {
@@ -1111,12 +1117,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   openImageModalRow(image: Image) {
+    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
-  openCatalogImageModalRow(image: Image){
+  openCatalogImageModalRow(image: Image) {
+    console.log(image);
     const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+    this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
 
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {

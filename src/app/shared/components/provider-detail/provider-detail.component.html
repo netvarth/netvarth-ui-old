@@ -360,7 +360,7 @@
                 <!-- Order Catalog-->
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
-                        <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(image_list_popup[0])" [src]="catalogImage" width="50" height="50" id="catalog-image1"
+                        <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage" width="50" height="50" id="catalog-image1"
                           class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
                         <!-- <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>    -->
                         <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
@@ -375,6 +375,10 @@
                         </span>
                     </div>
                 </div>
+                <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"
+                    [modalImages]="catalogimage_list_popup" [plainGalleryConfig]="customPlainGallerycatalogRowConfig"
+                    [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 <ng-container *ngIf="orderItems && orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"

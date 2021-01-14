@@ -1456,7 +1456,7 @@
                                             {{oder.orderFor.firstName}}
                                             {{oder.orderFor.lastName}}
                                         </div>
-                                        <span class="bold"><i class="shoppingcart-icon"></i> {{oder.totalItemQuantity}}</span>
+                                        <span *ngIf="oder.totalItemQuantity > 0" class="bold"><i class="shoppingcart-icon"></i> {{oder.totalItemQuantity}}</span>
                                     </td>
                                     <td>
                                         <h6>
