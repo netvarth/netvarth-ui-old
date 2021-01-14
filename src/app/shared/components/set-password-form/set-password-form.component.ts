@@ -22,6 +22,7 @@ export class SetPasswordFormComponent implements OnInit {
   isValidConfirm_pw = true;
   customer = '';
   spForm;
+  disableButton = false;
   @Input() type;
   @Input() checkConsumerOrProvider;
   @Input() consumerlogin;
@@ -70,6 +71,7 @@ export class SetPasswordFormComponent implements OnInit {
   }
   doOnPasswordSubmit(value) {
     if (this.isValidConfirm_pw) {
+      this.disableButton = true;
       this.retonPasswordSubmit.emit(value);
     }
   }
@@ -83,6 +85,7 @@ export class SetPasswordFormComponent implements OnInit {
   }
 
   keyPressed(ev) {
+    this.disableButton = false;
     if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
       this.isValidConfirm_pw = true;
     } else {

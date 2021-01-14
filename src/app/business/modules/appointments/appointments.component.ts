@@ -1635,6 +1635,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
+      } else {
+        return label;
       }
     }
   }

@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
@@ -48,33 +48,34 @@ export class PaymentComponent implements OnInit {
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
-    public prefillmodel: RazorpayprefillModel ) {
-    this.activated_route.queryParams.subscribe (qparams => {
-       this.data = qparams;
-       this.waitlistDetails = JSON.parse(this.data.details);
-       this.razorpayService.changePaidStatus(this.data.paidStatus);
-       this.razorpayService.currentStatus.subscribe( status => {
+    public prefillmodel: RazorpayprefillModel,
+    public location: Location) {
+    this.activated_route.queryParams.subscribe(qparams => {
+      this.data = qparams;
+      this.waitlistDetails = JSON.parse(this.data.details);
+      this.razorpayService.changePaidStatus(this.data.paidStatus);
+      this.razorpayService.currentStatus.subscribe(status => {
         this.razorpay_order_id = this.waitlistDetails.razorpay_order_id;
         this.razorpay_payment_id = this.waitlistDetails.razorpay_payment_id;
         this.razorpay_signature = this.waitlistDetails.razorpay_signature;
         this.paidStatus = status;
         this.cdRef.detectChanges();
-        });
-      if (this.waitlistDetails.amount) {
-       this.prepayAmount = this.waitlistDetails.amount;
-      }
       });
-   }
-   ngOnInit() {
+      if (this.waitlistDetails.amount) {
+        this.prepayAmount = this.waitlistDetails.amount;
+      }
+    });
+  }
+  ngOnInit() {
     // this.breadcrumbs = this.breadcrumbs_init;
     this.breadcrumbs = [
-    {
-      title: 'License & Invoice',
-      url: '/provider/license'
-    },
-    {
+      {
+        title: 'License & Invoice',
+        url: '/provider/license'
+      },
+      {
         title: 'Payments'
-    }
+      }
     ];
   }
   payuPayment() {
@@ -90,13 +91,13 @@ export class PaymentComponent implements OnInit {
   }
   makeFailedPayment(paymentMode) {
     this.waitlistDetails.paymentMode = paymentMode;
-      this.shared_services.providerPayment(this.waitlistDetails)
-        .subscribe((pData: any) => {
-          this.origin = 'provider';
-          this.pGateway = pData.paymentGateway;
-          if (this.pGateway === 'RAZORPAY') {
-            this.paywithRazorpay(pData);
-          } else {
+    this.shared_services.providerPayment(this.waitlistDetails)
+      .subscribe((pData: any) => {
+        this.origin = 'provider';
+        this.pGateway = pData.paymentGateway;
+        if (this.pGateway === 'RAZORPAY') {
+          this.paywithRazorpay(pData);
+        } else {
           if (pData['response']) {
             this.shared_functions.setitemonLocalStorage('p_src', 'p_lic');
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
@@ -112,12 +113,12 @@ export class PaymentComponent implements OnInit {
             this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
-        },
-          error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          });
-        }
-  paywithRazorpay(pData: any ) {
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+  paywithRazorpay(pData: any) {
     this.prefillmodel.name = pData.providerName;
     this.prefillmodel.email = pData.ConsumerEmail;
     this.prefillmodel.contact = pData.consumerPhoneumber;
@@ -127,7 +128,9 @@ export class PaymentComponent implements OnInit {
     this.razorModel.order_id = pData.orderId;
     this.razorModel.description = pData.description;
     this.razorModel.name = pData.providerName;
-    this.razorpayService.payWithRazor(this.razorModel , this.origin );
+    this.razorpayService.payWithRazor(this.razorModel, this.origin);
   }
-
+  goBack() {
+    this.location.back();
+  }
 }
