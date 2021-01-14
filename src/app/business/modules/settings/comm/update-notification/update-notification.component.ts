@@ -90,4 +90,11 @@ export class UpdateNotificationComponent implements OnInit {
             );
         }
     }
+    buttonDisable() {
+        if (this.callingMode == '' || ((this.mode === 'WhatsApp' || this.mode === 'Phone') && this.callingMode.length !== 10)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

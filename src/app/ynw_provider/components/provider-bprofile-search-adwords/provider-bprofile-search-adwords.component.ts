@@ -153,6 +153,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
+        'type': 'yes/no',
         'message': this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
       }
     });
