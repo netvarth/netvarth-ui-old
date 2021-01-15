@@ -1462,6 +1462,15 @@ export class SharedFunctions {
       return false;
     }
   }
+   isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    const charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
   isNumericforToken(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
     if (inputKeyCode < 48 || inputKeyCode > 57) {

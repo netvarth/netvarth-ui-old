@@ -1623,6 +1623,10 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
     isNumeric(evt) {
         return this.sharedfunctionObj.isNumeric(evt);
     }
+    isNumber(evt) {
+        return this.sharedfunctionObj.isNumber(evt);
+    }
+
     isvalid(evt) {
         return this.sharedfunctionObj.isValid(evt);
     }
@@ -1851,12 +1855,18 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         this.step = step;
 }
 showTimewindow(type) {
-    this.addtimewindowdialogRef = this.dialog.open(TimewindowPopupComponent, {
+    let list = [];
+    if (type === 'store') {
+        list = this.storetimewindow_list;
+    } else {
+        list = this.hometimewindow_list;
+    }
+        this.addtimewindowdialogRef = this.dialog.open(TimewindowPopupComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-            //source_id: data
+            windowlist: list
         }
     });
     this.addtimewindowdialogRef.afterClosed().subscribe(result => {
