@@ -915,7 +915,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getVideoCall(uuid) {
-    const url = 'provider/appointment/videocall/ready/' + uuid;
+    const url = 'consumer/appointment/videocall/ready/' + uuid;
     return this.servicemeta.httpPut(url);
   }
   getApptMeetingDetailsProvider(uuid) {

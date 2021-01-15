@@ -7,13 +7,13 @@
             </div>
         </div>
     </div>
-    
+
 </header>
 <section>
     <div class="content settings">
-        <div class="row">
+        <div class="row card">
             <div class="col-md-12 no-padding">
-                <div class="col-md-3 no-padding-small video">
+                <div class="col-md-3 no-padding-small video video_small">
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
@@ -31,8 +31,8 @@
                         </div>
                     </div>
                     <div class="lgo col-md-3 col-xs-5 pull-left">
-                        <a routerLink="/"><img style="width: 180px; height: 400px;"  src="assets/images/video-conference.png"
-                                ></a>
+                        <a routerLink="/"><img style="width: 180px; height: 400px;"
+                                src="assets/images/video-conference.png"></a>
                     </div>
                 </div>
                 <div class="col-md-5 no-padding-small video" *ngIf="showMeetngDetails">
@@ -65,17 +65,19 @@
                                 <span>In Progress - Doctor is Waiting</span>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
-                           
+
                         </div>
                     </div>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
-                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{videoList[0]?.providerAccount.businessName}}</span>
+                                <span> <img class="usr_img" src="assets/images/user_icn.png"
+                                        style="width: 30px; height: 30px;" alt="user_icon"> &nbsp;
+                                    {{videoList[0]?.providerAccount.businessName}}</span>
                             </div>
                         </div>
                     </div>
@@ -88,11 +90,10 @@
                     </div><br><br>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
-                            
-                            <span><button type="button" class="btn btn-video pull-right"
-                                    (click)="startVideo()"> START
+
+                            <span><button type="button" class="btn btn-video pull-right" (click)="startVideo()"> START
                                 </button></span>
-                        <span><button type="button" class="btn btn-video-cancel pull-right">
+                            <span><button type="button" class="btn btn-video-cancel pull-right">
                                     Appointment Cancel </button></span>
                         </div>
                     </div>
@@ -127,17 +128,19 @@
                                 <span>In Progress - Doctor is Waiting</span>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
-                           
+
                         </div>
                     </div>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
                             <div>
-                                <span> <img class="usr_img" src="assets/images/user_icn.png" style="width: 30px; height: 30px;" alt="user_icon"> &nbsp; {{businessName}}</span>
+                                <span> <img class="usr_img" src="assets/images/user_icn.png"
+                                        style="width: 30px; height: 30px;" alt="user_icon"> &nbsp;
+                                    {{businessName}}</span>
                             </div>
                         </div>
                     </div>
@@ -150,15 +153,14 @@
                     </div><br><br>
                     <div class="lc4-1">
                         <div class="lt mgn-bt-10">
-                            
-                            <span><button type="button" class="btn btn-video pull-right"
-                                    (click)="startVideo()"> START
+
+                            <span><button type="button" class="btn btn-video pull-right" (click)="startVideo()"> START
                                 </button></span>
-                        <span><button type="button" class="btn btn-video-cancel pull-right">
+                            <span><button type="button" class="btn btn-video-cancel pull-right">
                                     Appointment Cancel </button></span>
                         </div>
                     </div>
-                  
+
                 </div>
                 <div class="col-md-4 no-padding-small">
                     <div class="lc4-1">
@@ -171,28 +173,32 @@
                         </div>
                     </div><br>
                     <div *ngFor="let users of meetingList, let parentIndex = index">
-                    <div class="lc4-1">
-                        <div class="lt mgn-bt-10">
-                            <div>
-                                <span class="amount">
-                                    <strong>{{users?.apptDate | date: newDateFormat}}</strong>
-                                </span>
+                        <div class="lc4-1">
+                            <div class="lt mgn-bt-10">
+                                <div>
+                                    <span class="amount">
+                                        <strong>{{users?.apptDate | date: newDateFormat}}</strong>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="bx-shadw">
+
+
+
+                                <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20 mgn-up-10"
+                                    *ngFor="let data of users.videosList, let childIndex = index">
+                                    <div class="col-md-4 inpro-box-video">{{data.apptTakenTime}}</div>
+                                    <div class="col-md-6">
+                                        <span>{{data?.providerAccount.businessName}}</span><br>
+                                        <h5 style="cursor: pointer;" (click)="showMeetingDetails(data)">
+                                            {{data?.service.name}}</h5>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-
-                    
-                    <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20 mgn-up-10" *ngFor="let data of users.videosList, let childIndex = index"
-                        >
-                        <div class="col-md-4 inpro-box-video">{{data.apptTakenTime}}</div>
-                        <div class="col-md-6">
-                            <span>{{data?.providerAccount.businessName}}</span><br>
-                            <h5 style="cursor: pointer;" (click)="showMeetingDetails(data)">{{data?.service.name}}</h5>                        
-                        </div>
-                    </div>
-                </div>
-                </div>
                 </div>
             </div>
         </div>

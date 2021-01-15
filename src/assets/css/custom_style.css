@@ -26924,12 +26924,10 @@ color: #fff !important;
     margin-bottom: 20px !important;
     margin-top: 10px !important;
   }
-<<<<<<< HEAD
-  
 }
 .video {
   border-right: .1px solid #ccc;
-  height: 500px;
+  height: 100% !important;
 }
 .videocall{
   font-size: 50px !important;
@@ -26946,17 +26944,18 @@ color: #fff !important;
   border-color:  grey;
   margin-right: 30px;
 }
-.inpro-box-video {
-  border-right: .1px solid #191d96;
-  height: 50px;
+@media (min-width:575px) {
+  .inpro-box-video {
+    border-right: .1px solid #191d96;
+    height: 50px;
+  }
 }
+
 .header-color{
   background-color:  #f1b51c;
 }
 .status{
   color: #191d96;
-}
-=======
 }
 .parentpromolabel {
     position: relative;
@@ -27088,4 +27087,43 @@ color: #fff !important;
 .addon_warn .btn_close {
   background: #80808059;
 }
->>>>>>> refs/remotes/origin/1.7-order
+.video_blinking {
+  animation: videocallBlinking 1s infinite;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@keyframes videocallBlinking {
+  0% {
+    color: green;
+  }
+  49% {
+    color: green;
+  }
+  50% {
+    color: transparent;
+  }
+  99% {
+    color: green;
+  }
+  100% {
+    color: green;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .video_small {
+    display: none !important;
+  }
+}
+.bx-shadw {
+  /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important; */
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border: 1px solid #cccccc7d !important;
+  height: 100% !important;
+}
+.bx-shadw-centre {
+  /* box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important; */
+  box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+  border: 1px solid #cccccc7d !important;
+  height: 1000px !important;
+}

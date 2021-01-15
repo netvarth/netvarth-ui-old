@@ -26,6 +26,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private renderer: Renderer2;
     uuid: any;
     result;
+    type: any;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -41,7 +42,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.activateroute.queryParams.subscribe(params => {
         this.uuid = params.uu_id;
+        this.type = params.type;
         console.log(this.uuid);
+        console.log(this.type);
     });
     }
     ngAfterViewInit() {
@@ -143,8 +146,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
     joinVideo(){
-        
-         this.shared_services.getVideoCall(this.uuid)
+        console.log(this.type)
+        if(this.type === 'provider'){
+            this.shared_services.getApptMeetingDetailsProvider(this.uuid)
       .subscribe(data => {
          this.result = data;
          if(this.result === null){
@@ -156,6 +160,21 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.api_loading = false;
         });
+        } else{
+            this.shared_services.getVideoCall(this.uuid)
+            .subscribe(data => {
+               this.result = data;
+               if(this.result === null){
+                  //  this.joinVideo();
+               }
+              console.log(data)
+              this.api_loading = false;
+            },
+              () => {
+                this.api_loading = false;
+              });
+        }
+        
     }
     // joinRoom() {
     //     this.activateroute.params.subscribe(params => {

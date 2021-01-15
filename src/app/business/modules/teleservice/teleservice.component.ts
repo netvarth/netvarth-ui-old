@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router ,NavigationExtras} from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -44,6 +44,8 @@ export class TeleServiceComponent implements OnInit {
     meetlink_data;
     servStarted = false;
     serv_type: any;
+    phoneNumber: any;
+    uuid: any;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -142,6 +144,7 @@ export class TeleServiceComponent implements OnInit {
                 data => {
                     this.data = data;
                     console.log(this.data);
+                    this.uuid = this.data.uid;
                     if (this.data.apptStatus === 'Started') {
                         this.servStarted = true;
                     } else {
@@ -157,7 +160,8 @@ export class TeleServiceComponent implements OnInit {
                     //  this.busnes_name = this.data.providerAccount.businessName;
                     this.serv_name = this.data.service.name;
                     this.servDetails = this.data.service;
-                    console.log(this.servDetails);
+                    this.phoneNumber = this.servDetails.virtualCallingModes[0].value;
+                   
                     this.getMeetingDetails();
                     if (this.data.providerConsumer.email) {
                         this.emailPresent = true;
@@ -278,9 +282,18 @@ export class TeleServiceComponent implements OnInit {
                             // this.shared_functions.openWindow(path);
                             // } else {
                             if (this.callingModes === 'VideoCall') {
+                                const usertype = this.shared_functions.isBusinessOwner('returntyp')
+                                console.log(usertype)
                                 const startIndex = this.starting_url.lastIndexOf('/');
                                 const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
-                                this.router.navigate(['video', videoId]);
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                      uu_id: this.uuid,
+                                      type: usertype
+                                    }
+                                  };
+                                  console.log(navigationExtras)
+                                this.router.navigate(['meeting', this.phoneNumber , videoId], navigationExtras);
                             }
                             this.getProviderWaitlstById();
                         }
@@ -303,9 +316,17 @@ export class TeleServiceComponent implements OnInit {
                             // this.shared_functions.openWindow(path);
                             // } else
                             if (this.callingModes === 'VideoCall') {
+                                const usertype = this.shared_functions.isBusinessOwner('returntyp')
+                                console.log(usertype)
                                 const startIndex = this.starting_url.lastIndexOf('/');
                                 const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
-                                this.router.navigate(['video', videoId]);
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                      uu_id: this.uuid,
+                                      type: usertype
+                                    }
+                                  };
+                                this.router.navigate(['meeting', this.phoneNumber, videoId], navigationExtras);
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
                                 //         this.router.navigate(['provider', 'video', videoId]);
@@ -349,9 +370,17 @@ export class TeleServiceComponent implements OnInit {
         });
     }
     relauchMeeting(startingUrl) {
+        const usertype = this.shared_functions.isBusinessOwner('returntyp')
+        console.log(usertype)
         const startIndex = startingUrl.lastIndexOf('/');
         const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
-        this.router.navigate(['video', videoId]);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+              uu_id: this.uuid,
+              type: usertype
+            }
+          };
+        this.router.navigate(['meeting', this.phoneNumber, videoId], navigationExtras);
     }
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {
