@@ -12,6 +12,8 @@ import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { OrderItemsComponent } from '../order-items/order-items.component';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 
 @Component({
   selector: 'app-order-edit',
@@ -86,12 +88,17 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   sel_checdate: any;
   orderItems: any[];
   itemCount: any;
+  uid: any;
+  orderDetails: any = [];
+  addressDialogRef: any;
+  selectedAddress: string;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
+    public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions) {
     this.route.queryParams.subscribe(
       params => {
@@ -100,6 +107,8 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         this.account_id = params.account_id;
         this.provider_id = params.unique_id;
         this.choose_type = params.choosetype
+        this.uid = params.uid
+        this.getOrderDetails(this.uid);
       });
 
   }
@@ -115,6 +124,12 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy() {
     this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+  }
+  getOrderDetails(uid) {
+      this.providerservice.getProviderOrderById(uid).subscribe(data => {
+      this.orderDetails = data;
+      console.log(this.orderDetails);
+    });
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
@@ -735,4 +750,36 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     
   });
 }
+addAddress() {
+  this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: {
+      source: 'provider'
+    }
+  });
+  this.addressDialogRef.afterClosed().subscribe(result => {
+    console.log(result);
+    this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
+    console.log(this.selectedAddress);
+  });
+}
+EditAddress(selectedAddress){
+  console.log(selectedAddress);
+
+   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        source: 'provider',
+        update_address: selectedAddress,  
+      }
+    });
+    this.addressDialogRef.afterClosed().subscribe(result => {
+      // this.getaddress();
+    });
+  }
+
 }

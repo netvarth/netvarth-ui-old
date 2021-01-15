@@ -105,9 +105,9 @@
                         <div class="prov-loc">
                           {{businessDetails.blocation}}
                         </div>
-                        <div class="prov-loc store-cntct" (click)="sidebar()">
+                        <!-- <div class="prov-loc store-cntct" (click)="sidebar()">
                           <i class="fa fa-home store_ico"></i>Store Contact
-                        </div>
+                        </div> -->
                       </div>
                     </div>
   
@@ -149,6 +149,24 @@
                         <span *ngIf="isFuturedate">
                           {{nextAvailableTime}}
                         </span>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey" *ngIf="!storeChecked">
+                        <div class="oder-sumary-txt"  *ngIf="orderDetails.homeDeliveryAddress" >
+                             Address
+                        </div>
+                        <!-- <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div> -->
+                        <div *ngIf="orderDetails.homeDeliveryAddress"> 
+                            <span class="address" [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
+                        </div>
+                      <div class="oder-sumary-txt" *ngIf="!orderDetails.homeDeliveryAddress"  (click)="addAddress()">
+                        Add Address
+                      </div>                     
+                      <div *ngIf="selectedAddress"> 
+                          <span class="address" [innerHTML]="this.selectedAddress | nl2br"></span>
+                          <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div>
+
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">

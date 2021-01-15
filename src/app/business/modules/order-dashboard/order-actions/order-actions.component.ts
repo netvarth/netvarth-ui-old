@@ -128,7 +128,8 @@ export class OrderActionsComponent implements OnInit {
      const navigationExtras: NavigationExtras = {
       queryParams: {
         account_id: cuser,
-        choosetype:  this.choose_type
+        choosetype:  this.choose_type,
+        uid : this.orderDetails.uid
       }
     };
     const chosenDateTime = {
