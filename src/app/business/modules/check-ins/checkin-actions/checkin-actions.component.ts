@@ -708,6 +708,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        if (locid && servid && accountid) {
         _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.isAvailable);
@@ -716,6 +717,7 @@ export class CheckinActionsComponent implements OnInit {
                     return index === self.indexOf(elem);
                 });
             });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
