@@ -448,6 +448,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 }
             }
             fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
+            if (!checkin[field.name][0].firstName && lastname === '') {
+                if (this.type === 'waitlist') {
+                    fieldValue = field.displayName + ' id: ' + checkin.consumer.jaldeeId;
+                } else {
+                    fieldValue = field.displayName + ' id: ' + checkin.providerConsumer.jaldeeId;
+                }
+            }
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
         } else if (field.name === 'appointmentTime') {

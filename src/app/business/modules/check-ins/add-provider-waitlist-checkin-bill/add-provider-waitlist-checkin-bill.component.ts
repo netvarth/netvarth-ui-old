@@ -438,22 +438,22 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.billdate = this.bill_data.createdDate;
       // this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
       // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
-      const gethrs = this.today.getHours();
-      const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-      // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
-      let hour = 0;
-      if (gethrs === 12) {
-        hour = 12;
-      } else if (gethrs > 12) {
-        hour = gethrs - 12;
-      } else {
-        hour = gethrs;
-      }
-      this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
       // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
       // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
       // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     }
+    const gethrs = this.today.getHours();
+    const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
+    // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
+    let hour = 0;
+    if (gethrs === 12) {
+      hour = 12;
+    } else if (gethrs > 12) {
+      hour = gethrs - 12;
+    } else {
+      hour = gethrs;
+    }
+    this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
