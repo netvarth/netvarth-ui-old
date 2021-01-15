@@ -14,6 +14,10 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -92,8 +96,12 @@ export class CheckinActionsComponent implements OnInit {
         public sharedFunctionobj: SharedFunctions,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
-        this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
         console.log(this.data);
@@ -118,17 +126,17 @@ export class CheckinActionsComponent implements OnInit {
             this.showMsg = true;
             this.apiloading = false;
         }
-        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.subdomain = user.subSector;
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
 
     printCheckin() {
         this.dialogRef.close();
         this.qrCodegeneration(this.checkin);
-        const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
+        const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
         const bname = bprof.bn;
         const fname = (this.checkin.waitlistingFor[0].firstName) ? this.checkin.waitlistingFor[0].firstName : '';
         const lname = (this.checkin.waitlistingFor[0].lastName) ? this.checkin.waitlistingFor[0].lastName : '';
@@ -312,14 +320,14 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     if (this.showToken) {
-                        this.shared_functions.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('DD-MM-YYYY'));
+                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('DD-MM-YYYY'));
                     } else {
-                        this.shared_functions.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
+                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
                     }
                     this.dialogRef.close('reload');
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     qrCodegeneration(valuetogenerate) {
@@ -374,7 +382,7 @@ export class CheckinActionsComponent implements OnInit {
             });
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     locateCustomerMsg(details) {
@@ -400,7 +408,7 @@ export class CheckinActionsComponent implements OnInit {
                     this.dialogRef.close();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -498,7 +506,7 @@ export class CheckinActionsComponent implements OnInit {
             this.dialogRef.close('reload');
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     addLabelvalue(source, label?) {
@@ -538,7 +546,7 @@ export class CheckinActionsComponent implements OnInit {
         //     this.dialogRef.close('reload');
         // },
         //     error => {
-        //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     });
         const ids = [];
         if (this.data.multiSelection) {
@@ -557,7 +565,7 @@ export class CheckinActionsComponent implements OnInit {
             this.dialogRef.close('reload');
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     labels() {
@@ -703,11 +711,12 @@ export class CheckinActionsComponent implements OnInit {
                     this.router.navigate(['provider', 'check-ins']);
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        if (locid && servid && accountid) {
         _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.isAvailable);
@@ -716,6 +725,7 @@ export class CheckinActionsComponent implements OnInit {
                     return index === self.indexOf(elem);
                 });
             });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';

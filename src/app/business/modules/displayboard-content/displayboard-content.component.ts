@@ -1,12 +1,14 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 // import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-displayboard-content',
@@ -69,7 +71,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
-        public _sanitizer: DomSanitizer) {
+        public _sanitizer: DomSanitizer,
+        public router: Router,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService) {
         this.onResize();
         this.activated_route.params.subscribe(
             qparams => {
@@ -118,7 +123,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     }
     ngOnInit() {
         // this.gets3curl();
-        // const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
+        // const MainBdetails = this.groupService.getitemFromGroupStorage('ynwbp', 'branch');
         // if (MainBdetails) {
         //     this.MainBname = MainBdetails.bn || '';
         //     this.MainBlogo = MainBdetails.logo || '';
@@ -150,14 +155,24 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         //         this.getSingleStatusboard();
         //     });
         // }
-        this.initBoard();
+
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        const isprovider = localStorage.getItem('isBusinessOwner') === 'true'
+        if (activeUser && isprovider) {
+            this.initBoard();
+        }
+        else {
+            this.lStorageService.setitemonLocalStorage('dB', this.router.url);
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
+                 'src': 'dB'
+                }
+              };
+              this.router.navigate(['business', 'login'], navigationExtras);
+        }      
     }
-
     // qBoardSetValues(displayboard_data) {
-
     // }
-
-
     initBoard() {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
@@ -304,8 +319,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     //                 _this.shared_functions.setitemOnSessionStorage('accountid', accountId);
     //                 _this.shared_functions.setitemOnSessionStorage('tabId', data.tabId);
     //                 data['accountType'] = 'BRANCH_SP';
-    //                 _this.shared_functions.setitemToGroupStorage('ynw-user', data);
-    //                 _this.shared_functions.setitemonLocalStorage('tabIds', _this.tabid);
+    //                 _this.groupService.setitemToGroupStorage('ynw-user', data);
+    //                 _this.lStorageService.setitemonLocalStorage('tabIds', _this.tabid);
     //                 _this.provider_services.getBussinessProfile().subscribe(
     //                     (bProfile: any) => {
     //                         _this.provider_services.getProviderLogo().subscribe(
@@ -322,7 +337,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     //                             .subscribe((businessJson: any) => {
     //                                 dispcont['businessJson'] = businessJson;
     //                                 if (bProfile && bProfile.subDomainVirtualFields) {
-    //                                     const user = _this.shared_functions.getitemFromGroupStorage('ynw-user');
+    //                                     const user = _this.groupService.getitemFromGroupStorage('ynw-user');
     //                                     const virtualfields = bProfile.subDomainVirtualFields[0][user.subSector];
     //                                     _this.provider_services.getVirtualFields(user.sector, user.subSector).subscribe(data => {
     //                                         _this.subDomVirtualFields = data;
@@ -421,8 +436,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         }
     }
     // getBusinessdetFromLocalstorage() {
-    //     const MainBdetails = this.shared_functions.getitemFromGroupStorage('ynwbp', 'branch');
-    //     const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    //     const MainBdetails = this.groupService.getitemFromGroupStorage('ynwbp', 'branch');
+    //     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     //     if (bdetails) {
     //         this.bname = bdetails.bn || '';
     //         this.blogo = bdetails.logo || '';
@@ -448,6 +463,13 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 }
             }
             fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
+            if (!checkin[field.name][0].firstName && lastname === '') {
+                if (this.type === 'waitlist') {
+                    fieldValue = field.displayName + ' id: ' + checkin.consumer.jaldeeId;
+                } else {
+                    fieldValue = field.displayName + ' id: ' + checkin.providerConsumer.jaldeeId;
+                }
+            }
         } else if (field.name === 'appxWaitingTime') {
             return this.shared_functions.providerConvertMinutesToHourMinute(checkin[field.name]);
         } else if (field.name === 'appointmentTime') {

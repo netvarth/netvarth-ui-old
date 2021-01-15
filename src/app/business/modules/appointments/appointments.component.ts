@@ -16,6 +16,10 @@ import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, P
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -244,9 +248,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerdialogRef;
   trackDetail: any = [];
   customerMsg = '';
-  delayTooltip = this.shared_functions.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
-  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  cloudTooltip = this.shared_functions.getProjectMesssages('CLOUDICON_TOOPTIP');
+  delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  cloudTooltip = this.wordProcessor.getProjectMesssages('CLOUDICON_TOOPTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   qr_value;
   path = projectConstants.PATH;
@@ -347,26 +351,30 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     public activateroute: ActivatedRoute,
     private dialog: MatDialog,
-    private provider_shared_functions: ProviderSharedFuctions) {
+    private provider_shared_functions: ProviderSharedFuctions,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService) {
     this.onResize();
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-    this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
-    this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
-    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
-    this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
-    this.done_label = this.shared_functions.getTerminologyTerm('done');
-    this.done_upper = this.shared_functions.firstToUpper(this.done_label);
-    this.started_label = this.shared_functions.getTerminologyTerm('started');
-    this.started_upper = this.shared_functions.firstToUpper(this.started_label);
-    this.start_label = this.shared_functions.getTerminologyTerm('start');
-    this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
-    this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.no_started_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
-    this.no_completed_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
-    this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
-    this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');
+    this.arrived_upper = this.wordProcessor.firstToUpper(this.arrived_label);
+    this.checkedin_label = this.wordProcessor.getTerminologyTerm('waitlisted');
+    this.checkedin_upper = this.wordProcessor.firstToUpper(this.checkedin_label);
+    this.done_label = this.wordProcessor.getTerminologyTerm('done');
+    this.done_upper = this.wordProcessor.firstToUpper(this.done_label);
+    this.started_label = this.wordProcessor.getTerminologyTerm('started');
+    this.started_upper = this.wordProcessor.firstToUpper(this.started_label);
+    this.start_label = this.wordProcessor.getTerminologyTerm('start');
+    this.cancelled_label = this.wordProcessor.getTerminologyTerm('cancelled');
+    this.cancelled_upper = this.wordProcessor.firstToUpper(this.cancelled_label);
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    this.no_started_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
+    this.no_completed_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
+    this.no_cancelled_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
+    this.no_history = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
     this.appt_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
       { name: this.cancelled_upper, value: 'cancelled' },
@@ -423,22 +431,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       'show_learnmore': true, 'scrollKey': 'appointments',
       'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     };
-    if (this.shared_functions.getitemFromGroupStorage('selected_type')) {
-      this.selected_type = this.shared_functions.getitemFromGroupStorage('selected_type');
+    if (this.groupService.getitemFromGroupStorage('selected_type')) {
+      this.selected_type = this.groupService.getitemFromGroupStorage('selected_type');
     } else {
       this.selected_type = 'booked';
-      this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
+      this.groupService.setitemToGroupStorage('selected_type', this.selected_type);
     }
-    const savedtype = this.shared_functions.getitemFromGroupStorage('apptType');
+    const savedtype = this.groupService.getitemFromGroupStorage('apptType');
     if (savedtype !== undefined && savedtype !== null) {
       this.time_type = savedtype;
     }
     this.setSystemDate();
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
       this.getTomorrowDate();
     }
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.active_user.adminPrivilege) {
       this.admin = true;
     }
@@ -466,7 +474,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getDefaultViewSchedules(allSchedules) {
     console.log(allSchedules);
-    const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
@@ -510,19 +518,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           let selected_view;
           if (source === 'changeLocation') {
           } else {
-            selected_view = _this.shared_functions.getitemFromGroupStorage('appt-selectedView');
+            selected_view = _this.groupService.getitemFromGroupStorage('appt-selectedView');
           }
           if (selected_view) {
             const viewFilter = _this.views.filter(view => view.id === selected_view.id);
             if (viewFilter.length !== 0) {
-              _this.selectedView = _this.shared_functions.getitemFromGroupStorage('appt-selectedView');
+              _this.selectedView = _this.groupService.getitemFromGroupStorage('appt-selectedView');
             } else {
               _this.selectedView = tempView;
-              _this.shared_functions.setitemToGroupStorage('appt-selectedView', _this.selectedView);
+              _this.groupService.setitemToGroupStorage('appt-selectedView', _this.selectedView);
             }
           } else {
             _this.selectedView = tempView;
-            _this.shared_functions.setitemToGroupStorage('appt-selectedView', _this.selectedView);
+            _this.groupService.setitemToGroupStorage('appt-selectedView', _this.selectedView);
           }
           resolve(_this.selectedView);
         },
@@ -531,7 +539,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             _this.views.push(_this.users[i]);
           }
           _this.views.push(tempView);
-          _this.shared_functions.setitemToGroupStorage('appt-selectedView', _this.selectedView);
+          _this.groupService.setitemToGroupStorage('appt-selectedView', _this.selectedView);
           resolve(_this.selectedView);
         }
       );
@@ -562,11 +570,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selQIds.push(q.id);
     }
     if (this.time_type === 1) {
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     } else {
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
@@ -575,7 +583,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         res => {
           this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   ngOnDestroy() {
@@ -631,7 +639,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showAdjustDelay() {
     // if (this.queues.length === 0 || !this.selQIds) {
-    //   this.shared_functions.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
+    //   this.snackbarService.openSnackBar('Delay can be applied only for active schedules', { 'panelClass': 'snackbarerror' });
     //   return false;
     // } else {
     this.router.navigate(['provider', 'appointments', 'adjustdelay']);
@@ -684,7 +692,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     } else {
-      const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < schedules.length; qIndex++) {
@@ -725,7 +733,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getLocationList() {
     const self = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
       self.provider_services.getProviderLocations()
         .subscribe(
@@ -744,7 +752,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 self.locations.push(loc);
               }
             }
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+            const cookie_location_id = self.groupService.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
             if (cookie_location_id === '') {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
@@ -795,23 +803,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const q of this.activeSchedules) {
       qids.push(q.id);
     }
-    if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
-    } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+    if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
+    } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     } else if (this.activeSchedules.length > 0) {
       if (this.time_type === 3) {
         // const qIds = this.getQIdsFromView(view);
         this.selQidsforHistory = qids;
-        this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
+        this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
       }
       // this.selQIds = this.activeSchedules[this.findCurrentActiveQueue(this.activeSchedules)];
       this.selQIds = qids;
       if (this.time_type === 1) {
-        this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
+        this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
       }
       if (this.time_type === 2) {
-        this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+        this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
       }
     }
     setTimeout(() => {
@@ -881,18 +889,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let chkSrc = true;
     this.loading = true;
     if (source === 'changeLocation' && this.time_type === 3) {
-      const hisPage = this.shared_functions.getitemFromGroupStorage('appthP');
-      const hFilter = this.shared_functions.getitemFromGroupStorage('appthPFil');
+      const hisPage = this.groupService.getitemFromGroupStorage('appthP');
+      const hFilter = this.groupService.getitemFromGroupStorage('appthPFil');
       if (hisPage) {
         this.filter = hFilter;
         this.pagination.startpageval = hisPage;
-        this.shared_functions.removeitemFromGroupStorage('appthP');
-        this.shared_functions.removeitemFromGroupStorage('appthPFil');
+        this.groupService.removeitemFromGroupStorage('appthP');
+        this.groupService.removeitemFromGroupStorage('appthPFil');
         chkSrc = false;
       }
     } else {
-      this.shared_functions.removeitemFromGroupStorage('appthP');
-      this.shared_functions.removeitemFromGroupStorage('appthPFil');
+      this.groupService.removeitemFromGroupStorage('appthP');
+      this.groupService.removeitemFromGroupStorage('appthPFil');
     }
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
@@ -927,15 +935,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.appt_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
-    this.shared_functions.setitemToGroupStorage('apptType', this.time_type);
+    this.groupService.setitemToGroupStorage('apptType', this.time_type);
     if (time_type !== 3) {
       this.resetPaginationData();
     } else {
-      const selectedView = this.shared_functions.getitemFromGroupStorage('appt-selectedView');
+      const selectedView = this.groupService.getitemFromGroupStorage('appt-selectedView');
       this.selQidsforHistory = this.getQIdsFromView(selectedView);
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
+      this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQidsforHistory);
     }
-    const stype = this.shared_functions.getitemFromGroupStorage('pdStyp');
+    const stype = this.groupService.getitemFromGroupStorage('pdStyp');
     if (stype) {
       this.status_type = stype;
     } else {
@@ -1161,7 +1169,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = this.today_checkins_count + this.today_started_count + this.today_completed_count + this.today_cancelled_checkins_count;
   }
   getTodayAppointmentsCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+    const queueid = this.groupService.getitemFromGroupStorage('appt_selQ');
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
@@ -1188,7 +1196,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getFutureAppointmentsCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
+    const queueid = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
@@ -1251,8 +1259,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getTodayAppointments() {
     const Mfilter = this.setFilterForApi();
-    if (this.shared_functions.getitemFromGroupStorage('appt_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_selQ');
+    if (this.groupService.getitemFromGroupStorage('appt_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     } else {
 
     }
@@ -1260,9 +1268,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       Mfilter['schedule-eq'] = this.selQIds.toString();
       const qs = [];
       qs.push(this.selQIds);
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_history_selQ', qs);
+      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1319,25 +1327,25 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
-      this.filter.future_appt_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+      this.filter.future_appt_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.future_appt_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
   }
   getFutureAppointments() {
     this.resetCheckList();
-    if (this.shared_functions.getitemFromGroupStorage('appt_future_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('appt_future_selQ');
+    if (this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
     }
     let Mfilter = this.setFilterForApi();
     if (this.selQIds) {
       Mfilter['schedule-eq'] = this.selQIds;
       const qs = [];
       qs.push(this.selQIds);
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', qs);
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_history_selQ', qs);
+      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     }
     if (this.filter.apptStatus === 'all') {
       Mfilter['apptStatus-neq'] = 'prepaymentPending,failed';
@@ -1444,14 +1452,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   resetPaginationData() {
     this.filter.page = 1;
     this.pagination.startpageval = 1;
-    this.shared_functions.removeitemFromGroupStorage('appthP');
-    this.shared_functions.removeitemFromGroupStorage('appthPFil');
+    this.groupService.removeitemFromGroupStorage('appthP');
+    this.groupService.removeitemFromGroupStorage('appthPFil');
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.shared_functions.setitemToGroupStorage('appthP', pg);
-    this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
+    this.groupService.setitemToGroupStorage('appthP', pg);
+    this.groupService.setitemToGroupStorage('appthPFil', this.filter);
     this.doSearch();
   }
   getPatientIdFilter(patientid) {
@@ -1575,7 +1583,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   apptClicked(type, time?) {
     if (this.schedules.length === 0) {
-      this.shared_functions.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
     } else {
       let slot = '';
       let scheduleId;
@@ -1635,6 +1643,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
+      } else {
+        return label;
       }
     }
   }
@@ -1689,7 +1699,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getStatusLabel(status) {
-    const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
+    const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
 
@@ -1952,7 +1962,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.refresh();
       }, (error) => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
@@ -1994,8 +2004,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
-      this.shared_functions.setitemToGroupStorage('appthP', this.filter.page || 1);
-      this.shared_functions.setitemToGroupStorage('appthPFil', this.filter);
+      this.groupService.setitemToGroupStorage('appthP', this.filter.page || 1);
+      this.groupService.setitemToGroupStorage('appthPFil', this.filter);
     }
     this.router.navigate(['provider', 'appointments', checkin.uid], { queryParams: { timetype: this.time_type } });
   }
@@ -2122,9 +2132,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selected_location = location;
     const _this = this;
     if (this.selected_location) {
-      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+      this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     return new Promise(function (resolve, reject) {
       _this.getSchedules('all').then(
         (queues: any) => {
@@ -2143,7 +2153,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     tempUser['id'] = 'all';
     this.selectedUser = tempUser;
     this.qloading = true;
-    this.shared_functions.setitemToGroupStorage('appt-selectedView', view);
+    this.groupService.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     if (!view.userType) {
       this.initView(this.selectedView, 'reloadAPIs');
@@ -2152,10 +2162,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   clearApptIdsFromStorage() {
-    this.shared_functions.removeitemFromGroupStorage('appt_history_selQ');
-    this.shared_functions.removeitemFromGroupStorage('appt_future_selQ');
-    this.shared_functions.removeitemFromGroupStorage('appt_selQ');
-    this.shared_functions.removeitemFromGroupStorage('appt-selectedView');
+    this.groupService.removeitemFromGroupStorage('appt_history_selQ');
+    this.groupService.removeitemFromGroupStorage('appt_future_selQ');
+    this.groupService.removeitemFromGroupStorage('appt_selQ');
+    this.groupService.removeitemFromGroupStorage('appt-selectedView');
     this.resetPaginationData();
   }
   getServices() {
@@ -2222,8 +2232,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';
       // this.users.push(tempUser);
-      if (this.shared_functions.getitemFromGroupStorage('appt-selectedUser')) {
-        this.selectedUser = this.shared_functions.getitemFromGroupStorage('appt-selectedUser');
+      if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
+        this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
       } else {
         this.selectedUser = tempUser;
       }
@@ -2233,7 +2243,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleUserSelection(user) {
     this.qloading = true;
     this.resetFields();
-    this.shared_functions.setitemToGroupStorage('appt-selectedUser', user);
+    this.groupService.setitemToGroupStorage('appt-selectedUser', user);
     this.selectedUser = user;
     this.getQsByProvider(user);
   }
@@ -2283,11 +2293,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qloading = false;
     }, 1000);
     if (this.time_type === 1) {
-      this.shared_functions.setitemToGroupStorage('appt_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
-      this.shared_functions.setitemToGroupStorage('appt_future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_future_selQ', this.selQIds);
     } else {
-      this.shared_functions.setitemToGroupStorage('appt_history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('appt_history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
@@ -2349,7 +2359,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
   getGlobalSettings() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getGlobalSettings().subscribe(
         (data: any) => {
           this.apptStatus = data.appointment;
@@ -2358,7 +2368,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -2373,7 +2383,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAllServices() {
     const filter1 = { 'serviceType-neq': 'donationService' };
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
           (data: any) => {
@@ -2638,7 +2648,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (type) {
       this.selected_type = type;
     }
-    this.shared_functions.setitemToGroupStorage('selected_type', this.selected_type);
+    this.groupService.setitemToGroupStorage('selected_type', this.selected_type);
     this.scheduleSlots = [];
     if (this.selected_type !== 'booked' && this.selQIds.length > 0) {
       this.loading = true;

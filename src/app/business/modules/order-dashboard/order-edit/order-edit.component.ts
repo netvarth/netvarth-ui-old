@@ -11,6 +11,11 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { OrderItemsComponent } from '../order-items/order-items.component';
+import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 
 @Component({
   selector: 'app-order-edit',
@@ -83,13 +88,22 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   storeContact: any;
   canceldialogRef: any;
   sel_checdate: any;
+  orderItems: any[];
+  itemCount: any;
+  uid: any;
+  orderDetails: any = [];
+  addressDialogRef: any;
+  selectedAddress: string;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-    public sharedFunctionobj: SharedFunctions) {
+        public providerservice: ProviderServices,
+    public sharedFunctionobj: SharedFunctions,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService) {
     this.route.queryParams.subscribe(
       params => {
         console.log(params);
@@ -97,6 +111,8 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         this.account_id = params.account_id;
         this.provider_id = params.unique_id;
         this.choose_type = params.choosetype
+        this.uid = params.uid
+        this.getOrderDetails(this.uid);
       });
 
   }
@@ -111,11 +127,29 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
 
   ngOnDestroy() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+  }
+  getOrderDetails(uid) {
+      this.providerservice.getProviderOrderById(uid).subscribe(data => {
+      this.orderDetails = data;
+      console.log(this.orderDetails);
+    });
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      console.log(this.catalog_details);
+      this.orderItems = [];
+      const orderItems = [];
+      for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
+        const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
+        const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
+        const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
+        const showpric = this.catalog_details.showPrice;
+        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item ,'showpric':showpric});
+        this.itemCount++;
+        console.log(orderItems);
+      }
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -146,10 +180,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       this.orderList = JSON.parse(localStorage.getItem('order'));
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.orderCount = this.orders.length;
-      this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
+      this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
       this.getStoreContact();
       this.showfuturediv = false;
-      this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+      this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
       this.today = new Date(this.today);
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -181,7 +215,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     });
   }
   fillDateFromLocalStorage() {
-    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
+    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     console.log(this,this.chosenDateDetails)
     if (this.chosenDateDetails !== null) {
       this.delivery_type = this.chosenDateDetails.delivery_type;
@@ -317,7 +351,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       }
       if (found) {
         this.couponvalid = true;
-        this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
         this.action = '';
       } else {
         this.api_cp_error = 'Coupon invalid';
@@ -359,7 +393,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }
@@ -424,7 +458,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {
 
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
 
       const chosenDateTime = {
         delivery_type: this.choose_type,
@@ -435,8 +469,8 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         account_id: this.account_id
 
       };
-      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      // this.router.navigate(['order', 'shoppingcart', 'checkout']);
     }
 
   }
@@ -444,7 +478,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     let all_itemsSet = true;
     this.orders.forEach(item => {
       if (this.getItemQty(item) < item.minqty) {
-        this.sharedFunctionobj.openSnackBar(item.item.displayName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(item.item.displayName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
         all_itemsSet = false;
       }
     });
@@ -454,7 +488,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.location.back();
     }
   }
@@ -628,7 +662,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   }
 
   itemDetails(item) {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item)
@@ -706,4 +740,49 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   closeNav() {
     this.showSide = false;
   }
+  addItems(){
+  const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+    disableClose: true,
+    data: {
+    
+    }
+  });
+  additemsdialogRef.afterClosed().subscribe(data => {
+    
+  });
+}
+addAddress() {
+  this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: {
+      source: 'provider'
+    }
+  });
+  this.addressDialogRef.afterClosed().subscribe(result => {
+    console.log(result);
+    this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
+    console.log(this.selectedAddress);
+  });
+}
+EditAddress(selectedAddress){
+  console.log(selectedAddress);
+
+   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        source: 'provider',
+        update_address: selectedAddress,  
+      }
+    });
+    this.addressDialogRef.afterClosed().subscribe(result => {
+      // this.getaddress();
+    });
+  }
+
 }

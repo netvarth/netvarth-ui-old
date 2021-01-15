@@ -18,6 +18,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
@@ -262,7 +266,11 @@ export class ConsumerCheckinComponent implements OnInit {
         public provider_services: ProviderServices,
         public datastorage: CommonDataStorageService,
         public location: Location,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private lStorageService: LocalStorageService,
+        private groupService: GroupStorageService
     ) {
         this.route.queryParams.subscribe(
             params => {
@@ -307,7 +315,7 @@ export class ConsumerCheckinComponent implements OnInit {
             newWhatsapp: new FormControl(undefined),
             newPhone: new FormControl(undefined)
         });
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
             nav: true,
@@ -326,7 +334,7 @@ export class ConsumerCheckinComponent implements OnInit {
             loop: false,
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
-        const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.api_loading1 = true;
         if (activeUser) {
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
@@ -337,7 +345,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.maxsize = 1;
         this.step = 1;
 
-        // this.loggedinuser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        // this.loggedinuser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.gets3curl();
 
         // this.getCurrentLocation();
@@ -466,7 +474,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.apptdisable = false;
                 });
     }
@@ -481,9 +489,9 @@ export class ConsumerCheckinComponent implements OnInit {
         return found;
     }
     setTerminologyLabels() {
-        this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
-        this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
-        this.providerlabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('provider'));
+        this.checkinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlist'));
+        this.CheckedinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlisted'));
+        this.providerlabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('provider'));
         if (this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
         } else {
@@ -492,7 +500,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     getWaitlistMgr() {
         const _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise<void>(function (resolve, reject) {
             _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
@@ -659,6 +667,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        if (locid && servid && accountid) {
         _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.isAvailable);
@@ -667,6 +676,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     return index === self.indexOf(elem);
                 });
             });
+        }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
@@ -875,7 +885,7 @@ export class ConsumerCheckinComponent implements OnInit {
             if (error === '') {
                 this.saveCheckin();
             } else {
-                this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
             }
         }
@@ -903,7 +913,7 @@ export class ConsumerCheckinComponent implements OnInit {
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 for (const i in this.sel_ser_det.virtualCallingModes) {
                     if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
-                        this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                         this.is_wtsap_empty = true;
                         break;
                     }
@@ -967,7 +977,7 @@ export class ConsumerCheckinComponent implements OnInit {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         // }
         if (this.partySizeRequired) {
             this.holdenterd_partySize = this.enterd_partySize;
@@ -1028,8 +1038,8 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             },
                 error => {
-                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                 });
     }
@@ -1042,14 +1052,14 @@ export class ConsumerCheckinComponent implements OnInit {
             const stat = this.validateEmail(this.payEmail.trim());
             if (!stat) {
                 this.emailerror = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         if (this.payEmail1) {
             const stat1 = this.validateEmail(this.payEmail1.trim());
             if (!stat1) {
                 this.email1error = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         // return new Promise((resolve) => {
@@ -1073,12 +1083,12 @@ export class ConsumerCheckinComponent implements OnInit {
                         },
                         error => {
                             this.api_error = error.error;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
         } else {
             this.email1error = 'Email and Re-entered Email do not match';
-            this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
     }
     // handleGoBack(cstep) {
@@ -1175,11 +1185,11 @@ export class ConsumerCheckinComponent implements OnInit {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
 
                     } else if (this.maxsize === 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
                     }
                 }
             }
@@ -1271,8 +1281,8 @@ export class ConsumerCheckinComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                // this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.goBack();
@@ -1280,13 +1290,13 @@ export class ConsumerCheckinComponent implements OnInit {
             },
                 error => {
                     // this.api_error = error.error;
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
-                    // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {
             // this.api_error = derror;
-            this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
     handleNote() {
@@ -1515,7 +1525,7 @@ export class ConsumerCheckinComponent implements OnInit {
     //                             this.setServiceDetails(this.sel_ser);
     //                             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     //                         } else {
-    //                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+    //                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     //                         }
     //                     }
     //                 }
@@ -1532,7 +1542,7 @@ export class ConsumerCheckinComponent implements OnInit {
     //     //     this.sel_queue_indx = -1;
     //     //     this.sel_queue_id = null;
     //     //     this.queuejson = [];
-    //     //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+    //     //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     //     // }
     //     console.log(this.selectedUser);
     // }
@@ -1594,9 +1604,9 @@ export class ConsumerCheckinComponent implements OnInit {
         if (input) {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1648,7 +1658,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 () => {
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -1765,7 +1775,7 @@ export class ConsumerCheckinComponent implements OnInit {
                             this.getbusinessprofiledetails_json('terminologies', true);
                         } else {
                             this.datastorage.set('terminologies', this.terminologiesjson);
-                            this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                            this.wordProcessor.setTerminologies(this.terminologiesjson);
                         }
                     }
                     this.api_loading1 = false;
@@ -1795,7 +1805,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     case 'terminologies':
                         this.terminologiesjson = res;
                         this.datastorage.set('terminologies', this.terminologiesjson);
-                        this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                        this.wordProcessor.setTerminologies(this.terminologiesjson);
                         this.setTerminologyLabels();
                         break;
                     case 'businessProfile':
@@ -1880,7 +1890,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     addCallingmode() {
         if (this.callingModes === '' || this.callingModes.toString().length < 10 || this.callingModes.charAt(0) === '0') {
-            this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         } else if (this.callingModes && this.callingModes.toString().length === 10 && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
         }
@@ -1931,7 +1941,7 @@ export class ConsumerCheckinComponent implements OnInit {
             }
             if (found) {
                 this.couponvalid = true;
-                this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 this.action = '';
             } else {
                 this.api_cp_error = 'Coupon invalid';
@@ -2188,7 +2198,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         },
                         error => {
                             this.api_error = error.error;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                             this.payEmail = this.userData.userProfile.email;
                             return false;
                         }
@@ -2280,7 +2290,7 @@ export class ConsumerCheckinComponent implements OnInit {
         //                 error => {
         //                     this.api_error = error.error;
         //                     this.noEmailError = false;
-        //                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //                 });
         //     }
         // } else if (this.userEmail && this.payEmail.trim() == '') {
@@ -2315,7 +2325,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     showConfirmPopup(post_Data) {
         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-            this.sharedFunctionobj.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
             this.checkinenable = false
         } else {
             // this.dialogRef.close();

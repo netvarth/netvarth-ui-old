@@ -1,6 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -31,11 +35,15 @@ export class OrderActionsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private providerservice: ProviderServices) { }
+    private providerservice: ProviderServices,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private lStorageService:LocalStorageService) { }
 
   ngOnInit() {
     this.loading = true;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
     console.log(this.orderDetails);
     console.log(this.orderDetails.orderStatus);
@@ -67,21 +75,21 @@ export class OrderActionsComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
   orderEdit() {
     console.log(this.orderDetails);
-     const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
-    const location = this.shared_functions.getitemFromGroupStorage('location');
-    const ynwbp = this.shared_functions.getitemFromGroupStorage('ynwbp');
+     const cuser = this.groupService.getitemFromGroupStorage('accountId');
+    const location = this.groupService.getitemFromGroupStorage('location');
+    const ynwbp = this.groupService.getitemFromGroupStorage('ynwbp');
     const businessObject = {
       'bname': ynwbp.bn,
       'blocation': location,
       'logo': ''
     };
-    this.shared_functions.setitemonLocalStorage('order_sp', businessObject);
+    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     this.loading = true;
     this.orderList = [];
     this.image_list_popup = [];
@@ -104,7 +112,7 @@ export class OrderActionsComponent implements OnInit {
         }
       }
       console.log(JSON.stringify(this.orderList));
-      this.shared_functions.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       // if (this.orderDetails && this.orderDetails.shoppingList) {
       //   this.imagelist = this.orderDetails.shoppingList;
       //   for (let i = 0; i < this.imagelist.length; i++) {
@@ -128,7 +136,8 @@ export class OrderActionsComponent implements OnInit {
      const navigationExtras: NavigationExtras = {
       queryParams: {
         account_id: cuser,
-        choosetype:  this.choose_type
+        choosetype:  this.choose_type,
+        uid : this.orderDetails.uid
       }
     };
     const chosenDateTime = {
@@ -137,7 +146,7 @@ export class OrderActionsComponent implements OnInit {
      nextAvailableTime: this.orderDetails.timeSlot['sTime'] + ' - ' +  this.orderDetails.timeSlot['eTime'],
       order_date: this.orderDetails.orderDate,
     };
-    this.shared_functions.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.router.navigate(['provider', 'orders', 'edit' ], navigationExtras);
     this.dialogRef.close();
 
@@ -163,7 +172,7 @@ export class OrderActionsComponent implements OnInit {
       this.dialogRef.close();
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   getCatalog() {
