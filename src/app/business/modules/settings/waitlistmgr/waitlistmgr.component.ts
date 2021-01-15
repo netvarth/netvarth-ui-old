@@ -9,6 +9,9 @@ import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/c
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -75,11 +78,14 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         private router: Router,
         private routerobj: Router,
         private shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService
         // private shared_services: SharedServices
     ) {
-        this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.shared_functions.getMessage().subscribe(data => {
             switch (data.ttype) {
                 case 'upgradelicence':
@@ -95,13 +101,13 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     calcMode = 'conventional';
     est_time;
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
         }
         this.account_type = user.accountType;
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.loading = true;
         this.getBusinessProfile();
         this.getWaitlistMgr();
@@ -209,7 +215,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             (data: any) => {
                 this.waitlist_status = data['waitlist'];
                 this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
-                this.shared_functions.setitemToGroupStorage('settings', data);
+                this.groupService.setitemToGroupStorage('settings', data);
                 this.shared_functions.sendMessage({ 'ttype': 'checkinStatus', checkinStatus: this.waitlist_status });
             });
     }
@@ -229,7 +235,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         // if (this.statusboardStatus) {
         //     this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards']);
         // } else {
-        //     this.shared_functions.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.COUPON_UPGRADE_LICENSE, { 'panelClass': 'snackbarerror' });
         // }
     }
     // goLocation() {
@@ -242,7 +248,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         if (this.locationExists) {
             this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
         } else {
-            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
     // goDepartments() {
@@ -298,10 +304,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     //                         this.multipeLocationAllowed = true;
     //                     }
     //                     if (this.multipeLocationAllowed === true) {
-    //                         this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+    //                         this.locName = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
     //                     }
     //                     if (this.multipeLocationAllowed === false) {
-    //                         this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+    //                         this.locName = this.wordProcessor.getProjectMesssages('WIZ_LOCATION_CAP');
     //                     }
     //                 }
     //             }
@@ -326,12 +332,12 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.setAcceptOnlineCheckin(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getWaitlistMgr();
                 }
             );
@@ -342,12 +348,12 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.setFutureCheckinStatus(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -369,11 +375,11 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setCheckinPresence(is_check)
                 .subscribe(
                     () => {
-                        this.shared_functions.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
                         this.getGlobalSettingsStatus();
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getGlobalSettingsStatus();
                     }
                 );
@@ -390,7 +396,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     // }
     getStatusboardLicenseStatus() {
         // let pkgId;
-        // const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
         // if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
         //     pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
         // }
@@ -433,10 +439,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     () => {
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
-                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                        this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         } else {
             this.confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -454,10 +460,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                             () => {
                                 this.getWaitlistMgr();
                                 this.is_data_chnge = 0;
-                                this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                                this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                             },
                             error => {
-                                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                             });
                 } else {
                     if (qSystem === 'token') {
@@ -480,10 +486,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     () => {
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
-                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                        this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         } else {
             const postData = {
@@ -495,10 +501,10 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     () => {
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
-                        this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                        this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
     }
@@ -507,7 +513,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
     }
     updateManualMode() {
         if (this.trnArndTime <= 0) {
-            this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
             return;
         }
         const postData = {
@@ -520,11 +526,11 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 () => {
                     this.getWaitlistMgr();
                     this.is_data_chnge = 0;
-                    this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+                    this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                 },
                 error => {
                     this.is_data_chnge = 0;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     cancelChange() {

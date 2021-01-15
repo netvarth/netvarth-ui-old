@@ -6,6 +6,9 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-menu',
@@ -38,9 +41,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private renderer: Renderer2,
     public provider_services: ProviderServices,
-    private provider_shared_functions: ProviderSharedFuctions
+    private provider_shared_functions: ProviderSharedFuctions,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService
   ) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'messageCount':
@@ -110,7 +116,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -138,12 +144,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     // }
   }
   isCheckinActive() {
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     if (this.isCheckin || this.isCheckin === 0 || this.isCheckin > 3) {
       if (this.isCheckin === 0 || this.isCheckin > 3) {
         return true;
       } else {
-        this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
         return false;
       }
     } else {
@@ -151,11 +157,11 @@ export class MenuComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             this.isCheckin = this.provider_shared_functions.getProfileStatusCode(data);
-            this.shared_functions.setitemToGroupStorage('isCheckin', this.isCheckin);
+            this.groupService.setitemToGroupStorage('isCheckin', this.isCheckin);
             if (this.isCheckin === 0) {
               return true;
             } else {
-              this.shared_functions.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
               return false;
             }
           },
@@ -174,7 +180,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider/settings/general/holidays']);
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.domain = user.sector;
     this.getGlobalSettings();
@@ -219,7 +225,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         });
   }
   getGlobalSettings() {
-    const settings = this.shared_functions.getitemFromGroupStorage('settings');
+    const settings = this.groupService.getitemFromGroupStorage('settings');
     if (settings) {
       this.donationstatus = settings.donationFundRaising;
     } else {

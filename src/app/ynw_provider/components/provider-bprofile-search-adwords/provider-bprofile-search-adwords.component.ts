@@ -157,7 +157,11 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       disableClose: true,
       data: {
         'type': 'yes/no',
+<<<<<<< HEAD
         'message': this.wordProcessor.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
+=======
+        'message': this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
+>>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
       }
     });
     this.remadwdialogRef.afterClosed().subscribe(result => {

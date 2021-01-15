@@ -12,7 +12,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                             <div class="input-group-prepend">
-                                <span class="input-group-text countryCodeSelect" id="lstCountryCode">                            
+                                <span class="input-group-text mgn-m-up-10" id="lstCountryCode">                            
                                     <mat-select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                         <mat-option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</mat-option>
                                       </mat-select>

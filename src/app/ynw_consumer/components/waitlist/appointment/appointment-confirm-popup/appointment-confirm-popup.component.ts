@@ -8,6 +8,8 @@ import { NavigationExtras, Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -61,7 +63,8 @@ export class AppointmentConfirmPopupComponent implements OnInit {
         public provider_services: ProviderServices,
         public router: Router,
         public dateformat: DateFormatPipe,
-
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         public dialogRef: MatDialogRef<AppointmentConfirmPopupComponent>) {
         this.service_det = data.service_details;
         this.waitlist_for = data.waitlist_for;
@@ -93,7 +96,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
     }
     getWaitlistMgr() {
         const _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise<void>(function (resolve, reject) {
             _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
@@ -161,8 +164,8 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                 }
             },
                 error => {
-                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     // this.api_loading = false;
                     // this.apptdisable = false;
                 });
@@ -191,7 +194,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                 () => {
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -228,7 +231,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                         error => {
                             this.api_error = error.error;
                             this.noEmailError = false;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
         }

@@ -42,7 +42,7 @@
                 <div class="td td4" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">
                     <!-- <div class="label">{{message_cap}}</div> -->
                     <div class="result">
-                        {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:40)+'.....':shared_functions.firstToUpper(message.msg) }}
+                        {{ (message.msg.length>30)? (wordProcessor.firstToUpper(message.msg) | slice:0:40)+'.....':wordProcessor.firstToUpper(message.msg) }}
                     </div>
                 </div>
                 <div class="td td1" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">

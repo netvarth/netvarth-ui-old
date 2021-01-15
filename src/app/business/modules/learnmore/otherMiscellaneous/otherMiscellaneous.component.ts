@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({ 
     selector: 'app-otherMiscellaneous-learnmore',
@@ -114,9 +114,9 @@ export class OtherMiscellaneousComponent implements OnInit {
     showprofile = false;
     constructor(
       private activated_route: ActivatedRoute,
-      private shared_functions: SharedFunctions,
       private _location: Location,
-      private _scrollToService: ScrollToService
+      private _scrollToService: ScrollToService,
+      private groupService: GroupStorageService
     ) { }
   
     setActivePricing(item) {
@@ -124,7 +124,7 @@ export class OtherMiscellaneousComponent implements OnInit {
     }
   
     ngOnInit() {
-     this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.domain = this.active_user.sector;
       this.subdomain =  this.active_user.subSector;
       if (this.target) {

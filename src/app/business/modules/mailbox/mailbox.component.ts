@@ -66,8 +66,8 @@ export class MailboxComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices) { }
 
     ngOnInit() {
-        this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = {
             'show_learnmore': true, 'scrollKey': 'inbox',
@@ -97,7 +97,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                     }
                 );
         } else {
-            const userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
             this.user_id = userDet.id;
             this.loading = false;
         }
@@ -309,7 +309,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         this.getInboxMessages();
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         // this.disableButton = false;
                     }
                 );
@@ -323,7 +323,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         this.getInboxMessages();
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         // this.disableButton = false;
                     }
                 );
@@ -341,7 +341,7 @@ export class MailboxComponent implements OnInit, OnDestroy {
                         this.getInboxMessages();
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     }
                 );
         }

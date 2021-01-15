@@ -105,9 +105,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService
     ) {
+<<<<<<< HEAD
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+=======
+        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+        this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
+        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+>>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
         this.accountType = user.accountType;
     }
     ngOnInit() {

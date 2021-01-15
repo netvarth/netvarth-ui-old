@@ -8,6 +8,8 @@ import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-holiday-list',
@@ -58,17 +60,19 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions) {
-    this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
+    private sharedfunctionObj: SharedFunctions,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -117,7 +121,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
+        'message': this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
       }
     });
     this.remholdialogRef.afterClosed().subscribe(result => {

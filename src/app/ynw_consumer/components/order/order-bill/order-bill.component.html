@@ -49,24 +49,23 @@
                                                                                 {{checkin.orderFor.lastName | capitalizeFirst}}
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
-                                                                                class="dynamic">{{billdate | date:newDateFormat}}
+                                                                                class="dynamic">{{bill_data.createdDate | date:newDateFormat}}
                                                                                 {{billtime}}</span>
                                                                         </span> <span class="columns"
                                                                             *ngIf="billnumber"> <span
                                                                                 class="dynamic">{{bill_no_cap}} </span>
                                                                             <span class="dynamic">{{billnumber}}</span>
                                                                         </span> 
-                                                                        <span class="columns rightalign" *ngIf="checkin.orderNumber"> <span
-                                                                            class="dynamic">Order Id </span>
-                                                                        <span class="dynamic">{{checkin.orderNumber}}</span>
-                                                                    </span>
                                                                         <span class="columns rightalign"
                                                                             *ngIf="gstnumber">
                                                                             <span class="dynamic">{{gstin_cap}} </span>
                                                                             <span
                                                                                 class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                                         </span>
-                                                                     
+                                                                        <span class="columns mgn-up-10" *ngIf="checkin.orderNumber"> <span
+                                                                            class="dynamic">Order Id </span>
+                                                                        <span class="dynamic">{{checkin.orderNumber}}</span>
+                                                                    </span>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-custom-view-list',
@@ -37,12 +39,13 @@ export class CustomViewListComponent implements OnInit {
     private router: Router,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
-    private sharedfunctionObj: SharedFunctions,
-    private provider_services: ProviderServices) {
+    private provider_services: ProviderServices,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService) {
   }
   ngOnInit() {
     this.api_loading = true;
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'general->customview', 'classname': 'b-service',
@@ -94,7 +97,7 @@ export class CustomViewListComponent implements OnInit {
           this.api_loading = false;
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
         }
       );

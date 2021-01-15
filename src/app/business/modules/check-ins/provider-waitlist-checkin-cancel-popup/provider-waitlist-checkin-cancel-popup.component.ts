@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-cancel-popup',
@@ -51,19 +53,20 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     // if (this.data.appt || this.data.type === 'appt') {
     //   this.checkin_label = this.cancel_cap + ' Appointment';
     // } else {
-    //   this.checkin_label = this.cancel_cap + ' ' + this.sharedfunctionObj.getTerminologyTerm('waitlist');
+    //   this.checkin_label = this.cancel_cap + ' ' + this.wordProcessor.getTerminologyTerm('waitlist');
     // }
   }
 
   ngOnInit() {
     const reasons_list = [];
-    const type = this.sharedfunctionObj.getitemFromGroupStorage('pdtyp');
+    const type = this.groupService.getitemFromGroupStorage('pdtyp');
     // const reasons = projectConstants.WAITLIST_CANCEL_RESON;
     const reasons = projectConstantsLocal.WAITLIST_CANCEL_REASON;
     for (let i = 0; i < reasons.length; i++) {

@@ -1,9 +1,9 @@
 // import { Component, Input, OnChanges } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-veterinary-learnmore',
@@ -116,9 +116,9 @@ export class VeterinaryComponent implements OnInit {
   showprofile = false;
   constructor(
     private activated_route: ActivatedRoute,
-    private shared_functions: SharedFunctions,
     private _location: Location,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    private groupService: GroupStorageService
   ) { }
 
   setActivePricing(item) {
@@ -126,7 +126,7 @@ export class VeterinaryComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+   this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = this.active_user.sector;
     if (this.target) {
       // this.triggerScrollTo(this.target);

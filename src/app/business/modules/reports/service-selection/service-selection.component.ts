@@ -3,6 +3,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -50,9 +52,11 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     private router: Router,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_data_service: ReportDataService
+    private report_data_service: ReportDataService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
   ) {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
       this.service_displayedColumns = ['select', 'serviceName', 'status'];
@@ -168,7 +172,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     }
 
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
           (data: any) => {
@@ -202,7 +206,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     this.services_selected = this.selection.selected;
 
     if (this.selection.selected.length === 0) {
-      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
 
     } else {
 

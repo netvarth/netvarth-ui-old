@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { AccessibilityConfig, Image, ImageEvent } from '@ks89/angular-modal-gallery';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-item-details',
@@ -78,6 +79,7 @@ export class ItemDetailsComponent implements OnInit {
   constructor(   public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private location: Location,
+    private lStorageService: LocalStorageService,
     private router: Router ) { }
 
   ngOnInit() {
@@ -119,7 +121,7 @@ export class ItemDetailsComponent implements OnInit {
     // };
   }
   checkout() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'cart']);
   }
   getItemQty() {
@@ -138,7 +140,7 @@ export class ItemDetailsComponent implements OnInit {
     this.addToCart();
   }
   goBack() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.location.back();
   }
 
@@ -147,7 +149,7 @@ export class ItemDetailsComponent implements OnInit {
   }
   addToCart() {
     this.orderList.push(this.currentItem);
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.getItemQty();
 
   }
@@ -156,7 +158,7 @@ export class ItemDetailsComponent implements OnInit {
     for (const i in this.orderList) {
       if (this.orderList[i].itemId === this.currentItem.itemId) {
         this.orderList.splice(i, 1);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }

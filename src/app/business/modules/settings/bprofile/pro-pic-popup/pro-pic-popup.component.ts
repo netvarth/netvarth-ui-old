@@ -8,6 +8,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImageTransform } from './interfaces/index';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
 
 
@@ -40,6 +41,7 @@ export class ProPicPopupComponent implements OnInit {
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
+        private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
        // private user_datastorage: UserDataStorageService,
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -187,7 +189,7 @@ export class ProPicPopupComponent implements OnInit {
                     this.dialogRef.close();
                 }
                 // this.error_msg = 'Please upload images with size < 5mb';
-                this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
             }
         }
     }
@@ -216,7 +218,7 @@ export class ProPicPopupComponent implements OnInit {
                     }, projectConstantsLocal.TIMEOUT_DELAY);
                 },
                 error => {
-                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_error = error.error;
                 }
             );
@@ -246,7 +248,7 @@ export class ProPicPopupComponent implements OnInit {
             }, projectConstantsLocal.TIMEOUT_DELAY);
             },
             error => {
-              this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
       }

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-voicecall-details-send',
@@ -20,7 +20,7 @@ export class VoicecallDetailsSendComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
-    private shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     public dialogRef: MatDialogRef<VoicecallDetailsSendComponent>) {
     this.uuid = this.data.uuid;
     this.userid = this.data.custId;
@@ -63,10 +63,10 @@ export class VoicecallDetailsSendComponent implements OnInit {
     this.provider_services.createVoiceCall(post_itemdata).subscribe(
       () => {
         this.dialogRef.close();
-        this.shared_functions.openSnackBar('You are in a call');
+        this.snackbarService.openSnackBar('You are in a call');
       },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

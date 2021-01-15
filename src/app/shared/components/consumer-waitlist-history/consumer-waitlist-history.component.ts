@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
   selector: 'app-consumerwaitlist-history',
@@ -24,11 +25,12 @@ export class ConsumerWaitlistHistoryComponent implements OnInit {
 
   constructor(
     public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
     private locationobj: Location,
     private activaterouterobj: ActivatedRoute) { }
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activaterouterobj.params
       .subscribe(paramsv => {
         this.provider_id = paramsv.id;

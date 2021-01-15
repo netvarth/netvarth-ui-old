@@ -8,6 +8,8 @@ import { RazorpayService } from '../../services/razorpay.service';
 import { RazorpayprefillModel } from '../razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../services/windowRef.service';
 import { Razorpaymodel } from '../razorpay/razorpay.model';
+import { WordProcessor } from '../../services/word-processor.service';
+import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
   'selector': 'app-payment-link.component',
@@ -122,7 +124,9 @@ export class PaymentLinkComponent implements OnInit {
     public sharedServices: SharedServices,
     public razorpayService: RazorpayService,
     public prefillmodel: RazorpayprefillModel,
-    public winRef: WindowRefService) {
+    public winRef: WindowRefService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService) {
     this.activated_route.params.subscribe(
       qparams => {
         if (qparams.id !== 'new') {
@@ -131,13 +135,13 @@ export class PaymentLinkComponent implements OnInit {
       });
   }
   ngOnInit() {
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
-    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
     this.getuuid();
-    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   getuuid() {
     this.provider_services.Paymentlinkcheck(this.genid)
@@ -244,7 +248,7 @@ export class PaymentLinkComponent implements OnInit {
         }
       },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
         });
   }
   paywithRazorpay(data: any) {

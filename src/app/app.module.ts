@@ -88,6 +88,13 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { SessionStorageService } from './shared/services/session-storage.service';
+import { CookieProcessor } from './shared/services/cookie-processor.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { GroupStorageService } from './shared/services/group-storage.service';
+import { WordProcessor } from './shared/services/word-processor.service';
+import { SnackbarService } from './shared/services/snackbar.service';
+import { ErrorMessagingService } from './shared/services/error-message.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -203,10 +210,17 @@ export function init_app(globalService: GlobalService) {
     GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
+    ErrorMessagingService,
     SearchDetailServices,
     ProviderDetailService,
     ProviderDataStorageService,
     ShareService,
+    SessionStorageService,
+    LocalStorageService,
+    CookieProcessor,
+    GroupStorageService,
+    WordProcessor,
+    SnackbarService,
     Title,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },

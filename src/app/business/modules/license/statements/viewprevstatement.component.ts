@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConsumerPaymentmodeComponent } from '../../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-viewprevstatement',
@@ -49,6 +51,8 @@ export class ViewPrevStatementComponent implements OnInit {
         public shared_functions: SharedFunctions,
         private router: Router, public location: Location,
         private dialog: MatDialog,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
     ) {
         this.activated_route.queryParams.subscribe(
             (qParams) => {
@@ -57,7 +61,7 @@ export class ViewPrevStatementComponent implements OnInit {
             });
     }
     ngOnInit() {
-        const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+        const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
         if (bdetails) {
             this.bname = bdetails.bn || '';
         }
@@ -90,7 +94,7 @@ export class ViewPrevStatementComponent implements OnInit {
             }
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
 
         );
@@ -103,7 +107,7 @@ export class ViewPrevStatementComponent implements OnInit {
                     this.payment_loading = false;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -114,7 +118,7 @@ export class ViewPrevStatementComponent implements OnInit {
                     this.payment_detail = data;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

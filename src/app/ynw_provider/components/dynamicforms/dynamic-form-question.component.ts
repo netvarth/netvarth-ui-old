@@ -7,6 +7,7 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html'
@@ -23,7 +24,8 @@ export class DynamicFormQuestionComponent implements OnInit {
   constructor(private qcs: FormControlService,
     public fed_service: FormMessageDisplayService,
     public shared_functions: SharedFunctions,
-    public dateformat: DateFormatPipe) { }
+    public dateformat: DateFormatPipe,
+    private wordProcessor: WordProcessor) { }
 
   ngOnInit() {
     this.errors = this.messages[this.question.key] || [];
@@ -109,7 +111,7 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }

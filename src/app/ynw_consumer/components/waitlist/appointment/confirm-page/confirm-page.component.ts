@@ -4,6 +4,7 @@ import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -31,8 +32,9 @@ export class ConfirmPageComponent implements OnInit {
   type = 'appt';
   constructor(
     public route: ActivatedRoute, public router: Router,
-    private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions) {
-    this.provider_label = this.sharedFunctionobj.getTerminologyTerm('provider');
+    private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
+    private wordProcessor: WordProcessor) {
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
       params => {
         this.infoParams = params;

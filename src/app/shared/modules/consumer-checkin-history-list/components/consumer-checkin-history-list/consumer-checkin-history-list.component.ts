@@ -8,6 +8,7 @@ import { CheckInHistoryServices } from '../../consumer-checkin-history-list.serv
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ConsumerRateServicePopupComponent } from '../../../../components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/modules/consumer-checkin-history-list/components/consumer-waitlist-checkin-payment/consumer-waitlist-checkin-payment.component';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-consumer-checkin-history-list',
@@ -45,6 +46,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public dialog: MatDialog,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     private router: Router) { }
   ngOnInit() {
     this.getHistoryCount(this.params);
@@ -156,7 +158,7 @@ export class ConsumerCheckInHistoryListComponent implements OnInit, OnChanges, O
           this.viewBill(waitlist, bill_data);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

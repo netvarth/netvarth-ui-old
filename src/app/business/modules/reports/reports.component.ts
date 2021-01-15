@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-reports',
@@ -29,6 +30,7 @@ export class ReportsComponent implements OnInit {
   constructor(private router: Router, private report_dataService: ReportDataService,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     private dialog: MatDialog) {
     this.report_dataService.updateCustomers('All');
     this.report_dataService.updatedQueueDataSelection('All');
@@ -98,7 +100,7 @@ export class ReportsComponent implements OnInit {
     this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
       if (data) {
         this.getCriteriaList();
-        this.shared_functions.openSnackBar('Report Deleted');
+        this.snackbarService.openSnackBar('Report Deleted');
       }
     });
   }
@@ -125,7 +127,7 @@ export class ReportsComponent implements OnInit {
       this.generatedReport(res);
     },
       (error) => {
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
 
   }
@@ -138,7 +140,7 @@ export class ReportsComponent implements OnInit {
           },
           error => {
             reject(error);
-            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           }
         );
     });

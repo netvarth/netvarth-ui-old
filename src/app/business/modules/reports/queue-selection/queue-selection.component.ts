@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 //
 
 
@@ -45,12 +47,14 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_service: ReportDataService
+    private report_service: ReportDataService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
   ) {
 
     this.activated_route.queryParams.subscribe(qparams => {
 
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.accountType = user.accountType;
       if (this.accountType !== 'BRANCH') {
         this.displayedColumns = ['select', 'name', 'queue', 'status'];
@@ -140,7 +144,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
 
 
   getAllQs() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getProviderQueues()
         .subscribe(
           (data: any) => {
@@ -194,7 +198,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   passQueueSelectedToReports() {
     this.queues_selected = this.selection.selected;
     if (this.selection.selected.length === 0) {
-      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
     } else {
       if (this.queue_dataSource.filteredData.length < this.selection.selected.length) {
         this.queues_selected = this.queue_dataSource.filteredData;
@@ -216,7 +220,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
         this.queues_selected = 'All';
       }
       if (this.queues_selected.length === 0) {
-        this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
       } else {
         this.report_service.updatedQueueDataSelection(this.queues_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });

@@ -7,6 +7,9 @@ import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -64,15 +67,18 @@ export class OrderDashboardComponent implements OnInit {
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
     public shared_functions: SharedFunctions,
-    public dateformat: DateFormatPipe) { }
+    public dateformat: DateFormatPipe,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    const businessdetails = this.sharedFunctions.getitemFromGroupStorage('ynwbp');
+    const businessdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' id';
-    if (this.sharedFunctions.getitemFromGroupStorage('orderTab')) {
-      this.selectedTab = this.sharedFunctions.getitemFromGroupStorage('orderTab');
+    if (this.groupService.getitemFromGroupStorage('orderTab')) {
+      this.selectedTab = this.groupService.getitemFromGroupStorage('orderTab');
     } else {
       this.selectedTab = 1;
     }
@@ -85,7 +91,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   setTabSelection(type) {
     this.selectedTab = type;
-    this.shared_functions.setitemToGroupStorage('orderTab', this.selectedTab);
+    this.groupService.setitemToGroupStorage('orderTab', this.selectedTab);
     switch (type) {
       case 1: {
         this.getProviderTodayOrders();
@@ -350,7 +356,7 @@ export class OrderDashboardComponent implements OnInit {
             this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order' } });
           },
           error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     } else {

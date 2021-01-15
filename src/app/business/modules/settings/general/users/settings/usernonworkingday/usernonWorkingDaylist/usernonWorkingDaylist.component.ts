@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ConfirmBoxComponent } from '../../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-usernonworkingdaylist',
@@ -59,23 +61,25 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
     private activated_route: ActivatedRoute,
     private router: Router,
     public shared_functions: SharedFunctions,
-    public sharedfunctionObj: SharedFunctions
+    public sharedfunctionObj: SharedFunctions,
+    private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
     }
     );
-    this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
   ngOnInit() {
     this.getUser();
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   getUser() {
@@ -151,7 +155,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
+        'message': this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
       }
     });
     this.remholdialogRef.afterClosed().subscribe(result => {

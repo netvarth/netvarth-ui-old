@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="CustomersInboxMessage()">
+        <div class="action-box pointer-cursor" (click)="CustomersInboxMessage()" *ngIf="showMessage">
             <div class="action-box-sub">
                 <span class="message-icon"></span>
                 <div class="icon-text">Send Message

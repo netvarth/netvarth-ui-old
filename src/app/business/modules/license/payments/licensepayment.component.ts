@@ -119,12 +119,21 @@ export class PaymentComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
+<<<<<<< HEAD
         },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
         }
   paywithRazorpay(pData: any ) {
+=======
+      },
+        error => {
+          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+  paywithRazorpay(pData: any) {
+>>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
     this.prefillmodel.name = pData.providerName;
     this.prefillmodel.email = pData.ConsumerEmail;
     this.prefillmodel.contact = pData.consumerPhoneumber;

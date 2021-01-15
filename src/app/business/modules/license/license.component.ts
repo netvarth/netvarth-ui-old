@@ -2,7 +2,6 @@ import { Component, HostListener, Inject, OnInit, OnDestroy } from '@angular/cor
 import { ProviderAuditLogComponent } from '../../../ynw_provider/components/provider-auditlogs/provider-auditlogs.component';
 import { UpgradeLicenseComponent } from '../../../ynw_provider/components/upgrade-license/upgrade-license.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +12,10 @@ import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 // import { constants } from 'fs';
 @Component({
     selector: 'app-license',
@@ -107,38 +110,40 @@ export class LicenseComponent implements OnInit, OnDestroy {
 
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
-        private sharedfunctionObj: SharedFunctions,
         private route: ActivatedRoute,
-        private shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
         private routerobj: Router,
         public _sanitizer: DomSanitizer,
         @Inject(DOCUMENT) public document) {
         this.onResize();
-        this.license_tooltip = this.sharedfunctionObj.getProjectMesssages('LICENSE_TOOLTIP');
+        this.license_tooltip = this.wordProcessor.getProjectMesssages('LICENSE_TOOLTIP');
         this.route.params.subscribe((data) => {
             this.type = data.type;
             if (this.type === 'upgrade') {
-                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+                const ynw_user = this.groupService.getitemFromGroupStorage('ynw-user');
                 this.current_lic = ynw_user.accountLicenseDetails.accountLicense.displayName;
                 this.showupgradeLicense();
             }
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.account_type = this.active_user.accountType;
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.loading = true;
-        this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
-        // this.periodicTooltip = this.sharedfunctionObj.getProjectMesssages('PERIOD_TOOLTIP');
+        this.addonTooltip = this.wordProcessor.getProjectMesssages('ADDON_TOOLTIP');
+        // this.periodicTooltip = this.wordProcessor.getProjectMesssages('PERIOD_TOOLTIP');
         this.getLicenseCorpSettings();
         this.getLicenseDetails();
         this.getLicenseUsage();
         this.getInvoiceList();
         this.getSubscriptionDetail();
         this.getUpgradablePackages();
-        this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         this.loading = false;
         // this.getAnnualDiscountPercentage();
         this.getbillCycle();
@@ -196,9 +201,9 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     this.adon_list = this.currentlicense_details.addons;
                 }
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+                const ynw_user = this.groupService.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemToGroupStorage('ynw-user', ynw_user);
+                this.groupService.setitemToGroupStorage('ynw-user', ynw_user);
                 if (data['accountLicense'] && data['accountLicense']['type'] === 'Trial') {
                     const start_date = (data['accountLicense']['dateApplied']) ? moment(data['accountLicense']['dateApplied']) : null;
                     const end_date = (data['accountLicense']['expiryDate']) ? moment(data['accountLicense']['expiryDate']) : null;
@@ -232,7 +237,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     showupgradeLicense() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.upgradedialogRef = this.dialog.open(UpgradeLicenseComponent, {
                 width: '50%',
@@ -254,10 +259,10 @@ export class LicenseComponent implements OnInit, OnDestroy {
         }
     }
     goBacktoPrev() {
-        const retcheck = this.sharedfunctionObj.getitemfromLocalStorage('lic_ret');
+        const retcheck = this.lStorageService.getitemfromLocalStorage('lic_ret');
         if (retcheck !== undefined && retcheck !== null) {
             setTimeout(() => {
-                this.sharedfunctionObj.removeitemfromLocalStorage('lic_ret');
+                this.lStorageService.removeitemfromLocalStorage('lic_ret');
                 const retcheckarr = retcheck.split('/');
                 this.router.navigate(retcheckarr);
             }, 100);
@@ -281,7 +286,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     this.metrics = data;
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -305,7 +310,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     this.invoices = data;
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -328,7 +333,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     }
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 },
                 () => {
                     this.getAnnualDiscountPercentage().then(
@@ -346,7 +351,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         // this.provider_servicesobj.getLicenseMetadata()
         //     .subscribe(
         //         data => {
-        this.all_license_metadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+        this.all_license_metadata = this.lStorageService.getitemfromLocalStorage('license-metadata');
         // this.all_license_metadata = data;
         // const license_meta = {};
         this.license_upgarde_sub = {};
@@ -367,7 +372,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         }
         //     },
         //     error => {
-        //         this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     }
         // );
     }
@@ -378,7 +383,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
                     this.getLicenseDetails('update');
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -388,7 +393,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     showUnpaidInvoice() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         // if (this.corpSettings && this.corpSettings.isCentralised) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         // } else {
             this.loadingTb = true;
             if (this.invoices.length === 1) {
@@ -403,7 +408,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         const invoiceJson = JSON.stringify(invoice);
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: {
@@ -420,7 +425,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         const invoiceJson = JSON.stringify(invoice);
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         // if (this.corpSettings && this.corpSettings.isCentralised) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         // } else {
             this.temp1 = JSON.parse(invoiceJson);
             const navigationExtras: NavigationExtras = {
@@ -438,7 +443,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     openAnnualSection() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.changelicence = true;
         }
@@ -467,7 +472,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     doUpgradeSubcription(value) {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.upgradesubscriptdialogRef = this.dialog.open(ConfirmBoxComponent, {
                 width: '50%',
@@ -497,7 +502,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     makePayment(invoice) {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.pay_data.amount = invoice.amount;
             this.pay_data.uuid = invoice.ynwUuid;
@@ -512,17 +517,17 @@ export class LicenseComponent implements OnInit, OnDestroy {
                         data => {
                             if (data['response']) {
                                 this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('PAYMENT_REDIRECT'));
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('PAYMENT_REDIRECT'));
                                 setTimeout(() => {
                                     this.document.getElementById('payuform').submit();
                                 }, 2000);
                             } else {
-                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                             }
                         },
                         error => {
                             this.payment_loading = false;
-                            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
             }

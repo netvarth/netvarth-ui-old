@@ -84,7 +84,7 @@
                           <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                       </div>
-                      <div class="col-md-3 col-sm-4 col-xs-5">
+                      <div class="col-md-3 col-sm-4 col-xs-5 no-padding-small">
                         <mat-form-field>
                           <input matInput [matDatepicker]="picker1" (dateChange)="compareDate($event.value,1)"
                             placeholder="End Date" formControlName="enddate" readonly>
@@ -527,7 +527,7 @@
                           </div>
                         <div class="form-group">
                           <mat-form-field>
-                            <input matInput type="text" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="deliverykms"
+                            <input matInput type="text" (keypress)="isNumber($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="deliverykms"
                               placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
                               maxlength="50">
                           </mat-form-field>

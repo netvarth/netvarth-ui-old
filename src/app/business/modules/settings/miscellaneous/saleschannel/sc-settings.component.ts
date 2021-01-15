@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-saleschannel-settings',
@@ -33,14 +36,16 @@ export class SaleschannelSettingsComponent implements OnInit {
     dispObj = {};
     scCode;
     constructor(private provider_services: ProviderServices,
-        private shared_Functionsobj: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private router: Router) {
     }
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getSalesChannel();
     }
@@ -56,14 +61,14 @@ export class SaleschannelSettingsComponent implements OnInit {
         if (this.scCode) {
             this.provider_services.addSalesCode(this.scCode).subscribe(
                 data => {
-                    this.api_success = this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('SC_CREATED'), { 'panelclass': 'snackbarerror' });
+                    this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SC_CREATED'), { 'panelclass': 'snackbarerror' });
                     this.getSalesChannel();
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else {
-            this.shared_Functionsobj.openSnackBar('Sales Channel Code is Required', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Sales Channel Code is Required', { 'panelClass': 'snackbarerror' });
         }
     }
     getSalesChannel() {
@@ -82,7 +87,7 @@ export class SaleschannelSettingsComponent implements OnInit {
                 }
             },
             error => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     onCancel() {

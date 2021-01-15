@@ -1720,6 +1720,14 @@ export class ProviderServices {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
+   updateProviderOrders(data) {
+      const url = 'provider/orders';
+      return this.servicemeta.httpPut(url, data);
+   }
+   updateProviderOrderItems(uuid) {
+      const url = 'provider/orders/item' + uuid;
+      return this.servicemeta.httpPut(url);
+   }
    getProviderTodayOrders(filter = {}) {
       const url = 'provider/orders';
       return this.servicemeta.httpGet(url, null, filter);

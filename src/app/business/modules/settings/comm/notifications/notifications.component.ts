@@ -3,6 +3,9 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html'
@@ -47,17 +50,19 @@ export class NotificationsComponent implements OnInit {
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
-        private sharedfunctionObj: SharedFunctions
+        private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
     ) {
     }
     ngOnInit() {
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         this.sub_domain = user_data.subSector || null;
         // console.log(this.sub_domain);
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.getSMSglobalSettings();
         this.getSMSCredits();
         this.getDomainSubdomainSettings();
@@ -104,10 +109,10 @@ export class NotificationsComponent implements OnInit {
         const status = (value) ? 'enabled' : 'disabled';
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setNotificationSettings(state).subscribe(data => {
-            this.shared_functions.openSnackBar('Send notification  ' + status + ' successfully');
+            this.snackbarService.openSnackBar('Send notification  ' + status + ' successfully');
             this.getSMSglobalSettings();
         }, (error) => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
         });
     }
@@ -116,10 +121,10 @@ export class NotificationsComponent implements OnInit {
         const status = (value) ? 'enabled' : 'disabled';
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setSMSglobalSettings(state).subscribe(data => {
-            this.shared_functions.openSnackBar('SMS settings ' + status + ' successfully');
+            this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
             this.getSMSglobalSettings();
         }, (error) => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
         });
     }

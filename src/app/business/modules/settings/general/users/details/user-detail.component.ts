@@ -11,6 +11,10 @@ import { SharedServices } from '../../../../../../shared/services/shared-service
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     'selector': 'app-branchuser-detail',
     'templateUrl': './user-detail.component.html'
@@ -92,7 +96,11 @@ export class BranchUserDetailComponent implements OnInit {
         private shared_services: SharedServices,
         private router: Router,
         private dialog: MatDialog,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private lStorageService: LocalStorageService,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService
     ) {
         this.activated_route.queryParams.subscribe(data => {
             this.actionparam = data;
@@ -114,8 +122,8 @@ export class BranchUserDetailComponent implements OnInit {
             });
             this.breadcrumbs = breadcrumbs;
         }
-        const bConfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.subsector = user.subSector;
         this.sector = user.sector;
         if (this.sector === 'healthCare') {
@@ -142,7 +150,7 @@ export class BranchUserDetailComponent implements OnInit {
                             cdate: today,
                             bdata: res
                         };
-                        this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+                        this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
                     }
                 );
         }
@@ -326,19 +334,19 @@ export class BranchUserDetailComponent implements OnInit {
         // console.log(post_data1);
         if (this.actionparam.type === 'edit') {
             this.provider_services.updateUser(post_data1, this.userId).subscribe(() => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USERUPDATED_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'general', 'users']);
             },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else {
             this.provider_services.createUser(post_data1).subscribe(() => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('USER_ADDED'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'general', 'users']);
             },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }
@@ -402,7 +410,7 @@ export class BranchUserDetailComponent implements OnInit {
                             this.getWaitlistMgr();
                         },
                         error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             } else {
             }

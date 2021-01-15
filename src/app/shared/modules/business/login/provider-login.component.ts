@@ -10,6 +10,9 @@ import { FormMessageDisplayService } from '../../form-message-display/form-messa
 import { projectConstants } from '../../../../app.component';
 import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
 import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SessionStorageService } from '../../../../shared/services/session-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-plogin',
@@ -32,6 +35,7 @@ export class ProviderLoginComponent implements OnInit {
   signup_here = '';
   countryCodes = projectConstantsLocal.COUNTRY_CODES;
   selectedCountryCode;
+  
   // images = {
   //   special_offers: 'assets/images/special offer-01-01.png',
   //   jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -75,6 +79,9 @@ export class ProviderLoginComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
+    private lStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService,
+    private snackbarService: SnackbarService
   ) {
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -165,14 +172,24 @@ export class ProviderLoginComponent implements OnInit {
       'password': data.password,
       'mUniqueId': null
     };
-    this.shared_functions.removeitemfromSessionStorage('tabId');
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.shared_functions.clearSessionStorage();
-    this.shared_functions.providerLogin(post_data)
+    this.shared_functions.businessLogin(post_data)
       .then(
         () => {
           const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+          this.lStorageService.setitemonLocalStorage('busp', this.password);
+          if (this.qParams && this.qParams['src']) {
+            if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
+              this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+            } else {
+              this.router.navigate(['/provider']);
+            }
+          } else {
+            this.router.navigate(['/provider']);
+          }
         },
         error => {
           if (error.status === 401 && error.error === 'Session already exists.') {
@@ -180,7 +197,7 @@ export class ProviderLoginComponent implements OnInit {
               this.onSubmit(data);
             });
           } else {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
           this.api_loading = false;
         }

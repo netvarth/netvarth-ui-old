@@ -15,6 +15,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { ViewRxComponent } from '../../../home/view-rx/view-rx.component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import * as moment from 'moment';
 
 
@@ -71,6 +72,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.activateroute.queryParams.subscribe(params => {
       if (params.is_orderShow === 'false') {
@@ -230,7 +232,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
           this.viewBill(waitlist, bill_data);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -247,7 +249,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
           this.viewOrderBill(orders, bill_data);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -364,7 +366,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
           this.viewApptBill(waitlist, bill_data);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

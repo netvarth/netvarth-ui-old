@@ -7,6 +7,8 @@ import { CheckInHistoryServices } from '../../consumer-checkin-history-list.serv
 import { DomSanitizer } from '@angular/platform-browser'; import { DOCUMENT } from '@angular/common';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { JcCouponNoteComponent } from '../../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './consumer-waitlist-view-bill.component.html'
@@ -94,6 +96,8 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     public consumer_checkin_history_service: CheckInHistoryServices,
     public sharedfunctionObj: SharedFunctions,
     public sharedServices: SharedServices,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
   ) {
@@ -236,7 +240,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         },
         () => {
           this.payModesQueried = true;
-          // this.sharedfunctionObj.openSnackBar(error, {'panelClass': 'snackbarerror'});
+          // this.snackbarService.openSnackBar(error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -259,14 +263,14 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               this.document.getElementById('payuform').submit();
             }, 2000);
           },
           error => {
             this.resetApiError();
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     }
@@ -287,14 +291,14 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
         .subscribe(
           data => {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               this.document.getElementById('paytmform').submit();
             }, 2000);
           },
           error => {
             this.resetApiError();
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     }
@@ -309,7 +313,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
     if (this.checkCouponValid(this.jCoupon)) {
       this.applyAction(this.jCoupon, this.bill_data.uuid);
     } else {
-      this.sharedfunctionObj.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
     }
   }
   /**
@@ -331,7 +335,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    * @param data Data to be sent as request body
    */
   applyAction(action, uuid) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.sharedServices.applyCoupon(action, uuid, this.checkin.providerAccount.id).subscribe
         (billInfo => {
           this.bill_data = billInfo;
@@ -340,7 +344,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
           resolve();
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             reject(error);
           });
     });
@@ -577,7 +581,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit {
    * Cash Button Pressed
    */
   cashPayment() {
-    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CASH_PAYMENT'));
+    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
   getCouponList() {
     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();

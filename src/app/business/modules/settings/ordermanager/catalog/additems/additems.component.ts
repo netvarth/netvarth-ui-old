@@ -7,6 +7,10 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -85,8 +89,12 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
     public dialog: MatDialog,
-    private provider_servicesobj: ProviderServices) {
-    this.emptyMsg = this.shared_functions.getProjectMesssages('ITEM_LISTEMPTY');
+    private provider_servicesobj: ProviderServices,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ITEM_LISTEMPTY');
     this.activated_route.queryParams.subscribe(
       (qParams) => {
       this.action = qParams.action;
@@ -116,11 +124,11 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getitems().then(
       (data) => {
         console.log(this.cataId);
@@ -129,7 +137,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           this.heading = 'Edit'; 
           this.getCatalog();
         } else {
-          this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
+          this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
           if (this.addCatalogItems && this.addCatalogItems.length > 0) {
             this.selectedCount = this.addCatalogItems.length;
            for (const itm of this.catalogItem) {
@@ -186,7 +194,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             resolve(data);
           },
           error => {
-            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -255,7 +263,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     }
     console.log(this.catalogItemsSelected);
     console.log(this.addCatalogItems);
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+        this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'add',
                           isFrom: true }
@@ -284,7 +292,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             this.api_loading = false;
           }, error => {
             this.api_loading = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
             );
       }
@@ -336,7 +344,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
       (data) => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar('Items addeded');
+        this.snackbarService.openSnackBar('Items addeded');
         const navigationExtras: NavigationExtras = {
         queryParams: { action: 'edit',
                         isFrom: true }
@@ -345,7 +353,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
       }, error => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         );
   }
@@ -362,7 +370,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         this.api_loading = false;
       }, error => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
      );
   }

@@ -106,7 +106,7 @@ export const projectConstantsLocal = {
   POST_DATE_FORMAT_WITHTIME_A: 'YYYY-MM-DD HH:mm A',
   DATE_FORMAT_WITH_MONTH: 'd MMM',
   DATE_FORMAT_STARTS_MONTH: 'MMM d',
-  DATE_MM_DD_YY_FORMAT: 'MMM dd, y',
+  DATE_MM_DD_YY_FORMAT: 'MMM d, y',
   DATE_EE_MM_DD_YY_FORMAT: 'EEE, MMM dd, y',
   DATE_MM_DD_YY_HH_MM_A_FORMAT: 'medium',
   BASE_SCHEDULE: [

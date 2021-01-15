@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -67,18 +69,20 @@ export class TeleServiceShareComponent implements OnInit {
     public shared_services: SharedServices,
     private provider_services: ProviderServices,
     private dialog: MatDialog,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
-    this.reminder_cap = this.shared_functions.getProjectMesssages('SEND_REMINDER');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.sendMeetingDetails = this.wordProcessor.getProjectMesssages('SENDING_MEET_DETAILS');
+    this.reminder_cap = this.wordProcessor.getProjectMesssages('SEND_REMINDER');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.providerName = this.data.busnsName;
     this.serviceName = this.data.serviceDetail.name;
     this.meetingLink = this.data.meetingLink;
     this.consumerName = this.data.consumerName;
-    this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
+    this.internt_cap = this.wordProcessor.getProjectMesssages('NET_CNNCT');
     this.getSMSCredits();
     if (this.data.reminder) {
       this.getReminderData();
@@ -181,7 +185,7 @@ export class TeleServiceShareComponent implements OnInit {
     elementId.select();
     document.execCommand('copy');
     elementId.setSelectionRange(0, 0);
-    this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // const info = document.getElementById(elementId);
     // if (window.getSelection) {
     //   const selection = window.getSelection();
@@ -190,7 +194,7 @@ export class TeleServiceShareComponent implements OnInit {
     //   selection.removeAllRanges();
     //   selection.addRange(range);
     //   document.execCommand('Copy');
-    //   this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    //   this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // }
   }
 
@@ -209,7 +213,7 @@ export class TeleServiceShareComponent implements OnInit {
     if (this.data.waitingType === 'checkin') {
       this.shared_services.consumerMassCommunication(post_data).
         subscribe(() => {
-          this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
           this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
@@ -219,7 +223,7 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       this.shared_services.consumerMassCommunicationAppt(post_data).
         subscribe(() => {
-          this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
           this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
@@ -257,7 +261,7 @@ export class TeleServiceShareComponent implements OnInit {
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
   } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
           width: '50%',

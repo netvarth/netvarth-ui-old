@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output, OnInit, OnDestroy } from '@angu
 import { SearchFields } from '../../modules/search/searchfields';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Subscription } from 'rxjs';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
     selector: 'app-search-form',
@@ -32,7 +33,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     jsonlist: any = [];
     subscription: Subscription;
     constructor(
-        public shared_functions: SharedFunctions
+        public shared_functions: SharedFunctions,
+        private lStorageService: LocalStorageService
     ) {
         this.subscription = this.shared_functions.getMessage().subscribe(message => {
             switch (message.ttype) {
@@ -73,7 +75,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
         this.popSearches = [];
         this.showmoreSearch = false;
         if (jsonlist && jsonlist.length === 0) {
-            this.popSearches = this.shared_functions.getitemfromLocalStorage('popularSearch');
+            this.popSearches = this.lStorageService.getitemfromLocalStorage('popularSearch');
         } else {
             this.popSearches = jsonlist;
         }

@@ -9,6 +9,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-statements',
@@ -110,6 +112,8 @@ export class StatementsComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
   ) {
@@ -182,7 +186,7 @@ export class StatementsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const bdetails = this.sharedFunctionobj.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -225,7 +229,7 @@ export class StatementsComponent implements OnInit {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -294,7 +298,7 @@ export class StatementsComponent implements OnInit {
           this.payment_loading = false;
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -316,7 +320,7 @@ export class StatementsComponent implements OnInit {
           this.payment_detail = data;
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

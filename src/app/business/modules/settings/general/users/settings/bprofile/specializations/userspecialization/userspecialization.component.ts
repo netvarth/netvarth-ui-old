@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../../../../../../../ynw_provider/servic
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../../../../../app.component';
 import { Messages } from '../../../../../../../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../../../../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class UserSpecializationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
     this.loadData = data;
   }
@@ -89,13 +91,13 @@ export class UserSpecializationComponent implements OnInit {
     this.provider_services.updateuserSpecializationPrimaryFields(postdata, this.loadData.userId)
       .subscribe(data => {
         this.loadData = data;
-        this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
+        this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
         setTimeout(() => {
           this.dialogRef.close({ 'mod': 'reloadlist', 'data': data });
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.disableButton = false;
         }
       );

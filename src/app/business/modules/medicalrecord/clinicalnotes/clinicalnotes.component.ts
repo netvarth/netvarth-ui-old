@@ -3,6 +3,8 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 
@@ -36,7 +38,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
 
 
@@ -98,7 +102,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
             });
         },
           error => {
-            $this.sharedfunctionObj.openSnackBar($this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            $this.snackbarService.openSnackBar($this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
 
 

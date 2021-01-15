@@ -8,6 +8,7 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-forgot-password-app',
@@ -41,7 +42,8 @@ export class ForgotPasswordAppComponent {
     private fb: FormBuilder,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
 
     this.createForm(1);
@@ -97,7 +99,7 @@ export class ForgotPasswordAppComponent {
           this.createForm(3);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
 
@@ -119,7 +121,7 @@ export class ForgotPasswordAppComponent {
 
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
 
@@ -146,7 +148,7 @@ export class ForgotPasswordAppComponent {
           }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
 

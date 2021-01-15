@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-pos-coupondetail',
@@ -62,12 +64,13 @@ export class PosCouponDetailComponent implements OnInit {
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.activated_route.params.subscribe(
       (params) => {
         this.coupon_id = params.id;
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         if (this.coupon_id) {
           if (this.coupon_id === 'add') {
             const breadcrumbs = [];
@@ -191,13 +194,13 @@ export class PosCouponDetailComponent implements OnInit {
       }
       if (form_data.calculationType === 'Percentage') {
         if (form_data.coupValue < 0 || form_data.coupValue > 100) {
-          this.api_error = this.sharedfunctionObj.openSnackBar('Discount percentage should be between 0 and 100', { 'panelClass': 'snackbarerror' });
+          this.api_error = this.snackbarService.openSnackBar('Discount percentage should be between 0 and 100', { 'panelClass': 'snackbarerror' });
           return;
         }
       }
     }
     if (!isNaN(form_data.description.trim(' '))) {
-      this.api_error = this.sharedfunctionObj.openSnackBar('Please enter a valid description', { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar('Please enter a valid description', { 'panelClass': 'snackbarerror' });
       return;
     }
     const post_data = {
@@ -220,12 +223,12 @@ export class PosCouponDetailComponent implements OnInit {
     this.provider_services.editCoupon(post_data)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('COUPON_UPDATED'));
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_UPDATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -238,12 +241,12 @@ export class PosCouponDetailComponent implements OnInit {
     this.provider_services.addCoupon(post_data)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('COUPON_CREATED'));
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_CREATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }

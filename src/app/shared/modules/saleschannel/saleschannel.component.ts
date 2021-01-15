@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angu
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
     'selector': 'app-saleschannel',
@@ -16,7 +17,8 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     @Output() retfromSC = new EventEmitter<any>();
     constructor(private provider_services: ProviderServices,
-        private sharedfunctions: SharedFunctions) {
+        private sharedfunctions: SharedFunctions,
+        private snackbarService: SnackbarService) {
         this.subscription = this.sharedfunctions.getMessage().subscribe(
             (message) => {
                 switch (message.ttype) {
@@ -71,7 +73,7 @@ export class SalesChannelComponent implements OnInit, OnDestroy {
                         }
                     },
                     (error) => {
-                        this.sharedfunctions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.scfound = false;
                         this.retfromSC.emit(null);
                     }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-global-settings-appt',
     templateUrl: './global-settings.component.html'
@@ -72,7 +74,8 @@ export class GlobalSettingsComponent implements OnInit {
         private router: Router,
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
-        private shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor
     ) { }
     @Input() headerResult;
     breadcrumbs = this.breadcrumbs_init;
@@ -140,7 +143,7 @@ export class GlobalSettingsComponent implements OnInit {
                     } else if (this.error_list[0].size) {
                         this.error_msg = 'Please upload images with size less than 15mb';
                     }
-                    this.shared_Functionsobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
                 }
             }
         }
@@ -187,34 +190,34 @@ export class GlobalSettingsComponent implements OnInit {
                     submit_data.append('properties', blobPropdata);
                     this.imgProperties = submit_data;
                     this.provider_services.uploadDisplayboardLogoAppointment(this.displayboard_data.id, this.imgProperties).subscribe(() => {
-                        this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                         this.api_loading = false;
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
                     },
                         error => {
                             this.api_loading = false;
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
                 } else if (this.qboardLogo !== '') {
                     this.provider_services.uploadDisplayboardApptLogoProps(this.displayboard_data.id, propertiesDet).subscribe(() => {
-                        this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                         this.api_loading = false;
                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
                     },
                         error => {
                             this.api_loading = false;
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
                 }
             } else {
                 this.api_loading = false;
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.router.navigate(['provider', 'settings', 'appointmentmanager', 'displayboards']);
             }
         },
             error => {
                 this.api_loading = false;
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     previewCancel() {

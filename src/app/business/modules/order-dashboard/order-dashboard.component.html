@@ -153,8 +153,10 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
-                  <span class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
+                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
                     currency:'INR'}}</span>
@@ -296,7 +298,9 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
@@ -438,7 +442,9 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |

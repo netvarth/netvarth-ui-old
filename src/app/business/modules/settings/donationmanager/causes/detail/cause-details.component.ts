@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-cause-details',
@@ -46,8 +48,10 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     showGallery = false;
     causecaption = 'Add Cause';
     constructor(private provider_services: ProviderServices,
-        private sharedfunctionObj: SharedFunctions,
+        private groupService:GroupStorageService,
         private servicesService: ServicesService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,
         private router: Router,
@@ -55,7 +59,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
-                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.service_id === 'add') {
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -90,11 +94,11 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     .subscribe(
                         () => {
                             this.getGalleryImages();
-                            this.sharedfunctionObj.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
+                            this.snackbarService.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
                         error => {
-                            this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
@@ -135,10 +139,10 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         return false;
     }
     getDomainSubdomainSettings() {
-        const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.domainSubdomainSettings(domain, sub_domain)
                 .subscribe(
                     (data: any) => {
@@ -152,7 +156,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         });
     }
     getPaymentSettings() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.getPaymentSettings()
                 .subscribe(
                     data => {
@@ -166,7 +170,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         });
     }
     getTaxpercentage() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.getTaxpercentage()
                 .subscribe(data => {
                     this.serviceParams['taxsettings'] = data;
@@ -243,7 +247,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -251,11 +255,11 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
         this.provider_services.updateService(post_data)
             .subscribe(
                 () => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_UPDATED'));
                     this.getServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -266,7 +270,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = false;
                     this.getServiceDetail();
                 });
@@ -278,7 +282,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = true;
                     this.getServiceDetail();
                 });

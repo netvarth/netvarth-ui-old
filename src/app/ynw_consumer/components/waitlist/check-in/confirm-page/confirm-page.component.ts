@@ -4,6 +4,7 @@ import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-confirm-page',
@@ -33,12 +34,13 @@ export class ConfirmPageComponent implements OnInit {
   uuids: any = [];
   constructor(
     public route: ActivatedRoute, public router: Router,
-    private shared_services: SharedServices, public shared_functions: SharedFunctions
+    private shared_services: SharedServices, public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.route.queryParams.subscribe(
       params => {
-        // this.shared_functions.setitemonLocalStorage('inPostInfo', true);
+        // this.lStorageService.setitemonLocalStorage('inPostInfo', true);
         this.infoParams = params;
         if (this.infoParams.type === 'waitlistreschedule') {
           this.type = this.infoParams.type;
@@ -72,7 +74,7 @@ export class ConfirmPageComponent implements OnInit {
     } else {
       this.router.navigate(['consumer']);
     }
-    // this.shared_functions.removeitemfromLocalStorage('inPostInfo');
+    // this.lStorageService.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {
     console.log(this.email);

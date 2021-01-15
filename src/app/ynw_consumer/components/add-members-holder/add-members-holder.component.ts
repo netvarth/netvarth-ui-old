@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-add-members-holder',
@@ -38,6 +39,7 @@ export class AddMembersHolderComponent implements OnInit {
     public dialogRef: MatDialogRef<AddMembersHolderComponent>,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data.type === 'edit') {
       this.addmemberobj.fname = data.member.userProfile.firstName || '';
@@ -123,7 +125,7 @@ export class AddMembersHolderComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
           },
             error => {
-              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
               this.disableButton = false;
             });
       } else if (this.data.type === 'edit') {
@@ -137,7 +139,7 @@ export class AddMembersHolderComponent implements OnInit {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
               this.disableButton = false;
             }
           );

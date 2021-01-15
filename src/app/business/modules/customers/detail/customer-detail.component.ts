@@ -10,6 +10,9 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-customer-detail',
@@ -127,13 +130,16 @@ export class CustomerDetailComponent implements OnInit {
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,
         private _location: Location, public dialog: MatDialog,
-        private router: Router) {
+        private router: Router,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService) {
         // this.search_data = this.data.search_data;
-        const customer_label = this.shared_functions.getTerminologyTerm('customer');
+        const customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
         this.customernotes = this.customer_label + ' note';
         this.activated_route.queryParams.subscribe(qparams => {
-            const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            const user = this.groupService.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
             this.subdomain = user.subSector;
             this.source = qparams.source;
@@ -208,7 +214,7 @@ export class CustomerDetailComponent implements OnInit {
         this.activated_route.params.subscribe(
             (params) => {
                 this.customerId = params.id;
-                this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 this.breadcrumbs_init = [
 
                     {
@@ -331,7 +337,7 @@ export class CustomerDetailComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                     this.loading = false;
                 }
             );
@@ -373,7 +379,7 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit() {
         this.breadcrumbs = this.breadcrumbs_init;
         // this.breadcrumbs = [{
-        //     title: this.shared_functions.firstToUpper(this.customer_label) + 's',
+        //     title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
         //     url: 'provider/customers'
         // },
         // {
@@ -479,8 +485,8 @@ export class CustomerDetailComponent implements OnInit {
             this.provider_services.createProviderCustomer(post_data)
                 .subscribe(
                     data => {
-                        this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.shared_functions.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                         const qParams = {};
                         qParams['pid'] = data;
                         if (this.source === 'checkin' || this.source === 'token') {
@@ -521,7 +527,7 @@ export class CustomerDetailComponent implements OnInit {
                         }
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     });
         } else if (this.action === 'edit') {
@@ -548,8 +554,8 @@ export class CustomerDetailComponent implements OnInit {
             this.provider_services.updateProviderCustomer(post_data)
                 .subscribe(
                     data => {
-                        this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.shared_functions.openSnackBar('Updated Successfully');
+                        this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                        this.snackbarService.openSnackBar('Updated Successfully');
                         const qParams = {};
                         qParams['pid'] = data;
                         if (this.source === 'checkin' || this.source === 'token') {
@@ -573,7 +579,7 @@ export class CustomerDetailComponent implements OnInit {
                         }
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.disableButton = false;
                     });
         }
@@ -661,7 +667,7 @@ export class CustomerDetailComponent implements OnInit {
     }
     toCamelCase(word) {
         if (word) {
-            return this.shared_functions.toCamelCase(word);
+            return this.wordProcessor.toCamelCase(word);
         } else {
             return word;
         }
@@ -733,7 +739,7 @@ export class CustomerDetailComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -913,7 +919,7 @@ export class CustomerDetailComponent implements OnInit {
                     this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
                 },
                 () => {
-                    //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+                    //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
                 }
             );
     }

@@ -12,6 +12,7 @@ import { ConsumerWaitlistCheckInPaymentComponent } from '../../../../../shared/m
 import { ConsumerRateServicePopupComponent } from '../../../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { AddInboxMessagesComponent } from '../../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import * as moment from 'moment';
 
 
@@ -69,6 +70,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
     public dialog: MatDialog,
     private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
+    private snackbarService:SnackbarService,
     public shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -138,7 +140,7 @@ export class ConsumerAppointmentHistoryComponent implements OnInit {
           this.viewBill(waitlist, bill_data);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

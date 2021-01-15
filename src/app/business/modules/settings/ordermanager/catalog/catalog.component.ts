@@ -7,6 +7,10 @@ import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-bo
 import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-catalog',
@@ -57,18 +61,22 @@ export class CatalogComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
-        private sharedfunctionObj: SharedFunctions) {
+        private sharedfunctionObj: SharedFunctions,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService) {
         this.emptyMsg = 'No Catalogs found';
     }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.getCatalog();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
-        this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+        this.lStorageService.removeitemfromLocalStorage('selecteditems');
     }
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnDestroy() {
@@ -122,7 +130,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                     this.getCatalog();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         } else {
@@ -132,7 +140,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                     this.getCatalog();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }
@@ -144,7 +152,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                     this.getCatalog();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -168,7 +176,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', catalog.catalogName)
+                'message': this.wordProcessor.getProjectMesssages('ITEM_DELETE').replace('[name]', catalog.catalogName)
             }
         });
         this.removeitemdialogRef.afterClosed().subscribe(result => {
@@ -185,7 +193,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
                     this.getCatalog();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

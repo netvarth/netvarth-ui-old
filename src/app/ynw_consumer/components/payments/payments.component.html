@@ -28,16 +28,18 @@
                             <div class="c-body bill-wrapper">
                                 <div class="card history one section-four no-padding">
                                     <div class="list-outer consumer-pay">
-                                        <div *ngIf="payments.length === 0" class="no-payment">
+                                        <div *ngIf="payments && payments.length === 0" class="no-payment">
                                             No payments
                                         </div>
                                         <div class="listing" *ngFor="let payment of payments; let i = index">
                                             <div class="wrap pointer-cursor" (click)="gotoPayment(payment.id)">
-                                                <div class="td one" style="flex-basis: 10% !important">
+                                                <div class="td one consumer-appthistory" style="flex-basis: 10% !important">
                                                     <span *ngIf="payment.txnType==='Appointment'"
                                                         [matTooltip]="'Appointment'" class="fa appt-icon"></span>
-                                                    <span *ngIf="payment.txnType==='Waitlist'" [matTooltip]="'Waitlist'"
+                                                    <span *ngIf="payment.txnType==='Waitlist' && !payment.showTokenId" [matTooltip]="'Waitlist'"
                                                         class="fa chckn-icon"></span>
+                                                        <span *ngIf="payment.txnType==='Waitlist' && payment.showTokenId" [matTooltip]="'Waitlist'"
+                                                        class="fa token-icon"></span>
                                                     <span *ngIf="payment.txnType==='Donation'" [matTooltip]="'Donation'"
                                                         class="fa donate-icon"></span>
                                                     <span *ngIf="payment.txnType==='Order'" [matTooltip]="'Order'"

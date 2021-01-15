@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-return-payment',
@@ -23,7 +25,9 @@ export class ReturnPaymentComponent implements OnInit {
   constructor(public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService) { }
 
   ngOnInit() {
 
@@ -32,13 +36,13 @@ export class ReturnPaymentComponent implements OnInit {
         this.unq_id = params.id;
         // this.getPaymentStatus();
         if (!this.unq_id) {
-          this.shared_functions.openSnackBar(Messages.API_ERROR, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(Messages.API_ERROR, { 'panelClass': 'snackbarerror' });
           this.router.navigate(['/']);
         } else {
-          const src = this.shared_functions.getitemfromLocalStorage('p_src');
+          const src = this.lStorageService.getitemfromLocalStorage('p_src');
           if (src === 'c_c') {
-            const uuid = this.shared_functions.getitemfromLocalStorage('uuid');
-            const accountId = this.shared_functions.getitemfromLocalStorage('acid');
+            const uuid = this.lStorageService.getitemfromLocalStorage('uuid');
+            const accountId = this.lStorageService.getitemfromLocalStorage('acid');
             const navigationExtras: NavigationExtras = {
               queryParams: {
                 account_id: accountId,
@@ -65,19 +69,19 @@ export class ReturnPaymentComponent implements OnInit {
           this.status = this.status.toLowerCase();
           this.loading = 0;
           if (this.status === 'success') {
-            this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
+            this.snackbarService.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
           } else {
-            this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
           }
           if (this.user_type === 'consumer') {
             this.router.navigate(['consumer']);
           } else if (src === 'p_src') {
-            this.shared_functions.removeitemfromLocalStorage('p_src');
+            this.lStorageService.removeitemfromLocalStorage('p_src');
             this.router.navigate(['provider', 'license']);
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.loading = 0;
         }
       );

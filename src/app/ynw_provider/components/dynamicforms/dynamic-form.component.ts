@@ -7,6 +7,7 @@ import { FormControlService } from './form-control.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import * as moment from 'moment';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 // import { projectConstants } from '../../../app.component';
 
 @Component({
@@ -43,7 +44,8 @@ export class DynamicFormComponent implements OnInit {
 
 
   constructor(private qcs: FormControlService,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor) { }
 
   ngOnInit() {
     const form_ob = this.qcs.toFormGroup(this.questions);
@@ -63,7 +65,7 @@ export class DynamicFormComponent implements OnInit {
         this.api_error = null;
         this.retonFormSubmit.emit(this.form.value);
       } else {
-        this.shared_functions.apiErrorAutoHide(this, Messages.YEAR_MONTH_VALID);
+        this.wordProcessor.apiErrorAutoHide(this, Messages.YEAR_MONTH_VALID);
       }
     } else if (curdate) {
       this.retonFormSubmit.emit(curdate);

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 @Component({
     'selector': 'app-integration-settings',
     'templateUrl': './integration-settings.component.html'
@@ -33,12 +35,14 @@ export class IntegrationSettingsComponent implements OnInit {
     domain;
     constructor(private router: Router,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) {
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.getJaldeeIntegrationSettings();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     }
@@ -62,11 +66,11 @@ export class IntegrationSettingsComponent implements OnInit {
     //     this.provider_services.setJaldeeIntegration(data)
     //         .subscribe(
     //             () => {
-    //                 this.shared_functions.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar('Jaldee.com Integration ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
     //                 this.getJaldeeIntegrationSettings();
     //             },
     //             error => {
-    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //                 this.getJaldeeIntegrationSettings();
     //             }
     //         );
@@ -79,11 +83,11 @@ export class IntegrationSettingsComponent implements OnInit {
         this.provider_services.setJaldeeIntegration(data)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Integration of walk-ins with Jaldee.com ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Integration of walk-ins with Jaldee.com ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getJaldeeIntegrationSettings();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getJaldeeIntegrationSettings();
                 }
             );
@@ -96,11 +100,11 @@ export class IntegrationSettingsComponent implements OnInit {
     //     this.provider_services.setJaldeeIntegration(data)
     //         .subscribe(
     //             () => {
-    //                 this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
     //                 this.getJaldeeIntegrationSettings();
     //             },
     //             error => {
-    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //                 this.getJaldeeIntegrationSettings();
     //             }
     //         );

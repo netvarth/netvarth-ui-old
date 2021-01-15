@@ -6,6 +6,8 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -77,7 +79,9 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   constructor(
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
-    public router: Router) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    public router: Router) { this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist'); }
 
   ngOnInit() {
     if (this.router.url.substr(-8) !== '/bwizard') {
@@ -193,12 +197,12 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
   alertAcknowlege(alert) {
     this.shared_services.acknowledgeAlert(alert.id)
       .subscribe(() => {
-        this.shared_functions.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+        this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
         this.getAlertCount();
         this.getAlerts();
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 

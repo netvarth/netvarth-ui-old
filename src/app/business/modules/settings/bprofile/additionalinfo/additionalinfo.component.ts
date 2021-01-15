@@ -8,6 +8,9 @@ import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provi
 import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-additionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -55,22 +58,24 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     ];
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
         private dialog: MatDialog,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
-        private service: QuestionService
+        private service: QuestionService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
     ) {
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
-        this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.searchquestiontooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
     }
     learnmore_clicked(mod, e) {
         e.stopPropagation();
         this.routerobj.navigate(['/provider/' + this.domain + '/jaldeeonline->' + mod]);
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
@@ -88,11 +93,11 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 data => {
                     this.bProfile = data;
                     this.provider_datastorage.set('bProfile', data);
-                    const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+                    const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
                     // setting the status of the customer from the profile details obtained from the API call
                     loginuserdata.accStatus = this.bProfile.status;
                     // Updating the status (ACTIVE / INACTIVE) in the local storage
-                    this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+                    this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
                     this.serviceSector = data['serviceSector']['displayName'] || null;
                     this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
                     if (this.bProfile['serviceSector'] && this.bProfile['serviceSector']['domain']) {
@@ -267,7 +272,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                     if (str !== '') {
                         str += ', ';
                     }
-                    // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+                    // str += this.wordProcessor.firstToUpper(fld.value[i]);
                     str += this.getFieldDetails(passArray, field.value[i], field.name);
                 }
                 retfield = str;
@@ -302,7 +307,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 if (str !== '') {
                     str += ', ';
                 }
-                str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+                str += this.wordProcessor.firstToUpper(fld.value[i]);
             }
             return str;
         }
@@ -371,7 +376,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 },
                 (error) => {
                     this.getBusinessProfile(); // refresh data ;
-                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -384,7 +389,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 },
                 (error) => {
                     this.getBusinessProfile(); // refresh data ;
-                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

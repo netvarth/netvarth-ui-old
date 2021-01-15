@@ -6,6 +6,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-adjust-queue-delay',
   templateUrl: './adjust-queue-delay.component.html'
@@ -45,9 +46,11 @@ export class AdjustQueueDelayComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    private sharedfunctionObj: SharedFunctions
+    private sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor,
+
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   ngOnInit() {
     this.send_message_cap = Messages.DELAY_SEND_MSG.replace('[customer]', this.customer_label);
@@ -128,20 +131,20 @@ export class AdjustQueueDelayComponent implements OnInit {
       .subscribe(
         () => {
           if ((this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) && form_data.send_message ) {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
+            this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
           this.closePopup('reloadlist');
           } else {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
+            this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.closePopup('reloadlist');
           }
         },
         error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
           this.disableButton = false;
         }
       );
     // } else {
-    //   this.sharedfunctionObj.apiErrorAutoHide(this, this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_TIME_ERROR'));
+    //   this.wordProcessor.apiErrorAutoHide(this, this.wordProcessor.getProjectMesssages('ADD_DELAY_TIME_ERROR'));
     // }
   }
   getQueueDelay(queue_id) {

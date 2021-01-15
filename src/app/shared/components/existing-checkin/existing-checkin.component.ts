@@ -6,6 +6,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../../app.component';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-existing-checkin',
@@ -48,7 +49,8 @@ export class ExistingCheckinComponent implements OnInit {
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
-    public provider_datastorage: CommonDataStorageService
+    public provider_datastorage: CommonDataStorageService,
+    private wordProcessor: WordProcessor
   ) {
 
   }
@@ -63,8 +65,8 @@ export class ExistingCheckinComponent implements OnInit {
       this.checkinLabel = 'Check-In';
     }
     this.provider_datastorage.set('terminologies', this.terminologiesjson);
-    // this.checkinLabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['waitlist']);
-    this.cancelledlabel = this.sharedfunctionObj.firstToUpper(this.terminologiesjson['cancelled']);
+    // this.checkinLabel = this.wordProcessor.firstToUpper(this.terminologiesjson['waitlist']);
+    this.cancelledlabel = this.wordProcessor.firstToUpper(this.terminologiesjson['cancelled']);
     this.dialogRef.backdropClick().subscribe(() => {
       this.dialogRef.close(this.changeOccured);
     });
@@ -95,7 +97,7 @@ export class ExistingCheckinComponent implements OnInit {
         }
       },
         error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
   getDateDisplay(dt) {
@@ -159,18 +161,18 @@ export class ExistingCheckinComponent implements OnInit {
           if (data === 'reloadlist') {
             this.changeOccured = true;
             // this.api_success = Messages.CHECKIN_CANCELLED;
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', this.checkinLabel);
+            this.api_success = this.wordProcessor.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', this.checkinLabel);
             this.api_success = this.api_success.replace('[cancelled]', this.cancelledlabel);
             setTimeout(() => {
               this.api_success = null;
               this.api_error = null;
             }, projectConstants.TIMEOUT_DELAY);
-            // this.api_success = this.sharedfunctionObj.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', obj.place);;
+            // this.api_success = this.wordProcessor.getProjectMesssages('CHECKIN_CANCELLED').replace('[waitlist]', obj.place);;
             this.getExistingCheckinsByLocation(this.data.locId);
           }
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }

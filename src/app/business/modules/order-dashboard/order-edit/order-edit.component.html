@@ -17,7 +17,7 @@
                   <a class="back-btn" (click)="goBack()">
                     <i class="fa fa-arrow-left"></i>
                   </a>
-                  <span class=" mgn-lt-10 amount">Continue shopping</span>
+                  <span class=" mgn-lt-10 amount">Order</span>
                 </h5>
               </div>
               <!-- revamped section -->
@@ -66,12 +66,18 @@
                           Add Notes</i></a>
                       </div> -->
                     </div>
+                    <button class="confm_btn" (click)="addItems()">Add More Items</button>
+
+                    <!-- <div class="bus-item-O" *ngFor="let item of orderItems">
+                      <app-card [item]="item"  [extras]="orderList" ></app-card>
+                  </div> -->
+                  <!-- <button class="confm_btn">Add More Items</button> -->
                   </div>
                 </div>
   
                 <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
                   <!-- Side bar contact -->
-                  <div class="contact-outer">
+                  <!-- <div class="contact-outer">
                     <aside *ngIf="showSide" class="side_nav">
                       <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
                       <div class="addrs">
@@ -88,7 +94,7 @@
   
                       </div>
                     </aside>
-                  </div>
+                  </div> -->
                   <div [class.opacty]="showSide" class="card col-xs-12">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
                       <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
@@ -99,9 +105,9 @@
                         <div class="prov-loc">
                           {{businessDetails.blocation}}
                         </div>
-                        <div class="prov-loc store-cntct" (click)="sidebar()">
+                        <!-- <div class="prov-loc store-cntct" (click)="sidebar()">
                           <i class="fa fa-home store_ico"></i>Store Contact
-                        </div>
+                        </div> -->
                       </div>
                     </div>
   
@@ -145,6 +151,24 @@
                         </span>
                       </div>
                     </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey" *ngIf="!storeChecked">
+                        <div class="oder-sumary-txt"  *ngIf="orderDetails.homeDeliveryAddress" >
+                             Address
+                        </div>
+                        <!-- <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div> -->
+                        <div *ngIf="orderDetails.homeDeliveryAddress"> 
+                            <span class="address" [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
+                        </div>
+                      <div class="oder-sumary-txt" *ngIf="!orderDetails.homeDeliveryAddress"  (click)="addAddress()">
+                        Add Address
+                      </div>                     
+                      <div *ngIf="selectedAddress"> 
+                          <span class="address" [innerHTML]="this.selectedAddress | nl2br"></span>
+                          <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div>
+
+                      </div>
+                    </div>
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">
                       <div class="oder-sumary-txt">Order Summary</div>
                       <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
@@ -167,7 +191,7 @@
                       <div class="flex1">SUB TOTAL</div>
                       <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                     </div>
-                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Confirm Order</button>
+                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Update Order</button>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
@@ -19,7 +20,8 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInConsumerNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public sharedfunctionObj: SharedFunctions
+    public sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor
 
   ) {
     console.log(data);
@@ -34,7 +36,7 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
         this.noteTitle = 'Notes';
       }
     }
-    this.consumer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {

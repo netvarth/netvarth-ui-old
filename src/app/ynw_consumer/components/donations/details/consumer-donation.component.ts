@@ -19,6 +19,10 @@ import { WindowRefService } from '../../../../shared/services/windowRef.service'
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
@@ -218,6 +222,10 @@ export class ConsumerDonationComponent implements OnInit {
         public router: Router,
         public route: ActivatedRoute,
         public provider_services: ProviderServices,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
         public datastorage: CommonDataStorageService,
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
@@ -237,8 +245,8 @@ export class ConsumerDonationComponent implements OnInit {
     }
     ngOnInit() {
         this.getServicebyLocationId(this.sel_loc);
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-        const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         // this.api_loading = false;
         if (activeUser) {
             this.customer_data = activeUser;
@@ -288,7 +296,7 @@ export class ConsumerDonationComponent implements OnInit {
     }
     getWaitlistMgr() {
         const _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise<void>(function (resolve, reject) {
             _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
@@ -454,7 +462,7 @@ export class ConsumerDonationComponent implements OnInit {
         if (this.sel_ser) {
 
         } else {
-            this.sharedFunctionobj.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
         let paymentWay;
@@ -466,7 +474,7 @@ export class ConsumerDonationComponent implements OnInit {
         if (this.sel_ser) {
 
         } else {
-            this.sharedFunctionobj.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
         let paymentWay;
@@ -507,7 +515,7 @@ export class ConsumerDonationComponent implements OnInit {
             console.log(post_Data);
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
-            this.sharedFunctionobj.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }
     addDonationConsumer(post_Data, paymentWay) {
@@ -523,9 +531,9 @@ export class ConsumerDonationComponent implements OnInit {
                     'source': 'Desktop',
                     'purpose': 'donation'
                 };
-                this.sharedFunctionobj.setitemonLocalStorage('uuid', data['uid']);
-                this.sharedFunctionobj.setitemonLocalStorage('acid', this.account_id);
-                this.sharedFunctionobj.setitemonLocalStorage('p_src', 'c_d');
+                this.lStorageService.setitemonLocalStorage('uuid', data['uid']);
+                this.lStorageService.setitemonLocalStorage('acid', this.account_id);
+                this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
                 this.shared_services.consumerPayment(payInfo)
                     .subscribe((pData: any) => {
                         this.checkIn_type = 'donations';
@@ -536,7 +544,7 @@ export class ConsumerDonationComponent implements OnInit {
                         } else {
                             if (pData['response']) {
                                 this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                                 setTimeout(() => {
                                     if (paymentWay === 'DC') {
                                         this.document.getElementById('payuform').submit();
@@ -545,16 +553,16 @@ export class ConsumerDonationComponent implements OnInit {
                                     }
                                 }, 2000);
                             } else {
-                                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                             }
                         }
                     },
                         error => {
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     paywithRazorpay(pData: any) {
@@ -578,14 +586,14 @@ export class ConsumerDonationComponent implements OnInit {
             const stat = this.validateEmail(this.payEmail);
             if (!stat) {
                 this.emailerror = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         if (this.payEmail1) {
             const stat1 = this.validateEmail(this.payEmail1);
             if (!stat1) {
                 this.email1error = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         // return new Promise((resolve) => {
@@ -609,12 +617,12 @@ export class ConsumerDonationComponent implements OnInit {
                         },
                         error => {
                             this.api_error = error.error;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
         } else {
             this.email1error = 'Email and Re-entered Email do not match';
-            this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
     }
     goBack() {
@@ -684,11 +692,11 @@ export class ConsumerDonationComponent implements OnInit {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
 
                     } else if (this.maxsize === 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
                     }
                 }
             }
@@ -776,7 +784,7 @@ export class ConsumerDonationComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
@@ -784,12 +792,12 @@ export class ConsumerDonationComponent implements OnInit {
             },
                 error => {
                     // this.api_error = error.error;
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {
             // this.api_error = derror;
-            this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
     handleNote() {
@@ -851,7 +859,7 @@ export class ConsumerDonationComponent implements OnInit {
                 () => {
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -890,7 +898,7 @@ export class ConsumerDonationComponent implements OnInit {
                             this.getbusinessprofiledetails_json('terminologies', true);
                         } else {
                             this.datastorage.set('terminologies', this.terminologiesjson);
-                            this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                            this.wordProcessor.setTerminologies(this.terminologiesjson);
                         }
                     }
                     this.api_loading1 = false;
@@ -915,7 +923,7 @@ export class ConsumerDonationComponent implements OnInit {
                     case 'terminologies':
                         this.terminologiesjson = res;
                         this.datastorage.set('terminologies', this.terminologiesjson);
-                        this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                        this.wordProcessor.setTerminologies(this.terminologiesjson);
                         break;
                     case 'businessProfile':
                         this.businessjson = res;

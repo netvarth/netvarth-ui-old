@@ -11,6 +11,8 @@ import { ProviderBprofileSearchGalleryComponent } from '../../../../../ynw_provi
 import { Router } from '@angular/router';
 import { GalleryService } from '../../../../../shared/modules/gallery/galery-service';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-media',
     templateUrl: './media.component.html'
@@ -79,10 +81,12 @@ export class MediaComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private galleryService: GalleryService,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService
     ) { }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
         this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
@@ -96,12 +100,12 @@ export class MediaComponent implements OnInit, OnDestroy {
                 this.provider_services.uploadGalleryImages(input.value)
                     .subscribe(
                         () => {
-                            this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+                            this.snackbarService.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                             this.getGalleryImages();
                         },
                         error => {
-                            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );

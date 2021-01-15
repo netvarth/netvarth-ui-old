@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,14 +15,14 @@ export class DashboardComponent implements OnInit {
     }
   ];
   constructor(
-    private shared_functions:SharedFunctions,
-    private router :Router
+    private router :Router,
+    private groupService: GroupStorageService
   ) {
    
    }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreOptions = { 
       'show_learnmore': true, 'scrollkey': 'dashboard-home',

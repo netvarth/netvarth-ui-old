@@ -11,6 +11,8 @@ import { SharedServices } from '../../../../../../../../shared/services/shared-s
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-addservice',
@@ -80,9 +82,11 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         public servicesService: ServicesService,
         public shared_service: SharedServices,
         public provider_services: ProviderServices,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
         public router: Router) {
-        this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.serviceSubscription = this.servicesService.initService.subscribe(
             (serviceParams: any) => {
                 if (serviceParams) {
@@ -208,7 +212,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
                     }
                 },
                 error => {
-                    this.sharedFunctons.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -250,7 +254,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
     }
     taxapplicableChange() {
         if (!this.taxsettings || (this.taxsettings && this.taxsettings.taxPercentage <= 0)) {
-            this.sharedFunctons.openSnackBar(this.sharedFunctons.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
             this.serviceForm.get('taxable').setValue(false);
         }
     }
@@ -260,7 +264,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         } else {
             if (this.serviceForm.get('isPrePayment').value === true) {
                 if (!this.paymentsettings.onlinePayment) {
-                    this.sharedFunctons.openSnackBar(Messages.SERVICE_PRE_PAY_ERROR, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.SERVICE_PRE_PAY_ERROR, { 'panelClass': 'snackbarerror' });
                     this.serviceForm.get('isPrePayment').setValue(false);
                     return false;
                 }
@@ -330,7 +334,7 @@ export class AddServiceComponent implements OnInit, OnDestroy {
         if (this.locationExists) {
             this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
         } else {
-            this.sharedFunctons.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
 

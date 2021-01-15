@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-add-customer',
@@ -44,10 +46,12 @@ export class AddProviderCustomerComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.search_data = this.data.search_data;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
@@ -99,14 +103,14 @@ export class AddProviderCustomerComponent implements OnInit {
     this.provider_services.createProviderCustomer(post_data)
       .subscribe(
         data => {
-          this.shared_functions.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+          this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
           const user_data = { 'id': data, 'userProfile': post_data.userProfile };
           setTimeout(() => {
             this.dialogRef.close({ message: 'reloadlist', data: user_data });
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         });
   }
@@ -120,7 +124,7 @@ export class AddProviderCustomerComponent implements OnInit {
   }
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }

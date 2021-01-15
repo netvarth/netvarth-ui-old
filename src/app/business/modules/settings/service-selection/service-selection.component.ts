@@ -8,6 +8,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SelectionService } from '../../../../shared/services/selectionService';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-services-selection',
@@ -40,10 +42,12 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
         private location: Location,
         private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
-        private selectionService: SelectionService
+        private selectionService: SelectionService,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService
     ) {
         console.log('loading');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         if (this.accountType !== 'BRANCH') {
             this.service_displayedColumns = ['select', 'serviceName', 'status'];
@@ -131,7 +135,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
         } else {
             filter1 = { 'serviceType-neq': 'donationService' };
         }
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             this.provider_services.getServicesList(filter1)
                 .subscribe(
                     (data: any) => {
@@ -155,7 +159,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
     getSelectedServices() {
         this.services_selected = this.selection.selected;
         if (this.selection.selected.length === 0) {
-            this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
         } else {
             if (this.service_dataSource.filteredData.length < this.selection.selected.length) {
                 this.services_selected = this.service_dataSource.filteredData;

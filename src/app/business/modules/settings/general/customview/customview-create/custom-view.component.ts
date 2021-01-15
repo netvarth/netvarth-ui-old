@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Messages } from '../../../../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-custom-view',
@@ -75,7 +78,10 @@ export class CustomViewComponent implements OnInit {
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         private activated_route: ActivatedRoute,
-        private provider_services: ProviderServices) {
+        private provider_services: ProviderServices,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService) {
         this.activated_route.queryParams.subscribe((qparams) => {
             this.loading = true;
             this.viewId = qparams.id;
@@ -86,11 +92,11 @@ export class CustomViewComponent implements OnInit {
             this.getProviderServices();
             this.getAccountQs();
             this.getAppointmentSchedules();
-            this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+            this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         });
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.account_type = user.accountType;
         this.deptMultiFilterCtrl.valueChanges
             .pipe(takeUntil(this.onDestroy))
@@ -349,7 +355,7 @@ export class CustomViewComponent implements OnInit {
                     // }
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -568,7 +574,7 @@ export class CustomViewComponent implements OnInit {
                     this.getUsers();
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                     this.isDepartments = false;
                 }
             );
@@ -723,21 +729,21 @@ export class CustomViewComponent implements OnInit {
         if (this.viewId) {
             this.provider_services.updateCustomView(this.viewId, customViewInput).subscribe(
                 (data) => {
-                    this.shared_functions.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Custom  View Updated Successfully', { 'panelclass': 'snackbarerror' });
                     this.router.navigate(['provider', 'settings', 'general', 'customview']);
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         } else {
             this.provider_services.createCustomView(customViewInput).subscribe(
                 (data) => {
-                    this.shared_functions.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Custom  View Created Successfully', { 'panelclass': 'snackbarerror' });
                     this.router.navigate(['provider', 'settings', 'general', 'customview']);
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }

@@ -12,6 +12,10 @@ import { FormMessageDisplayService } from '../../form-message-display/form-messa
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-providersignup',
@@ -151,7 +155,11 @@ export class ProvidersignupComponent implements OnInit {
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     private router: Router, private provider_services: ProviderServices,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) { }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
@@ -159,8 +167,8 @@ export class ProvidersignupComponent implements OnInit {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
     this.active_step = 0;
-    this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;
     }
@@ -168,7 +176,7 @@ export class ProvidersignupComponent implements OnInit {
       this.fname = this.ynwUser.firstName;
       this.lname = this.ynwUser.lastName;
     }
-    this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
+    this.lStorageService.removeitemfromLocalStorage('ynw-createprov');
     this.moreParams = this.data.moreParams;
     this.heading = 'Service Provider Sign Up';
     if (this.data.moreOptions === undefined) {
@@ -288,7 +296,7 @@ export class ProvidersignupComponent implements OnInit {
       .subscribe(
         () => {
           this.actionstarted = false;
-          this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
+          this.lStorageService.setitemonLocalStorage('unClaimAccount', false);
           this.createForm();
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
@@ -302,9 +310,9 @@ export class ProvidersignupComponent implements OnInit {
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
           if (user_details.userProfile.email) {
-            this.shared_functions.openSnackBar('OTP is sent to Your email id');
+            this.snackbarService.openSnackBar('OTP is sent to Your email id');
           } else if (user_details.userProfile.primaryMobileNo) {
-            this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+            this.snackbarService.openSnackBar('OTP is sent to Your Mobile Number');
           }
           if (!source) {
             this.createpasswordform();
@@ -318,9 +326,9 @@ export class ProvidersignupComponent implements OnInit {
         },
         error => {
           this.actionstarted = false;
-          if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
+          if (this.lStorageService.getitemfromLocalStorage('unClaimAccount')) {
           } else {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         }
       );
@@ -343,7 +351,7 @@ export class ProvidersignupComponent implements OnInit {
           this.signUpApiProvider(this.user_details);
         });
       } else {
-        this.shared_functions.openSnackBar('Please enter Sales Partner Id/ Phone', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please enter Sales Partner Id/ Phone', { 'panelClass': 'snackbarerror' });
       }
     } else {
       this.signUpApiProvider(this.user_details);
@@ -378,7 +386,7 @@ export class ProvidersignupComponent implements OnInit {
               }
             },
             (error) => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               this.scfound = false;
               this.scCode = null;
             }
@@ -390,18 +398,18 @@ export class ProvidersignupComponent implements OnInit {
   signUpFinished(login_data) {
     if (this.ynw_credentials != null) {
       this.shared_functions.doLogout().then(() => {
-        this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+        this.lStorageService.setitemonLocalStorage('new_provider', 'true');
         this.shared_functions.providerLogin(login_data);
         const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-        this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-        this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+        this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+        this.lStorageService.setitemonLocalStorage('newProvider', 'true');
       });
     } else {
-      this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+      this.lStorageService.setitemonLocalStorage('new_provider', 'true');
       this.shared_functions.providerLogin(login_data);
       const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-      this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-      this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+      this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+      this.lStorageService.setitemonLocalStorage('newProvider', 'true');
     }
   }
   setPassword() {
@@ -426,7 +434,7 @@ export class ProvidersignupComponent implements OnInit {
           this.actionstarted = false;
           this.joinClicked = false;
           this.api_loading = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -473,7 +481,7 @@ export class ProvidersignupComponent implements OnInit {
           error => {
             this.actionstarted = false;
             // this.joinClicked = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -493,7 +501,7 @@ export class ProvidersignupComponent implements OnInit {
         (error) => {
           this.joinClicked = false;
           this.api_loading = false;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
       // },
       //   (error) => {
@@ -507,7 +515,7 @@ export class ProvidersignupComponent implements OnInit {
     // } else {
     //   this.joinClicked = false;
     //   this.api_loading = false;
-    //   this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    //   this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
     // }
   }
   resetApiErrors() {
@@ -550,7 +558,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }
@@ -570,7 +578,7 @@ export class ProvidersignupComponent implements OnInit {
   onCancelPass() {
     if (this.step === 4) {
       this.step = 5;
-      this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
+      this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
   goBusinessClicked() {
@@ -630,7 +638,7 @@ export class ProvidersignupComponent implements OnInit {
     this.checkAccountExists().then(
       (accountExists) => {
         if (accountExists) {
-          this.shared_functions.openSnackBar('Alert! The mobile number you have entered is already registered with Jaldee. Try again with different number.', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Alert! The mobile number you have entered is already registered with Jaldee. Try again with different number.', { 'panelClass': 'snackbarerror' });
           return;
         } else {
           let userProfile = {
@@ -660,14 +668,14 @@ export class ProvidersignupComponent implements OnInit {
           // const fname = userProfile.firstName.trim();
           // const lname = userProfile.lastName.trim();
           // if (fname === '') {
-          //   this.shared_functions.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
+          //   this.snackbarService.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
           //   if (document.getElementById('first_name')) {
           //     document.getElementById('first_name').focus();
           //   }
           //   return;
           // }
           // if (lname === '') {
-          //   this.shared_functions.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
+          //   this.snackbarService.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
           //   if (document.getElementById('last_name')) {
           //     document.getElementById('last_name').focus();
           //   }
@@ -767,7 +775,7 @@ export class ProvidersignupComponent implements OnInit {
   //     this.user_details['licPkgId'] = 9;
   //     this.active_step = 2;
   //   } else {
-  //     this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
+  //     this.snackbarService.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
   //     return;
   //   }
   // }

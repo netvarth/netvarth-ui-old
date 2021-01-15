@@ -9,6 +9,9 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { AddproviderAddonComponent } from '../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 
 @Component({
@@ -97,9 +100,12 @@ export class ShareRxComponent implements OnInit {
     private fb: FormBuilder,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
-    private medicalService: MedicalrecordService
+    private medicalService: MedicalrecordService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_user_Id = this.medicalService.getDoctorId();
     this.mrId = this.data.mrId;
     this.type = this.data.type;
@@ -118,7 +124,7 @@ export class ShareRxComponent implements OnInit {
     this.createForm();
     this.getMrprescription();
     this.getBussinessProfileApi();
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType === 'BRANCH') {
       this.getBusinessProfile();
@@ -178,7 +184,7 @@ export class ShareRxComponent implements OnInit {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
         if (!result) {
-          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID');
+          this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID');
           // 'Please enter a valid mobile phone number';
           this.disable = false;
           this.sharebtnloading = false;
@@ -187,7 +193,7 @@ export class ShareRxComponent implements OnInit {
         const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
         const result1 = pattern1.test(curphone);
         if (!result1) {
-          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS');
+          this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS');
           // 'Mobile number should have 10 digits';
           this.disable = false;
           this.sharebtnloading = false;
@@ -199,7 +205,7 @@ export class ShareRxComponent implements OnInit {
         const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
         const result2 = pattern2.test(curemail);
         if (!result2) {
-          this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID');
+          this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID');
           // 'Please enter a valid email id';
           this.disable = false;
           this.sharebtnloading = false;
@@ -230,11 +236,11 @@ export class ShareRxComponent implements OnInit {
         }
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
-            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.snackbarService.openSnackBar('Prescription shared successfully');
             this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
             this.sharebtnloading = false;
           });
@@ -251,11 +257,11 @@ export class ShareRxComponent implements OnInit {
         };
         this.provider_services.shareRx(this.mrId, passData)
           .subscribe((data) => {
-            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.snackbarService.openSnackBar('Prescription shared successfully');
             this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
             this.sharebtnloading = false;
           });
@@ -275,11 +281,11 @@ export class ShareRxComponent implements OnInit {
         }
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
-            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.snackbarService.openSnackBar('Prescription shared successfully');
             this.sharebtnloading = false;
             this.dialogRef.close();
           }, error => {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
             this.sharebtnloading = false;
           });
@@ -296,11 +302,11 @@ export class ShareRxComponent implements OnInit {
         };
         this.provider_services.shareRx(this.mrId, passData)
           .subscribe((data) => {
-            this.shared_functions.openSnackBar('Prescription shared successfully');
+            this.snackbarService.openSnackBar('Prescription shared successfully');
             this.dialogRef.close();
             this.sharebtnloading = false;
           }, error => {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             this.disable = false;
             this.sharebtnloading = false;
           });
@@ -343,7 +349,7 @@ export class ShareRxComponent implements OnInit {
           this.getProviderLogo();
         },
           error => {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -369,7 +375,7 @@ export class ShareRxComponent implements OnInit {
           console.log(this.signurl);
         },
           error => {
-            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -442,7 +448,7 @@ export class ShareRxComponent implements OnInit {
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
   } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
           width: '50%',

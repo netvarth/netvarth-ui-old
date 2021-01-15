@@ -25,14 +25,17 @@
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-bt-20">
                 <div class="mgn-up-20 bold"> Video Calling Modes</div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
+                        <div class="tele-connect textcenter">WhatsApp</div>
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
                         <div class="tele-connect textcenter" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('GoogleMeet')">
+                        <div class="tele-connect textcenter">Google Meet</div>
                         <span class="meet-icon" aria-hidden="true"></span>
                         <div class="tele-connect textcenter mgn-up-25" [class.greenc]="getName('GoogleMeet') === 'Connected'" [class.red]="getName('GoogleMeet') !== 'Connected'">{{getName('GoogleMeet')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Zoom')">
+                        <div class="tele-connect textcenter">Zoom</div>
                         <span class="zoom-icon" aria-hidden="true"></span>
                         <div class="tele-connect textcenter mgn-up-10" [class.greenc]="getName('Zoom') === 'Connected'" [class.red]="getName('Zoom') !== 'Connected'">{{getName('Zoom')}}</div>
                     </div>
@@ -40,10 +43,12 @@
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                 <div class="mgn-up-20 bold"> Voice Calling Modes</div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('WhatsApp')">
+                        <div class="tele-connect textcenter">WhatsApp</div>
                         <span class="wtsapaud-icon" aria-hidden="true"></span>
                         <div class="tele-connect textcenter" [class.greenc]="getName('WhatsApp') === 'Connected'" [class.red]="getName('WhatsApp') !== 'Connected'">{{getName('WhatsApp')}}</div>
                     </div>
                     <div class="notification-box no-padding pointer-cursor tele-box" (click)="showPopup('Phone')">
+                        <div class="tele-connect textcenter">Phone</div>
                         <span class="phon-icon" aria-hidden="true"></span>
                         <div class="tele-connect textcenter mgn-up-30" [class.greenc]="getName('Phone') === 'Connected'" [class.red]="getName('Phone') !== 'Connected'">{{getName('Phone')}}</div>
                     </div>

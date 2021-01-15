@@ -4,6 +4,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { projectConstants } from '../../../../app.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-apply-label',
@@ -41,6 +42,7 @@ export class ApplyLabelComponent implements OnInit {
     // dataParams;
     constructor(public activateroute: ActivatedRoute,
         public provider_services: ProviderServices,
+        private wordProcessor: WordProcessor,
         public shared_functions: SharedFunctions,
         @Inject(MAT_DIALOG_DATA) public checkin: any,
         public dialogRef: MatDialogRef<ApplyLabelComponent>,) {
@@ -86,7 +88,7 @@ export class ApplyLabelComponent implements OnInit {
 
     //     },
     //         error => {
-    //             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //             this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
     //         });
     // }
     // deleteLabel(label) {
@@ -94,7 +96,7 @@ export class ApplyLabelComponent implements OnInit {
 
     //     },
     //         error => {
-    //             this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //             this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
     //         });
     // }
     // changeLabelvalue(labelname, value) {
@@ -161,7 +163,7 @@ export class ApplyLabelComponent implements OnInit {
                         }, 1000);
                     },
                     error => {
-                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                        this.api_error['error'] = this.wordProcessor.getProjectErrorMesssages(error);
                     });
             } else {
                 // this.dialogRef.close({ label: this.label, value: this.value, message: 'newvalue' });
@@ -191,8 +193,8 @@ export class ApplyLabelComponent implements OnInit {
                         }, projectConstants.TIMEOUT_DELAY);
                     },
                     error => {
-                        // this.shared_functions.apiErrorAutoHide(this, error);
-                        this.api_error['error'] = this.shared_functions.getProjectErrorMesssages(error);
+                        // this.wordProcessor.apiErrorAutoHide(this, error);
+                        this.api_error['error'] = this.wordProcessor.getProjectErrorMesssages(error);
                     });
             }
         }

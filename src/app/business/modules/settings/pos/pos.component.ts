@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-pos',
@@ -43,16 +45,18 @@ export class POSComponent implements OnInit {
   // jaldee_pay_cap: string;
   breadcrumb_moreoptions: any = [];
   constructor(private router: Router,
-    private shared_functions: SharedFunctions,
     private routerobj: Router,
-    private provider_services: ProviderServices) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private provider_services: ProviderServices,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     // this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     // this.getpaymentDetails();
@@ -110,25 +114,25 @@ export class POSComponent implements OnInit {
   //   (event.checked) ? status = 'enable' : status = 'disable';
   //   this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
   //     this.getpaymentDetails();
-  //     this.shared_functions.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+  //     this.snackbarService.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
   //   },
   //     error => {
   //       this.getpaymentDetails();
-  //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //     });
   // }
   gotoItems() {
     if (this.noitemError) {
       this.router.navigate(['provider', 'settings', 'pos', 'items']);
     } else {
-      this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
     }
   }
   gotoDiscounts() {
     if (this.nodiscountError) {
       this.router.navigate(['provider', 'settings', 'pos', 'discount']);
     } else {
-      this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
     }
   }
   gotoCoupons() {
@@ -144,10 +148,10 @@ export class POSComponent implements OnInit {
     const value = (event.checked) ? true : false;
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
-      this.shared_functions.openSnackBar('Billing settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Billing settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getPOSSettings();
     }, (error) => {
-      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       this.getPOSSettings();
     });
   }
