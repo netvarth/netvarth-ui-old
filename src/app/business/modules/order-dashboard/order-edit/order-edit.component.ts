@@ -11,6 +11,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { OrderItemsComponent } from '../order-items/order-items.component';
 
 @Component({
   selector: 'app-order-edit',
@@ -451,7 +452,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
       };
       this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      // this.router.navigate(['order', 'shoppingcart', 'checkout']);
     }
 
   }
@@ -721,4 +722,17 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   closeNav() {
     this.showSide = false;
   }
+  addItems(){
+  const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+    disableClose: true,
+    data: {
+    
+    }
+  });
+  additemsdialogRef.afterClosed().subscribe(data => {
+    
+  });
+}
 }

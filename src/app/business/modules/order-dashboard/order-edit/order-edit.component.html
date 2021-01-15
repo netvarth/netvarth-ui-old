@@ -66,11 +66,11 @@
                           Add Notes</i></a>
                       </div> -->
                     </div>
-                    <button class="confm_btn">Add More Items</button>
+                    <button class="confm_btn" (click)="addItems()">Add More Items</button>
 
-                    <div class="bus-item-O" *ngFor="let item of orderItems">
+                    <!-- <div class="bus-item-O" *ngFor="let item of orderItems">
                       <app-card [item]="item"  [extras]="orderList" ></app-card>
-                  </div>
+                  </div> -->
                   <!-- <button class="confm_btn">Add More Items</button> -->
                   </div>
                 </div>
