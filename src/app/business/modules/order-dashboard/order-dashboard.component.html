@@ -153,7 +153,7 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
                   *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
@@ -298,7 +298,7 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
                   *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
@@ -442,7 +442,7 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
                     *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
