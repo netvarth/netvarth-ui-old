@@ -1109,6 +1109,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.showmoreDesc = true;
     }
   }
+
   showSpec() {
     if (this.showmoreSpec) {
       this.showmoreSpec = false;
