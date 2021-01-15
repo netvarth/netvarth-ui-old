@@ -14,6 +14,9 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { AddcatalogimageComponent } from '../addcatalogimage/addcatalogimage.component';
 import { TimewindowPopupComponent } from '../timewindowpopup/timewindowpopup.component';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -21,7 +24,7 @@ import { TimewindowPopupComponent } from '../timewindowpopup/timewindowpopup.com
 })
 export class CatalogdetailComponent implements OnInit {
     catalog_id;
-    rupee_symbol = '₹';
+    rupee_symbol = 'â‚¹';
     item_hi_cap = Messages.ITEM_HI_CAP;
     item_name_cap = Messages.ITEM_NAME_CAP;
     short_desc_cap = Messages.SHORT_DESC_CAP;
@@ -195,6 +198,9 @@ export class CatalogdetailComponent implements OnInit {
         public dialog: MatDialog,
         private fb: FormBuilder,
         private activated_route: ActivatedRoute,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
         public fed_service: FormMessageDisplayService) {
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -202,13 +208,13 @@ export class CatalogdetailComponent implements OnInit {
         this.dend_timestore = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.dstart_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
-        this.seletedCatalogItems = this.sharedfunctionObj.getitemfromLocalStorage('selecteditems');
+        this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         console.log(this.seletedCatalogItems);
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.isFromadd = qParams.isFrom;
                 if (this.isFromadd) {
-                    this.prefillData = this.sharedfunctionObj.getitemfromLocalStorage('prefilldata');
+                    this.prefillData = this.lStorageService.getitemfromLocalStorage('prefilldata');
                     //  this.prefillData = this.provider_services.getCatalogPrefiledDetails();
                     console.log(this.prefillData);
                 }
@@ -216,7 +222,7 @@ export class CatalogdetailComponent implements OnInit {
         this.activated_route.params.subscribe(
             (params) => {
                 this.catalog_id = params.id;
-                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.catalog_id) {
                     if (this.catalog_id === 'add') {
                         this.action = 'add';
@@ -234,7 +240,7 @@ export class CatalogdetailComponent implements OnInit {
                                         if (this.catalog.catalogItem) {
                                             this.catalogItems = this.catalog.catalogItem;
                                             console.log(this.catalogItems);
-                                           // this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.catalogItems);
+                                           // this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItems);
                                         }
                                         if (this.action === 'edit') {
                                             this.createForm();
@@ -247,7 +253,7 @@ export class CatalogdetailComponent implements OnInit {
                                         //     if (this.catalog.catalogItem) {
                                         //         this.seletedCatalogItems = this.catalog.catalogItem;
                                         //         console.log(this.seletedCatalogItems);
-                                        //         this.sharedfunctionObj.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+                                        //         this.lStorageService.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
                                         //     }
                                         // }
                                     }
@@ -273,7 +279,7 @@ export class CatalogdetailComponent implements OnInit {
             this.item_count = this.item_list.length;
           },
             (error) => {
-                this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
       }
 
@@ -451,7 +457,7 @@ export class CatalogdetailComponent implements OnInit {
             'imagebase64': seltedimgbase || []
         };
         console.log(postdata);
-        this.sharedfunctionObj.setitemonLocalStorage('prefilldata', postdata);
+        this.lStorageService.setitemonLocalStorage('prefilldata', postdata);
         //  this.provider_services.setCatalogPrefilledDetails(postdata);
     }
 
@@ -1301,7 +1307,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         // }
         // if (this.selday_arr.length === 0) {
         //     const error = 'Please select the days';
-        //     this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         let endDate;
@@ -1313,12 +1319,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         }
         // check whether the start and end times are selected
         // if (!this.dstart_time || !this.dend_time) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // // today
         // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // const curdate = new Date();
@@ -1339,12 +1345,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         console.log(this.selday_arrstorepickup.length);
         if (this.storepickupStat && this.selday_arrstorepickup.length === 0) {
             const error = 'Please select the storepickup days';
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         if (this.storepickupStat && this.storetimewindow_list.length === 0) {
             const error = 'Please add the storepickup timewindow';
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         let storeendDate;
@@ -1357,12 +1363,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
 
         // check whether the start and end times are selected
         // if (!this.dstart_timestore || !this.dend_timestore) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // today
         // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timestore) > this.sharedfunctionObj.getminutesOfDay(this.dend_timestore)) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // const curdatestore = new Date();
@@ -1381,12 +1387,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         }
         if (this.homedeliveryStat && this.selday_arrhomedelivery.length === 0) {
             const error = 'Please select the homedelivery days';
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         if (this.homedeliveryStat && this.hometimewindow_list.length === 0) {
             const error = 'Please add the homedelivery timewindow';
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         let homeendDate;
@@ -1398,12 +1404,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         }
         // check whether the start and end times are selected
         // if (!this.dstart_timehome || !this.dend_timehome) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // today
         // if (this.sharedfunctionObj.getminutesOfDay(this.dstart_timehome) > this.sharedfunctionObj.getminutesOfDay(this.dend_timehome)) {
-        //     this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        //     this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // const curdatehome = new Date();
@@ -1416,7 +1422,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         // const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
-                this.sharedfunctionObj.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }
@@ -1526,8 +1532,8 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         this.provider_services.addCatalog(post_data)
             .subscribe(
                 (data) => {
-                   // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_CREATED'));
-                    this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
+                   // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_CREATED'));
+                    this.lStorageService.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
                             this.addcatalogimagedialogRef = this.dialog.open(AddcatalogimageComponent, {
                                 width: '50%',
@@ -1545,7 +1551,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                               });
                },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -1559,13 +1565,13 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         this.provider_services.editCatalog(post_itemdata)
             .subscribe(
                 () => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CATALOG_UPDATED'));
-                    this.sharedfunctionObj.removeitemfromLocalStorage('selecteditems');
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_UPDATED'));
+                    this.lStorageService.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
                     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -1645,9 +1651,9 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             // this.sharedfunctionObj.sendMessage({ 'ttype': 'hide-back' });
         } else {
             if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
-                this.sharedfunctionObj.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else if (this.postInfoEnabled && this.postInfoTitle.trim() === '') {
-                this.sharedfunctionObj.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else {
                 this.showInfo = false;
                 // this.sharedfunctionObj.sendMessage({ 'ttype': 'show-back' });
@@ -1721,11 +1727,11 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                 }
             );
             this.api_loading = false;
-            this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+            this.snackbarService.openSnackBar('Image uploaded successfully');
         },
             error => {
                 this.api_loading = false;
-                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
     }
 
@@ -1750,9 +1756,9 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         if (input) {
             for (const file of input) {
                 if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
-                    this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
                 } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-                    this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.selectedMessage.files.push(file);
                     console.log(this.selectedMessage.files);
@@ -1803,7 +1809,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                             this.image_list_popup.splice(index, 1);
                         },
                             error => {
-                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                             });
                 } else {
                     this.selectedMessage.files.splice(index, 1);

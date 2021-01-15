@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="td td4" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">
                                         <div class="result">
-                                            {{ (message.msg.length>30)? (shared_functions.firstToUpper(message.msg) | slice:0:39)+'.....':shared_functions.firstToUpper(message.msg) }}
+                                            {{ (message.msg.length>30)? (wordProcessor.firstToUpper(message.msg) | slice:0:39)+'.....':wordProcessor.firstToUpper(message.msg) }}
                                         </div>
                                     </div>
                                     <div class="td td1" [class.inbox-unreadmsg]="!message.read && isRecievedOrSent(message) === 'receive'">

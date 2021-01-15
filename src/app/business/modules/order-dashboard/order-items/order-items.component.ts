@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 
@@ -20,11 +21,12 @@ export class OrderItemsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
-    public sharedFunctionobj: SharedFunctions
+    public sharedFunctionobj: SharedFunctions,
+    private groupService: GroupStorageService
     ) { }
 
   ngOnInit() {
-    const cuser = this.shared_functions.getitemFromGroupStorage('accountId');
+    const cuser = this.groupService.getitemFromGroupStorage('accountId');
     this.account_id = cuser;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     console.log(this.orderList);

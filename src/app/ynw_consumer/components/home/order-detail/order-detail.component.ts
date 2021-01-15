@@ -372,9 +372,9 @@ buttons: [
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {
-      return this.shared_functions.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+      return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
     } else {
-      return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+      return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
     }
   }
   generateQR() {

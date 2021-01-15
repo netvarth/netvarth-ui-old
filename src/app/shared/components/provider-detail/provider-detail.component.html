@@ -175,7 +175,7 @@
                                       <ng-container>
                                           <div class="question-header">{{vfield.displayName}}</div>
                                           <div class="question-value1" *ngIf="vfield.type!= 'object'"
-                                              [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
+                                              [innerHTML]="wordProcessor.firstToUpper(vfield.value) | nl2br">
                                           </div>
                                           <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                               <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">

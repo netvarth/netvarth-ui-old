@@ -59,7 +59,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private routerobj: Router,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor,
+    public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
