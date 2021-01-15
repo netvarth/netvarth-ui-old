@@ -272,7 +272,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private locationobj: Location,
     private titleService: Title,
     private metaService: Meta,
-    private LStorageService: LocalStorageService,
+    private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService
@@ -284,7 +284,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
   getDomainList() {
-    const bconfig = this.LStorageService.getitemfromLocalStorage('ynw-bconf');
+    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
       const bdate = bconfig.cdate;
@@ -311,7 +311,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               cdate: today,
               bdata: this.domainList
             };
-            this.LStorageService.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
           }
         );
     }
@@ -322,9 +322,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
-    this.server_date = this.LStorageService.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.loc_details = this.LStorageService.getitemfromLocalStorage('ynw-locdet');
+    this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
 
     const isMobile = {
@@ -418,13 +418,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   ngAfterViewInit() {
-    const appPopupDisplayed = this.LStorageService.getitemfromLocalStorage('a_dsp');
+    const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
     if (!appPopupDisplayed) {
       this.popUp.nativeElement.style.display = 'block';
     }
   }
   closeModal() {
-    this.LStorageService.setitemonLocalStorage('a_dsp', true);
+    this.lStorageService.setitemonLocalStorage('a_dsp', true);
     this.popUp.nativeElement.style.display = 'none';
   }
   ngOnDestroy() {
@@ -459,7 +459,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(
         res => {
           this.server_date = res;
-          this.LStorageService.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   gets3curl() {
@@ -1430,8 +1430,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goThroughLogin() {
     return new Promise((resolve) => {
-      const qrpw = this.LStorageService.getitemfromLocalStorage('qrp');
-      const qrusr = this.LStorageService.getitemfromLocalStorage('ynw-credentials');
+      const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+      const qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       if (qrusr && qrpw) {
         const data = {
           'countryCode': qrusr.countryCode,
@@ -1442,7 +1442,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.shared_services.ConsumerLogin(data).subscribe(
           (loginInfo: any) => {
             this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
-            this.LStorageService.setitemonLocalStorage('qrp', data.password);
+            this.lStorageService.setitemonLocalStorage('qrp', data.password);
             resolve(true);
           },
           (error) => {
@@ -2556,29 +2556,29 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
-    const spId = this.LStorageService.getitemfromLocalStorage('order_spId');
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
-      this.LStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
       this.orderList.push(itemObj);
-      this.LStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
       this.getItemQty(item);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
-            this.LStorageService.removeitemfromLocalStorage('order');
+            this.lStorageService.removeitemfromLocalStorage('order');
           }
         } else {
           this.orderList.push(itemObj);
-          this.LStorageService.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
           this.getItemQty(item);
         }
       } else {
         this.orderList.push(itemObj);
-        this.LStorageService.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
         this.getItemQty(item);
       }
@@ -2601,10 +2601,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (result) {
         can_remove = true;
         this.orderList = [];
-        this.LStorageService.removeitemfromLocalStorage('order_sp');
-        this.LStorageService.removeitemfromLocalStorage('chosenDateTime');
-        this.LStorageService.removeitemfromLocalStorage('order_spId');
-        this.LStorageService.removeitemfromLocalStorage('order');
+        this.lStorageService.removeitemfromLocalStorage('order_sp');
+        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+        this.lStorageService.removeitemfromLocalStorage('order_spId');
+        this.lStorageService.removeitemfromLocalStorage('order');
         return true;
       } else {
         can_remove = false;
@@ -2620,12 +2620,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
         if (this.orderList.length > 0 && this.orderList !== null) {
-          this.LStorageService.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
         } else {
-          this.LStorageService.removeitemfromLocalStorage('order_sp');
-          this.LStorageService.removeitemfromLocalStorage('chosenDateTime');
-          this.LStorageService.removeitemfromLocalStorage('order_spId');
-          this.LStorageService.removeitemfromLocalStorage('order');
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
         }
 
         break;
@@ -2652,8 +2652,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         'bname': this.businessjson.businessName,
         'blocation': this.locationjson[0].place
       };
-      this.LStorageService.setitemonLocalStorage('order', this.orderList);
-      this.LStorageService.setitemonLocalStorage('order_sp', businessObject);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           account_id: this.provider_bussiness_id
@@ -2674,8 +2674,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'blocation': this.locationjson[0].place,
       'logo': this.businessjson.logo.url
     };
-    this.LStorageService.setitemonLocalStorage('order', this.orderList);
-    this.LStorageService.setitemonLocalStorage('order_sp', businessObject);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item)
@@ -2706,8 +2706,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   catlogArry() {
     // this.catlog = itemjson;
     // this.catalogItem = catalog.default.catalogItem;
-    if (this.LStorageService.getitemfromLocalStorage('order') !== null) {
-      this.orderList = this.LStorageService.getitemfromLocalStorage('order');
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     }
     this.getTotalItemAndPrice();
   }
@@ -2717,7 +2717,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   showOrderFooter() {
     let showFooter = false;
-    this.spId_local_id = this.LStorageService.getitemfromLocalStorage('order_spId');
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (this.spId_local_id !== null) {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (this.spId_local_id !== this.provider_bussiness_id) {
@@ -2741,7 +2741,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       account_id: this.provider_bussiness_id
 
     };
-    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {
@@ -2757,7 +2757,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         'logo': blogoUrl
       };
       // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };

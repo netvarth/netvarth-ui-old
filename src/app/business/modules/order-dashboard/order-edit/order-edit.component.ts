@@ -11,11 +11,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddItemNotesComponent } from '../../../../shared/modules/shopping-cart/add-item-notes/add-item-notes.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-<<<<<<< HEAD
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-=======
->>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
@@ -103,15 +100,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-<<<<<<< HEAD
         public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService) {
-=======
-    public providerservice: ProviderServices,
-    public sharedFunctionobj: SharedFunctions) {
->>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
     this.route.queryParams.subscribe(
       params => {
         console.log(params);
@@ -131,17 +123,8 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
   }
 
-
-
-
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-  }
-  getOrderDetails(uid) {
-      this.providerservice.getProviderOrderById(uid).subscribe(data => {
-      this.orderDetails = data;
-      console.log(this.orderDetails);
-    });
   }
   getOrderDetails(uid) {
       this.providerservice.getProviderOrderById(uid).subscribe(data => {
@@ -164,10 +147,6 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         this.itemCount++;
         console.log(orderItems);
       }
-<<<<<<< HEAD
-=======
-
->>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -487,11 +466,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         account_id: this.account_id
 
       };
-<<<<<<< HEAD
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-=======
-      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
->>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
       // this.router.navigate(['order', 'shoppingcart', 'checkout']);
     }
 

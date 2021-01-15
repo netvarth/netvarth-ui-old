@@ -2265,13 +2265,8 @@ public wordProcessor: WordProcessor
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-<<<<<<< HEAD
      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-=======
-      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
->>>>>>> branch '1.7-order' of https://github.com/netvarth/calpine-ui
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
