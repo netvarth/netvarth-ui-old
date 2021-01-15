@@ -248,7 +248,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
   orderstatus: any;
+  orderType = '';
+  advance_amount: any;
   dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
+  store_pickup: boolean;
+  home_delivery: boolean;
+  choose_type = 'store';
+  sel_checkindate;
+  deliveryCharge = 0;
+  nextAvailableTime;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -1711,7 +1719,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
-          this.checkout();
+          if (this.orderType === 'SHOPPINGLIST') {
+            this.shoppinglistupload();
+          } else {
+            this.checkout();
+          }
         } else {
           // this.getFavProviders();
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
@@ -1749,7 +1761,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
-          this.checkout();
+          if (this.orderType === 'SHOPPINGLIST') {
+            this.shoppinglistupload();
+          } else {
+            this.checkout();
+          }
         } else {
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -2474,11 +2490,34 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];
+          this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
           }
           this.catlogArry();
           console.log(this.activeCatalog);
+
+          this.advance_amount = this.activeCatalog.advanceAmount;
+          if (this.activeCatalog.pickUp) {
+            if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+              this.store_pickup = true;
+              this.choose_type = 'store';
+              this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+              this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+            }
+          }
+          if (this.activeCatalog.homeDelivery) {
+            if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+              this.home_delivery = true;
+
+              if (!this.store_pickup) {
+                this.choose_type = 'home';
+                this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+              }
+            }
+          }
           // console.log(cat)
           // if(catalogs.length > 1) {
           //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
@@ -2682,6 +2721,40 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
     return showFooter;
+  }
+
+  shoppinglistupload() {
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.activeCatalog.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.advance_amount,
+      account_id: this.provider_bussiness_id
+
+    };
+    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
   }
 
 }

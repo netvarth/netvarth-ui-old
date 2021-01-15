@@ -362,7 +362,7 @@
                             src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
                     </div>
                 </div>
-                <ng-container *ngIf="orderItems.length >0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
+                <ng-container *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
@@ -373,6 +373,13 @@
                             <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
                         </div>
                     </div>
+                </ng-container>
+                <ng-container *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                    <div class="bus-item-O" >
+                        <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
+                        <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
+                    </div>
+  
                 </ng-container>
             </div>
         </div>
