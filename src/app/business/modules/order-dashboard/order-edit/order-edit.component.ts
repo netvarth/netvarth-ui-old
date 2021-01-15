@@ -83,6 +83,8 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   storeContact: any;
   canceldialogRef: any;
   sel_checdate: any;
+  orderItems: any[];
+  itemCount: any;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -116,6 +118,19 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      console.log(this.catalog_details);
+      this.orderItems = [];
+      const orderItems = [];
+      for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
+        const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
+        const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
+        const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
+        const showpric = this.catalog_details.showPrice;
+        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item ,'showpric':showpric});
+        this.itemCount++;
+        console.log(orderItems);
+      }
+
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
