@@ -37,10 +37,10 @@
                           </div> -->
                 <div class="td td2" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">
                     <!-- <div class="label">{{service_cap}}</div> -->
-                    <div class="result" *ngIf="message.service !== null">
+                    <div class="result" *ngIf="message.service && message.service !== null">
                         {{ (message.service.length>50)? (wordProcessor.firstToUpper(message.service) | slice:0:40)+'.....':wordProcessor.firstToUpper(message.service) }}
                     </div>
-                    <div class="result" *ngIf="message.service === null">-</div>
+                    <div class="result" *ngIf="!message.service || message.service === null">-</div>
                 </div>
                 <div class="td td4" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">
                     <!-- <div class="label">{{message_cap}}</div> -->
