@@ -40,7 +40,7 @@
               <p>No patients found</p>
             </div>
             <p>&nbsp;</p>
-<div *ngIf="count > 0">
+<div  *ngIf="count > 0" class="box-body table-container table-responsive mat-elevation-z8">
             <mat-table  [dataSource]="patient_dataSource">
               <!-- Checkbox Column -->
               <ng-container matColumnDef="select">

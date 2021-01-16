@@ -440,7 +440,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.added_address.splice(index ,1);
+        this.added_address.splice(index , 1);
       this.shared_services.updateConsumeraddress(this.added_address)
       .subscribe(
         data => {
@@ -992,9 +992,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   }
   deleteTempImage(img, index) {
     console.log(img);
-    //this.image_list_popup.splice(index, 1);
+    // this.image_list_popup.splice(index, 1);
   //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
- //console.log(idex);
+ // console.log(idex);
    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
     this.selectedImagelist.files.splice(img.id, 1);
     this.selectedImagelist.base64.splice(img.id, 1);

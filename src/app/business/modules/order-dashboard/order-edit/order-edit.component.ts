@@ -113,7 +113,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         this.account_id = params.account_id;
         this.provider_id = params.unique_id;
         this.choose_type = params.choosetype;
-        this.uid = params.uid
+        this.uid = params.uid;
         this.getOrderDetails(this.uid);
       });
 
@@ -145,7 +145,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item ,'showpric':showpric});
+        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item , 'showpric': showpric});
         this.itemCount++;
         console.log(orderItems);
       }
@@ -215,7 +215,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   }
   fillDateFromLocalStorage() {
     this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
-    console.log(this,this.chosenDateDetails)
+    console.log(this, this.chosenDateDetails);
     if (this.chosenDateDetails !== null) {
       this.delivery_type = this.chosenDateDetails.delivery_type;
       this.choose_type = this.delivery_type;
@@ -693,7 +693,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       // console.log(this.orderList);
     });
   }
-  deleteNotes(item, index){
+  deleteNotes(item, index) {
     console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -739,7 +739,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   closeNav() {
     this.showSide = false;
   }
-  addItems(){
+  addItems() {
   const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
     width: '50%',
     panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
@@ -773,7 +773,7 @@ addAddress() {
 }
 
 
-EditAddress(selectedAddress){
+EditAddress(selectedAddress) {
   console.log(selectedAddress);
 
    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
