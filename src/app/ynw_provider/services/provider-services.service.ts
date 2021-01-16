@@ -1844,4 +1844,8 @@ export class ProviderServices {
       const url = 'provider/appointment/labelBatch';
       return this.servicemeta.httpPost(url, data);
    }
+   deleteLabelfromOrder(uuid, label) {
+      const url = 'provider/orders/label/' + uuid + '/' + label;
+      return this.servicemeta.httpDelete(url);
+   }
 }

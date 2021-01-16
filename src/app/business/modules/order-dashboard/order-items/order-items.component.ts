@@ -38,7 +38,6 @@ export class OrderItemsComponent implements OnInit {
       this.catalog_details = data;
       console.log(this.catalog_details);
       this.orderItems = [];
-      const orderItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;

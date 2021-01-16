@@ -114,7 +114,7 @@ source;
             });
     }
     redirecToGeneral() {
-        if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer') {
+        if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer' || this.source === 'order') {
             this._location.back();
         } else {
         this.router.navigate(['provider', 'settings' , 'general']);

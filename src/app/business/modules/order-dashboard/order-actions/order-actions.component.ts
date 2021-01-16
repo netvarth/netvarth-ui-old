@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -8,6 +8,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
+import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
   
 @Component({
   selector: 'app-order-actions',
@@ -31,6 +32,9 @@ export class OrderActionsComponent implements OnInit {
   catalog_Id: any;
   orderStatusClasses = projectConstantsLocal.ORDER_STATUS_CLASS;
   choose_type: string;
+  action = '';
+  providerLabels: any = [];
+  labelMap;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -39,6 +43,7 @@ export class OrderActionsComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
+    private dialog: MatDialog,
     private lStorageService:LocalStorageService) { }
 
   ngOnInit() {
@@ -50,6 +55,7 @@ export class OrderActionsComponent implements OnInit {
     if (this.orderDetails.length > 1) {
       this.mulipleSelection = true;
     }
+    this.getLabel();
     this.getPos();
   }
   setActions() {
@@ -192,4 +198,120 @@ export class OrderActionsComponent implements OnInit {
     const returndet = retdet[0].class;
     return returndet;
   }
+
+  showLabels() {
+    this.action = 'label';
+}
+goBack() {
+  this.action = '';
+}
+
+labelselection() {
+  const values = [];
+  if (this.orderDetails.label && Object.keys(this.orderDetails.label).length > 0) {
+      Object.keys(this.orderDetails.label).forEach(key => {
+          values.push(key);
+      });
+      for (let i = 0; i < this.providerLabels.length; i++) {
+          for (let k = 0; k < values.length; k++) {
+              if (this.providerLabels[i].label === values[k]) {
+                  this.providerLabels[i].selected = true;
+              }
+          }
+      }
+  }
+}
+addLabeltoOrder(label, event) {
+  this.labelMap = new Object();
+  if (event.checked) {
+      this.labelMap[label] = true;
+      this.addLabel(label);
+  } else {
+      this.deleteLabel(label, this.orderDetails.uid);
+  }
+}
+
+addLabel(label) {
+  // this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
+  //     this.dialogRef.close('reload');
+  // },
+  //     error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  const ids = [];
+  if (this.mulipleSelection) {
+      for (const order of this.orderDetails) {
+          ids.push(order.uid);
+      }
+  } else {
+      ids.push(this.orderDetails.uid);
+  }
+  const postData = {
+      'labelName': label,
+      'labelValue': 'true',
+      'uuid': ids
+  };
+  this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
+      this.dialogRef.close('reload');
+  },
+      error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+}
+
+getLabel() {
+  this.loading = true;
+  this.providerLabels = [];
+  this.provider_services.getLabelList().subscribe((data: any) => {
+      this.providerLabels = data.filter(label => label.status === 'ENABLED');
+      if (!this.mulipleSelection) {
+          this.labelselection();
+      }
+      this.loading = false;
+  });
+}
+deleteLabel(label, orderId) {
+  this.provider_services.deleteLabelfromOrder(orderId, label).subscribe(data => {
+      this.dialogRef.close('reload');
+  },
+      error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+}
+gotoLabel() {
+  this.router.navigate(['provider', 'settings', 'general', 'labels'], { queryParams: { source: 'order' } });
+  this.dialogRef.close();
+}
+addLabelvalue(source, label?) {
+  const labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+          checkin: this.orderDetails,
+          source: source,
+          label: label
+      }
+  });
+  labeldialogRef.afterClosed().subscribe(data => {
+      if (data) {
+          // setTimeout(() => {
+          // this.labels();
+          this.labelMap = new Object();
+          this.labelMap[data.label] = data.value;
+          this.addLabel(data.label);
+          this.getDisplayname(data.label);
+          // }, 500);
+      }
+      this.getLabel();
+  });
+}
+getDisplayname(label) {
+  for (let i = 0; i < this.providerLabels.length; i++) {
+      if (this.providerLabels[i].label === label) {
+          return this.providerLabels[i].displayName;
+      }
+  }
+}
 }
