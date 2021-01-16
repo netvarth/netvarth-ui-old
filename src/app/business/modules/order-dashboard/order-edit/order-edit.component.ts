@@ -94,6 +94,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   orderDetails: any = [];
   addressDialogRef: any;
   selectedAddress: string;
+  storeaddress: string;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -756,11 +757,14 @@ addAddress() {
     panelClass: ['popup-class', 'commonpopupmainclass'],
     disableClose: true,
     data: {
-      source: 'provider'
+      source: 'provider',
+      type: 'Add'
+      
     }
   });
   this.addressDialogRef.afterClosed().subscribe(result => {
     console.log(result);
+    this.storeaddress = result;
     this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
     console.log(this.selectedAddress);
   });
@@ -774,11 +778,16 @@ EditAddress(selectedAddress){
       disableClose: true,
       data: {
         source: 'provider',
-        update_address: selectedAddress,  
+        type: 'edit',
+        update_address: this.storeaddress  
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
       // this.getaddress();
+      console.log(result);
+      this.storeaddress = result;
+      this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
+      console.log(this.selectedAddress);
     });
   }
 
