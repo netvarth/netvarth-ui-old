@@ -47,6 +47,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   ]
 })
 export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
@@ -161,6 +162,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
+  customPlainGallerycatalogRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -379,6 +385,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.apptTempArray = [];
       this.donationServicesjson = [];
       this.image_list_popup = [];
+      this.catalogimage_list_popup = [];
       this.galleryjson = [];
       this.deptUsers = [];
       if (qparams.psource) {
@@ -1327,6 +1334,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  openCatalogImageModalRow(image: Image) {
+    console.log(image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
+    this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
   }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
@@ -2501,6 +2513,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
+            this.catalogimage_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.activeCatalog.catalogImages[0].url,
+                description: ''
+              });
+            this.catalogimage_list_popup.push(imgobj);
           }
           this.catlogArry();
           console.log(this.activeCatalog);
