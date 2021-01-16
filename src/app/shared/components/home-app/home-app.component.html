@@ -14,14 +14,14 @@
     <div class="login-ph">
       <div class="form-group mobile-field">
         <mat-form-field>
-          <div class="input-group">
+          <!-- <div class="input-group">
             <div class="input-group-prepend mob-prefix">
               <span class="input-group-text" id="">{{mob_prefix_cap}}</span>
-            </div>
+            </div> -->
             <input type="text" matInput class="form-control" id="phonenumber"
-              placeholder="Enter your 10 digit Mobile number" formControlName="phonenumber" autocomplete="off"
-              (keyup)="handlekeyup($event)" maxlength=10>
-          </div>
+              placeholder="Mobile/Email" formControlName="phonenumber" autocomplete="off"
+              (keyup)="handlekeyup($event)">
+          <!-- </div> -->
         </mat-form-field>
         <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'phonenumber') && show_error"
           [errorMsgs]="fed_service.getErrorMessage(loginForm,'phonenumber',

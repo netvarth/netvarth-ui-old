@@ -7,7 +7,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
-import { projectConstantsLocal } from '../../constants/project-constants';
 import {version} from '../../../shared/constants/version';
 import { Router } from '@angular/router';
 @Component({
@@ -72,10 +71,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   createForm() {
     this.loginForm = this.fb.group({
       phonenumber: ['', Validators.compose(
-        [Validators.required,
-        Validators.maxLength(10),
-        Validators.minLength(10),
-        Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        [Validators.required])],
       password: ['', Validators.compose([Validators.required])]
 
     });
