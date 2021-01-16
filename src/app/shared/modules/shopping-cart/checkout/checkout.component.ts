@@ -444,7 +444,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       this.shared_services.updateConsumeraddress(this.added_address)
       .subscribe(
         data => {
-         this.snackbarService.openSnackBar('Address Updated successfully');     
+         this.snackbarService.openSnackBar('Address Updated successfully');
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -690,7 +690,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             uuid: this.trackUuid
           }
         };
-        if (this.catalog_details.advanceAmount) {
+        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
             .subscribe(res => {
               console.log(res);
@@ -738,7 +738,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             uuid: this.trackUuid
           }
         };
-        if (this.catalog_details.advanceAmount) {
+        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
             .subscribe(res => {
               console.log(res);
@@ -998,7 +998,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
     this.selectedImagelist.files.splice(img.id, 1);
     this.selectedImagelist.base64.splice(img.id, 1);
-    
+
     console.log(this.image_list_popup);
      console.log(this.selectedImagelist.files);
 }
@@ -1017,7 +1017,7 @@ onButtonBeforeHook(event) {
     return;
 }
 if (event.button.type === ButtonType.DELETE) {
-    
+
     console.log(event.image.plain);
     console.log(this.selectedImagelist.files);
    console.log(this.image_list_popup);
@@ -1028,7 +1028,7 @@ if (event.button.type === ButtonType.DELETE) {
   this.selectedImagelist.files.splice(idex, 1);
   this.selectedImagelist.base64.splice(idex, 1);
  // this.image_list_popup.splice(idex, 1);
-  
+
    console.log(this.selectedImagelist.files);
    console.log(this.image_list_popup);
 }
@@ -1067,7 +1067,7 @@ imageSelect(event) {
                 this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
             } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
                 this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-            } else {
+          } else {
                     this.selectedImagelist.files.push(file);
                      const reader = new FileReader();
                       reader.onload = (e) => {

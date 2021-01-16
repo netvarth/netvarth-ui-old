@@ -34,6 +34,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     ngOnInit() {
+      console.log(this.item.type);
 
         switch (this.item.type) {
             case 'waitlist':
@@ -69,9 +70,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.service);
                 break;
             case 'item':
-                console.log(this.item);
+            console.log('item');
                 this.service = this.item.item;
-                console.log(this.service);
                 break;
             case 'pitem':
                 this.service = this.item.item;

@@ -2008,7 +2008,7 @@ public wordProcessor: WordProcessor
               });
             this.catalogimage_list_popup.push(imgobj);
           }
-          //this.updateLocalStorageItems();
+          // this.updateLocalStorageItems();
           this.catlogArry();
           this.advance_amount = this.activeCatalog.advanceAmount;
           if (this.activeCatalog.pickUp) {

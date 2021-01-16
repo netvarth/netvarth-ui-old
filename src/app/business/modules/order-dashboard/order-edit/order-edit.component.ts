@@ -17,6 +17,7 @@ import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
 
+
 @Component({
   selector: 'app-order-edit',
   templateUrl: './order-edit.component.html',
@@ -111,7 +112,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         this.sel_checdate = params.order_date;
         this.account_id = params.account_id;
         this.provider_id = params.unique_id;
-        this.choose_type = params.choosetype
+        this.choose_type = params.choosetype;
         this.uid = params.uid
         this.getOrderDetails(this.uid);
       });
@@ -717,7 +718,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       //   }
       // });
       console.log(this.orderList);
-  
+
     }
   });
   }
@@ -744,13 +745,14 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
     disableClose: true,
     data: {
-    
+
     }
   });
   additemsdialogRef.afterClosed().subscribe(data => {
-    
+
   });
 }
+
 addAddress() {
   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
     width: '50%',
@@ -759,7 +761,7 @@ addAddress() {
     data: {
       source: 'provider',
       type: 'Add'
-      
+
     }
   });
   this.addressDialogRef.afterClosed().subscribe(result => {
@@ -769,6 +771,8 @@ addAddress() {
     console.log(this.selectedAddress);
   });
 }
+
+
 EditAddress(selectedAddress){
   console.log(selectedAddress);
 
@@ -779,7 +783,7 @@ EditAddress(selectedAddress){
       data: {
         source: 'provider',
         type: 'edit',
-        update_address: this.storeaddress  
+        update_address: this.storeaddress
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {

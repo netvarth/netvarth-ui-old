@@ -15,15 +15,16 @@ export class OrderItemsComponent implements OnInit {
   orderItems: any[];
   itemCount: any;
   orderList: any = [];
+  loading = true;
 
- 
+
   constructor(public dialogRef: MatDialogRef<OrderItemsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService
-    ) { }
+  ) { }
 
   ngOnInit() {
     const cuser = this.groupService.getitemFromGroupStorage('accountId');
@@ -43,11 +44,13 @@ export class OrderItemsComponent implements OnInit {
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item ,'showpric':showpric});
+        this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(orderItems);
+        console.log(this.orderItems);
       }
+      this.loading = false;
     });
+
   }
   getCatalogDetails(accountId) {
     const _this = this;
@@ -62,6 +65,22 @@ export class OrderItemsComponent implements OnInit {
           }
         );
     });
+  }
+  showConsumerNote(item) {
+    console.log(item);
+    // const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     checkin: item,
+    //     type: 'order-details'
+    //   }
+    // });
+    // notedialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'reloadlist') {
+    //   }
+    // });
   }
 
 }
