@@ -7,6 +7,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
@@ -49,7 +50,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: FormBuilder, public dateformat: DateFormatPipe,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
@@ -81,12 +82,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       if (this.data.appt) {
         this.rep_username = this.data.waitlist.appmtFor[0].firstName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) : '' + ' ' +
           this.data.waitlist.appmtFor[0].lastName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName) : '';
-        this.rep_date = this.titleCaseWord(this.data.waitlist.appmtDate);
+        this.rep_date = this.titleCaseWord(this.dateformat.transformToMonthlyDate(this.data.waitlist.appmtDate));
         this.rep_time = this.titleCaseWord(this.data.waitlist.apptTakenTime);
       } else {
         this.rep_username = this.data.waitlist.waitlistingFor[0].firstName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) : '' + ' ' +
           this.data.waitlist.waitlistingFor[0].lastName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName) : '';
-        this.rep_date = this.titleCaseWord(this.data.waitlist.date);
+        this.rep_date = this.titleCaseWord(this.dateformat.transformToMonthlyDate(this.data.waitlist.date));
         this.rep_time = this.titleCaseWord(this.data.waitlist.checkInTime);
       }
       if (!this.rep_username) {

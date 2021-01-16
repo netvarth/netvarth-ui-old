@@ -788,7 +788,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return qIds;
   }
-  initView(view, source?) {
+  initView(view, source, type?) {
     this.activeSchedules = [];
     const groupbyQs = this.shared_functions.groupBy(this.getSchedulesFromView(view, this.schedules), 'apptState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
@@ -803,9 +803,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const q of this.activeSchedules) {
       qids.push(q.id);
     }
-    if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
+    if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
-    } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
+    } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
     } else if (this.activeSchedules.length > 0) {
       if (this.time_type === 3) {
@@ -2156,7 +2156,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.groupService.setitemToGroupStorage('appt-selectedView', view);
     this.selectedView = view;
     if (!view.userType) {
-      this.initView(this.selectedView, 'reloadAPIs');
+      this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
       this.handleUserSelection(view);
     }

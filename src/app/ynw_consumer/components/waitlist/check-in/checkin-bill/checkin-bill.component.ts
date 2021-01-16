@@ -111,7 +111,10 @@ export class ConsumerCheckinBillComponent implements OnInit {
     razorpayDetails: any = [];
     provider_label = '';
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
-
+    retval;
+    s3url;
+    terminologiesjson;
+    provider_id;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -184,7 +187,39 @@ export class ConsumerCheckinBillComponent implements OnInit {
                 }
 
             });
-            this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    }
+
+    gets3curl() {
+        this.retval = this.sharedfunctionObj.getS3Url()
+            .then(
+                res => {
+                    this.s3url = res;
+                    this.getbusinessprofiledetails_json('terminologies', true);
+                });
+    }
+    getbusinessprofiledetails_json(section, modDateReq: boolean) {
+        let UTCstring = null;
+        if (modDateReq) {
+            UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
+        }
+        this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+            .subscribe(res => {
+                switch (section) {
+                    case 'terminologies': {
+                        this.terminologiesjson = res;
+                        break;
+                    }
+                }
+            });
+    }
+    getTerminologyTerm(term) {
+        const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+        if (this.terminologiesjson) {
+            return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+        } else {
+            return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
+        }
     }
     goBack() {
         this.location.back();
@@ -203,15 +238,19 @@ export class ConsumerCheckinBillComponent implements OnInit {
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
+                    this.provider_id = this.checkin.providerAccount.uniqueId;
+                    if (this.provider_label === 'provider') {
+                        this.gets3curl();
+                    }
                 });
     }
     getBillDateandTime() {
         if (this.bill_data.hasOwnProperty('createdDate')) {
             this.billdate = this.bill_data.createdDate;
-            // const datearr = this.bill_data.createdDate.split(' ');
-            // const billdatearr = datearr[0].split('-');
-            // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-            // this.billtime = datearr[1] + ' ' + datearr[2];
+            const datearr = this.bill_data.createdDate.split(' ');
+            const billdatearr = datearr[0].split('-');
+            this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+            this.billtime = datearr[1] + ' ' + datearr[2];
         }
         if (this.bill_data.hasOwnProperty('gstNumber')) {
             this.gstnumber = this.bill_data.gstNumber;
@@ -498,7 +537,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
 
                 bill_html += '	<tr style="line-height:0;">';
                 bill_html += '<td style="text-align:right" colspan="2"></td>';
-                bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+                bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
                 bill_html += '	</tr>';
                 bill_html += '	<tr style="font-weight:bold">';
                 bill_html += '<td style="text-align:right"colspan="2">Sub Total</td>';
@@ -530,7 +569,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
             if (item.discount && item.discount.length > 0) {
                 bill_html += '	<tr style="line-height:0;">';
                 bill_html += '<td style="text-align:right" colspan="2"></td>';
-                bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd"> </td>';
+                bill_html += '<td style="text-align:right; border-bottom:1px dotted #ddd">Â </td>';
                 bill_html += '	</tr>';
                 bill_html += '	<tr style="font-weight:bold">';
                 bill_html += '<td style="text-align:right" colspan="2">Sub Total</td>';
@@ -668,7 +707,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
      * Cash Button Pressed
      */
     cashPayment() {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
+        this.snackbarService.openSnackBar('Visit ' + this.getTerminologyTerm('provider') + ' to pay by cash');
     }
     getCouponList() {
         const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();

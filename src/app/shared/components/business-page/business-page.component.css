@@ -1275,3 +1275,14 @@ img.ordericon.home {
 	color: #000 !important;
 	text-decoration: underline;
 }
+.instagram {
+  margin-bottom: -3px;
+}
+.youTube {
+  height: 18px;
+  margin-bottom: -2px;
+}
+.bizyGlobe {
+  height: 22px;
+  margin-bottom: -5px;
+}

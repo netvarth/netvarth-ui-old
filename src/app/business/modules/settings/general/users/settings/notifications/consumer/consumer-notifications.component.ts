@@ -381,7 +381,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
       // activeInput.providerId = this.userId;
       this.provider_services.updateUserConsumerNotificationSettings(activeInput).subscribe(
         () => {
-          this.snackbarService.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);
+          this.snackbarService.openSnackBar(this.wordProcessor.firstToUpper(this.customer_label) + ' notification settings updated successfully');
           this.showButton[type] = false;
         },
         (error) => {
@@ -396,7 +396,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
       }
       this.provider_services.saveUserConsumerNotificationSettings(activeInput).subscribe(
         () => {
-          this.snackbarService.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);
+          this.snackbarService.openSnackBar(this.wordProcessor.firstToUpper(this.customer_label) + ' notification settings updated successfully');
           this.showButton[type] = false;
         },
         (error) => {

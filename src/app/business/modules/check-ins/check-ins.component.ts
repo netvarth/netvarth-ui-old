@@ -1027,7 +1027,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.loadApiSwitch('reloadAPIs');
   }
-  initView(view, source?) {
+  initView(view, source, type?) {
     this.activeQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
@@ -1043,9 +1043,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const q of this.activeQs) {
       qids.push(q.id);
     }
-    if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
+    if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
-    } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
+    } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
       this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
     } else {
       if (this.time_type !== 1) {
@@ -1246,7 +1246,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.groupService.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
     if (!view.userType) {
-      this.initView(this.selectedView, 'reloadAPIs');
+      this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
       this.handleUserSelection(view);
     }

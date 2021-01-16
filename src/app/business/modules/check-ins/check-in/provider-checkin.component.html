@@ -462,7 +462,12 @@
                               <mat-checkbox
                                 (change)="handleMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
                                 [value]="memb.id" [checked]="isChecked(memb.id)">
-                                {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
+                                <ng-container *ngIf="memb.firstName || memb.lastName">
+                                  {{memb.firstName | capitalizeFirst}} {{memb.lastName}}
+                                </ng-container>
+                                <ng-container *ngIf="!memb.firstName && !memb.lastName">
+                                  {{customer_label | capitalizeFirst}} id: {{memb.jaldeeId}}
+                                </ng-container>
                               </mat-checkbox>
                             </li>
                           </ng-container>

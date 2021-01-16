@@ -123,6 +123,16 @@
                           noEntriesFoundLabel="no matching service found"></ngx-mat-select-search>
                         <mat-option *ngFor="let service of service_list" [value]="service"
                           (click)="setServiceIds(service.id)">
+                          <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                            class="fa wtsapaud-icon"></i>
+                          <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                            class="fa wtsapvid-icon"></i>
+                          <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                            class="fa zoom-icon"></i>
+                          <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                            class="fa meet-icon"></i>
+                          <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                            class="fa phon-icon" aria-hidden="true"></i>
                           {{service.name}}
                         </mat-option>
                       </mat-select>
@@ -137,6 +147,16 @@
                     </p>
                     <ul *ngFor="let service of selectedServices">
                       <li>
+                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"
+                          class="fa wtsapaud-icon"></i>
+                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
+                          class="fa wtsapvid-icon"></i>
+                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
+                          class="fa zoom-icon"></i>
+                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                          class="fa meet-icon"></i>
+                        <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Phone'"
+                          class="fa phon-icon" aria-hidden="true"></i>
                         {{service.name}}
                       </li>
                     </ul>

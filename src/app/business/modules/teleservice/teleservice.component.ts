@@ -381,6 +381,12 @@ export class TeleServiceComponent implements OnInit {
 
     // Reminder popup
     reminder() {
+        let consumer;
+        if (this.waiting_type === 'checkin') {
+            consumer = this.data.consumer;
+        } else {
+            consumer = this.data.providerConsumer;
+        }
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -396,7 +402,8 @@ export class TeleServiceComponent implements OnInit {
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
                 busnsName: this.busnes_name,
-                status: this.servStarted
+                status: this.servStarted,
+                consumerDetails: consumer
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
@@ -406,6 +413,12 @@ export class TeleServiceComponent implements OnInit {
 
     // Meeting detail popup
     meetingDetails() {
+        let consumer;
+        if (this.waiting_type === 'checkin') {
+            consumer = this.data.consumer;
+        } else {
+            consumer = this.data.providerConsumer;
+        }
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -422,7 +435,8 @@ export class TeleServiceComponent implements OnInit {
                 waitingType: this.waiting_type,
                 busnsName: this.busnes_name,
                 token: this.data.token,
-                checkInTime: this.data.checkInTime
+                checkInTime: this.data.checkInTime,
+                consumerDetails: consumer
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {

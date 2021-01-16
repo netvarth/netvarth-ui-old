@@ -9,6 +9,7 @@ import { projectConstants } from '../../../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-displayboard-content',
@@ -68,11 +69,12 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
     gLogoHeight = '';
     glogo = '';
     gPosition;
+    customer_label = '';
     constructor(private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         private shared_functions: SharedFunctions,
         public _sanitizer: DomSanitizer,
-        public router: Router,
+        public router: Router, private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService) {
         this.onResize();
@@ -88,6 +90,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     this.type = 'appointment';
                 }
             });
+            this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     @HostListener('window:resize', ['$event'])
     onResize(event?) {
@@ -465,9 +468,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
             if (!checkin[field.name][0].firstName && lastname === '') {
                 if (this.type === 'waitlist') {
-                    fieldValue = field.displayName + ' id: ' + checkin.consumer.jaldeeId;
+                    fieldValue = this.wordProcessor.firstToUpper(this.customer_label) + ' id: ' + checkin.consumer.jaldeeId;
                 } else {
-                    fieldValue = field.displayName + ' id: ' + checkin.providerConsumer.jaldeeId;
+                    fieldValue = this.wordProcessor.firstToUpper(this.customer_label) + ' id: ' + checkin.providerConsumer.jaldeeId;
                 }
             }
         } else if (field.name === 'appxWaitingTime') {

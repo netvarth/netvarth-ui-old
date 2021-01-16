@@ -53,20 +53,25 @@
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
-                                                                                class="dynamic">{{billdate | date:newDateFormat}}</span>
-                                                                                <!-- {{billtime}}</span> -->
+                                                                                class="dynamic">{{bill_data.createdDate
+                                                                                | date:'mediumDate'}}
+                                                                                {{billtime}}</span>
                                                                         </span> <span class="columns"
                                                                             *ngIf="billnumber"> <span
                                                                                 class="dynamic">{{bill_no_cap}} </span>
                                                                             <span class="dynamic">{{billnumber}}</span>
                                                                         </span> <span class="columns rightalign">
-                                                                            <span class="dynamic" *ngIf="gstnumber">{{gstin_cap}} </span>
-                                                                            <span class="dynamic" *ngIf="gstnumber">{{gstnumber |
+                                                                            <span class="dynamic"
+                                                                                *ngIf="gstnumber">{{gstin_cap}} </span>
+                                                                            <span class="dynamic"
+                                                                                *ngIf="gstnumber">{{gstnumber |
                                                                                 capitalizeFirst}}</span>
                                                                         </span>
                                                                         <span class="columns mgn-up-10"
                                                                             *ngIf="checkin.provider">
-                                                                            <span class="dynamic">{{provider_label |
+                                                                            <span
+                                                                                class="dynamic">{{getTerminologyTerm('provider')
+                                                                                |
                                                                                 capitalizeFirst}}: </span>
                                                                             <span
                                                                                 class="dynamic">{{checkin.provider.businessName}}</span>

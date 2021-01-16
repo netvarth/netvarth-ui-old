@@ -416,7 +416,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     if (this.cSettings[type]) {
       this.provider_services.updateConsumerNotificationSettings(activeInput).subscribe(
         () => {
-          this.snackbarService.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);
+          this.snackbarService.openSnackBar(this.wordProcessor.firstToUpper(this.customer_label) + ' notification settings updated successfully');
           this.showButton[type] = false;
         },
         (error) => {
@@ -427,7 +427,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     } else {
       this.provider_services.saveConsumerNotificationSettings(activeInput).subscribe(
         () => {
-          this.snackbarService.openSnackBar(Messages.CONSUMERSETTINGSSUCCESS);
+          this.snackbarService.openSnackBar(this.wordProcessor.firstToUpper(this.customer_label) + ' notification settings updated successfully');
           this.showButton[type] = false;
         },
         (error) => {
