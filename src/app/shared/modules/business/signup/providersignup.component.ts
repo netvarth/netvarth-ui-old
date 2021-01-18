@@ -73,7 +73,7 @@ export class ProvidersignupComponent implements OnInit {
   CorporateBranch;
   action = false;
   bank_action = false;
-  otp = null;
+  otp = '';
   isValidOtp = false;
   user_details;
   domainIsthere;
@@ -125,7 +125,7 @@ export class ProvidersignupComponent implements OnInit {
   refreshTime = 30;
   otp_mobile = null;
   providerPwd;
-  email;
+  email = '';
   isValidConfirm_pw = true;
   hideOtpSection = true;
   joinClicked = false;
@@ -164,7 +164,7 @@ export class ProvidersignupComponent implements OnInit {
 
   ngOnInit() {
     if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
+      this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.active_step = 0;
     this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -333,7 +333,7 @@ export class ProvidersignupComponent implements OnInit {
         }
       );
   }
-  
+
 
 
   // onReferalSubmit(sccode) {
@@ -413,9 +413,9 @@ export class ProvidersignupComponent implements OnInit {
     }
   }
   setPassword() {
-    const post_data = { 
-      countryCode : this.selectedCountryCode,
-      password: this.spForm.get('new_password').value 
+    const post_data = {
+      countryCode: this.selectedCountryCode,
+      password: this.spForm.get('new_password').value
     };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
@@ -466,25 +466,29 @@ export class ProvidersignupComponent implements OnInit {
     });
   }
   onOtpSubmit() {
-    this.actionstarted = true;
-    // this.joinClicked = true;
-    this.resetApiErrors();
-    return new Promise<void>((resolve, reject) => {
-      this.shared_services.OtpSignUpProviderValidate(this.otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.isValidOtp = true;
-            this.hideOtpSection = false;
-            resolve();
-          },
-          error => {
-            this.actionstarted = false;
-            // this.joinClicked = false;
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    });
+    if (this.otp === '') {
+      this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.actionstarted = true;
+      // this.joinClicked = true;
+      this.resetApiErrors();
+      return new Promise<void>((resolve, reject) => {
+        this.shared_services.OtpSignUpProviderValidate(this.otp)
+          .subscribe(
+            () => {
+              this.actionstarted = false;
+              this.isValidOtp = true;
+              this.hideOtpSection = false;
+              resolve();
+            },
+            error => {
+              this.actionstarted = false;
+              // this.joinClicked = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      });
+    }
   }
   onPasswordSubmit() {
     this.actionstarted = true;
@@ -751,11 +755,15 @@ export class ProvidersignupComponent implements OnInit {
     this.showOTPEmailContainer = true;
   }
   resendViaEmail() {
-    this.user_details.userProfile.email = this.email;
-    this.resendOtp(this.user_details);
-    this.resetCounter(this.refreshTime);
-    this.checking_email_otpsuccess = true;
-    this.setMessage('email', this.email);
+    if (this.email === '') {
+      this.snackbarService.openSnackBar('Please enter your email id', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.user_details.userProfile.email = this.email;
+      this.resendOtp(this.user_details);
+      this.resetCounter(this.refreshTime);
+      this.checking_email_otpsuccess = true;
+      this.setMessage('email', this.email);
+    }
   }
   doCancelEmailOTP() {
     this.resetApiErrors();
@@ -779,7 +787,7 @@ export class ProvidersignupComponent implements OnInit {
   //     return;
   //   }
   // }
-  handleDomainSelection () {
+  handleDomainSelection() {
     this.selectedSubDomain = this.selectedDomain.subDomains[0];
     this.user_details['sector'] = this.selectedDomain.domain;
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
@@ -790,14 +798,14 @@ export class ProvidersignupComponent implements OnInit {
       this.active_step = 2;
     }
   }
-  backToSubdomains () {
+  backToSubdomains() {
     if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
       this.active_step = 4;
     } else {
       this.active_step = 1;
     }
   }
-  handleSubDomainSelection () {
+  handleSubDomainSelection() {
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.active_step = 2;
   }

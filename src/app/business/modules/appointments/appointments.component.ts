@@ -463,7 +463,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
     this.getServices();
-    this.getProviders();
+    if (this.active_user.accountType === 'BRANCH') {
+      this.getProviders();
+    }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });

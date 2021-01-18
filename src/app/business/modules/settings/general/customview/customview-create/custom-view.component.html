@@ -41,7 +41,7 @@
                   <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <div>
                       <mat-form-field>
-                        <mat-select placeholder="Custom View For" [(ngModel)]="customViewFor"
+                        <mat-select placeholder="" [(ngModel)]="customViewFor"
                           (selectionChange)="changeType()">
                           <mat-option *ngIf="waitlist_status == true" [value]="'Waitlist'">
                             Check-in/Token

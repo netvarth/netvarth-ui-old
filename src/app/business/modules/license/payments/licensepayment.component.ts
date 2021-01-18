@@ -3,7 +3,7 @@ import { WindowRefService } from '../../../../shared//services/windowRef.service
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
@@ -55,7 +55,7 @@ export class PaymentComponent implements OnInit {
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
     public prefillmodel: RazorpayprefillModel,
-    public location: Location) {
+    public location: Location, public router: Router) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.data = qparams;
       this.waitlistDetails = JSON.parse(this.data.details);
@@ -119,12 +119,12 @@ export class PaymentComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
-        },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          });
-        }
-  paywithRazorpay(pData: any ) {
+      },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
+  }
+  paywithRazorpay(pData: any) {
     this.prefillmodel.name = pData.providerName;
     this.prefillmodel.email = pData.ConsumerEmail;
     this.prefillmodel.contact = pData.consumerPhoneumber;
@@ -137,6 +137,10 @@ export class PaymentComponent implements OnInit {
     this.razorpayService.payWithRazor(this.razorModel, this.origin);
   }
   goBack() {
-    this.location.back();
+    if (this.paidStatus === 'true') {
+      this.router.navigate(['provider', 'license']);
+    } else {
+      this.location.back();
+    }
   }
 }

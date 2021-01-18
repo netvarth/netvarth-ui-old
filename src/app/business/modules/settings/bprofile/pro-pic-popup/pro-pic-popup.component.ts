@@ -189,6 +189,7 @@ export class ProPicPopupComponent implements OnInit {
                     this.dialogRef.close();
                 }
                 // this.error_msg = 'Please upload images with size < 5mb';
+                this.savedisabled = false;
                 this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
             }
         }

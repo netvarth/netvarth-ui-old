@@ -794,7 +794,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
     checkUrl(urlData) {
-        if (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom') {
+        if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
             const tempvar = urlData.substring( 0 , 4 );
             if (tempvar !== 'http') {
                 this.tool_id = '';

@@ -51,8 +51,11 @@
                                     <td>{{status.licensePaymentStatus}}</td>
                                     <td>
                                         <button
-                                            *ngIf="status.licensePaymentStatus === 'Paid' || status.licensePaymentStatus === 'NotPaid'"
-                                            type="button" (click)="jaldeeStatement(status)">JaldeeStatement</button>
+                                            *ngIf="status.licensePaymentStatus === 'Paid'"
+                                            type="button" (click)="jaldeeStatement(status)">Jaldee Invoice</button>
+                                            <button
+                                            *ngIf="status.licensePaymentStatus === 'NotPaid'"
+                                            type="button" (click)="jaldeeStatement(status)">Jaldee Statement</button>
                                     </td>
                                 </tr>
                             </tbody>
