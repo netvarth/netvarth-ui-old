@@ -1293,7 +1293,7 @@
                         <div class="filterTextinput" *ngIf="time_type == 3">
                           <li class="filterli filterDatepicker">
                             <input type="text" [(ngModel)]="filter.check_in_end_date"
-                              [ngModelOptions]="{standalone: true}" [min]="endminday" [max]="maxday"
+                              [ngModelOptions]="{standalone: true}" [min]="endminday" [max]="endmaxday"
                               [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
                               class="filterTextbox" placeholder="End Date">
                             <mat-datepicker-toggle matSuffix [for]="picker">

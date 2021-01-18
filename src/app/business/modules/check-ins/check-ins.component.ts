@@ -328,6 +328,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerIdTooltip = '';
   endminday;
   maxday = new Date();
+  endmaxday = new Date();
   allLabels: any = [];
   voicedialogRef: any;
   addCustomerTooltip = '';
@@ -2012,6 +2013,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
+    }
     this.labelSelection();
     // this.groupService.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
     // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));

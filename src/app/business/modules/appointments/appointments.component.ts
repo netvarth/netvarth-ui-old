@@ -344,6 +344,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   scheduleSlots: any = [];
   qloading: boolean;
   firstTime = true;
+  endminday;
+  maxday = new Date();
+  endmaxday = new Date();
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -1560,6 +1563,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return api_filter;
   }
   doSearch() {
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
+    }
     this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.appointmentEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.schedule !== 'all' || this.filter.payment_status !== 'all' || this.filter.appointmentMode !== 'all' || this.filter.check_in_start_date !== null
