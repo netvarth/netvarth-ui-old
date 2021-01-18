@@ -8,7 +8,7 @@ import { WordProcessor } from "./word-processor.service";
 })
 
 export class SnackbarService {
-    TIMEOUT_DELAY_LARGE: 4100;
+    TIMEOUT_DELAY_LARGE= 4100;
 
     constructor(private snackBar: MatSnackBar,
         private errorMsgService: ErrorMessagingService,

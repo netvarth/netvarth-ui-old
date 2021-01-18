@@ -8,7 +8,7 @@ import { ErrorMessagingService } from "./error-message.service";
 })
 
 export class WordProcessor {
-  TIMEOUT_DELAY_LARGE10: 10000; // msec
+  TIMEOUT_DELAY_LARGE10= 10000; // msec
   constructor(private errorService: ErrorMessagingService,
     private common_datastorage: CommonDataStorageService) {
 
