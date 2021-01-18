@@ -490,7 +490,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   confirm() {
     this.checkoutDisabled = true;
     console.log(this.nextAvailableTime);
-    let timeslot = this.nextAvailableTime.split("- ");
+    let timeslot = this.nextAvailableTime.split(" - ");
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
