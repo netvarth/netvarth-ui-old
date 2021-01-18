@@ -63,6 +63,15 @@ export class OrderDashboardComponent implements OnInit {
   payStatusClassList = projectConstantsLocal.PAYMENT_STATUS_CLASS;
   billPaymentStatuses = projectConstantsLocal.BILL_PAYMENT_STATUS_WITH_DISPLAYNAME;
   pos: any;
+  allLabels: any = [];
+  providerLabels: any = [];
+  tooltipcls = '';
+  labelMultiCtrl: any = [];
+  labelFilter: any = [];
+  labelFilterData = '';
+  labelsCount: any = [];
+  selectedLabels: any = [];
+  allLabelSelected: any = [];
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -83,6 +92,7 @@ export class OrderDashboardComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.getPos();
+    this.getLabel();
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderTodayOrdersCount();
@@ -111,6 +121,7 @@ export class OrderDashboardComponent implements OnInit {
     this.hideFilterSidebar();
     this.resetFilter();
     this.resetFilterValues();
+    this.resetLabelFilter();
     this.filterapplied = false;
     this.setTabSelection(event.index + 1);
   }
@@ -201,6 +212,7 @@ export class OrderDashboardComponent implements OnInit {
   clearFilter() {
     this.resetFilter();
     this.resetFilterValues();
+    this.resetLabelFilter();
     this.filterapplied = false;
     this.doSearch();
   }
@@ -231,8 +243,9 @@ export class OrderDashboardComponent implements OnInit {
     };
   }
   doSearch() {
+    this.labelSelection();
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
-      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.orderModes.length > 0 || this.paymentStatuses.length > 0) {
+      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.orderModes.length > 0 || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -252,6 +265,8 @@ export class OrderDashboardComponent implements OnInit {
     this.orderStatuses = [];
     this.orderModes = [];
     this.paymentStatuses = [];
+    this.selectedLabels = [];
+    this.allLabelSelected = [];
   }
   setFilterDataCheckbox(type, value?) {
     if (type === 'homeDelivery' || 'storePickup') {
@@ -321,6 +336,9 @@ export class OrderDashboardComponent implements OnInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNumber-eq'] = this.filter.phone_number;
     }
+    if (this.labelFilterData !== '') {
+      api_filter['label-eq'] = this.labelFilterData;
+    }
     return api_filter;
   }
   getDefaultCatalogStatus() {
@@ -389,5 +407,201 @@ export class OrderDashboardComponent implements OnInit {
     this.providerservices.getProviderPOSStatus().subscribe(data => {
       this.pos = data['enablepos'];
     });
+  }
+
+  resetLabelFilter() {
+    this.labelMultiCtrl = [];
+    this.labelFilter = [];
+    this.labelFilterData = '';
+  }
+  // labelClick() {
+  //   this.showLabels = true;
+  // }
+  getLabel() {
+    this.providerLabels = [];
+    this.providerservices.getLabelList().subscribe(data => {
+      this.allLabels = data;
+      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
+    });
+  }
+  getDisplayname(label) {
+    for (let i = 0; i < this.allLabels.length; i++) {
+      if (this.allLabels[i].label === label) {
+        return this.allLabels[i].displayName;
+      } else {
+        return label;
+      }
+    }
+  }
+  labelfilterClicked(index, label) {
+    delete this.labelMultiCtrl[label];
+    this.labelFilter[index] = !this.labelFilter[index];
+    if (!this.labelFilter[index]) {
+      this.doSearch();
+    }
+  }
+  labelSelection() {
+    this.labelFilterData = '';
+    this.labelsCount = [];
+    let count = 0;
+    Object.keys(this.selectedLabels).forEach(key => {
+      if (this.selectedLabels[key].length > 0) {
+        count++;
+        if (!this.labelFilterData.includes(key)) {
+          // const labelvalues = this.selectedLabels[key].join(',');
+          // const labelvaluesArray = labelvalues.split(',');
+          // for (const value of labelvaluesArray) {
+          //   const lblFilter = key + '::' + value;
+          //   const Mfilter = this.setFilterForApi();
+          //   Mfilter['label-eq'] = lblFilter;
+          //   const promise = this.getHistoryWLCount(Mfilter);
+          //   promise.then(
+          //     result => {
+          //       if (this.labelsCount.indexOf(value + ' - ' + result) === -1) {
+          //         this.labelsCount.push(value + ' - ' + result);
+          //       }
+          //     });
+          // }
+          if (count === 1) {
+            this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
+          } else {
+            this.labelFilterData = this.labelFilterData + '$' + key + '::' + this.selectedLabels[key].join(',');
+          }
+        }
+      } else {
+        delete this.selectedLabels[key];
+      }
+    });
+  }
+  // labels(checkin) {
+  //   for (let i = 0; i < this.providerLabels.length; i++) {
+  //     for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+  //       this.providerLabels[i].valueSet[j].selected = false;
+  //     }
+  //   }
+  //   setTimeout(() => {
+  //     const values = [];
+  //     if (checkin.label) {
+  //       for (const value of Object.values(checkin.label)) {
+  //         values.push(value);
+  //       }
+  //       for (let i = 0; i < this.providerLabels.length; i++) {
+  //         for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+  //           for (let k = 0; k < values.length; k++) {
+  //             if (this.providerLabels[i].valueSet[j].value === values[k]) {
+  //               this.providerLabels[i].valueSet[j].selected = true;
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }, 100);
+  // }
+  // addLabelvalue(source, label?) {
+  //   const _this = this;
+  //   const appts = [];
+  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+  //     appts.push(_this.appointmentsChecked[apptIndex]);
+  //   });
+  //   this.labeldialogRef = this.dialog.open(ApplyLabelComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'privacyoutermainclass'],
+  //     disableClose: true,
+  //     autoFocus: true,
+  //     data: {
+  //       checkin: appts[0],
+  //       source: source,
+  //       label: label
+  //     }
+  //   });
+  //   this.labeldialogRef.afterClosed().subscribe(data => {
+  //     if (data) {
+  //       setTimeout(() => {
+  //         this.labels(appts[0]);
+  //         this.labelMap = new Object();
+  //         this.labelMap[data.label] = data.value;
+  //         this.addLabel(appts[0].ynwUuid);
+  //         this.getDisplayname(data.label);
+  //         this.loadApiSwitch('');
+  //       }, 500);
+  //     }
+  //     this.getLabel();
+  //   });
+  // }
+  // addLabel(checkinId) {
+  //   this.provider_services.addLabeltoCheckin(checkinId, this.labelMap).subscribe(data => {
+  //     this.loadApiSwitch('');
+  //   },
+  //     error => {
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  // }
+  // deleteLabel(label, checkinId) {
+  //   this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+  //     this.loadApiSwitch('');
+  //   },
+  //     error => {
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //     });
+  // }
+
+  // changeLabelvalue(labelname, value) {
+  //   this.showLabels = false;
+  //   const _this = this;
+  //   const appts = [];
+  //   Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
+  //     appts.push(_this.appointmentsChecked[apptIndex]);
+  //   });
+  //   if (appts.length === 1) {
+  //     this.labelMap = new Object();
+  //     this.labelMap[labelname] = value;
+  //     for (let i = 0; i < this.providerLabels.length; i++) {
+  //       for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+  //         if (this.providerLabels[i].valueSet[j].value === value) {
+  //           if (!this.providerLabels[i].valueSet[j].selected) {
+  //             this.providerLabels[i].valueSet[j].selected = true;
+  //             this.addLabel(appts[0].ynwUuid);
+  //           } else {
+  //             this.providerLabels[i].valueSet[j].selected = false;
+  //             this.deleteLabel(labelname, appts[0].ynwUuid);
+  //           }
+  //         } else {
+  //           if (this.providerLabels[i].label === labelname) {
+  //             this.providerLabels[i].valueSet[j].selected = false;
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  setLabelFilter(label, event) {
+    const value = event.checked;
+    if (label === 'all') {
+      this.allLabelSelected = false;
+      if (event.checked) {
+        for (const lbl of this.providerLabels) {
+          if (!this.selectedLabels[lbl.label]) {
+            this.selectedLabels[lbl.label] = [];
+            this.selectedLabels[lbl.label].push(true);
+          }
+        }
+        this.allLabelSelected = true;
+      } else {
+        this.selectedLabels = [];
+        this.allLabelSelected = false;
+      }
+    } else {
+      this.allLabelSelected = false;
+      if (this.selectedLabels[label.label]) {
+        delete this.selectedLabels[label.label];
+      } else {
+        this.selectedLabels[label.label] = [];
+        this.selectedLabels[label.label].push(value);
+      }
+      if (Object.keys(this.selectedLabels).length === this.providerLabels.length) {
+        this.allLabelSelected = true;
+      }
+    }
+    this.doSearch();
   }
 }

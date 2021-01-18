@@ -3,7 +3,7 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div class="action-section col-md-12 no-padding"*ngIf="action === '' && !apiloading">
+<div class="action-section col-md-12 no-padding"*ngIf="action === '' && !loading">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!mulipleSelection">
         <p *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
             Order For : {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</p>
@@ -102,4 +102,4 @@
         <a class="" (click)="gotoLabel()">Manage labels</a>
     </div>
 </div>
-<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+

@@ -251,7 +251,7 @@ addLabel(label) {
       'labelValue': 'true',
       'uuid': ids
   };
-  this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
+  this.provider_services.addLabeltoMultipleOrder(postData).subscribe(data => {
       this.dialogRef.close('reload');
   },
       error => {
