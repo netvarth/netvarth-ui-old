@@ -490,10 +490,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   confirm() {
     this.checkoutDisabled = true;
     console.log(this.nextAvailableTime);
-    console.log(this.queue);
-    // console.log(this.selectqueue);
-    // selectqueue
-    console.log(this.catalog_details.homeDelivery);
+    let timeslot = this.nextAvailableTime.split("- ");
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
@@ -513,9 +510,11 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'orderFor': {
               'id': 0
             },
-            'timeSlot': {
-              'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-              'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+            'timeSlot': { 
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -525,7 +524,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           };
           this.confirmOrder(post_Data);
         } else {
-        const post_Data = {
+         const post_Data = {
           'homeDelivery': true,
           'homeDeliveryAddress': this.selectedAddress,
           'catalog': {
@@ -535,8 +534,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'id': 0
           },
           'timeSlot': {
-            'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-            'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+            'sTime': timeslot[0],
+            'eTime': timeslot[1]
+            // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+            // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
           },
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
@@ -550,7 +551,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     }
     }
     if (this.delivery_type === 'store') {
-      if (!this.storeContact.value.phone || !this.storeContact.value.email) {
+       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
@@ -570,8 +571,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
               'id': 0
             },
             'timeSlot': {
-              'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-              'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -590,8 +593,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'id': 0
           },
           'timeSlot': {
-            'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-            'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+            'sTime': timeslot[0],
+            'eTime': timeslot[1]
+            // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+            // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
           },
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
@@ -966,7 +971,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(storeIntervals));
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         // console.log(this.nextAvailableTimeQueue);
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         // this.availableTimewindows = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
@@ -983,7 +988,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(homeIntervals));
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         // console.log(this.nextAvailableTimeQueue);
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         // this.availableTimewindows = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;

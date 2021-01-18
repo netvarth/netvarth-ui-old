@@ -621,7 +621,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
         console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
@@ -633,7 +634,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
         console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
