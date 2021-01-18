@@ -85,6 +85,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   showSide = false;
   storeContact: any;
   canceldialogRef: any;
+  nextAvailableTimeQueue: any = [];
+  queue;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
@@ -117,6 +119,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      console.log(this.catalog_details);
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -136,6 +139,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+
             }
           }
         }
@@ -425,6 +429,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     if (this.checkMinimumQuantityofItems()) {
 
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      console.log(this.nextAvailableTime);
 
       const chosenDateTime = {
         delivery_type: this.choose_type,
@@ -458,8 +463,13 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.location.back();
     }
   }
-  goBackCart(selectedTimeslot) {
-    this.nextAvailableTime = selectedTimeslot;
+  goBackCart(selectedTimeslot,queue) {
+    console.log(queue);
+    console.log(selectedTimeslot);
+    let selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    console.log(selectqueue);
+     this.nextAvailableTime = selectqueue;
+    // this.nextAvailableTime = selectedTimeslot;
     this.action = '';
   }
   changeTime() {
@@ -611,7 +621,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -620,7 +633,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -706,6 +722,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   closeNav() {
     this.showSide = false;
   }
+  handleQueueSelection(queue, index) {
+    console.log(queue);
+    console.log(index);
+    this.queue = queue;
+    console.log(this.queue);
+}
 }
 
 

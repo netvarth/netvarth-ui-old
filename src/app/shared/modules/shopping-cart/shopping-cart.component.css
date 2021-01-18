@@ -61,7 +61,7 @@ flex-basis: 50% !important;
     width: 40px;
    }
 
-    .slotdiv mat-chip {
+  .slotdiv mat-chip {
     font-weight: 600;
     font-size: 1rem !important;
     background-color: #fff !important;
@@ -84,6 +84,25 @@ flex-basis: 50% !important;
   .shop-cart .pad-10 {
     padding: 10px ;
   }
+  /* .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
+    border-color: #334b99 !important;
+    color:#334b99 !important;
+    border: 2px solid !important;
+  }
+  .c-checkin-new .slotdiv .mat-chip {
+    border-color: #ccc !important;
+  }
+  .c-checkin-new mat-chip a {
+    width: 100%;
+    text-align: center;
+  }
+  .c-checkin-new .chk-btns-div mat-chip {
+    font-weight: 600;
+    font-size: 0.75rem !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc;
+    border-radius: 20px !important;
+  } */
   .shop-cart .prov-name {
     margin-left: 14px;
     flex: 1;

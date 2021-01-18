@@ -134,8 +134,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
 
   canceldialogRef: any;
-  availableTimewindows: any = [];
-  timeWindows;
+  // availableTimewindows: any = [];
+  // timeWindows;
+  nextAvailableTimeQueue: any = [];
+  queue;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -487,6 +489,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
   confirm() {
     this.checkoutDisabled = true;
+    console.log(this.nextAvailableTime);
+    console.log(this.queue);
+    // console.log(this.selectqueue);
+    // selectqueue
     console.log(this.catalog_details.homeDelivery);
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
@@ -762,9 +768,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       );
     }
   }
-  goBackToCheckout(selectesTimeslot) {
+  goBackToCheckout(selectesTimeslot , queue) {
     this.action = '';
-    this.nextAvailableTime = selectesTimeslot;
+    console.log(queue);  
+    let selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    console.log(selectqueue);
+    this.nextAvailableTime = selectqueue;
+    // this.nextAvailableTime = selectesTimeslot;
     const chosenDateTime = {
       delivery_type: this.choose_type,
       catlog_id: this.catalog_details.id,
@@ -956,9 +966,12 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(storeIntervals));
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.availableTimewindows = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-        this.timeWindows = this.availableTimewindows[0];
-        console.log(this.availableTimewindows);
+        this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        // console.log(this.nextAvailableTimeQueue);
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+        // this.availableTimewindows = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // this.timeWindows = this.availableTimewindows[0];
+        // console.log(this.availableTimewindows);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
@@ -970,7 +983,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(homeIntervals));
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
-        this.availableTimewindows = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+        this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        // console.log(this.nextAvailableTimeQueue);
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+        // this.availableTimewindows = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
@@ -1117,5 +1133,9 @@ imageSelect(event) {
       }
       });
     }
+    handleQueueSelection(queue, index) {
+      console.log(index);
+      this.queue = queue;
+  }
 }
 
