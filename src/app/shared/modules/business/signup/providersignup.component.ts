@@ -2,7 +2,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -150,16 +150,21 @@ export class ProvidersignupComponent implements OnInit {
   };
   scInfo;
   scCode_Ph;
+  claimDetails;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
-    public shared_services: SharedServices,
+    public shared_services: SharedServices, public activatedRoute: ActivatedRoute,
     private router: Router, private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor) { }
+    private wordProcessor: WordProcessor) {
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.claimDetails = params;
+      });
+     }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
@@ -198,8 +203,13 @@ export class ProvidersignupComponent implements OnInit {
       .subscribe(
         data => {
           this.business_domains = data;
-          this.selectedDomain = this.business_domains[0];
-          this.selectedSubDomain = this.selectedDomain.subDomains[0];
+          if (this.claimDetails && this.claimDetails.sector) {
+            const filteredList = this.business_domains.filter(domain => domain.domain === this.claimDetails.sector.toString());
+            this.selectedDomain = filteredList[0];
+          } else {
+            this.selectedDomain = this.business_domains[0];
+            this.selectedSubDomain = this.selectedDomain.subDomains[0];
+          }
           this.domainIndex[0] = false;
           // this.subdomainlist = this.selectedDomain.subDomains;
           // this.getPackages();
@@ -788,10 +798,20 @@ export class ProvidersignupComponent implements OnInit {
   //   }
   // }
   handleDomainSelection() {
-    this.selectedSubDomain = this.selectedDomain.subDomains[0];
+    if (this.claimDetails.subSector) {
+      const subdomains = this.selectedDomain.subDomains.filter(subdom => subdom.subDomain === this.claimDetails.subSector.toString());
+      if (subdomains[0]) {
+        this.selectedSubDomain = subdomains[0];
+      } else {
+        this.selectedSubDomain = this.selectedDomain.subDomains[0];
+      }
+    } else {
+      this.selectedSubDomain = this.selectedDomain.subDomains[0];
+    }
     this.user_details['sector'] = this.selectedDomain.domain;
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.user_details['licPkgId'] = 9;
+    this.user_details['accountId'] = this.claimDetails.accountId;
     if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
       this.active_step = 4;
     } else {
