@@ -6902,7 +6902,7 @@ select.input.input--lg {
   height: 100%;
 }
 
-.box {
+.midon-box {
   box-shadow: 0px 3px 20px #0000000b;
   --bg-opacity: 1;
   background-color: #fff;
@@ -6975,7 +6975,7 @@ select.input.input--lg {
   } */
 }
 
-.content {
+.midon-content {
   border-radius: 30px;
   padding: 0px 22px;
   min-height: 100vh;
@@ -6987,14 +6987,14 @@ select.input.input--lg {
 }
 
 @media (max-width: 767px) {
-  .content {
+  .midon-content {
     padding-left: 1rem;
     padding-right: 1rem;
     max-width: 100%;
   }
 }
 
-.content:before {
+.midon-content:before {
   content: "";
   width: 100%;
   height: 1px;
@@ -19153,7 +19153,7 @@ video {
   margin-left: 0.5rem;
 }
 
-.mt-3{
+.midon-mt-3{
   margin-top: 0.75rem;
 }
 
@@ -19185,7 +19185,7 @@ video {
   margin-left: 1rem;
 }
 
-.mt-5{
+.midon-mt-5{
   margin-top: 1.25rem;
 }
 
@@ -21175,7 +21175,7 @@ video {
   padding: 1rem;
 }
 
-.p-5{
+.midon-p-5{
   padding: 1.25rem;
 }
 
@@ -21286,7 +21286,7 @@ video {
   padding-bottom: 1.25rem;
 }
 
-.px-5{
+.midon-px-5{
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
@@ -21501,7 +21501,7 @@ video {
   padding-left: 1rem;
 }
 
-.pt-5{
+.midon-pt-5{
   padding-top: 1.25rem;
 }
 
@@ -21745,7 +21745,7 @@ video {
   padding: 1rem;
 }
 
-.last\:p-5:last-child{
+.last\:midon-p-5:last-child{
   padding: 1.25rem;
 }
 
@@ -47619,7 +47619,7 @@ video {
     padding: 1rem;
   }
 
-  .sm\:p-5{
+  .sm\:midon-p-5{
     padding: 1.25rem;
   }
 
@@ -48189,7 +48189,7 @@ video {
     padding: 1rem;
   }
 
-  .sm\:last\:p-5:last-child{
+  .sm\:last\:midon-p-5:last-child{
     padding: 1.25rem;
   }
 
@@ -72719,7 +72719,7 @@ video {
     padding: 1rem;
   }
 
-  .md\:p-5{
+  .md\:midon-p-5{
     padding: 1.25rem;
   }
 
@@ -73289,7 +73289,7 @@ video {
     padding: 1rem;
   }
 
-  .md\:last\:p-5:last-child{
+  .md\:last\:midon-p-5:last-child{
     padding: 1.25rem;
   }
 
@@ -97819,7 +97819,7 @@ video {
     padding: 1rem;
   }
 
-  .lg\:p-5{
+  .lg\:midon-p-5{
     padding: 1.25rem;
   }
 
@@ -98389,7 +98389,7 @@ video {
     padding: 1rem;
   }
 
-  .lg\:last\:p-5:last-child{
+  .lg\:last\:midon-p-5:last-child{
     padding: 1.25rem;
   }
 
@@ -122919,7 +122919,7 @@ video {
     padding: 1rem;
   }
 
-  .xl\:p-5{
+  .xl\:midon-p-5{
     padding: 1.25rem;
   }
 
@@ -123489,7 +123489,7 @@ video {
     padding: 1rem;
   }
 
-  .xl\:last\:p-5:last-child{
+  .xl\:last\:midon-p-5:last-child{
     padding: 1.25rem;
   }
 
@@ -148019,7 +148019,7 @@ video {
     padding: 1rem;
   }
 
-  .xxl\:p-5{
+  .xxl\:midon-p-5{
     padding: 1.25rem;
   }
 
@@ -148589,7 +148589,7 @@ video {
     padding: 1rem;
   }
 
-  .xxl\:last\:p-5:last-child{
+  .xxl\:last\:midon-p-5:last-child{
     padding: 1.25rem;
   }
 

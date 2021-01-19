@@ -6,7 +6,7 @@
     </div>
   </div>
 </section>
-<section class="dashboard content customers" *ngIf="!apiloading">
+<!-- <section class="dashboard content customers" *ngIf="!apiloading">
   <div class="col-md-12 no-padding-small">
     <div class="row">
       <div class="card p0 w-dta ">
@@ -199,7 +199,313 @@
     </div>
   </div>
   <div class="clearfix"></div>
-</section>
+</section> -->
+
+
+<div class="midon-content">
+   <div class="intro-y chat grid grid-cols-12 gap-5 mt-5">
+      
+
+      <!-- <div class="col-span-12 lg:col-span-3 xxl:col-span-3 flex lg:block flex-col-reverse">
+        <div class="intro-y midon-box">
+            <div class="relative flex items-center">
+                <div class="mr-auto midon-mt-3">
+                  <input type="text" class="input  midon-box pr-10 placeholder-theme-13" style="width: 11rem !important;" placeholder="Search group...">
+                </div>
+            </div>
+            <div class="midon-p-5 border-t border-gray-200 midon-mt-3">
+                <a class="flex items-center text-theme-1 font-medium" href=""> <i data-feather="activity" class="w-4 h-4 mr-2"></i> All Ptients </a>
+                <a class="flex items-center midon-mt-5" href=""> <i data-feather="box" class="w-4 h-4 mr-2"></i> Regular Patients </a>
+                <a class="flex items-center midon-mt-5" href=""> <i data-feather="lock" class="w-4 h-4 mr-2"></i> VIP Patients </a>
+                <a class="flex items-center midon-mt-5" href=""> <i data-feather="settings" class="w-4 h-4 mr-2"></i> Critical Patients </a>
+            </div>
+        </div>
+    </div> -->
+    <div class = "col-span-12 lg:col-span-3 xxl:col-span-3">
+      <div class="col-span-12 ">
+        <div class="tab-content">
+            <div class="tab-content__pane active" id="chats">
+                <div class="pr-1">
+                    <div class="midon-box midon-px-5 midon-pt-5 pb-5 lg:pb-0">
+                        <!-- <div class="relative text-gray-700">
+                            <input type="text" class="input input--lg w-full bg-gray-200 pr-10 placeholder-theme-13" placeholder="Search group...">
+                            <i class="w-4 h-4 hidden sm:absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i> 
+                        </div> -->
+                        <div class="overflow-x-auto scrollbar-hidden">
+                          <div class="ml-2 overflow-hidden">
+                            <div class="flex items-center">
+                                <a href="javascript:;" class="text-lg font-medium">All Patients</a> 
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1">
+                    <div class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5 ">
+                        <div class="ml-2 overflow-hidden">
+                            <div class="flex items-center">
+                                <a href="javascript:;" class="text-lg font-medium">Regular Patients</a> 
+                            </div>
+                            <div class="w-full truncate text-gray-600 text-xs">Krishna, Melvin, Smera, Vivek, Layana </div>
+                        </div>
+                    </div>
+                    <div class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5">
+                        <div class="ml-2 overflow-hidden">
+                            <div class="flex items-center">
+                                <a href="javascript:;" class="font-medium">VIP Patients</a> 
+                            </div>
+                            <div class="w-full truncate text-gray-600 text-xs">Krishna, Melvin, Smera, Vivek, Layana </div>
+                        </div>
+                    </div>
+                    <div class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5">
+                        <div class="ml-2 overflow-hidden">
+                            <div class="flex items-center">
+                                <a href="javascript:;" class="font-medium">Critical Patients</a> 
+                            </div>
+                            <div class="w-full truncate text-gray-600 text-xs">Krishna, Melvin, Smera, Vivek, Layana </div>
+                        </div>
+                    </div>
+                    <div class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5">
+                        <div class="ml-2 overflow-hidden">
+                            <div class="flex items-center">
+                                <a href="javascript:;" class="font-medium">Isolated Patients</a> 
+                            </div>
+                            <div class="w-full truncate text-gray-600 text-xs">Krishna, Melvin, Smera, Vivek, Layana </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+
+  <div class="intro-y col-span-12 lg:col-span-9 xxl:col-span-9">
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center">
+      <h2 class="text-lg font-medium mr-auto">
+        Regular Patients
+    </h2>
+  </div>
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center midon-mt-3">
+      <button class="button text-white bg-theme-1 shadow-md mr-2">Add Patient</button>
+      <button class="button text-white bg-theme-1 shadow-md mr-2">Create Patient</button>
+  
+      <div class="sm:w-auto midon-mt-3 sm:mt-0 sm:ml-auto  pull-right">
+        <div class="w-56 relative text-gray-700">
+            <input type="text" class="input w-56 midon-box pr-10 placeholder-theme-13" placeholder="Search...">
+            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i> 
+        </div>
+    </div>
+    <a class="dropdown-toggle navbar-item-color bold pointer-cursor" style="margin-left: 15px;" data-toggle="control-sidebar">
+      <i class="icon-filter-one" [matTooltipClass]="tooltipcls"
+        [matTooltip]="filtericonTooltip">
+      </i>
+    </a>
+  </div>
+  <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center midon-mt-3">
+    <span class="bold" data-toggle="control-sidebar">
+      <input [checked]="allCustomerSelected" type="checkbox" class="ckbx pull-left" (change)="selectAll()" />
+      <span class="statuslink " [matTooltip]="'Select all'">
+        Select All</span>
+    </span>
+</div>
+  
+  
+        <!-- BEGIN: Users Layout -->
+        <div class="intro-y col-span-12 md:col-span-12 midon-mt-3">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                    
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                   
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                    
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                    
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                    
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                   
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input  type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Kevin Spacey</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                   
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="intro-y col-span-12 md:col-span-9">
+            <div class="midon-box">
+                <div class="flex lg:flex-row items-center midon-p-5">
+                  <input  type="checkbox" class="ckbx pull-left" style="margin-right: 5px;"/>
+
+                    <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                        <a href="" class="font-medium">Robert De Niro</a> 
+                        <div class="text-gray-600 text-xs">Patient Id : 45</div>
+                    </div>
+                    
+                  <div class="lg:ml-2 lg:mr-auto text-center lg:text-left midon-mt-3 lg:mt-0">
+                    <a href="" class="font-medium">Fri, Jan 01 2021</a> 
+                </div>
+                    <div class="flex lg:mt-0">
+                        <button class="button button--sm text-white bg-theme-1 mr-2">Message</button>
+                        <button class="button button--sm text-gray-700 border border-gray-300">Profile</button>
+                        <button type="button" mat-icon-button>
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+ 
+      <!-- BEGIN: Users Layout -->
+      <!-- END: Pagination -->
+      
+      <!-- END: Pagination -->
+  </div>
+</div>
+
+
+
 <div *ngIf="apiloading" style="margin-top: 100px">
   <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
