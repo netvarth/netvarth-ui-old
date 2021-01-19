@@ -43,7 +43,7 @@ export class ProPicPopupComponent implements OnInit {
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
-       // private user_datastorage: UserDataStorageService,
+        // private user_datastorage: UserDataStorageService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ProPicPopupComponent>) {
 
@@ -147,9 +147,9 @@ export class ProPicPopupComponent implements OnInit {
         this.success_error = null;
         this.error_list = [];
         this.error_msg = '';
-        this.img_save_caption = 'Uploading .. ';
         this.savedisabled = true;
         if (file) {
+            this.img_save_caption = 'Uploading .. ';
             this.success_error = this.sharedfunctionobj.imageValidation(file);
             if (this.success_error === true) {
                 const reader = new FileReader();
@@ -192,6 +192,10 @@ export class ProPicPopupComponent implements OnInit {
                 this.savedisabled = false;
                 this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
             }
+        } else {
+            this.error_msg = 'Selected image type not supported';
+            this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+            this.dialogRef.close();
         }
     }
 
@@ -227,44 +231,44 @@ export class ProPicPopupComponent implements OnInit {
 
     uploadUserLogo(passdata) {
         this.provider_services.uploaduserLogo(passdata, this.data.userId)
-          .subscribe(
-            data => {
-            //   this.blogo = [];
-            //   this.blogo = data;
-            //   console.log(this.blogo);
-              // calling function which saves the business related details to show in the header
-            //   const today = new Date();
-            //   const tday = today.toString().replace(/\s/g, '');
-            //   const blogo = this.blogo.url + '?' + tday;
-            //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
-            //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
-            //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
-            //   const pdata = { 'ttype': 'updateuserdetails' };
-            //   this.user_datastorage.updateProfilePicWeightage(true);
-            //   this.sharedfunctionobj.sendMessage(pdata);
-              this.api_success = Messages.BPROFILE_LOGOUPLOADED;
-              this.img_save_caption = 'Uploaded';
-              setTimeout(() => {
-                this.dialogRef.close();
-            }, projectConstantsLocal.TIMEOUT_DELAY);
-            },
-            error => {
-              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }
-          );
-      }
+            .subscribe(
+                data => {
+                    //   this.blogo = [];
+                    //   this.blogo = data;
+                    //   console.log(this.blogo);
+                    // calling function which saves the business related details to show in the header
+                    //   const today = new Date();
+                    //   const tday = today.toString().replace(/\s/g, '');
+                    //   const blogo = this.blogo.url + '?' + tday;
+                    //   const subsectorname = this.sharedfunctionobj.retSubSectorNameifRequired(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['displayName']);
+                    //   this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+                    //     || '', this.bProfile['serviceSector']['displayName'] || '', subsectorname || '', blogo || '');
+                    //   const pdata = { 'ttype': 'updateuserdetails' };
+                    //   this.user_datastorage.updateProfilePicWeightage(true);
+                    //   this.sharedfunctionobj.sendMessage(pdata);
+                    this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                    this.img_save_caption = 'Uploaded';
+                    setTimeout(() => {
+                        this.dialogRef.close();
+                    }, projectConstantsLocal.TIMEOUT_DELAY);
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+    }
 
     uploadCoverPic(passdata) {
-    this.provider_services.uploadCoverFoto(passdata).subscribe(
-      data => {
-        console.log(data);
-          if (data) {
-            this.api_success = Messages.BPROFILE_COVER_ADD;
-            this.img_save_caption = 'Uploaded';
+        this.provider_services.uploadCoverFoto(passdata).subscribe(
+            data => {
+                console.log(data);
+                if (data) {
+                    this.api_success = Messages.BPROFILE_COVER_ADD;
+                    this.img_save_caption = 'Uploaded';
                     setTimeout(() => {
                         this.dialogRef.close('cover');
                     }, projectConstantsLocal.TIMEOUT_DELAY);
-          }
-      });
-  }
+                }
+            });
+    }
 }

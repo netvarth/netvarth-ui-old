@@ -1694,7 +1694,9 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             accountId: myidarr[0],
             sector: claimdata['sector'],
             subSector: claimdata['subSector'],
-            phoneNo: claimdata['userProfile'].primaryMobileNo
+            phoneNo: (claimdata['userProfile'].primaryMobileNo) ? claimdata['userProfile'].primaryMobileNo : '',
+            firstName: (claimdata['userProfile'].firstName) ? claimdata['userProfile'].firstName : 'wer',
+            lastName: (claimdata['userProfile'].lastName) ? claimdata['userProfile'].lastName : 'eee'
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
@@ -1715,7 +1717,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // });
     // this.claimdialogRef.afterClosed().subscribe(result => {
     // });
-    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, phoneNo: passData.phoneNo, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector } });
+    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, phoneNo: passData.phoneNo, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector, firstName: passData.firstName, lastName: passData.lastName } });
   }
 
   checkinClicked(obj, chdatereq) {

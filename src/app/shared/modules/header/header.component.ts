@@ -184,7 +184,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // }
     }
     if (this.ctype === 'consumer') {
-    this.getInboxUnreadCnt();
+      this.getInboxUnreadCnt();
     }
   }
   getLicenseDetails(call_type = 'init') {
@@ -458,6 +458,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['business'], navigationExtras);
   }
   gotoActiveHome() {
-    this.router.navigate(['/']);
+    if (this.consumer_loggedin) {
+      this.router.navigate(['/consumer']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

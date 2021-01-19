@@ -66,7 +66,7 @@ export class PaymentComponent implements OnInit {
             });
     }
     goBack() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/consumer']);
     }
     ngOnInit() {
         this.shared_services.getOrderByConsumerUUID(this.uuid, this.accountId).subscribe(

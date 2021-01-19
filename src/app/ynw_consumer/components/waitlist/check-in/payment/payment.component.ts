@@ -158,7 +158,7 @@ export class ConsumerPaymentComponent implements OnInit {
         this.makeFailedPayment(paymentWay);
     }
     goBack() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/consumer']);
     }
     paytmPayment() {
         let paymentWay;

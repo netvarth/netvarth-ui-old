@@ -208,7 +208,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             } else {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
             }
-            this.router.navigate(['/']);
+            this.router.navigate(['/consumer']);
         }
     }
     updateLiveTrackInfo() {

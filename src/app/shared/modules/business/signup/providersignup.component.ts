@@ -161,10 +161,10 @@ export class ProvidersignupComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor) {
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.claimDetails = params;
-      });
-     }
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.claimDetails = params;
+    });
+  }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
@@ -249,7 +249,15 @@ export class ProvidersignupComponent implements OnInit {
       terms_condition: ['true'],
     });
     if (this.claimDetails) {
-      this.signupForm.get('phonenumber').setValue(this.claimDetails.phoneNo);
+      if (this.claimDetails.phoneNo) {
+        this.signupForm.get('phonenumber').setValue(this.claimDetails.phoneNo);
+      }
+      if (this.claimDetails.firstName) {
+        this.signupForm.get('first_name').setValue(this.claimDetails.firstName);
+      }
+      if (this.claimDetails.lastName) {
+        this.signupForm.get('last_name').setValue(this.claimDetails.lastName);
+      }
     }
   }
   createFormSpecial(step) {

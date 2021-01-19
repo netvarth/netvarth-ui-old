@@ -72,7 +72,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit {
             });
     }
     goBack() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/consumer']);
     }
     ngOnInit() {
         this.shared_services.getAppointmentByConsumerUUID(this.uuid, this.accountId).subscribe(

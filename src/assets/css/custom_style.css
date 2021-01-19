@@ -12163,7 +12163,7 @@ img.busN-logo {
 
 .checkfilter {
   overflow: auto;
-  height: 664px;
+  height: 650px !important;
 }
 
 .checkinactionclass {
@@ -25365,11 +25365,6 @@ img.busN-logo {
 
 .check-table-head {
   padding-left: 5px !important;
-}
-
-.checkfilter {
-  overflow: auto;
-  height: 664px;
 }
 
 .checkinactionclass {
