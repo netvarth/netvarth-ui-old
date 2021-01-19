@@ -248,6 +248,9 @@ export class ProvidersignupComponent implements OnInit {
       package_id: [''],
       terms_condition: ['true'],
     });
+    if (this.claimDetails) {
+      this.signupForm.get('phonenumber').setValue(this.claimDetails.phoneNo);
+    }
   }
   createFormSpecial(step) {
     this.step = step;

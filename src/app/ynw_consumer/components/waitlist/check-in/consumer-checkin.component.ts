@@ -2317,7 +2317,7 @@ export class ConsumerCheckinComponent implements OnInit {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.apptTime['time'] === this.holdselectedTime) {
+        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.waitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
             return true;
         } else {
             return false;

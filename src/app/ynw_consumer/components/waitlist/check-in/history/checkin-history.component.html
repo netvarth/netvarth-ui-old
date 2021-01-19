@@ -230,7 +230,7 @@
                                                     {{his_wait.orderFor.firstName || '' | capitalizeFirst}}
                                                     {{his_wait.orderFor.lastName || '' | capitalizeFirst}}</td>
                                                 <td data-title="Service" class="td6">
-                                                    <span>{{his_wait.orderItem.length}}</span>
+                                                    <span *ngIf="his_wait.orderItem">{{his_wait.orderItem.length}}</span>
                                                 </td>
                                                 <td data-title="Status" class="td4">
                                                     <span>{{his_wait.orderStatus}}</span>

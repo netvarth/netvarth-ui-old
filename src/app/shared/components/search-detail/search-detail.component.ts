@@ -1693,7 +1693,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const pass_data = {
             accountId: myidarr[0],
             sector: claimdata['sector'],
-            subSector: claimdata['subSector']
+            subSector: claimdata['subSector'],
+            phoneNo: claimdata['userProfile'].primaryMobileNo
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
@@ -1714,7 +1715,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // });
     // this.claimdialogRef.afterClosed().subscribe(result => {
     // });
-    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector } });
+    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, phoneNo: passData.phoneNo, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector } });
   }
 
   checkinClicked(obj, chdatereq) {
