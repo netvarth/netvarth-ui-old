@@ -87,8 +87,8 @@
                             </div>
                             <form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
-                                <div class="form-group mobile-field" *ngIf="haveMobile">
-                                    <mat-form-field>
+                                <div class="mobile-field mgn-up-20" *ngIf="haveMobile">
+                                    <!-- <mat-form-field>
                                         <div class="input-group">
                                             <div class="input-group-prepend mob-prefix">
                                                 <span class="input-group-text" style="padding: 15px 10px 0 5px!important;
@@ -100,8 +100,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                 autocomplete="off" maxlength=10>
 
                                         </div>
-                                    </mat-form-field>
-
+                                    </mat-form-field> -->
+                                    <div> <label>Mobile #</label>
+                                        <input type="text" class="input w-full border mt-2" (keypress)="isNumeric($event)" id="mobile_number"
+                                        placeholder="{{mobile_cap}} " formControlName="mobile_number"
+                                        autocomplete="off" maxlength=10>
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
           {
@@ -118,14 +122,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group"
+                                <div class="mgn-up-20"
                                     *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
-                                    <mat-form-field>
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" matInput id="customer_id"
                                             placeholder="{{customerPlaceholder | capitalizeFirst}}"
                                             formControlName="customer_id" autocomplete="off"
                                             (blur)="onFieldBlur('customer_id')">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div> <label>{{customerPlaceholder | capitalizeFirst}}</label>
+                                        <input type="text" class="input w-full border mt-2" id="customer_id" placeholder="{{customerPlaceholder | capitalizeFirst}}"
+                                        formControlName="customer_id" autocomplete="off"
+                                            (blur)="onFieldBlur('customer_id')">
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'customer_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'customer_id',
     {
@@ -133,12 +142,17 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     })">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group">
-                                    <mat-form-field>
+                                <div class="mgn-up-20">
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" matInput id="first_name"
                                             placeholder="{{f_name_cap}}" formControlName="first_name" autocomplete="off"
                                             (blur)="onFieldBlur('first_name')">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div> <label>First Name</label>
+                                        <input type="text" class="input w-full border mt-2" id="first_name" placeholder="First Name"
+                                        formControlName="first_name" autocomplete="off"
+                                            (blur)="onFieldBlur('first_name')">
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
     {
@@ -147,12 +161,17 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     })">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group">
-                                    <mat-form-field>
+                                <div class="mgn-up-20">
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="last_name"
                                             placeholder="{{l_name_cap}}" formControlName="last_name" autocomplete="off"
                                             (blur)="onFieldBlur('last_name')">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div> <label>Last Name</label>
+                                        <input type="text" class="input w-full border mt-2" id="last_name" placeholder="Last Name"
+                                        formControlName="last_name" autocomplete="off"
+                                            (blur)="onFieldBlur('last_name')">
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
     {
@@ -161,18 +180,23 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
     })">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group">
-                                    <mat-form-field>
+                                <div class="mgn-up-20">
+                                    <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="email_id"
                                             placeholder="Email(user@xyz.com)" formControlName="email_id"
                                             autocomplete="off">
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div> <label>Email</label>
+                                        <input type="text" class="input w-full border mt-2" id="email_id" placeholder="Email(user@xyz.com)"
+                                        formControlName="email_id" autocomplete="off"
+                                            (blur)="onFieldBlur('email_id')">
+                                    </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'email_id')"
                                         errorMsg="Please enter valid email.">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group">
+                                <div class="mgn-up-20">
                                     <label class="col-form-label" for="gender">{{gender_cap}}</label>
                                     <mat-radio-group formControlName="gender">
                                         <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
@@ -185,7 +209,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         errorMsg="Please select the gender.">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group normalpicker">
+                                <div class="form-group mgn-up-20 normalpicker">
                                     <label class="col-form-label" for="last_name">{{dob_cap}}</label>
                                     <div class="pickerouter">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -198,11 +222,15 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         errorMsg="Please select the date of birth.">
                                     </app-field-error-display>
                                 </div>
-                                <div class="form-group">
-                                    <mat-form-field>
+                                <div class="mgn-up-20">
+                                    <!-- <mat-form-field>
                                         <textarea class="form-control" matInput id="address" placeholder="Address"
                                             formControlName="address"></textarea>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div> <label>Address</label>
+                                        <textarea type="text" class="input w-full border mt-2" id="address" placeholder="Address"
+                                        formControlName="address"></textarea>
+                                    </div>
                                 </div>
                                 <div class="mgn-up-20 mgn-bt-20" *ngIf="customerErrorMsg2 !== '' && !loading">
                                     {{customerErrorMsg2}}
