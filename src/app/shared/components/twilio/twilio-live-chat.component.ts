@@ -27,6 +27,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     uuid: any;
     result;
     type: any;
+    status: string;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -90,6 +91,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
     connect(tokenObj) {
+        alert('efre')
         console.log(tokenObj.tokenId);
         this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
@@ -145,21 +147,32 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.twilioService.switchCamera('user');
         }
     }
+     getStatus() {
+        this.shared_services.getStatus(this.uuid)
+        .subscribe(data => {
+           this.result = data;
+           console.log(this.result)
+           if(this.result === false){
+             this.status = 'Consumer is not ready'
+           }
+          console.log(data)
+          this.api_loading = false;
+        });
+    }
     joinVideo(){
         console.log(this.type)
         if(this.type === 'provider'){
-            this.shared_services.getApptMeetingDetailsProvider(this.uuid)
-      .subscribe(data => {
-         this.result = data;
-         if(this.result === null){
-            //  this.joinVideo();
-         }
-        console.log(data)
-        this.api_loading = false;
-      },
-        () => {
-          this.api_loading = false;
-        });
+           
+            this.shared_services.getApptMeetingDetailsProvider(this.uuid) .subscribe(data => {
+                this.result = data;
+                this.getStatus();
+                if(this.result === null){
+                   //  this.joinVideo();
+                }
+               console.log(data)
+               this.api_loading = false;
+             },
+            );
         } else{
             this.shared_services.getVideoCall(this.uuid)
             .subscribe(data => {

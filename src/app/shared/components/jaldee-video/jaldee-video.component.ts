@@ -30,6 +30,7 @@ export class JaldeeVideoComponent implements OnInit {
   serviceName: any;
   businessName: any;
   description: any;
+  countrycode: string;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private shared_services: SharedServices,
@@ -81,7 +82,8 @@ export class JaldeeVideoComponent implements OnInit {
     });
   }
   getVideo() {
-    this.shared_services.getVideoList(this.phone)
+      this.countrycode = '91';
+    this.shared_services.getVideoList(this.countrycode, this.phone)
       .subscribe(data => {
         this.videoList = data;
         this.videoList.forEach(video_details => {
