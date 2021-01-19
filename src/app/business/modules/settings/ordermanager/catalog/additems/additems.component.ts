@@ -244,8 +244,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     console.log(this.itemsforadd[index].selected);
   }
   selectedItems() {
-    console.log(this.action);
-    console.log(this.cataId);
     this.api_loading = true;
     this.catalogItemsSelected = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
@@ -253,16 +251,24 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.selecteditemfordelete = [];
       this.selecteditemforupdate = [];
       this.selecteditemforadd = [];
+      let minqty = '';
+      let maxqty = '';
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
+        console.log(this.catalogItem[ia]);
+        minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+        maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+        if (minqty > maxqty) {
+          this.snackbarService.openSnackBar('' + this.catalogItem[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+          return;
+        }
        this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
        this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
        this.seletedCatalogItems1.item = this.catalogItem[ia];
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
     }
-    console.log(this.catalogItemsSelected);
-    console.log(this.addCatalogItems);
         this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'add',
@@ -393,8 +399,18 @@ selectedaddItems() {
   for (let ia = 0; ia < this.itemsforadd.length; ia++) {
     this.seletedCatalogItemsadd = {};
     this.selecteditemforadd = [];
+    let minqty = '';
+    let maxqty = '';
     console.log('minquty_' + this.itemsforadd[ia].itemId + '');
     if (this.itemsforadd[ia].selected === true) {
+      console.log(this.itemsforadd[ia]);
+        minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
+        maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
+        if (minqty > maxqty) {
+          this.snackbarService.openSnackBar('' + this.itemsforadd[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+          return;
+        }
      this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
      this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
      this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
