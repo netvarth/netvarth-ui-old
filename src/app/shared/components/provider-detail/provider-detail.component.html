@@ -142,7 +142,7 @@
                       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                           <ul class="bus-actions bus-actions-horiz no-padding">
                               <li class="more_less centeralign"><a class="more_less mgn-lt-3 lnk pointer-cursor"
-                                      (click)="redirectToHistory()">History</a></li>
+                                      (click)="redirectToHistory()" *ngIf="businessjson && businessjson.claimStatus!='Unclaimed'">History</a></li>
                               <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                       class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                       (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
