@@ -1799,7 +1799,7 @@ export class ProviderServices {
       const url = 'provider/order/settings/' + status;
       return this.servicemeta.httpPut(url);
    }
-   addCatalogItems(id,data) {
+   addCatalogItems(id, data) {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpPost(url, data);
    }
@@ -1807,7 +1807,7 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpDelete(url, data);
    }
-   deleteCatalogItem(id,itemid) {
+   deleteCatalogItem(id, itemid) {
       const url = 'provider/catalog/' + id + '/item/' + itemid;
       return this.servicemeta.httpDelete(url);
    }

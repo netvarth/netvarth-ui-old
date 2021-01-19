@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-reports',
@@ -13,6 +14,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
+  msg = 'Do you really want to delete this report ? ';
   order_criteria: any[];
   appointmentReports = [];
   donationReports = [];
@@ -97,12 +99,25 @@ export class ReportsComponent implements OnInit {
     });
   }
   deletCriteria(del_item) {
-    this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
-      if (data) {
-        this.getCriteriaList();
-        this.snackbarService.openSnackBar('Report Deleted');
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.msg
       }
     });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
+          if (data) {
+            this.getCriteriaList();
+            this.snackbarService.openSnackBar('Report Deleted');
+          }
+        });
+      }
+    });
+
   }
   viewCriteria(details) {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {

@@ -490,7 +490,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   confirm() {
     this.checkoutDisabled = true;
     console.log(this.nextAvailableTime);
-    let timeslot = this.nextAvailableTime.split(" - ");
+    const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
@@ -510,7 +510,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'orderFor': {
               'id': 0
             },
-            'timeSlot': { 
+            'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
               // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
@@ -775,8 +775,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   }
   goBackToCheckout(selectesTimeslot , queue) {
     this.action = '';
-    console.log(queue);  
-    let selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    console.log(queue);
+    const selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
     console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     // this.nextAvailableTime = selectesTimeslot;
