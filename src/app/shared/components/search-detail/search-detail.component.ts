@@ -1695,8 +1695,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             sector: claimdata['sector'],
             subSector: claimdata['subSector'],
             phoneNo: (claimdata['userProfile'].primaryMobileNo) ? claimdata['userProfile'].primaryMobileNo : '',
-            firstName: (claimdata['userProfile'].firstName) ? claimdata['userProfile'].firstName : 'wer',
-            lastName: (claimdata['userProfile'].lastName) ? claimdata['userProfile'].lastName : 'eee'
+            firstName: (claimdata['userProfile'].firstName) ? claimdata['userProfile'].firstName : '',
+            lastName: (claimdata['userProfile'].lastName) ? claimdata['userProfile'].lastName : ''
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
