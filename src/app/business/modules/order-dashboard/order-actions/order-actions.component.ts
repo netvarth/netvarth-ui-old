@@ -86,8 +86,9 @@ export class OrderActionsComponent implements OnInit {
       );
   }
   orderEdit() {
+    this.lStorageService.removeitemfromLocalStorage('order');
     console.log(this.orderDetails);
-     const cuser = this.groupService.getitemFromGroupStorage('accountId');
+    const cuser = this.groupService.getitemFromGroupStorage('accountId');
     const location = this.groupService.getitemFromGroupStorage('location');
     const ynwbp = this.groupService.getitemFromGroupStorage('ynwbp');
     const businessObject = {
@@ -102,6 +103,7 @@ export class OrderActionsComponent implements OnInit {
     this.providerservice.getProviderOrderById(this.orderDetails.uid).subscribe(data => {
       this.orderDetails = data;
       if (this.orderDetails && this.orderDetails.orderItem) {
+        console.log(this.orderDetails.orderItem);
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           for (let i = 0; i <= itemqty; i++) {
@@ -112,8 +114,10 @@ export class OrderActionsComponent implements OnInit {
               'itemImages': item.itemImages
 
             };
+            console.log(itemObj);
             this.orderList.push({'type': 'item', 'item': itemObj});
-          }
+            console.log(this.orderList);
+         }
 
         }
       }

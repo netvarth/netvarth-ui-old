@@ -177,10 +177,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.orderList = JSON.parse(localStorage.getItem('order'));
+      console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.orderCount = this.orders.length;
       this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
-      this.getStoreContact();
       this.showfuturediv = false;
       this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -426,6 +426,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
   }
   getTotalItemPrice() {
+    console.log(this.orderList);
     this.price = 0;
     for (const itemObj of this.orderList) {
       let item_price = itemObj.item.price;
@@ -725,12 +726,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   sidebar() {
     this.showSide = !this.showSide;
   }
-  getStoreContact() {
-    this.shared_services.getStoreContact(this.account_id)
-      .subscribe((data: any) => {
-        this.storeContact = data;
-      });
-  }
+ 
   // resetDateTime() {
   //   this.action = '';
   //   this.fetchCatalog();

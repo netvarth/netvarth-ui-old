@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-order-items',
@@ -23,7 +24,8 @@ export class OrderItemsComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
   ) { }
 
   ngOnInit() {
@@ -81,5 +83,61 @@ export class OrderItemsComponent implements OnInit {
     //   }
     // });
   }
+
+  cardClicked(actionObj) {
+    if (actionObj['type'] === 'item') {
+      if (actionObj['action'] === 'add') {
+        this.increment(actionObj['service']);
+      } else if (actionObj['action'] === 'remove') {
+        this.decrement(actionObj['service']);
+      }
+    }
+  }
+  increment(item) {
+    console.log(item);
+    this.addToCart(item);
+  }
+  decrement(item) {
+    console.log(item);
+    this.removeFromCart(item);
+  }
+  addToCart(itemObj) {
+    const item = itemObj.item;
+    this.orderList.push(itemObj);
+    console.log(this.orderList);
+    console.log(item);
+    console.log(itemObj);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    // this.getTotalItemAndPrice();
+    // this.getItemQty(item);   
+  }
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
+
+    for (const i in this.orderList) {
+      if (this.orderList[i].item.itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        if (this.orderList.length > 0 && this.orderList !== null) {
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        } else {
+          this.lStorageService.removeitemfromLocalStorage('order');
+        }
+        break;
+      }
+    }
+  }
+
+  // getItemQty(itemObj) {
+  //   let qty = 0;
+  //   if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
+  //     qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
+  //   }
+  //   console.log(qty);
+  //   return qty;
+  
+  // }
+     
+
+
 
 }
