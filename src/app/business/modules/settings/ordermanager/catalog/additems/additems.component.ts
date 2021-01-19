@@ -422,5 +422,7 @@ selectedaddItems() {
   }
     }
 
-
+    isNumber(evt) {
+      return this.shared_functions.isNumber(evt);
+  }
 }
