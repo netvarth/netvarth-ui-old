@@ -180,7 +180,7 @@ export class ProviderLoginComponent implements OnInit {
         () => {
           const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-          this.lStorageService.setitemonLocalStorage('busp', this.password);
+          this.lStorageService.setitemonLocalStorage('bpwd', data.password);
           if (this.qParams && this.qParams['src']) {
             if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
               this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));

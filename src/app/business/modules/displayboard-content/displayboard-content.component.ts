@@ -4,12 +4,12 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-// import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { DomSanitizer } from '@angular/platform-browser';
-import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { AuthService } from '../../../shared/services/auth-service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-displayboard-content',
@@ -75,8 +75,9 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         private shared_functions: SharedFunctions,
         public _sanitizer: DomSanitizer,
         public router: Router, private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService,
-        private lStorageService: LocalStorageService) {
+        private lStorageService: LocalStorageService,
+        private authService: AuthService,
+        private snackbarService: SnackbarService) {
         this.onResize();
         this.activated_route.params.subscribe(
             qparams => {
@@ -158,21 +159,23 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         //         this.getSingleStatusboard();
         //     });
         // }
-
-        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const isprovider = localStorage.getItem('isBusinessOwner') === 'true'
-        if (activeUser && isprovider) {
-            this.initBoard();
-        }
-        else {
-            this.lStorageService.setitemonLocalStorage('dB', this.router.url);
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                 'src': 'dB'
+        this.authService.goThroughBusinessLogin().then(
+            (userLoggedIn) => {
+                if(userLoggedIn) {
+                    this.lStorageService.removeitemfromLocalStorage('dB');
+                    this.initBoard();
+                } else {
+                    this.lStorageService.setitemonLocalStorage('dB', this.router.url);
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: {
+                         'src': 'dB'
+                        }
+                      };
+                      this.router.navigate(['business', 'login'], navigationExtras);
                 }
-              };
-              this.router.navigate(['business', 'login'], navigationExtras);
-        }      
+                
+            }
+        )
     }
     // qBoardSetValues(displayboard_data) {
     // }
@@ -254,6 +257,10 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     });
                     this.api_loading = false;
                 }
+            },
+            (error)=> {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.router.navigate(['/']);
             });
     }
     // getSingleStatusboard(sbId) {
