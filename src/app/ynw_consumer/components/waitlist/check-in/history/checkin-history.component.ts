@@ -433,4 +433,14 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
         }
       );
   }
+  addordertMessage(waitlist) {
+    const pass_ob = {};
+    pass_ob['source'] = 'consumer-waitlist';
+    pass_ob['uuid'] = waitlist.uid;
+    pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['typeOfMsg'] = 'single';
+    pass_ob['orders'] = 'orders';
+    this.addNote(pass_ob); 
+  }
 }
