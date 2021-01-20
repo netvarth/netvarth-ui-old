@@ -64,7 +64,8 @@ export class ExistingCheckinComponent implements OnInit {
     } else {
       this.checkinLabel = 'Check-In';
     }
-    this.provider_datastorage.set('terminologies', this.terminologiesjson);
+    // this.provider_datastorage.set('terminologies', this.terminologiesjson);
+    this.wordProcessor.setTerminologies(this.terminologiesjson);
     // this.checkinLabel = this.wordProcessor.firstToUpper(this.terminologiesjson['waitlist']);
     this.cancelledlabel = this.wordProcessor.firstToUpper(this.terminologiesjson['cancelled']);
     this.dialogRef.backdropClick().subscribe(() => {

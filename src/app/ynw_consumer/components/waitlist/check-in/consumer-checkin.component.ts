@@ -1774,7 +1774,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         if (this.terminologiesjson.length === 0) {
                             this.getbusinessprofiledetails_json('terminologies', true);
                         } else {
-                            this.datastorage.set('terminologies', this.terminologiesjson);
+                            // this.datastorage.set('terminologies', this.terminologiesjson);
                             this.wordProcessor.setTerminologies(this.terminologiesjson);
                         }
                     }
@@ -1804,7 +1804,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         break;
                     case 'terminologies':
                         this.terminologiesjson = res;
-                        this.datastorage.set('terminologies', this.terminologiesjson);
+                        // this.datastorage.set('terminologies', this.terminologiesjson);
                         this.wordProcessor.setTerminologies(this.terminologiesjson);
                         this.setTerminologyLabels();
                         break;

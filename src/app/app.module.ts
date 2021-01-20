@@ -95,6 +95,7 @@ import { GroupStorageService } from './shared/services/group-storage.service';
 import { WordProcessor } from './shared/services/word-processor.service';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
+import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -222,6 +223,7 @@ export function init_app(globalService: GlobalService) {
     WordProcessor,
     SnackbarService,
     Title,
+    CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
