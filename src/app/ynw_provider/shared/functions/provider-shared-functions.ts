@@ -372,13 +372,20 @@ export class ProviderSharedFuctions {
       }
     } else {
       type = 'single';
-      if (appt) {
+      if (appt === 'appt') {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
           waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
-      } else {
+      } else if(appt === 'order-provider') {
+        console.log(waitlist);
+        uuid = waitlist[0].uid || null;
+        name = waitlist[0].orderFor.firstName ? waitlist[0].orderFor.firstName : '' + ' ' +
+               waitlist[0].orderFor.lastName ? waitlist[0].orderFor.lastName : '';
+        email = waitlist[0].email;
+        phone = waitlist[0].phoneNumber;   
+      } else { 
         uuid = waitlist[0].ynwUuid || null;
         name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
           waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';

@@ -695,6 +695,10 @@ export class SharedServices {
     const url = 'provider/appointment/communicate/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+  addProviderOrderNote(uuid, body) {
+    const url = 'provider/orders/communicate/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
   addConsumerAppointmentNote(accountid, uuid, body) {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
@@ -709,6 +713,10 @@ export class SharedServices {
   }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
+  consumerOrderMassCommunicationAppt(data) {
+    const url = 'provider/orders/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);
   }
   addCustomerDonation(postData, accountid) {

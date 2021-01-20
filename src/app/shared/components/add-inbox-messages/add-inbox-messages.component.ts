@@ -88,6 +88,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders'){
         this.type = 'orders';
+      } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
+        this.type = 'order';
       } else {
         this.type = 'wl';
       }
@@ -353,6 +355,35 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             );
         } else {
           this.shared_services.addProviderAppointmentNote(this.uuid, dataToSend)
+            .subscribe(
+              () => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        }
+      }  else if (this.type === 'order') {
+        if (this.selectedMessage.files.length === 0) {
+          this.shared_services.consumerOrderMassCommunicationAppt(postdata).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        } else {
+          this.shared_services.addProviderOrderNote(this.uuid, dataToSend)
             .subscribe(
               () => {
                 this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;

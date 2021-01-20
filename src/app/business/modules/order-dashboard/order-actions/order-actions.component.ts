@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
+import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
   
 @Component({
   selector: 'app-order-actions',
@@ -44,6 +45,7 @@ export class OrderActionsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private provider_shared_functions: ProviderSharedFuctions,
     private lStorageService:LocalStorageService) { }
 
   ngOnInit() {
@@ -317,5 +319,24 @@ getDisplayname(label) {
           return this.providerLabels[i].displayName;
       }
   }
+}
+addConsumerInboxMessage() {
+  this.dialogRef.close();
+  let checkin = [];
+  // if (this.orderDetails.length > 1) {
+  //   this.mulipleSelection = true;
+  // }
+  // if (this.data.multiSelection) {
+  //     checkin = this.orderDetails;
+  // } else {
+  //     checkin.push(this.orderDetails);
+  // }
+  checkin.push(this.orderDetails);
+  console.log(checkin);
+  this.provider_shared_functions.addConsumerInboxMessage(checkin, this ,'order-provider')
+      .then(
+          () => { },
+          () => { }
+      );
 }
 }
