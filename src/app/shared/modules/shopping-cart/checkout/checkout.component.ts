@@ -446,13 +446,16 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       this.shared_services.updateConsumeraddress(this.added_address)
       .subscribe(
         data => {
+          if(data){
+            this.getaddress();
+          }
          this.snackbarService.openSnackBar('Address Updated successfully');
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-      this.getaddress();
+      // this.getaddress();
       }
     });
   }
