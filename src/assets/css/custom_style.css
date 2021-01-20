@@ -27082,5 +27082,7 @@ color: #fff !important;
   user-select: none;
   margin-left: 25px;
 }
-
+.createCustomer .form-group .pickerouter .mat-datepicker-toggle button svg{
+width: 40px !important;
+}
 

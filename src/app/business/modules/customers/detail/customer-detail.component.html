@@ -54,7 +54,7 @@
         </h5>
     </div>
 </section>
-<section>
+<section class="createCustomer">
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
             <div class="row">
@@ -198,7 +198,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 </div>
                                 <div class="mgn-up-20">
                                     <label class="col-form-label" for="gender">{{gender_cap}}</label>
-                                    <mat-radio-group formControlName="gender">
+                                    <mat-radio-group class = "mgn-lt-10" formControlName="gender">
                                         <mat-radio-button value="male">{{male_cap}}</mat-radio-button>
                                         <mat-radio-button class="mat-radio-button-createpatient" value="female">
                                             {{female_cap}}</mat-radio-button>
@@ -246,7 +246,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 </div>
                             </form>
                         </div>
-                        <div class="class = lbr col-sm-12 col-md-12 col-lg-12">
+                        <div class="class = lbr col-sm-12 col-md-12 col-lg-12" style="background: white !important;">
                             <!-- <div class="col-md-12  mgn-up-20 ">
                                 <button class="cs-btn bt3 width-100 mgn-up-20" (click)="findCustomer()">Find {{customer_label}}</button>
                             </div>
