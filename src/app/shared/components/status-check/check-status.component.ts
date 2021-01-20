@@ -93,6 +93,7 @@ export class CheckYourStatusComponent implements OnInit {
     });
   }
   ngOnInit() {
+    console.log(this.check_in_statuses);
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
