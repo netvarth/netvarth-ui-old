@@ -703,6 +703,10 @@ export class SharedServices {
     const url = 'consumer/order/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
+  addConsumerOrderNotecomm(accountid, uuid, body) {
+    const url = 'consumer/orders/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
+  }
   consumerMassCommunicationAppt(data) {
     const url = 'provider/appointment/consumerMassCommunication';
     return this.servicemeta.httpPost(url, data);

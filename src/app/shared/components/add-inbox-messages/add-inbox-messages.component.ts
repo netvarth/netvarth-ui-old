@@ -86,8 +86,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'appt';
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order'){
         this.type = 'order';
-      }
-      else{
+      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders'){
+        this.type = 'orders';
+      } else {
         this.type = 'wl';
       }
     }
@@ -428,6 +429,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           );
       } else if (this.type === 'order'){
         this.shared_services.addConsumerOrderNote(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+          );
+      }  else if (this.type === 'orders'){
+        this.shared_services.addConsumerOrderNotecomm(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
             () => {

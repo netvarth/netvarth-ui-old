@@ -1045,6 +1045,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (type === 'appt') {
       pass_ob['appt'] = type;
       pass_ob['uuid'] = waitlist.uid;
+    }else if(type === 'orders') {
+      pass_ob['orders'] = type;
+      pass_ob['uuid'] = waitlist.uid;
     } else {
       pass_ob['uuid'] = waitlist.ynwUuid;
     }
