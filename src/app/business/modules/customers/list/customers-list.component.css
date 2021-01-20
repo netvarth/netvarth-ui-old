@@ -1,0 +1,14 @@
+.customersList {
+
+}
+@media screen and (max-width: 1000px) {
+    .customersList .part2 {
+      display: none;
+    }
+    .customersList .visible {
+        display: inherit !important;
+    }
+    .customersList .invisible {
+        display: none;
+    }
+  }

@@ -13,7 +13,8 @@ import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-deta
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
 @Component({
   selector: 'app-customers-list',
-  templateUrl: './customers-list.component.html'
+  templateUrl: './customers-list.component.html',
+  styleUrls: ['./customers-list.component.css']
 })
 
 export class CustomersListComponent implements OnInit {
@@ -95,6 +96,7 @@ export class CustomersListComponent implements OnInit {
   selectedLabels: any = [];
   labelFilterData = '';
   allLabels: any = [];
+  visibility = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -486,6 +488,9 @@ export class CustomersListComponent implements OnInit {
         return this.allLabels[i].displayName;
       }
     }
+  }
+  seeVisible() {
+    this.visibility = true;
   }
 }
 

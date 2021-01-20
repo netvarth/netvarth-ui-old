@@ -13001,8 +13001,8 @@ video {
 
 .bg-theme-1{
   --bg-opacity: 1;
-  background-color: #1C3FAA;
-  background-color: rgba(28, 63, 170, var(--bg-opacity));
+  background-color: #1e4079;
+  /* background-color: rgba(28, 63, 170, var(--bg-opacity)); */
 }
 
 .bg-theme-2{
@@ -17440,7 +17440,7 @@ video {
 }
 
 .rounded-none{
-  border-radius: 0;
+  border-radius: 0 !important;
 }
 
 .rounded-sm{
@@ -18258,7 +18258,7 @@ video {
 }
 
 .font-roboto{
-  font-family: Roboto;
+  font-family: Roboto !important;
 }
 
 .font-hairline{
@@ -18462,7 +18462,7 @@ video {
 }
 
 .text-sm{
-  font-size: 0.875rem;
+  font-size: 0.875rem !important;
 }
 
 .text-base{
@@ -21156,7 +21156,7 @@ video {
 }
 
 .p-0{
-  padding: 0;
+  padding: 0 !important;
 }
 
 .p-1{
@@ -30664,7 +30664,7 @@ video {
 }
 
 .shadow-none{
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .hover\:shadow-xs:hover{
@@ -162976,4 +162976,9 @@ video {
   .xxl\:delay-1000{
     transition-delay: 1000ms;
   }
+}
+
+/* Custom styles common*/
+.midon-bg-none {
+    background: none !important;
 }
