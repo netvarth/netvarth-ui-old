@@ -11,6 +11,9 @@ import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-managesettings',
@@ -180,7 +183,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   };
   businessConfig: any = [];
   // customer_label = '';
-  maintooltip = this.sharedfunctionObj.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -214,10 +217,13 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     private provider_shared_functions: ProviderSharedFuctions,
     private activatedRoot: ActivatedRoute,
     private provider_services: ProviderServices,
-    private shared_service: SharedServices
+    private shared_service: SharedServices,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activatedRoot.params.subscribe(params => {
       this.userId = params.id;
     });
@@ -236,10 +242,10 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
       this.businessProfile_weightageArray = result;
       // console.log( JSON.stringify(this.businessProfile_weightageArray));
@@ -296,7 +302,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
                   bdata: res
                 };
                 this.domainList = postdata;
-                this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+                this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
               }
             );
 

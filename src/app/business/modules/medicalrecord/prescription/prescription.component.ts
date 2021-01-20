@@ -11,6 +11,9 @@ import { ImagesviewComponent } from './imagesview/imagesview.component';
 import { projectConstants } from '../..../../../../../app.component';
 import { ShareRxComponent } from './share-rx/share-rx.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-prescription',
@@ -75,6 +78,9 @@ export class PrescriptionComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private medicalrecord_service: MedicalrecordService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService
   ) {
 
   }
@@ -86,7 +92,7 @@ export class PrescriptionComponent implements OnInit {
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     this.provider_user_Id = this.medicalrecord_service.getDoctorId();
     if (!this.provider_user_Id) {
-      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.provider_user_Id = user.id;
     }
     if (this.mrId === 0) {
@@ -108,7 +114,7 @@ export class PrescriptionComponent implements OnInit {
         }
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   deleteTempImage(index) {
@@ -119,9 +125,9 @@ export class PrescriptionComponent implements OnInit {
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
         } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();
@@ -199,7 +205,7 @@ export class PrescriptionComponent implements OnInit {
         this.loading = false;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   openImageModalRow(image: Image) {
@@ -238,25 +244,25 @@ export class PrescriptionComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.updateMRprescription(result, this.mrId).
         subscribe(res => {
-          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.snackbarService.openSnackBar('Prescription Saved Successfully');
           this.getMrprescription(this.mrId);
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
       this.medicalrecord_service.createMR('prescriptions', result)
         .then((data: number) => {
           this.mrId = data;
-          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.snackbarService.openSnackBar('Prescription Saved Successfully');
           this.getMrprescription(this.mrId);
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }

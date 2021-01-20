@@ -6,6 +6,7 @@ import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-provider-note',
@@ -35,7 +36,8 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-
+    private wordProcessor: WordProcessor
+    
   ) {
     this.checkin_id = this.data.checkin_id || null;
     this.message = this.data.message;
@@ -45,7 +47,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         this.dialogRef.close('error');
       }, projectConstants.TIMEOUT_DELAY);
     }
-    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
 
   ngOnInit() {
@@ -72,13 +74,13 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         post_data)
         .subscribe(
           () => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
             this.disableButton = false;
           }
         );
@@ -87,13 +89,13 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         post_data)
         .subscribe(
           () => {
-            this.api_success = this.sharedfunctionObj.getProjectMesssages('PROVIDER_NOTE_ADD');
+            this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
             this.disableButton = false;
           }
         );

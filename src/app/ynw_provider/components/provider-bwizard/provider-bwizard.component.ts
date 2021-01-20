@@ -16,6 +16,10 @@ import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { JoyrideService } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
 import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-provider-bwizard',
@@ -241,10 +245,14 @@ export class ProviderbWizardComponent implements OnInit {
     private dialog: MatDialog,
     private routerobj: Router, private qservice: QuestionService,
     @Inject(DOCUMENT) public document,
-    private readonly joyrideService: JoyrideService
+    private readonly joyrideService: JoyrideService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService
   ) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {
@@ -282,7 +290,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
 
   getUserdetails() {
-    this.userdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.userdet = this.groupService.getitemFromGroupStorage('ynw-user');
   }
 
   showStep(changetostep) {
@@ -343,7 +351,7 @@ export class ProviderbWizardComponent implements OnInit {
             },
             (error) => {
               this.loading_active = false;
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
         // }
@@ -478,7 +486,7 @@ export class ProviderbWizardComponent implements OnInit {
             (error) => {
               this.loading_active = false;
               // this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
         break;
@@ -532,7 +540,7 @@ export class ProviderbWizardComponent implements OnInit {
             (error) => {
               this.loading_active = false;
               if (changetostep > this.active_step) {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               } else {
                 this.active_step = this.wizardPageShowDecision(this.active_step, changetostep);
               }
@@ -814,14 +822,14 @@ export class ProviderbWizardComponent implements OnInit {
     this.shared_services.bussinessDomains()
       .subscribe(data => {
         this.businessConfig = data;
-        const bprof = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+        const bprof = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         if (bprof === null || bprof === undefined) {
           const today = new Date();
           const postdata = {
             cdate: today,
             bdata: this.businessConfig
           };
-          this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+          this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
         }
         this.getBusinessProfile();
       },
@@ -861,7 +869,7 @@ export class ProviderbWizardComponent implements OnInit {
         }
       }, error => {
         if (status === 'ENABLE') {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         this.search_status = prevstat;
       });
@@ -1022,7 +1030,7 @@ export class ProviderbWizardComponent implements OnInit {
           this.payment_settings = data;
           this.payment_loading = false;
           if (!this.payment_settings.onlinePayment) {
-            this.shared_functions.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
+            this.wordProcessor.apiErrorAutoHide(this, Messages.SERVICE_PRE_PAY_ERROR);
             if (this.isServiceBillable) {
               this.amForm.get('isPrePayment').setValue(false);
               this.changePrepayment();
@@ -1035,7 +1043,7 @@ export class ProviderbWizardComponent implements OnInit {
   }
   taxapplicableChange() {
     if (this.taxpercentage <= 0) {
-      this.api_error = this.shared_functions.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+      this.api_error = this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
       setTimeout(() => {
         this.api_error = null;
       }, projectConstants.TIMEOUT_DELAY_LARGE);
@@ -1078,8 +1086,8 @@ export class ProviderbWizardComponent implements OnInit {
           // this.add_more_queue_in_set_cap = Messages.WIZ_ADD_MORE_QUEUE_IN_THE_SETT_CAP;
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1090,7 +1098,7 @@ export class ProviderbWizardComponent implements OnInit {
           this.service = data[0];
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -1119,7 +1127,7 @@ export class ProviderbWizardComponent implements OnInit {
     }
   }
   getDomainSubdomainSettings() {
-    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     this.provider_services.domainSubdomainSettings(domain, sub_domain)
@@ -1250,14 +1258,14 @@ export class ProviderbWizardComponent implements OnInit {
     };
     this.provider_services.updatePrimaryFields(postdata)
       .subscribe(data => {
-        this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
+        this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SPECIALIZATION_SAVED');
         this.showSpecial = true;
         this.getBusinessProfile();
         setTimeout(() => {
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1345,7 +1353,7 @@ export class ProviderbWizardComponent implements OnInit {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1361,7 +1369,7 @@ export class ProviderbWizardComponent implements OnInit {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1380,8 +1388,8 @@ export class ProviderbWizardComponent implements OnInit {
           this.showAddSection1 = false;
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.wordProcessor.apiErrorAutoHide(this, error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1413,8 +1421,8 @@ export class ProviderbWizardComponent implements OnInit {
           this.showAddSection1 = false;
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.wordProcessor.apiErrorAutoHide(this, error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

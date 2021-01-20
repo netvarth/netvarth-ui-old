@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
     'selector': 'app-payment-settings',
@@ -32,13 +34,15 @@ export class PaymentSettingsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     constructor(private router: Router,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) {
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.jaldee_pay_cap = Messages.JALDEE_PAY_MSG.replace('[customer]', this.customer_label);
         this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getpaymentDetails();
@@ -71,11 +75,11 @@ export class PaymentSettingsComponent implements OnInit {
         (event.checked) ? status = 'enable' : status = 'disable';
         this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
             this.getpaymentDetails();
-            this.shared_functions.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         },
             error => {
                 this.getpaymentDetails();
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     performActions(action) {

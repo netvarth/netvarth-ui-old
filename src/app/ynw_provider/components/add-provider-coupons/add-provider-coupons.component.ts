@@ -7,6 +7,7 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-add-coupons',
@@ -42,7 +43,8 @@ export class AddProviderCouponsComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
   }
   ngOnInit() {
@@ -114,13 +116,13 @@ export class AddProviderCouponsComponent implements OnInit {
     this.provider_services.addCoupon(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('COUPON_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('COUPON_CREATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -133,13 +135,13 @@ export class AddProviderCouponsComponent implements OnInit {
     this.provider_services.editCoupon(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('COUPON_UPDATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('COUPON_UPDATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }

@@ -2,7 +2,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -12,6 +12,10 @@ import { FormMessageDisplayService } from '../../form-message-display/form-messa
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-providersignup',
@@ -69,7 +73,7 @@ export class ProvidersignupComponent implements OnInit {
   CorporateBranch;
   action = false;
   bank_action = false;
-  otp = null;
+  otp = '';
   isValidOtp = false;
   user_details;
   domainIsthere;
@@ -121,7 +125,7 @@ export class ProvidersignupComponent implements OnInit {
   refreshTime = 30;
   otp_mobile = null;
   providerPwd;
-  email;
+  email = '';
   isValidConfirm_pw = true;
   hideOtpSection = true;
   joinClicked = false;
@@ -146,21 +150,30 @@ export class ProvidersignupComponent implements OnInit {
   };
   scInfo;
   scCode_Ph;
+  claimDetails;
   constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
-    public shared_services: SharedServices,
+    public shared_services: SharedServices, public activatedRoute: ActivatedRoute,
     private router: Router, private provider_services: ProviderServices,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.claimDetails = params;
+    });
+  }
   @Inject(DOCUMENT) public document;
 
   ngOnInit() {
     if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
+      this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.active_step = 0;
-    this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;
     }
@@ -168,7 +181,7 @@ export class ProvidersignupComponent implements OnInit {
       this.fname = this.ynwUser.firstName;
       this.lname = this.ynwUser.lastName;
     }
-    this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
+    this.lStorageService.removeitemfromLocalStorage('ynw-createprov');
     this.moreParams = this.data.moreParams;
     this.heading = 'Service Provider Sign Up';
     if (this.data.moreOptions === undefined) {
@@ -190,8 +203,13 @@ export class ProvidersignupComponent implements OnInit {
       .subscribe(
         data => {
           this.business_domains = data;
-          this.selectedDomain = this.business_domains[0];
-          this.selectedSubDomain = this.selectedDomain.subDomains[0];
+          if (this.claimDetails && this.claimDetails.sector) {
+            const filteredList = this.business_domains.filter(domain => domain.domain === this.claimDetails.sector.toString());
+            this.selectedDomain = filteredList[0];
+          } else {
+            this.selectedDomain = this.business_domains[0];
+            this.selectedSubDomain = this.selectedDomain.subDomains[0];
+          }
           this.domainIndex[0] = false;
           // this.subdomainlist = this.selectedDomain.subDomains;
           // this.getPackages();
@@ -230,6 +248,17 @@ export class ProvidersignupComponent implements OnInit {
       package_id: [''],
       terms_condition: ['true'],
     });
+    if (this.claimDetails) {
+      if (this.claimDetails.phoneNo) {
+        this.signupForm.get('phonenumber').setValue(this.claimDetails.phoneNo);
+      }
+      if (this.claimDetails.firstName) {
+        this.signupForm.get('first_name').setValue(this.claimDetails.firstName);
+      }
+      if (this.claimDetails.lastName) {
+        this.signupForm.get('last_name').setValue(this.claimDetails.lastName);
+      }
+    }
   }
   createFormSpecial(step) {
     this.step = step;
@@ -288,7 +317,7 @@ export class ProvidersignupComponent implements OnInit {
       .subscribe(
         () => {
           this.actionstarted = false;
-          this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
+          this.lStorageService.setitemonLocalStorage('unClaimAccount', false);
           this.createForm();
           this.resendemailotpsuccess = true;
           if (user_details.userProfile &&
@@ -302,9 +331,9 @@ export class ProvidersignupComponent implements OnInit {
           this.showOTPContainer = true;
           this.showOTPEmailContainer = false;
           if (user_details.userProfile.email) {
-            this.shared_functions.openSnackBar('OTP is sent to Your email id');
+            this.snackbarService.openSnackBar('OTP is sent to Your email id');
           } else if (user_details.userProfile.primaryMobileNo) {
-            this.shared_functions.openSnackBar('OTP is sent to Your Mobile Number');
+            this.snackbarService.openSnackBar('OTP is sent to Your Mobile Number');
           }
           if (!source) {
             this.createpasswordform();
@@ -318,14 +347,14 @@ export class ProvidersignupComponent implements OnInit {
         },
         error => {
           this.actionstarted = false;
-          if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
+          if (this.lStorageService.getitemfromLocalStorage('unClaimAccount')) {
           } else {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         }
       );
   }
-  
+
 
 
   // onReferalSubmit(sccode) {
@@ -343,7 +372,7 @@ export class ProvidersignupComponent implements OnInit {
           this.signUpApiProvider(this.user_details);
         });
       } else {
-        this.shared_functions.openSnackBar('Please enter Sales Partner Id/ Phone', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please enter Sales Partner Id/ Phone', { 'panelClass': 'snackbarerror' });
       }
     } else {
       this.signUpApiProvider(this.user_details);
@@ -378,7 +407,7 @@ export class ProvidersignupComponent implements OnInit {
               }
             },
             (error) => {
-              this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               this.scfound = false;
               this.scCode = null;
             }
@@ -390,24 +419,24 @@ export class ProvidersignupComponent implements OnInit {
   signUpFinished(login_data) {
     if (this.ynw_credentials != null) {
       this.shared_functions.doLogout().then(() => {
-        this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+        this.lStorageService.setitemonLocalStorage('new_provider', 'true');
         this.shared_functions.providerLogin(login_data);
         const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-        this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-        this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+        this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+        this.lStorageService.setitemonLocalStorage('newProvider', 'true');
       });
     } else {
-      this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+      this.lStorageService.setitemonLocalStorage('new_provider', 'true');
       this.shared_functions.providerLogin(login_data);
       const encrypted = this.shared_services.set(this.providerPwd, projectConstants.KEY);
-      this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-      this.shared_functions.setitemonLocalStorage('newProvider', 'true');
+      this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+      this.lStorageService.setitemonLocalStorage('newProvider', 'true');
     }
   }
   setPassword() {
-    const post_data = { 
-      countryCode : this.selectedCountryCode,
-      password: this.spForm.get('new_password').value 
+    const post_data = {
+      countryCode: this.selectedCountryCode,
+      password: this.spForm.get('new_password').value
     };
     this.shared_services.ProviderSetPassword(this.otp, post_data)
       .subscribe(
@@ -426,7 +455,7 @@ export class ProvidersignupComponent implements OnInit {
           this.actionstarted = false;
           this.joinClicked = false;
           this.api_loading = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -458,25 +487,29 @@ export class ProvidersignupComponent implements OnInit {
     });
   }
   onOtpSubmit() {
-    this.actionstarted = true;
-    // this.joinClicked = true;
-    this.resetApiErrors();
-    return new Promise<void>((resolve, reject) => {
-      this.shared_services.OtpSignUpProviderValidate(this.otp)
-        .subscribe(
-          () => {
-            this.actionstarted = false;
-            this.isValidOtp = true;
-            this.hideOtpSection = false;
-            resolve();
-          },
-          error => {
-            this.actionstarted = false;
-            // this.joinClicked = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    });
+    if (this.otp === '') {
+      this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.actionstarted = true;
+      // this.joinClicked = true;
+      this.resetApiErrors();
+      return new Promise<void>((resolve, reject) => {
+        this.shared_services.OtpSignUpProviderValidate(this.otp)
+          .subscribe(
+            () => {
+              this.actionstarted = false;
+              this.isValidOtp = true;
+              this.hideOtpSection = false;
+              resolve();
+            },
+            error => {
+              this.actionstarted = false;
+              // this.joinClicked = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      });
+    }
   }
   onPasswordSubmit() {
     this.actionstarted = true;
@@ -493,7 +526,7 @@ export class ProvidersignupComponent implements OnInit {
         (error) => {
           this.joinClicked = false;
           this.api_loading = false;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
       // },
       //   (error) => {
@@ -507,7 +540,7 @@ export class ProvidersignupComponent implements OnInit {
     // } else {
     //   this.joinClicked = false;
     //   this.api_loading = false;
-    //   this.shared_functions.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
+    //   this.snackbarService.openSnackBar('Please enter OTP', { 'panelClass': 'snackbarerror' });
     // }
   }
   resetApiErrors() {
@@ -550,7 +583,7 @@ export class ProvidersignupComponent implements OnInit {
   }
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }
@@ -570,7 +603,7 @@ export class ProvidersignupComponent implements OnInit {
   onCancelPass() {
     if (this.step === 4) {
       this.step = 5;
-      this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
+      this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
   goBusinessClicked() {
@@ -630,7 +663,7 @@ export class ProvidersignupComponent implements OnInit {
     this.checkAccountExists().then(
       (accountExists) => {
         if (accountExists) {
-          this.shared_functions.openSnackBar('Alert! The mobile number you have entered is already registered with Jaldee. Try again with different number.', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Alert! The mobile number you have entered is already registered with Jaldee. Try again with different number.', { 'panelClass': 'snackbarerror' });
           return;
         } else {
           let userProfile = {
@@ -660,14 +693,14 @@ export class ProvidersignupComponent implements OnInit {
           // const fname = userProfile.firstName.trim();
           // const lname = userProfile.lastName.trim();
           // if (fname === '') {
-          //   this.shared_functions.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
+          //   this.snackbarService.openSnackBar('First name is required', { 'panelClass': 'snackbarerror' })
           //   if (document.getElementById('first_name')) {
           //     document.getElementById('first_name').focus();
           //   }
           //   return;
           // }
           // if (lname === '') {
-          //   this.shared_functions.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
+          //   this.snackbarService.openSnackBar('Last name is required', { 'panelClass': 'snackbarerror' });
           //   if (document.getElementById('last_name')) {
           //     document.getElementById('last_name').focus();
           //   }
@@ -743,11 +776,15 @@ export class ProvidersignupComponent implements OnInit {
     this.showOTPEmailContainer = true;
   }
   resendViaEmail() {
-    this.user_details.userProfile.email = this.email;
-    this.resendOtp(this.user_details);
-    this.resetCounter(this.refreshTime);
-    this.checking_email_otpsuccess = true;
-    this.setMessage('email', this.email);
+    if (this.email === '') {
+      this.snackbarService.openSnackBar('Please enter your email id', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.user_details.userProfile.email = this.email;
+      this.resendOtp(this.user_details);
+      this.resetCounter(this.refreshTime);
+      this.checking_email_otpsuccess = true;
+      this.setMessage('email', this.email);
+    }
   }
   doCancelEmailOTP() {
     this.resetApiErrors();
@@ -767,29 +804,39 @@ export class ProvidersignupComponent implements OnInit {
   //     this.user_details['licPkgId'] = 9;
   //     this.active_step = 2;
   //   } else {
-  //     this.shared_functions.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
+  //     this.snackbarService.openSnackBar('Select your area of specialization', { 'panelClass': 'snackbarerror' });
   //     return;
   //   }
   // }
-  handleDomainSelection () {
-    this.selectedSubDomain = this.selectedDomain.subDomains[0];
+  handleDomainSelection() {
+    if (this.claimDetails.subSector) {
+      const subdomains = this.selectedDomain.subDomains.filter(subdom => subdom.subDomain === this.claimDetails.subSector.toString());
+      if (subdomains[0]) {
+        this.selectedSubDomain = subdomains[0];
+      } else {
+        this.selectedSubDomain = this.selectedDomain.subDomains[0];
+      }
+    } else {
+      this.selectedSubDomain = this.selectedDomain.subDomains[0];
+    }
     this.user_details['sector'] = this.selectedDomain.domain;
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.user_details['licPkgId'] = 9;
+    this.user_details['accountId'] = this.claimDetails.accountId;
     if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
       this.active_step = 4;
     } else {
       this.active_step = 2;
     }
   }
-  backToSubdomains () {
+  backToSubdomains() {
     if (this.selectedDomain && this.selectedDomain.subDomains.length > 1) {
       this.active_step = 4;
     } else {
       this.active_step = 1;
     }
   }
-  handleSubDomainSelection () {
+  handleSubDomainSelection() {
     this.user_details['subSector'] = this.selectedSubDomain.subDomain;
     this.active_step = 2;
   }

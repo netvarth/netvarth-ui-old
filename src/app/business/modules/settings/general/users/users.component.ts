@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +8,9 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
 
@@ -89,16 +91,18 @@ export class BranchUsersComponent implements OnInit {
         private routerobj: Router,
         private provider_services: ProviderServices,
         private dialog: MatDialog,
-        private shared_functions: SharedFunctions) {
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor) {
     }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
         this.getUsers();
-        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-        this.assistant_label = this.shared_functions.getTerminologyTerm('assistant');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.getLicenseUsage();
     }
@@ -170,7 +174,7 @@ export class BranchUsersComponent implements OnInit {
     //                 this.getUsers();
     //             },
     //             (error) => {
-    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //                 this.getUsers();
     //             });
     // }
@@ -205,7 +209,7 @@ export class BranchUsersComponent implements OnInit {
                         this.getUsers();
                     },
                     (error) => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getUsers();
                     });
             }
@@ -217,7 +221,7 @@ export class BranchUsersComponent implements OnInit {
                     this.getUsers();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getUsers();
                 });
     }
@@ -247,11 +251,11 @@ export class BranchUsersComponent implements OnInit {
                         },
 
                         (error: any) => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
                 },
                 (error: any) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     getDepartmentNamebyId(id) {
@@ -371,7 +375,7 @@ export class BranchUsersComponent implements OnInit {
                 this.getUsers();
             },
             (error) => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.getUsers();
             });
 
@@ -394,7 +398,7 @@ export class BranchUsersComponent implements OnInit {
                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

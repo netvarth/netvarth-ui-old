@@ -7,6 +7,10 @@ import { QuestionService } from '../../../../../../../../ynw_provider/components
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../../../../../app.component';
 import { ProviderUserBprofileSearchDynamicComponent } from './provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
+import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-useradditionalinfo',
     templateUrl: './additionalinfo.component.html',
@@ -60,15 +64,18 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     userId: any;
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private dialog: MatDialog,
         private routerobj: Router,
         private activated_route: ActivatedRoute,
         public shared_functions: SharedFunctions,
-        private service: QuestionService
+        private service: QuestionService,
+        private lStorageService: LocalStorageService,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService
     ) {
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
-        this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.searchquestiontooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
@@ -81,8 +88,8 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         this.domain = user.sector;
         this.bProfile['domain'] = this.domain;
         this.getUser();
@@ -346,7 +353,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 if (str !== '') {
                     str += ', ';
                 }
-                str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+                str += this.wordProcessor.firstToUpper(fld.value[i]);
             }
             return str;
         }
@@ -418,7 +425,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 },
                 (error) => {
                     this.getBusinessProfile(); // refresh data ;
-                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -431,7 +438,7 @@ export class AdditionalInfoComponent implements OnInit, OnDestroy {
                 },
                 (error) => {
                     this.getBusinessProfile(); // refresh data ;
-                    this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

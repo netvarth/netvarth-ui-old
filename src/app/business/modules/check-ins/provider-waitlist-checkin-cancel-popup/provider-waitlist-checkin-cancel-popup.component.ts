@@ -7,6 +7,9 @@ import { Messages } from '../../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-cancel-popup',
@@ -47,23 +50,24 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ProviderWaitlistCheckInCancelPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: FormBuilder, public dateformat: DateFormatPipe,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
-
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     // if (this.data.appt || this.data.type === 'appt') {
     //   this.checkin_label = this.cancel_cap + ' Appointment';
     // } else {
-    //   this.checkin_label = this.cancel_cap + ' ' + this.sharedfunctionObj.getTerminologyTerm('waitlist');
+    //   this.checkin_label = this.cancel_cap + ' ' + this.wordProcessor.getTerminologyTerm('waitlist');
     // }
   }
 
   ngOnInit() {
     const reasons_list = [];
-    const type = this.sharedfunctionObj.getitemFromGroupStorage('pdtyp');
+    const type = this.groupService.getitemFromGroupStorage('pdtyp');
     // const reasons = projectConstants.WAITLIST_CANCEL_RESON;
     const reasons = projectConstantsLocal.WAITLIST_CANCEL_REASON;
     for (let i = 0; i < reasons.length; i++) {
@@ -78,12 +82,12 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
       if (this.data.appt) {
         this.rep_username = this.data.waitlist.appmtFor[0].firstName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].firstName) : '' + ' ' +
           this.data.waitlist.appmtFor[0].lastName ? this.titleCaseWord(this.data.waitlist.appmtFor[0].lastName) : '';
-        this.rep_date = this.titleCaseWord(this.data.waitlist.appmtDate);
+        this.rep_date = this.titleCaseWord(this.dateformat.transformToMonthlyDate(this.data.waitlist.appmtDate));
         this.rep_time = this.titleCaseWord(this.data.waitlist.apptTakenTime);
       } else {
         this.rep_username = this.data.waitlist.waitlistingFor[0].firstName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].firstName) : '' + ' ' +
           this.data.waitlist.waitlistingFor[0].lastName ? this.titleCaseWord(this.data.waitlist.waitlistingFor[0].lastName) : '';
-        this.rep_date = this.titleCaseWord(this.data.waitlist.date);
+        this.rep_date = this.titleCaseWord(this.dateformat.transformToMonthlyDate(this.data.waitlist.date));
         this.rep_time = this.titleCaseWord(this.data.waitlist.checkInTime);
       }
       if (!this.rep_username) {

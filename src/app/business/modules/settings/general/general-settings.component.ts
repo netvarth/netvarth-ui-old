@@ -3,9 +3,11 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     'selector': 'app-general-settings',
@@ -51,15 +53,17 @@ export class GeneralSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private shared_services: SharedServices,
         private dialog: MatDialog,
-        private shared_functions: SharedFunctions) {
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.account_type = user.accountType;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
-        // this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        // this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.getWaitlistMgr();
         // this.getLiveTrackStatus();
         this.getLocationCount();
@@ -142,17 +146,17 @@ export class GeneralSettingsComponent implements OnInit {
                             this.multipeLocationAllowed = true;
                         }
                         if (this.multipeLocationAllowed === true) {
-                            this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+                            this.locName = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
                         }
                         if (this.multipeLocationAllowed === false) {
-                            this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+                            this.locName = this.wordProcessor.getProjectMesssages('WIZ_LOCATION_CAP');
                         }
                     }
                 }
             });
     }
     getDomainSubdomainSettings() {
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
@@ -183,11 +187,11 @@ export class GeneralSettingsComponent implements OnInit {
     //     this.provider_services.setLivetrack(is_livetrack)
     //         .subscribe(
     //             () => {
-    //                 this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
     //                 this.getLiveTrackStatus();
     //             },
     //             error => {
-    //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //                 this.getLiveTrackStatus();
     //             }
     //         );
@@ -222,7 +226,7 @@ export class GeneralSettingsComponent implements OnInit {
                             this.getWaitlistMgr();
                         },
                         error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             } else {
                 this.filterByDept = (this.filterByDept === true) ? false : true;

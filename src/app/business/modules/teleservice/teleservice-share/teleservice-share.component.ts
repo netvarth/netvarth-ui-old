@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-teleservice-share',
@@ -27,7 +29,7 @@ export class TeleServiceShareComponent implements OnInit {
   provider_label: any;
   sendMeetingDetails: any;
   sms = true;
-  email = true;
+  email = false;
   pushnotify = true;
   reminder_cap: any;
   msg_to_user;
@@ -61,24 +63,37 @@ export class TeleServiceShareComponent implements OnInit {
   addondialogRef: any;
   is_noSMS = false;
   zoomWaitFor: string;
-
+  haveEmail = false;
   constructor(public dialogRef: MatDialogRef<TeleServiceShareComponent>,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     private provider_services: ProviderServices,
     private dialog: MatDialog,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.sendMeetingDetails = this.shared_functions.getProjectMesssages('SENDING_MEET_DETAILS');
-    this.reminder_cap = this.shared_functions.getProjectMesssages('SEND_REMINDER');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    if (this.data.waitingType === 'checkin') {
+      if (this.data.consumerDetails.email_verified) {
+        this.haveEmail = true;
+        this.email = true;
+      }
+    } else {
+      if (this.data.consumerDetails.email) {
+        this.haveEmail = true;
+        this.email = true;
+      }
+    }
+    this.sendMeetingDetails = this.wordProcessor.getProjectMesssages('SENDING_MEET_DETAILS');
+    this.reminder_cap = this.wordProcessor.getProjectMesssages('SEND_REMINDER');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.providerName = this.data.busnsName;
     this.serviceName = this.data.serviceDetail.name;
     this.meetingLink = this.data.meetingLink;
     this.consumerName = this.data.consumerName;
-    this.internt_cap = this.shared_functions.getProjectMesssages('NET_CNNCT');
+    this.internt_cap = this.wordProcessor.getProjectMesssages('NET_CNNCT');
     this.getSMSCredits();
     if (this.data.reminder) {
       this.getReminderData();
@@ -131,8 +146,8 @@ export class TeleServiceShareComponent implements OnInit {
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.gooleWaitFor;
           break;
         case 'VideoCall':
-            this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.waitFor;
-            break;
+          this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.waitFor;
+          break;
       }
     }
   }
@@ -149,10 +164,10 @@ export class TeleServiceShareComponent implements OnInit {
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
         } else {
-          this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +'  + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
         }
         break;
@@ -181,7 +196,7 @@ export class TeleServiceShareComponent implements OnInit {
     elementId.select();
     document.execCommand('copy');
     elementId.setSelectionRange(0, 0);
-    this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // const info = document.getElementById(elementId);
     // if (window.getSelection) {
     //   const selection = window.getSelection();
@@ -190,7 +205,7 @@ export class TeleServiceShareComponent implements OnInit {
     //   selection.removeAllRanges();
     //   selection.addRange(range);
     //   document.execCommand('Copy');
-    //   this.shared_functions.openSnackBar(Message + ' copied to clipboard');
+    //   this.snackbarService.openSnackBar(Message + ' copied to clipboard');
     // }
   }
 
@@ -209,7 +224,7 @@ export class TeleServiceShareComponent implements OnInit {
     if (this.data.waitingType === 'checkin') {
       this.shared_services.consumerMassCommunication(post_data).
         subscribe(() => {
-          this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
           this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
@@ -219,7 +234,7 @@ export class TeleServiceShareComponent implements OnInit {
     } else {
       this.shared_services.consumerMassCommunicationAppt(post_data).
         subscribe(() => {
-          this.api_success = this.shared_functions.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
+          this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
           this.disableButton = false;
           setTimeout(() => {
             this.dialogRef.close();
@@ -231,47 +246,47 @@ export class TeleServiceShareComponent implements OnInit {
 
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
-        this.smsCredits = data;
-        if (this.smsCredits < 5 && this.smsCredits > 0) {
-          this.is_smsLow = true;
-          this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else if (this.smsCredits === 0) {
-          this.is_smsLow = true;
-          this.is_noSMS = true;
-          this.smsWarnMsg = Messages.NO_SMS_CREDIT;
-          this.getLicenseCorpSettings();
-        } else {
-          this.is_smsLow = false;
-          this.is_noSMS = false;
-        }
+      this.smsCredits = data;
+      if (this.smsCredits < 5 && this.smsCredits > 0) {
+        this.is_smsLow = true;
+        this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else if (this.smsCredits === 0) {
+        this.is_smsLow = true;
+        this.is_noSMS = true;
+        this.smsWarnMsg = Messages.NO_SMS_CREDIT;
+        this.getLicenseCorpSettings();
+      } else {
+        this.is_smsLow = false;
+        this.is_noSMS = false;
+      }
     });
   }
   getLicenseCorpSettings() {
     this.provider_services.getLicenseCorpSettings().subscribe(
-        (data: any) => {
-            this.corpSettings = data;
-        }
+      (data: any) => {
+        this.corpSettings = data;
+      }
     );
-}
+  }
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-  } else {
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+    } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-          width: '50%',
-          data: {
-              type: 'addons'
-          },
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true
+        width: '50%',
+        data: {
+          type: 'addons'
+        },
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result) {
-         this.getSMSCredits();
+          this.getSMSCredits();
         }
       });
-  }
+    }
   }
 }

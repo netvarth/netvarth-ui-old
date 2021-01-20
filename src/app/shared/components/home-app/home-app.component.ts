@@ -7,6 +7,9 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
+import { SignUpComponent } from '../signup/signup.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
+import { WordProcessor } from '../../services/word-processor.service';
 import {version} from '../../../shared/constants/version';
 import { Router } from '@angular/router';
 @Component({
@@ -38,6 +41,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
     public dialog: MatDialog, public router: Router,
     @Inject(DOCUMENT) public document
   ) {
@@ -134,7 +138,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
            }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
-            ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.api_loading = false;
           }
         );

@@ -2,9 +2,11 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { UpdateNotificationComponent } from './update-notification/update-notification.component';
 import { MatDialog } from '@angular/material/dialog';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
     'selector': 'app-comm-settings',
@@ -42,10 +44,12 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     scrollContainer;
     constructor(private router: Router, public dialog: MatDialog,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions,
+        private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
         public route: ActivatedRoute) {
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.route.queryParams.subscribe(
             params => {
                 this.type = params.type;
@@ -62,7 +66,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         }
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.sub_domain = user.subSector || null;
         this.accountType = user.accountType;
@@ -106,11 +110,11 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getGlobalSettingsStatus();
                 }
             );
@@ -123,10 +127,10 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         const status = (value) ? 'enabled' : 'disabled';
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setNotificationSettings(state).subscribe(data => {
-            this.shared_functions.openSnackBar('Send notification  ' + status + ' successfully');
+            this.snackbarService.openSnackBar('Send notification  ' + status + ' successfully');
             this.getSMSglobalSettings();
         }, (error) => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
         });
     }
@@ -135,10 +139,10 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         const status = (value) ? 'enabled' : 'disabled';
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setSMSglobalSettings(state).subscribe(data => {
-            this.shared_functions.openSnackBar('SMS settings ' + status + ' successfully');
+            this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
             this.getSMSglobalSettings();
         }, (error) => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.getSMSglobalSettings();
         });
     }

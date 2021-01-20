@@ -11,6 +11,9 @@ import { FormMessageDisplayService } from '../../form-message-display/form-messa
 import { projectConstants } from '../../../../app.component';
 import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
 import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
+import { SessionStorageService } from '../../../../shared/services/session-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-phome',
@@ -84,6 +87,9 @@ export class PhomeComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
+    private sessionStorageService: SessionStorageService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService
   ) {
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -281,7 +287,7 @@ export class PhomeComponent implements OnInit {
       'password': data.password,
       'mUniqueId': null
     };
-    this.shared_functions.removeitemfromSessionStorage('tabId');
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
     // this.api_loading = true;
 
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
@@ -290,18 +296,18 @@ export class PhomeComponent implements OnInit {
       .then(
         () => {
           const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
-          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           // this.dialogRef.close();
 
         },
         error => {
-          // ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          // ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           if (error.status === 401 && error.error === 'Session already exists.') {
             this.shared_functions.doLogout().then(() => {
               this.onSubmit(data);
             });
           } else {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
           this.api_loading = false;
         }

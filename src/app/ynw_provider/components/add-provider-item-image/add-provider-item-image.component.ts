@@ -7,6 +7,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-item-image-add',
@@ -42,7 +43,8 @@ export class AddProviderItemImageComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public sharedfunctionObj: SharedFunctions
+    public sharedfunctionObj: SharedFunctions,
+        private wordProcessor: WordProcessor,
   ) {
   }
 
@@ -88,12 +90,12 @@ export class AddProviderItemImageComponent implements OnInit {
 
     this.provider_services.uploadItemImage(this.data.item.itemId, submit_data)
       .subscribe(() => {
-        this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEMIMAGE_UPLOADED');
+        this.api_success = this.wordProcessor.getProjectMesssages('ITEMIMAGE_UPLOADED');
         setTimeout(() => {
           this.dialogRef.close('reloadlist');
         }, projectConstants.TIMEOUT_DELAY);
       }, error => {
-        this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+        this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         this.upload_button_caption = 'Upload';
         this.uploading = false;
       });

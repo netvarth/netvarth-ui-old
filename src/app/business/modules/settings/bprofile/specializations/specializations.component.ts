@@ -4,6 +4,8 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 @Component({
     selector: 'app-specializatons',
     templateUrl: './specializations.component.html'
@@ -43,7 +45,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private provider_services: ProviderServices,
         private routerobj: Router,
         private specialsn: Location,
-        public shared_functions: SharedFunctions
+        public shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService
     ) {
       }
     ngOnDestroy() {
@@ -51,7 +55,7 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.initSpecializations();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     // learnmore_clicked(parent, child) {}
@@ -151,12 +155,12 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         };
         this.provider_services.updatePrimaryFields(postdata)
           .subscribe(() => {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
             this.disableButton = false;
             this.routerobj.navigate(['provider', 'settings', 'bprofile']);
             },
             error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
           );
       }

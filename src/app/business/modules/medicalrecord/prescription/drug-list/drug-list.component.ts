@@ -10,6 +10,10 @@ import { projectConstants } from '../../../../../app.component';
 import { InstructionsComponent } from '../instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -56,7 +60,11 @@ export class DrugListComponent implements OnInit {
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private medicalrecord_service: MedicalrecordService) {
+    private medicalrecord_service: MedicalrecordService,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService) {
 
       this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.details) {
@@ -73,7 +81,7 @@ export class DrugListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.patientDetails = this.medicalrecord_service.getPatientDetails();
     if (this.patientDetails.memberJaldeeId) {
       this.display_PatientId = this.patientDetails.memberJaldeeId;
@@ -85,7 +93,7 @@ export class DrugListComponent implements OnInit {
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
     this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
-    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.providerId = user.id;
 
     this.getMrprescription();
@@ -102,7 +110,7 @@ export class DrugListComponent implements OnInit {
         },
           error => {
             this.digitalSign = false;
-            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -120,7 +128,7 @@ export class DrugListComponent implements OnInit {
           this.deleteFromDb = true;
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -204,7 +212,7 @@ export class DrugListComponent implements OnInit {
         },
           error => {
             this.disable = false;
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
       this.medicalrecord_service.createMR('prescriptions', this.drugList)
@@ -212,12 +220,12 @@ export class DrugListComponent implements OnInit {
           this.mrId = data;
 
           this.showSave = false;
-          this.sharedfunctionObj.openSnackBar('Prescription Saved Successfully');
+          this.snackbarService.openSnackBar('Prescription Saved Successfully');
           this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
         },
           error => {
             this.disable = false;
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -229,9 +237,9 @@ export class DrugListComponent implements OnInit {
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
         } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();
@@ -245,7 +253,7 @@ export class DrugListComponent implements OnInit {
   }
 
   saveDigitalSignImages(index) {
-    this.mrId = this.sharedfunctionObj.getitemfromLocalStorage('mrId');
+    this.mrId = this.lStorageService.getitemfromLocalStorage('mrId');
     const submit_data: FormData = new FormData();
     const propertiesDetob = {};
     let i = 0;
@@ -272,10 +280,10 @@ export class DrugListComponent implements OnInit {
       .subscribe((data) => {
         this.digitalSign = true;
         this.deleteTempImage(val);
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   instrutionType(val) {

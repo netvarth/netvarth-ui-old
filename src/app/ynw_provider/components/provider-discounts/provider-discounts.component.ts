@@ -6,6 +6,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderDiscountsComponent } from '../add-provider-discounts/add-provider-discounts.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-discounts',
@@ -50,17 +53,20 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions) {
-    this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('DISCOUNT_LISTEMPTY');
+    private sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('DISCOUNT_LISTEMPTY');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getDiscounts(); // Call function to get the list of discount lists
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -131,7 +137,7 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('DISCOUNT_DELETE').replace('[name]', discount.name),
+        'message': this.wordProcessor.getProjectMesssages('DISCOUNT_DELETE').replace('[name]', discount.name),
         'heading': 'Delete Confirmation'
       }
     });
@@ -147,11 +153,11 @@ export class ProviderDiscountsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.deleteDiscount(id)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(Messages.DISCOUNT_DELETED);
+          this.snackbarService.openSnackBar(Messages.DISCOUNT_DELETED);
           this.getDiscounts();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 

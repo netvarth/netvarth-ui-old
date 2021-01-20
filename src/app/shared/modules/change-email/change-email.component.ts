@@ -6,6 +6,8 @@ import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-change-email',
@@ -42,7 +44,9 @@ export class ChangeEmailComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router
+    public router: Router,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -72,7 +76,7 @@ export class ChangeEmailComponent implements OnInit {
         },
         error => {
           // ob.api_error = error.error;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -95,8 +99,8 @@ export class ChangeEmailComponent implements OnInit {
           // this.api_success = Messages.OTP_SENT_EMAIL;
         },
         error => {
-          // this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -135,13 +139,13 @@ export class ChangeEmailComponent implements OnInit {
       .subscribe(
         () => {
           // this.api_success = Messages.EMAIL_VERIFIED;
-          this.shared_functions.openSnackBar(Messages.EMAIL_VERIFIED);
+          this.snackbarService.openSnackBar(Messages.EMAIL_VERIFIED);
           this.api_success = null;
           setTimeout(() => {
             // this.router.navigate(['/']);
-            const e_ret = this.shared_functions.getitemfromLocalStorage('e_ret');
+            const e_ret = this.lStorageService.getitemfromLocalStorage('e_ret');
             if (e_ret && e_ret === 'pset') {
-              this.shared_functions.removeitemfromLocalStorage('e_ret');
+              this.lStorageService.removeitemfromLocalStorage('e_ret');
               this.router.navigate(['provider', 'settings', 'paymentsettings']);
             } else {
               this.getProviderProfile();
@@ -150,7 +154,7 @@ export class ChangeEmailComponent implements OnInit {
         },
         error => {
           // this.api_error = error.error;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 

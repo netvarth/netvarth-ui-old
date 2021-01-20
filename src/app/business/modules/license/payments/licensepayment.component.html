@@ -15,7 +15,7 @@
                         <div class="pay-section card">
                             <div *ngIf="paidStatus == 'false'">
                                 <div style="padding-bottom: 10px">Amount to pay : <b
-                                        class="rupee-font">&#8377;{{prepayAmount}}</b></div>
+                                        class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
                                 <div style="padding-bottom: 10px">Payment Options
                                     <div>
                                         <p class="settings_info" style="display: inline;">Choose your payment options

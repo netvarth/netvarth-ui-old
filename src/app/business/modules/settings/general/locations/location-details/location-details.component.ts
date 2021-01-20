@@ -13,6 +13,9 @@ import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { AddProviderWaitlistLocationsComponent } from '../../../../../../ynw_provider/components/add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-location-details',
@@ -96,6 +99,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private _location: Location,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
     private dialog: MatDialog) {
     this.activated_route.params.subscribe(params => {
       this.location_id = params.id;
@@ -129,7 +135,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this.action = this.location_id;
       this.createForm();
     }
-    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.editlocdialogRef) {
@@ -249,11 +255,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             if (msg_data['chgstatus'] === 'enable') {
               msg_data['msg'] = msg_data['msg'] + '. ' + Messages.ENBALE_QUEUES;
             }
-            this.shared_Functionsobj.openSnackBar(msg_data['msg']);
+            this.snackbarService.openSnackBar(msg_data['msg']);
             this.getLocationDetail();
           },
             error => {
-              this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               this.getLocationDetail();
             });
       });
@@ -261,11 +267,11 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   changeProviderBaseLocationStatus(obj) {
     this.provider_services.changeProviderBaseLocationStatus(obj.id)
       .subscribe(() => {
-        this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
+        this.snackbarService.openSnackBar(Messages.WAITLIST_LOCATION_CHG_BASELOCATION.replace('[locname]', obj.place));
         this.getLocationDetail();
       },
         error => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getLocationDetail();
         });
   }
@@ -465,7 +471,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.shared_Functionsobj.openSnackBar(Messages.BPROFILE_LOCNAME_BLANK, { 'panelClass': 'snackbarerror' }); // 'Phone label should not be blank';
+        this.snackbarService.openSnackBar(Messages.BPROFILE_LOCNAME_BLANK, { 'panelClass': 'snackbarerror' }); // 'Phone label should not be blank';
         this.disableButton = false;
         return;
       }
@@ -487,7 +493,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this.provider_services.editProviderLocation(post_itemdata2)
         .subscribe(
           () => {
-            this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_UPDATED, { 'panelclass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.WAITLIST_LOCATION_UPDATED, { 'panelclass': 'snackbarerror' });
 
             amenties_FormData.locationVirtualFields = {};
             amenties_FormData.id = this.location_data.id;
@@ -500,7 +506,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.provider_services.editProviderLocation(amenties_FormData)
               .subscribe(
                 (response) => {
-                  this.shared_Functionsobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_UPDATED');
+                  this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_UPDATED');
                   this.getLocationDetail();
                   if (this.params.action === 'editbase') {
                     this.router.navigate(['provider', 'settings', 'bprofile']);
@@ -510,7 +516,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
                   this.disableButton = false;
                 },
                 error => {
-                  this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   this.disableButton = false;
                 }
 
@@ -519,7 +525,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
 
           },
           error => {
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           }
         );
@@ -540,7 +546,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.provider_services.editProviderLocation(amenties_FormData)
               .subscribe(
                 (response) => {
-                  this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar(Messages.WAITLIST_LOCATION_CREATED, { 'panelclass': 'snackbarerror' });
                   this.shared_Functionsobj.sendMessage({ 'ttype': 'locationChange' });
                   this.getLocationDetail();
                   this.getLocationBadges();
@@ -551,14 +557,14 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
 
                 },
                 error => {
-                  this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   this.disableButton = false;
                 }
               );
 
           },
           error => {
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.disableButton = false;
           }
         );

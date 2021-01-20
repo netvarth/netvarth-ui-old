@@ -36,7 +36,7 @@
 															{{user.lastName | capitalizeFirst}}
 
 														</span>
-														<span class="dynamic fl-right">{{billdate | date:newDateFormat}}
+														<span class="dynamic fl-right">{{billdate | date:'mediumDate'}}
 															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad" *ngIf="source">
@@ -52,8 +52,8 @@
 																{{checkin.orderFor.lastName | capitalizeFirst}}
 															</span>
 														</ng-container>
-														<span class="dynamic fl-right">{{billdate | date:newDateFormat}}</span>
-															<!-- {{billtime}}</span> -->
+														<span class="dynamic fl-right">{{billdate | date:'mediumDate'}}
+															{{billtime}}</span>
 													</div>
 													<div class="col-md-12 col-sm-12 col-lg-12 btm-pad">
 														<span *ngIf="billnumber">
@@ -136,7 +136,7 @@
 																	</button>
 																</mat-menu>
 															</span>
-															<button class="cs-btn bt3 btn-additem"
+															<button class="cs-btn bt3 btn-additem" *ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 																(click)="showAddItem()">{{ad_ser_item_cap}}</button>&nbsp;
 														</div>
 														<ng-container *ngIf="showAddItemsec">

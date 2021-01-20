@@ -12,16 +12,19 @@ import { CardModule } from '../../../shared/components/card/card.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { OrderEditComponent } from './order-edit/order-edit.component';
+import { OrderItemsComponent } from './order-items/order-items.component';
 
 @NgModule({
   declarations: [
     OrderDashboardComponent,
     OrderDetailsComponent,
     OrderActionsComponent,
-    OrderEditComponent
+    OrderEditComponent,
+    OrderItemsComponent
   ],
   entryComponents: [
     OrderActionsComponent,
+    OrderItemsComponent
   ],
   imports: [
     CommonModule,

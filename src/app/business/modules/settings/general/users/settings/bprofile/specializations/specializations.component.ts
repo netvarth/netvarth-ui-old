@@ -5,6 +5,9 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 // import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 // import { UserSpecializationComponent } from './userspecialization/userspecialization.component';
 @Component({
     selector: 'app-userspecializatons',
@@ -56,6 +59,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         private routerobj: Router,
         private specialsn: Location,
         public shared_functions: SharedFunctions,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService
         // private dialog: MatDialog
     ) {
         this.activated_route.params.subscribe(params => {
@@ -69,8 +75,8 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getUser();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -209,12 +215,12 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
         }
         this.provider_services.updateuserSpecializationPrimaryFields(postdata, this.userId)
           .subscribe(() => {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_SPECIALIZATION_SAVED, { 'panelClass': 'snackbarnormal' });
             this.disableButton = false;
             this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
             },
             error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
           );
       }

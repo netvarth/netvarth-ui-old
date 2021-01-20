@@ -7,6 +7,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-provider-system-auditlogs',
   templateUrl: './provider-system-auditlogs.component.html'
@@ -39,7 +42,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   logSelsubcat = '';
   logSeldate = '';
   logSelaction = '';
-  filtericonTooltip = this.sharedfunctionObj.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   holdlogSelcat = '';
   holdlogSelsubcat = '';
   holdlogSeldate = '';
@@ -67,17 +70,20 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   ];
   isCheckin;
   dateFilter = false;
-  constructor(private sharedfunctionObj: SharedFunctions,
+  constructor(
     private locationobj: Location,
     private shared_services: SharedServices,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    public date_format: DateFormatPipe
+    public date_format: DateFormatPipe,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor
   ) { }
 
   ngOnInit() {
     // this.getAuditList();\
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.logSelcat = '';
     this.logSelsubcat = '';
@@ -91,7 +97,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdlogSeldate = this.logSeldate;
     this.holdlogSelaction = this.logSelaction;
     this.getAuditListTotalCnt('', '', '', '');
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
   }
   getAuditListTotalCnt(cat, subcat, action, sdate) {
@@ -124,7 +130,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
         this.auditStatus = 3;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.load_complete = 2;
           this.auditStatus = 0;
         });
@@ -172,7 +178,7 @@ redirecToHelp() {
       seldate = this.shared_functions.transformToYMDFormat(this.holdlogSeldate);
     }
     /*if (pagecall === false && this.holdlogSelcat === '' && this.holdlogSelsubcat === '' && this.holdlogSelaction === '' && seldate === '') {
-      this.sharedfunctionObj.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});
+      this.snackbarService.openSnackBar('Please select atleast one filter option', {'panelClass': 'snackbarerror'});
     } else { */
     let ccat = '';
     if (this.holdlogSelcat !== '') {

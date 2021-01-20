@@ -7,6 +7,9 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { AddproviderAddonComponent } from '../../../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateProviderNotificationsComponent } from '../../update-provider-notifications/update-provider-notifications.component';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -159,11 +162,13 @@ export class ProviderNotificationsComponent implements OnInit {
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     public route: ActivatedRoute,
-    private shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
     private dialog: MatDialog,
     public provider_services: ProviderServices) {
-    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.route.queryParams.subscribe(
       params => {
         this.crumbtitle = params.type;
@@ -171,11 +176,11 @@ export class ProviderNotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.accountType = user.accountType;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getGlobalSettingsStatus();
     // this.getNotificationList();
     // this.getSMSCredits();
@@ -222,7 +227,7 @@ export class ProviderNotificationsComponent implements OnInit {
           this.setNotificationList(this.notificationList);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -422,7 +427,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addChkinPh() {
     this.resetApiErrors();
     if (this.notifyphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -431,14 +436,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -446,7 +451,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.ph_arr.indexOf(curphone) === -1) {
         this.ph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okCheckinStatus = true;
@@ -456,7 +461,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addcheknPushPh() {
     this.resetApiErrors();
     if (this.notifycheknPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -465,14 +470,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -480,7 +485,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.cheknPushph_arr.indexOf(curphone) === -1) {
         this.cheknPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okCheckinStatus = true;
@@ -491,7 +496,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addChkinemil() {
     this.resetApiErrors();
     if (this.notifyemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
       // 'Please enter a valid email id';
       return;
     }
@@ -500,14 +505,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid email id';
         return;
       }
       if (this.em_arr.indexOf(curemail) === -1) {
         this.em_arr.push(curemail);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.okCheckinStatus = true;
@@ -517,7 +522,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addCheknCanclph() {
     this.resetApiErrors();
     if (this.notifycanclphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -526,21 +531,21 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
       if (this.ph1_arr.indexOf(curphone1) === -1) {
         this.ph1_arr.push(curphone1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       // this.ph1_arr.push(curphone1);
@@ -551,7 +556,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addcheknCancelPushPh() {
     this.resetApiErrors();
     if (this.notifycheknCancelPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -560,14 +565,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -575,7 +580,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.cheknCancelPushph_arr.indexOf(curphone) === -1) {
         this.cheknCancelPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okCancelStatus = true;
@@ -586,7 +591,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addCheknCanclemil() {
     this.resetApiErrors();
     if (this.notifycanclemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
       return;
     }
     if (this.notifycanclemail !== '') {
@@ -594,13 +599,13 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       if (this.em1_arr.indexOf(curemail1) === -1) {
         this.em1_arr.push(curemail1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.notifycanclemail = '';
@@ -610,7 +615,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addApptPh() {
     this.resetApiErrors();
     if (this.notifyApptphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -619,14 +624,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -634,7 +639,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.apptph_arr.indexOf(curphone) === -1) {
         this.apptph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okApptStatus = true;
@@ -644,7 +649,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addOrderPh() {
     this.resetApiErrors();
     if (this.notifyOrderphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -653,14 +658,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -668,7 +673,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.orderph_arr.indexOf(curphone) === -1) {
         this.orderph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okOrderStatus = true;
@@ -678,7 +683,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addapptPushPh() {
     this.resetApiErrors();
     if (this.notifyapptPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -687,14 +692,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -702,7 +707,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.apptPushph_arr.indexOf(curphone) === -1) {
         this.apptPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okApptStatus = true;
@@ -713,7 +718,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addorderPushPh() {
     this.resetApiErrors();
     if (this.notifyorderPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -722,14 +727,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -737,7 +742,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.orderPushph_arr.indexOf(curphone) === -1) {
         this.orderPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okOrderStatus = true;
@@ -747,7 +752,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addApptemail() {
     this.resetApiErrors();
     if (this.notifyApptemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
       // 'Please enter a valid email id';
       return;
     }
@@ -756,14 +761,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid email id';
         return;
       }
       if (this.apptem_arr.indexOf(curemail) === -1) {
         this.apptem_arr.push(curemail);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.okApptStatus = true;
@@ -773,7 +778,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addOrderemail() {
     this.resetApiErrors();
     if (this.notifyOrderemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
       // 'Please enter a valid email id';
       return;
     }
@@ -782,14 +787,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid email id';
         return;
       }
       if (this.orderem_arr.indexOf(curemail) === -1) {
         this.orderem_arr.push(curemail);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.okOrderStatus = true;
@@ -799,7 +804,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addApptCanclph() {
     this.resetApiErrors();
     if (this.notifyApptcanclphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -808,21 +813,21 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
       if (this.apptph1_arr.indexOf(curphone1) === -1) {
         this.apptph1_arr.push(curphone1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       // this.ph1_arr.push(curphone1);
@@ -833,7 +838,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addOrderCanclph() {
     this.resetApiErrors();
     if (this.notifyOrdercanclphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -842,21 +847,21 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone1);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone1);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
       if (this.orderph1_arr.indexOf(curphone1) === -1) {
         this.orderph1_arr.push(curphone1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       // this.ph1_arr.push(curphone1);
@@ -867,7 +872,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addapptcancelPushPh() {
     this.resetApiErrors();
     if (this.notifyapptcancelPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -876,14 +881,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -891,7 +896,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.apptcancelPushph_arr.indexOf(curphone) === -1) {
         this.apptcancelPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okApptCancelStatus = true;
@@ -902,7 +907,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addOrdercancelPushPh() {
     this.resetApiErrors();
     if (this.notifyOrdercancelPushphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -911,14 +916,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -926,7 +931,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.ordercancelPushph_arr.indexOf(curphone) === -1) {
         this.ordercancelPushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okOrderCancelStatus = true;
@@ -936,7 +941,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addApptCancelemail() {
     this.resetApiErrors();
     if (this.notifyApptcanclemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
       return;
     }
     if (this.notifyApptcanclemail !== '') {
@@ -944,13 +949,13 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       if (this.apptem1_arr.indexOf(curemail1) === -1) {
         this.apptem1_arr.push(curemail1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.notifyApptcanclemail = '';
@@ -960,7 +965,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addOrderCancelemail() {
     this.resetApiErrors();
     if (this.notifyOrdercanclemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
       return;
     }
     if (this.notifyOrdercanclemail !== '') {
@@ -968,13 +973,13 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail1);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       if (this.orderem1_arr.indexOf(curemail1) === -1) {
         this.orderem1_arr.push(curemail1);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.notifyOrdercanclemail = '';
@@ -984,7 +989,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addDonatePh() {
     this.resetApiErrors();
     if (this.notifyDonatephonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -993,14 +998,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -1008,7 +1013,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.donateph_arr.indexOf(curphone) === -1) {
         this.donateph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okDonateStatus = true;
@@ -1018,7 +1023,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addpushDonatePh() {
     this.resetApiErrors();
     if (this.notifypushDonatephonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -1027,14 +1032,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -1042,7 +1047,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.donatepushph_arr.indexOf(curphone) === -1) {
         this.donatepushph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okDonateStatus = true;
@@ -1053,7 +1058,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addDonatemail() {
     this.resetApiErrors();
     if (this.notifydonateemail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
       // 'Please enter a valid email id';
       return;
     }
@@ -1062,14 +1067,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid email id';
         return;
       }
       if (this.donateem_arr.indexOf(curemail) === -1) {
         this.donateem_arr.push(curemail);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.okDonateStatus = true;
@@ -1080,7 +1085,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addSystemPh() {
     this.resetApiErrors();
     if (this.notifySystemphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -1089,14 +1094,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -1104,7 +1109,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.systemph_arr.indexOf(curphone) === -1) {
         this.systemph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okSystemStatus = true;
@@ -1114,7 +1119,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addpushSystemPh() {
     this.resetApiErrors();
     if (this.notifypushSystemphonenumber === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PHONENO'), { 'panelClass': 'snackbarerror' });
       // 'Please enter mobile phone number';
       return;
     }
@@ -1123,14 +1128,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS'), { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -1138,7 +1143,7 @@ export class ProviderNotificationsComponent implements OnInit {
       if (this.pushsystemph_arr.indexOf(curphone) === -1) {
         this.pushsystemph_arr.push(curphone);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Phone number already exists'
       }
       this.okSystemStatus = true;
@@ -1150,7 +1155,7 @@ export class ProviderNotificationsComponent implements OnInit {
   addSystemmail() {
     this.resetApiErrors();
     if (this.notifysystememail === '') {
-      this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
       // 'Please enter a valid email id';
       return;
     }
@@ -1159,14 +1164,14 @@ export class ProviderNotificationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result2 = pattern2.test(curemail);
       if (!result2) {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_INVALID'), { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid email id';
         return;
       }
       if (this.systemem_arr.indexOf(curemail) === -1) {
         this.systemem_arr.push(curemail);
       } else {
-        this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_EMAIL_DUPLICATE'), { 'panelClass': 'snackbarerror' });
         // 'Email already exists'
       }
       this.okSystemStatus = true;
@@ -1428,10 +1433,10 @@ export class ProviderNotificationsComponent implements OnInit {
             if (source === 'newsystem') {
               this.okSystemStatus = true;
             }
-            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD NOTIFICATIONS'));
+            this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD NOTIFICATIONS'));
           },
           error => {
-            this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           }
         );
     } else {
@@ -1463,10 +1468,10 @@ export class ProviderNotificationsComponent implements OnInit {
             if (source === 'newsystem') {
               this.okSystemStatus = true;
             }
-            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('UPDATED NOTIFICATIONS'));
+            this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('UPDATED NOTIFICATIONS'));
           },
           error => {
-            this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           }
         );
     }
@@ -1735,7 +1740,7 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
     } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
         width: '50%',
@@ -1759,13 +1764,13 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   showNotificationPopup(type) {
     if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
-      this.sharedfunctionObj.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Appointment' && !this.appointment_status) {
-      this.sharedfunctionObj.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Order' && !this.order_status) {
-      this.sharedfunctionObj.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Donation' && !this.donations_status) {
-      this.sharedfunctionObj.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
       const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
         width: '40%',

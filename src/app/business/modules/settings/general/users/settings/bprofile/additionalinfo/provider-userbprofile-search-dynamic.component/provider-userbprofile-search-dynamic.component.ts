@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { QuestionService } from '../../../../../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
+import { GroupStorageService } from '../../../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-userbprofile-search-dynamic',
@@ -25,11 +27,13 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
     private service: QuestionService,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
+    private wordProcessor:WordProcessor,
     public dialogRef: MatDialogRef<ProviderUserBprofileSearchDynamicComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
     this.subdomain = this.data.subdomain;
@@ -117,7 +121,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -146,7 +150,7 @@ export class ProviderUserBprofileSearchDynamicComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }

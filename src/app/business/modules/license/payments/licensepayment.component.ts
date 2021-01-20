@@ -3,11 +3,14 @@ import { WindowRefService } from '../../../../shared//services/windowRef.service
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-payments',
@@ -44,12 +47,15 @@ export class PaymentComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
     public winRef: WindowRefService,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
     public prefillmodel: RazorpayprefillModel,
-    public location: Location) {
+    public location: Location, public router: Router) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.data = qparams;
       this.waitlistDetails = JSON.parse(this.data.details);
@@ -99,9 +105,9 @@ export class PaymentComponent implements OnInit {
           this.paywithRazorpay(pData);
         } else {
           if (pData['response']) {
-            this.shared_functions.setitemonLocalStorage('p_src', 'p_lic');
+            this.lStorageService.setitemonLocalStorage('p_src', 'p_lic');
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               if (paymentMode === 'DC') {
                 this.document.getElementById('payuform').submit();
@@ -110,12 +116,12 @@ export class PaymentComponent implements OnInit {
               }
             }, 2000);
           } else {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         }
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   paywithRazorpay(pData: any) {
@@ -131,6 +137,10 @@ export class PaymentComponent implements OnInit {
     this.razorpayService.payWithRazor(this.razorModel, this.origin);
   }
   goBack() {
-    this.location.back();
+    if (this.paidStatus === 'true') {
+      this.router.navigate(['provider', 'license']);
+    } else {
+      this.location.back();
+    }
   }
 }

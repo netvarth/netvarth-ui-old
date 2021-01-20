@@ -8,6 +8,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-privacy-detail',
   templateUrl: './privacy-detail.component.html',
@@ -50,7 +52,7 @@ export class PrivacyDetailComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
-  customernormal_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+  customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
   loadData: ArrayBuffer;
   breadcrumbs_init = [
     {
@@ -80,6 +82,8 @@ export class PrivacyDetailComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private _location: Location,
     private router: Router,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     public shared_functions: SharedFunctions
   ) {
     this.activated_route.queryParams.subscribe(
@@ -90,7 +94,7 @@ export class PrivacyDetailComponent implements OnInit {
       .subscribe(
         profile => {
           this.bProfile = profile;
-          this.privacypermissiontxt.customersOnly = this.sharedfunctionObj.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
+          this.privacypermissiontxt.customersOnly = this.wordProcessor.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
           this.curmod = (this.data.editindx >= 0) ? 'edit' : 'add';
           if (this.curmod === 'edit') {
             this.curid = this.data.editindx;
@@ -193,14 +197,14 @@ export class PrivacyDetailComponent implements OnInit {
     this.phone_json = [];
     if (this.curtype === 'phone') { // case of phone numbers
       if (this.phonelabel === '' && this.phonenumber === '') {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PHONEDET, { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PHONEDET, { 'panelClass': 'snackbarerror' });
         return;
       }
       const curlabel = this.phonelabel;
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONELABEL_REQ, { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PRIVACY_PHONELABEL_REQ, { 'panelClass': 'snackbarerror' });
         // 'Phone label should not be blank';
         return;
       }
@@ -208,14 +212,14 @@ export class PrivacyDetailComponent implements OnInit {
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const result = pattern.test(curphone);
       if (!result) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_INVALID, { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_INVALID, { 'panelClass': 'snackbarerror' });
         // 'Please enter a valid mobile phone number';
         return;
       }
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
       const result1 = pattern1.test(curphone);
       if (!result1) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_10DIGITS, { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PRIVACY_PHONE_10DIGITS, { 'panelClass': 'snackbarerror' });
         // 'Mobile number should have 10 digits';
         return;
       }
@@ -247,21 +251,21 @@ export class PrivacyDetailComponent implements OnInit {
       this.UpdatePrimaryFields(post_itemdata);
     } else if (this.curtype === 'email') { // case of email ids
       if (this.emaillabel === '' && this.emailemailid === '') {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_EMAILDET, { 'panelClass': 'snackbarerror' });
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_EMAILDET, { 'panelClass': 'snackbarerror' });
         return;
       }
       const curlabel = this.emaillabel;
       const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result1 = pattern1.test(curlabel);
       if (result1) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_EMAILLABEL_REQ, { 'panelClass': 'snackbarerror' }); // 'Email label should not be blank';
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PRIVACY_EMAILLABEL_REQ, { 'panelClass': 'snackbarerror' }); // 'Email label should not be blank';
         return;
       }
       const curemail = this.emailemailid;
       const pattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const result = pattern.test(curemail);
       if (!result) {
-        this.api_error = this.shared_functions.openSnackBar(Messages.BPROFILE_PRIVACY_EMAIL_INVALID, { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
+        this.api_error = this.snackbarService.openSnackBar(Messages.BPROFILE_PRIVACY_EMAIL_INVALID, { 'panelClass': 'snackbarerror' }); // 'Please enter a valid email id';
         return;
       }
       if (this.curid >= 0) { // case of edit
@@ -301,14 +305,14 @@ export class PrivacyDetailComponent implements OnInit {
         data => {
           this.loadData = data;
           if (this.curmod === 'add') {
-            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_SAVED'));
+            this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_SAVED'));
           } else {
-            this.api_success = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('BPROFILE_PRIVACY_UPDATED'));
+            this.api_success = this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_UPDATED'));
           }
           this.router.navigate(['provider', 'settings', 'bprofile', 'privacy']);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.api_error = this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         }
       );
@@ -327,7 +331,7 @@ export class PrivacyDetailComponent implements OnInit {
     let rettxt = '';
     if (txt === 'customersOnly') {
       if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
-        rettxt = 'My ' + this.sharedfunctionObj.firstToUpper(this.customernormal_label) + 's Only';
+        rettxt = 'My ' + this.wordProcessor.firstToUpper(this.customernormal_label) + 's Only';
       } else {
         rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
       }

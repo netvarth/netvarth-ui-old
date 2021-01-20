@@ -5,6 +5,9 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderSharedFuctions } from '../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { projectConstants } from '../../../../../../app.component';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 
 @Component({
     'selector': 'app-department-list',
@@ -41,11 +44,14 @@ export class DepartmentListComponent implements OnInit {
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
-        private provider_services: ProviderServices) {
+        private provider_services: ProviderServices,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.loading = true;
         this.getDepartments();
@@ -53,7 +59,7 @@ export class DepartmentListComponent implements OnInit {
             'show_learnmore': true, 'scrollKey': 'general->departments', 'subKey': 'timewindow', 'classname': 'b-queue',
             'actions': [{ 'title': 'Add Department', 'type': 'addDepartment' }, { 'title': 'Help', 'type': 'learnmore' }]
         };
-        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         // this.loading = false;
     }
     gotoDepartmentDetails(dept) {
@@ -71,7 +77,7 @@ export class DepartmentListComponent implements OnInit {
                 },
                 error => {
                     this.loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -79,21 +85,21 @@ export class DepartmentListComponent implements OnInit {
         if (dept.departmentStatus === 'ACTIVE') {
             this.provider_services.disableDepartment(dept.departmentId).subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Department and its services disabled successfully', { 'panelClass': 'snackbarnormal' });
+                    this.snackbarService.openSnackBar('Department and its services disabled successfully', { 'panelClass': 'snackbarnormal' });
                     this.getDepartments();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         } else {
             this.provider_services.enableDepartment(dept.departmentId).subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Department and its services enabled successfully', { 'panelClass': 'snackbarnormal' });
+                    this.snackbarService.openSnackBar('Department and its services enabled successfully', { 'panelClass': 'snackbarnormal' });
                     this.getDepartments();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }

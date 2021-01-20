@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared//pipes/date-format/date-format.pipe';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 // import { MedicalrecordService } from '../medicalrecord.service';
 
 @Component({
@@ -29,7 +32,9 @@ export class LastVisitComponent implements OnInit {
   constructor(public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private router: Router,
-
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     public dateformat: DateFormatPipe,
     // private medicalrecordService: MedicalrecordService,
     public dialogRef: MatDialogRef<LastVisitComponent>,
@@ -47,12 +52,12 @@ export class LastVisitComponent implements OnInit {
         this.display_PatientId = this.customerDetails.jaldeeId;
       }
     }
-    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     if (this.accountType !== 'BRANCH') {
       this.lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'mr', 'rx'];
     }
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     // tslint:disable-next-line: no-shadowed-variable
     // this.medicalrecordService.patient_data.subscribe(data => {
     //   this.customerDetails = JSON.parse(data.customerDetail);
@@ -76,7 +81,7 @@ export class LastVisitComponent implements OnInit {
         console.log(this.visitcount);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   getPatientVisitList() {
@@ -87,7 +92,7 @@ export class LastVisitComponent implements OnInit {
         this.loading = false;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
 

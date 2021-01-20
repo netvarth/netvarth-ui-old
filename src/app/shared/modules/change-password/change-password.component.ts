@@ -5,6 +5,10 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
+import { projectConstants } from '../../../app.component';
+import { Location } from '@angular/common';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-change-password',
@@ -42,29 +46,34 @@ export class ChangePasswordComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router
+    public router: Router,
+    private location: Location,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService
   ) { }
-
+  goBack() {
+    this.location.back();
+  }
   ngOnInit() {
-    this.isBusinessowner = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+    this.isBusinessowner = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     if (this.isBusinessowner) {
-    this.spForm = this.fb.group({
-      old_password: ['', Validators.compose(
-        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-      new_password: ['', Validators.compose(
-        [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-      confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
-    });
-  } else {
-    this.spForm = this.fb.group({
-      old_password: ['', Validators.compose(
-        [Validators.required])],
-      new_password: ['', Validators.compose(
-        [Validators.required])],
-      confirm_password: ['', Validators.compose([Validators.required])],
-    });
-  }
+      this.spForm = this.fb.group({
+        old_password: ['', Validators.compose(
+          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+        new_password: ['', Validators.compose(
+          [Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+        confirm_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$')])],
+      });
+    } else {
+      this.spForm = this.fb.group({
+        old_password: ['', Validators.compose(
+          [Validators.required])],
+        new_password: ['', Validators.compose(
+          [Validators.required])],
+        confirm_password: ['', Validators.compose([Validators.required])],
+      });
+    }
   }
 
   onSubmit(sub_data) {
@@ -80,18 +89,18 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe(
           () => {
             // this.api_success = Messages.PASSWORD_CHANGED;
-            const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+            const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
             // const encrypted = this.shared_services.set(sub_data.new_password, projectConstants.KEY);
-            // this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-            this.shared_functions.setitemonLocalStorage('jld', sub_data.new_password);
+            // this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+            this.lStorageService.setitemonLocalStorage('jld', sub_data.new_password);
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
-            this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
-            this.shared_functions.openSnackBar(Messages.PASSWORD_CHANGED);
+            this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
+            this.snackbarService.openSnackBar(Messages.PASSWORD_CHANGED);
             this.spForm.reset();
           },
           error => {
             // this.api_error = error.error;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             if (error.status === 419) { // case of session expired
               this.router.navigate(['/logout']);
             }
@@ -99,7 +108,7 @@ export class ChangePasswordComponent implements OnInit {
         );
 
     } else {
-      this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.PASSWORD_MISMATCH, { 'panelClass': 'snackbarerror' });
       // this.api_error = Messages.PASSWORD_MISMATCH;
     }
 
@@ -110,5 +119,4 @@ export class ChangePasswordComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
   }
-
 }

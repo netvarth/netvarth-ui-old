@@ -293,3 +293,6 @@ flex-basis: 50% !important;
 .shop-cart .contact-outer .fa-times-circle {
   cursor: pointer;
 }
+.address{
+  font-size: 13px;
+}

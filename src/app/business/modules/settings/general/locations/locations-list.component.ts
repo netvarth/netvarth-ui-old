@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { Router, NavigationExtras } from '@angular/router';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-locations',
@@ -54,20 +56,22 @@ export class LocationsListComponent implements OnInit {
     order = 'status';
     constructor(
         private provider_services: ProviderServices,
-        private shared_Functionsobj: SharedFunctions,
         private router: Router,
         private shared_services: SharedServices,
-        private provider_shared_functions: ProviderSharedFuctions
+        private provider_shared_functions: ProviderSharedFuctions,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService
     ) {
-        this.emptyMsg = this.shared_Functionsobj.getProjectMesssages('ADWORD_LISTEMPTY');
+        this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
     }
     ngOnInit() {
-        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getBusinessConfiguration();
         // calling the method to get the list of badges related to location
         // this.bProfile = this.provider_datastorage.get('bProfile');
-        this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     }
 
     getBusinessConfiguration() {
@@ -128,7 +132,7 @@ export class LocationsListComponent implements OnInit {
     }
     // get the list of locations added for the current provider
     getProviderLocations() {
-        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.api_loading = true;
         this.show_addlocationButton = false;
         this.provider_services.getProviderLocations()
@@ -169,11 +173,11 @@ export class LocationsListComponent implements OnInit {
                         if (msg_data['chgstatus'] === 'enable') {
                             msg_data['msg'] = msg_data['msg'];
                         }
-                        this.shared_Functionsobj.openSnackBar(msg_data['msg']);
+                        this.snackbarService.openSnackBar(msg_data['msg']);
                         this.getProviderLocations();
                     },
                         error => {
-                            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                             this.getProviderLocations();
                         });
             });
@@ -224,7 +228,7 @@ export class LocationsListComponent implements OnInit {
                 this.getProviderLocations();
             },
                 (error) => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getProviderLocations();
                 });
     }

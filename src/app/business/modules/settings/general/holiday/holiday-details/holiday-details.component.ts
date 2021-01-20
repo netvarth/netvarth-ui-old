@@ -7,6 +7,8 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-holiday-details',
@@ -68,13 +70,14 @@ export class HolidayDetailsComponent implements OnInit {
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
     {
       this.activated_route.params.subscribe(
         (params) => {
           this.holiday_id = params.id;
-          this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+          this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
           if (this.holiday_id) {
             if (this.holiday_id === 'add') {
               const breadcrumbs = [];
@@ -195,16 +198,16 @@ export class HolidayDetailsComponent implements OnInit {
       const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
       const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
-        // this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
-        this.shared_functions.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
+        // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
+        this.snackbarService.openSnackBar(Messages.HOLIDAY_STIME, { 'panelClass': 'snackbarerror' });
         return;
       }
     }
     const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
     const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
-     // this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
-      this.shared_functions.openSnackBar(Messages.HOLIDAY_ETIME, { 'panelClass': 'snackbarerror' });
+     // this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+      this.snackbarService.openSnackBar(Messages.HOLIDAY_ETIME, { 'panelClass': 'snackbarerror' });
       return;
     }
 
@@ -246,15 +249,15 @@ export class HolidayDetailsComponent implements OnInit {
     this.provider_services.addHoliday(post_data)
       .subscribe(
         () => {
-          // this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('HOLIDAY_CREATED'));
+          // this.api_success = this.wordProcessor.getProjectMesssages('ITEM_CREATED');
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_CREATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'general', 'holidays']);
 
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -267,12 +270,12 @@ export class HolidayDetailsComponent implements OnInit {
     this.provider_services.editHoliday(post_data)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('HOLIDAY_UPDATED'));
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('HOLIDAY_UPDATED'));
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'general', 'holidays']);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }

@@ -7,6 +7,10 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { Location } from '@angular/common';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-change-mobile',
@@ -38,21 +42,27 @@ export class ChangeMobileComponent implements OnInit {
   curtype;
   usertype;
   submit_data = { 'phonenumber': null };
-  breadcrumbs_init = [
-    {
-      title: this.changemob_cap,
-      url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
+  // breadcrumbs_init = [
+  //   {
+  //     title: this.changemob_cap,
+  //     url: '/' + this.shared_functions.isBusinessOwner('returntyp') + '/change-mobile'
+  //   }
+  // ];
+  // breadcrumbs = this.breadcrumbs_init;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router
+    private location: Location,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService
   ) { }
-
+  goBack () {
+    this.location.back();
+  }
   ngOnInit() {
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.spForm = this.fb.group({
@@ -88,7 +98,7 @@ export class ChangeMobileComponent implements OnInit {
             this.is_verified = success['userProfile']['phoneVerified'];
           }
         },
-        error => { ob.api_error = this.shared_functions.getProjectErrorMesssages(error); }
+        error => { ob.api_error = this.wordProcessor.getProjectErrorMesssages(error); }
       );
   }
   onSubmit(submit_data) {
@@ -102,14 +112,14 @@ export class ChangeMobileComponent implements OnInit {
           this.step = 2;
           this.submit_data = submit_data;
           // this.api_success = Messages.OTP_SENT_MOBILE.replace('[your_mobile]', submit_data.phonenumber);
-          // this.shared_functions.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
+          // this.snackbarService.openSnackBar(Messages.PASSWORD_MISMATCH, {'panelClass': 'snackbarerror'});
           setTimeout(() => {
             this.api_success = '';
             this.spForm.reset();
           }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -151,10 +161,10 @@ export class ChangeMobileComponent implements OnInit {
         () => {
           // this.api_success = Messages.PHONE_VERIFIED;
           this.api_success = null;
-          this.shared_functions.openSnackBar(Messages.PHONE_VERIFIED);
-          const ynw = this.shared_functions.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+          this.snackbarService.openSnackBar(Messages.PHONE_VERIFIED);
+          const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
           ynw.loginId = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
-          this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
+          this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
           setTimeout(() => {
             this.router.navigate(['/']);
             this.getProfile();
@@ -162,7 +172,7 @@ export class ChangeMobileComponent implements OnInit {
         },
         error => {
           // this.api_error = error.error;
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 

@@ -2,6 +2,7 @@ import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError, EMPTY } from 'rxjs';
+import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -9,6 +10,9 @@ import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenance-msg.component';
+import { SnackbarService } from '../services/snackbar.service';
+import { SessionStorageService } from '../services/session-storage.service';
+import { LocalStorageService } from '../services/local-storage.service';
 import { version } from '../constants/version';
 
 @Injectable()
@@ -38,8 +42,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private shared_functions: SharedFunctions,
-    public shared_services: SharedServices, private dialog: MatDialog) { }
+  constructor(private router: Router, private shared_functions: SharedFunctions,
+    public shared_services: SharedServices, private dialog: MatDialog,
+    private snackbarService: SnackbarService,
+    private sessionStorageService: SessionStorageService,
+    private lStorageService: LocalStorageService) { }
 
   private _refreshSubject: Subject<any> = new Subject<any>();
   private _maintananceSubject: Subject<any> = new Subject<any>();
@@ -215,7 +222,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               );
             } else if (error.status === 0) {
                 retry(2),
-                this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
                 return EMPTY;
             } else if (error.status === 404) {
               // return EMPTY;
@@ -234,7 +241,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               }
               return EMPTY;
             } else if (error.status === 303) {
-              this.shared_functions.setitemonLocalStorage('unClaimAccount', true);
+              this.lStorageService.setitemonLocalStorage('unClaimAccount', true);
               return throwError(error);
             } else {
               return throwError(error);
@@ -253,8 +260,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     if (this.shared_functions.getitemfromSessionStorage('deviceName')) {
       req = req.clone({ headers: req.headers.append('device-name', this.shared_functions.getitemfromSessionStorage('deviceName')), withCredentials: true });
     }
-    if (this.shared_functions.getitemfromSessionStorage('tabId')) {
-      req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
+    if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
+      req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
       req.headers.delete('tab');
     }
@@ -283,3 +290,4 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
+

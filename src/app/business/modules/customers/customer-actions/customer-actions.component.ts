@@ -2,10 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-customer-actions',
@@ -21,7 +22,9 @@ export class CustomerActionsComponent implements OnInit {
     loading = false;
     showMessage = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions, private router: Router,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+     private router: Router,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
@@ -34,7 +37,7 @@ export class CustomerActionsComponent implements OnInit {
         if (this.data.type && this.data.type === 'label') {
             this.action = 'label';
         }
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.subdomain = user.subSector;
     }
@@ -49,7 +52,7 @@ export class CustomerActionsComponent implements OnInit {
         // const navigationExtras: NavigationExtras = {
         //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
         // };
-        // this.shared_functions.removeitemfromLocalStorage('mrId');
+        // this.lStorageService.removeitemfromLocalStorage('mrId');
         // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     medicalRecord() {
@@ -66,7 +69,7 @@ export class CustomerActionsComponent implements OnInit {
         // const navigationExtras: NavigationExtras = {
         //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
         // };
-        // this.shared_functions.removeitemfromLocalStorage('mrId');
+        // this.lStorageService.removeitemfromLocalStorage('mrId');
         // this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     lastvisits() {
@@ -178,7 +181,7 @@ export class CustomerActionsComponent implements OnInit {
             this.dialogRef.close();
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     deleteLabel(label, id) {
@@ -186,7 +189,7 @@ export class CustomerActionsComponent implements OnInit {
             this.dialogRef.close();
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     showLabelSection() {

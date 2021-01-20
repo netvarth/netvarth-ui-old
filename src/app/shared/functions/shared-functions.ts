@@ -12,20 +12,22 @@ import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
+import { GroupStorageService } from '../services/group-storage.service';
+import { LocalStorageService } from '../services/local-storage.service';
 @Injectable()
 
 export class SharedFunctions {
   holdbdata: any = [];
-  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp']; // ['isBusinessOwner'];
+  dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp', 'qB']; // ['isBusinessOwner'];
   private subject = new Subject<any>();
   private switchSubject = new Subject<any>();
   mUniqueId;
   constructor(private shared_service: SharedServices, private router: Router,
     private dialog: MatDialog, public provider_services: ProviderServices,
-    private snackBar: MatSnackBar,
     public dateformat: DateFormatPipe,
-    private common_datastorage: CommonDataStorageService,
-    private providerDataStorage: ProviderDataStorageService
+    private providerDataStorage: ProviderDataStorageService,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService
   ) { }
 
   logout() {
@@ -50,14 +52,14 @@ export class SharedFunctions {
   }
 
   callMaintanance() {
-    const promise = new Promise((resolve) => {
+    const promise = new Promise<void>((resolve) => {
       resolve();
     });
     return promise;
   }
 
   doLogout() {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<void>((resolve, reject) => {
       if (localStorage.getItem('isBusinessOwner') === 'true') {
         this.providerLogout()
           .then(
@@ -77,7 +79,7 @@ export class SharedFunctions {
     return promise;
   }
   private consumerLogout() {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<void>((resolve, reject) => {
       this.shared_service.ConsumerLogout()
         .subscribe(data => {
           this.clearLocalstorage();
@@ -93,7 +95,7 @@ export class SharedFunctions {
   }
 
   private providerLogout() {
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<void>((resolve, reject) => {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
           this.providerDataStorage.setWeightageArray([]);
@@ -144,6 +146,32 @@ export class SharedFunctions {
     return promise;
   }
 
+  businessLogin(post_data) {
+    this.sendMessage({ ttype: 'main_loading', action: true });
+    const promise = new Promise((resolve, reject) => {
+      this.shared_service.ProviderLogin(post_data)
+        .subscribe(
+          data => {
+            this.providerDataStorage.setWeightageArray([]);
+            localStorage.setItem('popupShown', 'false');
+            this.setLoginData(data, post_data, 'provider');
+            resolve(data);
+          },
+          error => {
+            this.sendMessage({ ttype: 'main_loading', action: false });
+            if (error.status === 401) {
+              reject(error);
+              // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+            } else {
+              if (error.error && typeof (error.error) === 'object') {
+                error.error = Messages.API_ERROR;
+              }
+              reject(error);
+            }
+          });
+    });
+    return promise;
+  }
   providerLogin(post_data) {
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
@@ -200,18 +228,17 @@ export class SharedFunctions {
 
   public setLoginData(data, post_data, mod) {
     // localStorage.setItem('ynw-user', JSON.stringify(data));
-    this.setitemToGroupStorage('ynw-user', data);
+    this.groupService.setitemToGroupStorage('ynw-user', data);
     this.setitemonLocalStorage('jld', post_data['password']);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
-
     }
     delete post_data['password'];
     localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
   }
 
   public clearLocalstorage() {
-    this.removeitemfromLocalStorage('ynw-credentials');
+    this.lStorageService.removeitemfromLocalStorage('ynw-credentials');
     const uniqueId = localStorage.getItem('mUniqueId');
     const devicename = localStorage.getItem('deviceName');
     for (let index = 0; index < localStorage.length; index++) {
@@ -256,96 +283,6 @@ export class SharedFunctions {
     return is_business_owner;
   }
 
-  public getitemfromLocalStorage(itemname) { // function to get local storage item value
-    if (localStorage.getItem(itemname) !== 'undefined') {
-      return JSON.parse(localStorage.getItem(itemname));
-    }
-  }
-  public setitemonLocalStorage(itemname, itemvalue) { // function to set local storage item value
-    localStorage.setItem(itemname, JSON.stringify(itemvalue));
-  }
-  public removeitemfromLocalStorage(itemname) {
-    localStorage.removeItem(itemname);
-  }
-
-  public setitemOnSessionStorage(itemname, itemvalue) {
-    sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
-  }
-  public getitemfromSessionStorage(itemname) { // function to get local storage item value
-    if (sessionStorage.getItem(itemname) !== 'undefined') {
-      return JSON.parse(sessionStorage.getItem(itemname));
-    }
-  }
-  public removeitemfromSessionStorage(itemname) {
-    sessionStorage.removeItem(itemname);
-  }
-
-  public getGroup() {
-    if (this.getitemfromSessionStorage('tabId')) {
-      return this.getitemfromSessionStorage('accountid');
-    } else {
-      return 0;
-    }
-  }
-
-  public setitemToGroupStorage(itemname, itemvalue) {
-    const group = this.getGroup();
-    let groupObj = {};
-    if (localStorage.getItem(group)) {
-      groupObj = JSON.parse(localStorage.getItem(group));
-      if (groupObj) {
-        groupObj[itemname] = itemvalue;
-      }
-    } else {
-      groupObj[itemname] = itemvalue;
-    }
-    localStorage.setItem(group, JSON.stringify(groupObj));
-  }
-  public getitemFromGroupStorage(itemname, type?) {
-    let group;
-    if (type) {
-      group = 0;
-    } else {
-      group = this.getGroup();
-    }
-    if (localStorage.getItem(group)) {
-      const groupObj = JSON.parse(localStorage.getItem(group));
-      if (groupObj[itemname] || (itemname === 'isCheckin' && groupObj[itemname] !== undefined)) {
-        return groupObj[itemname];
-      }
-    }
-  }
-  public removeitemFromGroupStorage(itemname) {
-    const group = this.getGroup();
-    const groupObj = JSON.parse(localStorage.getItem(group));
-    if (groupObj[itemname]) {
-      delete groupObj[itemname];
-      localStorage.setItem(group, JSON.stringify(groupObj));
-    }
-  }
-
-  public setItemOnCookie(cname, cvalue, exdays = 30) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    const expires = 'expires=' + d.toUTCString();
-    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
-  }
-  public getItemOnCookie(cname) {
-    const name = cname + '=';
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return '';
-  }
-
   public getCurrentUTCdatetimestring() {
     const curdate = new Date();
     const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
@@ -385,7 +322,7 @@ export class SharedFunctions {
 
   public getProfile() {
     const promise = new Promise((resolve, reject) => {
-      const user = this.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
         this.router.navigate(['logout']);
       }
@@ -489,7 +426,7 @@ export class SharedFunctions {
         });
         break;
     }
-    this.setitemonLocalStorage('popularSearch', retdet);
+    this.lStorageService.setitemonLocalStorage('popularSearch', retdet);
     const pdata = { 'ttype': 'popularSearchList', 'target': retdet };
     this.sendMessage(pdata);
     return retdet;
@@ -537,7 +474,7 @@ export class SharedFunctions {
       'dentists': 'dentalHosp',
       'alternateMedicinePractitioners': 'alternateMedicineHosp'
     };
-    const ynw_conf = this.getitemfromLocalStorage('ynw-bconf');
+    const ynw_conf = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     if (ynw_conf.bdata) {
       for (let i = 0; i < ynw_conf.bdata.length; i++) {
         if (ynw_conf.bdata[i].domain === selected_domain) {
@@ -584,7 +521,7 @@ export class SharedFunctions {
               cdate: today,
               bdata: res
             };
-            this.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
             this.getSearchLabels(selected_domain);
           }
         );
@@ -592,7 +529,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price;
+    return 'â‚¹' + ' ' + price;
   }
 
   imageValidation(file) {
@@ -624,23 +561,6 @@ export class SharedFunctions {
     } else {
       return Messages.API_ERROR;
     }
-  }
-
-  apiErrorAutoHide(ob, error) {
-    error = this.getApiError(error);
-    const replaced_message = this.findTerminologyTerm(error);
-    ob.api_error = this.firstToUpper(replaced_message);
-    setTimeout(() => {
-      ob.api_error = null;
-    }, projectConstants.TIMEOUT_DELAY_LARGE10);
-  }
-
-  apiSuccessAutoHide(ob, message) {
-    const replaced_message = this.findTerminologyTerm(message);
-    ob.api_success = this.firstToUpper(replaced_message);
-    setTimeout(() => {
-      ob.api_success = null;
-    }, projectConstants.TIMEOUT_DELAY_LARGE10);
   }
 
   confirmGalleryImageDelete(ob, file) {
@@ -911,7 +831,7 @@ export class SharedFunctions {
 
   setBusinessDetailsforHeaderDisp(bname, sector, subsector, logo, forcelogoblank?) {
     const buss_det = { 'bn': '', 'bs': '', 'bss': '', 'logo': '' };
-    const exist_det = this.getitemFromGroupStorage('ynwbp');
+    const exist_det = this.groupService.getitemFromGroupStorage('ynwbp');
     if (exist_det) {
       buss_det.bn = bname || '';
       buss_det.bs = sector || '';
@@ -927,10 +847,10 @@ export class SharedFunctions {
       buss_det.bss = subsector;
       buss_det.logo = logo;
     }
-    this.setitemToGroupStorage('ynwbp', buss_det);
+    this.groupService.setitemToGroupStorage('ynwbp', buss_det);
   }
   retSubSectorNameifRequired(domain, subdomainname) {
-    const bprof = this.getitemfromLocalStorage('ynw-bconf');
+    const bprof = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     if (bprof === null || bprof === undefined || bprof.bdata === null || bprof.bdata === undefined) {
       this.shared_service.bussinessDomains()
         .subscribe(
@@ -990,19 +910,7 @@ export class SharedFunctions {
     return pattern.test(str);  // returns a boolean
   }
 
-  openSnackBar(message: string, params: any = []) {
-    const panelclass = (params['panelClass']) ? params['panelClass'] : 'snackbarnormal';
-    if (params['panelClass'] === 'snackbarerror') {
-      message = this.getApiError(message);
-    }
-    let duration = projectConstants.TIMEOUT_DELAY_LARGE;
-    if (params['duration']) {
-      duration = params['duration'];
-    }
-    const replaced_message = this.findTerminologyTerm(message);
-    const snackBarRef = this.snackBar.open(replaced_message, '', { duration: duration, panelClass: panelclass });
-    return snackBarRef;
-  }
+  
 
   redirectto(mod) {
     const usertype = this.isBusinessOwner('returntyp');
@@ -1294,7 +1202,7 @@ export class SharedFunctions {
               }
             );
         } else {
-          resolve();
+          resolve(null);
         }
       });
     });
@@ -1354,66 +1262,7 @@ export class SharedFunctions {
     }
     return retval;
   }
-  setTerminologies(terminologies) {
-    this.common_datastorage.set('terminologies', terminologies);
-  }
-  getTerminologies() {
-    return this.common_datastorage.get('terminologies');
-  }
-  getTerminologyTerm(term) {
-    const term_only = term.replace(/[\[\]']/g, '').toLowerCase();
-    const terminologies = this.common_datastorage.get('terminologies');
-    if (terminologies) {
-      return (terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term);
-    } else {
-      return (term === term_only) ? term_only : term;
-    }
-  }
-
-  removeTerminologyTerm(term, full_message) {
-    const term_replace = this.getTerminologyTerm(term);
-    const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
-    return full_message.replace('[' + term_only + ']', term_replace);
-  }
-
-  toCamelCase(str) {
-    return str;
-  }
-
-  firstToUpper(str) {
-    if (str) {
-      if (str.substr(0, 7) === 'http://' || str.substr(0, 8) === 'https://') {
-        return str;
-      } else {
-        return str.charAt(0).toUpperCase() + str.substr(1);
-      }
-    }
-  }
-
-  findTerminologyTerm(message) {
-    const matches = message.match(/\[(.*?)\]/g);
-    let replaced_msg = message;
-
-    if (matches) {
-      for (const match of matches) {
-        replaced_msg = this.removeTerminologyTerm(match, replaced_msg);
-      }
-    }
-    return replaced_msg;
-  }
-
-  getProjectMesssages(key) {
-    let message = Messages[key] || '';
-    message = this.findTerminologyTerm(message);
-    return this.firstToUpper(message);
-  }
-
-  getProjectErrorMesssages(error) {
-    let message = this.getApiError(error);
-    message = this.findTerminologyTerm(message);
-    return this.firstToUpper(message);
-  }
-
+  
   roundToTwoDecimel(amt) {
     return Math.round(amt * 100) / 100; // for only two decimal
   }
@@ -1471,6 +1320,15 @@ export class SharedFunctions {
       return false;
     }
   }
+   isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    const charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
   isNumericforToken(evt) {
     const inputKeyCode = evt.keyCode ? evt.keyCode : evt.which;
     if (inputKeyCode < 48 || inputKeyCode > 57) {
@@ -1671,12 +1529,12 @@ export class SharedFunctions {
   }
   getGlobalSettings() {
     return new Promise((resolve) => {
-      let settings = this.getitemFromGroupStorage('settings');
+      let settings = this.groupService.getitemFromGroupStorage('settings');
       if (!settings) {
         this.provider_services.getGlobalSettings().subscribe(
           (data: any) => {
             settings = data;
-            this.setitemToGroupStorage('settings', data);
+            this.groupService.setitemToGroupStorage('settings', data);
             resolve(data);
           });
       } else {

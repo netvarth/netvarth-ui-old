@@ -11,6 +11,8 @@ import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-add-inbox-messages',
   templateUrl: './add-inbox-messages.component.html'
@@ -65,9 +67,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     public common_datastorage: CommonDataStorageService,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
     this.uuid = this.data.uuid || null;
@@ -82,8 +86,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'appt';
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order'){
         this.type = 'order';
-      }
-      else{
+      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders'){
+        this.type = 'orders';
+      } else {
         this.type = 'wl';
       }
     }
@@ -119,7 +124,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
   gets3curl() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.sharedfunctionObj.getS3Url('provider')
         .then(
           res => {
@@ -169,7 +174,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.resetApiErrors();
     const blankvalidate = projectConstantsLocal.VALIDATOR_BLANK;
     if (blankvalidate.test(form_data.message)) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('MSG_ERROR');
+      this.api_error = this.wordProcessor.getProjectMesssages('MSG_ERROR');
     } else {
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
@@ -194,7 +199,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }, projectConstants.TIMEOUT_DELAY);
               },
                 error => {
-                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                  this.wordProcessor.apiErrorAutoHide(this, error);
                   this.disableButton = false;
                 }
               );
@@ -222,7 +227,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }, projectConstants.TIMEOUT_DELAY);
                 },
                   error => {
-                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                     this.disableButton = false;
                   }
                 );
@@ -235,7 +240,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }, projectConstants.TIMEOUT_DELAY);
                 },
                   error => {
-                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                     this.disableButton = false;
                   }
                 );
@@ -248,7 +253,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }, projectConstants.TIMEOUT_DELAY);
                 },
                   error => {
-                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                     this.disableButton = false;
                   }
                 );
@@ -278,7 +283,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }, projectConstants.TIMEOUT_DELAY);
               },
                 error => {
-                  this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                  this.wordProcessor.apiErrorAutoHide(this, error);
                   this.disableButton = false;
                 }
               );
@@ -342,7 +347,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }, projectConstants.TIMEOUT_DELAY);
             },
               error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.wordProcessor.apiErrorAutoHide(this, error);
                 this.disableButton = false;
               }
             );
@@ -356,7 +361,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }, projectConstants.TIMEOUT_DELAY);
               },
               error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.wordProcessor.apiErrorAutoHide(this, error);
                 this.disableButton = false;
               }
             );
@@ -371,7 +376,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }, projectConstants.TIMEOUT_DELAY);
             },
               error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.wordProcessor.apiErrorAutoHide(this, error);
                 this.disableButton = false;
               }
             );
@@ -385,7 +390,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }, projectConstants.TIMEOUT_DELAY);
               },
               error => {
-                this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                this.wordProcessor.apiErrorAutoHide(this, error);
                 this.disableButton = false;
               }
             );
@@ -419,7 +424,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       } else if (this.type === 'order'){
@@ -433,7 +438,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+          );
+      }  else if (this.type === 'orders'){
+        this.shared_services.addConsumerOrderNotecomm(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       }
@@ -448,7 +467,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       }
@@ -466,7 +485,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
           }
         );
     }
@@ -503,7 +522,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
           }
         );
     }
@@ -517,9 +536,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Selected image type not supported');
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
         } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.sharedfunctionObj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();
@@ -583,7 +602,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
     } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
         width: '50%',

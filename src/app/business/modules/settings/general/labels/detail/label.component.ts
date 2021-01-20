@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-label',
     templateUrl: './label.component.html'
@@ -68,10 +69,10 @@ export class LabelComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         public fed_service: FormMessageDisplayService,
-        private shared_functions: SharedFunctions,
-        private shared_Functionsobj: SharedFunctions) {
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-        this.waitlist_label = this.shared_functions.getTerminologyTerm('waitlist');
+        private snackbarService:SnackbarService,
+        private  wordProcessor: WordProcessor) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
         this.activated_route.params.subscribe(params => {
             this.actionparam = params.id;
             if (this.actionparam === 'view') {
@@ -137,13 +138,13 @@ export class LabelComponent implements OnInit {
                 'valueSet': this.valueSet,
             };
             this.provider_services.createLabel(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_ADDED'));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_ADDED'));
                 this.editLabelbyId(data);
                 this.actionparam = 'view';
                 this.labelcaption = 'Label Details';
             },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }
@@ -156,14 +157,14 @@ export class LabelComponent implements OnInit {
                 'valueSet': this.valueSet
             };
             this.provider_services.updateLabel(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('LABEL_UPDATED'));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_UPDATED'));
                 this.editLabelbyId(data);
                 this.labelcaption = 'Label Details';
                 this.actionparam = 'view';
 
             },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }
@@ -171,11 +172,11 @@ export class LabelComponent implements OnInit {
         const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
         const statusmsg = (label.status === 'ENABLED') ? 'disabled' : 'enabled';
         this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
-            this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.snackbarService.openSnackBar(label.displayName + statusmsg + ' successfully');
             this.editLabelbyId(label.id);
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     setDescFocus() {

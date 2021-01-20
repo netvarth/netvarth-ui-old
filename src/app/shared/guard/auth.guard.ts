@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
-import { SharedFunctions } from '../functions/shared-functions';
+import { GroupStorageService } from '../services/group-storage.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class AuthGuardConsumer implements CanActivate {
@@ -50,17 +51,18 @@ export class AuthGuardLogin implements CanActivate {
 
 @Injectable()
 export class AuthGuardHome implements CanActivate {
-  constructor(private router: Router, private shared_functions: SharedFunctions) {}
+  constructor(private router: Router, private groupService: GroupStorageService, 
+    private LStorageService: LocalStorageService) {}
   canActivate() {
     let credentials = null;
     let userType = null;
-    if (localStorage.getItem('ynw-credentials') && this.shared_functions.getitemFromGroupStorage('ynw-user') ) {
-      credentials = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    if (localStorage.getItem('ynw-credentials') && this.groupService.getitemFromGroupStorage('ynw-user') ) {
+      credentials = this.groupService.getitemFromGroupStorage('ynw-user');
       userType = credentials['userType'];
-      if (localStorage.getItem('isBusinessOwner') === 'true' || userType === 3) {
+      if (this.LStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true' || userType === 3) {
         this.router.navigate(['/provider/check-ins/']);
         return false;
-      } else if (localStorage.getItem('isBusinessOwner') === 'false') {
+      } else if (this.LStorageService.getitemfromLocalStorage('isBusinessOwner') === 'false') {
         this.router.navigate(['/consumer']);
         return false;
       }
@@ -71,11 +73,11 @@ export class AuthGuardHome implements CanActivate {
 
 @Injectable()
 export class AuthGuardProviderHome implements CanActivate {
-  constructor(private router: Router, private shared_functions: SharedFunctions) { }
+  constructor(private router: Router, private groupService: GroupStorageService) { }
   canActivate() {
     if (localStorage.getItem('ynw-credentials')
-      && this.shared_functions.getitemFromGroupStorage('ynw-user')) {
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      && this.groupService.getitemFromGroupStorage('ynw-user')) {
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (user.accStatus === 'ACTIVE') {
         return true;
       } else {

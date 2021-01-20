@@ -8,6 +8,9 @@ import { projectConstants } from '../../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { ShowMessageComponent } from '../../../../../../../../business/modules/show-messages/show-messages.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-user-services',
@@ -65,7 +68,10 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
         private dialog: MatDialog,
-        public router: Router) {
+        public router: Router,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
@@ -74,7 +80,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getUser();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
         this.getServiceCount();
@@ -132,7 +138,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -148,7 +154,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.getServiceCount();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServiceCount();
                 });
     }
@@ -160,7 +166,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.getServiceCount();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServiceCount();
                 });
     }
@@ -258,7 +264,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     } 

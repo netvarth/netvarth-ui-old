@@ -125,7 +125,7 @@
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
                             <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
                                 placeholderLabel="Search departments"
-                                noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
+                                noEntriesFoundLabel="No matching department found"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
                                 (click)="setDeptIds(department.departmentId)">
                                 {{department.departmentName | capitalizeFirst}}
@@ -154,10 +154,10 @@
                             [multiple]="true">
                             <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
                                 placeholderLabel="Search {{provider_label}}s"
-                                noEntriesFoundLabel="no matching {{provider_label}} found"></ngx-mat-select-search>
+                                noEntriesFoundLabel="No matching {{provider_label}} found"></ngx-mat-select-search>
                             <mat-option *ngFor="let user of userList" [value]="user" (click)="setUsersIds(user.id)">
                                 <!-- {{user.firstName}} {{user.lastName}} -->
-                                {{user.businessName}}
+                                {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -184,7 +184,7 @@
                     <mat-form-field *ngIf="services_list.length > 0">
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
                             <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
-                                placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
+                                placeholderLabel="Search services" noEntriesFoundLabel="No matching service found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="setServiceIds(service.id)">
@@ -212,7 +212,7 @@
                     <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Schedules" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search schedules"
-                                noEntriesFoundLabel="no matching schedule found">
+                                noEntriesFoundLabel="No matching schedule found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id)">

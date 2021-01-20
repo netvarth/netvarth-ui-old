@@ -5,6 +5,7 @@ import { FormMessageDisplayService } from '../../../../../../../../../shared/mod
 import { ProviderServices } from '../../../../../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../../../../../app.component';
+import { WordProcessor } from '../../../../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-addprovideuserbprofilespokenlanguages',
@@ -29,7 +30,8 @@ export class AddProviderUserBprofileSpokenLanguagesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
     this.loadData = data;
   }
@@ -82,13 +84,13 @@ export class AddProviderUserBprofileSpokenLanguagesComponent implements OnInit {
     this.provider_services.updateUserbProfile(postdata, this.data.userId)
       .subscribe(data => {
         this.loadData = data;
-        this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_LANGUAGE_SAVED');
+        this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_LANGUAGE_SAVED');
         setTimeout(() => {
           this.dialogRef.close({ 'mod': 'reloadlist', 'data': this.loadData });
         }, projectConstants.TIMEOUT_DELAY);
       },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.disableButton = false;
         }
       );

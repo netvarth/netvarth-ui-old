@@ -10,6 +10,10 @@ import { projectConstants } from '../../../../../app.component';
 import { QRCodeGeneratorComponent } from '../qrcodegenerator/qrcodegenerator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 @Component({
   selector: 'app-jaldeeonline',
   templateUrl: './jaldee-online.component.html'
@@ -55,12 +59,16 @@ export class JaldeeOnlineComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private fb: FormBuilder,
     private routerobj: Router,
-    private dialog: MatDialog) {
-      this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    private dialog: MatDialog,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService) {
+      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.jaldee_online_enabled_msg = Messages.JALDEE_ONLINE_ENABLED_MSG.replace('[customer]', this.customer_label);
@@ -99,7 +107,7 @@ export class JaldeeOnlineComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.shared_functions.openSnackBar('Link copied to clipboard');
+    this.snackbarService.openSnackBar('Link copied to clipboard');
   }
   copyProfileId(valuetocopy) {
     const path = valuetocopy;
@@ -114,7 +122,7 @@ export class JaldeeOnlineComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.shared_functions.openSnackBar('Profile ID copied to clipboard');
+    this.snackbarService.openSnackBar('Profile ID copied to clipboard');
   }
   qrCodegeneraterOnlineID(accEncUid) {
     this.qrdialogRef = this.dialog.open(QRCodeGeneratorComponent, {
@@ -206,10 +214,10 @@ export class JaldeeOnlineComponent implements OnInit {
         const status = (this.listmyprofile_status === true) ? 'disable' : 'enable';
 
         this.listmyprofile_status = !this.listmyprofile_status;
-        this.shared_functions.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully');
+        this.snackbarService.openSnackBar('List my profile on Jaldee.com ' + status + 'd successfully');
         this.getPublicSearch();
       }, error => {
-        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
       });
   }
@@ -233,11 +241,11 @@ export class JaldeeOnlineComponent implements OnInit {
       .subscribe(
         () => {
           this.onlinepresence_status = !this.onlinepresence_status;
-          this.shared_functions.openSnackBar('Jaldee Online ' + is_check + 'd successfully');
+          this.snackbarService.openSnackBar('Jaldee Online ' + is_check + 'd successfully');
           this.getJaldeeIntegrationSettings();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -253,7 +261,7 @@ export class JaldeeOnlineComponent implements OnInit {
   }
   customizeId() {
     if (this.licence_warn) {
-      this.shared_functions.openSnackBar('  You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('  You are not allowed to do this operation. Please upgrade license package', { 'panelClass': 'snackbarerror' });
     } else {
       this.editCustomId();
     }
@@ -284,10 +292,10 @@ export class JaldeeOnlineComponent implements OnInit {
         data => {
           this.bProfile.customId = customId;
           this.normal_customid_show = 3;
-          this.shared_functions.openSnackBar('Jaldee Link Personalized successfully');
+          this.snackbarService.openSnackBar('Jaldee Link Personalized successfully');
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.normal_customid_show = 2;
           this.is_customized = false;
         });
@@ -296,10 +304,10 @@ export class JaldeeOnlineComponent implements OnInit {
         data => {
           this.bProfile.customId = customId;
           this.normal_customid_show = 3;
-          this.shared_functions.openSnackBar('Jaldee Link Personalized successfully');
+          this.snackbarService.openSnackBar('Jaldee Link Personalized successfully');
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.normal_customid_show = 3;
         });
     }
@@ -307,11 +315,11 @@ export class JaldeeOnlineComponent implements OnInit {
   }
   getLicensemetrics() {
     let pkgId;
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
       pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     }
-    this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+    this.licenseMetadata = this.lStorageService.getitemfromLocalStorage('license-metadata');
     // this.provider_services.getLicenseMetadata().subscribe(data => {
     //   this.licenseMetadata = data;
     for (let i = 0; i < this.licenseMetadata.length; i++) {

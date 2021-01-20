@@ -8,6 +8,9 @@ import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -60,6 +63,9 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
     private medicalrecord_service: MedicalrecordService
   ) {
 
@@ -71,7 +77,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     this.providerId = this.medicalrecord_service.getDoctorId();
     console.log(this.providerId);
     if (!this.providerId) {
-      const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.providerId = user.id;
     }
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
@@ -147,7 +153,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
           error => {
             this.digitalSign = false;
             this.loading = false;
-            // this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -171,7 +177,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         this.getDigitalSign();
        },
       error => {
-        this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
       }
     });
@@ -183,9 +189,9 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     if (input) {
       for (const file of input) {
        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();
@@ -234,11 +240,11 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
 

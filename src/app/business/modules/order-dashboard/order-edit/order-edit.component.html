@@ -17,7 +17,7 @@
                   <a class="back-btn" (click)="goBack()">
                     <i class="fa fa-arrow-left"></i>
                   </a>
-                  <span class=" mgn-lt-10 amount">Continue shopping</span>
+                  <span class=" mgn-lt-10 amount">Order</span>
                 </h5>
               </div>
               <!-- revamped section -->
@@ -33,7 +33,7 @@
                           [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                         <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                           <div class="itm-nme"> {{item.item.displayName}}</div>
-                          <div  *ngIf="catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                          <div  class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                           </div>
                           <div>
                              <span class="add_nte" (click)="addNotes(item,i)">
@@ -66,45 +66,12 @@
                           Add Notes</i></a>
                       </div> -->
                     </div>
+                    <button class="confm_btn" (click)="addItems()">Add More Items</button>
                   </div>
                 </div>
   
                 <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
-                  <!-- Side bar contact -->
-                  <div class="contact-outer">
-                    <aside *ngIf="showSide" class="side_nav">
-                      <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
-                      <div class="addrs">
-                        <div>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</div>
-                        <div *ngIf="storeContact.address">
-                          <i class="fa fa-map-marker"></i> {{storeContact.address}}
-                        </div>
-                        <div><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</div>
-                        <div *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</div>
-                        <div *ngIf="storeContact.email" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.email}}</div>
-                        <div *ngIf= "storeContact.alternateEmail" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.alternateEmail}}</div>
-                        <div *ngIf= "storeContact.whatsappNo"><i class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}} {{storeContact.whatsappNo}}</div>
-  
-  
-                      </div>
-                    </aside>
-                  </div>
                   <div [class.opacty]="showSide" class="card col-xs-12">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
-                      <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + businessDetails.logo + ')'}"></div>
-                      <div class="prov-name">
-                        <div class="prov-name-txt">
-                          {{businessDetails.bname}}
-                        </div>
-                        <div class="prov-loc">
-                          {{businessDetails.blocation}}
-                        </div>
-                        <div class="prov-loc store-cntct" (click)="sidebar()">
-                          <i class="fa fa-home store_ico"></i>Store Contact
-                        </div>
-                      </div>
-                    </div>
-  
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey">
                       <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
                         Delivery Type
@@ -145,7 +112,25 @@
                         </span>
                       </div>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey" *ngIf="!storeChecked">
+                        <div class="oder-sumary-txt"  *ngIf="orderDetails.homeDeliveryAddress" >
+                             Address
+                        </div>
+                        <!-- <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div> -->
+                        <div *ngIf="orderDetails.homeDeliveryAddress"> 
+                            <span class="address" [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
+                        </div>
+                      <div class="oder-sumary-txt" *ngIf="!orderDetails.homeDeliveryAddress"  (click)="addAddress()">
+                        Add Address
+                      </div>                     
+                      <div *ngIf="storeaddress"> 
+                          <span class="address" [innerHTML]="this.storeaddress | nl2br"></span>
+                          <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(storeaddress)">Change</a></div>
+
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
                       <div class="oder-sumary-txt">Order Summary</div>
                       <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
                         *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
@@ -163,11 +148,11 @@
                       </div>
                     </ng-container>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_details.showPrice">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
                       <div class="flex1">SUB TOTAL</div>
                       <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                     </div>
-                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Confirm Order</button>
+                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Update Order</button>
                   </div>
                 </div>
               </div>

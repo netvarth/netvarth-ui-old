@@ -11,6 +11,9 @@ import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { SessionStorageService } from '../../services/session-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
 
 
 
@@ -55,6 +58,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private sessionStorageService: SessionStorageService,
+    private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor,
     public dialog: MatDialog,
     private router: Router,
     @Inject(DOCUMENT) public document
@@ -186,7 +192,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       'password': data.password,
       'mUniqueId': null
     };
-    this.shared_functions.removeitemfromSessionStorage('tabId');
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     if (this.data.type === 'provider') {
       post_data.mUniqueId = localStorage.getItem('mUniqueId');
@@ -194,19 +200,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.shared_functions.providerLogin(post_data)
         .then(
           () => {
+            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+            // this.dialogRef.close();
             setTimeout(() => {
               this.dialogRef.close();
             }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
-            ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.api_loading = false;
           }
         );
     } else if (this.data.type === 'consumer') {
       if (post_data.loginId.startsWith('55') && this.test_provider === false) {
         setTimeout(() => {
-          ob.api_error = this.shared_functions.getProjectMesssages('TESTACC_LOGIN_NA');
+          ob.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
@@ -214,6 +223,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
+              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+              this.lStorageService.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
             },
             error => {
@@ -222,7 +234,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                  this.onSubmit(data);
                });
              } else {
-              ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+              ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             }
               this.api_loading = false;
             }

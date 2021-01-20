@@ -5,6 +5,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { OnInit, Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-provider-jcoupon-details',
   templateUrl: './provider-jcoupon-details.component.html',
@@ -63,7 +65,9 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   constructor(private provider_servicesobj: ProviderServices,
     public shared_functions: SharedFunctions,
     private location: Location,
-    private router: ActivatedRoute) { this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist'); }
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private router: ActivatedRoute) { this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist'); }
   ngOnInit() {
     this.router.params
       .subscribe(params => {
@@ -72,7 +76,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
         this.getJaldeeCouponStatistic();
         this.getWaltilistmgrSettings();
       });
-    // this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    // this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   getCouponview() {
     this.provider_servicesobj.getJaldeeCoupon(this.jc_code).subscribe(
@@ -113,7 +117,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
       data => {
         this.getCouponview();
       }, error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

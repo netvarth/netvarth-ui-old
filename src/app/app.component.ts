@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { SharedFunctions } from './shared/functions/shared-functions';
+import { LocalStorageService } from './shared/services/local-storage.service';
 export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
@@ -12,22 +13,23 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(
     private globalService: GlobalService,
-    private shared_functions: SharedFunctions
+    private shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService
   ) { }
 
   ngOnInit() {
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
-    const pVersion = this.shared_functions.getitemfromLocalStorage('version');
+    const pVersion = this.lStorageService.getitemfromLocalStorage('version');
     if ((pVersion && pVersion !== cVersion) || !pVersion) {
-      const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+      const ynw_user = this.shared_functions.lStorageService('ynw-credentials');
       if(ynw_user) {
         const phone_number = ynw_user.loginId;
-        const password = this.shared_functions.getitemfromLocalStorage('jld');
+        const password = this.shared_functions.lStorageService('jld');
         if (!ynw_user.mUniqueId) {
           if (localStorage.getItem('mUniqueId')) {
             ynw_user.mUniqueId = localStorage.getItem('mUniqueId');
-            this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw_user);
+            this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
           }
         }
         const post_data = {
@@ -40,10 +42,10 @@ export class AppComponent implements OnInit {
         this.shared_functions.doLogout().then(
           () => {
           this.shared_functions.providerLogin(post_data);
-          this.shared_functions.setitemonLocalStorage('version', cVersion);
+          this.lStorageService.setitemonLocalStorage('version', cVersion);
         });
       } else {
-        this.shared_functions.setitemonLocalStorage('version', cVersion);
+        this.lStorageService.setitemonLocalStorage('version', cVersion);
       }
     }
   }

@@ -3,9 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-auditlogs',
@@ -28,9 +28,9 @@ export class ProviderAuditLogComponent implements OnInit {
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
   constructor(private provider_servicesobj: ProviderServices,
-    private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
     public dialogRef: MatDialogRef<ProviderAuditLogComponent>,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
@@ -45,7 +45,7 @@ export class ProviderAuditLogComponent implements OnInit {
         this.auditlog_details = data;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.load_complete = 1;
         },
         () => {

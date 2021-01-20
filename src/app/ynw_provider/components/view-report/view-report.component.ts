@@ -6,6 +6,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-view-report',
@@ -61,14 +63,16 @@ export class ViewReportComponent implements OnInit {
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private router: ActivatedRoute,
-    private shared_services: SharedServices, ) { }
+    private shared_services: SharedServices,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService ) { }
   ngOnInit() {
     this.router.params
       .subscribe(params => {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
-      this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+      this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
       return JSON.parse(jsonString);
@@ -88,11 +92,11 @@ export class ViewReportComponent implements OnInit {
                   this.invoiceFromS3 = s3Result;
                 },
                   error => {
-                    this.sharedfunctionObj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                   });
             },
             error => {
-              this.sharedfunctionObj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       }

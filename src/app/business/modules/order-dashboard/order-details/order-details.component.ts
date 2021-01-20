@@ -9,6 +9,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { OrderActionsComponent } from '../order-actions/order-actions.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-order-details',
@@ -47,10 +48,11 @@ buttons: [
 };
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
-    public location: Location, public sharedFunctions: SharedFunctions) {
+    public location: Location, public sharedFunctions: SharedFunctions,
+    private wordProcessor: WordProcessor) {
     this.activaterouter.params.subscribe(param => {
       this.uid = param.id;
-      this.customerLabel = this.sharedFunctions.getTerminologyTerm('customer');
+      this.customerLabel = this.wordProcessor.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
     });
   }

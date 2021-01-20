@@ -9,6 +9,7 @@ import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { Meta, Title } from '@angular/platform-browser';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -49,6 +50,7 @@ export class HomeComponent implements OnInit {
     private routerobj: Router,
     public dialog: MatDialog,
     private _scrollToService: ScrollToService,
+    private lStorageService: LocalStorageService,
     private titleService: Title,
     private metaService: Meta
   ) { }
@@ -185,11 +187,11 @@ export class HomeComponent implements OnInit {
     this.shared_service.getSystemDate()
       .subscribe(
         res => {
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   getDomainList() {
-    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
       const bdate = bconfig.cdate;
@@ -216,7 +218,7 @@ export class HomeComponent implements OnInit {
               cdate: today,
               bdata: this.domainlist_data
             };
-            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
           }
         );
     }
@@ -242,7 +244,7 @@ export class HomeComponent implements OnInit {
     this.handle_search();
   }
   handle_search() {
-    const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+    const localloc = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     if (localloc.autoname !== '' && localloc.autoname !== undefined && localloc.autoname !== null) {
       this.locationholder = localloc;
     }

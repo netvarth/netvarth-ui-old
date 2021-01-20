@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
+import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -21,10 +23,12 @@ export class InboxOuterComponent implements OnInit {
   obtainedMsgs = false;
 
   constructor(private inbox_services: InboxServices,
-    private shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
+    private location: Location) { }
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
   }
 
@@ -44,7 +48,9 @@ export class InboxOuterComponent implements OnInit {
         }
       );
   }
-
+  goBack () {
+    this.location.back();
+  }
   sortMessages() {
     this.messages.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {

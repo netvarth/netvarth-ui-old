@@ -14,6 +14,9 @@ import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { UpdateEmailComponent } from '../../../business/modules/update-email/update-email.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-provider-settings',
@@ -176,19 +179,22 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private provider_shared_functions: ProviderSharedFuctions,
     private activated_route: ActivatedRoute,
     private readonly joyrideService: JoyrideService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
         this.showTakeaTour = qparams.firstTimeSignup;
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         if (this.showTakeaTour) {
           this.getAccountContactInfo();
         }
       });
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.shared_functions.getMessage().subscribe(data => {
       switch (data.ttype) {
         case 'upgradelicence':
@@ -196,7 +202,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
           break;
       }
     });
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   bprofileTooltip = '';
   waitlistTooltip = '';
@@ -241,20 +247,20 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showIncompleteButton = true;
   ordermanagertooltip = 'Ordermanager';
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
     }
     this.accountType = user.accountType;
-    this.bprofileTooltip = this.shared_functions.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
-    this.waitlistTooltip = this.shared_functions.getProjectMesssages('WAITLIST_TOOLTIP');
-    this.licenseTooltip = this.shared_functions.getProjectMesssages('LINCENSE_TOOLTIP');
-    this.paymentTooltip = this.shared_functions.getProjectMesssages('PAYMENT_TOOLTIP');
-    this.billposTooltip = this.shared_functions.getProjectMesssages('BILLPOS_TOOLTIP');
+    this.bprofileTooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+    this.waitlistTooltip = this.wordProcessor.getProjectMesssages('WAITLIST_TOOLTIP');
+    this.licenseTooltip = this.wordProcessor.getProjectMesssages('LINCENSE_TOOLTIP');
+    this.paymentTooltip = this.wordProcessor.getProjectMesssages('PAYMENT_TOOLTIP');
+    this.billposTooltip = this.wordProcessor.getProjectMesssages('BILLPOS_TOOLTIP');
     this.frm_profile_cap = Messages.FRM_LEVEL_PROFILE_MSG.replace('[customer]', this.customer_label);
-    this.miscellaneous = this.shared_functions.getProjectMesssages('FRM_LEVEL_MISC_MSG');
+    this.miscellaneous = this.wordProcessor.getProjectMesssages('FRM_LEVEL_MISC_MSG');
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     // this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG.replace('[customer]', this.customer_label);
     this.frm_addinfo_cap = Messages.FRM_ADDINFO_MSG;
@@ -297,7 +303,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getSchedulesCount();
     this.getCatalog();
     // this.getStatusboardLicenseStatus();
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     // Update from footer
     this.subscription = this.shared_functions.getMessage()
       .subscribe(
@@ -533,11 +539,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Jaldee.com for Mob App ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Jaldee.com for Mob App ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         }
       );
@@ -550,11 +556,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setJaldeeIntegration(data)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Jaldee.com Online presence ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getJaldeeIntegrationSettings();
         }
       );
@@ -564,11 +570,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setLivetrack(is_livetrack)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         }
       );
@@ -578,12 +584,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setAcceptOnlineCheckin(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getWaitlistMgr();
         }
       );
@@ -593,12 +599,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setFutureCheckinStatus(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -607,12 +613,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setAcceptOnlineAppointment(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getApptlistMgr();
         }
       );
@@ -622,18 +628,18 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setFutureAppointmentStatus(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
 
   getDomainSubdomainSettings() {
-    const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
     return new Promise((resolve, reject) => {
@@ -684,11 +690,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
       this.getpaymentDetails();
       if (!event.checked) {
-        this.shared_functions.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
       }
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.getpaymentDetails();
       });
   }
@@ -721,12 +727,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     const value = (event.checked) ? true : false;
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
-      this.shared_functions.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getPOSSettings();
       this.getItems();
       this.getDiscounts();
     }, (error) => {
-      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       this.getPOSSettings();
     });
   }
@@ -750,7 +756,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.getWaitlistMgr();
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getSearchstatus();
           this.getWaitlistMgr();
         });
@@ -795,14 +801,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         if (this.locationExists) {
           this.routerobj.navigate(['provider', 'settings', 'q-manager', 'queues']);
         } else if (this.bprofileLoaded) {
-          this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'discounts':
         if (this.nodiscountError) {
           this.routerobj.navigate(['provider', 'settings', 'pos', 'discount']);
         } else {
-          this.shared_functions.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.discountError, { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'coupons':
@@ -822,7 +828,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         if (this.noitemError) {
           this.routerobj.navigate(['provider', 'settings', 'pos', 'items']);
         } else {
-          this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'waitlistmanager':
@@ -939,7 +945,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         if (this.locationExists) {
           this.routerobj.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
         } else if (this.bprofileLoaded) {
-          this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
         break;
       case 'appservices':
@@ -1046,9 +1052,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       },
         (error) => {
           if (typeof (error) === 'object') {
-            // this.shared_functions.openSnackBar(error.error, { 'panelclass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(error.error, { 'panelclass': 'snackbarerror' });
           } else {
-            this.shared_functions.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelclass': 'snackbarerror' });
           }
         });
   }
@@ -1121,10 +1127,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
               this.multipeLocationAllowed = true;
             }
             if (this.multipeLocationAllowed === true) {
-              this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+              this.locName = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
             }
             if (this.multipeLocationAllowed === false) {
-              this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+              this.locName = this.wordProcessor.getProjectMesssages('WIZ_LOCATION_CAP');
             }
           }
         }
@@ -1151,10 +1157,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   //     .subscribe(
   //       () => {
   //         this.getWaitlistMgr();
-  //         this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+  //         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
   //       },
   //       error => {
-  //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //       });
   // }
 
@@ -1167,7 +1173,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   }
   getStatusboardLicenseStatus() {
     // let pkgId;
-    // const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    // const user = this.groupService.getitemFromGroupStorage('ynw-user');
     // if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
     //   pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
     // }
@@ -1213,11 +1219,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setAppointmentPresence(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         }
       );
@@ -1227,11 +1233,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setCheckinPresence(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Check-in creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Check-in creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         }
       );
@@ -1241,11 +1247,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setDonations(is_Donation)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         }
       );
@@ -1255,11 +1261,11 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getGlobalSettingsStatus();
         }
       );

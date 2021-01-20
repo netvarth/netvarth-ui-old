@@ -8,6 +8,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { ConsumerPaymentmodeComponent } from '../../../shared/components/consumer-paymentmode/consumer-paymentmode.component';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-provider-licence-invoice-detail',
@@ -80,6 +82,8 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     public sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
     public shared_functions: SharedFunctions,
     public _sanitizer: DomSanitizer,
     @Inject(DOCUMENT) public document
@@ -92,7 +96,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -137,7 +141,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
 
       );
@@ -192,7 +196,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           this.payment_loading = false;
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -215,7 +219,7 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
           // this.paymentDetlId = this.getJsonPaymentId(this.payment_detail);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -251,17 +255,17 @@ export class ProviderLicenceInvoiceDetailComponent implements OnInit {
       //     data => {
       //       if (data['response']) {
       //         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-      //         this.api_success = this.shared_functions.getProjectMesssages('PAYMENT_REDIRECT');
+      //         this.api_success = this.wordProcessor.getProjectMesssages('PAYMENT_REDIRECT');
       //         setTimeout(() => {
       //           this.document.getElementById('payuform').submit();
       //         }, 2000);
       //       } else {
-      //         this.api_error = this.shared_functions.getProjectMesssages('CHECKIN_ERROR');
+      //         this.api_error = this.wordProcessor.getProjectMesssages('CHECKIN_ERROR');
       //       }
       //     },
       //     error => {
       //       this.payment_loading = false;
-      //       this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       //     }
       //   );
     }

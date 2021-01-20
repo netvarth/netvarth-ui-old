@@ -11,6 +11,9 @@ import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/function
 import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { AppointmentActionsComponent } from '../appointment-actions/appointment-actions.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-provider-appointment-detail',
   templateUrl: './provider-appointment-detail.component.html'
@@ -101,6 +104,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private activated_route: ActivatedRoute,
     private locationobj: Location,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -108,10 +114,10 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
     });
-    this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
-    this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
-   // this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
-   // this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+   // this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+   // this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init.push({
@@ -122,17 +128,17 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     console.log(this.check_in_statuses);
     this.getPos();
     this.api_loading = true;
-    this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
+    this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
     }
-    this.userDet = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
       this.getProviderSettings();
     } else {
       this.goBack();
     }
-    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -206,7 +212,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
         },
         error => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.goBack();
         }
       );
@@ -219,7 +225,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           this.waitlist_notes = data;
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -230,7 +236,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           this.waitlist_history = data;
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -250,7 +256,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           this.shared_Functionsobj.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -412,7 +418,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           this.showEditView = false;
           this.getApptDetails();
         }, (error) => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
     }
@@ -439,7 +445,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         this.editAppntTime = false;
         this.getApptDetails();
       }, (error) => {
-        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

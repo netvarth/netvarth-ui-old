@@ -8,6 +8,9 @@ import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../shared/modules/gallery/galery-service';
 import { Location } from '@angular/common';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-waitlistservice-detail',
@@ -41,8 +44,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,
         private router: Router, public location: Location,
-        private provider_shared_functions: ProviderSharedFuctions) {
-        const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        private provider_shared_functions: ProviderSharedFuctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService) {
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.breadcrumbs_init = [
@@ -80,7 +86,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.id;
-                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.service_id === 'add') {
                     const breadcrumbs = [];
                     this.breadcrumbs_init.map((e) => {
@@ -110,7 +116,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user_data.sector;
         setTimeout(() => this.showGallery = true, 1200);
         this.initServiceParams();
@@ -136,11 +142,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     .subscribe(
                         () => {
                             this.getGalleryImages();
-                            this.sharedfunctionObj.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
+                            this.snackbarService.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
                         error => {
-                            this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
@@ -182,7 +188,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         return false;
     }
     getDomainSubdomainSettings() {
-        const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         return new Promise((resolve, reject) => {
@@ -291,7 +297,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -299,12 +305,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.provider_services.updateService(post_data)
             .subscribe(
                 () => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_UPDATED'));
                     this.location.back();
                     this.getServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -315,7 +321,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = false;
                     this.getServiceDetail();
                 });
@@ -327,7 +333,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = true;
                     this.getServiceDetail();
                 });

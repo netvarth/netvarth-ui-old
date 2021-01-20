@@ -8,6 +8,8 @@ import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { MessageService } from '../../services/provider-message.service';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-upgrade-license',
@@ -44,7 +46,9 @@ export class UpgradeLicenseComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     public message_service: MessageService,
-    public shared_service: SharedServices
+    public shared_service: SharedServices,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
   ) {
   }
   ngOnInit() {
@@ -72,9 +76,9 @@ export class UpgradeLicenseComponent implements OnInit {
       this.api_loading = true;
       this.provider_services.upgradeLicensePackage(this.selected_pac.pkgId)
         .subscribe(data => {
-          const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           loginuserdata['new_lic'] = this.selected_pac.displayName;
-          this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
           this.api_success = Messages.LICENSE_UPGRADED.replace('[package]', this.selected_pac.pkgName);
           const pdata = { 'ttype': 'upgradelicence'};
           this.sharedfunctionObj.sendMessage(pdata);
@@ -83,7 +87,7 @@ export class UpgradeLicenseComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         },
           error => {
-            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.api_loading = false;
           }
         );

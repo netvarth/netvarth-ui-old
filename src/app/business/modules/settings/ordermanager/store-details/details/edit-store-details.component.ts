@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedFunctions } from '../../../../../../../../src/app/shared/functions/shared-functions';
 import { Messages } from '../../../../../../../../src/app/shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../src/app/ynw_provider/services/provider-services.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-edit-store-details',
     templateUrl: './edit-store-details.component.html'
@@ -28,7 +29,8 @@ export class EditStoreDetailsComponent implements OnInit {
         public activateroute: ActivatedRoute,
         private route: ActivatedRoute,
         private router: Router,
-        private shared_Functionsobj: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
         private provider_services: ProviderServices,
     ) {
         this.route.queryParams.subscribe(params => {
@@ -66,9 +68,9 @@ export class EditStoreDetailsComponent implements OnInit {
             'whatsAppCountryCode': '+91',
         };
         if (this.email === this.alternateEmail) {
-            this.shared_Functionsobj.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
         } else if (this.phone === this.alternatePhone) {
-            this.shared_Functionsobj.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
         } else {
             this.editInfo(data);
         }
@@ -80,12 +82,12 @@ export class EditStoreDetailsComponent implements OnInit {
         this.provider_services.editContactInfo(data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('CONTACT_INFO_UPDATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CONTACT_INFO_UPDATED'));
                     this.api_loading = false;
                     this.router.navigate(['provider', 'settings', 'ordermanager', 'storedetails']);
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
