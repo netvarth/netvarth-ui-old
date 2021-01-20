@@ -71,7 +71,7 @@ flex-basis: 50% !important;
     padding: 15px !important;
   }
    .slotdiv {
-    max-height: 175px !important;
+    max-height: auto; 
     margin-top: 0px !important;
 
   }
