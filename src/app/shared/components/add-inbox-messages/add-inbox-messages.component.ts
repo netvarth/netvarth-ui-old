@@ -233,6 +233,19 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
+            }  else if (this.type === 'order') {
+              this.shared_services.consumerOrderMassCommunicationAppt(post_data).
+                subscribe(() => {
+                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                  setTimeout(() => {
+                    this.dialogRef.close('reloadlist');
+                  }, projectConstants.TIMEOUT_DELAY);
+                },
+                  error => {
+                    this.wordProcessor.apiErrorAutoHide(this, error);
+                    this.disableButton = false;
+                  }
+                );
             } else if (this.source === 'donation-list') {
               this.provider_services.donationMassCommunication(post_data).
                 subscribe(() => {

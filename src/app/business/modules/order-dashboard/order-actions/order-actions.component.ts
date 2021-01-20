@@ -323,15 +323,11 @@ getDisplayname(label) {
 addConsumerInboxMessage() {
   this.dialogRef.close();
   let checkin = [];
-  // if (this.orderDetails.length > 1) {
-  //   this.mulipleSelection = true;
-  // }
-  // if (this.data.multiSelection) {
-  //     checkin = this.orderDetails;
-  // } else {
-  //     checkin.push(this.orderDetails);
-  // }
-  checkin.push(this.orderDetails);
+  if (this.orderDetails.length > 1) {
+      checkin = this.orderDetails;
+  } else {
+      checkin.push(this.orderDetails);
+  }
   console.log(checkin);
   this.provider_shared_functions.addConsumerInboxMessage(checkin, this ,'order-provider')
       .then(
