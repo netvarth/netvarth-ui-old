@@ -166,7 +166,7 @@ export class ChangeMobileComponent implements OnInit {
           ynw.loginId = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
           this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable
           setTimeout(() => {
-            this.router.navigate(['/']);
+            this.location.back();
             this.getProfile();
           }, projectConstants.TIMEOUT_DELAY);
         },

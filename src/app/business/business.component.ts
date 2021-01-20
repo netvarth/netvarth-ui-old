@@ -11,6 +11,7 @@ import { UpdateEmailComponent } from './modules/update-email/update-email.compon
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { GroupStorageService } from '../shared/services/group-storage.service';
 import { SnackbarService } from '../shared/services/snackbar.service';
+import { WordProcessor } from '../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-business',
@@ -37,7 +38,8 @@ export class BusinessComponent implements OnInit {
     private provider_shared_functions: ProviderSharedFuctions,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor ) {
     router.events.subscribe(
       (event: RouterEvent): void => {
         this._navigationInterceptor(event);
@@ -73,7 +75,7 @@ export class BusinessComponent implements OnInit {
 
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
-        this.provider_datastorage.set('terminologies', data.terminologies);
+        this.wordProcessor.setTerminologies(data.terminologies);
       }
     });
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });

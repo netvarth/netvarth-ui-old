@@ -354,7 +354,7 @@ export class ProviderSharedFuctions {
 
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
     const uuids = [];
-    let type;
+    let type;    
     let ynwUuid;
     let uuid;
     let name;
@@ -364,7 +364,9 @@ export class ProviderSharedFuctions {
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
-        if (appt) {
+        if (appt === 'appt') {
+          uuids.push(watlst.uid);
+        } else if(appt === 'order-provider'){
           uuids.push(watlst.uid);
         } else {
           uuids.push(watlst.ynwUuid);
@@ -372,13 +374,20 @@ export class ProviderSharedFuctions {
       }
     } else {
       type = 'single';
-      if (appt) {
+      if (appt === 'appt') {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
           waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
-      } else {
+      } else if(appt === 'order-provider') {
+        console.log(waitlist);
+        uuid = waitlist[0].uid || null;
+        name = waitlist[0].orderFor.firstName ? waitlist[0].orderFor.firstName : '' + ' ' +
+               waitlist[0].orderFor.lastName ? waitlist[0].orderFor.lastName : '';
+        email = waitlist[0].email;
+        phone = waitlist[0].phoneNumber;   
+      } else { 
         uuid = waitlist[0].ynwUuid || null;
         name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
           waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';
