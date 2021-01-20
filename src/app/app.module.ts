@@ -60,6 +60,14 @@ import { ShareService } from 'ngx-sharebuttons';
 import { VoicecallDetailsSendComponent } from './business/modules/appointments/voicecall-details-send/voicecall-details-send.component';
 import { LiveChatComponent } from './shared/components/twilio/twilio-live-chat.component';
 import { CardModule } from './shared/components/card/card.module';
+import { CookieProcessor } from './shared/services/cookie-processor.service';
+import { ErrorMessagingService } from './shared/services/error-message.service';
+import { GroupStorageService } from './shared/services/group-storage.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { SessionStorageService } from './shared/services/session-storage.service';
+import { SnackbarService } from './shared/services/snackbar.service';
+import { WordProcessor } from './shared/services/word-processor.service';
+import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -79,7 +87,8 @@ export function init_app(globalService: GlobalService) {
     ForceDialogComponent,
     ConsumerPaymentmodeComponent,
     VoicecallDetailsSendComponent,
-    LiveChatComponent
+    LiveChatComponent,
+    AddAddressComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -89,7 +98,8 @@ export function init_app(globalService: GlobalService) {
     VoicecallDetailsSendComponent,
     RequestForComponent,
     ForceDialogComponent,
-    ConsumerPaymentmodeComponent
+    ConsumerPaymentmodeComponent,
+    AddAddressComponent
   ],
   imports: [
     CapitalizeFirstPipeModule,

@@ -54,7 +54,7 @@ export class ChangeMobileComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    public router: Router
+    public router: Router,
     private location: Location,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,

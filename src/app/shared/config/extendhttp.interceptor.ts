@@ -2,7 +2,6 @@ import { catchError, switchMap, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject, throwError, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
 import { base_url } from './../constants/urls';
 import { SharedFunctions } from '../functions/shared-functions';
 import { Messages } from '../constants/project-messages';
@@ -42,7 +41,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   forceUpdateCalled = false;
   stopThisRequest = false;
 
-  constructor(private router: Router, private shared_functions: SharedFunctions,
+  constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private sessionStorageService: SessionStorageService,
@@ -77,17 +76,17 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       // Hit refresh-token API passing the refresh token stored into the request
       // to get new access token and refresh token pair
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-      this.shared_functions.removeitemfromSessionStorage('tabId');
-      const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+      this.sessionStorageService.removeitemfromSessionStorage('tabId');
+      const ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       if (!ynw_user) {
         window.location.reload();
       }
       const phone_number = ynw_user.loginId;
-      const password = this.shared_functions.getitemfromLocalStorage('jld');
+      const password = this.lStorageService.getitemfromLocalStorage('jld');
       if (!ynw_user.mUniqueId) {
         if (localStorage.getItem('mUniqueId')) {
           ynw_user.mUniqueId = localStorage.getItem('mUniqueId');
-          this.shared_functions.setitemonLocalStorage('ynw-credentials', ynw_user);
+          this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
         }
       }
       const post_data = {
@@ -96,7 +95,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'password': password,
         'mUniqueId': ynw_user.mUniqueId
       };
-      const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+      const activeuser = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
       // this.shared_functions.doLogout().then(
       //   (refreshSubject: any) => {
       //     this._refreshSubject.next(refreshSubject);
@@ -228,7 +227,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               return throwError(error);
             } else if (error.status === 401) {
-              const password = this.shared_functions.getitemfromLocalStorage('jld');
+              const password = this.lStorageService.getitemfromLocalStorage('jld');
               if (!password) {
                 this.shared_functions.logout();
                 return EMPTY;
@@ -257,8 +256,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Hybrid-Version', version.mobile) });
     req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache')});
-    if (this.shared_functions.getitemfromSessionStorage('deviceName')) {
-      req = req.clone({ headers: req.headers.append('device-name', this.shared_functions.getitemfromSessionStorage('deviceName')), withCredentials: true });
+    if (this.sessionStorageService.getitemfromSessionStorage('deviceName')) {
+      req = req.clone({ headers: req.headers.append('device-name', this.sessionStorageService.getitemfromSessionStorage('deviceName')), withCredentials: true });
     }
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });

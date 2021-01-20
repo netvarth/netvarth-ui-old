@@ -9,12 +9,12 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
 import { projectConstants } from '../../../../app.component';
-import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
+// import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
+// import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -219,14 +219,14 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       if (this.orderType === 'SHOPPINGLIST') {
-          this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-               source: this.imagelist
-            }
-        });
+          // this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+          //   width: '50%',
+          //   panelClass: ['popup-class', 'commonpopupmainclass'],
+          //   disableClose: true,
+          //   data: {
+          //      source: this.imagelist
+          //   }
+        // });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
             if (result) {
             console.log(result);
@@ -622,23 +622,24 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     //     is_test_account = false;
     //   }
     // }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.isLoggedIn();
+    // const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+    //   width: '40%',
+    //   panelClass: ['loginmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: {
+    //     type: origin,
+    //     is_provider: false,
+    //     test_account: is_test_account,
+    //     moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result === 'success') {
+    //     const pdata = { 'ttype': 'updateuserdetails' };
+    //     this.sharedFunctionobj.sendMessage(pdata);
+    //     this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+    //     this.isLoggedIn();
+
         // if (passParam['callback'] === 'communicate') {
         //   // this.getFavProviders();
         //   // this.showCommunicate(passParam['providerId']);
@@ -654,10 +655,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
         //   // this.getFavProviders();
         //   // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         // }
-      } else if (result === 'showsignup') {
+      // } else if (result === 'showsignup') {
         // this.doSignup(passParam);
-      }
-    });
+    //   }
+    // });
   }
   confirmOrder(post_Data) {
     console.log(post_Data);
@@ -1111,32 +1112,32 @@ imageSelect(event) {
     editshoppinglist() {
       this.imagelist = this.selectedImagelist;
       console.log(this.selectedImagelist);
-      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-           source: this.imagelist
-        }
-    });
-    this.shoppinglistdialogRef.afterClosed().subscribe(result => {
-        if (result) {
-        console.log(result);
-        this.selectedImagelist = result;
-        this.image_list_popup = [];
-        if (this.selectedImagelist.files.length > 0) {
-        for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-          const imgobj = new Image(i,
-              {
-                  img: this.selectedImagelist.base64[i],
-                  description: ''
-              });
-          this.image_list_popup.push(imgobj);
-      }
+    //   this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+    //     width: '50%',
+    //     panelClass: ['popup-class', 'commonpopupmainclass'],
+    //     disableClose: true,
+    //     data: {
+    //        source: this.imagelist
+    //     }
+    // });
+    // this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+    //     if (result) {
+    //     console.log(result);
+    //     this.selectedImagelist = result;
+    //     this.image_list_popup = [];
+    //     if (this.selectedImagelist.files.length > 0) {
+    //     for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+    //       const imgobj = new Image(i,
+    //           {
+    //               img: this.selectedImagelist.base64[i],
+    //               description: ''
+    //           });
+    //       this.image_list_popup.push(imgobj);
+    //   }
 
-        }
-      }
-      });
+    //     }
+    //   }
+    //   });
     }
     handleQueueSelection(queue, index) {
       console.log(index);

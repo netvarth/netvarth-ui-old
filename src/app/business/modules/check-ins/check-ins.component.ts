@@ -329,6 +329,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerIdTooltip = '';
   endminday;
   maxday = new Date();
+  endmaxday = new Date();
   allLabels: any = [];
   voicedialogRef: any;
   addCustomerTooltip = '';
@@ -930,7 +931,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           let selected_view;
           if (source === 'changeLocation') {
           } else {
-            selected_view = _this.shared_functions.getitemFromGroupStorage('selectedView');
+            selected_view = _this.groupService.getitemFromGroupStorage('selectedView');
           }
           if (selected_view) {
             const viewFilter = _this.views.filter(view => view.id === selected_view.id);
@@ -2006,7 +2007,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setPaginationFilter(api_filter) {
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
-    this.shared_functions.setitemToGroupStorage('paginationStart', this.pagination.startpageval);
+    this.groupService.setitemToGroupStorage('paginationStart', this.pagination.startpageval);
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }

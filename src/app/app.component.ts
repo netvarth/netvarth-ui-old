@@ -22,10 +22,10 @@ export class AppComponent implements OnInit {
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
     if ((pVersion && pVersion !== cVersion) || !pVersion) {
-      const ynw_user = this.shared_functions.lStorageService('ynw-credentials');
+      const ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       if(ynw_user) {
         const phone_number = ynw_user.loginId;
-        const password = this.shared_functions.lStorageService('jld');
+        const password = this.lStorageService.getitemfromLocalStorage('jld');
         if (!ynw_user.mUniqueId) {
           if (localStorage.getItem('mUniqueId')) {
             ynw_user.mUniqueId = localStorage.getItem('mUniqueId');

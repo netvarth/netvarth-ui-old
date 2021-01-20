@@ -6,8 +6,6 @@ import { Messages } from '../constants/project-messages';
 import { ConfirmBoxComponent } from '../components/confirm-box/confirm-box.component';
 import { Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonDataStorageService } from '../services/common-datastorage.service';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderDataStorageService } from '../../ynw_provider/services/provider-datastorage.service';
@@ -229,7 +227,7 @@ export class SharedFunctions {
   public setLoginData(data, post_data, mod) {
     // localStorage.setItem('ynw-user', JSON.stringify(data));
     this.groupService.setitemToGroupStorage('ynw-user', data);
-    this.setitemonLocalStorage('jld', post_data['password']);
+    this.lStorageService.setitemonLocalStorage('jld', post_data['password']);
     localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
     }

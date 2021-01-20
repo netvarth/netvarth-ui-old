@@ -7,11 +7,10 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
-import { SignUpComponent } from '../signup/signup.component';
-import { projectConstantsLocal } from '../../constants/project-constants';
 import { WordProcessor } from '../../services/word-processor.service';
 import {version} from '../../../shared/constants/version';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-home-app',
   templateUrl: './home-app.component.html'
@@ -43,6 +42,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     public dialog: MatDialog, public router: Router,
+    private lStorageService: LocalStorageService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -126,10 +126,11 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     post_data.mUniqueId = localStorage.getItem('mUniqueId');
     this.shared_functions.doLogout().then(
       ()=> {
-        this.shared_functions.providerLogin(post_data)
+        this.shared_functions.businessLogin(post_data)
         .then(
           () => {
-            this.shared_functions.setitemonLocalStorage('version', cVersion);
+            this.lStorageService.setitemonLocalStorage('version', cVersion);
+            this.router.navigate(['/provider']);
            // this.dialogRef.close();
           //  const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
           //  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());

@@ -408,6 +408,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
     private qservice: QuestionService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
     private changeDetectorRef: ChangeDetectorRef) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
@@ -1398,7 +1401,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.error_msg = 'Please upload images with size less than 5mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
-          this.shared_functions.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
         }
       }
     }
@@ -1408,7 +1411,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       .subscribe(
         data => {
           this.provider_datastorage.updateProfilePicWeightage(true);
-          this.shared_functions.openSnackBar('Profile image uploaded successfully', { 'panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Profile image uploaded successfully', { 'panelclass': 'snackbarerror' });
           //   this.data.logoExist  = true;
         });
   }
@@ -1417,7 +1420,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       data => {
         console.log(data);
         if (data) {
-          this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(Messages.BPROFILE_COVER_ADD, { 'panelclass': 'snackbarerror' });
           this.getCoverPhoto();
         }
       });

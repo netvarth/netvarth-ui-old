@@ -5,7 +5,6 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
