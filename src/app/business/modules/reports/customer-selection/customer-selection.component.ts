@@ -80,7 +80,7 @@ export class CustomerSelectionComponent implements OnInit {
     const customerData = {
       'jaldee_customers': jaldee_customers,
       'customers': customers
-    }
+    };
     console.log(JSON.stringify(customerData));
     this.report_data_service.updateCustomers(customerData);
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });

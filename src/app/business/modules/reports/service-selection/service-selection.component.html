@@ -31,43 +31,43 @@
           </mat-form-field>
         </div>
 
-        <mat-table [dataSource]="service_dataSource">
+        <table mat-table [dataSource]="service_dataSource">
           <!-- Checkbox Column -->
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row">
+              </th>
+              <td mat-cell *matCellDef="let row">
                 <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
                 </mat-checkbox>
-              </mat-cell>
+              </td>
             </ng-container>
           <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>Service ID</mat-header-cell>
-            <mat-cell *matCellDef="let service">
+            <th mat-header-cell *matHeaderCellDef>Service ID</th>
+            <td mat-cell *matCellDef="let service">
               <span class="mobile-label">Service ID:</span>
-              {{service.id}}</mat-cell>
+              {{service.id}}</td>
           </ng-container>
           <ng-container matColumnDef="serviceName">
-            <mat-header-cell *matHeaderCellDef>Service Name</mat-header-cell>
-            <mat-cell *matCellDef="let service">
+            <th mat-header-cell *matHeaderCellDef>Service Name</th>
+            <td mat-cell *matCellDef="let service">
               <!-- <span class="mobile-label">Service Name:</span> -->
-              {{service.name}}</mat-cell>
+              {{service.name}}</td>
           </ng-container>
 
           <ng-container matColumnDef="userName">
-            <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
-            <mat-cell *matCellDef="let service">
+            <th mat-header-cell *matHeaderCellDef>User Name</th>
+            <td mat-cell *matCellDef="let service">
               <!-- <span class="mobile-label">User Name</span> -->
-              {{service.user}}</mat-cell>
+              {{service.user}}</td>
           </ng-container>
           <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-            <mat-cell *matCellDef="let service">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let service">
               <!-- <span class="mobile-label">User Name</span> -->
-              {{service.status}}</mat-cell>
+              {{service.status}}</td>
           </ng-container>
           <!-- <ng-container matColumnDef="department">
               <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
@@ -76,10 +76,10 @@
                 {{service.department}}</mat-cell>
             </ng-container> -->
 
-          <mat-header-row *matHeaderRowDef="service_displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row;columns:service_displayedColumns"></mat-row>
+          <tr mat-header-row *matHeaderRowDef="service_displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row;columns:service_displayedColumns"></tr>
 
-        </mat-table>
+        </table>
         <!-- <mat-paginator #paginator [pageSize]="100" [length]="serviceCount"></mat-paginator> -->
         <div class="text-center mt-5">
           <button type="button" class="btn btn-lg default profile-back" (click)="passServiceToReports();">Select</button>

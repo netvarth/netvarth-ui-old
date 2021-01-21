@@ -31,53 +31,52 @@
               <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Apply Filter" style="border-bottom:none;">
             </mat-form-field>
           </div>
-          <mat-table [dataSource]="queue_dataSource">
+          <table mat-table [dataSource]="queue_dataSource">
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
-              <mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
-              </mat-header-cell>
-              <mat-cell *matCellDef="let queue">
+              </th>
+              <td mat-cell *matCellDef="let queue">
                 <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(queue) : null" [checked]="selection.isSelected(queue)">
                 </mat-checkbox>
-              </mat-cell>
+              </td>
             </ng-container>
             .
             <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-              <mat-cell *matCellDef="let queue">
-                {{queue.id}}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef> Id</th>
+              <td mat-cell *matCellDef="let queue">
+                {{queue.id}}</td>
             </ng-container>
             <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
-              <mat-cell *matCellDef="let queue">
-                {{queue.name}}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef> Name</th>
+              <td mat-cell *matCellDef="let queue">
+                {{queue.name}}</td>
             </ng-container>
             <ng-container matColumnDef="queue">
-              <mat-header-cell *matHeaderCellDef>Queue</mat-header-cell>
-              <mat-cell *matCellDef="let queue">
-                {{queue.queue_weekdays}} {{queue.queue_time}}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef>Queue</th>
+              <td mat-cell *matCellDef="let queue">
+                {{queue.queue_weekdays}} {{queue.queue_time}}</td>
             </ng-container>
             <ng-container matColumnDef="status">
-              <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-              <mat-cell *matCellDef="let queue">
-                {{queue.queue_state}}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let queue">
+                {{queue.queue_state}}</td>
             </ng-container>
             <ng-container matColumnDef="userName">
-              <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
-              <mat-cell *matCellDef="let queue">
-                {{queue.userName}}</mat-cell>
+              <th mat-header-cell *matHeaderCellDef>User Name</th>
+              <td mat-cell *matCellDef="let queue">
+                {{queue.userName}}</td>
             </ng-container>
 
 
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row;columns:displayedColumns"></mat-row>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
 
-          </mat-table>
+          </table>
 
-           <!-- <mat-paginator #paginator [pageSize]="100" [length]="queueCount"></mat-paginator> -->
           <div class="text-center mt-5">
             <button type="button" class="btn btn-lg default profile-back" (click)="passQueueSelectedToReports();">Select </button>
           </div>
