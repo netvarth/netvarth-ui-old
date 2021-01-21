@@ -226,23 +226,22 @@
         <div class="col-span-12 ">
           <div class="tab-content">
             <div class="tab-content__pane active" id="chats">
-              <div class="pr-1">
-                <div class="midon-box midon-px-5 midon-pt-5 pb-5 lg:pb-0">
-                  <div class="overflow-x-auto scrollbar-hidden">
-                    <div class="ml-2 overflow-hidden">
-                      <div class="flex items-center">
-                        <a href="javascript:;" class="text-lg font-medium">All Patients</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
               <div class="overflow-y-auto scrollbar-hidden pr-1 pt-1">
                 <div
                   class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5 shadow-none rounded-none mb-2">
                   <div class="ml-2 overflow-hidden">
                     <div class="flex items-center">
-                      <a (click)="seeVisible()" class="text-lg font-medium">Regular Patients</a>
+                      <a (click)="seeVisible()" class="text-lg font-medium">All Patients</a>
+                    </div>
+                    <div class="w-full truncate text-gray-600 text-xs">Vishnu, Krishna, Melvin, Smera, Vivek, Layana </div>
+                  </div>
+                </div>
+                <div
+                  class="intro-x cursor-pointer midon-box relative flex items-center midon-p-5 shadow-none rounded-none mb-2">
+                  <div class="ml-2 overflow-hidden">
+                    <div class="flex items-center">
+                      <a (click)="seeVisible()" class="font-medium">Regular Patients</a>
                     </div>
                     <div class="w-full truncate text-gray-600 text-xs">Krishna, Melvin, Smera, Vivek, Layana </div>
                   </div>
@@ -283,13 +282,14 @@
   
       <div [class.visible]="visibility" class="intro-y col-span-12 lg:col-span-9 xxl:col-span-9 part2">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center">
-          <h2 class="text-lg font-medium mr-auto">
+          <h2 class="text-lg font-medium mr-auto pitch_blu">
             Regular Patients
           </h2>
         </div>
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-no-wrap items-center midon-mt-3">
           <button class="button text-white bg-theme-1 shadow-md mr-2">Add Patient</button>
           <button (click)="searchCustomer()" class="button text-white bg-theme-1 shadow-md mr-2">Create Patient</button>
+          <button (click)="searchCustomer()" class="button text-white bg-theme-1 shadow-md mr-2">Create Group</button>
   
           <div class="sm:w-auto midon-mt-3 sm:mt-0 sm:ml-auto  pull-right">
             <div class="w-56 relative text-gray-700">

@@ -1,6 +1,12 @@
 .customersList {
 
 }
+.customersList .pitch_blu {
+  color: #1e4079 !important;
+}
+.customersList h2 {
+  font-family: Roboto !important;
+}
 @media screen and (max-width: 1000px) {
     .customersList .part2 {
       display: none;
