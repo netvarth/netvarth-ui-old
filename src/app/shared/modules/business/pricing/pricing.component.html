@@ -1,17 +1,18 @@
 <section id="prov_home_n">
-  <header class="site-header">
+  <!-- <header class="site-header">
     <div class="container">
       <div class="row align-items-center hidden-xs hidden-sm">
-        <div class="site-branding col-md-4 col-lg-4 mb-4 mb-lg-0">
+        <div class="site-branding col-md-3 col-lg-3 mb-4 mb-lg-0">
           <a routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"
               class="img-fluid logo" /></a>
         </div>
-        <div class="col-md-8 col-lg-8 site-header--links">
+        <div class="col-md-9 col-lg-9 site-header--links">
           <div class="account-links pull-right">
             <a class="active">Pricing</a>
             <a href="https://contact.jaldee.com"><span class="mgn-lt-20 ">Contact Us</span></a>
-            <a class="mgn-lt-20 mgn-rt-30" href="https://wa.me/917306823011" aria-expanded="false"><i
+            <a class="mgn-lt-20" href="https://wa.me/917306823011" aria-expanded="false"><i
                 class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+            <a class="mgn-lt-20 mgn-rt-30" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
             <a class="pointer-cursor" class="login-link">
               <a routerLink="/business/login" class="prov_btn_login_top btn join">Log in</a>
               <a routerLink="/business/signup" class="prov_btn_join_top btn join">Start For Free</a></a>
@@ -32,23 +33,53 @@
         <div class="col-12 col-xs-12 col-sm-12 mgn-up-10">
           <a class="pointer-cursor pull-right mgn-lt-20 mgn-rt-5" href="https://wa.me/917306823011"
             aria-expanded="false"><i class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+        <a class="mgn-lt-20 mgn-rt-30" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
           <a href="https://contact.jaldee.com" class="pointer-cursor pull-right"><span class="mgn-lt-20">Contact
               Us</span></a>
           <a class="pointer-cursor pull-right active mgn-lt-20">Pricing</a>
         </div>
       </div>
     </div>
+  </header> -->
+  <header class="site-header">
+		<a class="logo" routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 3rem;"></a>
+		<a class="pointer-cursor" class="account-links pull-right">
+			<a routerLink="/business/login" class="prov_btn_login_top btn join">Log in</a> 
+			<a routerLink="/business/signup" class="prov_btn_join_top btn join">Start For Free</a>			
+		</a>
+		<input class="menu-btn" type="checkbox" id="menu-btn" />
+		<label class="menu-icon pull-right" for="menu-btn"><span class="navicon"></span></label>	
+		<ul class="menu">
+      <li><a [routerLink]="['/business']" [queryParams]="{type: 'features'}">Features</a></li>
+		  <li class="active"><a routerLink="pricing" >Pricing</a></li>
+		  <li><a href="https://contact.jaldee.com">Contact Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://wa.me/917306823011" aria-expanded="false"><i
+			class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://t.me/Jaldeekaro" aria-expanded="false"><i
+			class="fa fa-telegram"></i>&nbsp;Telegram Us</a></li>						
+		</ul>
   </header>
   <main id="page-container">
 
 
     <div class="page-banner">
+      <!-- style="background: url('assets/images/business/home/pricing-banner.jpg') no-repeat center / cover;" -->
       <div class="page-banner-image"
-        style="background: url('assets/images/business/home/pricing-banner.jpg') no-repeat center / cover;"></div>
+        ></div>
       <div class="container">
         <div class="page-banner-content text-light d-flex flex-column justify-content-center">
           <h1 class="page-title text-light text-shadow">Pricing</h1>
           <span class="breadcrumbs text-light text-shadow">All first time users get a FREE 30-day Jaldee Premium plan (worth <span class="rupee-font">&#8377;1499</span>)</span>          
+          <div class="plan-contact d-flex mgn-up-20">
+            <span class="contact-info contact-info--phone mgn-rt-30">
+              <strong>Speak with us</strong><br>
+              +91 8880 125000
+            </span>
+            <span class="contact-info contact-info--chat">
+              <strong>Want to discuss?</strong><br>
+              Live Chat Now
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -92,18 +123,9 @@
                 </ul>
               </div>
               <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
-                </div>
+                
                 <div class="plan-price text-center">
-                  <span class="rupee-font">&#8377;199</span>
+                  <span class="rupee-font">&#8377;0</span>
                   <div class="text-center">per month</div>
                 </div>
                 
@@ -150,7 +172,7 @@
                 </ul>
               </div>
               <div class="plan-footer">
-                <div class="plan-contact d-flex">
+                <!-- <div class="plan-contact d-flex">
                   <span class="contact-info contact-info--phone">
                     <strong>Speak with us</strong><br>
                     +91 8880 125000
@@ -159,7 +181,7 @@
                     <strong>Want to discuss?</strong><br>
                     Live Chat Now
                   </span>
-                </div>
+                </div> -->
                 <div class="plan-price text-center">
                   <span class="rupee-font">&#8377;499</span>
                   <div class="text-center">per month</div>
@@ -208,7 +230,7 @@
                 </ul>
               </div>
               <div class="plan-footer">
-                <div class="plan-contact d-flex">
+                <!-- <div class="plan-contact d-flex">
                   <span class="contact-info contact-info--phone">
                     <strong>Speak with us</strong><br>
                     +91 8880 125000
@@ -217,7 +239,7 @@
                     <strong>Want to discuss?</strong><br>
                     Live Chat Now
                   </span>
-                </div>
+                </div> -->
                 <div class="plan-price text-center rupee-font">
                   <span class="rupee-font">&#8377;1499</span>
                   <div class="text-center">per month</div>
@@ -266,7 +288,7 @@
                 </ul>
               </div>
               <div class="plan-footer">
-                <div class="plan-contact d-flex">
+                <!-- <div class="plan-contact d-flex">
                   <span class="contact-info contact-info--phone">
                     <strong>Speak with us</strong><br>
                     +91 8880 125000
@@ -275,7 +297,7 @@
                     <strong>Want to discuss?</strong><br>
                     Live Chat Now
                   </span>
-                </div>
+                </div> -->
                 <div class="plan-price text-center">
                   <span class="rupee-font">&#8377;2999</span>
                   <div class="text-center">per month</div>
@@ -324,7 +346,7 @@
                 </ul>
               </div>
               <div class="plan-footer">
-                <div class="plan-contact d-flex">
+                <!-- <div class="plan-contact d-flex">
                   <span class="contact-info contact-info--phone">
                     <strong>Speak with us</strong><br>
                     +91 8880 125000
@@ -333,7 +355,7 @@
                     <strong>Want to discuss?</strong><br>
                     Live Chat Now
                   </span>
-                </div>
+                </div> -->
                 <div class="plan-price text-center ">
                   <span class="rupee-font">&#8377;7999</span>
                   <div class="text-center">per month</div>

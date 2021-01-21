@@ -1,11 +1,29 @@
 <section id="prov_home_n">
   <header class="site-header">
-    <div class="container">
+		<a class="logo"  routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 3rem;"></a>
+		<a class="pointer-cursor" class="account-links pull-right">
+			<a routerLink="/business/login" class="prov_btn_login_top btn join">Log in</a> 
+			<a routerLink="/business/signup" class="prov_btn_join_top btn join">Start For Free</a>			
+		</a>
+		<input class="menu-btn" type="checkbox" id="menu-btn" />
+		<label class="menu-icon pull-right" for="menu-btn"><span class="navicon"></span></label>	
+		<ul class="menu">
+      <li><a [routerLink]="['/business']" [queryParams]="{type: 'features'}">Features</a></li>
+		  <li><a routerLink="/business/pricing" >Pricing</a></li>
+		  <li><a href="https://contact.jaldee.com">Contact Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://wa.me/917306823011" aria-expanded="false"><i
+			class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://t.me/Jaldeekaro" aria-expanded="false"><i
+			class="fa fa-telegram"></i>&nbsp;Telegram Us</a></li>						
+		</ul>
+  </header>
+  <!-- <header class="site-header">
+    <div class="container-fluid">
       <div class="row align-items-center hidden-xs hidden-sm">
-        <div class="site-branding col-md-4 col-lg-4 mb-4 mb-lg-0">
+        <div class="site-branding col-md-3 col-lg-3 mb-4 mb-lg-0">
           <a routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee" class="img-fluid logo" /></a>
         </div>
-        <div class="col-md-8 col-lg-8 site-header--links">
+        <div class="col-md-9 col-lg-9 site-header--links">
           <div class="account-links pull-right">
             <a routerLink="/business/pricing"><span class="mgn-lt-20">Pricing</span></a>
             <a href="https://contact.jaldee.com"><span class="mgn-lt-20 ">Contact Us</span></a>
@@ -38,15 +56,16 @@
         </div>
       </div>
     </div>
-  </header>
+  </header> -->
   <main id="page-container">
     <div class="page-banner">
-      <div class="page-banner-image" style="background: url('assets/images/business/home/about-banner.jpg') no-repeat center / cover;">
+      <!-- style="background: url('assets/images/business/home/about-banner.jpg') no-repeat center / cover;" -->
+      <div class="page-banner-image" >
       </div>
       <div class="container">
-        <div class="page-banner-content text-dark d-flex flex-column justify-content-center">
-          <h1 class="page-title text-dark text-shadow">About Us</h1>
-          <span class="breadcrumbs text-dark text-shadow">Our Products & Services</span>
+        <div class="page-banner-content text-light d-flex flex-column justify-content-center">
+          <h1 class="page-title text-light text-shadow">About Us</h1>
+          <span class="breadcrumbs text-light text-shadow">Our Products & Services</span>
         </div>
       </div>
     </div>
@@ -61,10 +80,10 @@
       </div> -->
       <div id="about__right">
         <div id="">
-          <div class="section-header">
+          <!-- <div class="section-header">
             <h3 class="text-light">Our Products & Services</h3>
             <h2 class="text-light">About Us</h2>
-          </div>
+          </div> -->
           <div class="p-subouter">
             <p>www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform
               listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare,

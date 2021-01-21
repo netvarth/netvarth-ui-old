@@ -17,7 +17,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-phome',
-  templateUrl: './phome.component.html'
+  templateUrl: './phome.component.html',
+  styleUrls: ['./phome.component.css']
 })
 export class PhomeComponent implements OnInit {
   show_jaldeegrow = true;
