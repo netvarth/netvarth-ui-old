@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-provider-skins',
@@ -25,11 +26,12 @@ export class ProviderSkinsComponent implements OnInit {
   ];
   domain: any;
   constructor(private shared_functions: SharedFunctions,
-    private routerobj: Router, ) {
+    private routerobj: Router,
+    private groupService: GroupStorageService ) {
   }
   ngOnInit() {
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
   }
   skinSelected(skin) {

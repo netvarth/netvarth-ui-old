@@ -39,11 +39,11 @@
     </mat-dialog-content>
     <mat-dialog-actions>
         <ng-container *ngIf="selectedMessage">
-            <div class="row col-md-12" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
-                <div class="col-md-7">
+            <div class="row col-md-12 no-padding-small" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
+                <div class="col-md-7 no-padding-small">
                     <span class="ln-hgt-40">{{item.name}}</span>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 no-padding-small">
                     <span class="mbt comm-menu-imgs">
                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                             <mat-icon>more_vert</mat-icon>

@@ -10,6 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { Location } from '@angular/common';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -48,6 +51,8 @@ export class MedicalrecordComponent implements OnInit {
   mrlist;
   providerId;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+
   mrCreatedDate: string;
   consultationMode = 'Out Patient';
   bookingType: any;
@@ -69,9 +74,12 @@ export class MedicalrecordComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog, private location: Location,
     private medicalService: MedicalrecordService,
-    private datePipe: DateFormatPipe
+    private datePipe: DateFormatPipe,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.activated_route.queryParams.subscribe(queryParams => {
       if (queryParams['calledfrom']) {
@@ -86,7 +94,7 @@ export class MedicalrecordComponent implements OnInit {
 
 
   ngOnInit() {
-    const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.medicalService.setDoctorId(user.id);
     this.activated_route.paramMap.subscribe(params => {
@@ -158,7 +166,7 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   getWaitlistDetails(uid) {
@@ -188,7 +196,7 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   getPatientDetails(uid) {
@@ -211,7 +219,7 @@ export class MedicalrecordComponent implements OnInit {
 
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   routerNavigate(event, routerId) {
@@ -230,7 +238,7 @@ export class MedicalrecordComponent implements OnInit {
           this.showLastvisitorNot();
         },
           error => {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -246,7 +254,7 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     } else {
       this.updateMR(object, this.mrId);
@@ -259,10 +267,10 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe((data) => {
         this.getMedicalRecordUsingId(data);
 
-        this.sharedfunctionObj.openSnackBar('Medical Record updated successfully');
+        this.snackbarService.openSnackBar('Medical Record updated successfully');
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
 
 
@@ -307,7 +315,7 @@ export class MedicalrecordComponent implements OnInit {
         }
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   VisitList() {

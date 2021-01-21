@@ -207,24 +207,32 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
                           Timings</div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                          <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">
-                            <p>{{futureAvailableTime}}</p>
-                          </div>
-                          <div *ngIf="!isfutureAvailableTime">
+                          <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime"> -->
+                            <!-- <p>{{futureAvailableTime}}</p> -->
+                       
+                          <!-- <div *ngIf="!isfutureAvailableTime">
                             <p>No timings are available</p>
-                          </div>
-                          <!-- <mat-chip-list>
-                            <mat-chip>
-                              09:00 AM - 10:00 PM
+                          </div> -->
+                            <mat-chip-list class="" *ngIf="isfutureAvailableTime" >
+                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index" 
+                                (click)="handleQueueSelection(queue, i)">
+                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                    {{queue['sTime'] + ' - ' +
+                                    queue['eTime']}}
+                                </mat-chip>
+                            </mat-chip-list>
+                          <!-- </div> -->
 
-                            </mat-chip>
-                          </mat-chip-list> -->
+                            <div *ngIf="!isfutureAvailableTime">
+                              <p>No timings are available</p>
+                            </div>
+                
 
                         </div>
 
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                        <button (click)="goBackCart(futureAvailableTime)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
+                        <button (click)="goBackCart(futureAvailableTime ,queue)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Ok</button>
                           <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
                           type="button">Cancel</button> -->

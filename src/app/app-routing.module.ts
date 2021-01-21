@@ -40,7 +40,7 @@ const routes: Routes = [
     { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
     {
         path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule),
-        canActivate: [AuthGuardProvider]
+        // canActivate: [AuthGuardProvider]
     },
     // { path: 'client', component: LiveChatClientComponent},
     // {path: 'video/:id',  component: LiveChatComponent},

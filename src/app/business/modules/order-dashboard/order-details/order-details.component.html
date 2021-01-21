@@ -18,6 +18,8 @@
                 <div> {{orderDetails.orderNumber}}</div>
                 <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
                         aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
+                        <div *ngIf="orderDetails.email"> <i class="fa fa-envelope"
+                            aria-hidden="true"></i>{{orderDetails.email}}</div>
                 <div *ngIf="orderDetails.homeDeliveryAddress"> <i class="fa fa-map-marker" aria-hidden="true"></i>
                     <span [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
                 </div>
@@ -38,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem">
+        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0">
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
                 <div class="pull-left bold font11">
                     Order Items

@@ -55,12 +55,14 @@
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
-                                                class="fa fa-map-marker"></i>&nbsp;{{locationjson[0].place | capitalizeFirst}}</a>
+                                                class="fa fa-map-marker"></i>&nbsp;{{locationjson[0].place |
+                                            capitalizeFirst}}</a>
                                     </h6>
                                     <h6 *ngIf="locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
                                             target="_blank" *ngIf="locationjson[0].googleMapUrl!=''"><i
                                                 class="fa fa-map-marker"></i>
-                                            {{locationjson[0].address.substr(0, locationjson[0].address.split(',', 2).join(',').length)}}</a>
+                                            {{locationjson[0].address.substr(0, locationjson[0].address.split(',',
+                                            2).join(',').length)}}</a>
                                     </h6>
                                 </div>
                                 <div class="question-main-outer col-md-12 col-xs-12 col-sm-12 no-padding"
@@ -135,10 +137,10 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li class="more_less centeralign pull-right" *ngIf="!showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                    (click)="showMoreInfo()">More Info</a></li>
-                            <li class="more_less centeralign pull-right" *ngIf="showMore"><a class="mgn-lt-3 lnk pointer-cursor"
-                                    (click)="showMoreInfo()">Less Info</a></li>
+                                <li class="more_less centeralign pull-right" *ngIf="!showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
+                                <li class="more_less centeralign pull-right" *ngIf="showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
                         <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
@@ -156,18 +158,18 @@
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                <!-- <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
+                                <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Area of Specialization</div>
                                     <div class="question-value1">{{businessjson.serviceSubSector.displayName |
                                         capitalizeFirst}}</div>
-                                </div> -->
+                                </div>
                                 <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10"
                                     *ngFor="let vfield of virtualfieldsCombinedjson">
                                     <div class="question-outer" *ngIf="vfield.value">
                                         <ng-container>
                                             <div class="question-header">{{vfield.displayName}}</div>
                                             <div class="question-value1" *ngIf="vfield.type!= 'object'"
-                                                [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
+                                                [innerHTML]="wordProcessor.firstToUpper(vfield.value) | nl2br">
                                             </div>
                                             <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                                 <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
@@ -207,7 +209,8 @@
                                             <ng-container *ngIf="locationjson && locationjson.length > 0">
                                                 <li *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
                                                     [matTooltip]="'Parking Type: ' + locationjson[0].parkingType | capitalizeFirst">
-                                                    <span class="icon-parking"></span></li>
+                                                    <span class="icon-parking"></span>
+                                                </li>
                                                 <li
                                                     *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">
                                                     <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span>
@@ -224,7 +227,8 @@
                                     locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
                                     locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
-                                                    <span class="icon-emergency"></span></li>
+                                                    <span class="icon-emergency"></span>
+                                                </li>
                                                 <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
                                                     [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
                                                 </li>
@@ -272,30 +276,36 @@
                     </h4>
                     <h4 *ngIf="isPlaceisSame"><a [href]="selectedLocation.googleMapUrl" target="_blank"
                             *ngIf="selectedLocation.googleMapUrl!=''"><i class="fa fa-map-marker"></i>
-                            {{selectedLocation.address.substr(0, selectedLocation.address.split(',', 2).join(',').length)}}</a>
+                            {{selectedLocation.address.substr(0, selectedLocation.address.split(',',
+                            2).join(',').length)}}</a>
                     </h4>
                 </div>
                 <div class="col-md-5 col-xs-4">
                     <div class="btn-group pull-right">
-                        <a  class="dropdown-toggle d-block loc-chg-action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Change
+                        <a class="dropdown-toggle d-block loc-chg-action" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Change
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item d-block pad-10" [ngClass]="{'active': selectedLocation.id === loc.id}" (click)="changeLocation(loc)" *ngFor="let loc of locationjson">{{loc.place}}</a>
+                            <a class="dropdown-item d-block pad-10"
+                                [ngClass]="{'active': selectedLocation.id === loc.id}" (click)="changeLocation(loc)"
+                                *ngFor="let loc of locationjson">{{loc.place}}</a>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0" [class.mgn-bt-10]="!showDepartments">
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0"
+                    [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
                     <h6 class="question-header">Book online now for your convenience.
                     </h6>
                 </div>
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0" [class.mgn-bt-10]="!showDepartments">
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0"
+                    [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
                     </h5>
                     <h6 class="question-header">{{dotor_specialization_hint}}
@@ -324,7 +334,8 @@
                 <!-- Departments True-->
                 <ng-container *ngIf="showDepartments && !this.userId">
                     <ng-container *ngFor="let sps of servicesAndProviders">
-                        <h4 class="p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4" *ngIf="sps['departmentItems'].length > 0">
+                        <h4 class="p-2 d-block m0 sp-head mgn-bt-10 dept-title-h4"
+                            *ngIf="sps['departmentItems'].length > 0">
                             {{sps.departmentName}}
                         </h4>
                         <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
@@ -349,22 +360,35 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
-                    <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
-                      <h5 class="mgn-bt-5 primary-color"><img  [src]="catalogImage" width="50" height="50" id="catalog-image1"
-                        class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
+                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 no-padding">
+                        <h5 class="mgn-bt-5 primary-color"><img
+                                (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
+                                width="50" height="50" id="catalog-image1"
+                                class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
                         <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
-                        <span class="pull-left">
-                            <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails"><img class="ordericon home"
-                                    src="../../../../assets/images/Delivery.svg" />&nbsp;Home Delivery</span>
-                            <span class=""  *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp  && activeCatalog.nextAvailablePickUpDetails"><img class="ordericon pickup"
-                                    src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
-                        </span>
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 catalog-icons no-padding-small disp-flex">
+                        <div class="mgn-rt-10 disp-flex"
+                            *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
+                            <img class="ordericon home" src="../../../../assets/images/Delivery.svg" />
+                            <div class="mgn-lt-5">Home Delivery<div class="font-small "
+                                    *ngIf="activeCatalog.homeDelivery.deliveryRadius">
+                                    (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
+                            </div>
+                        </div>
+                        <span class=""
+                            *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails"><img
+                                class="ordericon pickup"
+                                src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
                     </div>
                 </div>
-                <ng-container *ngIf="orderItems.length >0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
+                <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"
+                    [modalImages]="catalogimage_list_popup" [plainGalleryConfig]="customPlainGallerycatalogRowConfig"
+                    [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                <ng-container
+                    *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
@@ -376,25 +400,33 @@
                         </div>
                     </div>
                 </ng-container>
+                <ng-container
+                    *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                    <div class="bus-item-O">
+                        <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
+                        <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
+                    </div>
+
+                </ng-container>
             </div>
         </div>
     </div>
 </section>
 <div id="popup" #popupforApp class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <span class="close" (click)="closeModal()">&times;</span>
-      </div>
-      <div class="modal-body">
-        <div class="section-app text-center">
-            <p>Download Jaldee App</p>
-            <a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
-                    src="assets/images/img-glplay.png"></a>
-            <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
-                    src="assets/images/img-aplstore.png"></a>
+        <div class="modal-header">
+            <span class="close" (click)="closeModal()">&times;</span>
         </div>
-      </div>
+        <div class="modal-body">
+            <div class="section-app text-center">
+                <p>Download Jaldee App</p>
+                <a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
+                        src="assets/images/img-glplay.png"></a>
+                <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
+                        src="assets/images/img-aplstore.png"></a>
+            </div>
+        </div>
     </div>
 
-  </div>
+</div>
 <!-- <app-consumer-footer></app-consumer-footer> -->

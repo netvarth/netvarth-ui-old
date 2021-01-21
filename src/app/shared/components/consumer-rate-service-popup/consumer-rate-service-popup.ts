@@ -5,6 +5,7 @@ import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-consumer-rate-service-popup',
@@ -32,7 +33,7 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
-
+private wordProcessor: WordProcessor
   ) {
     this.waitlist = data.detail;
     this.type = data.isFrom;
@@ -116,13 +117,13 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.shared_services.postConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
-          this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+          this.wordProcessor.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
 
@@ -131,14 +132,14 @@ export class ConsumerRateServicePopupComponent implements OnInit {
     this.shared_services.updateConsumerRateService(params, post_data, this.type)
       .subscribe(
         () => {
-          this.sharedfunctionObj.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
+          this.wordProcessor.apiSuccessAutoHide(this, Messages.SERVICE_RATE_UPDATE);
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
           // this.dialogRef.close('reloadlist');
         },
         error => {
-          this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
 

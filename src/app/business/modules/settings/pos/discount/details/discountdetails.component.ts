@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-details',
@@ -64,12 +66,13 @@ export class DiscountDetailsComponent implements OnInit {
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.activated_route.params.subscribe(
       (params) => {
         this.discount_id = params.id;
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         if (this.discount_id) {
           if (this.discount_id === 'add') {
             const breadcrumbs = [];
@@ -176,7 +179,7 @@ export class DiscountDetailsComponent implements OnInit {
       if (form_data.calculationType === 'Percentage') {
         if (form_data.discValue < 0 || form_data.discValue > 100) {
           // this.api_error = 'Discount percentage should be between 0 and 100';
-          this.api_error = this.sharedfunctionObj.openSnackBar('Discount percentage should be between 0 and 100', { 'panelClass': 'snackbarerror' });
+          this.api_error = this.snackbarService.openSnackBar('Discount percentage should be between 0 and 100', { 'panelClass': 'snackbarerror' });
           return;
         }
       }
@@ -184,7 +187,7 @@ export class DiscountDetailsComponent implements OnInit {
     }
     if (!isNaN(form_data.description.trim(' '))) {
       // this.api_error = 'Please enter a description';
-      this.api_error = this.sharedfunctionObj.openSnackBar('Please enter a valid description', { 'panelClass': 'snackbarerror' });
+      this.api_error = this.snackbarService.openSnackBar('Please enter a valid description', { 'panelClass': 'snackbarerror' });
       return;
     }
     const post_data = {
@@ -207,14 +210,14 @@ export class DiscountDetailsComponent implements OnInit {
     this.provider_services.addDiscount(post_data)
       .subscribe(
         () => {
-          // this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_CREATED');
-          this.api_success = this.sharedfunctionObj.openSnackBar(Messages.DISCOUNT_CREATED);
+          // this.api_success = this.wordProcessor.getProjectMesssages('DISCOUNT_CREATED');
+          this.api_success = this.snackbarService.openSnackBar(Messages.DISCOUNT_CREATED);
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'discount']);
         },
         error => {
-          // this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -234,14 +237,14 @@ export class DiscountDetailsComponent implements OnInit {
     this.provider_services.editDiscount(post_data)
       .subscribe(
         () => {
-          // this.api_success = this.shared_functions.getProjectMesssages('DISCOUNT_UPDATED');
-          this.api_success = this.sharedfunctionObj.openSnackBar(Messages.DISCOUNT_UPDATED);
+          // this.api_success = this.wordProcessor.getProjectMesssages('DISCOUNT_UPDATED');
+          this.api_success = this.snackbarService.openSnackBar(Messages.DISCOUNT_UPDATED);
           this.api_loading = false;
           this.router.navigate(['provider', 'settings', 'pos', 'discount']);
         },
         error => {
-          // this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
           this.disableButton = false;
         }

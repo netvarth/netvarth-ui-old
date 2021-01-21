@@ -116,7 +116,7 @@
                                 <table class="status-table">
                                     <tbody>
                                         <tr *ngIf="wtlst.personsAhead>=0">
-                                            <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;Persons ahead
+                                            <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;People waiting in line
                                             </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{wtlst.personsAhead}}</td>
@@ -130,7 +130,7 @@
                                     </tbody>
                                 </table>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
-                                    <a href="{{path}}status/{{wtlst.checkinEncId}}" target="blank">
+                                    <a href="{{path}}status/{{wtlst.checkinEncId}}" target="_blank">
                                         {{path}}status/{{wtlst.checkinEncId}}</a>
                                 </div>
                                 <!-- <div class="txt-align-center mgn-up-10" *ngIf="wtlst.consumer.email_verified"> A booking

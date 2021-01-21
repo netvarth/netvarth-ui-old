@@ -20,6 +20,10 @@ import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { Meta, Title } from '@angular/platform-browser';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-business-page',
@@ -43,6 +47,7 @@ import { Meta, Title } from '@angular/platform-browser';
   ]
 })
 export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
+  catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   spId_local_id: any;
   go_back_cap = Messages.GO_BACK_CAP;
@@ -157,6 +162,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
+  customPlainGallerycatalogRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+
   customButtonsFontAwesomeConfig: ButtonsConfig = {
     visible: true,
     strategy: ButtonsStrategy.CUSTOM,
@@ -248,7 +258,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // cSource  = 'qr';
   @ViewChild('popupforApp') popUp: ElementRef;
   orderstatus: any;
+  orderType = '';
+  advance_amount: any;
   dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
+  store_pickup: boolean;
+  home_delivery: boolean;
+  choose_type = 'store';
+  sel_checkindate;
+  deliveryCharge = 0;
+  nextAvailableTime;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -259,16 +277,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router,
     private locationobj: Location,
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
+    public wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.getDomainList();
-    // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
+    // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
   }
   getDomainList() {
-    const bconfig = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
+    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
       const bdate = bconfig.cdate;
@@ -295,7 +317,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               cdate: today,
               bdata: this.domainList
             };
-            this.sharedFunctionobj.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
           }
         );
     }
@@ -306,10 +328,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
-    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+    this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
 
     const isMobile = {
       Android: function () {
@@ -363,6 +385,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.apptTempArray = [];
       this.donationServicesjson = [];
       this.image_list_popup = [];
+      this.catalogimage_list_popup = [];
       this.galleryjson = [];
       this.deptUsers = [];
       if (qparams.psource) {
@@ -402,13 +425,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   ngAfterViewInit() {
-    const appPopupDisplayed = this.sharedFunctionobj.getitemfromLocalStorage('a_dsp');
+    const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
     if (!appPopupDisplayed) {
       this.popUp.nativeElement.style.display = 'block';
     }
   }
   closeModal() {
-    this.sharedFunctionobj.setitemonLocalStorage('a_dsp', true);
+    this.lStorageService.setitemonLocalStorage('a_dsp', true);
     this.popUp.nativeElement.style.display = 'none';
   }
   ngOnDestroy() {
@@ -443,7 +466,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(
         res => {
           this.server_date = res;
-          this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   gets3curl() {
@@ -472,7 +495,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -538,9 +561,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.phonelist = this.businessjson.phoneNumbers;
               }
               this.getbusinessprofiledetails_json('gallery', true);
-              // if (this.userType === 'consumer') {
-              //   this.getFavProviders();
-              // }
+              if (this.userType === 'consumer') {
+                this.getFavProviders();
+              }
               const holdbName = this.businessjson.businessDesc || '';
               const maxCnt = 120;
               if (holdbName.length > maxCnt) {
@@ -1312,6 +1335,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
+  openCatalogImageModalRow(image: Image) {
+    console.log(image);
+    const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
+    this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
@@ -1329,7 +1357,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   //       console.log(this.locationjson[passedIndx]['wlservices']);
   //     },
   //       error => {
-  //         this.sharedFunctionobj.apiErrorAutoHide(this, error);
+  //         this.wordProcessor.apiErrorAutoHide(this, error);
   //       });
   // }
   // getApptServiceByLocationid(locid, passedIndx) {
@@ -1344,7 +1372,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   //       console.log(this.locationjson[passedIndx]['wlservices']);
   //     },
   //       error => {
-  //         this.sharedFunctionobj.apiErrorAutoHide(this, error);
+  //         this.wordProcessor.apiErrorAutoHide(this, error);
   //       });
   // }
   getServicesByDepartment(dept) {
@@ -1366,7 +1394,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.locationjson[passedIndx]['checkins'] = data;
       },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
   getWaitlistingFor(obj) {
@@ -1414,8 +1442,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goThroughLogin() {
     return new Promise((resolve) => {
-      const qrpw = this.sharedFunctionobj.getitemfromLocalStorage('qrp');
-      const qrusr = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+      const qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       if (qrusr && qrpw) {
         const data = {
           'countryCode': qrusr.countryCode,
@@ -1426,7 +1454,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.shared_services.ConsumerLogin(data).subscribe(
           (loginInfo: any) => {
             this.sharedFunctionobj.setLoginData(loginInfo, data, 'consumer');
-            this.sharedFunctionobj.setitemonLocalStorage('qrp', data.password);
+            this.lStorageService.setitemonLocalStorage('qrp', data.password);
             resolve(true);
           },
           (error) => {
@@ -1530,7 +1558,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }
               }, error => {
-                this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                this.wordProcessor.apiErrorAutoHide(this, error);
               });
           }
         } else {
@@ -1548,7 +1576,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           _this.isInFav = true;
         },
           error => {
-            _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+            _this.wordProcessor.apiErrorAutoHide(_this, error);
           });
     } else if (mod === 'remove') {
       _this.shared_services.removeProviderfromFavourite(accountid)
@@ -1556,7 +1584,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           _this.isInFav = false;
         },
           error => {
-            _this.sharedFunctionobj.apiErrorAutoHide(_this, error);
+            _this.wordProcessor.apiErrorAutoHide(_this, error);
           });
     }
   }
@@ -1672,7 +1700,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   doLogin(origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     // let is_test_account = null;
     // if (current_provider) {
@@ -1698,6 +1726,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           // this.getFavProviders();
           this.showCommunicate(passParam['providerId']);
@@ -1710,9 +1739,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
-          this.checkout();
+          if (this.orderType === 'SHOPPINGLIST') {
+            this.shoppinglistupload();
+          } else {
+            this.checkout();
+          }
         } else {
-          this.getFavProviders();
+          // this.getFavProviders();
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
@@ -1736,6 +1769,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+        this.getFavProviders();
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
         } else if (passParam['callback'] === 'history') {
@@ -1747,7 +1781,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'appointment') {
           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
-          this.checkout();
+          if (this.orderType === 'SHOPPINGLIST') {
+            this.shoppinglistupload();
+          } else {
+            this.checkout();
+          }
         } else {
           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
@@ -1961,9 +1999,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       // const terminologies = this.common_datastorage.get('terminologies');
       if (this.terminologiesjson) {
-        return this.sharedFunctionobj.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+        return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
       } else {
-        return this.sharedFunctionobj.firstToUpper((term === term_only) ? term_only : term);
+        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
       }
     } else {
       return term;
@@ -2017,7 +2055,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }
@@ -2445,11 +2483,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           },
             error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             });
       },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
@@ -2472,11 +2510,41 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
           this.activeCatalog = catalogs[0];
+          this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
+            this.catalogimage_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.activeCatalog.catalogImages[0].url,
+                description: ''
+              });
+            this.catalogimage_list_popup.push(imgobj);
           }
           this.catlogArry();
           console.log(this.activeCatalog);
+
+          this.advance_amount = this.activeCatalog.advanceAmount;
+          if (this.activeCatalog.pickUp) {
+            if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+              this.store_pickup = true;
+              this.choose_type = 'store';
+              this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+              this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+            }
+          }
+          if (this.activeCatalog.homeDelivery) {
+            if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+              this.home_delivery = true;
+
+              if (!this.store_pickup) {
+                this.choose_type = 'home';
+                this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+              }
+            }
+          }
           // console.log(cat)
           // if(catalogs.length > 1) {
           //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
@@ -2490,7 +2558,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
               const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
-              orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item });
+              const showpric = this.activeCatalog.showPrice;
+              orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item , 'showpric':showpric });
               this.itemCount++;
             }
           }
@@ -2506,29 +2575,29 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
-    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
-      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
       this.orderList.push(itemObj);
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
       this.getItemQty(item);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
-            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+            this.lStorageService.removeitemfromLocalStorage('order');
           }
         } else {
           this.orderList.push(itemObj);
-          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
           this.getItemQty(item);
         }
       } else {
         this.orderList.push(itemObj);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
         this.getItemQty(item);
       }
@@ -2551,10 +2620,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (result) {
         can_remove = true;
         this.orderList = [];
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        this.lStorageService.removeitemfromLocalStorage('order_sp');
+        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+        this.lStorageService.removeitemfromLocalStorage('order_spId');
+        this.lStorageService.removeitemfromLocalStorage('order');
         return true;
       } else {
         can_remove = false;
@@ -2570,12 +2639,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
         if (this.orderList.length > 0 && this.orderList !== null) {
-          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
         } else {
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
         }
 
         break;
@@ -2602,8 +2671,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         'bname': this.businessjson.businessName,
         'blocation': this.locationjson[0].place
       };
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           account_id: this.provider_bussiness_id
@@ -2624,8 +2693,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'blocation': this.locationjson[0].place,
       'logo': this.businessjson.logo.url
     };
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item)
@@ -2656,8 +2725,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   catlogArry() {
     // this.catlog = itemjson;
     // this.catalogItem = catalog.default.catalogItem;
-    if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
-      this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     }
     this.getTotalItemAndPrice();
   }
@@ -2667,7 +2736,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   showOrderFooter() {
     let showFooter = false;
-    this.spId_local_id = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (this.spId_local_id !== null) {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (this.spId_local_id !== this.provider_bussiness_id) {
@@ -2679,6 +2748,40 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
     return showFooter;
+  }
+
+  shoppinglistupload() {
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.activeCatalog.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.advance_amount,
+      account_id: this.provider_bussiness_id
+
+    };
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
   }
 
 }

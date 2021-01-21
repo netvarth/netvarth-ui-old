@@ -171,12 +171,13 @@
                 <div class="service-outer" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                   <ng-container>
                     <mat-form-field *ngIf="users.length == 1">
-                      <input matInput *ngFor="let user of users" [readonly]="true" placeholder="{{provider_label | capitalizeFirst}}"
-                        value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
+                      <input matInput *ngFor="let user of users" [readonly]="true"
+                        placeholder="{{provider_label | capitalizeFirst}}"
+                        value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="users.length > 1">
-                      <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user" #usersel
-                        (selectionChange)="handleUserSelection(usersel.value)">
+                      <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user"
+                        #usersel (selectionChange)="handleUserSelection(usersel.value)">
                         <mat-option *ngFor="let user of users" [value]="user">
                           <!-- {{user.firstName}} {{user.lastName}} -->
                           {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
@@ -295,7 +296,8 @@
                         <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                           [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                           (click)="handleQueueSelection(queue, i);">
-                          <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                          <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                            queue.queueSchedule.timeSlots[0]['eTime']}}
                           </span>
                         </mat-chip>
                       </owl-carousel>
@@ -448,8 +450,7 @@
                         <span *ngIf="settingsjson['showTokenId']">
                           token
                         </span>
-                        <span
-                          *ngIf="!settingsjson['showTokenId']">{{checkin_label}}
+                        <span *ngIf="!settingsjson['showTokenId']">{{checkin_label}}
                         </span>
                         {{is_beingmade_cap}}
                       </div>
@@ -462,7 +463,12 @@
                               <mat-checkbox
                                 (change)="handleMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
                                 [value]="memb.id" [checked]="isChecked(memb.id)">
-                                {{memb.firstName | capitalizeFirst}} {{(memb.lastName) ? memb.lastName : ''}}
+                                <ng-container *ngIf="memb.firstName || memb.lastName">
+                                  {{memb.firstName | capitalizeFirst}} {{memb.lastName}}
+                                </ng-container>
+                                <ng-container *ngIf="!memb.firstName && !memb.lastName">
+                                  {{customer_label | capitalizeFirst}} id: {{memb.jaldeeId}}
+                                </ng-container>
                               </mat-checkbox>
                             </li>
                           </ng-container>
@@ -599,8 +605,10 @@
                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>
                     <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple
                       (change)="filesSelected($event)">
-                    <span> Attach
-                      File</span> </a>
+                    <span> Upload
+                      File</span>
+                    <span
+                      *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
                 </mat-chip>
               </mat-chip-list>
             </div>

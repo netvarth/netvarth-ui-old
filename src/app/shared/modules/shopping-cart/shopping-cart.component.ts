@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../constants/project-messages';
 import { ConfirmBoxComponent } from '../../components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -83,13 +85,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   showSide = false;
   storeContact: any;
   canceldialogRef: any;
+  nextAvailableTimeQueue: any = [];
+  queue;
   constructor(
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-    public sharedFunctionobj: SharedFunctions) {
+    public sharedFunctionobj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService) {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
@@ -108,11 +114,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      console.log(this.catalog_details);
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -132,6 +139,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+
             }
           }
         }
@@ -143,10 +151,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.orderList = JSON.parse(localStorage.getItem('order'));
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.orderCount = this.orders.length;
-      this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
+      this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
       this.getStoreContact();
       this.showfuturediv = false;
-      this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+      this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
       this.today = new Date(this.today);
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -178,7 +186,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     });
   }
   fillDateFromLocalStorage() {
-    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
+    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     if (this.chosenDateDetails !== null) {
       this.delivery_type = this.chosenDateDetails.delivery_type;
       this.choose_type = this.delivery_type;
@@ -313,7 +321,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       if (found) {
         this.couponvalid = true;
-        this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
         this.action = '';
       } else {
         this.api_cp_error = 'Coupon invalid';
@@ -355,7 +363,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }
@@ -420,7 +428,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {
 
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      console.log(this.nextAvailableTime);
 
       const chosenDateTime = {
         delivery_type: this.choose_type,
@@ -431,7 +440,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         account_id: this.account_id
 
       };
-      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     }
 
@@ -440,7 +449,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     let all_itemsSet = true;
     this.orders.forEach(item => {
       if (this.getItemQty(item) < item.minqty) {
-        this.sharedFunctionobj.openSnackBar(item.item.displayName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(item.item.displayName + ' required atleast qty ' + item.minqty + ' as minimum to checkout', { 'panelClass': 'snackbarerror' });
         all_itemsSet = false;
       }
     });
@@ -450,12 +459,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.location.back();
     }
   }
-  goBackCart(selectedTimeslot) {
-    this.nextAvailableTime = selectedTimeslot;
+  goBackCart(selectedTimeslot,queue) {
+    console.log(queue);
+    console.log(selectedTimeslot);
+    let selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    console.log(selectqueue);
+     this.nextAvailableTime = selectqueue;
+    // this.nextAvailableTime = selectedTimeslot;
     this.action = '';
   }
   changeTime() {
@@ -607,7 +621,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -616,7 +634,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
       } else {
         this.isfutureAvailableTime = false;
       }
@@ -624,7 +646,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   itemDetails(item) {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item)
@@ -702,6 +724,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   closeNav() {
     this.showSide = false;
   }
+  handleQueueSelection(queue, index) {
+    console.log(queue);
+    console.log(index);
+    this.queue = queue;
+    console.log(this.queue);
+}
 }
 
 

@@ -6,6 +6,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -129,7 +131,9 @@ export class NewReportComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private report_data_service: ReportDataService,
     private provider_services: ProviderServices,
-    public dateformat: DateFormatPipe
+    public dateformat: DateFormatPipe,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.report_type) {
@@ -142,7 +146,7 @@ export class NewReportComponent implements OnInit {
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
-    this.minDate = new Date(new Date().setDate(new Date().getDate() - 100));
+    this.minDate = new Date(new Date().setDate(new Date().getDate() - 90));
   }
 
   ngOnInit() {
@@ -168,7 +172,7 @@ export class NewReportComponent implements OnInit {
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
 
 
@@ -495,7 +499,7 @@ export class NewReportComponent implements OnInit {
 
     if (reportType === 'payment') {
       if (this.payment_timePeriod === 'DATE_RANGE' && (this.payment_startDate === undefined || this.payment_endDate === undefined)) {
-        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
           'status': this.payment_paymentStatus,
@@ -569,7 +573,7 @@ export class NewReportComponent implements OnInit {
     } else if (reportType === 'appointment') {
 
       if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
-        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
           'paymentStatus': this.appointment_billpaymentstatus,
@@ -610,7 +614,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.appointment_timePeriod === 'DATE_RANGE') {
           if (this.appointment_startDate === undefined || this.appointment_endDate === undefined) {
-            this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
           filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
@@ -627,7 +631,7 @@ export class NewReportComponent implements OnInit {
 
     } else if (reportType === 'token') {
       if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
-        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
           'billPaymentStatus': this.waitlist_billpaymentstatus,
@@ -683,7 +687,7 @@ export class NewReportComponent implements OnInit {
 
     } else if (reportType === 'donation') {
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
-        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
 
         this.filterparams = {
@@ -722,7 +726,7 @@ export class NewReportComponent implements OnInit {
 
     } else if (reportType === 'order') {
       if (this.order_timePeriod === 'DATE_RANGE' && (this.order_startDate === undefined || this.order_endDate === undefined)) {
-        this.shared_functions.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
 
         this.filterparams = {
@@ -743,8 +747,11 @@ export class NewReportComponent implements OnInit {
         if (this.delivery_mode === 'homeDelivery') {
           delete this.filterparams.storePickup;
 
-        } else if (this.delivery_mode === 'storePcikup') {
+        } else if (this.delivery_mode === 'storePickup') {
           delete this.filterparams.homeDelivery;
+        } else if (this.delivery_mode === 0) {
+          delete this.filterparams.homeDelivery;
+          delete this.filterparams.storePickup;
         }
         if (this.order_status === 'Any') {
           delete this.filterparams.orderStatus;
@@ -766,7 +773,7 @@ export class NewReportComponent implements OnInit {
         }
         const request_payload: any = {};
         request_payload.reportType = this.report_type.toUpperCase();
-        request_payload.reportDateCategory = this.donation_timePeriod;
+        request_payload.reportDateCategory = this.order_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
@@ -792,7 +799,7 @@ export class NewReportComponent implements OnInit {
           },
           error => {
             reject(error);
-            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -816,7 +823,7 @@ export class NewReportComponent implements OnInit {
       (error) => {
         this.report_loading = false;
         this.btn_disabled = false;
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
 
   }

@@ -5,6 +5,9 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -47,10 +50,13 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
         public router: Router) { }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
         this.getDomainSubdomainSettings();
@@ -82,7 +88,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -97,7 +103,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                     this.getServices();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServices();
                 });
     }
@@ -108,7 +114,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
                     this.getServices();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServices();
                 });
     }
@@ -125,7 +131,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
 
     getDomainSubdomainSettings() {
         this.api_loading = true;
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         this.provider_services.domainSubdomainSettings(domain, sub_domain)

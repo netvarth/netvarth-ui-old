@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Image } from '@ks89/angular-modal-gallery';
 import { Observable } from 'rxjs';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-bprofile-search-gallery',
@@ -41,6 +42,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
 
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
     public dialogRef: MatDialogRef<ProviderBprofileSearchGalleryComponent>) { }
 
   ngOnInit() {
@@ -70,7 +72,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
     this.provider_services.deleteProviderGalleryImage(file.keyName)
       .subscribe(
         () => {
-          this.shared_functions.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
+          this.wordProcessor.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_DELETE);
           this.dialogRef.close('reloadlist');
         },
         error => {
@@ -140,7 +142,7 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
         () => {
           this.resetVariables();
           this.getGalleryImages();
-          this.shared_functions.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_UPLOAD);
+          this.wordProcessor.apiSuccessAutoHide(this, Messages.BPROFILE_IMAGE_UPLOAD);
           this.savedisabled = false;
           this.canceldisabled = false;
           this.img_save_caption = 'Upload';
@@ -148,8 +150,8 @@ export class ProviderBprofileSearchGalleryComponent implements OnInit {
           this.uploading = false;
         },
         error => {
-          this.error_list.push(this.shared_functions.getProjectErrorMesssages(error));
-          this.error_msg = this.shared_functions.getProjectErrorMesssages(error);
+          this.error_list.push(this.wordProcessor.getProjectErrorMesssages(error));
+          this.error_msg = this.wordProcessor.getProjectErrorMesssages(error);
           this.canceldisabled = false;
           this.uploading = false;
         }

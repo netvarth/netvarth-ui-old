@@ -4,6 +4,7 @@ import { projectConstants } from '../../../app.component';
 import * as moment from 'moment';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -52,6 +53,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   constructor(
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
   }
 
@@ -113,12 +115,12 @@ export class AddProviderSchedulesComponent implements OnInit {
     // validate the fields
     // check whether any day is selected
     if (this.selday_arr.length === 0) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_ATLEASTONEDAY');
+      this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_ATLEASTONEDAY');
       return;
     }
     // check whether the start and end times are selected
     if (!this.dstart_time || !this.dend_time) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SELECTTIME');
+      this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SELECTTIME');
       return;
     }
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) === this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
@@ -129,7 +131,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     const curday = new Date();
     const today_date = moment(curday).format('YYYY-MM-DD');
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_STIMEERROR');
+      this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_STIMEERROR');
       return;
     }
     // convert start time to 12 hour format
@@ -171,17 +173,17 @@ export class AddProviderSchedulesComponent implements OnInit {
             // const etime =  moment(sch.eTime, ['h:mm A']).format('HH:mm');
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(stime))
               && (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start time within the existing range
-              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
+              this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
               return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dend_time) > this.sharedfunctionObj.getminutesOfDay(stime))
               && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) < this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current end time within the existing range
-              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
+              this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
               return;
             }
             if ((this.sharedfunctionObj.getminutesOfDay(this.dstart_time) <= this.sharedfunctionObj.getminutesOfDay(stime))
               && (this.sharedfunctionObj.getminutesOfDay(this.dend_time) >= this.sharedfunctionObj.getminutesOfDay(etime))) { // check whether the current start & end outside existing range
-              this.api_error = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
+              this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SCHOVERLAP').replace('[day]', this.getDay(selday));
               return;
             }
           }
@@ -199,7 +201,7 @@ export class AddProviderSchedulesComponent implements OnInit {
         // this.api_success = Messages.BPROFILE_SCHADDEDFOR + this.getDay(selday);
       } else { // case if adding the schedule
         this.schedule_arr.push(add_schedule);
-        // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_SCHADDEDFOR') + this.getDay(selday);
+        // this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SCHADDEDFOR') + this.getDay(selday);
       }
     }
     if (this.edit_mode && this.edit_index !== '') {

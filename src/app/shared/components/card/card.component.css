@@ -372,4 +372,10 @@ button.fxmenu {
 }
 .booking-card.card.order.disabled {
     opacity: .4 !important;
+    pointer-events: none !important;
+}
+.outstock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

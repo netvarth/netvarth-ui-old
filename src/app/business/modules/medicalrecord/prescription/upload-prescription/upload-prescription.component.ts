@@ -10,6 +10,8 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -73,11 +75,13 @@ export class UploadPrescriptionComponent implements OnInit {
   customer_label = '';
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
-      this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activatedRoute.queryParams.subscribe(queryParams => {
       if (queryParams.mode) {
         const type = queryParams.mode;
@@ -130,7 +134,7 @@ export class UploadPrescriptionComponent implements OnInit {
         console.log(this.selectedMessage.files);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
 
   }
@@ -152,9 +156,9 @@ export class UploadPrescriptionComponent implements OnInit {
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-          this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
           console.log(this.selectedMessage.files);
@@ -265,7 +269,7 @@ export class UploadPrescriptionComponent implements OnInit {
         },
           error => {
             this.disable = false;
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
 
@@ -275,12 +279,12 @@ export class UploadPrescriptionComponent implements OnInit {
       .subscribe((data) => {
         this.showSave = false;
         this.upload_status = 'Uploaded';
-        this.sharedfunctionObj.openSnackBar('Prescription uploaded successfully');
+        this.snackbarService.openSnackBar('Prescription uploaded successfully');
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
           this.disable = false;
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   deleteTempImage(img, index) {
@@ -302,7 +306,7 @@ export class UploadPrescriptionComponent implements OnInit {
               this.selectedMessage.files.splice(index, 1);
             },
               error => {
-                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
               });
         } else {
           this.selectedMessage.files.splice(index, 1);

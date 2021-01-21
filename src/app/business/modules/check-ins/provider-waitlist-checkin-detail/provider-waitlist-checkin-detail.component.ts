@@ -11,6 +11,9 @@ import * as moment from 'moment';
 import { AddProviderWaitlistCheckInProviderNoteComponent } from '../add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 import { CheckinActionsComponent } from '../checkin-actions/checkin-actions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
   templateUrl: './provider-waitlist-checkin-detail.component.html'
@@ -87,6 +90,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   view_more = false;
   multiSelection = false;
   timetype;
+  spName: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -94,6 +98,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private router: Router,
     private activated_route: ActivatedRoute,
     private locationobj: Location,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
@@ -101,10 +108,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
     });
-    this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
-    this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
-    this.checkin_label = this.shared_Functionsobj.getTerminologyTerm('waitlist');
-    this.checkin_upper = this.shared_Functionsobj.firstToUpper(this.checkin_label);
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
   }
@@ -112,18 +119,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.getPos();
     // this.getDisplayboardCount();
     this.api_loading = true;
-    this.pdtype = this.shared_Functionsobj.getitemFromGroupStorage('pdtyp');
+    this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
     }
-    this.userDet = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
       // this.getWaitlistDetail();
       this.getProviderSettings();
     } else {
       this.goBack();
     }
-    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
@@ -197,7 +204,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
               }
             }
           }
-          const interval = this.shared_Functionsobj.getitemFromGroupStorage('interval');
+          const interval = this.groupService.getitemFromGroupStorage('interval');
           if (interval) {
             this.getTimeSlots(this.waitlist_data.queue.queueStartTime, this.waitlist_data.queue.queueEndTime, interval);
           }
@@ -222,12 +229,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
+             this.spName = this.waitlist_data.provider.businessName;
              this.spfname = this.waitlist_data.provider.firstName;
              this.splname = this.waitlist_data.provider.lastName;
           }
         },
         error => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.goBack();
         }
       );
@@ -242,7 +250,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.waitlist_notes = data;
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -253,7 +261,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.waitlist_history = data;
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -273,7 +281,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.shared_Functionsobj.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
         },
         () => {
-          //  this.shared_Functionsobj.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
@@ -347,13 +355,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getTimeSlots(QStartTime, QEndTime, interval) {
     this.availableSlots = [];
     const _this = this;
-    const locId = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
+    const locId = this.groupService.getitemFromGroupStorage('loc_id');
     // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
     // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
     const nextTimeDt = this.shared_Functionsobj.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const filter = {};
     this.availableSlots = [];
-    filter['queue-eq'] = _this.shared_Functionsobj.getitemFromGroupStorage('pdq');
+    filter['queue-eq'] = _this.groupService.getitemFromGroupStorage('pdq');
     filter['location-eq'] = locId.id;
     filter['waitlistStatus-eq'] = 'arrived,checkedIn,done,started';
     const activeSlots = [];
@@ -492,7 +500,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.showEditView = false;
           this.getWaitlistDetail();
         }, (error) => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
     }
@@ -522,7 +530,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         this.editAppntTime = false;
         this.getWaitlistDetail();
       }, (error) => {
-        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

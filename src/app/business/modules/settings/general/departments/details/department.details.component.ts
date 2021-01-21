@@ -6,6 +6,9 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 @Component({
     'selector': 'app-department-details',
     'templateUrl': './department-details.component.html'
@@ -61,14 +64,17 @@ export class DepartmentDetailComponent implements OnInit {
         private dialog: MatDialog,
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
-        private activated_route: ActivatedRoute) {
+        private activated_route: ActivatedRoute,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) {
         this.activated_route.params.subscribe(params => {
             this.dept_id = params.id;
         });
     }
     ngOnInit() {
         this.loading = true;
-        this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         // this.getServices();
         this.getDepartments();
         if (this.dept_id === 'add') {
@@ -88,7 +94,7 @@ export class DepartmentDetailComponent implements OnInit {
         } else {
             this.selected_action = 'add';
         }
-        this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         this.getUsers();
         // this.loading = false;
     }
@@ -147,14 +153,14 @@ export class DepartmentDetailComponent implements OnInit {
         input['serviceIds'] = serviceIds;
         this.provider_services.addDepartmentServices(input, this.dept_id).subscribe(
             (data) => {
-                this.shared_Functionsobj.openSnackBar('Services added successfully', { 'panelClass': 'snackbarnormal' });
+                this.snackbarService.openSnackBar('Services added successfully', { 'panelClass': 'snackbarnormal' });
                 this.getDepartments();
                 this.getDepartmentDetails();
                 this.add_it_now_show = true;
                 this.showAllServices = false;
             },
             (error) => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }
@@ -191,7 +197,7 @@ export class DepartmentDetailComponent implements OnInit {
                         },
 
                         (error: any) => {
-                            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
     }
     createDepartment(post_data) {
@@ -202,14 +208,14 @@ export class DepartmentDetailComponent implements OnInit {
                     this.getDepartmentDetails();
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         this.showServc = true;
     }
     getServices() {
         this.loading = true;
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             const filter = { 'serviceType-neq': 'donationService', 'scope-eq': 'account' };
             this.provider_services.getServicesList(filter)
                 .subscribe(
@@ -227,7 +233,7 @@ export class DepartmentDetailComponent implements OnInit {
                     },
                     error => {
                         this.loading = false;
-                        this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                        this.wordProcessor.apiErrorAutoHide(this, error);
                         reject(error);
                     }
                 );
@@ -335,7 +341,7 @@ export class DepartmentDetailComponent implements OnInit {
                             this.editLocationServices();
                         },
                         error => {
-                            this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                            this.wordProcessor.apiErrorAutoHide(this, error);
                         }
                     );
             });
@@ -345,11 +351,11 @@ export class DepartmentDetailComponent implements OnInit {
         this.provider_services.updateDepartment(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar('Departments updated successfully');
+                    this.snackbarService.openSnackBar('Departments updated successfully');
                     this.getDepartmentDetails();
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

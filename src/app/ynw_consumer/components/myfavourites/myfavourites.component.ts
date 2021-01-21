@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { AddManagePrivacyComponent } from '../add-manage-privacy/add-manage-privacy.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-myfavourites',
@@ -55,25 +58,28 @@ export class MyfavouritesComponent implements OnInit {
     private shared_services: SharedServices,
     private consumer_services: ConsumerServices,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
     this.setSystemDate();
     this.getFavouriteProvider();
     this.gets3curl();
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
   }
 
   // Get system date
   setSystemDate() {
     const _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       _this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
-            _this.shared_functions.setitemonLocalStorage('sysdate', res);
+            _this.lStorageService.setitemonLocalStorage('sysdate', res);
             resolve();
           },
           () => {
@@ -131,7 +137,7 @@ export class MyfavouritesComponent implements OnInit {
           this.getFavouriteProvider();
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -365,7 +371,7 @@ export class MyfavouritesComponent implements OnInit {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 
@@ -386,9 +392,9 @@ export class MyfavouritesComponent implements OnInit {
     if (this.terminologiesJson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       if (this.terminologiesJson) {
-        return this.shared_functions.firstToUpper((this.terminologiesJson[term_only]) ? this.terminologiesJson[term_only] : ((term === term_only) ? term_only : term));
+        return this.wordProcessor.firstToUpper((this.terminologiesJson[term_only]) ? this.terminologiesJson[term_only] : ((term === term_only) ? term_only : term));
       } else {
-        return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
       }
     } else {
       return term;

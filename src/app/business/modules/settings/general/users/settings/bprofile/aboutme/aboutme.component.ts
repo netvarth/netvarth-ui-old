@@ -16,6 +16,10 @@ import { QuestionService } from '../../../../../../../../ynw_provider/components
 import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { UserBprofileSearchPrimaryComponent } from './../user-bprofile-search-primary/user-bprofile-search-primary.component';
 import { ProPicPopupComponent } from '../../../../../bprofile/pro-pic-popup/pro-pic-popup.component';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-aboutme',
   templateUrl: './aboutme.component.html'
@@ -101,6 +105,10 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     private routerobj: Router,
     private activated_route: ActivatedRoute,
     private sharedfunctionobj: SharedFunctions,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
@@ -110,12 +118,12 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     this.getUser();
     this.createForm();
     // this.getBusinessProfile();
-    const user = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
-    this.provider_label = this.sharedfunctionobj.firstToUpper(this.sharedfunctionobj.getTerminologyTerm('provider'));
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.provider_label = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('provider'));
 this.business_name_cap = this.provider_label + '\'s  Name *';
     this.domain = user.sector;
-    this.domainList = this.sharedfunctionobj.getitemfromLocalStorage('ynw-bconf');
-    // const bConfig = this.sharedfunctionobj.getitemfromLocalStorage('ynw-bconf');
+    this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
+    // const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
 
   }
   redirecToBprofile() {
@@ -191,9 +199,9 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
       form_data.bdesc = form_data.bdesc.trim();
     }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionobj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
@@ -217,7 +225,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
     this.provider_services.patchUserbProfile(pdata, this.userId)
       .subscribe(
         () => {
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
+          this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if (this.domain_fields_mandatory.length !== 0 || this.subdomain_fields_mandatory.length !== 0) {
             this.showVirtualFields = true;
@@ -226,7 +234,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
           }
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         }
       );
@@ -237,8 +245,8 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
     this.provider_services.createUserbProfile(pdata, this.userId)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionobj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
+          this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_UPDATED');
+          this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           if ( this.domain_fields_mandatory.length !== 0 &&  this.domain_fields_mandatory.some(domain => (domain.value === '') || (domain.value === undefined))
            || this.subdomain_fields_mandatory.length !== 0 && this.subdomain_fields_mandatory.some(subdomain => (subdomain.value === '') || (subdomain.value === undefined))) {
@@ -249,7 +257,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
 
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         }
       );
@@ -272,11 +280,11 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
             this.showVirtualFields = false;
           }
           this.user_datastorage.set('bProfile', this.bProfile);
-          const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
           this.provider_services.getVirtualFields(this.domain).subscribe(
             domainfields => {
               this.provider_services.getVirtualFields(this.domain, this.subDomain).subscribe(
@@ -493,7 +501,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -517,7 +525,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -638,7 +646,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
             this.error_msg = 'Please upload images with size less than 15mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
-          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
         }
       }
     }
@@ -673,7 +681,7 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
           this.getBusinessProfileLogo();
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           // this.api_error = error.error;
         }
       );

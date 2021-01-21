@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -48,13 +51,15 @@ export class AppointmentmanagerComponent implements OnInit {
     constructor(
         private router: Router,
         private routerobj: Router, private dialog: MatDialog,
-        public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
-        private sharedfunctionObj: SharedFunctions,
         private provider_datastorage: ProviderDataStorageService,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private sharedFunctions: SharedFunctions
     ) {
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
     ngOnInit() {
         this.getBusinessProfile();
@@ -67,9 +72,9 @@ export class AppointmentmanagerComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);
         this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-         if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
+        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
         }
     }
@@ -92,7 +97,7 @@ export class AppointmentmanagerComponent implements OnInit {
         if (this.locationExists) {
             this.router.navigate(['provider', 'settings', 'appointmentmanager', 'schedules']);
         } else {
-            this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
     gotoservices() {
@@ -114,7 +119,7 @@ export class AppointmentmanagerComponent implements OnInit {
         this.routerobj.navigate(['/provider/' + this.domain + '/appointmentmanager->' + mod]);
     }
     getDomainSubdomainSettings() {
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
@@ -139,9 +144,9 @@ export class AppointmentmanagerComponent implements OnInit {
                 panelClass: ['popup-class', 'commonpopupmainclass'],
                 disableClose: true,
                 data: {
-                  'type': 'appt'
+                    'type': 'appt'
                 }
-              });
+            });
             confirmdialogRef.afterClosed().subscribe(result => {
                 this.createappointment_status = false;
             });
@@ -149,11 +154,11 @@ export class AppointmentmanagerComponent implements OnInit {
             this.provider_services.setAppointmentPresence(is_check)
                 .subscribe(
                     () => {
-                        this.shared_functions.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                         this.getOnlinePresence();
                     },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.getOnlinePresence();
                     }
                 );
@@ -165,8 +170,8 @@ export class AppointmentmanagerComponent implements OnInit {
             (data: any) => {
                 this.createappointment_status = data.appointment;
                 this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
-                this.shared_functions.setitemToGroupStorage('settings', data);
-                this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
+                this.groupService.setitemToGroupStorage('settings', data);
+                this.sharedFunctions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
             });
     }
     handle_apptliststatus(event) {
@@ -174,12 +179,12 @@ export class AppointmentmanagerComponent implements OnInit {
         this.provider_services.setAcceptOnlineAppointment(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getApptlistMgr();
-                    this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+                    this.sharedFunctions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getApptlistMgr();
                 }
             );
@@ -190,12 +195,12 @@ export class AppointmentmanagerComponent implements OnInit {
         this.provider_services.setFutureAppointmentStatus(is_check)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getApptlistMgr();
-                    this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
+                    this.sharedFunctions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

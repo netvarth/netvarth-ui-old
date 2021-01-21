@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-waitlist-online-checkin',
@@ -50,13 +52,15 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
   isManualMode = false;
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
-    private shared_functions: SharedFunctions) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.account_type = user.accountType;
     this.waitlist_manager = this.reset_waitlist_manager = this.provider_datastorage.get('waitlistManage') || [];
     this.setValue(this.waitlist_manager);
@@ -89,10 +93,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       .subscribe(
         () => {
           this.getWaitlistMgr();
-          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+          this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   handleCheckinManager(event) {
@@ -106,10 +110,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       .subscribe(
         () => {
           this.getWaitlistMgr();
-          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+          this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   setValue(value) {
@@ -159,16 +163,16 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
       .subscribe(
         () => {
           this.getWaitlistMgr();
-          this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+          this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 
   updateManualMode(trnArndTime) {
       if (trnArndTime <= 0) {
-        this.shared_functions.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
         return;
       }
       const postData = {
@@ -181,10 +185,10 @@ export class ProviderWaitlistOnlineCheckinComponent implements OnInit {
           () => {
             this.getWaitlistMgr();
             this.is_data_chnge = 0;
-            this.shared_functions.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
+            this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
           },
           error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
   }
   fixedModeChanged(event) {
@@ -261,7 +265,7 @@ inputChanged () {
   //             this.getWaitlistMgr();
   //           },
   //           error => {
-  //             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //           });
   //     } else {
   //       this.form['filterByDept'] = (this.form.filterByDept === true) ? false : true;

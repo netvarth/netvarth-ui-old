@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-provider-privacy-settings-add',
   templateUrl: './provider-bprofile-privacysettings.component.html',
@@ -49,7 +50,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
   privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
-  customernormal_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+  customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
   loadData: ArrayBuffer;
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofilePrivacysettingsComponent>,
@@ -57,8 +58,9 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
-    this.privacypermissiontxt.customersOnly = this.sharedfunctionObj.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
+    this.privacypermissiontxt.customersOnly = this.wordProcessor.removeTerminologyTerm('customer', this.privacypermissiontxt.customersOnly);
     this.curmod = (data.editindx >= 0) ? 'edit' : 'add';
     if (this.curmod === 'edit') {
       this.curid = data.editindx;
@@ -247,7 +249,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.disableButton = false;
         }
       );
@@ -264,7 +266,7 @@ export class AddProviderBprofilePrivacysettingsComponent implements OnInit {
     let rettxt = '';
     if (txt === 'customersOnly') {
       if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
-        rettxt = 'My ' + this.sharedfunctionObj.firstToUpper(this.customernormal_label) + 's Only';
+        rettxt = 'My ' + this.wordProcessor.firstToUpper(this.customernormal_label) + 's Only';
       } else {
         rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
       }

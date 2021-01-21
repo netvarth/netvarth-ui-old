@@ -28,6 +28,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-bprofile-search',
@@ -180,7 +183,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   normal_customid_show = 1;
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
   showaddsocialmedia = false;
-  customernormal_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+  customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
 
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -229,7 +232,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
   multipeLocationAllowed = false;
 
   customer_label = '';
-  maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   loceditdialogRef;
   addlocdialogRef;
@@ -277,13 +280,16 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
     private service: QuestionService) {
-    this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
-    this.searchquestiontooltip = this.sharedfunctionobj.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.searchquestiontooltip = this.wordProcessor.getProjectMesssages('BRPFOLE_SEARCH_TOOLTIP');
   }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.custm_id = Messages.CUSTM_ID.replace('[customer]', this.customer_label);
     this.customForm = this.fb.group({
       // customid: ['', Validators.compose([Validators.required])]
@@ -387,7 +393,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.getPublicSearch();
       }, error => {
-        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
 
@@ -407,11 +413,11 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
               }
             }
           }
-          const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
 
           this.serviceSector = data['serviceSector']['displayName'] || null;
           this.subdomain = this.bProfile['serviceSubSector']['subDomain'];
@@ -557,7 +563,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           // check whether domain fields exists
 
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
-          this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
+          this.groupService.setitemToGroupStorage('isCheckin', statusCode);
 
         },
         () => {
@@ -1117,7 +1123,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           /// this.api_success = Messages.BPROFILE_LOGOUPLOADED;
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           // this.api_error = error.error;
         }
       );
@@ -1178,7 +1184,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
             this.error_msg = 'Please upload images with size less than 15mb';
           }
           // this.error_msg = 'Please upload images with size < 5mb';
-          this.sharedfunctionobj.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
         }
       }
     }
@@ -1529,7 +1535,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           if (str !== '') {
             str += ', ';
           }
-          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          // str += this.wordProcessor.firstToUpper(fld.value[i]);
           str += this.getFieldDetails(passArray, field.value[i], field.name);
         }
         retfield = str;
@@ -1563,7 +1569,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         if (str !== '') {
           str += ', ';
         }
-        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+        str += this.wordProcessor.firstToUpper(fld.value[i]);
       }
       return str;
     }
@@ -1645,7 +1651,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -1661,7 +1667,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
 
@@ -1691,7 +1697,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
     let rettxt = '';
     if (txt === 'customersOnly') {
       if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
-        rettxt = 'My ' + this.sharedfunctionobj.firstToUpper(this.customernormal_label) + 's Only';
+        rettxt = 'My ' + this.wordProcessor.firstToUpper(this.customernormal_label) + 's Only';
       } else {
         rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
       }
@@ -1750,7 +1756,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           this.normal_customid_show = 3;
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.normal_customid_show = 2;
         });
     } else {
@@ -1760,7 +1766,7 @@ export class ProviderBprofileSearchComponent implements OnInit, OnDestroy {
           this.normal_customid_show = 3;
         },
         error => {
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.normal_customid_show = 3;
         });
     }

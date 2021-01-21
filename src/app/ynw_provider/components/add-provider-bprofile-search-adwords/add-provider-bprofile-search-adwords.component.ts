@@ -7,6 +7,8 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-addprovider-bprofile-search-adwords',
@@ -32,7 +34,9 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) { }
 
   ngOnInit() {
@@ -49,7 +53,7 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   onSubmit(form_data) {
     if (!form_data.adwordname.replace(/\s/g, '').length) {
       const error = 'Please enter a keyword';
-      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     } else {
       this.resetApiErrors();
       // form_data.adwordname = form_data.adwordname.replace(' ', projectConstants.ADWORDSPLIT);
@@ -66,13 +70,13 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
     this.provider_services.addAdwords(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('ADWORD_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('ADWORD_CREATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
           this.disableButton = false;
         }
       );

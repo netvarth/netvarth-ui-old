@@ -95,7 +95,6 @@ export const projectConstantsLocal = {
     { name: 'others', items: ['-'] }
   ],
   DISPLAY_DATE_FORMAT: 'DD/MM/YYYY',
-  DATE_MM_DD_YY_FORMAT : 'MMM dd, y',
   DISPLAY_DATE_FORMAT_NEW: 'dd/MM/yyyy',
   PIPE_DISPLAY_DATE_FORMAT: 'dd/MM/y',
   PIPE_DISPLAY_DATE_FORMAT_WITH_DAY: 'E, dd/MM/y',
@@ -106,6 +105,8 @@ export const projectConstantsLocal = {
   POST_DATE_FORMAT_WITHTIME: 'YYYY-MM-DD HH:mm a',
   POST_DATE_FORMAT_WITHTIME_A: 'YYYY-MM-DD HH:mm A',
   DATE_FORMAT_WITH_MONTH: 'd MMM',
+  DATE_FORMAT_STARTS_MONTH: 'MMM d',
+  DATE_MM_DD_YY_FORMAT: 'MMM d, y',
   DATE_EE_MM_DD_YY_FORMAT: 'EEE, MMM dd, y',
   DATE_MM_DD_YY_HH_MM_A_FORMAT: 'medium',
   BASE_SCHEDULE: [
@@ -253,10 +254,10 @@ export const projectConstantsLocal = {
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook' },
     { key: 'twitter', iconClass: 'fa fa-twitter-square tw', iconImg: 'twitter.png', displayName: 'Twitter' },
-    { key: 'youtube', iconClass: 'fa fa-youtube-square ytb', iconImg: 'youtube.png', displayName: 'Youtube' },
+    { key: 'youtube', iconClass: 'youTube youtube', iconImg: 'youtube.png', displayName: 'Youtube' },
     { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
     { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
-    { key: 'instagram', iconClass: 'fa fa-instagram inst', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'instagram', iconClass: 'instagram insta', iconImg: 'instagram.png', displayName: 'Instagram' },
     { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
     { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
   ],

@@ -81,7 +81,8 @@
             <div class="form-group col-md-6 mgn-up-20" *ngIf="locName">
                 <div class="col-md-12">
                     <label style="margin: 0px;">Location: &nbsp;</label>{{locName}}
-                    <ul class="info-lst serviceadd-info" *ngIf="multipeLocationAllowed">
+                    <ul class="info-lst serviceadd-info"
+                        *ngIf="multipeLocationAllowed && accountType ==='INDEPENDENT_SP'">
                         <li>To create a queue board for a different location, choose the location from the dashboard.
                         </li>
                     </ul>
@@ -123,7 +124,7 @@
                         <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
                             <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
                                 placeholderLabel="Search departments"
-                                noEntriesFoundLabel="no matching department found"></ngx-mat-select-search>
+                                noEntriesFoundLabel="No matching department found"></ngx-mat-select-search>
                             <mat-option *ngFor="let department of departmentList" [value]="department"
                                 (click)="setDeptIds(department.departmentId)">
                                 {{department.departmentName | capitalizeFirst}}
@@ -148,13 +149,14 @@
                     {{provider_label | capitalizeFirst}}s</label>
                 <div class="form-group col-md-6 col-xs-12 col-sm-6">
                     <mat-form-field *ngIf="users.length > 0">
-                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s" [multiple]="true">
+                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s"
+                            [multiple]="true">
                             <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
                                 placeholderLabel="Search {{provider_label}}s"
-                                noEntriesFoundLabel="no matching {{provider_label}} found"></ngx-mat-select-search>
+                                noEntriesFoundLabel="No matching {{provider_label}} found"></ngx-mat-select-search>
                             <mat-option *ngFor="let user of userList" [value]="user" (click)="setUsersIds(user.id)">
                                 <!-- {{user.firstName}} {{user.lastName}} -->
-                                {{user.businessName}}
+                                {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -181,7 +183,7 @@
                     <mat-form-field *ngIf="services_list.length > 0">
                         <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
                             <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
-                                placeholderLabel="Search services" noEntriesFoundLabel="no matching service found">
+                                placeholderLabel="Search services" noEntriesFoundLabel="No matching service found">
                             </ngx-mat-select-search>
                             <mat-option *ngFor="let service of servicesList" [value]="service"
                                 (click)="setServiceIds(service.id)">
@@ -209,7 +211,7 @@
                     <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
                         <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
                             <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
-                                noEntriesFoundLabel="no matching queue found"></ngx-mat-select-search>
+                                noEntriesFoundLabel="No matching queue found"></ngx-mat-select-search>
                             <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
                                 (click)="queueSelection(schedule.id, 'QUEUE')">
                                 {{schedule.name}}
@@ -264,15 +266,15 @@
                 <mat-form-field>
                     <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
-                            noEntriesFoundLabel="no matching label found"></ngx-mat-select-search>
+                            noEntriesFoundLabel="No matching label found"></ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                             (click)="labelClick(label)">
                             {{label.displayName}}
                         </mat-option> -->
                         <mat-option *ngFor="let label of providerLabelsList" [value]="label"
-                        (click)="providerLabelSelection(label)">
-                        {{label.displayName}}
-                    </mat-option>
+                            (click)="providerLabelSelection(label)">
+                            {{label.displayName}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <!-- <div class="mgn-up-20 mgn-lt-20 form-group" *ngIf="labelMultiCtrl.length > 0">
@@ -283,7 +285,7 @@
                         <li>
                             {{label.displayName}}
                         </li> -->
-                        <!-- <mat-form-field class="col-md-6 no-padding">
+                <!-- <mat-form-field class="col-md-6 no-padding">
                             <mat-select placeholder="Select value" [(value)]="label.selectedValue">
                                 <mat-option *ngFor="let value of label.valueSet" [value]="value.value"
                                     (click)="providerLabelSelection(value.value, label.label)">
@@ -291,7 +293,7 @@
                                 </mat-option>
                             </mat-select>
                         </mat-form-field> -->
-                    <!-- </ul>
+                <!-- </ul>
                 </div> -->
             </div>
             <!-- <div class="sort-label col-md-12">
@@ -360,7 +362,8 @@
                     *ngFor="let field of labelsList; let i = index" cdkDrag>
                     <div class="red col-md-1 no-padding">
                         <i class="fa fa-minus-circle" aria-hidden="true"
-                            (click)="removeFIeldFromArray(field.name, i)"></i> </div>
+                            (click)="removeFIeldFromArray(field.name, i)"></i>
+                    </div>
                     <div class="col-md-10 no-padding"> {{field.displayName}} </div>
                     <div class="col-md-1 no-padding" cdkDragHandle style="color: #ccc;cursor: move;">
                         <i class="fa fa-arrows" aria-hidden="true"></i>

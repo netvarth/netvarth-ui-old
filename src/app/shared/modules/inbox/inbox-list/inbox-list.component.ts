@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { InboxServices } from '../inbox.service';
 import { AddInboxMessagesComponent } from '../../../components/add-inbox-messages/add-inbox-messages.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-inbox-list',
@@ -44,7 +46,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
   constructor(private inbox_services: InboxServices,
     private dialog: MatDialog,
-    public shared_functions: SharedFunctions) { }
+    public shared_functions: SharedFunctions,
+    public wordProcessor: WordProcessor,
+    private groupService: GroupStorageService) { }
 
   ngOnInit() {
     if (this.fromsource === 'provider_checkin_detail' ||
@@ -53,7 +57,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       this.hide_reply_button = false;
     }
-    this.terminologies = this.shared_functions.getTerminologies();
+    this.terminologies = this.wordProcessor.getTerminologies();
     this.usertype = this.shared_functions.isBusinessOwner('returntyp');
 
     if (this.usertype === 'provider') {
@@ -68,7 +72,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
           }
         );
     } else {
-      const userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const userDet = this.groupService.getitemFromGroupStorage('ynw-user');
       this.user_id = userDet.id;
       this.loading = false;
     }

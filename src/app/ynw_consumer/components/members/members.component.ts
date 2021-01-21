@@ -10,6 +10,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -49,6 +50,7 @@ curtype;
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private dialog: MatDialog,
+    private snackbarService: SnackbarService,
     private location: Location) { }
 
   ngOnInit() {
@@ -105,7 +107,7 @@ goBack() {
           this.getMembers();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

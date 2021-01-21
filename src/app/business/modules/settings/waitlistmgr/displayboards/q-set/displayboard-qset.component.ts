@@ -1,8 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-displayboard-qset',
@@ -20,12 +21,13 @@ export class DisplayboardQSetComponent implements OnInit {
     constructor(
         private routerobj: Router,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
     ) { }
 
     ngOnInit() {
         this.getDisplayboardQsets();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     goBack() {
@@ -49,7 +51,7 @@ export class DisplayboardQSetComponent implements OnInit {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }

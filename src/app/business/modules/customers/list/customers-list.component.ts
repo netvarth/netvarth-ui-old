@@ -11,6 +11,9 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-details-send/voicecall-details-send.component';
 import { CustomerActionsComponent } from '../customer-actions/customer-actions.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html'
@@ -61,8 +64,8 @@ export class CustomersListComponent implements OnInit {
   loadComplete = false;
   minday = new Date(1900, 0, 1);
   maxday = new Date();
-  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   apiloading = false;
   srchcustdialogRef;
@@ -101,8 +104,11 @@ export class CustomersListComponent implements OnInit {
     private provider_shared_functions: ProviderSharedFuctions,
     public dateformat: DateFormatPipe,
     private routerobj: Router,
-    private shared_functions: SharedFunctions) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
     this.breadcrumbs_init = [
@@ -111,18 +117,18 @@ export class CustomersListComponent implements OnInit {
       }
     ];
     this.breadcrumbs = this.breadcrumbs_init;
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    // this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    // this.checkedin_label = this.wordProcessor.getTerminologyTerm('waitlisted');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.subdomain = user.subSector;
     this.getCustomersList(true);
     this.getLabel();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
@@ -163,14 +169,14 @@ export class CustomersListComponent implements OnInit {
                 this.loadComplete = true;
               },
               error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.apiloading = false;
                 this.loadComplete = true;
               }
             );
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

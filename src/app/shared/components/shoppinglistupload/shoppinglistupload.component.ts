@@ -36,7 +36,7 @@ export class ShoppinglistuploadComponent implements OnInit, OnChanges {
     canceldisabled = false;
     source_id;
     subscription: Subscription;
-    @ViewChild('imagefile') fileInput: ElementRef;
+    @ViewChild('imagefile') filed: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ShoppinglistuploadComponent>,
         public sharedfunctionObj: SharedFunctions,
@@ -47,11 +47,10 @@ export class ShoppinglistuploadComponent implements OnInit, OnChanges {
     }
     ngOnChanges() { }
     ngOnInit() {
-        // if (this.data.source_id) {
-        //     this.source_id = this.data.source_id;
-        // } else {
-        //     this.dialogRef.close();
-        // }
+        if (this.data.source) {
+            console.log(this.data.source);
+            this.item_pic = this.data.source;
+        }
     }
     resetVariables() {
         this.item_pic = {
@@ -99,7 +98,6 @@ export class ShoppinglistuploadComponent implements OnInit, OnChanges {
         this.item_pic.files.splice(i, 1);
         this.item_pic.base64.splice(i, 1);
         this.item_pic.caption.splice(i, 1);
-        this.fileInput.nativeElement.value = '';
     }
     saveImages() {
         this.error_msg = '';

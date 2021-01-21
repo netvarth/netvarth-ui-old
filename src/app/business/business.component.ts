@@ -8,6 +8,10 @@ import { SharedServices } from '../shared/services/shared-services';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
+import { LocalStorageService } from '../shared/services/local-storage.service';
+import { GroupStorageService } from '../shared/services/group-storage.service';
+import { SnackbarService } from '../shared/services/snackbar.service';
+import { WordProcessor } from '../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-business',
@@ -31,7 +35,11 @@ export class BusinessComponent implements OnInit {
     public shared_service: SharedServices,
     public dialog: MatDialog,
     public provider_datastorage: CommonDataStorageService,
-    private provider_shared_functions: ProviderSharedFuctions) {
+    private provider_shared_functions: ProviderSharedFuctions,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor ) {
     router.events.subscribe(
       (event: RouterEvent): void => {
         this._navigationInterceptor(event);
@@ -45,7 +53,7 @@ export class BusinessComponent implements OnInit {
               (settings: any) => {
                 if (router.url === '\/provider') {
                   setTimeout(() => {
-                    if (this.shared_functions.getitemFromGroupStorage('isCheckin') === 0) {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                       if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
                       } else if (settings.appointment) {
@@ -67,7 +75,7 @@ export class BusinessComponent implements OnInit {
 
     this.route.data.subscribe((data) => {
       if (data.terminologies) {
-        this.provider_datastorage.set('terminologies', data.terminologies);
+        this.wordProcessor.setTerminologies(data.terminologies);
       }
     });
     this.shared_functions.sendMessage({ ttype: 'main_loading', action: false });
@@ -76,7 +84,7 @@ export class BusinessComponent implements OnInit {
       switch (message.ttype) {
         case 'skin':
           this.activeSkin = message.selectedSkin;
-          this.shared_functions.setitemonLocalStorage('activeSkin', this.activeSkin);
+          this.lStorageService.setitemonLocalStorage('activeSkin', this.activeSkin);
           break;
       }
     });
@@ -103,7 +111,7 @@ export class BusinessComponent implements OnInit {
   ngOnInit() {
     this.getBusinessProfile();
     this.getLicenseMetaData();
-    this.activeSkin = this.shared_functions.getitemfromLocalStorage('activeSkin');
+    this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
       this.activeSkin = 'skin-blue';
     }
@@ -158,7 +166,7 @@ export class BusinessComponent implements OnInit {
       data => {
       },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }
@@ -193,7 +201,7 @@ export class BusinessComponent implements OnInit {
           if (!localStorage.getItem('newProvider')) {
             this.getAccountContactInfo();
           }
-          this.shared_functions.setitemToGroupStorage('accountId', bProfile.id);
+          this.groupService.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             // const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
@@ -207,7 +215,7 @@ export class BusinessComponent implements OnInit {
             const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
             if (statusCode === 0) {
             }
-            this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
+            this.groupService.setitemToGroupStorage('isCheckin', statusCode);
           }
         },
         () => { }
@@ -229,7 +237,7 @@ export class BusinessComponent implements OnInit {
   }
   getLicenseMetaData() {
     this.provider_services.getLicenseMetadata().subscribe(data => {
-      this.shared_functions.setitemonLocalStorage('license-metadata', data);
+      this.lStorageService.setitemonLocalStorage('license-metadata', data);
     });
   }
 }

@@ -24,7 +24,7 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.apptState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="!queue_data.instantQueue"></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>
@@ -97,11 +97,11 @@
                                             </div> -->
                                             <div class="item">
                                                 <span class="ttle">Start date</span>
-                                                <span>{{queue_data.apptSchedule.startDate | date: dateFormat}}</span>
+                                                <span>{{queue_data.apptSchedule.startDate | date: newDateFormat}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">End date</span>
-                                                <span>{{queue_data.apptSchedule.terminator.endDate | date: dateFormat}}</span>
+                                                <span>{{queue_data.apptSchedule.terminator.endDate | date: newDateFormat}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Online Appointments</span> <span

@@ -7,6 +7,9 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../../../show-messages/show-messages.component';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -60,7 +63,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
         private dialog: MatDialog,
-        public router: Router) { }
+        public router: Router,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
+        ) { }
 
     ngOnInit() {
         this.provider_services.getGlobalSettings().subscribe(
@@ -70,7 +77,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.is_virtual_enbl = false;
                 }
             });
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
        if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
             const breadcrumbs = [];
@@ -124,7 +131,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -141,12 +148,12 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.provider_services.setServiceLivetrack(this.trackStatus, service.id)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Live tracking updated successfully', { ' panelclass': 'snackbarerror' });
                     this.service_list = [];
                     this.getServiceCount();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
 
@@ -159,7 +166,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.getServiceCount();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServiceCount();
                 });
     }
@@ -171,7 +178,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                     this.getServiceCount();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getServiceCount();
                 });
     }
@@ -190,7 +197,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
 
     getDomainSubdomainSettings() {
         this.api_loading = true;
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         this.provider_services.domainSubdomainSettings(domain, sub_domain)
@@ -278,7 +285,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

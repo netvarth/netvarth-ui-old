@@ -1,3 +1,10 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10"> 
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Statements </h5>
+    </div>
+ </section>
 <section class="dashboard content pro-dash" *ngIf="!apiloading">
     <div class="col-md-12 no-padding-small">
         <div class="row">
@@ -58,7 +65,7 @@
                                                 </tr>
                                                 <br>
                                                 <tr>
-                                                    <td style="margin-top: 8px">Invoice Reference No</td>
+                                                    <td style="margin-top: 8px">Reference No</td>
                                                     <td class="previousDue" style="text-align: end;">Due On </td>
                                                 </tr>
                                                 <tr>
@@ -129,7 +136,7 @@
                                                 </tr>
                                                 <tr [hidden]="showPreviousDue == false"
                                                     *ngIf="mergeinvoicerefno.length > 0">
-                                                    <td style="float: right;">Previous Invoice Ref #</td>
+                                                    <td style="float: right;">Previous Ref #</td>
                                                     <td class="previousDue" style="text-align: end;">
                                                         <a class="pointlist" style="text-decoration: underline;"
                                                             *ngFor="let row of mergeinvoicerefno;let i=index"

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../services/provider-services.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-customers',
@@ -50,13 +52,15 @@ export class ProviderCustomersComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   loadComplete = false;
   minday = new Date(2015, 0, 1);
-  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   apiloading = false;
   constructor(private provider_services: ProviderServices,
-    private shared_functions: SharedFunctions) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.breadcrumbs_init = [
       {
@@ -64,15 +68,15 @@ export class ProviderCustomersComponent implements OnInit {
       }
     ];
     this.breadcrumbs = this.breadcrumbs_init;
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    // this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    // this.checkedin_label = this.wordProcessor.getTerminologyTerm('waitlisted');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
 
   ngOnInit() {
     this.getCustomersList(true);
     this.breadcrumb_moreoptions = { 'show_learnmore': true, 'scrollKey': 'customer', 'subKey': 'services' };
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   routeLoadIndicator(e) {
@@ -97,12 +101,12 @@ export class ProviderCustomersComponent implements OnInit {
                 this.loadComplete = true;
               },
               error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               }
             );
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

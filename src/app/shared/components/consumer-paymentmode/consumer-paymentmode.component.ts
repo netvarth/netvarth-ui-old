@@ -4,6 +4,9 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-consumer-paymentmode',
   templateUrl: './consumer-paymentmode.component.html',
@@ -20,6 +23,9 @@ export class ConsumerPaymentmodeComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ConsumerPaymentmodeComponent>,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer) { }
@@ -50,7 +56,7 @@ export class ConsumerPaymentmodeComponent implements OnInit {
         .subscribe(pData => {
           if (pData['response']) {
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               if (paymentMode === 'DC') {
                 this.document.getElementById('payuform').submit();
@@ -59,19 +65,19 @@ export class ConsumerPaymentmodeComponent implements OnInit {
               }
             }, 2000);
           } else {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         },
           error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     } else {
       this.shared_services.providerPayment(this.waitlistDetails)
         .subscribe(pData => {
           if (pData['response']) {
-            this.shared_functions.setitemonLocalStorage('p_src', 'p_lic');
+            this.lStorageService.setitemonLocalStorage('p_src', 'p_lic');
             this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
             setTimeout(() => {
               if (paymentMode === 'DC') {
                 this.document.getElementById('payuform').submit();
@@ -80,11 +86,11 @@ export class ConsumerPaymentmodeComponent implements OnInit {
               }
             }, 2000);
           } else {
-            this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
           }
         },
           error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
   }

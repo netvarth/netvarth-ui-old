@@ -8,6 +8,7 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-consumer-waitlist',
@@ -52,7 +53,8 @@ export class WaitlistComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private shared_services: SharedServices) { }
+    private shared_services: SharedServices,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.route.params
@@ -97,7 +99,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
           this.getCommunicationHistory();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -141,7 +143,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -160,7 +162,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 
@@ -175,7 +177,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
 
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -196,7 +198,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
           this.sortMessages();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

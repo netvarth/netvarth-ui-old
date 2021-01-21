@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../../functions/shared-functions';
 import { SharedServices } from '../../../../services/shared-services';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-consumer-waitlist-checkin-payment',
@@ -49,6 +50,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,
     public _sanitizer: DomSanitizer,
+    private snackbarService: SnackbarService,
     @Inject(DOCUMENT) public document
 
   ) {
@@ -91,7 +93,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
         },
         error => {
           this.payModesQueried = true;
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -118,7 +120,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
           },
           error => {
             this.resetApiError();
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     }

@@ -7,6 +7,9 @@ import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/funct
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     'selector': 'app-departments',
@@ -44,11 +47,14 @@ export class DepartmentsComponent implements OnInit {
         public provider_shared_functions: ProviderSharedFuctions,
         private routerobj: Router,
         private dialog: MatDialog,
-        private provider_services: ProviderServices) {
+        private provider_services: ProviderServices,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService) {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.account_type = user.accountType;
         this.getWaitlistMgr();
@@ -109,7 +115,7 @@ export class DepartmentsComponent implements OnInit {
                             }
                         },
                         error => {
-                            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             } else {
                 this.filterbydepartment = (this.filterbydepartment === true) ? false : true;
@@ -133,7 +139,7 @@ export class DepartmentsComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -144,7 +150,7 @@ export class DepartmentsComponent implements OnInit {
                     // this.getDepartmentDetails();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

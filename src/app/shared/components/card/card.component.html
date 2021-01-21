@@ -45,8 +45,9 @@
         </div>
     </div>
 </div>
+<div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
 <div class="card booking-card pointer-cursor order"
-    [class.disabled]="service['status'] && service['status']=='INACTIVE'"
+    [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
     *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
     (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
     <div class="card-item-head" *ngIf="service.itemImages">
@@ -61,6 +62,8 @@
         </mat-menu>
         <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
     </div>
+    <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
+        Out of stock</div>
     <div class="card-item-content">
         <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!service.itemImages && item.actions"
             (click)="stopProp($event)">
@@ -94,8 +97,12 @@
                     <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
                 </div>
             </div>
+            
         </div>
     </div>
+</div>
+    <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
+        Out of stock</div> -->
 </div>
 <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
     (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">

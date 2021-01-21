@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
 import { AddProviderMemberComponent } from '../add-provider-member/add-provider-member.component';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-provider-members',
@@ -20,14 +20,14 @@ export class ProviderMembersComponent implements OnInit {
   query_executed = false;
 
   constructor(private provider_servicesobj: ProviderServices,
-    private dialog: MatDialog, private shared_functions: SharedFunctions) { }
+    private dialog: MatDialog, private groupService: GroupStorageService) { }
 
   ngOnInit() {
     this.getMembers();
   }
 
   getMembers() {
-    const userdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const userdet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_servicesobj.getMembers(userdet.id)
       .subscribe(data => {
         this.member_list = data;

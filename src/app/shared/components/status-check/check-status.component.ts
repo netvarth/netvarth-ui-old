@@ -6,6 +6,9 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import * as moment from 'moment';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-check-status-component',
   templateUrl: './check-status.component.html',
@@ -46,7 +49,10 @@ export class CheckYourStatusComponent implements OnInit {
   terminologiesjson: ArrayBuffer;
   constructor(private shared_services: SharedServices,
     private activated_route: ActivatedRoute, public router: Router,
-    private shared_functions: SharedFunctions) {
+    private shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor) {
     this.activated_route.params.subscribe(
       qparams => {
         // this.type = qparams.type;
@@ -72,12 +78,12 @@ export class CheckYourStatusComponent implements OnInit {
   }
   setSystemDate() {
     const _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       _this.shared_services.getSystemDate()
         .subscribe(
           res => {
             _this.server_date = res;
-            _this.shared_functions.setitemonLocalStorage('sysdate', res);
+            _this.lStorageService.setitemonLocalStorage('sysdate', res);
             resolve();
           },
           () => {
@@ -87,9 +93,10 @@ export class CheckYourStatusComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    console.log(this.check_in_statuses);
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.setSystemDate();
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.api_loading = true;
     if (this.encId) {
       if (this.type === 'wl') {
@@ -129,9 +136,9 @@ export class CheckYourStatusComponent implements OnInit {
   getTerminologyTerm(term) {
     const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
     if (this.terminologiesjson) {
-      return this.shared_functions.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+      return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
     } else {
-      return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+      return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
     }
   }
   getAppxTime(waitlist) {
@@ -254,7 +261,7 @@ export class CheckYourStatusComponent implements OnInit {
           const wlInfo = data;
           this.statusInfo = data;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
             this.history = true;
           }
@@ -294,7 +301,7 @@ export class CheckYourStatusComponent implements OnInit {
           this.statusInfo = wlInfo;
         },
         (error) => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
           this.api_loading = false;
         });
@@ -327,14 +334,14 @@ export class CheckYourStatusComponent implements OnInit {
         (data: any) => {
           this.statusInfo = data;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           this.foundDetails = true;
           this.type = 'order';
           this.api_loading = false;
           this.getStoreContactInfo(this.statusInfo.providerAccount.id);
         },
         (error) => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
           this.api_loading = false;
         });
@@ -380,21 +387,25 @@ export class CheckYourStatusComponent implements OnInit {
           this.api_loading = false;
           this.statusInfo = wlInfo;
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
-          this.gets3curl();
+          // this.gets3curl();
           this.api_loading = false;
         },
         (error) => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.foundDetails = false;
           this.api_loading = false;
         });
   }
   getStatusLabel(status) {
-    const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
+    const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
   okClick() {
-    this.router.navigate(['']);
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
+      this.router.navigate(['/consumer']);
+    } else {
+      this.router.navigate(['']);
+    }
   }
   showStatusInput() {
     this.type = '';

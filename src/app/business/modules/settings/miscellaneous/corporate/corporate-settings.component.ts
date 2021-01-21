@@ -3,6 +3,8 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-corporatesettings',
@@ -37,12 +39,14 @@ export class CorporateSettingsComponent implements OnInit {
         private router: Router,
         private routerobj: Router,
         private shared_services: ProviderServices,
-        private shared_functions: SharedFunctions) {
+        private shared_functions: SharedFunctions,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService) {
 
     }
     ngOnInit() {
         this.loading = false;
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.accountType = user.accountType;
         this.getCorporateDetails();
@@ -58,11 +62,11 @@ export class CorporateSettingsComponent implements OnInit {
     onSubmitJoinCorp(corpId) {
         this.shared_services.joinCorp(corpId).subscribe(
             (data) => {
-                const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                const user = this.groupService.getitemFromGroupStorage('ynw-user');
                 user['accountType'] = 'BRANCH';
-                this.shared_functions.setitemToGroupStorage('ynw-user', user);
+                this.groupService.setitemToGroupStorage('ynw-user', user);
                 this.accountType = 'BRANCH';
-                this.shared_functions.openSnackBar(Messages.JOINCORP_SUCCESS);
+                this.snackbarService.openSnackBar(Messages.JOINCORP_SUCCESS);
                 this.corpType = '';
                 this.corpId = '';
                 this.getCorporateDetails();
@@ -70,17 +74,17 @@ export class CorporateSettingsComponent implements OnInit {
                 this.shared_functions.sendMessage(pdata);
             },
             (error) => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }
     onSubmitCreateCorp(corpName, corpCode) {
         if (!corpName || corpName === '') {
-            this.shared_functions.openSnackBar('Corporate Name required', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Corporate Name required', { 'panelClass': 'snackbarerror' });
             return false;
         }
         if (!corpCode || corpCode === '') {
-            this.shared_functions.openSnackBar('Corporate Code required', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Corporate Code required', { 'panelClass': 'snackbarerror' });
             return false;
         }
         const post_data = {
@@ -90,17 +94,17 @@ export class CorporateSettingsComponent implements OnInit {
         };
         this.shared_services.createCorp(post_data).subscribe(
             (data) => {
-                const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+                const user = this.groupService.getitemFromGroupStorage('ynw-user');
                 user['accountType'] = 'BRANCH';
-                this.shared_functions.setitemToGroupStorage('ynw-user', user);
+                this.groupService.setitemToGroupStorage('ynw-user', user);
                 this.accountType = 'BRANCH';
-                this.shared_functions.openSnackBar(Messages.CREATECORP_SUCCESS);
+                this.snackbarService.openSnackBar(Messages.CREATECORP_SUCCESS);
                 this.getCorporateDetails();
                 const pdata = { 'ttype': 'upgradelicence' };
                 this.shared_functions.sendMessage(pdata);
             },
             (error) => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../app.component';
 import { ShowMessageComponent } from '../../../show-messages/show-messages.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-displayboards-appt',
@@ -71,7 +73,9 @@ export class DisplayboardsComponent implements OnInit {
         private router: Router,
         private routerobj: Router,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
         private dialog: MatDialog
     ) { }
     ngOnInit() {
@@ -80,9 +84,9 @@ export class DisplayboardsComponent implements OnInit {
             'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
         };
         this.getDisplayboardLayouts();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
-        this.accountId = this.shared_functions.getitemFromGroupStorage('accountId');
+        this.accountId = this.groupService.getitemFromGroupStorage('accountId');
         this.domain = user.sector;
         this.getLicenseUsage();
     }
@@ -108,7 +112,7 @@ export class DisplayboardsComponent implements OnInit {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -354,13 +358,13 @@ export class DisplayboardsComponent implements OnInit {
                 'isContainer': true
             };
             this.provider_services.createDisplayboardAppointment(post_data).subscribe(data => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.onCancel();
                 this.getDisplayboardLayouts();
             },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else if (this.action === 'updateGroup') {
             const post_data = {
@@ -374,13 +378,13 @@ export class DisplayboardsComponent implements OnInit {
                 'isContainer': true
             };
             this.provider_services.updateDisplayboardAppointment(post_data).subscribe(data => {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.onCancel();
                 this.getDisplayboardLayouts();
             },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }
@@ -402,7 +406,7 @@ export class DisplayboardsComponent implements OnInit {
                    this.disply_name = this.qbrd_info[0].metricName;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

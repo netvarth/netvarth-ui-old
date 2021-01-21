@@ -8,6 +8,8 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 @Component({
   selector: 'app-provider-system-alerts',
   templateUrl: './provider-system-alerts.component.html'
@@ -69,11 +71,13 @@ export class ProviderSystemAlertComponent implements OnInit {
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
-    public date_format: DateFormatPipe
+    public date_format: DateFormatPipe,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService
   ) { }
   ngOnInit() {
     // this.getAlertList();
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.alertSelAck = []; // default becuase maximise from footer alert panel
     this.alertStartdate = null;
@@ -83,7 +87,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     this.holdalertStartdate = this.alertStartdate;
     this.holdalertEnddate = this.alertEnddate;
     this.getAlertListTotalCnt('false', '', '');
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
   getAlertListTotalCnt(ackStatus, sdate, edate) {
@@ -122,7 +126,7 @@ export class ProviderSystemAlertComponent implements OnInit {
         }
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.load_complete = 2;
           this.alertStatus = 0;
         });
@@ -208,7 +212,7 @@ export class ProviderSystemAlertComponent implements OnInit {
       endseldate = this.shared_functions.transformToYMDFormat(this.holdalertEnddate);
     }
     /*if (pagecall === false && this.holdalertSelAck === '' && seldate === '') {
-      this.sharedfunctionObj.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
+      this.snackbarService.openSnackBar('Please select atleast one option', {'panelClass': 'snackbarerror'});
     } else {*/
 
     // if (pagecall === false) {
@@ -240,15 +244,15 @@ export class ProviderSystemAlertComponent implements OnInit {
     return this.startpageval;
   }
   alertAcknowledge(obj) {
-    // this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
+    // this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC + obj.id);
     this.provider_servicesobj.acknowledgeAlert(obj.id)
       .subscribe(() => {
-        this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+        this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
         this.getAlertListTotalCnt('false', this.holdalertStartdate, this.holdalertEnddate);
         // this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount' });
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 

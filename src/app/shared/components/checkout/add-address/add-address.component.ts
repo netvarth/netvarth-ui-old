@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../constants/project-constants';
 import { SharedServices } from '../../../services/shared-services';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 // import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 // import { projectConstantsLocal } from 'src/app/shared/constants/project-constants';
 
@@ -35,6 +36,7 @@ export class AddAddressComponent implements OnInit {
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private shared_services:SharedServices,
+    private snackbarService: SnackbarService
     // private consumer_services: ConsumerServices,
   ) {
     this.address_title = 'Add New Address';
@@ -103,15 +105,15 @@ export class AddAddressComponent implements OnInit {
       .subscribe(
         data => {
           if (this.formMode === 'edit') {
-            this.sharedfunctionObj.openSnackBar('Address Updated successfully');
+            this.snackbarService.openSnackBar('Address Updated successfully');
           } else {
-            this.sharedfunctionObj.openSnackBar('Address Added successfully');
+            this.snackbarService.openSnackBar('Address Added successfully');
           }
 
           this.dialogRef.close();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

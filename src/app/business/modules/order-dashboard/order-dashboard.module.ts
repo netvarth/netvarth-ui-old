@@ -11,15 +11,23 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { CardModule } from '../../../shared/components/card/card.module';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { OrderEditComponent } from './order-edit/order-edit.component';
+import { OrderItemsComponent } from './order-items/order-items.component';
+import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
 
 @NgModule({
   declarations: [
     OrderDashboardComponent,
     OrderDetailsComponent,
-    OrderActionsComponent
+    OrderActionsComponent,
+    OrderEditComponent,
+    OrderItemsComponent,
+    DisplaylabelpopupComponent
   ],
   entryComponents: [
-    OrderActionsComponent
+    OrderActionsComponent,
+    OrderItemsComponent,
+    DisplaylabelpopupComponent
   ],
   imports: [
     CommonModule,

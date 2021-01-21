@@ -11,6 +11,8 @@ import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ActionPopupComponent } from './action-popup/action-popup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -64,17 +66,19 @@ export class ApptDetailComponent implements OnInit {
     public shared_functions: SharedFunctions,
     @Inject(DOCUMENT) public document,
     private consumer_services: ConsumerServices,
-    private sharedServices: SharedServices
+    private sharedServices: SharedServices,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
       });
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
-    this.checkin_label = this.shared_functions.getTerminologyTerm('checkin');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('checkin');
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
   }
   ngOnInit() {
@@ -110,7 +114,7 @@ export class ApptDetailComponent implements OnInit {
         }
       },
       (error) => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.getFavouriteProvider();
   }
@@ -164,7 +168,7 @@ export class ApptDetailComponent implements OnInit {
           this.sortMessages();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -241,7 +245,7 @@ export class ApptDetailComponent implements OnInit {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
 
@@ -268,7 +272,7 @@ export class ApptDetailComponent implements OnInit {
           this.apptHistory = data;
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

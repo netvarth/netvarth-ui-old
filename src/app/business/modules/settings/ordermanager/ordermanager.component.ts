@@ -5,6 +5,9 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { Messages } from '../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 
 @Component({
@@ -46,13 +49,17 @@ export class OrdermanagerComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private routerobj: Router,
     private dialog: MatDialog,
-    private provider_services: ProviderServices) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private provider_services: ProviderServices,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService
+    ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.getOrderStatus();
@@ -102,7 +109,7 @@ export class OrdermanagerComponent implements OnInit {
     if (this.noitemError) {
       this.router.navigate(['provider', 'settings', 'pos', 'items'] , navigatExtras);
     } else {
-      this.shared_functions.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.itemError, { 'panelClass': 'snackbarerror' });
     }
   }
   gotoStoredetails() {
@@ -127,10 +134,10 @@ export class OrdermanagerComponent implements OnInit {
       });
   } else {
     this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
-      this.shared_functions.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
       this.getOrderStatus();
     }, (error) => {
-      this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       this.getOrderStatus();
     });
   }

@@ -208,14 +208,16 @@
                                         <mat-form-field *ngIf="users.length == 1">
                                             <input matInput *ngFor="let user of users" [readonly]="true"
                                                 placeholder="{{provider_label | capitalizeFirst}}"
-                                                value="{{user.firstName | capitalizeFirst}} {{user.lastName}}">
+                                                value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                                         </mat-form-field>
                                         <mat-form-field *ngIf="users.length > 1">
-                                            <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user" #usersel
+                                            <mat-select placeholder="Select {{provider_label | capitalizeFirst}}"
+                                                [ngModel]="selected_user" #usersel
                                                 (selectionChange)="handleUserSelection(usersel.value)">
                                                 <mat-option *ngFor="let user of users" [value]="user">
                                                     <!-- {{user.firstName}} {{user.lastName}} -->
-                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
+                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' +
+                                                    user.lastName}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -290,8 +292,9 @@
                                                     </span>
                                                     <span> <input *ngIf="!showInputSection"
                                                             (keypress)="isNumeric($event)"
-                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"  style="width:150px!important;"
-                                                            placeholder="" [(ngModel)]="callingModes" autocomplete="off"
+                                                            class="form-control emailPrepay call-mode-ip wtsap-ip-wdth"
+                                                            style="width:150px!important;" placeholder=""
+                                                            [(ngModel)]="callingModes" autocomplete="off"
                                                             maxlength="10"></span>
                                                     <span class="mgn-bt-10 cal-mod-edt custId-flex-form"
                                                         *ngIf="showInputSection"> {{callingModes}}</span>
@@ -343,8 +346,10 @@
                                                 <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                                                     [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                     (click)="handleQueueSelection(queue, i);">
-                                                    <span>{{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']}}
-                                                    </span></mat-chip>
+                                                    <span>{{queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                                        queue.apptSchedule.timeSlots[0]['eTime']}}
+                                                    </span>
+                                                </mat-chip>
                                             </owl-carousel>
                                             <div class="owl-theme">
                                                 <div class="owl-controls">
@@ -657,8 +662,10 @@
                                 <mat-chip class="pro-action" (click)="imagefile.click()"><a>
                                         <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
                                             multiple (change)="filesSelected($event)">
-                                        <span> Attach
-                                            File</span> </a>
+                                        <span> Upload
+                                            File</span>
+                                        <span
+                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
                                 </mat-chip>
                             </mat-chip-list>
                             <!-- <button *ngIf="thirdParty === ''" class="cs-btn bt3 width-100"

@@ -5,7 +5,7 @@
 <section class="">
     <div class="card title-gb">
         <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-            License & Subscriptions
+            Subscription Plan
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </div>
     </div>
@@ -26,7 +26,7 @@
                                         <i  class="fa fa-ellipsis-v"></i>
                                        </button>
                                         <mat-menu #menu="matMenu">
-                                          <button mat-menu-item (click)="showLicenseUsage()">Usage</button>
+                                          <button mat-menu-item (click)="showLicenseUsage()">License Usage</button>
                                           <button mat-menu-item (click)="showLicenceHistory()">License History</button>
                                           <button mat-menu-item (click)="gotoPaymentHistory()">Payment History</button>
                                           <button mat-menu-item (click)="showInvoiceStatus()">License Statement</button>
@@ -83,7 +83,7 @@
 
                                     <div class="txt_sub_plan">Your Subscription Plan</div>
                                     <div>
-                                        <h3 class="clr_pitch_blu">{{current_lic}}</h3>
+                                        <h2 class="clr_pitch_blu">{{current_lic}}</h2>
                                     </div>
                                     <div class="mgn-up-10" *ngIf="upgradablepackages.length > 0">
                                         <button mat-flat-button class="btn_upgrde" (click)="showupgradeLicense()">Upgrade your
@@ -115,12 +115,12 @@
                                                 The subscription license statement will be generated on
                                                 {{effectivedate | date: newDateFormat}}.
                                             </div>
-                                            <button mat-flat-button class="btn_switch mgn-up-10" 
+                                            <button mat-flat-button class="btn_switch mgn-up-10 mgn-bt-10" 
                                                 (click)="doUpgradeSubcription('MONTHLY')">Cancel Annual</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 no-padding">
+                                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                                     <div *ngIf="currentlicense_details.dueAmount > 0"
                                         class="card no-mgn-bt card_addon txt_centr">
                                         <div class="txt_adon">Bill Due</div>

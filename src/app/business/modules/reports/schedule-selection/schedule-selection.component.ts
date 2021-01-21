@@ -1,19 +1,20 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-schedule-selection',
   templateUrl: './schedule-selection.component.html',
   styleUrls: ['./schedule-selection.component.css']
 })
-export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
+export class ScheduleSelectionComponent implements OnInit {
 
   accountType: any;
   selected_data: any = [];
@@ -30,20 +31,21 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   select_All = Messages.SELECT_ALL;
   public schedule_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns = ['select', 'name', 'schedule', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_service: ReportDataService) {
+    private report_service: ReportDataService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService) {
 
     this.activated_route.queryParams.subscribe(qparams => {
 
       this.reportType = qparams.report_type;
       this.selected_data_id = qparams.data;
 
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.accountType = user.accountType;
       if (this.accountType !== 'BRANCH') {
         this.displayedColumns = ['select', 'name', 'schedule', 'status'];
@@ -108,15 +110,12 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     return schedule_list;
 
   }
-  ngAfterViewInit() {
 
-    this.paginator._intl.itemsPerPageLabel = 'schedules per page';
-
-  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.schedule_dataSource.data.length;
+    console.log(numSelected, numRows);
     return numSelected === numRows;
   }
 
@@ -135,7 +134,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   // schedule related method------------------------------------------------->
   getSchedules(date?) {
     const filterEnum = {};
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
           this.schedule_list_for_grid = [];
@@ -191,7 +190,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     this.schedules_selected = this.selection.selected;
 
     if (this.selection.selected.length === 0) {
-      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
 
     } else {
 
@@ -212,6 +211,9 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
         });
 
         this.schedules_selected = schedule_id;
+      }
+      if (this.schedules_selected === '') {
+        this.schedules_selected = 'All';
       }
 
       console.log(this.schedules_selected.length + '=' + this.scheduleCount);

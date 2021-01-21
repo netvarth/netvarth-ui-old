@@ -7,6 +7,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-search-provider-customer',
@@ -48,13 +49,14 @@ export class SearchProviderCustomerComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
     this.source = this.data.source;
     this.calculationMode = this.data.calc_mode;
     this.showToken = this.data.showToken;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
   }
 
   ngOnInit() {
@@ -105,7 +107,7 @@ export class SearchProviderCustomerComponent implements OnInit {
                 }
               } else {
                 if (this.source === 'createCustomer') {
-                  this.shared_functions.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_EXIST);
+                  this.wordProcessor.apiErrorAutoHide(this, Messages.CUSTOMER_SEARCH_EXIST);
                 } else if (this.source === 'providerCheckin') {
                   const return_data = {
                     'message': 'haveCustomer',
@@ -116,11 +118,11 @@ export class SearchProviderCustomerComponent implements OnInit {
               }
             },
             error => {
-              this.shared_functions.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
       } else {
-        this.shared_functions.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
+        this.wordProcessor.apiErrorAutoHide(this, 'Please enter atleast the first 3 letters of First/Last Name');
       }
     }
   }
@@ -147,7 +149,7 @@ export class SearchProviderCustomerComponent implements OnInit {
 
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }

@@ -23,6 +23,9 @@ import { ProPicPopupComponent } from './pro-pic-popup/pro-pic-popup.component';
 import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
 import { Meta } from '@angular/platform-browser';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-bprofile',
@@ -302,7 +305,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   businessConfig: any = [];
   multipeLocationAllowed = false;
   // customer_label = '';
-  maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   loceditdialogRef;
   addlocdialogRef;
@@ -400,12 +403,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private fb: FormBuilder, private galleryService: GalleryService,
     private dialog: MatDialog, private angular_meta: Meta,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
     private routerobj: Router,
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
     private qservice: QuestionService,
     private changeDetectorRef: ChangeDetectorRef) {
-    this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
     // this.shared_functions.getMessage().subscribe(data => {
     //   this.getLicensemetrics();
@@ -446,8 +452,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.getProviderLogo();
     this.getCoverPhoto();
 
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.user_accountType = user.accountType;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -492,12 +498,12 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.provider_services.uploadGalleryImages(input.value)
           .subscribe(
             () => {
-              this.shared_functions.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
+              this.snackbarService.openSnackBar(Messages.BPROFILE_IMAGE_UPLOAD, { 'panelClass': 'snackbarnormal' });
               this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
               this.getGalleryImages();
             },
             error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
               this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
             }
           );
@@ -743,11 +749,11 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
                 });
             });
           this.provider_datastorage.set('bProfile', this.bProfile);
-          const loginuserdata = this.sharedfunctionobj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionobj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
           this.serviceSector = data['serviceSector']['displayName'] || null;
           if (this.bProfile.status === 'ACTIVE') {
             this.normal_profile_active = 3;
@@ -774,7 +780,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           // check whether domain fields exists
           const statusCode = this.provider_shared_functions.getProfileStatusCode(this.bProfile);
           this.provider_datastorage.setBusinessProfileWeightage(this.bProfile);
-          this.sharedfunctionobj.setitemToGroupStorage('isCheckin', statusCode);
+          this.groupService.setitemToGroupStorage('isCheckin', statusCode);
           this.businessProfile_show = -1;
           this.loading = false;
         },
@@ -1135,7 +1141,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           if (str !== '') {
             str += ', ';
           }
-          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          // str += this.wordProcessor.firstToUpper(fld.value[i]);
           str += this.getFieldDetails(passArray, field.value[i], field.name);
         }
         retfield = str;
@@ -1168,7 +1174,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         if (str !== '') {
           str += ', ';
         }
-        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+        str += this.wordProcessor.firstToUpper(fld.value[i]);
       }
       return str;
     }
@@ -1237,7 +1243,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1250,7 +1256,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1478,7 +1484,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.provider_services.deleteCoverFoto(del_pic).subscribe(
           data => {
             this.getCoverPhoto();
-            this.shared_functions.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_COVER_DEL, { 'panelClass': 'snackbarnormal' });
           });
       }
     });

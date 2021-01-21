@@ -11,6 +11,9 @@ import { SharedServices } from '../../services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 
 @Component({
@@ -71,7 +74,10 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private dialog: MatDialog,
     private shared_services: SharedServices,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
 
   ) {
     this.catalog_details = this.shared_services.getOrderDetails();
@@ -134,9 +140,9 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-   this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
+   this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
     this.catlogArry();
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.customer_data = activeUser;
       this.customer_phoneNumber = this.customer_data.primaryPhoneNumber;
@@ -155,7 +161,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     });
     this.advance_amount = this.catalog_details.advanceAmount;
     this.showfuturediv = false;
-    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     this.today = new Date(this.today);
     this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -185,14 +191,14 @@ this.isFuturedate = false;
 }
   }
   ngOnDestroy() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
   getItemPrice(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
   }
   isLoggedIn() {
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
    if (activeUser) {
     this.loginForm.get('phone').setValue(activeUser.primaryPhoneNumber);
    // this.getaddress();
@@ -227,7 +233,7 @@ this.isFuturedate = false;
 
         },
         error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -334,7 +340,7 @@ this.isFuturedate = false;
 
   }
   doLogin(origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    // this.snackbarService.openSnackBar('You need to login to check in');
     // const current_provider = passParam['current_provider'];
     // let is_test_account = null;
     // if (current_provider) {
@@ -413,12 +419,12 @@ this.isFuturedate = false;
         }
       },
         // error => {
-        //     this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-        //     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+        //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     this.api_loading = false;
         // }
         error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
 
       );

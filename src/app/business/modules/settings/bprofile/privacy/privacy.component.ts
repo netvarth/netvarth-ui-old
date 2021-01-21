@@ -7,6 +7,8 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
@@ -15,7 +17,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
     normal_privacy_settings_show = 1;
     frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
-    customernormal_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    customernormal_label = this.wordProcessor.getTerminologyTerm('customer');
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     email_cap = Messages.SERVICE_EMAIL_CAP;
     bProfile = null;
@@ -47,14 +49,15 @@ export class PrivacyComponent implements OnInit, OnDestroy {
     screenWidth;
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private routerobj: Router,
         private router: Router,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor
     ) { }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.setPrivacyDetails();
@@ -186,7 +189,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         let rettxt = '';
         if (txt === 'customersOnly') {
             if (this.customernormal_label !== '' && this.customernormal_label !== undefined && this.customernormal_label !== null) {
-                rettxt = 'My ' + this.sharedfunctionobj.firstToUpper(this.customernormal_label) + 's Only';
+                rettxt = 'My ' + this.wordProcessor.firstToUpper(this.customernormal_label) + 's Only';
             } else {
                 rettxt = 'My ' + this.privacypermissiontxt[txt] + 's Only';
             }

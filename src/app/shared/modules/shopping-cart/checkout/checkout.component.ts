@@ -17,6 +17,9 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { ConfirmBoxComponent } from '../../../components/confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -98,6 +101,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         base64: [],
         caption: []
     };
+    imagelist = {
+      files: [],
+      base64: [],
+      caption: []
+  };
   shoppinglistdialogRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -107,6 +115,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   visible: true,
   strategy: ButtonsStrategy.CUSTOM,
   buttons: [
+    {
+      className: 'fa fa-trash-o',
+      type: ButtonType.DELETE,
+      ariaLabel: 'custom plus aria label',
+      title: 'Delete',
+      fontSize: '20px'
+  },
       {
           className: 'inside close-image',
           type: ButtonType.CLOSE,
@@ -116,7 +131,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       }
   ]
 };
+
+
   canceldialogRef: any;
+  // availableTimewindows: any = [];
+  // timeWindows;
+  nextAvailableTimeQueue: any = [];
+  queue;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -124,7 +145,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     public route: ActivatedRoute,
     private dialog: MatDialog,
     private shared_services: SharedServices,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService
 
   ) {
     // this.route.queryParams.subscribe(
@@ -132,8 +156,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     //    this.selectedImagelist = qParams.uploadlist;
     //     console.log(this.selectedImagelist);
     //   });
-    this.businessDetails = this.sharedFunctionobj.getitemfromLocalStorage('order_sp');
-    this.chosenDateDetails = this.sharedFunctionobj.getitemfromLocalStorage('chosenDateTime');
+    this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
+    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
     this.catalog_Id = this.chosenDateDetails.catlog_id;
@@ -178,10 +202,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     }
     // this.catlogArry();
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.getProfile();
-      const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
@@ -192,6 +216,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     }
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
+      this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       if (this.orderType === 'SHOPPINGLIST') {
           this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
@@ -199,13 +224,14 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
-              // source_id: data
+               source: this.imagelist
             }
         });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
             if (result) {
             console.log(result);
             this.selectedImagelist = result;
+            console.log(this.selectedImagelist.files);
             this.image_list_popup = [];
             if (this.selectedImagelist.files.length > 0) {
             for (let i = 0; i < this.selectedImagelist.files.length; i++) {
@@ -213,9 +239,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
                   {
                       img: this.selectedImagelist.base64[i],
                       description: ''
-                  });
+                  }, this.selectedImagelist.files[i].name);
               this.image_list_popup.push(imgobj);
           }
+          console.log(this.image_list_popup);
 
             }
           }
@@ -251,7 +278,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     });
 
     this.showfuturediv = false;
-    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     this.today = new Date(this.today);
     this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -283,7 +310,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
   }
   ngOnDestroy() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
   getItemPrice(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
@@ -323,9 +350,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   }
 
   isLoggedIn() {
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-      const credentials = this.sharedFunctionobj.getitemfromLocalStorage('ynw-credentials');
+      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
       const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
       this.loginForm.get('phone').setValue(customer_phonenumber);
       // this.getaddress();
@@ -365,7 +392,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           }
         },
         error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -376,7 +403,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       disableClose: true,
       data: {
         type: 'Add',
-        address: this.added_address
+        address: this.added_address,
+        source: 'consumer',
+
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
@@ -392,7 +421,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
         type: 'edit',
         address: this.added_address,
         update_address: address,
-        edit_index: index
+        edit_index: index,
+        source: 'consumer',
 
       }
     });
@@ -412,22 +442,26 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.added_address.splice(index ,1);
+        this.added_address.splice(index , 1);
       this.shared_services.updateConsumeraddress(this.added_address)
       .subscribe(
         data => {
-         this.sharedFunctionobj.openSnackBar('Address Updated successfully');     
+          if(data){
+            this.getaddress();
+          }
+         this.snackbarService.openSnackBar('Address Updated successfully');
         },
         error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
-      this.getaddress();
+      // this.getaddress();
       }
     });
   }
   goBack() {
-    if (this.action === 'changeTime') {
+    console.log(this.action);
+    if (this.action === 'timeChange') {
       this.action = '';
     } else {
       const chosenDateTime = {
@@ -438,7 +472,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
         account_id: this.account_id
 
       };
-      this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
       this.location.back();
     }
   }
@@ -458,11 +492,12 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
   confirm() {
     this.checkoutDisabled = true;
-    console.log(this.catalog_details.homeDelivery);
+    console.log(this.nextAvailableTime);
+    const timeslot = this.nextAvailableTime.split(' - ');
     if (this.delivery_type === 'home') {
       if (this.added_address === null || this.added_address.length === 0) {
         this.checkoutDisabled = false;
-        this.sharedFunctionobj.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
       } else {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
@@ -479,8 +514,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
               'id': 0
             },
             'timeSlot': {
-              'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-              'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -490,7 +527,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           };
           this.confirmOrder(post_Data);
         } else {
-        const post_Data = {
+         const post_Data = {
           'homeDelivery': true,
           'homeDeliveryAddress': this.selectedAddress,
           'catalog': {
@@ -500,8 +537,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'id': 0
           },
           'timeSlot': {
-            'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-            'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+            'sTime': timeslot[0],
+            'eTime': timeslot[1]
+            // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+            // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
           },
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
@@ -515,9 +554,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     }
     }
     if (this.delivery_type === 'store') {
-      if (!this.storeContact.value.phone || !this.storeContact.value.email) {
+       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
-        this.sharedFunctionobj.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
         const contactNumber = this.storeContact.value.phone;
@@ -535,8 +574,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
               'id': 0
             },
             'timeSlot': {
-              'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-              'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -555,8 +596,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'id': 0
           },
           'timeSlot': {
-            'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-            'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+            'sTime': timeslot[0],
+            'eTime': timeslot[1]
+            // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+            // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
           },
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
@@ -572,7 +615,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
   }
   doLogin(origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    // this.snackbarService.openSnackBar('You need to login to check in');
     // const current_provider = passParam['current_provider'];
     // let is_test_account = null;
     // if (current_provider) {
@@ -661,7 +704,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             uuid: this.trackUuid
           }
         };
-        if (this.catalog_details.advanceAmount) {
+        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
             .subscribe(res => {
               console.log(res);
@@ -669,17 +712,17 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             });
         } else {
           this.orderList = [];
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order');
-          this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
+          this.snackbarService.openSnackBar('Your Order placed successfully');
           this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
         }
       },
       error => {
         this.checkoutDisabled = false;
-        this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
 
     );
@@ -709,7 +752,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             uuid: this.trackUuid
           }
         };
-        if (this.catalog_details.advanceAmount) {
+        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
             .subscribe(res => {
               console.log(res);
@@ -717,25 +760,29 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             });
         } else {
           this.orderList = [];
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order');
-          this.sharedFunctionobj.openSnackBar('Your Order placed successfully');
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
+          this.snackbarService.openSnackBar('Your Order placed successfully');
           this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
         }
       },
         error => {
           this.checkoutDisabled = false;
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
 
       );
     }
   }
-  goBackToCheckout(selectesTimeslot) {
+  goBackToCheckout(selectesTimeslot , queue) {
     this.action = '';
-    this.nextAvailableTime = selectesTimeslot;
+    console.log(queue);
+    const selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    console.log(selectqueue);
+    this.nextAvailableTime = selectqueue;
+    // this.nextAvailableTime = selectesTimeslot;
     const chosenDateTime = {
       delivery_type: this.choose_type,
       catlog_id: this.catalog_details.id,
@@ -745,7 +792,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       account_id: this.account_id
 
     };
-    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
   }
   changeTime() {
     this.action = 'timeChange';
@@ -927,6 +974,12 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(storeIntervals));
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // console.log(this.nextAvailableTimeQueue);
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+        // this.availableTimewindows = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // this.timeWindows = this.availableTimewindows[0];
+        // console.log(this.availableTimewindows);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
@@ -938,6 +991,10 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       console.log(JSON.stringify(homeIntervals));
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+        // console.log(this.nextAvailableTimeQueue);
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+        // this.availableTimewindows = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
       } else {
         this.isfutureAvailableTime = false;
@@ -958,13 +1015,18 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.showSide = false;
   }
   deleteTempImage(img, index) {
-            this.image_list_popup.splice(index, 1);
-            this.selectedImagelist.files.splice(index, 1);
-            this.selectedImagelist.base64.splice(index, 1);
+    console.log(img);
+    // this.image_list_popup.splice(index, 1);
+  //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
+ // console.log(idex);
+   this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+    this.selectedImagelist.files.splice(img.id, 1);
+    this.selectedImagelist.base64.splice(img.id, 1);
+
+    console.log(this.image_list_popup);
+     console.log(this.selectedImagelist.files);
 }
 openImageModalRow(image: Image) {
-  console.log(image);
-  console.log(this.image_list_popup);
   const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
   this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
 }
@@ -973,7 +1035,51 @@ private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
   return image ? images.indexOf(image) : -1;
 }
 
-onButtonBeforeHook() {
+onButtonBeforeHook(event) {
+  console.log(event);
+  if (!event || !event.button) {
+    return;
+}
+if (event.button.type === ButtonType.DELETE) {
+
+    console.log(event.image.plain);
+    console.log(this.selectedImagelist.files);
+   console.log(this.image_list_popup);
+  // this.deletemodelboxImage(event.image.plain);
+   const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
+ console.log(idex);
+ this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
+  this.selectedImagelist.files.splice(idex, 1);
+  this.selectedImagelist.base64.splice(idex, 1);
+ // this.image_list_popup.splice(idex, 1);
+
+   console.log(this.selectedImagelist.files);
+   console.log(this.image_list_popup);
+}
+
+}
+deletemodelboxImage(name) {
+  console.log(name);
+ const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
+ console.log(idex);
+  this.selectedImagelist.files.splice(idex, 1);
+  this.selectedImagelist.base64.splice(idex, 1);
+  this.image_list_popup.splice(idex, 1);
+  console.log(this.selectedImagelist.files);
+ // this.image_list_popup = [];
+//   if (this.selectedImagelist.files.length > 0) {
+//   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+//     const imgobj = new Image(i,
+//         {
+//             img: this.selectedImagelist.base64[i],
+//             description: ''
+//         });
+//     this.image_list_popup.push(imgobj);
+// }
+// console.log(this.image_list_popup);
+
+//   }
+console.log(this.image_list_popup);
 }
 onButtonAfterHook() { }
 
@@ -982,10 +1088,10 @@ imageSelect(event) {
     if (input) {
         for (const file of input) {
             if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
-                this.sharedFunctionobj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
             } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-                this.sharedFunctionobj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-            } else {
+                this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+          } else {
                     this.selectedImagelist.files.push(file);
                      const reader = new FileReader();
                       reader.onload = (e) => {
@@ -996,7 +1102,7 @@ imageSelect(event) {
                                 {
                                     img: this.selectedImagelist.base64[i],
                                     description: ''
-                                });
+                                }, this.selectedImagelist.files[i].name);
                             this.image_list_popup.push(imgobj);
                         }
                 };
@@ -1005,5 +1111,39 @@ imageSelect(event) {
         }
                 }
     }
+    editshoppinglist() {
+      this.imagelist = this.selectedImagelist;
+      console.log(this.selectedImagelist);
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+           source: this.imagelist
+        }
+    });
+    this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        console.log(result);
+        this.selectedImagelist = result;
+        this.image_list_popup = [];
+        if (this.selectedImagelist.files.length > 0) {
+        for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+          const imgobj = new Image(i,
+              {
+                  img: this.selectedImagelist.base64[i],
+                  description: ''
+              });
+          this.image_list_popup.push(imgobj);
+      }
+
+        }
+      }
+      });
+    }
+    handleQueueSelection(queue, index) {
+      console.log(index);
+      this.queue = queue;
+  }
 }
 

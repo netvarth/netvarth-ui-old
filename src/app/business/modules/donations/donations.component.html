@@ -64,6 +64,12 @@
                   <i class="fa fa-comments-o" (click)="addInboxMessage()" style="font-size: 1.1rem"></i> </span>
               </a>
             </li>
+            <li class="dropdown notifications-menu pull-left">
+              <a class="dropdown-toggle navbar-item-color bold pointer-cursor" data-toggle="control-sidebar">
+                <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations()"/>
+                &nbsp;&nbsp;Select all
+              </a>
+            </li>
             <!-- <li class="dropdown messages-menu loc-lst queue-menu pull-right" (click)="showFilterLocation()">
               <a class="dropdown-toggle navbar-item-color bold pointer-cursor">
                 <i class="icon-location" [matTooltipClass]="tooltipcls"
@@ -109,8 +115,9 @@
               </div>
               <div class="filterTextinput">
                 <li class="filterli filterDatepicker">
-                  <input type="text" [(ngModel)]="filter.date" [min]="minday" [matDatepicker]="picker" #Fdate
-                    (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date" readonly>
+                  <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                    #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date"
+                    readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker">
                   </mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>

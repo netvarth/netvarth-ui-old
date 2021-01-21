@@ -5,6 +5,9 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 // import { AddProviderUserBprofileSpokenLanguagesComponent } from './addprovideuserbprofilespokenlanguages/addprovideuserbprofilespokenlanguages.component';
 @Component({
     selector: 'app-userlanguages',
@@ -46,22 +49,24 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     userId: any;
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private activated_route: ActivatedRoute,
         private routerobj: Router,
         private language: Location,
         public shared_functions: SharedFunctions,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService
         // private dialog: MatDialog
     ) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
         );
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.getUser();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -194,12 +199,12 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         }
         this.provider_services.updateUserbProfile(postdata, this.userId)
           .subscribe(data => {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_LANGUAGE_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_LANGUAGE_SAVED, { 'panelClass': 'snackbarnormal' });
             this.disableButton = false;
             this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
             },
             error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
           );
       }

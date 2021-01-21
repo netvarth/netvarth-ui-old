@@ -9,6 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProviderUserBprofileSearchSocialMediaComponent } from './providerUserBprofileSearchSocialMedia/providerUserBprofileSearchSocialMedia.component';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-usermedia',
     templateUrl: './media.component.html',
@@ -85,18 +88,21 @@ export class MediaComponent implements OnInit, OnDestroy {
         private activated_route: ActivatedRoute,
         private routerobj: Router,
         public shared_functions: SharedFunctions,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor
     ) {
         this.activated_route.params.subscribe(params => {
             this.userId = params.id;
         }
         );
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
         this.loading = true;
         this.getUser();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         // this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
         this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
@@ -270,7 +276,7 @@ export class MediaComponent implements OnInit, OnDestroy {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
         const filteredList = this.social_arr.filter(social => social.Sockey === media);
@@ -298,12 +304,12 @@ export class MediaComponent implements OnInit, OnDestroy {
         this.provider_services.updateUserSocialMediaLinks(submit_data, this.userId)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIALMEDIA_SAVED, { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIALMEDIA_SAVED, { 'panelclass': 'snackbarerror' });
                     this.showSave = [];
                     this.getBusinessProfile();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

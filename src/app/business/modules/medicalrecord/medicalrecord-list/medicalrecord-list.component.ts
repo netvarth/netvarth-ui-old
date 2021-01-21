@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-medicalrecord-list',
@@ -25,10 +26,11 @@ export class MedicalrecordListComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public dateformat: DateFormatPipe,
     private router: Router,
-    private sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
     private location: Location) {
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
 
@@ -46,7 +48,7 @@ export class MedicalrecordListComponent implements OnInit {
           console.log(this.patientDetails);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   getPatientMedicalRecords() {
@@ -57,7 +59,7 @@ export class MedicalrecordListComponent implements OnInit {
         this.loading = false;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
   back() {
@@ -71,9 +73,9 @@ export class MedicalrecordListComponent implements OnInit {
     return serviceName;
 
   }
-  getBookingName(bookingType) {
-    let bkgType = '';
-    switch (bookingType) {
+  getBookingName(mr) {
+   let bkgType = '';
+    switch (mr.bookingType) {
       case 'FOLLOWUP': {
         bkgType = 'Follow up';
         break;
@@ -83,7 +85,12 @@ export class MedicalrecordListComponent implements OnInit {
         break;
       }
       case 'TOKEN': {
-        bkgType = 'Check-ins/Tokens';
+        if(mr.showTokenId) {
+          bkgType = 'Token';
+        } else{
+          bkgType = 'Check-in';
+        }
+        bkgType;
         break;
       }
     }

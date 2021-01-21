@@ -5,7 +5,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-general',
@@ -38,13 +39,14 @@ export class GeneralComponent implements OnInit {
   constructor(
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
-    private shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
     private router: Router,
-    private medicalrecordService: MedicalrecordService
+    private medicalrecordService: MedicalrecordService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
   ) {
 
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerDetails = this.medicalrecordService.getPatientDetails();
     if (this.customerDetails.memberJaldeeId) {
       this.display_PatientId = this.customerDetails.memberJaldeeId;
@@ -94,11 +96,11 @@ export class GeneralComponent implements OnInit {
 
       this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
         this.mrId = res;
-        this.sharedfunctionObj.openSnackBar('Medical Record Created Successfully');
+        this.snackbarService.openSnackBar('Medical Record Created Successfully');
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     } else {
       this.updateMrwithClinicalNotes(payload, this.mrId);
@@ -111,11 +113,11 @@ export class GeneralComponent implements OnInit {
   updateMrwithClinicalNotes(payload, mrId) {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
-        this.shared_functions.openSnackBar(this.displayTitle + ' updated successfully');
+        this.snackbarService.openSnackBar(this.displayTitle + ' updated successfully');
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
 
 

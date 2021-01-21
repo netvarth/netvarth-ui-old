@@ -7,6 +7,10 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { ConfirmBoxComponent } from '../../../../../../ynw_provider/shared/component/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -85,8 +89,12 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
     public dialog: MatDialog,
-    private provider_servicesobj: ProviderServices) {
-    this.emptyMsg = this.shared_functions.getProjectMesssages('ITEM_LISTEMPTY');
+    private provider_servicesobj: ProviderServices,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ITEM_LISTEMPTY');
     this.activated_route.queryParams.subscribe(
       (qParams) => {
       this.action = qParams.action;
@@ -116,11 +124,11 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     this.getitems().then(
       (data) => {
         console.log(this.cataId);
@@ -129,7 +137,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           this.heading = 'Edit'; 
           this.getCatalog();
         } else {
-          this.addCatalogItems = this.shared_functions.getitemfromLocalStorage('selecteditems');
+          this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
           if (this.addCatalogItems && this.addCatalogItems.length > 0) {
             this.selectedCount = this.addCatalogItems.length;
            for (const itm of this.catalogItem) {
@@ -186,7 +194,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             resolve(data);
           },
           error => {
-            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
@@ -236,8 +244,6 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     console.log(this.itemsforadd[index].selected);
   }
   selectedItems() {
-    console.log(this.action);
-    console.log(this.cataId);
     this.api_loading = true;
     this.catalogItemsSelected = [];
     for (let ia = 0; ia < this.catalogItem.length; ia++) {
@@ -245,17 +251,25 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       this.selecteditemfordelete = [];
       this.selecteditemforupdate = [];
       this.selecteditemforadd = [];
+      let minqty = '';
+      let maxqty = '';
       console.log('minquty_' + this.catalogItem[ia].itemId + '');
       if (this.catalogItem[ia].selected === true) {
+        console.log(this.catalogItem[ia]);
+        minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+        maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+        if (minqty > maxqty) {
+          this.snackbarService.openSnackBar('' + this.catalogItem[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+          return;
+        }
        this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
        this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
        this.seletedCatalogItems1.item = this.catalogItem[ia];
        this.catalogItemsSelected.push(this.seletedCatalogItems1);
       }
     }
-    console.log(this.catalogItemsSelected);
-    console.log(this.addCatalogItems);
-        this.shared_functions.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+        this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         const navigationExtras: NavigationExtras = {
           queryParams: { action: 'add',
                           isFrom: true }
@@ -284,7 +298,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
             this.api_loading = false;
           }, error => {
             this.api_loading = false;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
             );
       }
@@ -336,7 +350,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
       (data) => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar('Items addeded');
+        this.snackbarService.openSnackBar('Items addeded');
         const navigationExtras: NavigationExtras = {
         queryParams: { action: 'edit',
                         isFrom: true }
@@ -345,7 +359,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
       }, error => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         );
   }
@@ -362,7 +376,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         this.api_loading = false;
       }, error => {
         this.api_loading = false;
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
      );
   }
@@ -385,8 +399,18 @@ selectedaddItems() {
   for (let ia = 0; ia < this.itemsforadd.length; ia++) {
     this.seletedCatalogItemsadd = {};
     this.selecteditemforadd = [];
+    let minqty = '';
+    let maxqty = '';
     console.log('minquty_' + this.itemsforadd[ia].itemId + '');
     if (this.itemsforadd[ia].selected === true) {
+      console.log(this.itemsforadd[ia]);
+        minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
+        maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
+        if (minqty > maxqty) {
+          this.snackbarService.openSnackBar('' + this.itemsforadd[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+          return;
+        }
      this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
      this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
      this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
@@ -398,5 +422,7 @@ selectedaddItems() {
   }
     }
 
-
+    isNumber(evt) {
+      return this.shared_functions.isNumber(evt);
+  }
 }

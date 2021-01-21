@@ -25,7 +25,7 @@ export const Messages = {
   'ITEM_LISTEMPTY': 'No items found',
   'ITEM_IMGREMOVED': 'Image removed successfully',
   'ITEMIMAGE_UPLOADED': 'Image uploaded successfully',
-  //Catalog
+  // Catalog
   'CATALOG_CREATED': 'Catalog added successfully',
   'CATALOG_UPDATED': 'Catalog updated successfully',
   // Bill Discount
@@ -137,6 +137,7 @@ export const Messages = {
   'WAITLIST_QUEUE_UPDATED': 'Queue updated successfully',
   'WAITLIST_QUEUE_SELECTTIME': 'Please select the start and end time',
   'WAITLIST_QUEUE_STIMEERROR': 'Today\'s schedule ends at 11:59 PM. Please create a separate schedule for the next day, starting at 12 AM.',
+  'WAITLIST_WINDOW_STIMEERROR': 'Today\'s timewindow ends at 11:59 PM. Please create a separate timewindow.',
   'WAITLIST_QUEUE_CHG_STAT': '[qname] [status] successfully',
   'WAITLIST_SERVICE_CHG_STAT': '[sername] [status] successfully',
   'NEW_SERVICE_TOOLTIP': 'Please add this service to the relevant Queues by editing it',
@@ -268,6 +269,8 @@ export const Messages = {
   'CLOUDICON_TOOPTIP': 'Online Check-in',
   'ITEMNAME_TOOLTIP': 'Click here to edit item',
   'QUEUENAME_TOOLTIP': 'Click here to edit the Queue',
+  'SCHEDULENAME_TOOLTIP': 'Click here to edit the Schedule',
+
   'ADD_BUTTON': 'Click to create an instant queue',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
@@ -1479,7 +1482,7 @@ export const Messages = {
   'CHOOSE_LOCATION': 'Choose a different location to view it\'s dashboard.',
   'ENBALE_QUEUES': 'Make sure to set the respective working hours and services too for this location.',
   'PLACE_ORDER_CLICK_HERE': 'To place your order, Click here',
-  'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services for this location',
+  'NO_SERVICE_IN_DEPARTMENT': 'The selected department doesn\'t contain any active services',
   'CHECK_DET_NO_CUS_NOTES_FOUND_CAP': 'No [customer] note found',
 
   // Home Service

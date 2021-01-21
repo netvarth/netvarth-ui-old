@@ -21,6 +21,10 @@ import { interval as observableInterval, Subscription } from 'rxjs';
 import { CheckinActionsComponent } from './checkin-actions/checkin-actions.component';
 import { VoicecallDetailsComponent } from './voicecall-details/voicecall-details.component';
 import Speech from 'speak-tts';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -324,6 +328,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerIdTooltip = '';
   endminday;
   maxday = new Date();
+  endmaxday = new Date();
   allLabels: any = [];
   voicedialogRef: any;
   addCustomerTooltip = '';
@@ -336,28 +341,32 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     public dateformat: DateFormatPipe,
     private dialog: MatDialog,
     public activateroute: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService) {
     this.onResize();
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-    this.arrived_label = this.shared_functions.getTerminologyTerm('arrived');
-    this.arrived_upper = this.shared_functions.firstToUpper(this.arrived_label);
-    this.checkedin_label = this.shared_functions.getTerminologyTerm('waitlisted');
-    this.checkedin_upper = this.shared_functions.firstToUpper(this.checkedin_label);
-    this.done_label = this.shared_functions.getTerminologyTerm('done');
-    this.done_upper = this.shared_functions.firstToUpper(this.done_label);
-    this.started_label = this.shared_functions.getTerminologyTerm('started');
-    this.started_upper = this.shared_functions.firstToUpper(this.started_label);
-    this.start_label = this.shared_functions.getTerminologyTerm('start');
-    this.cancelled_label = this.shared_functions.getTerminologyTerm('cancelled');
-    this.cancelled_upper = this.shared_functions.firstToUpper(this.cancelled_label);
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.no_future_checkins = this.shared_functions.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
-    this.no_today_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
-    this.no_started_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
-    this.no_completed_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
-    this.no_cancelled_checkin_msg = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
-    this.no_history = this.shared_functions.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+    this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');
+    this.arrived_upper = this.wordProcessor.firstToUpper(this.arrived_label);
+    this.checkedin_label = this.wordProcessor.getTerminologyTerm('waitlisted');
+    this.checkedin_upper = this.wordProcessor.firstToUpper(this.checkedin_label);
+    this.done_label = this.wordProcessor.getTerminologyTerm('done');
+    this.done_upper = this.wordProcessor.firstToUpper(this.done_label);
+    this.started_label = this.wordProcessor.getTerminologyTerm('started');
+    this.started_upper = this.wordProcessor.firstToUpper(this.started_label);
+    this.start_label = this.wordProcessor.getTerminologyTerm('start');
+    this.cancelled_label = this.wordProcessor.getTerminologyTerm('cancelled');
+    this.cancelled_upper = this.wordProcessor.firstToUpper(this.cancelled_label);
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    this.no_future_checkins = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.FUTURE_NO_CHECKINS);
+    this.no_today_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_TODAY_CHECKIN_MSG);
+    this.no_started_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_STRTED_CHECKIN_MSG);
+    this.no_completed_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_COMPLETED_CHECKIN_MSG);
+    this.no_cancelled_checkin_msg = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_CANCELLED_CHECKIN_MSG);
+    this.no_history = this.wordProcessor.removeTerminologyTerm('waitlist', Messages.NO_HISTORY_MSG);
 
     this.waitlist_status = [
       { name: this.checkedin_upper, value: 'checkedIn' },
@@ -371,6 +380,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     this.statusAction = 'started';
     //   }
     // });
+    if (this.groupService.getitemFromGroupStorage('action')) {
+      this.statusAction = this.groupService.getitemFromGroupStorage('action');
+    }
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -430,29 +442,29 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.pagination.startpageval = this.shared_functions.getitemFromGroupStorage('paginationStart') || 1;
+    this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     // this.breadcrumb_moreoptions = {
     //   'show_learnmore': true, 'scrollKey': 'appointments',
     //   'actions': [{ 'title': 'Help', 'type': 'learnmore' }]
     // };
-    const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (savedtype !== undefined && savedtype !== null) {
       this.time_type = savedtype;
     }
     this.setSystemDate();
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
       this.getTomorrowDate();
     }
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.active_user.adminPrivilege) {
       this.admin = true;
     }
     this.account_type = this.active_user.accountType;
     this.domain = this.active_user.sector;
     this.cust_note_tooltip = Messages.CUST_NOT_TOOLTIP.replace('[customer]', this.customer_label);
-    this.customerIdTooltip = this.customer_label + ' id';
+    this.customerIdTooltip = this.customer_label + ' Id';
     this.addCustomerTooltip = 'Add ' + this.customer_label;
     this._initSpeech();
     this.getDisplayboardCount();
@@ -471,13 +483,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getServiceList();
     }
     this.image_list_popup_temp = [];
-    // const savedtype = this.shared_functions.getitemFromGroupStorage('pdtyp');
+    // const savedtype = this.groupService.getitemFromGroupStorage('pdtyp');
     // if (savedtype !== undefined && savedtype !== null) {
     //   this.time_type = savedtype;
     // }
     // this.getLocationList().then(
     //   () => {
-    //     this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+    //     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     //     // this.router.events
     //     //   .pipe(filter((e: any) => e instanceof RoutesRecognized),
     //     //     pairwise()
@@ -813,7 +825,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         res => {
           this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   getTomorrowDate() {
@@ -821,8 +833,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    if (this.shared_functions.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.shared_functions.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
-      this.filter.futurecheckin_date = new Date(this.shared_functions.getitemFromGroupStorage('futureDate'));
+    if (this.groupService.getitemFromGroupStorage('futureDate') && this.shared_functions.transformToYMDFormat(this.groupService.getitemFromGroupStorage('futureDate')) > this.shared_functions.transformToYMDFormat(servdate)) {
+      this.filter.futurecheckin_date = new Date(this.groupService.getitemFromGroupStorage('futureDate'));
     } else {
       this.filter.futurecheckin_date = moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD');
     }
@@ -874,7 +886,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getDefaultViewQs(allQueues) {
     console.log(allQueues);
-    const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(loggedUser.adminPrivilege);
     if (!loggedUser.adminPrivilege) {
       const userQs = [];
@@ -921,19 +933,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           let selected_view;
           if (source === 'changeLocation') {
           } else {
-            selected_view = _this.shared_functions.getitemFromGroupStorage('selectedView');
+            selected_view = _this.groupService.getitemFromGroupStorage('selectedView');
           }
           if (selected_view) {
             const viewFilter = _this.views.filter(view => view.id === selected_view.id);
             if (viewFilter.length !== 0) {
-              _this.selectedView = _this.shared_functions.getitemFromGroupStorage('selectedView');
+              _this.selectedView = _this.groupService.getitemFromGroupStorage('selectedView');
             } else {
               _this.selectedView = tempView;
-              _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
+              _this.groupService.setitemToGroupStorage('selectedView', _this.selectedView);
             }
           } else {
             _this.selectedView = tempView;
-            _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
+            _this.groupService.setitemToGroupStorage('selectedView', _this.selectedView);
           }
           resolve(_this.selectedView);
         },
@@ -942,7 +954,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
             _this.views.push(_this.users[i]);
           }
           _this.views.push(tempView);
-          _this.shared_functions.setitemToGroupStorage('selectedView', _this.selectedView);
+          _this.groupService.setitemToGroupStorage('selectedView', _this.selectedView);
           resolve(_this.selectedView);
         }
       );
@@ -975,7 +987,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     } else {
-      const loggedUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       console.log(loggedUser);
       if (!loggedUser.adminPrivilege) {
         for (let qIndex = 0; qIndex < queues.length; qIndex++) {
@@ -1009,17 +1021,17 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.time_type === 1) {
       // this.shared_functions.removeitemFromGroupStorage('selQ');
-      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('selQ', this.selQIds);
     } else if (this.time_type === 2) {
       // this.shared_functions.removeitemFromGroupStorage('future_selQ');
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     } else {
       // this.shared_functions.removeitemFromGroupStorage('history_selQ');
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
-  initView(view, source?) {
+  initView(view, source, type?) {
     this.activeQs = [];
     const groupbyQs = this.shared_functions.groupBy(this.getQsFromView(view, this.queues), 'queueState');
     if (groupbyQs['ENABLED'] && groupbyQs['ENABLED'].length > 0) {
@@ -1035,22 +1047,22 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (const q of this.activeQs) {
       qids.push(q.id);
     }
-    if (this.time_type === 2 && this.shared_functions.getitemFromGroupStorage('future_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
-    } else if (this.time_type === 1 && this.shared_functions.getitemFromGroupStorage('selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
+    if (!type && this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+    } else if (!type && this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
     } else {
       if (this.time_type !== 1) {
         this.selQIds = this.getActiveQIdsFromView(view);
-        this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-        this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+        this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+        this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       } else {
         this.selQIds = [];
         // if (activeQ && activeQ.id) {
         //   this.selQIds.push(activeQ.id);
         if (qids && qids.length > 0) {
           this.selQIds = qids;
-          this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+          this.groupService.setitemToGroupStorage('selQ', this.selQIds);
         } else {
           this.loading = false;
         }
@@ -1109,7 +1121,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getLocationList() {
     const self = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
       self.provider_services.getProviderLocations()
         .subscribe(
@@ -1128,7 +1140,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 self.locations.push(loc);
               }
             }
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+            const cookie_location_id = self.groupService.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
             if (cookie_location_id === '') {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
@@ -1178,10 +1190,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   clearQIdsFromStorage() {
-    this.shared_functions.removeitemFromGroupStorage('history_selQ');
-    this.shared_functions.removeitemFromGroupStorage('future_selQ');
-    this.shared_functions.removeitemFromGroupStorage('selQ');
-    this.shared_functions.removeitemFromGroupStorage('selectedView');
+    this.groupService.removeitemFromGroupStorage('history_selQ');
+    this.groupService.removeitemFromGroupStorage('future_selQ');
+    this.groupService.removeitemFromGroupStorage('selQ');
+    this.groupService.removeitemFromGroupStorage('selectedView');
     this.resetPaginationData();
   }
   onChangeLocationSelect(event) {
@@ -1214,9 +1226,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selected_location = location;
     const _this = this;
     if (_this.selected_location) {
-      _this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+      _this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    _this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    _this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     return new Promise(function (resolve, reject) {
       _this.getQs('all').then(
         (queues: any) => {
@@ -1230,11 +1242,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   handleViewSel(view) {
+    const tempUser = {};
+    tempUser['firstName'] = 'All';
+    tempUser['id'] = 'all';
+    this.selectedUser = tempUser;
     this.qloading = true;
-    this.shared_functions.setitemToGroupStorage('selectedView', view);
+    this.groupService.setitemToGroupStorage('selectedView', view);
     this.selectedView = view;
     if (!view.userType) {
-      this.initView(this.selectedView, 'reloadAPIs');
+      this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
       this.handleUserSelection(view);
     }
@@ -1257,18 +1273,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resetCheckList();
     let chkSrc = true;
     if (source === 'changeLocation' && this.time_type === 3) {
-      const hisPage = this.shared_functions.getitemFromGroupStorage('hP');
-      const hFilter = this.shared_functions.getitemFromGroupStorage('hPFil');
+      const hisPage = this.groupService.getitemFromGroupStorage('hP');
+      const hFilter = this.groupService.getitemFromGroupStorage('hPFil');
       if (hisPage) {
         this.filter = hFilter;
         this.pagination.startpageval = hisPage;
-        this.shared_functions.removeitemFromGroupStorage('hP');
-        this.shared_functions.removeitemFromGroupStorage('hPFil');
+        this.groupService.removeitemFromGroupStorage('hP');
+        this.groupService.removeitemFromGroupStorage('hPFil');
         chkSrc = false;
       }
     } else {
-      this.shared_functions.removeitemFromGroupStorage('hP');
-      this.shared_functions.removeitemFromGroupStorage('hPFil');
+      this.groupService.removeitemFromGroupStorage('hP');
+      this.groupService.removeitemFromGroupStorage('hPFil');
     }
     if (chkSrc) {
       if (source !== 'doSearch' && source !== 'reloadAPIs' && source !== 'changeWaitlistStatusApi') {
@@ -1288,7 +1304,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getCounts();
   }
   getStatusLabel(status) {
-    const label_status = this.shared_functions.firstToUpper(this.shared_functions.getTerminologyTerm(status));
+    const label_status = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm(status));
     return label_status;
   }
   selectAllStarted() {
@@ -1363,16 +1379,16 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const _this = this;
     this.loading = true;
     const Mfilter = this.setFilterForApi();
-    if (this.shared_functions.getitemFromGroupStorage('selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('selQ');
+    if (this.groupService.getitemFromGroupStorage('selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
     } else {
       this.selQIds = this.getActiveQIdsFromView(this.selectedView);
     }
     if (this.selQIds && this.selQIds.length > 0) {
       Mfilter['queue-eq'] = this.selQIds;
-      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
-      // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-      // this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('selQ', this.selQIds);
+      // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+      // this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     }
     // this.resetPaginationData();
     // this.pagination.startpageval = 1;
@@ -1420,10 +1436,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.futurecheckin_date === null) {
       this.getTomorrowDate();
     }
-    // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
+    // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     // const date = this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date);
-    if (this.shared_functions.getitemFromGroupStorage('future_selQ')) {
-      this.selQIds = this.shared_functions.getitemFromGroupStorage('future_selQ');
+    if (this.groupService.getitemFromGroupStorage('future_selQ')) {
+      this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
     } else {
 
     }
@@ -1431,9 +1447,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     const Mfilter = this.setFilterForApi();
     if (this.selQIds && this.selQIds.length > 0) {
       Mfilter['queue-eq'] = this.selQIds;
-      // this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
-      // this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+      // this.groupService.setitemToGroupStorage('selQ', this.selQIds);
+      // this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     }
     const promise = this.getFutureWLCount(Mfilter);
     promise.then(
@@ -1570,15 +1586,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.appt_list = this.check_in_filtered_list = [];
     this.time_type = time_type;
-    this.shared_functions.setitemToGroupStorage('pdtyp', this.time_type);
+    this.groupService.setitemToGroupStorage('pdtyp', this.time_type);
     if (time_type !== 3) {
       this.resetPaginationData();
     } else {
-      const selectedView = this.shared_functions.getitemFromGroupStorage('selectedView');
+      const selectedView = this.groupService.getitemFromGroupStorage('selectedView');
       this.selQIds = this.getActiveQIdsFromView(selectedView);
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
     }
-    const stype = this.shared_functions.getitemFromGroupStorage('pdStyp');
+    const stype = this.groupService.getitemFromGroupStorage('pdStyp');
     if (stype) {
       this.status_type = stype;
     } else {
@@ -1634,7 +1650,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.completed_count = this.today_completed_count;
   }
   getTodayWLCount(Mfilter = null) {
-    const queueid = this.shared_functions.getitemFromGroupStorage('selQ');
+    const queueid = this.groupService.getitemFromGroupStorage('selQ');
     let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
@@ -1662,7 +1678,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getFutureWLCount(Mfilter = null) {
     // let no_filter = false;
-    const queueid = this.shared_functions.getitemFromGroupStorage('future_selQ');
+    const queueid = this.groupService.getitemFromGroupStorage('future_selQ');
     if (!Mfilter) {
       Mfilter = {};
       if (this.selected_location && this.selected_location.id) {
@@ -1672,7 +1688,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         Mfilter['queue-eq'] = queueid;
       } else {
         Mfilter['queue-eq'] = this.selQIds;
-        this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+        this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
       }
       // no_filter = true;
     }
@@ -1691,7 +1707,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getHistoryWLCount(Mfilter = null) {
-    // const queueid = this.shared_functions.getitemFromGroupStorage('history_selQ');
+    // const queueid = this.groupService.getitemFromGroupStorage('history_selQ');
     // let no_filter = false;
     if (!Mfilter) {
       Mfilter = {};
@@ -1820,14 +1836,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   resetPaginationData() {
     this.filter.page = 1;
     this.pagination.startpageval = 1;
-    this.shared_functions.removeitemFromGroupStorage('hP');
-    this.shared_functions.removeitemFromGroupStorage('hPFil');
+    this.groupService.removeitemFromGroupStorage('hP');
+    this.groupService.removeitemFromGroupStorage('hPFil');
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.shared_functions.setitemToGroupStorage('hP', pg);
-    this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
+    this.groupService.setitemToGroupStorage('hP', pg);
+    this.groupService.setitemToGroupStorage('hPFil', this.filter);
     this.doSearch();
   }
   clearFilter() {
@@ -1942,15 +1958,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   api_filter['date-eq'] = this.dateformat.transformTofilterDate(this.filter.futurecheckin_date);
       // }
     }
+    if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
+      api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
+    }
     if (this.time_type === 3) {
       if (this.filterQ.length > 0 && this.filter.queue !== 'all') {
         api_filter['queue-eq'] = this.filterQ.toString();
       }
       if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
         api_filter['location-eq'] = this.filterLocation.toString();
-      }
-      if (this.paymentStatuses.length > 0 && this.filter.payment_status !== 'all') {
-        api_filter['billPaymentStatus-eq'] = this.paymentStatuses.toString();
       }
       if (this.ageGroups.length > 0 && this.filter.age !== 'all') {
         const kids = moment(new Date()).add(-12, 'year').format('YYYY-MM-DD');
@@ -1993,16 +2009,21 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   setPaginationFilter(api_filter) {
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
-    this.shared_functions.setitemToGroupStorage('paginationStart', this.pagination.startpageval);
+    this.groupService.setitemToGroupStorage('paginationStart', this.pagination.startpageval);
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
   doSearch() {
     // this.filter.waitlist_status !== 'all'
     this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = new Date();
+    }
     this.labelSelection();
-    // this.shared_functions.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
-    // this.shared_functions.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
+    // this.groupService.setitemToGroupStorage('futureDate', this.dateformat.transformTofilterDate(this.filter.futurecheckin_date));
+    // this.groupService.setitemToGroupStorage('futureDate', this.shared_functions.transformToYMDFormat(this.filter.futurecheckin_date));
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' ||
       this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== '') {
@@ -2090,6 +2111,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
+      } else {
+        return label;
       }
     }
   }
@@ -2193,7 +2216,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loadApiSwitch('');
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   deleteLabel(label, checkinId) {
@@ -2201,7 +2224,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.loadApiSwitch('');
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
 
@@ -2248,7 +2271,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   checkinClicked(source) {
     if (this.queues.length === 0) {
-      this.shared_functions.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('No active queues', { 'panelClass': 'snackbarerror' });
     } else {
       let deptId;
       let userId;
@@ -2283,7 +2306,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showAdjustDelay() {
     if (this.queues.length === 0) {
-      this.shared_functions.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Delay can be applied only for active queues', { 'panelClass': 'snackbarerror' });
       return false;
     } else {
       this.router.navigate(['provider', 'check-ins', 'adjustdelay']);
@@ -2332,8 +2355,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   goCheckinDetail(checkin) {
     if (this.time_type === 3) {
-      this.shared_functions.setitemToGroupStorage('hP', this.filter.page || 1);
-      this.shared_functions.setitemToGroupStorage('hPFil', this.filter);
+      this.groupService.setitemToGroupStorage('hP', this.filter.page || 1);
+      this.groupService.setitemToGroupStorage('hPFil', this.filter);
     }
     this.router.navigate(['provider', 'check-ins', checkin.ynwUuid], { queryParams: { timetype: this.time_type } });
   }
@@ -2349,7 +2372,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.router.navigate(['provider', 'bill', checkin_details.ynwUuid]);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -2417,7 +2440,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     },
       error => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   locateCustomerMsg(details) {
@@ -2484,7 +2507,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //           const pdata = { 'ttype': 'updateuserdetails' };
   //           this.shared_functions.sendMessage(pdata);
   //           const statusCode = this.provider_shared_functions.getProfileStatusCode(bProfile);
-  //           this.shared_functions.setitemToGroupStorage('isCheckin', statusCode);
+  //           this.groupService.setitemToGroupStorage('isCheckin', statusCode);
   //           // this.reloadAPIs();
   //         }
   //       },
@@ -2536,7 +2559,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(checkin);
     if (checkin.showToken) {
       if (!checkin.callingStatus) {
-        const speechSupported = this.shared_functions.getitemfromLocalStorage('speech');
+        const speechSupported = this.lStorageService.getitemfromLocalStorage('speech');
         if (speechSupported) {
           this.playSound(checkin, 0);
         }
@@ -2628,7 +2651,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qrCodegeneration(checkinlist);
     const fname = (checkinlist.waitlistingFor[0].firstName) ? checkinlist.waitlistingFor[0].firstName : '';
     const lname = (checkinlist.waitlistingFor[0].lastName) ? checkinlist.waitlistingFor[0].lastName : '';
-    const bprof = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     setTimeout(() => {
       const printContent = document.getElementById('print-section');
@@ -2689,10 +2712,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     // this.provider_services.smsCheckin(appt.ynwUuid).subscribe(
     //   () => {
-    //     this.shared_functions.openSnackBar('Check-in details sent successfully');
+    //     this.snackbarService.openSnackBar('Check-in details sent successfully');
     //   },
     //   error => {
-    //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //   }
     // );
   }
@@ -2713,10 +2736,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   //   // this.provider_services.emailCheckin(appt.ynwUuid).subscribe(
   //   //   () => {
-  //   //     this.shared_functions.openSnackBar('Check-in details mailed successfully');
+  //   //     this.snackbarService.openSnackBar('Check-in details mailed successfully');
   //   //   },
   //   //   error => {
-  //   //     this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //   //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //   //   }
   //   // );
   // }
@@ -2814,20 +2837,20 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getProviders() {
     const _this = this;
-    return new Promise(function (resolve) {
+    return new Promise<void>(function (resolve) {
       const apiFilter = {};
       apiFilter['userType-eq'] = 'PROVIDER';
       // let filter = 'userType-neq :"assistant"'
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
-        // const tempUser = {};
-        // tempUser['firstName'] = 'All';
-        // tempUser['id'] = 'all';
+        const tempUser = {};
+        tempUser['firstName'] = 'All';
+        tempUser['id'] = 'all';
         // _this.users.push(tempUser);
-        if (_this.shared_functions.getitemFromGroupStorage('selectedUser')) {
-          _this.selectedUser = _this.shared_functions.getitemFromGroupStorage('selectedUser');
+        if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
+          _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
         } else {
-          // _this.selectedUser = tempUser;
+          _this.selectedUser = tempUser;
         }
         resolve();
       },
@@ -2840,7 +2863,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   handleUserSelection(user) {
     this.qloading = true;
     this.resetFields();
-    this.shared_functions.setitemToGroupStorage('selectedUser', user);
+    this.groupService.setitemToGroupStorage('selectedUser', user);
     this.selectedUser = user;
     this.getQsByProvider(user);
   }
@@ -2887,11 +2910,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qloading = false;
     }, 1000);
     if (this.time_type === 1) {
-      this.shared_functions.setitemToGroupStorage('selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('selQ', this.selQIds);
     } else if (this.time_type === 2) {
-      this.shared_functions.setitemToGroupStorage('future_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('future_selQ', this.selQIds);
     } else {
-      this.shared_functions.setitemToGroupStorage('history_selQ', this.selQIds);
+      this.groupService.setitemToGroupStorage('history_selQ', this.selQIds);
     }
     this.loadApiSwitch('reloadAPIs');
   }
@@ -2945,7 +2968,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return image ? images.indexOf(image) : -1;
   }
   getGlobalSettings() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getGlobalSettings().subscribe(
         (data: any) => {
           this.checkinStatus = data.waitlist;
@@ -2954,7 +2977,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -2969,7 +2992,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getAllServices() {
     const filter1 = { 'serviceType-neq': 'donationService' };
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getServicesList(filter1)
         .subscribe(
           (data: any) => {
@@ -3087,6 +3110,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusClick(status) {
     this.allSelection = false;
     this.statusAction = status;
+    this.groupService.setitemToGroupStorage('action', this.statusAction);
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
     this.resetCheckList();
@@ -3138,7 +3162,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   _initSpeech() {
     this.speech = new Speech();
     if (this.speech.hasBrowserSupport()) { // returns a boolean
-      this.shared_functions.setitemonLocalStorage('speech', true);
+      this.lStorageService.setitemonLocalStorage('speech', true);
       this.speech
         .init({
           volume: 0.5,

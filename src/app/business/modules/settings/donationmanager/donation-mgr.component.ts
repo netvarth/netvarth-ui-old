@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-donationmanager',
@@ -27,12 +29,14 @@ export class DonationMgrComponent implements OnInit {
   constructor(private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private provider_services: ProviderServices) { }
+    private provider_services: ProviderServices,
+    private groupService:GroupStorageService,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit() {
     this.getDonationStatus();
     this.getCauseCount();
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
   }
@@ -53,11 +57,11 @@ export class DonationMgrComponent implements OnInit {
     this.provider_services.setDonations(is_Donation)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getDonationStatus();
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getDonationStatus();
         }
       );

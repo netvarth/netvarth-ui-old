@@ -4,6 +4,10 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { SessionStorageService } from '../../../shared/services/session-storage.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-provider-settings',
@@ -47,14 +51,18 @@ export class ProvidertaxSettingsComponent implements OnInit {
 
     constructor(private shared_functions: SharedFunctions,
         private routerobj: Router,
-        private provider_services: ProviderServices) {
+        private provider_services: ProviderServices,
+        private sessionStorageService: SessionStorageService,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor) {
 
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        this.isCheckin = this.shared_functions.getitemfromSessionStorage('isCheckin');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.isCheckin = this.sessionStorageService.getitemfromSessionStorage('isCheckin');
         this.resetApi();
         this.getTaxpercentage();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
@@ -88,18 +96,18 @@ export class ProvidertaxSettingsComponent implements OnInit {
         if (!floatpattern.test(this.taxpercentage)) {
             this.errorExist = true;
             if (setmsgs) {
-                this.showError['taxpercentage'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_TAXPER') };
+                this.showError['taxpercentage'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_TAXPER') };
             }
         } else if (this.taxpercentage < 0 || this.taxpercentage > 100) {
             this.errorExist = true;
             if (setmsgs) {
-                this.showError['taxpercentage'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_TAXPER') };
+                this.showError['taxpercentage'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_TAXPER') };
             }
         }
         if (blankpattern.test(this.gstnumber)) {
             this.errorExist = true;
             if (setmsgs) {
-                this.showError['gstnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_GSTNUM') };
+                this.showError['gstnumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_GSTNUM') };
             }
         }
         if (!setmsgs) {
@@ -116,12 +124,12 @@ export class ProvidertaxSettingsComponent implements OnInit {
             };
             this.provider_services.setTaxpercentage(postData)
                 .subscribe(() => {
-                    this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('PAYSETTING_SAV_TAXPER'));
                     this.showEditSection = false;
                     this.getTaxpercentage();
                 },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.showEditSection = true;
                     });
         }
@@ -165,7 +173,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
                     this.getTaxpercentage();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

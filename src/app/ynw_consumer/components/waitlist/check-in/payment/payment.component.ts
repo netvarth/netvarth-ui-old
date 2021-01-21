@@ -9,6 +9,9 @@ import { Razorpaymodel } from '../../../../../shared/components/razorpay/razorpa
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
 import { RazorpayService } from '../../../../../shared/services/razorpay.service';
 import { WindowRefService } from '../../../../../shared/services/windowRef.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-consumer-payment',
@@ -48,6 +51,9 @@ export class ConsumerPaymentComponent implements OnInit {
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
         private shared_services: SharedServices,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
@@ -109,7 +115,7 @@ export class ConsumerPaymentComponent implements OnInit {
                     'purpose': 'prePayment'
                 };
                 if (this.pid) {
-                    this.shared_functions.setitemonLocalStorage('returntyp', 'consumer');
+                    this.lStorageService.setitemonLocalStorage('returntyp', 'consumer');
                     this.getPaymentStatus(this.pid);
                 }
             },
@@ -118,27 +124,27 @@ export class ConsumerPaymentComponent implements OnInit {
         );
     }
     getPaymentStatus(pid) {
-        this.shared_functions.removeitemfromLocalStorage('acid');
-        this.shared_functions.removeitemfromLocalStorage('uuid');
+        this.lStorageService.removeitemfromLocalStorage('acid');
+        this.lStorageService.removeitemfromLocalStorage('uuid');
         this.shared_services.getPaymentStatus('consumer', pid)
             .subscribe(
                 data => {
                     this.status = data;
                     this.status = this.status.toLowerCase();
                     if (this.status === 'success') {
-                        this.shared_functions.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
+                        this.snackbarService.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
                         if (this.activeWt.service.livetrack) {
                             this.router.navigate(['consumer', 'checkin', 'track']);
                         } else {
                             this.router.navigate(['consumer']);
                         }
                     } else {
-                        this.shared_functions.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
                         this.router.navigate(['consumer']);
                     }
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         /*this.user_type = 'consumer';
@@ -152,7 +158,7 @@ export class ConsumerPaymentComponent implements OnInit {
         this.makeFailedPayment(paymentWay);
     }
     goBack() {
-        this.router.navigate(['/']);
+        this.router.navigate(['/consumer']);
     }
     paytmPayment() {
         let paymentWay;
@@ -161,9 +167,9 @@ export class ConsumerPaymentComponent implements OnInit {
     }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails.paymentMode = paymentMode;
-        this.shared_functions.setitemonLocalStorage('uuid', this.uuid);
-        this.shared_functions.setitemonLocalStorage('acid', this.accountId);
-        this.shared_functions.setitemonLocalStorage('p_src', 'c_c');
+        this.lStorageService.setitemonLocalStorage('uuid', this.uuid);
+        this.lStorageService.setitemonLocalStorage('acid', this.accountId);
+        this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
         this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
@@ -173,7 +179,7 @@ export class ConsumerPaymentComponent implements OnInit {
                 } else {
                     if (pData['response']) {
                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                         setTimeout(() => {
                             if (paymentMode === 'DC') {
                                 this.document.getElementById('payuform').submit();
@@ -182,12 +188,12 @@ export class ConsumerPaymentComponent implements OnInit {
                             }
                         }, 2000);
                     } else {
-                        this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                     }
                 }
             },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     paywithRazorpay(pData: any) {

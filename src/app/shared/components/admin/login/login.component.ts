@@ -7,6 +7,8 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { projectConstants } from '../../../../app.component';
 import { ProviderDataStorageService } from '../../../../ynw_provider/services/provider-datastorage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,6 +37,8 @@ export class AdminLoginComponent implements OnInit {
     public activaterouterobj: ActivatedRoute,
     private provider_dataStorage: ProviderDataStorageService,
     public router: Router, private activated_route: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService
   ) {
     this.activaterouterobj.paramMap
       .subscribe(params => {
@@ -72,7 +76,7 @@ export class AdminLoginComponent implements OnInit {
       .then(
         () => {
           const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-          this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
            this.provider_dataStorage.setWeightageArray([]);
           localStorage.setItem('popupShown', 'false');
           this.api_loading = false;
@@ -82,7 +86,7 @@ export class AdminLoginComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY_SMALL);
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.api_loading = false;
         }
       );

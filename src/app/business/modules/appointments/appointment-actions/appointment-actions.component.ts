@@ -13,6 +13,11 @@ import { LocateCustomerComponent } from '../../check-ins/locate-customer/locate-
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -63,6 +68,7 @@ export class AppointmentActionsComponent implements OnInit {
     server_date;
     dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     loading = false;
     apptDate = '';
     domain;
@@ -76,9 +82,13 @@ export class AppointmentActionsComponent implements OnInit {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
         private provider_shared_functions: ProviderSharedFuctions, public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
-        this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
         this.setMinMaxDate();
@@ -92,11 +102,11 @@ export class AppointmentActionsComponent implements OnInit {
             this.showMsg = true;
             this.apiloading = false;
         }
-        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.subdomain = user.subSector;
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     setData() {
         this.holdselectedTime = this.appt.appmtTime;
@@ -113,7 +123,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     printAppt() {
         this.dialogRef.close();
-        const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+        const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
         let bname = '';
         if (bdetails) {
             bname = bdetails.bn || '';
@@ -233,7 +243,7 @@ export class AppointmentActionsComponent implements OnInit {
             });
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     locateCustomerMsg(details) {
@@ -259,7 +269,7 @@ export class AppointmentActionsComponent implements OnInit {
                     this.dialogRef.close();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -359,7 +369,7 @@ export class AppointmentActionsComponent implements OnInit {
             this.dialogRef.close('reload');
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     addLabelvalue(source, label?) {
@@ -399,7 +409,7 @@ export class AppointmentActionsComponent implements OnInit {
         //     this.dialogRef.close('reload');
         // },
         //     error => {
-        //         this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     });
         const ids = [];
         if (this.data.multiSelection) {
@@ -418,7 +428,7 @@ export class AppointmentActionsComponent implements OnInit {
             this.dialogRef.close('reload');
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     labels() {
@@ -496,11 +506,11 @@ export class AppointmentActionsComponent implements OnInit {
         this.provider_services.rescheduleProviderAppointment(data)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Appointment rescheduled to ' + this.apptDate);
+                    this.snackbarService.openSnackBar('Appointment rescheduled to ' + this.apptDate);
                     this.dialogRef.close('reload');
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     timeSelected(slot) {
@@ -686,7 +696,7 @@ export class AppointmentActionsComponent implements OnInit {
                     this.router.navigate(['provider', 'appointments']);
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {

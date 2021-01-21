@@ -26,12 +26,18 @@
               <table class="book-details-sub chkntoknappt-details">
                 <tbody>
                   <tr *ngIf="!statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
+                    <td width="48%" align="right">
+                      <!-- Name of the {{getTerminologyTerm('provider') | capitalizeFirst}} -->
+                      Provider
+                    </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.providerAccount?.businessName}}</td>
                   </tr>
                   <tr *ngIf="statusInfo.provider">
-                    <td width="48%" align="right">Name of the {{getTerminologyTerm('provider') | capitalizeFirst}}</td>
+                    <td width="48%" align="right">
+                      <!-- Name of the {{getTerminologyTerm('provider') | capitalizeFirst}} -->
+                      Provider
+                    </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>{{statusInfo.provider.businessName}},
                       {{statusInfo.providerAccount?.businessName}}</td>
@@ -136,11 +142,12 @@
                       {{statusInfo.queue.queueEndTime}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
-                    <td width="48%" align="right">Time window </td>
+                    <td width="48%" align="right" *ngIf="statusInfo.storePickup">Store pickup Time</td>
+                    <td width="48%" align="right" *ngIf="statusInfo.homeDelivery">Delivery Time</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.orderDate | date: newDateFormat }},
-                      {{statusInfo.orderTimeWindow.timeSlots[0].sTime}} -
-                      {{statusInfo.orderTimeWindow.timeSlots[0].eTime}}</td>
+                      {{statusInfo.timeSlot.sTime}} -
+                      {{statusInfo.timeSlot.eTime}}</td>
                   </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
@@ -202,32 +209,20 @@
                 </tbody>
               </table>
               <div class="txt-align-center" *ngIf="statusInfo.waitlistStatus">
-                <span class="cancelled" *ngIf="statusInfo.waitlistStatus === 'cancelled'">
-                  <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
-                  <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
-                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
-                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
-                </span>
-                <span class="green" *ngIf="statusInfo.waitlistStatus !== 'cancelled'">
-                  <ng-container *ngIf="statusInfo.showToken"> Token</ng-container>
-                  <ng-container *ngIf="!statusInfo.showToken"> Check-in</ng-container>
-                  {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
+                <span [class.cancelled]="statusInfo.waitlistStatus === 'cancelled'"
+                  [class.green]="statusInfo.waitlistStatus !== 'cancelled'">
+                  Status: {{check_in_statuses[getStatusLabel(statusInfo.waitlistStatus)]}}
                 </span>
               </div>
               <div class="txt-align-center" *ngIf="statusInfo.apptStatus">
-                <span class="cancelled"
-                  *ngIf="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'">
-                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
-                  <!-- on {{getCancelledTime(statusInfo).date}}, {{getCancelledTime(statusInfo).time}} -->
-                </span>
-                <span class="green"
-                  *ngIf="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
-                  Appointment {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
+                <span [class.cancelled]="statusInfo.apptStatus === 'Cancelled' || statusInfo.apptStatus === 'Rejected'"
+                  [class.green]="statusInfo.apptStatus !== 'Cancelled' && statusInfo.apptStatus !== 'Rejected'">
+                  Status: {{check_in_statuses[getStatusLabel(statusInfo.apptStatus)]}}
                 </span>
               </div>
               <div class="txt-align-center" *ngIf="type == 'order'">
                 <span class="green">
-                  {{statusInfo.orderStatus}}
+                  Status: {{statusInfo.orderStatus}}
                 </span>
               </div>
               <div class="notes"

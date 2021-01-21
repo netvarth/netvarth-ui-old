@@ -16,6 +16,10 @@ import { ConfirmPaymentBoxComponent } from '../../../../ynw_provider/shared/comp
 import { ActivatedRoute } from '@angular/router';
 import { JcCouponNoteComponent } from '../../../../ynw_provider/components/jc-Coupon-note/jc-Coupon-note.component';
 import { ConfirmPatmentLinkComponent } from '../../../../ynw_provider/shared/component/confirm-paymentlink/confirm-paymentlink.component';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 export interface ItemServiceGroup {
   type: string;
@@ -109,6 +113,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   message = '';
   today = new Date();
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   timeFormat = 'h:mm a';
   itemServiceSearch: FormControl = new FormControl();
   services: any = [];
@@ -224,6 +229,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private provider_shared_functions: ProviderSharedFuctions,
     public sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     @Inject(DOCUMENT) public document
   ) {
@@ -261,8 +269,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
-    const bdetails = this.sharedfunctionObj.getitemFromGroupStorage('ynwbp');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
     }
@@ -276,12 +284,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getDomainSubdomainSettings()
       .then(
         () => {
-          this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+          this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         }
       );
     this.bill_load_complete = 1;
     this.getProviderSettings();
-    this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -366,7 +374,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
               }
             );
         }, error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -390,7 +398,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
               }
             );
         }, error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -419,35 +427,39 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
               }
             );
         }, error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
   getBillDateandTime() {
     if (this.bill_data.hasOwnProperty('createdDate')) {
-      const datearr = this.bill_data.createdDate.split(' ');
-      const billdatearr = datearr[0].split('-');
-      this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
-      this.billtime = datearr[1] + ' ' + datearr[2];
+      console.log(this.bill_data.createdDate)
+      this.billdate = this.bill_data.createdDate;
+      // const datearr = this.bill_data.createdDate.split(' ');
+      // const billdatearr = datearr[0].split('-');
+      // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
+      console.log(this.billdate);
+      // this.billtime = datearr[1] + ' ' + datearr[2];
     } else {
-      this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
+      this.billdate = this.bill_data.createdDate;
+      // this.billdate = this.sharedfunctionObj.addZero(this.today.getDate()) + '/' + this.sharedfunctionObj.addZero((this.today.getMonth() + 1)) + '/' + this.today.getFullYear();
       // this.billtime = this.sharedfunctionObj.addZero(this.today.getHours()) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes());
-      const gethrs = this.today.getHours();
-      const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
-      // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
-      let hour = 0;
-      if (gethrs === 12) {
-        hour = 12;
-      } else if (gethrs > 12) {
-        hour = gethrs - 12;
-      } else {
-        hour = gethrs;
-      }
-      this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
       // const amOrPm = (this.today.getHours() < 12) ? 'AM' : 'PM';
       // const hour = (this.today.getHours() < 12) ? this.today.getHours() : this.today.getHours() - 12;
       // this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     }
+    const gethrs = this.today.getHours();
+    const amOrPm = (gethrs < 12) ? 'AM' : 'PM';
+    // const hour = (gethrs < 12) ? gethrs : gethrs - 12;
+    let hour = 0;
+    if (gethrs === 12) {
+      hour = 12;
+    } else if (gethrs > 12) {
+      hour = gethrs - 12;
+    } else {
+      hour = gethrs;
+    }
+    this.billtime = this.sharedfunctionObj.addZero(hour) + ':' + this.sharedfunctionObj.addZero(this.today.getMinutes()) + ' ' + amOrPm;
     if (this.bill_data.hasOwnProperty('gstNumber')) {
       this.gstnumber = this.bill_data.gstNumber;
     }
@@ -546,10 +558,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   //   return errMsgs;
   // }
   getDomainSubdomainSettings() {
-    const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+    const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
     const domain = user_data.sector || null;
     const sub_domain = user_data.subSector || null;
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.provider_services.domainSubdomainSettings(domain, sub_domain)
         .subscribe(
           (data: any) => {
@@ -583,12 +595,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           }
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
   getCoupons() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.provider_services.getProviderCoupons()
         .subscribe(
           data => {
@@ -597,13 +609,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.coupons = [];
-            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     });
   }
   getDiscounts() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.provider_services.getProviderDiscounts()
         .subscribe(
           data => {
@@ -614,7 +626,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           },
           error => {
             this.discounts = [];
-            // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             // reject(error);
           }
         );
@@ -635,13 +647,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         },
         error => {
           this.items.push(null);
-          // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
 
   getPrePaymentDetails() {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       let uid;
       if (this.source === 'appt' || this.source === 'order') {
         uid = this.checkin.uid;
@@ -655,7 +667,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             resolve();
           },
           error => {
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
             reject(error);
           }
@@ -913,7 +925,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param data Data to be sent as request body
    */
   applyAction(action, uuid, data) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (uuid) {
         this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
           (billInfo => {
@@ -927,7 +939,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             resolve();
           },
             error => {
-              this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               this.disableButton = false;
               this.disableDiscountbtn = false;
               this.disableCouponbtn = false;
@@ -983,7 +995,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.hideAddItem();
           this.getWaitlistBill();
         }, error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     }
     this.itemServiceSearch.reset();
@@ -1236,7 +1248,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (this.selOrderDiscount.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
-      //   this.sharedfunctionObj.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
+      //   this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
       // } else {
       //   discount['discValue'] = this.discAmount;
       // }
@@ -1276,7 +1288,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       len = amount.split('.').length;
     }
     if (len > 2) {
-      this.sharedfunctionObj.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please enter valid amount', { 'panelClass': 'snackbarerror' });
     } else {
       let status = 0;
       const canceldialogRef = this.dialog.open(ConfirmPaymentBoxComponent, {
@@ -1322,7 +1334,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .subscribe(
         data => {
           if (this.pay_data.acceptPaymentBy === 'self_pay') {
-            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_SELFPAY);
           } else {
             if (status === 2) {
               if (this.source === 'appt') {
@@ -1337,11 +1349,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.hidePayWorkBench();
             this.getWaitlistBill();
             this.getPrePaymentDetails();
-            this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           }
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1369,7 +1381,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
           this.getWaitlistBill();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1380,7 +1392,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       // if (this.bill_data.amountDue < 0) {
       //   msg = 'Do you really want to settle the bill which is in refund status, this will be moved to paid status once settled';
       // } else {
-      msg = this.sharedfunctionObj.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
+      msg = this.wordProcessor.getProjectMesssages('PROVIDER_BILL_SETTLE_CONFIRM');
       // }
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
@@ -1421,10 +1433,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.provider_services.emailWaitlistBill(this.uuid)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
+          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_EMAIL);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -1728,13 +1740,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
                 this.amounttoRefund = '';
               },
               error => {
-                this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               }
             );
         }
       });
     } else {
-      this.sharedfunctionObj.openSnackBar('Please enter the refund amount', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please enter the refund amount', { 'panelClass': 'snackbarerror' });
     }
   }
   showRefund(payment?) {

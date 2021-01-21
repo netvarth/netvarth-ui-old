@@ -9,6 +9,9 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provi
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   'selector': 'app-donations',
@@ -45,8 +48,9 @@ export class DonationsComponent implements OnInit {
 
   loadComplete = false;
   minday = new Date(2015, 0, 1);
-  filtericonTooltip = this.shared_functions.getProjectMesssages('FILTERICON_TOOPTIP');
-  filtericonclearTooltip = this.shared_functions.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
+  maxday = new Date();
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
   tooltipcls = projectConstants.TOOLTIP_CLS;
   date_cap = Messages.DATE_CAP;
   amount_cap = Messages.AMOUNT_CAP;
@@ -73,11 +77,15 @@ export class DonationsComponent implements OnInit {
   selected_location = null;
   screenWidth;
   small_device_display = false;
+  selectAll = false;
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe, private provider_shared_functions: ProviderSharedFuctions,
     private routerobj: Router, private dialog: MatDialog,
-    private shared_functions: SharedFunctions) {
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.onResize();
     // this.breadcrumbs_init = [
     //     {
@@ -100,7 +108,7 @@ export class DonationsComponent implements OnInit {
     }
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.getServiceList();
     this.getLocationList();
@@ -205,13 +213,13 @@ export class DonationsComponent implements OnInit {
   //                             this.loadComplete = true;
   //                         },
   //                         error => {
-  //                             this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //                             this.loadComplete = true;
   //                         }
   //                     );
   //             },
   //             error => {
-  //                 this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
   //             }
   //         );
   // }
@@ -231,13 +239,13 @@ export class DonationsComponent implements OnInit {
                 this.loadComplete = true;
               },
               error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.loadComplete = true;
               }
             );
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -349,8 +357,26 @@ export class DonationsComponent implements OnInit {
         }
       }
     }
-    console.log(this.selectedDonations);
-    console.log(this.donationsSelected);
+    if (this.donations.length === this.selectedDonations.length) {
+      this.selectAll = true;
+    } else {
+      this.selectAll = false;
+    }
+  }
+  selectAllDonations() {
+    if (!this.selectAll) {
+      this.selectAll = true;
+      for (let i = 0; i < this.donations.length; i++) {
+        this.donationsSelected[i] = true;
+        if (this.selectedDonations.indexOf(this.donations[i]) === -1) {
+          this.selectedDonations.push(this.donations[i]);
+        }
+      }
+    } else {
+      this.selectAll = false;
+      this.donationsSelected = [];
+      this.selectedDonations = [];
+    }
   }
   addInboxMessage() {
     let customerlist = [];
@@ -368,7 +394,7 @@ export class DonationsComponent implements OnInit {
     //         this.locations = data;
     //     }
     //     );
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
       self.provider_services.getProviderLocations()
         .subscribe(
@@ -381,7 +407,7 @@ export class DonationsComponent implements OnInit {
               }
             }
             self.onChangeLocationSelect(self.locations[0]);
-            const cookie_location_id = self.shared_functions.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
+            const cookie_location_id = self.groupService.getitemFromGroupStorage('provider_selected_location'); // same in provider checkin button page
             if (cookie_location_id === '') {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
@@ -407,9 +433,9 @@ export class DonationsComponent implements OnInit {
     this.selected_location = location;
     // const _this = this;
     if (this.selected_location) {
-      this.shared_functions.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
+      this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
     }
-    this.shared_functions.setitemToGroupStorage('loc_id', this.selected_location);
+    this.groupService.setitemToGroupStorage('loc_id', this.selected_location);
     return new Promise(function (resolve, reject) {
     });
   }

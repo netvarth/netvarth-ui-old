@@ -43,18 +43,22 @@
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
                                                                         <span class="columns rightalign"><span
-                                                                                class="dynamic">{{billdate}}
+                                                                                class="dynamic">{{bill_data.createdDate
+                                                                                | date:'mediumDate'}}
                                                                                 {{billtime}}</span>
                                                                         </span> <span class="columns"
                                                                             *ngIf="billnumber"> <span
                                                                                 class="title">{{bill_no_cap}}</span>
                                                                             <span class="dynamic">{{billnumber}}</span>
                                                                         </span> <span class="columns rightalign">
-                                                                            <span class="title" *ngIf="gstnumber">{{gstin_cap}}</span>
-                                                                            <span class="dynamic" *ngIf="gstnumber">{{gstnumber |
+                                                                            <span class="title"
+                                                                                *ngIf="gstnumber">{{gstin_cap}}</span>
+                                                                            <span class="dynamic"
+                                                                                *ngIf="gstnumber">{{gstnumber |
                                                                                 capitalizeFirst}}</span>
                                                                         </span>
-                                                                        <span class="columns mgn-up-10" *ngIf="checkin.provider">
+                                                                        <span class="columns mgn-up-10"
+                                                                            *ngIf="checkin.provider">
                                                                             <span class="dynamic">{{provider_label |
                                                                                 capitalizeFirst}}: </span>
                                                                             <span
@@ -118,7 +122,6 @@
                                                                                     <div class="name">
                                                                                         {{item.itemName |
                                                                                         capitalizeFirst}}
-                                                                                        -
                                                                                         <span
                                                                                             class="rupee-font">{{item.price
                                                                                             |

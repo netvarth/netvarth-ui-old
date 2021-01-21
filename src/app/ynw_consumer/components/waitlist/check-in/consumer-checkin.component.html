@@ -59,18 +59,19 @@
                                                 <h6 class="card-title service">
                                                     {{sel_ser_det.name}}
                                                 </h6>
-                                                <div class="mgn-bt-15" style="font-size: 1rem;">
+                                                <div class="mgn-bt-15" style="font-size: 1rem;" *ngIf="sel_ser_det.price && type != 'reschedule'">
                                                     <span *ngIf="sel_ser_det.price && type != 'waitlistreschedule'">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
                                                                 class="rupee-font">&#8377;
                                                             </span>{{serviceCost}}</span>
-                                                        </span>&nbsp;
-                                                    <span *ngIf="sel_ser_det.isPrePayment && type != 'waitlistreschedule'">
-                                                    Booking Fee
-                                                    <span class="prepaymin-cls bold"><span
-                                                            class="rupee-font">&#8377;
-                                                        </span>{{prepaymentAmount}}</span>
+                                                    </span>&nbsp;
+                                                    <span
+                                                        *ngIf="sel_ser_det.isPrePayment && type != 'waitlistreschedule'">
+                                                        Booking Fee
+                                                        <span class="prepaymin-cls bold"><span
+                                                                class="rupee-font">&#8377;
+                                                            </span>{{prepaymentAmount}}</span>
                                                     </span>
                                                 </div>
                                                 <!-- <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
@@ -80,7 +81,7 @@
                                                                 class="rupee-font">&#8377;
                                                             </span>{{prepaymentAmount}}</span>
                                                     </div> -->
-                                                    <!-- <div *ngIf="sel_ser_det.price && type != 'reschedule'"
+                                                <!-- <div *ngIf="sel_ser_det.price && type != 'reschedule'"
                                                         class="mgn-bt-20">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
@@ -164,16 +165,40 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="sel_ser_det.preInfoEnabled">
+                                                    <!-- <div *ngIf="sel_ser_det.preInfoEnabled">
                                                         <a class="lnk" (click)="showPreInfo()">{{sel_ser_det.preInfoTitle}}</a>
-                                                        <!-- <div class="preinfo-text mgn-up-5">
-                                                            <span [innerHTML]="sel_ser_det.preInfoText"></span>
+                                                    </div> -->
+                                                    <div class="prenotes mgn-bt-10" *ngIf="sel_ser_det.preInfoEnabled">
+                                                        <div class="preinfo-title">{{sel_ser_det.preInfoTitle}}</div>
+                                                        <div [innerHTML]="sel_ser_det.preInfoText">
                                                         </div>
-                                                        <a *ngIf="sel_ser_det.preInfoText" (click)="showPreInfo()"
-                                                            class="pull-right pointer-cursor mgn-up-5">
-                                                            See more
-                                                        </a> -->
                                                     </div>
+                                                    <div
+                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                                        <mat-chip-list class="btns">
+                                                            <mat-chip
+                                                                [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'"
+                                                                (click)="handleSideScreen('note')"><a
+                                                                    class="lnk action pointer-cursor"><i
+                                                                        class="fa fa-file-text-o mgn-rt-5"
+                                                                        aria-hidden="true"></i>
+                                                                    {{sel_ser_det.consumerNoteTitle}} <span
+                                                                        *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
+                                                            </mat-chip>
+                                                            <mat-chip><a class="lnk action pointer-cursor"
+                                                                    (click)="imagefile1.click()"><input #imagefile1
+                                                                        type="file" accept="/*;capture=camera"
+                                                                        style="display:none;" multiple
+                                                                        (change)="filesSelected($event)"><i
+                                                                        class="fa fa-paperclip mgn-rt-5"
+                                                                        aria-hidden="true"></i>Upload
+                                                                    File
+                                                                    <span
+                                                                        *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+                                                                </a></mat-chip>
+                                                        </mat-chip-list>
+                                                    </div>
+
                                                     <!-- <div class="mgn-bt-5 pre-check-title color-grey">Pre Check In Instructions
                                             </div>
                                             <div class="ln-hgt-20 pre-instr">If grouping, whether to show a group footer
@@ -208,12 +233,16 @@
                                             <h6 class="card-title serv-time border-style">
                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                 <span *ngIf="!isFuturedate">
-                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + '
+                                                    - ' +
+                                                    queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                 </span>
                                                 <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
                                                 </span>
                                                 <span *ngIf="isFuturedate">
-                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                                    {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + '
+                                                    - ' +
+                                                    queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                 </span>
 
                                                 <!-- <span class="slotdiv">
@@ -337,9 +366,11 @@
                                                             {{waitlist_for[0].phoneNo}}
                                                         </span> -->
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="userPhone && !changePhno">{{countryCode}} {{userPhone}}</span>
+                                                            *ngIf="userPhone && !changePhno">{{countryCode}}
+                                                            {{userPhone}}</span>
                                                         <span class="mgn-lt-10 phonevallabel"
-                                                            *ngIf="currentPhone && changePhno">{{countryCode}} {{currentPhone}}</span><a
+                                                            *ngIf="currentPhone && changePhno">{{countryCode}}
+                                                            {{currentPhone}}</span><a
                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                             <!-- <i *ngIf="type !== 'waitlistreschedule'" class="fa fa-pencil"
                                                                 (click)="editPhone()"></i> -->
@@ -385,8 +416,9 @@
                                                 <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0"
                                                     (click)="applyPromocode()">
                                                     Promocode applied</a>
-                                                {{selected_coupons.toString()}}</div>
-                                            <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                                {{selected_coupons.toString()}}
+                                            </div>
+                                            <!-- <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
                                                 <mat-chip-list class="btns">
                                                     <mat-chip
                                                         [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'"
@@ -397,14 +429,6 @@
                                                             {{sel_ser_det.consumerNoteTitle}} <span
                                                                 *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
                                                     </mat-chip>
-                                                    <!-- <mat-chip (click)="gotoAttachments()"><a
-                                                            class="lnk action pointer-cursor"><i
-                                                                class="fa fa-paperclip mgn-rt-5"
-                                                                aria-hidden="true"></i>Upload Files<span
-                                                                *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-                                                        </a></mat-chip> -->
-
-
                                                     <mat-chip><a class="lnk action pointer-cursor"
                                                             (click)="imagefile1.click()"><input #imagefile1 type="file"
                                                                 accept="/*;capture=camera" style="display:none;"
@@ -415,10 +439,8 @@
                                                             <span
                                                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
                                                         </a></mat-chip>
-
-
                                                 </mat-chip-list>
-                                            </div>
+                                            </div> -->
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                     <!-- <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"
@@ -496,7 +518,8 @@
                                             <mat-chip *ngFor="let queue of queuejson, let i= index"
                                                 [selected]="queue.id === queuejson[this.sel_queue_indx].id"
                                                 (click)="handleQueueSelection(queue, i)">
-                                                {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']}}
+                                                {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                                queue.queueSchedule.timeSlots[0]['eTime']}}
                                             </mat-chip>
                                         </mat-chip-list>
                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
@@ -554,7 +577,8 @@
                                         *ngIf="showCouponWB">
                                         <div
                                             class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                                            <i class="icon-bell"></i>{{applied_inbilltime}}</div>
+                                            <i class="icon-bell"></i>{{applied_inbilltime}}
+                                        </div>
                                         <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
                                             <div class="input-group">
                                                 <input [ngClass]="{'invalid':!couponvalid}"
@@ -828,7 +852,8 @@
                                                             (change)="handleMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName, $event)"
                                                             [value]="memb.userProfile.id"
                                                             [checked]="isChecked(memb.userProfile.id)">
-                                                            {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
+                                                            {{memb.userProfile.firstName + ' ' +
+                                                            memb.userProfile.lastName | capitalizeFirst}}
                                                         </mat-checkbox>
                                                     </li>
                                                 </ng-container>
@@ -839,7 +864,8 @@
                                                                 (change)="handleOneMemberSelect(memb.userProfile.id, memb.userProfile.firstName, memb.userProfile.lastName)"
                                                                 [value]="memb.userProfile.id"
                                                                 [checked]="isChecked(memb.userProfile.id)">
-                                                                {{memb.userProfile.firstName + ' ' + memb.userProfile.lastName | capitalizeFirst}}
+                                                                {{memb.userProfile.firstName + ' ' +
+                                                                memb.userProfile.lastName | capitalizeFirst}}
                                                             </mat-radio-button>
                                                         </li>
                                                     </mat-radio-group>
@@ -863,10 +889,10 @@
                                                         [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
                                                         [(ngModel)]="selected_phone">
                                                     </ngx-intl-tel-input> -->
-                                                    
-                                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
-                                                <!-- </div> -->
-                                                <!-- <td> 
+
+                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                    <!-- </div> -->
+                                    <!-- <td> 
                                                     <span style="width: 65px">
                                                         <select [(ngModel)] = "selectedCountryCode" [ngModelOptions]="{standalone: true}">
                                                         <option *ngFor="let codes of countryCodes" [value]="codes.value">{{codes.displayName}}</option>
@@ -879,7 +905,7 @@
                                                         *ngIf="phoneerror != null" errorMsg={{phoneerror}}>
                                                     </app-field-error-display>
                                                 </td> -->
-                                            <!-- </tr>
+                                    <!-- </tr>
                                             <tr>
                                                 <td class="td1" [class.pad-bt-15]="emailerror != null">Email :&nbsp;&nbsp; </td>
                                                 <td>
@@ -900,7 +926,7 @@
                                                 <td class="td1" [class.pad-bt-15]="callingmodePhoneerror != null">
                                                     <i class="fa wtsapaud-icon wtsap-cal"
                                                         style="top : 10px !important"></i>WhatsApp Number : &nbsp;&nbsp;</td> -->
-                                                <!-- <td>
+                                    <!-- <td>
                                                     <input type="text" maxlength="10"
                                                         placeholder="WhatsApp number" class=""
                                                         [(ngModel)]="callingModes" />
@@ -909,7 +935,7 @@
                                                         errorMsg={{callingmodePhoneerror}}>
                                                     </app-field-error-display>
                                                 </td> -->
-                                                <!-- <div class="form-group">
+                                    <!-- <div class="form-group">
                                                     <mat-label for="phone">Enter new Whatsapp Number</mat-label>
                                                     <ngx-intl-tel-input style="width: 300px !important;" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                                                         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -920,12 +946,12 @@
                                                         [(ngModel)]="callingModes">
                                                     </ngx-intl-tel-input>
                                                      -->
-                                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
-                                                <!-- </div>
+                                    <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                    <!-- </div>
                                             </tr>
                                         </table> -->
 
-                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30"
+                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-30"
                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                             <div class="disp-flex">
                                                 <div class="changephemail">
@@ -971,11 +997,13 @@
                                             </h5>
                                         </div>
                                         <div class="consumer_appt mgn-bt-10 brd-bt">
-                                            <p class="m0 mgn-lt-10 mgn-up-10">Phone#: <b>{{countryCode}} {{selected_phone}}</b></p>
+                                            <p class="m0 mgn-lt-10 mgn-up-10">Phone#: <b>{{countryCode}}
+                                                    {{selected_phone}}</b></p>
                                             <p class="m0 mgn-up-10-m"
                                                 *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <i class="fa wtsapaud-icon wtsap-cal"></i> <span>WhatsApp#:
-                                                    <b>+{{callingModes}}</b></span></p>
+                                                    <b>+{{callingModes}}</b></span>
+                                            </p>
                                             <p class="mgn-up-5 mgn-lt-10">Email : <b>{{payEmail}}</b></p>
                                             <p class="mgn-up-5 mgn-lt-10" *ngIf="!editBookingFields">To Change the
                                                 Number/Email <a class="bold" (click)="changeBookingFields()">Click
@@ -1001,7 +1029,8 @@
                                                             [numberFormat]="PhoneNumberFormat.National" name="newPhone"
                                                             formControlName="newPhone">
                                                         </ngx-intl-tel-input>
-                                                        <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+                                                        <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -1009,11 +1038,10 @@
                                                         <mat-label for="newselected_phone">Enter New Email </mat-label>
                                                         <input class="width100 height40" id="newEmail"
                                                             placeholder="Email(user@xyz.com)" name="newEmail"
-                                                            formControlName="newEmail"
-                                                            autocomplete="off" (keyup)="showConfrmEmail($event)"
-                                                            onpaste="return false;" oncopy="return false"
-                                                            oncut="return false" ondrag="return false"
-                                                            ondrop="return false">
+                                                            formControlName="newEmail" autocomplete="off"
+                                                            (keyup)="showConfrmEmail($event)" onpaste="return false;"
+                                                            oncopy="return false" oncut="return false"
+                                                            ondrag="return false" ondrop="return false">
                                                         <app-field-error-display class="red" [displayError]="true"
                                                             *ngIf="emailerror != null" errorMsg={{emailerror}}>
                                                         </app-field-error-display>
@@ -1034,10 +1062,11 @@
                                                             [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
                                                             [selectedCountryISO]="selectedCountry"
                                                             [separateDialCode]="separateDialCode"
-                                                            [numberFormat]="PhoneNumberFormat.National" name="newWhatsapp"
-                                                            formControlName="newWhatsapp">
+                                                            [numberFormat]="PhoneNumberFormat.National"
+                                                            name="newWhatsapp" formControlName="newWhatsapp">
                                                         </ngx-intl-tel-input>
-                                                        <div class="sts-msg error" *ngIf="whatsapperror">{{whatsapperror}}</div>
+                                                        <div class="sts-msg error" *ngIf="whatsapperror">
+                                                            {{whatsapperror}}</div>
                                                     </div>
                                                 </div>
                                             </form>

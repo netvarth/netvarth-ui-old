@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -23,10 +24,11 @@ export class InboxOuterComponent implements OnInit {
 
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
     private location: Location) { }
 
   ngOnInit() {
-    this.userDet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
   }
 

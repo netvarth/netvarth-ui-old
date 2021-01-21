@@ -1,27 +1,21 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
-//
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
-
-
-
-
-
-// import { ReportDataService } from '../reports-data.service';
 
 @Component({
   selector: 'app-queue-selection',
   templateUrl: './queue-selection.component.html',
   styleUrls: ['./queue-selection.component.css']
 })
-export class QueueSelectionComponent implements OnInit, AfterViewInit {
+export class QueueSelectionComponent implements OnInit {
   accountType: string;
   selected_data: any = [];
   selected_data_id: any;
@@ -38,19 +32,21 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   select_All = Messages.SELECT_ALL;
   public queue_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
   displayedColumns = ['select', 'name', 'queue', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_service: ReportDataService
+    private report_service: ReportDataService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
   ) {
 
     this.activated_route.queryParams.subscribe(qparams => {
 
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.accountType = user.accountType;
       if (this.accountType !== 'BRANCH') {
         this.displayedColumns = ['select', 'name', 'queue', 'status'];
@@ -69,6 +65,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
       const _this = this;
       this.getAllQs().then(result => {
         if (parseInt(qparams.data, 0) === 0) {
+          console.log(this.queue_dataSource.data);
           this.masterToggle();
         }
         if (_this.selected_data.length > 0) {
@@ -118,15 +115,13 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
     return queue_list;
 
   }
-  ngAfterViewInit() {
 
-    this.paginator._intl.itemsPerPageLabel = 'queues per page';
-
-  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
+    console.log(numSelected);
     const numRows = this.queue_dataSource.data.length;
+    console.log(numRows);
     return numSelected === numRows;
   }
 
@@ -140,7 +135,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
 
 
   getAllQs() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getProviderQueues()
         .subscribe(
           (data: any) => {
@@ -176,10 +171,11 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
               );
             }
             this.queue_dataSource.data = this.queue_list_for_grid;
+            console.log(this.queue_list_for_grid.length);
             this.queueCount = this.queue_list_for_grid.length;
-
+            resolve();
           });
-      resolve();
+
     });
   }
 
@@ -194,7 +190,7 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
   passQueueSelectedToReports() {
     this.queues_selected = this.selection.selected;
     if (this.selection.selected.length === 0) {
-      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
     } else {
       if (this.queue_dataSource.filteredData.length < this.selection.selected.length) {
         this.queues_selected = this.queue_dataSource.filteredData;
@@ -212,8 +208,11 @@ export class QueueSelectionComponent implements OnInit, AfterViewInit {
         });
         this.queues_selected = queue_id;
       }
+      if (this.queues_selected === '') {
+        this.queues_selected = 'All';
+      }
       if (this.queues_selected.length === 0) {
-        this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
       } else {
         this.report_service.updatedQueueDataSelection(this.queues_selected);
         this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });

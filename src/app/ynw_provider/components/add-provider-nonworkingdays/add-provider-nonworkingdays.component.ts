@@ -8,6 +8,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import * as moment from 'moment';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-add-nonworkingdays',
@@ -43,7 +44,8 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
 
   }
@@ -94,14 +96,14 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
       const curtime = this.shared_functions.getTimeAsNumberOfMinutes(today_curtime);
       const selstarttime = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
       if (selstarttime < curtime) {
-        this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
+        this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_STIME);
         return;
       }
     }
     const Start_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.starttime.hour + ':' + form_data.starttime.minute);
     const End_time = this.shared_functions.getTimeAsNumberOfMinutes(form_data.endtime.hour + ':' + form_data.endtime.minute);
     if (End_time <= Start_time) {
-      this.shared_functions.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
+      this.wordProcessor.apiErrorAutoHide(this, Messages.HOLIDAY_ETIME);
       return;
     }
 
@@ -143,13 +145,13 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     this.provider_services.addHoliday(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('HOLIDAY_CREATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -162,13 +164,13 @@ export class AddProviderNonworkingdaysComponent implements OnInit {
     this.provider_services.editHoliday(post_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('HOLIDAY_UPDATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('HOLIDAY_UPDATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
           this.api_loading = false;
           this.disableButton = false;
         }

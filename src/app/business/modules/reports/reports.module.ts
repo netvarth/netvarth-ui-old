@@ -7,6 +7,7 @@ import { ReportsComponent } from './reports.component';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { NewReportComponent } from './new-report/new-report.component';
 import { ReportDataService } from './reports-data.service';
+import { ExportReportService } from './export-report.service';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -61,7 +62,8 @@ import { MatOptionModule } from '@angular/material/core';
     MatPaginatorModule
   ],
   providers: [
-    ReportDataService
+    ReportDataService,
+    ExportReportService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

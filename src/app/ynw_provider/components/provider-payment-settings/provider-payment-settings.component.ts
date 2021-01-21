@@ -5,6 +5,10 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-provider-paymentsettings',
     templateUrl: './provider-payment-settings.component.html',
@@ -131,8 +135,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         private shared_functions: SharedFunctions,
         private router: Router,
         private routerobj: Router,
-        private activated_route: ActivatedRoute
-
+        private activated_route: ActivatedRoute,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor
     ) {
         this.shared_functions.getMessage().subscribe(data => {
             switch (data.ttype) {
@@ -141,24 +148,24 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     break;
             }
         });
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(params => {
             this.tabid = (params.id) ? params.id : 0;
         });
     }
     ngOnInit() {
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.getLicensemetrics();
         this.domain = user.sector;
         this.resetApi();
         this.getPaymentSettings(2);
         this.getTaxpercentage();
         this.getProviderProfile();
-        this.activeLicPkg = this.shared_functions.getitemFromGroupStorage('ynw-user').accountLicenseDetails.accountLicense.name;
+        this.activeLicPkg = this.groupService.getitemFromGroupStorage('ynw-user').accountLicenseDetails.accountLicense.name;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.payment_set_cap = Messages.FRM_LEVEL_PAYMENT_SETTINGS_MSG.replace('[customer]', this.customer_label);
-        this.isCheckin = this.shared_functions.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         // this.getLicenseMetrics();
     }
     /**
@@ -303,16 +310,16 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             let params;
             const duration = projectConstants.TIMEOUT_DELAY_LARGE10;
             if ((this.paytmenabled && !this.paytmverified) || (this.ccenabled && !this.payuverified) || (this.ccenabled && !this.razorpayVerified)) {
-                showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.shared_functions.getProjectMesssages('PAYSETTING_CONTACTADMIN')
-                    + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_EMAIL') + '. ' + this.shared_functions.getProjectMesssages('SUPPORT_MOBILE');
+                showmsgs = this.wordProcessor.getProjectMesssages('PAYSETTING_SAV_SUCC') + '. ' + this.wordProcessor.getProjectMesssages('PAYSETTING_CONTACTADMIN')
+                    + '. ' + this.wordProcessor.getProjectMesssages('SUPPORT_EMAIL') + '. ' + this.wordProcessor.getProjectMesssages('SUPPORT_MOBILE');
                 panelclass = 'snackbarnormal'; // 'snackbarerror';
                 params = { 'duration': duration, 'panelClass': panelclass };
             } else {
-                showmsgs = this.shared_functions.getProjectMesssages('PAYSETTING_SAV_SUCC');
+                showmsgs = this.wordProcessor.getProjectMesssages('PAYSETTING_SAV_SUCC');
                 panelclass = 'snackbarnormal';
                 params = { 'duration': duration, 'panelClass': panelclass };
             }
-            this.shared_functions.openSnackBar(showmsgs, params);
+            this.snackbarService.openSnackBar(showmsgs, params);
             this.tabid = 1;
             if (document.getElementById('gstno')) {
                 document.getElementById('gstno').focus();
@@ -367,7 +374,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                 this.saveEnabled = true;
             },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getPaymentSettings(2);
                     this.saveEnabled = true;
                 });
@@ -392,11 +399,11 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.paytmwebsiteAppBlur();
             this.paytmindustrytypeBlur();
             if (!numberpattern.test(this.paytmmobile)) {
-                this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ONLYNUM') };
+                this.showError['paytmmobile'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ONLYNUM') };
                 this.errorExist = true;
             } else {
                 if (!numbercntpattern.test(this.paytmmobile)) {
-                    this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS') };
+                    this.showError['paytmmobile'] = { status: true, msg: this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS') };
                     this.errorExist = true;
                 } else {
                     postData['payTmLinkedPhoneNumber'] = this.paytmmobile;
@@ -420,12 +427,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
             this.bankBranchBlur();
             if (blankpattern.test(this.bankfiling)) {
                 this.errorExist = true;
-                this.showError['bankfiling'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_FILING') };
+                this.showError['bankfiling'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_FILING') };
             }
 
             if (blankpattern.test(this.bankactype)) {
                 this.errorExist = true;
-                this.showError['bankactype'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACTYPE') };
+                this.showError['bankactype'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ACTYPE') };
             }
             postData['panCardNumber'] = this.pannumber;
             postData['bankAccountNumber'] = this.bankacnumber;
@@ -445,7 +452,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.saveEnabled = true;
                 },
                     error => {
-                        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         this.saveEnabled = true;
                     });
         }
@@ -470,7 +477,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
                     this.emailidVerified = success['basicInfo']['emailVerified'];
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -478,7 +485,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
      * method to redirect to change email page
      */
     redirectToEmail() {
-        this.shared_functions.setitemonLocalStorage('e_ret', 'pset');
+        this.lStorageService.setitemonLocalStorage('e_ret', 'pset');
         this.router.navigate(['provider', 'profile']);
     }
 
@@ -497,12 +504,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         const blankpattern = projectConstantsLocal.VALIDATOR_BLANK;
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmmobile)) {
-                this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKNUM') };
+                this.showError['paytmmobile'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKNUM') };
             } else if (!numberpattern.test(this.paytmmobile)) {
-                this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ONLYNUM') };
+                this.showError['paytmmobile'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ONLYNUM') };
             } else {
                 if (!numbercntpattern.test(this.paytmmobile)) {
-                    this.showError['paytmmobile'] = { status: true, msg: this.shared_functions.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS') };
+                    this.showError['paytmmobile'] = { status: true, msg: this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS') };
                 }
             }
         }
@@ -512,7 +519,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmMerchantId)) {
                 this.errorExist = true;
-                this.showError['paytmMerchantId'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKMID') };
+                this.showError['paytmMerchantId'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKMID') };
             }
         }
     }
@@ -521,7 +528,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmMerchantKey)) {
                 this.errorExist = true;
-                this.showError['paytmMerchantKey'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKMKEY') };
+                this.showError['paytmMerchantKey'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKMKEY') };
             }
         }
     }
@@ -530,7 +537,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmWebsiteWeb)) {
                 this.errorExist = true;
-                this.showError['paytmWebsiteWeb'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKWEBSITE') };
+                this.showError['paytmWebsiteWeb'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKWEBSITE') };
             }
         }
     }
@@ -540,7 +547,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmWebsiteApp)) {
                 this.errorExist = true;
-                this.showError['paytmWebsiteApp'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKWEBSITEAPP') };
+                this.showError['paytmWebsiteApp'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKWEBSITEAPP') };
             }
         }
     }
@@ -550,7 +557,7 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         if (this.paytmenabled === true) {
             if (blankpattern.test(this.paytmIndustryType)) {
                 this.errorExist = true;
-                this.showError['paytmIndustryType'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BLANKINDUSTRYTYPE') };
+                this.showError['paytmIndustryType'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BLANKINDUSTRYTYPE') };
             }
         }
     }
@@ -559,14 +566,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.pannumber)) {
             this.errorExist = true;
-            this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PAN') };
+            this.showError['pannumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_PAN') };
         }
         //  else if (!alphanumericpattern.test(this.pannumber)) {
         //     this.errorExist = true;
-        //     this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANPHANUMERIC') };
+        //     this.showError['pannumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_PANPHANUMERIC') };
         // } else if (this.pannumber.length > this.maxcnt15) {
         //     this.errorExist = true;
-        //     this.showError['pannumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANMAXLEN15') };
+        //     this.showError['pannumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_PANMAXLEN15') };
         // }
     }
     ifscBlur() {
@@ -574,14 +581,14 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const alphanumericpattern = projectConstantsLocal.VALIDATOR_ALPHANUMERIC;
         if (blankpattern.test(this.bankifsc)) {
             this.errorExist = true;
-            this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSC') };
+            this.showError['bankifsc'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_IFSC') };
         }
         //  else if (!alphanumericpattern.test(this.bankifsc)) {
         //     this.errorExist = true;
-        //     this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC') };
+        //     this.showError['bankifsc'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_IFSCALPHANUMERIC') };
         // } else if (this.bankifsc.length > this.maxcnt11) {
         //     this.errorExist = true;
-        //     this.showError['bankifsc'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_IFSCMAXLEN11') };
+        //     this.showError['bankifsc'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_IFSCMAXLEN11') };
         // }
     }
     panNameBlur() {
@@ -589,15 +596,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         // if (this.panname.length > this.maxcnt100) {
         //     this.errorExist = true;
-        //     this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        //     this.showError['panname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
         // } else 
         if (blankpattern.test(this.panname)) {
             this.errorExist = true;
-            this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_PANNAME') };
+            this.showError['panname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_PANNAME') };
         }
         //  else if (!charonly.test(this.panname)) {
         //     this.errorExist = true;
-        //     this.showError['panname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        //     this.showError['panname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_CHARONLY') };
         // }
     }
     acholderNameBlur() {
@@ -605,15 +612,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         // if (this.bankacname.length > this.maxcnt100) {
         //     this.errorExist = true;
-        //     this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        //     this.showError['bankacname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
         // } else 
         if (blankpattern.test(this.bankacname)) {
             this.errorExist = true;
-            this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACMNAME') };
+            this.showError['bankacname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ACMNAME') };
         }
         //  else if (!charonly.test(this.bankacname)) {
         //     this.errorExist = true;
-        //     this.showError['bankacname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        //     this.showError['bankacname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_CHARONLY') };
         // }
     }
     bankAcnumberBlur() {
@@ -621,12 +628,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const numberpattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
         if (blankpattern.test(this.bankacnumber)) {
             this.errorExist = true;
-            this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO') };
+            this.showError['bankacnumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ACCNO') };
         }
         //  else {
         //     if (!numberpattern.test(this.bankacnumber)) {
         //         this.errorExist = true;
-        //         this.showError['bankacnumber'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY') };
+        //         this.showError['bankacnumber'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_ACCNO_NUMONLY') };
         //     }
         // }
     }
@@ -635,15 +642,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         // if (this.bankname.length > this.maxcnt100) {
         //     this.errorExist = true;
-        //     this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        //     this.showError['bankname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
         // } else 
         if (blankpattern.test(this.bankname)) {
             this.errorExist = true;
-            this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BANKNAME') };
+            this.showError['bankname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BANKNAME') };
         }
         //  else if (!charonly.test(this.bankname)) {
         //     this.errorExist = true;
-        //     this.showError['bankname'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        //     this.showError['bankname'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_CHARONLY') };
         // }
     }
     bankBranchBlur() {
@@ -651,15 +658,15 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         // const charonly = projectConstantsLocal.VALIDATOR_CHARONLY;
         // if (this.bankbranch.length > this.maxcnt100) {
         //     this.errorExist = true;
-        //     this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
+        //     this.showError['bankbranch'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_MAXLEN').replace('[maxlen]', this.maxcnt100) };
         // } else 
         if (blankpattern.test(this.bankbranch)) {
             this.errorExist = true;
-            this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_BRANCH') };
+            this.showError['bankbranch'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_BRANCH') };
         }
         //  else if (!charonly.test(this.bankbranch)) {
         //     this.errorExist = true;
-        //     this.showError['bankbranch'] = { status: true, msg: this.shared_functions.getProjectMesssages('PAYSETTING_CHARONLY') };
+        //     this.showError['bankbranch'] = { status: true, msg: this.wordProcessor.getProjectMesssages('PAYSETTING_CHARONLY') };
         // }
     }
     removSpace(evt) {
@@ -669,12 +676,12 @@ export class ProviderPaymentSettingsComponent implements OnInit {
     getLicensemetrics() {
         this.api_loading = true;
         let pkgId;
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
             pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
         }
         // this.provider_services.getLicenseMetadata().subscribe(data => {
-        this.licenseMetadata = this.shared_functions.getitemfromLocalStorage('license-metadata');
+        this.licenseMetadata = this.lStorageService.getitemfromLocalStorage('license-metadata');
         // this.licenseMetadata = data;
         for (let i = 0; i < this.licenseMetadata.length; i++) {
             if (this.licenseMetadata[i].pkgId === pkgId) {

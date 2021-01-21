@@ -6,6 +6,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-addprovider-addon',
@@ -35,7 +36,8 @@ export class AddproviderAddonComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public sharedfunctionObj: SharedFunctions
+    public sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
   }
   ngOnInit() {
@@ -70,14 +72,14 @@ export class AddproviderAddonComponent implements OnInit {
     if (this.selected_addon) {
       this.provider_services.addAddonPackage(this.selected_addon)
         .subscribe(() => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('ADDON_ADDED');
+          this.api_success = this.wordProcessor.getProjectMesssages('ADDON_ADDED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
           error => {
-            // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            // this.api_error = this.wordProcessor.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
             this.api_loading = false;
             this.disableButton = false;
           }

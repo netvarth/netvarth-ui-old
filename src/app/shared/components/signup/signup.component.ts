@@ -9,6 +9,9 @@ import { Messages } from '../../constants/project-messages';
 import { Router } from '@angular/router';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
   selector: 'app-signup',
@@ -97,7 +100,10 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     private router: Router,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService
   ) {
     this.is_provider = data.is_provider || 'true';
   }
@@ -106,8 +112,8 @@ export class SignUpComponent implements OnInit {
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode =this.countryCodes[0].value;
     }
-    this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.ynw_credentials = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+    this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;
     }
@@ -115,7 +121,7 @@ export class SignUpComponent implements OnInit {
       this.fname = this.ynwUser.firstName;
       this.lname = this.ynwUser.lastName;
     }
-    this.shared_functions.removeitemfromLocalStorage('ynw-createprov');
+    this.lStorageService.removeitemfromLocalStorage('ynw-createprov');
     this.moreParams = this.data.moreParams;
     if (this.data.is_provider === 'true') {
       this.heading = 'Service Provider Sign Up';
@@ -438,7 +444,7 @@ export class SignUpComponent implements OnInit {
           // }
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -450,7 +456,7 @@ export class SignUpComponent implements OnInit {
   //     .subscribe(
   //       () => {
   //         this.actionstarted = false;
-  //         this.shared_functions.setitemonLocalStorage('unClaimAccount', false);
+  //         this.lStorageService.setitemonLocalStorage('unClaimAccount', false);
   //         this.createForm(2);
   //         this.resendemailotpsuccess = true;
   //         if (user_details.userProfile &&
@@ -462,10 +468,10 @@ export class SignUpComponent implements OnInit {
   //       },
   //       error => {
   //         this.actionstarted = false;
-  //         if (this.shared_functions.getitemfromLocalStorage('unClaimAccount')) {
+  //         if (this.lStorageService.getitemfromLocalStorage('unClaimAccount')) {
   //           this.onSubmit(error.error);
   //         } else {
-  //           this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+  //           this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
   //         }
   //       }
   //     );
@@ -483,7 +489,7 @@ export class SignUpComponent implements OnInit {
     //       },
     //       error => {
     //         this.actionstarted = false;
-    //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
     //       }
     //     );
     // } else {
@@ -496,7 +502,7 @@ export class SignUpComponent implements OnInit {
           },
           error => {
             this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           }
         );
     // }
@@ -530,7 +536,7 @@ export class SignUpComponent implements OnInit {
   //       },
   //       error => {
   //         this.actionstarted = false;
-  //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+  //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
   //       }
   //     );
   // }
@@ -555,21 +561,21 @@ export class SignUpComponent implements OnInit {
     //         this.dialogRef.close();
     //         if (this.ynw_credentials != null) {
     //           this.shared_functions.doLogout().then(() => {
-    //             this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+    //             this.lStorageService.setitemonLocalStorage('new_provider', 'true');
     //             this.shared_functions.providerLogin(login_data);
     //             const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-    //             this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+    //             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
     //           });
     //         } else {
-    //           this.shared_functions.setitemonLocalStorage('new_provider', 'true');
+    //           this.lStorageService.setitemonLocalStorage('new_provider', 'true');
     //           this.shared_functions.providerLogin(login_data);
     //           const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-    //           this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+    //           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
     //         }
     //       },
     //       error => {
     //         this.actionstarted = false;
-    //         this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+    //         this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
     //       }
     //     );
     // } else {
@@ -587,19 +593,19 @@ export class SignUpComponent implements OnInit {
               .then(
                 () => {
                   const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-                  this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
+                  this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                  this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
                   this.dialogRef.close('success');
                 },
                 error => {
-                  ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                  ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                   // this.api_loading = false;
                 }
               );
           },
           error => {
             this.actionstarted = false;
-            this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           }
         );
     // }
@@ -646,7 +652,7 @@ export class SignUpComponent implements OnInit {
   }
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }
@@ -666,7 +672,7 @@ export class SignUpComponent implements OnInit {
   onCancelPass() {
     if (this.step === 4) {
       this.step = 5;
-      this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
+      this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
   goBusinessClicked() {

@@ -4,10 +4,11 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { MatSelect } from '@angular/material/select';
 import { takeUntil, startWith, map } from 'rxjs/operators';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 
 interface Bank {
@@ -121,8 +122,8 @@ export class DisplayboardDetailComponent implements OnInit {
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
-        private shared_functions: SharedFunctions,
-        private shared_Functionsobj: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
         private activated_route: ActivatedRoute,
         private router: Router
     ) {
@@ -300,14 +301,14 @@ export class DisplayboardDetailComponent implements OnInit {
                 'metric': this.metric,
             };
             this.provider_services.createDisplayboardWaitlist(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_ADD'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(data);
                 this.actionparam = 'view';
                 this.qBoardscaption = 'QBoard Details';
             },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
         if (this.actionparam === 'edit') {
@@ -324,14 +325,14 @@ export class DisplayboardDetailComponent implements OnInit {
                 post_data['layout'] = this.layout.value;
             }
             this.provider_services.updateDisplayboardWaitlist(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('DISPLAYBOARD_UPDATE'), { 'panelclass': 'snackbarerror' });
                 this.editLayoutbyId(this.layoutData.id);
                 this.actionparam = 'view';
                 this.qBoardscaption = 'QBoard Details';
             },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }
@@ -354,7 +355,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -370,7 +371,7 @@ export class DisplayboardDetailComponent implements OnInit {
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }

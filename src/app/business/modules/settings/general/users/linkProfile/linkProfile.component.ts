@@ -6,8 +6,8 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../../../../app.component';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-linkprofile',
     templateUrl: './linkProfile.component.html'
@@ -28,10 +28,10 @@ export class LinkProfileComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         private router: Router,
         private sharedservices: ProviderServices,
-        private sharedfunctionObj: SharedFunctions,
         public dialogRef: MatDialogRef<LinkProfileComponent>,
         @Inject(DOCUMENT) public document,
         @Inject(MAT_DIALOG_DATA) public data: any,
+        private snackbarService: SnackbarService
     ) { }
     ngOnInit() {
         this.provId = this.data.provId;
@@ -46,7 +46,7 @@ export class LinkProfileComponent implements OnInit {
     onSubmit(input) {
         this.resetApiErrors();
         if (input.profileId === 0) {
-            this.api_error = this.sharedfunctionObj.openSnackBar('Please enter a valid Provider ProfileId', { 'panelClass': 'snackbarerror' });
+            this.api_error = this.snackbarService.openSnackBar('Please enter a valid Provider ProfileId', { 'panelClass': 'snackbarerror' });
         } else {
             this.addlink(this.provId, input.profileId);
         }
@@ -57,7 +57,7 @@ export class LinkProfileComponent implements OnInit {
         this.disableButton = true;
         this.sharedservices.updateuserlinkProfile(provId, profileId).subscribe(
             () => {
-                this.api_success = this.sharedfunctionObj.openSnackBar(Messages.Profile_Created);
+                this.api_success = this.snackbarService.openSnackBar(Messages.Profile_Created);
                 this.api_loading = false;
                 setTimeout(() => {
                     this.dialogRef.close('reloadlist');
@@ -66,7 +66,7 @@ export class LinkProfileComponent implements OnInit {
                 this.router.navigate(['provider', 'settings', 'general', 'users']);
             },
             error => {
-                this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
                 this.disableButton = false;
             }

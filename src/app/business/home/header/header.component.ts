@@ -14,6 +14,11 @@ import { JoyrideService } from 'ngx-joyride';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderStartTourComponent } from '../../../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { HelpPopUpComponent } from './help-pop-up/help-pop-up.component';
+import { SessionStorageService } from '../../../shared/services/session-storage.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -48,7 +53,11 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   licenseDetails;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
-    private sharedfunctionobj: SharedFunctions,
+    private sessionStorageService: SessionStorageService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
     private renderer: Renderer2,
     public shared_service: SharedServices,
     private provider_services: ProviderServices,
@@ -57,7 +66,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     private provider_dataStorage: ProviderDataStorageService,
     private readonly joyrideService: JoyrideService) {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
-    this.waitlist_label = this.sharedfunctionobj.getTerminologyTerm('waitlist');
+    this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
         case 'checkin-settings-changed':
@@ -158,7 +167,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['provider', 'settings', 'bprofile']);
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -167,7 +176,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    if (this.shared_functions.getitemfromSessionStorage('tabId')) {
+    if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       this.sessionStorage = true;
     }
     this.isAvailableNow();
@@ -273,7 +282,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const cuser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = cuser.accountType;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
@@ -296,7 +305,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.shared_functions.sendMessage({ 'ttype': 'menuChanged', 'value': 'inbox' });
   }
   upgradeMembership() {
-    this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
+    this.lStorageService.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'license', 'upgrade']);
   }
   showCheckinED() {
@@ -380,12 +389,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   alertAcknowlege(alert) {
     this.shared_service.acknowledgeAlert(alert.id)
       .subscribe(() => {
-        this.shared_functions.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
+        this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
         this.getAlertCount();
         this.getAlerts();
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   // getAlertById(date) {
@@ -399,10 +408,10 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   // }
 
   gotoBranch() {
-    const accountid = this.sharedfunctionobj.getitemfromSessionStorage('accountid');
-    this.sharedfunctionobj.removeitemfromLocalStorage(accountid);
-    this.sharedfunctionobj.removeitemfromSessionStorage('accountid');
-    this.sharedfunctionobj.removeitemfromSessionStorage('tabId');
+    const accountid = this.sessionStorageService.getitemfromSessionStorage('accountid');
+    this.lStorageService.removeitemfromLocalStorage(accountid);
+    this.sessionStorageService.removeitemfromSessionStorage('accountid');
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
     window.location.reload();
   }
   helpClicked() {

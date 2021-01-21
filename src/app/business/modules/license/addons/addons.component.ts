@@ -3,12 +3,14 @@ import { ProviderAddonAuditlogsComponent } from '../../../../ynw_provider/compon
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { Location } from '@angular/common';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-addons',
@@ -50,18 +52,19 @@ export class AddonsComponent implements OnInit, OnDestroy {
     constructor(
         private dialog: MatDialog,
         private provider_servicesobj: ProviderServices,
-        private shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
         private routerobj: Router,
-        private sharedfunctionObj: SharedFunctions,
         private location: Location,
     ) { }
 
     ngOnInit() {
         this.getLicenseCorpSettings();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.account_type = user.accountType;
         this.domain = user.sector;
-        this.addonTooltip = this.sharedfunctionObj.getProjectMesssages('ADDON_TOOLTIP');
+        this.addonTooltip = this.wordProcessor.getProjectMesssages('ADDON_TOOLTIP');
         this.getLicenseDetails();
         this.getUpgradableaddonPackages();
     }
@@ -85,9 +88,9 @@ export class AddonsComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 this.currentlicense_details = data;
                 this.current_lic = this.currentlicense_details.accountLicense.displayName;
-                const ynw_user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+                const ynw_user = this.groupService.getitemFromGroupStorage('ynw-user');
                 ynw_user.accountLicenseDetails = this.currentlicense_details;
-                this.sharedfunctionObj.setitemToGroupStorage('ynw-user', ynw_user);
+                this.groupService.setitemToGroupStorage('ynw-user', ynw_user);
             });
     }
     ngOnDestroy() {
@@ -127,7 +130,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     showadd_addons() {
         // if (this.account_type === 'BRANCH' || this.account_type === 'BRANCH_SP') {
         if (this.corpSettings && this.corpSettings.isCentralised) {
-            this.sharedfunctionObj.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         } else {
             this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
                 width: '50%',

@@ -8,6 +8,9 @@ import { TeleServiceConfirmBoxComponent } from './teleservice-confirm-box/telese
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 import { TeleServiceShareComponent } from './teleservice-share/teleservice-share.component';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 
 @Component({
@@ -53,25 +56,28 @@ export class TeleServiceComponent implements OnInit {
         private router: Router, public _location: Location,
         private dialog: MatDialog,
         private provider_shared_functions: ProviderSharedFuctions,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService
     ) {
         this.activateroute.queryParams.subscribe(params => {
             this.waiting_id = params.waiting_id;
             this.waiting_type = params.type;
         });
-        this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-        this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
     ngOnInit() {
-        this.ynwUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (this.waiting_type === 'checkin') {
             this.getProviderWaitlstById();
         } else {
             this.getProviderApptById();
         }
-        this.notSupported = this.shared_functions.getProjectMesssages('TELE_NOT_SUPPORTED');
-        this.availableMsg = this.shared_functions.getProjectMesssages('IS_AVAILABLE');
-        this.ph_or_tab_cap = this.shared_functions.getProjectMesssages('PHONE_OR_TAB');
-        this.installed_cap = this.shared_functions.getProjectMesssages('IS_INSTALD');
+        this.notSupported = this.wordProcessor.getProjectMesssages('TELE_NOT_SUPPORTED');
+        this.availableMsg = this.wordProcessor.getProjectMesssages('IS_AVAILABLE');
+        this.ph_or_tab_cap = this.wordProcessor.getProjectMesssages('PHONE_OR_TAB');
+        this.installed_cap = this.wordProcessor.getProjectMesssages('IS_INSTALD');
 
         // checking the device
         const isMobile = {
@@ -219,7 +225,7 @@ export class TeleServiceComponent implements OnInit {
                         if (this.data.waitlistStatus !== 'started') {
                             this.changeWaitlistStatus(this.data, 'STARTED');
                         } else if (this.data.waitlistStatus === 'started') {
-                            this.shared_functions.openSnackBar('Service already started!');
+                            this.snackbarService.openSnackBar('Service already started!');
                             this.servStarted = true;
                         }
                         // this.chkinTeleserviceJoinLink();
@@ -227,7 +233,7 @@ export class TeleServiceComponent implements OnInit {
                         if (this.data.apptStatus !== 'Started') {
                             this.changeWaitlistStatus(this.data, 'Started');
                         } else if (this.data.apptStatus === 'Started') {
-                            this.shared_functions.openSnackBar('Service already started!');
+                            this.snackbarService.openSnackBar('Service already started!');
                             this.servStarted = true;
                         }
                         //  this.apptTeleserviceJoinLink();
@@ -271,7 +277,7 @@ export class TeleServiceComponent implements OnInit {
                     if (result) {
                         // this.servStarted = true;
                         if (action === 'DONE') {
-                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.snackbarService.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'check-ins']);
                         } else {
                             // console.log(this.starting_url);
@@ -306,7 +312,7 @@ export class TeleServiceComponent implements OnInit {
                 .then(result => {
                     if (result) {
                         if (action === 'Completed') {
-                            this.shared_functions.openSnackBar('Meeting has been ended');
+                            this.snackbarService.openSnackBar('Meeting has been ended');
                             this.router.navigate(['provider', 'appointments']);
                         } else {
                             this.apptTeleserviceJoinLink();
@@ -404,6 +410,12 @@ export class TeleServiceComponent implements OnInit {
 
     // Reminder popup
     reminder() {
+        let consumer;
+        if (this.waiting_type === 'checkin') {
+            consumer = this.data.consumer;
+        } else {
+            consumer = this.data.providerConsumer;
+        }
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -419,7 +431,8 @@ export class TeleServiceComponent implements OnInit {
                 waitingId: this.waiting_id,
                 waitingType: this.waiting_type,
                 busnsName: this.busnes_name,
-                status: this.servStarted
+                status: this.servStarted,
+                consumerDetails: consumer
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {
@@ -429,6 +442,12 @@ export class TeleServiceComponent implements OnInit {
 
     // Meeting detail popup
     meetingDetails() {
+        let consumer;
+        if (this.waiting_type === 'checkin') {
+            consumer = this.data.consumer;
+        } else {
+            consumer = this.data.providerConsumer;
+        }
         this.startTeledialogRef = this.dialog.open(TeleServiceShareComponent, {
             width: '50%',
             panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -445,7 +464,8 @@ export class TeleServiceComponent implements OnInit {
                 waitingType: this.waiting_type,
                 busnsName: this.busnes_name,
                 token: this.data.token,
-                checkInTime: this.data.checkInTime
+                checkInTime: this.data.checkInTime,
+                consumerDetails: consumer
             }
         });
         this.startTeledialogRef.afterClosed().subscribe(result => {

@@ -1,12 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 import { projectConstants } from '../../../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../../../../shared/components/confirm-box/confirm-box.component';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-nonworkingday-list',
@@ -26,6 +29,7 @@ export class NonWorkingDaylistComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   isCheckin;
@@ -60,17 +64,19 @@ export class NonWorkingDaylistComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions) {
-    this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('HOLIDAY_LISTEMPTY');
+    private sharedfunctionObj: SharedFunctions,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getNonworkingdays();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   ngOnDestroy() {
@@ -122,7 +128,7 @@ export class NonWorkingDaylistComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
+        'message': this.wordProcessor.getProjectMesssages('HOLIDAY_DELETE').replace('[date]', date_format)
       }
     });
     this.remholdialogRef.afterClosed().subscribe(result => {

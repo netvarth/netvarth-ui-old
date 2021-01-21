@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-consumer-livetrack',
@@ -41,7 +43,9 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
         private dialog: MatDialog,
         public route: ActivatedRoute,
         public shared_functions: SharedFunctions,
-        private shared_services: SharedServices) {
+        private shared_services: SharedServices,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor) {
         this.route.params.subscribe(
             params => {
                 this.uuid = params.id;
@@ -79,7 +83,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
             (lat_long: any) => {
             }, (error) => {
                 this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-                this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                 this.shareLoc = false;
                 this.track_loading = false;
             }
@@ -134,8 +138,8 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 this.liveTrackMessage = this.shared_functions.getLiveTrackStatusMessage(data, this.activeWt.providerAccount.businessName, this.travelMode);
             },
             error => {
-                this.api_error = this.shared_functions.getProjectErrorMesssages(error);
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
             });
     }
@@ -193,18 +197,18 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                 this.track_loading = false;
             },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
             });
     }
     trackClose(status) {
         if (status === 'livetrack') {
             if (this.shareLoc) {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TRACKINGCANCELENABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
             } else {
-                this.shared_functions.openSnackBar(this.shared_functions.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
             }
-            this.router.navigate(['/']);
+            this.router.navigate(['/consumer']);
         }
     }
     updateLiveTrackInfo() {
@@ -285,7 +289,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit {
                     }
                 }, (error) => {
                     this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-                    this.shared_functions.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
                     this.shareLoc = false;
                     this.track_loading = false;
                 }

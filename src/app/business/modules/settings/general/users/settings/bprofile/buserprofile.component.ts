@@ -19,6 +19,10 @@ import { QuestionService } from '../../../../../../../ynw_provider/components/dy
 import { ProviderUserBprofileSearchDynamicComponent } from './additionalinfo/provider-userbprofile-search-dynamic.component/provider-userbprofile-search-dynamic.component';
 import { UserDataStorageService } from '../user-datastorage.service';
 import { ProPicPopupComponent } from '../../../../bprofile/pro-pic-popup/pro-pic-popup.component';
+import { GroupStorageService } from '../../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-buserprofile',
@@ -220,7 +224,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   breadcrumbs = this.breadcrumbs_init;
   businessConfig: any = [];
   customer_label = '';
-  maintooltip = this.sharedfunctionobj.getProjectMesssages('BPROFILE_TOOPTIP');
+  maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
   primarydialogRef;
   cacheavoider = '';
   frm_additional_cap = '';
@@ -274,8 +278,12 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     @Inject(DOCUMENT) public document,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<UserBprofileSearchPrimaryComponent>,
-    private shared_services: SharedServices) {
-    this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+    private shared_services: SharedServices,
+    private groupService: GroupStorageService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
     }
@@ -291,8 +299,8 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.frm_public_search_off_cap = Messages.FRM_LEVEL_PUBLIC_SEARCH_MSG_OFF.replace('[customer]', this.customer_label);
     this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
     this.frm_additional_cap = Messages.FRM_LEVEL_ADDITIONAL_MSG.replace('[customer]', this.customer_label);
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
     this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
@@ -317,7 +325,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     // this.createForm();
     // }, 500);
     this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
-    this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
     this.subscription = this.user_datastorage.getWeightageArray().subscribe(result => {
@@ -387,10 +395,10 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     this.provider_services.updateUserPublicSearch(this.userId, changeTostatus)
       .subscribe(() => {
         this.onlinepresence_status = !this.onlinepresence_status;
-        this.shared_functions.openSnackBar('Jaldee Online ' + changeTostatus + 'd successfully', { ' panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Jaldee Online ' + changeTostatus + 'd successfully', { ' panelclass': 'snackbarerror' });
         this.getUserPublicSearch();
       }, error => {
-        this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.getUserPublicSearch();
       });
   }
@@ -682,7 +690,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -695,7 +703,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -927,7 +935,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
         if (str !== '') {
           str += ', ';
         }
-        str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+        str += this.wordProcessor.firstToUpper(fld.value[i]);
       }
       return str;
     }

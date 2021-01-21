@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-customer-selection',
@@ -36,7 +36,7 @@ export class CustomerSelectionComponent implements OnInit {
     private report_data_service: ReportDataService,
     private fb: FormBuilder,
     private provider_services: ProviderServices,
-    private shared_functions: SharedFunctions) {
+    private wordProcessor: WordProcessor) {
     this.activated_route.queryParams.subscribe(qparams => {
 
       this.reportType = qparams.report_type;
@@ -55,7 +55,7 @@ export class CustomerSelectionComponent implements OnInit {
   ngOnInit() {
 
     this.createForm();
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const placeholder = 'Enter customer id seperated by comm;Ex 1,2,3';
     this.placeHolder_msg = placeholder.replace('customer', this.customer_label);
   }
@@ -80,7 +80,7 @@ export class CustomerSelectionComponent implements OnInit {
     const customerData = {
       'jaldee_customers': jaldee_customers,
       'customers': customers
-    }
+    };
     console.log(JSON.stringify(customerData));
     this.report_data_service.updateCustomers(customerData);
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
@@ -207,7 +207,7 @@ export class CustomerSelectionComponent implements OnInit {
           // }
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }

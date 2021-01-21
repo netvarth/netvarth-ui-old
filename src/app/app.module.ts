@@ -89,6 +89,15 @@ import { AddAddressComponent } from './shared/components/checkout/add-address/ad
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
+import { SessionStorageService } from './shared/services/session-storage.service';
+import { CookieProcessor } from './shared/services/cookie-processor.service';
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { GroupStorageService } from './shared/services/group-storage.service';
+import { WordProcessor } from './shared/services/word-processor.service';
+import { SnackbarService } from './shared/services/snackbar.service';
+import { ErrorMessagingService } from './shared/services/error-message.service';
+import { AuthService } from './shared/services/auth-service';
+import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -200,16 +209,26 @@ export function init_app(globalService: GlobalService) {
       useClass: ExtendHttpInterceptor,
       multi: true
     },
+    AuthService,
     SharedServices,
     GlobalFunctions,
     GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
+    ErrorMessagingService,
     SearchDetailServices,
     ProviderDetailService,
     ProviderDataStorageService,
     ShareService,
+    SessionStorageService,
+    LocalStorageService,
+    CookieProcessor,
+    GroupStorageService,
+    WordProcessor,
+    SnackbarService,
+    GroupStorageService,
     Title,
+    CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },

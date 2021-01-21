@@ -4,6 +4,9 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-languages',
     templateUrl: './languages.component.html'
@@ -40,15 +43,17 @@ export class LanguagesComponent implements OnInit, OnDestroy {
     ];
     constructor(
         private provider_services: ProviderServices,
-        private sharedfunctionobj: SharedFunctions,
         private routerobj: Router,
         private language: Location,
-        public shared_functions: SharedFunctions
+        public shared_functions: SharedFunctions,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private snackbarService: SnackbarService
     ) {
-        this.customer_label = this.sharedfunctionobj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.frm_lang_cap = Messages.FRM_LEVEL_LANG_MSG.replace('[customer]', this.customer_label);
@@ -146,12 +151,12 @@ export class LanguagesComponent implements OnInit, OnDestroy {
         };
         this.provider_services.updatePrimaryFields(postdata)
           .subscribe(() => {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_LANGUAGE_SAVED, { 'panelClass': 'snackbarnormal' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_LANGUAGE_SAVED, { 'panelClass': 'snackbarnormal' });
             this.disableButton = false;
             this.routerobj.navigate(['provider', 'settings', 'bprofile']);
             },
             error => {
-              this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             }
           );
       }

@@ -11,6 +11,10 @@ import { ProviderServices } from '../../../../../ynw_provider/services/provider-
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -230,10 +234,14 @@ export class AppointmentComponent implements OnInit {
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
         private activated_route: ActivatedRoute,
-        public provider_services: ProviderServices) {
-        this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
-        this.provider_label = this.sharedFunctionobj.getTerminologyTerm('provider');
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+        public provider_services: ProviderServices,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
@@ -334,7 +342,7 @@ export class AppointmentComponent implements OnInit {
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
         this.createForm();
-        const user = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
@@ -491,7 +499,7 @@ export class AppointmentComponent implements OnInit {
                         }
                     },
                     error => {
-                        this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                        this.wordProcessor.apiErrorAutoHide(this, error);
                     }
                 );
         }
@@ -517,7 +525,7 @@ export class AppointmentComponent implements OnInit {
                     this.router.navigate(['provider', 'appointments']);
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     getGlobalSettings() {
@@ -556,7 +564,7 @@ export class AppointmentComponent implements OnInit {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
 
-        const loc = this.sharedFunctionobj.getitemFromGroupStorage('loc_id');
+        const loc = this.groupService.getitemFromGroupStorage('loc_id');
         this.sel_loc = loc.id;
         // if (this.sel_checkindate === undefined) {
         //     this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
@@ -625,7 +633,7 @@ export class AppointmentComponent implements OnInit {
     initDepartments(accountId) {
         this.departmentlist = this.departments = [];
         const _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise<void>(function (resolve, reject) {
             _this.shared_services.getProviderDept(accountId).subscribe(data => {
                 _this.departmentlist = data;
                 _this.filterDepart = _this.departmentlist.filterByDept;
@@ -654,8 +662,8 @@ export class AppointmentComponent implements OnInit {
         });
     }
     setTerminologyLabels() {
-        this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
-        this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
+        this.checkinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlist'));
+        this.CheckedinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlisted'));
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
         } else {
@@ -664,7 +672,7 @@ export class AppointmentComponent implements OnInit {
     }
     getWaitlistMgr() {
         const _this = this;
-        return new Promise(function (resolve, reject) {
+        return new Promise<void>(function (resolve, reject) {
             _this.provider_services.getWaitlistMgr()
                 .subscribe(
                     data => {
@@ -964,7 +972,7 @@ export class AppointmentComponent implements OnInit {
                 this.saveCheckin();
                 // }
             } else {
-                this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 // this.api_error = error;
             }
         }
@@ -1057,7 +1065,7 @@ export class AppointmentComponent implements OnInit {
             // post_Data['virtualService'] = this.virtualServiceArray;
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
-                    this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
@@ -1079,8 +1087,8 @@ export class AppointmentComponent implements OnInit {
             }
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-        //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
-        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        //     // this.api_error = this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR');
+        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // if (this.partySizeRequired) {
@@ -1103,7 +1111,7 @@ export class AppointmentComponent implements OnInit {
     addAppointmentBlock(post_Data) {
         this.provider_services.addAppointmentBlock(post_Data)
             .subscribe((data) => {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                 this.showCheckin = false;
                 this.searchForm.reset();
                 this.router.navigate(['provider', 'appointments']);
@@ -1132,17 +1140,17 @@ export class AppointmentComponent implements OnInit {
                     this.consumerNoteAndFileSave(retUuid);
                 }
                 // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('APPOINTMNT_SUCC'));
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                 // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
-                //    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('TOKEN_GENERATION'));
+                //    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
                 // }
                 this.showCheckin = false;
                 this.searchForm.reset();
                 this.router.navigate(['provider', 'appointments']);
             },
                 error => {
-                    // this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                 });
     }
@@ -1226,11 +1234,11 @@ export class AppointmentComponent implements OnInit {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
 
                     } else if (this.maxsize === 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
                     }
                 }
             }
@@ -1330,8 +1338,8 @@ export class AppointmentComponent implements OnInit {
             }
             fn = this.shared_services.addProviderCustomerFamilyMember(post_data);
             fn.subscribe(() => {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
-                // this.api_success = this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED');
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                // this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.handleGoBack(3);
@@ -1339,14 +1347,14 @@ export class AppointmentComponent implements OnInit {
             },
                 error => {
                     // this.api_error = error.error;
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
-                    // this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'));
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'));
                 });
         } else {
             // this.api_error = derror;
             this.disable = false;
-            this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
     handleNote() {
@@ -1552,9 +1560,9 @@ export class AppointmentComponent implements OnInit {
                             this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
                         } else {
                             // if (this.filterDepart) {
-                            this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
                             // } else {
-                            //     this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+                            //     this.snackbarService.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
                             // }
                         }
                     }
@@ -1630,9 +1638,9 @@ export class AppointmentComponent implements OnInit {
             this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         } else {
             // if (this.filterDepart) {
-            //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+            //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
             // } else {
-            this.sharedFunctionobj.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('The selected provider doesn\'t contain any active services for this location', { 'panelClass': 'snackbarerror' });
             // }
         }
     }
@@ -1671,9 +1679,9 @@ export class AppointmentComponent implements OnInit {
         if (input) {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1712,7 +1720,7 @@ export class AppointmentComponent implements OnInit {
                 () => {
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -1775,7 +1783,7 @@ export class AppointmentComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -1806,7 +1814,7 @@ export class AppointmentComponent implements OnInit {
         if (this.callingModes && this.callingModes.length === 10 && this.callingModes.charAt(0) !== '0') {
             this.showInputSection = true;
         } else if (!this.callingModes || this.callingModes.length < 10 || this.callingModes.charAt(0) === '0') {
-            this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         }
     }
     // handleModeSel(index, ev) {

@@ -11,6 +11,10 @@ import * as moment from 'moment';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -238,8 +242,12 @@ export class CustomerSearchComponent implements OnInit {
         public router: Router,
         private activated_route: ActivatedRoute,
         private _location: Location,
-        public provider_services: ProviderServices) {
-        this.customer_label = this.sharedFunctionobj.getTerminologyTerm('customer');
+        public provider_services: ProviderServices,
+        private snackbarService:SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService) {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.isFrom) {
                 this.isFrom = qparams.isFrom;
@@ -333,15 +341,15 @@ export class CustomerSearchComponent implements OnInit {
     }
     ngOnInit() {
         this.createForm();
-        const user = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
         this.api_loading = false;
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.get_token_cap = Messages.GET_TOKEN;
         const breadcrumbs = [
             {
-                title: this.sharedFunctionobj.firstToUpper(this.customer_label) + 's',
+                title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
                 url: 'provider/customers'
             },
             {
@@ -351,7 +359,7 @@ export class CustomerSearchComponent implements OnInit {
         this.loading = true;
         this.getGlobalSettingsStatus();
         this.breadcrumbs = [{
-            title: this.sharedFunctionobj.firstToUpper(this.customer_label) + 's',
+            title: this.wordProcessor.firstToUpper(this.customer_label) + 's',
             url: 'provider/customers'
         },
         {
@@ -489,8 +497,8 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.createProviderCustomer(post_data)
             .subscribe(
                 data => {
-                    this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                    this.sharedFunctionobj.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+                    this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                    this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
                     const qParams = {};
                     qParams['pid'] = data;
                     if (this.source === 'checkin') {
@@ -518,7 +526,7 @@ export class CustomerSearchComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disableButton = false;
                 });
         // } else if (this.action === 'edit') {
@@ -545,7 +553,7 @@ export class CustomerSearchComponent implements OnInit {
         //         .subscribe(
         //             data => {
         //                 this.sharedFunctionobj.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-        //                 this.sharedFunctionobj.openSnackBar('Updated Successfully');
+        //                 this.snackbarService.openSnackBar('Updated Successfully');
         //                 const qParams = {};
         //                 qParams['pid'] = data;
         //                 if (this.source === 'checkin') {
@@ -574,7 +582,7 @@ export class CustomerSearchComponent implements OnInit {
         //                 }
         //             },
         //             error => {
-        //                 this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //             });
 
         // }
@@ -673,7 +681,7 @@ export class CustomerSearchComponent implements OnInit {
                 this.qParams['phone'] = form_data.search_input;
                 break;
             case 'email':
-                this.qParams['phone'] = form_data.search_input;
+                this.qParams['email'] = form_data.search_input;
                 post_data = {
                     'email-eq': form_data.search_input
                 };
@@ -730,7 +738,7 @@ export class CustomerSearchComponent implements OnInit {
                 },
                 error => {
                     this.loading = false;
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -758,7 +766,7 @@ export class CustomerSearchComponent implements OnInit {
     }
     toCamelCase(word) {
         if (word) {
-            return this.sharedFunctionobj.toCamelCase(word);
+            return this.wordProcessor.toCamelCase(word);
         } else {
             return word;
         }

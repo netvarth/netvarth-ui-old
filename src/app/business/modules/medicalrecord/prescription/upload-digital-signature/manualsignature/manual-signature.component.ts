@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { SignaturePad } from 'angular2-signaturepad';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-manual-signature',
@@ -64,6 +66,8 @@ export class ManualSignatureComponent implements OnInit {
     private router: Router,
     private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor
    // private medicalrecord_service: MedicalrecordService
     ) {
       const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
@@ -139,11 +143,11 @@ export class ManualSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        this.sharedfunctionObj.openSnackBar('Digital sign uploaded successfully');
+        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
 

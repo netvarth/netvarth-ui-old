@@ -1,60 +1,138 @@
 <section id="prov_home_n">
 	<header class="site-header">
-		<div class="container">
-			<div class="row align-items-center hidden-xs hidden-sm">
-				<div class="site-branding col-md-4 col-lg-4 mb-4 mb-lg-0">
+		<a class="logo"  routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 3rem;"></a>
+		<a class="pointer-cursor" class="account-links pull-right">
+			<a routerLink="login" class="prov_btn_login_top btn join">Log in</a> 
+			<a routerLink="signup" class="prov_btn_join_top btn join">Start For Free</a>			
+		</a>
+		<input class="menu-btn" type="checkbox" id="menu-btn" />
+		<label class="menu-icon pull-right" for="menu-btn"><span class="navicon"></span></label>	
+		<ul class="menu">
+		  <li><a class="pointer-cursor" (click)="triggerScrollTo('features')">Features</a></li>
+		  <li><a routerLink="pricing">Pricing</a></li>
+		  <li><a href="https://contact.jaldee.com">Contact Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://wa.me/917306823011" aria-expanded="false"><i
+			class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a></li>
+		  <li><a class="nav-item nav-link " href="https://t.me/Jaldeekaro" aria-expanded="false"><i
+			class="fa fa-telegram"></i>&nbsp;Telegram Us</a></li>						
+		</ul>
+	  </header>
+	<!-- <header class="site-header">		
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="container-fluid">
+				<div class="navbar-brand"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"
+						class="img-fluid logo" /></div>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+					aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="hamburger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-item nav-link " routerLink="pricing">Pricing</a>
+						<a class="nav-item nav-link " href="https://contact.jaldee.com">Contact Us</a>
+						<a class="nav-item nav-link " href="https://wa.me/917306823011" aria-expanded="false"><i
+								class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+						<a class="nav-item nav-link " href="https://t.me/Jaldeekaro" aria-expanded="false"><i
+								class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
+						<a class="nav-item nav-link account-links" routerLink="login" class="prov_btn_login_top btn join">Log in</a>
+						<a class="nav-item nav-link account-links" routerLink="signup" class="prov_btn_join_top btn join">Start For
+							Free</a>
+					</div>
+				</div> -->
+				<!-- <div class="account-links pull-right">
+					
+					</div> -->
+			<!-- </div>
+			</nav> -->
+			<!-- <nav class="navbar navbar-dropdown navbar-expand-lg">
+				<div class="container-fluid">
+					<div class="navbar-brand">
+						<span class="navbar-logo">
+							<a href="http://business.jaldee.com/">
+								<img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business" style="height: 3rem;">
+							</a>
+						</span>					
+					</div>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+						<div class="hamburger">
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav nav-dropdown" data-app-modern-menu="true"><li class="nav-item dropdown"><a class="nav-link link text-black text-primary dropdown-toggle display-7" href="#" aria-expanded="true" data-toggle="dropdown-submenu">Sign In/Sign Up</a><div class="dropdown-menu"><a class="text-black text-primary dropdown-item display-7" href="https://www.jaldee.com/business" aria-expanded="false">Sign In</a><a class="text-black text-primary dropdown-item display-7" href="https://www.jaldee.com/business/providersignup" aria-expanded="false">Sign Up for FREE</a></div></li><li class="nav-item"><a class="nav-link link text-black text-primary display-7" href="http://pricing.jaldee.com/">
+									Pricing</a></li>
+							<li class="nav-item"><a class="nav-link link text-black text-primary display-7" href="http://contact.jaldee.com/" aria-expanded="false">Contact Us</a>
+							</li><li class="nav-item"><a class="nav-link link text-black text-primary display-7" href="https://wa.me/917306823011" aria-expanded="false"><span class="socicon socicon-whatsapp mbr-iconfont mbr-iconfont-btn"></span>WhatsApp Us</a></li></ul>
+						
+						<div class="navbar-buttons mbr-section-btn"><a class="btn btn-secondary display-7" href="http://demo.jaldee.com">Get a FREE Demo</a></div>
+					</div>
+				</div>
+			</nav> -->
+			<!-- <div class="row align-items-center hidden-xs hidden-sm">
+				<div class="site-branding col-md-3 col-lg-3 mb-4 mb-lg-0">
 					<img src="assets/images/jaldee-businesslogo.png" alt="Jaldee" class="img-fluid logo" />
 				</div>
-				<div class="col-md-8 col-lg-8 site-header--links">
-					<!-- <div class="download-buttons visible-xs visible-sm">
+				<div class="col-md-9 col-lg-9 site-header--links"> -->
+			<!-- <div class="download-buttons visible-xs visible-sm">
 						<span>Download Jaldee App</span>
 						<a href="#" class="cons_btn_login_top"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store"
 								class="" /></a>
 						<a href="#" class=""><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store"
 								class="" /></a>
 					</div> -->
-					<div class="account-links pull-right">
-						<!-- <a class="pointer-cursor"><span class="mgn-lt-20">Features
+			<!-- <div class="account-links pull-right"> -->
+			<!-- <a class="pointer-cursor"><span class="mgn-lt-20">Features
 							</span></a> -->
-						<a routerLink="pricing" ><span class="mgn-lt-20">Pricing</span></a>
+			<!-- <a routerLink="pricing" ><span class="mgn-lt-20">Pricing</span></a>
 						<a href="https://contact.jaldee.com"><span class="mgn-lt-20">Contact Us</span></a>
-						<a class="mgn-lt-20 mgn-rt-30" href="https://wa.me/917306823011" aria-expanded="false"><i class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+						<a class="mgn-lt-20" href="https://wa.me/917306823011" aria-expanded="false"><i class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+						<a class="mgn-lt-20 mgn-rt-30" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
 						<a class="pointer-cursor" class="login-link">
 							<a routerLink="login" class="prov_btn_login_top btn join">Log in</a> 
 							<a routerLink="signup" class="prov_btn_join_top btn join">Start For Free</a></a>
-					</div>
-					<!-- <div class="account-links col-xs-12 col-sm-12">
+					</div> -->
+			<!-- <div class="account-links col-xs-12 col-sm-12">
 						<a href="# " class="pointer-cursor pull-left">Business Partner Zone</a>
 						<a class="pointer-cursor" class="login-link pull-right"><span class="cons_btn_login_top" (click)="doLogin('consumer')">Log in</span> / <span class="cons_btn_join_top" (click)="doSignup('consumer')">Sign up</span></a>
 					</div> -->
-				</div>
+			<!-- </div>
 			</div>
 			<div class="row visible-xs visible-sm">
 				<div class="col-5 col-xs-5 col-sm-5">
 					<img src="assets/images/jaldee-businesslogo.png" alt="Jaldee" class="logo" />
 				</div>
-				<div class="col-7 col-xs-7 col-sm-7 no-padding">
-					<!-- <div class="download-buttons visible-xs visible-sm">
+				<div class="col-7 col-xs-7 col-sm-7 no-padding"> -->
+			<!-- <div class="download-buttons visible-xs visible-sm">
 						<span>Download Jaldee App</span>
 						<a href="#" class="cons_btn_login_top"><img src="assets/images/home/playstore-icon.png" alt="Download from Google Play Store"
 								class="" /></a>
 						<a href="#" class=""><img src="assets/images/home/applestore-icon.png" alt="Download from Apple Store"
 								class="" /></a>
 					</div> -->
-					<div class="col-12 no-padding">
+			<!-- <div class="col-12 no-padding">
 						<a class="pointer-cursor" class="login-link d-block pull-right">
 							<a routerLink="signup"  class="prov_btn_join_top btn pull-right mgn-rt-15">Start For Free</a></a>
 						<a routerLink="login"  class="prov_btn_login_top pull-right btn join">Log in</a>
 					</div>
 				</div>
 				<div class="col-12 col-xs-12 col-sm-12 mgn-up-10 account-links">
+					<a class="pointer-cursor pull-right mgn-lt-20 mgn-rt-5" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
 					<a class="pointer-cursor pull-right mgn-lt-20 mgn-rt-5" href="https://wa.me/917306823011" aria-expanded="false"><i class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
 					<a routerLink="pricing" class="pointer-cursor pull-right"><span class="mgn-lt-20">Pricing</span></a>
 					<a href="https://contact.jaldee.com" class="pointer-cursor pull-right"><span class="mgn-lt-20">Contact Us</span></a>				
 				</div>
-			</div>
-		</div>
-	</header>
+			</div> -->
+		<!-- </div> -->
+	<!-- </header> -->
 	<main id="site-main">
 		<section id="hero">
 			<div class="container">
@@ -70,10 +148,10 @@
 					</div>
 					<div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
 						<div class="section-header mgn-bt-20 align-items-center centeralign pad-bt-50">
-							<h2 class="text-shadow">Jaldify your</h2>
-							<h1 class="text-shadow">practice or business</h1>
-							<h2 class="text-shadow">Now!</h2>
-							<a href="https://demo.jaldee.com" class="btn mgn-up-20 btn-invert">Request for DEMO</a>
+							<!-- <h2 class="text-shadow">Jaldify your</h2> -->
+							<h1 class="text-shadow">Bring your practice or business online</h1>
+							<!-- <h2 class="text-shadow">Now!</h2> -->
+							<a href="https://demo.jaldee.com" class="btn mgn-up-20 btn-invert">REQUEST A FREE DEMO</a>
 						</div>
 						<!-- <p class="text-shadow text-center">Get your <span >Jaldee</span> QR code or link</p>
 						<div class="jaldee-links text-center">
@@ -87,7 +165,7 @@
 								<p class="mt-2 text-shadow" >Jaldee link</p>
 							</span>
 						</div> -->
-					</div>					
+					</div>
 				</div>
 			</div>
 		</section>
@@ -101,7 +179,8 @@
 							<span class="icon mx-auto"><img src="assets/images/business/home/icons/rocket.png"
 									alt=""></span>
 							<h5>Start connecting directly</h5>
-							<p>Jaldee cuts out the middleman between you and your customers- no more listing fees or commissions on your bookings</p>
+							<p>Jaldee cuts out the middleman between you and your customers- no more listing fees or
+								commissions on your bookings</p>
 						</div>
 					</div>
 					<div class="col-md-4 d2c-box text-center">
@@ -109,7 +188,8 @@
 							<span class="icon mx-auto"><img src="assets/images/business/home/icons/gear.png"
 									alt=""></span>
 							<h5>Build your customer base</h5>
-							<p>Jaldee makes it easy for you to reach out to new customers with Jaldee's in-built customer acquisition features</p>
+							<p>Jaldee makes it easy for you to reach out to new customers with Jaldee's in-built
+								customer acquisition features</p>
 						</div>
 					</div>
 					<div class="col-md-4 d2c-box text-center">
@@ -117,21 +197,23 @@
 							<span class="icon mx-auto"><img src="assets/images/business/home/icons/board.png"
 									alt=""></span>
 							<h5>Create your own strategy</h5>
-							<p>Jaldee helps you take control of your online presence so that you can grow your business seamlessly</p>
+							<p>Jaldee helps you take control of your online presence so that you can grow your business
+								seamlessly</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<section id="healthcare">
+		<section id="healthcare" >
 			<div class="container">
-				<h2 class="text-center mb-4">Jaldee for Healthcare</h2>
+				<h2 class="text-center mb-4 health-title">Jaldee for Healthcare</h2>
 				<div class="text-center">
 					<img src="assets/images/business/home/healthcare-infograph.png"
-						alt="Jaldee for Healthcare Infograph" class="img-fluid mb-3" />
+						alt="Jaldee for Healthcare Infograph" class="img-fluid mb-3 ph_health" />
 
 					<h5 style="font-weight: 400;" class="mb-3">Grow your practice with Jaldee</h5>
-					<a href="https://contact.jaldee.com" class="pointer-cursor" class="btn prov_btn_join_grow_practice join btn">Learn More</a>
+					<a href="https://contact.jaldee.com" class="pointer-cursor"
+						class="btn prov_btn_join_grow_practice join btn">Learn More</a>
 				</div>
 			</div>
 		</section>
@@ -146,7 +228,7 @@
 					<h2>with <span style="color: #f2b51c;">Jaldee</span></h2>
 				</header>
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-4 mgn-up-20">
 						<div>
 							<span class="icon pull-right-small">
 								<img src="assets/images/business/home/icons/hourglass.png" alt="" class="" />
@@ -169,7 +251,7 @@
 							</li> -->
 						</ul>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-4 mgn-up-20">
 						<div>
 							<span class="icon pull-right-small">
 								<img src="assets/images/business/home/icons/customers.png" alt="" class="" />
@@ -188,7 +270,7 @@
 							</li>
 							<li>
 								<h6>Direct online booking</h6>
-								<p>Customers who scan your qr code or visit your Jaldee link directly</p>
+								<p>Customers who scan your QR code or visit your Jaldee link directly</p>
 							</li>
 							<li>
 								<h6>Social media booking</h6>
@@ -205,7 +287,7 @@
 							</li> -->
 						</ul>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-4 mgn-up-20">
 						<div>
 							<span class="icon pull-right-small">
 								<img src="assets/images/business/home/icons/single-customer.png" alt="" class="" />
@@ -244,14 +326,14 @@
 					<h3>Jaldee business all-in-one open SaaS program</h3>
 					<h2>All the essentials that you need are at one place</h2>
 					<h5>Build your direct to customer (D2C) strategy and so increase your revenue</h5>
-				</header>
-
-				<div class="row align-items-center mb-5">
+					<h2 class="mgn-up-50" id="features">Jaldee Features</h2>
+				</header>				
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6">
 						<img src="assets/images/business/home/illustration1.png" alt="" class="img-fluid" />
 					</div>
 					<div class="col-md-6">
-						<h2>Omni-booking platform</h2>
+						<h2>Omni-channel platform</h2>
 						<ul class="jaldee-custom-list cde">
 							<li>
 								<h6>Online virtual queues</h6>
@@ -287,7 +369,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6 order-md-1">
 						<img src="assets/images/business/home/illustration2.png" alt="" class="img-fluid" />
 					</div>
@@ -297,7 +379,8 @@
 						<ul class="jaldee-custom-list">
 							<li>
 								<h6>Build your own brand</h6>
-								<p>Take control of your practice or business without relying on any third-party platform</p>
+								<p>Take control of your practice or business without relying on any third-party platform
+								</p>
 								<!-- <a href="#" class="btn-link">Learn More</a> -->
 							</li>
 							<li>
@@ -307,7 +390,7 @@
 							</li>
 							<li>
 								<h6>Direct online booking</h6>
-								<p>Customers who scan your qr code or visit your Jaldee link directly</p>
+								<p>Customers who scan your QR code or visit your Jaldee link directly</p>
 							</li>
 							<!-- <li>
 								<h6>Personalized website and app</h6>
@@ -323,7 +406,7 @@
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div class="row align-items-center mb-5" id="customerEngagement">
+				<div class="row align-items-center mb-5 mgn-up-50" id="customerEngagement">
 					<div class="col-md-6">
 						<img src="assets/images/business/home/illustration3.png" alt="" class="img-fluid" />
 					</div>
@@ -372,13 +455,14 @@
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				<div class="row align-items-center mb-5" id="healthCareInfo">
+				<div class="row align-items-center mb-5 mgn-up-50" id="healthCareInfo">
 					<div class="col-md-6 order-md-1">
 						<img src="assets/images/business/home/illustration4.png" alt="" class="img-fluid" />
 					</div>
 					<div class="col-md-6">
-						<h2 >Healthcare exclusive</h2>
-						<p>Jaldee can be used by anybody from individual practitioners, small clinics and large hospitals</p>
+						<h2>Healthcare exclusive</h2>
+						<p>Jaldee can be used by anybody from individual practitioners, small clinics and large
+							hospitals</p>
 						<ul class="jaldee-custom-list cde">
 							<li>
 								<h6>Multidepartment and multispecialization</h6>
@@ -422,7 +506,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6">
 						<img src="assets/images/business/home/illustration5.png" alt="" class="img-fluid" />
 					</div>
@@ -474,7 +558,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6 order-md-1">
 						<img src="assets/images/business/home/illustration6.png" alt="" class="img-fluid" />
 					</div>
@@ -526,7 +610,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6">
 						<img src="assets/images/business/home/illustration7.png" alt="" class="img-fluid" />
 					</div>
@@ -588,7 +672,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6 order-md-1">
 						<img src="assets/images/business/home/illustration8.png" alt="" class="img-fluid" />
 					</div>
@@ -620,7 +704,7 @@
 					</div>
 				</div>
 
-				<div class="row align-items-center mb-5">
+				<div class="row align-items-center mb-5 mgn-up-50">
 					<div class="col-md-6">
 						<img src="assets/images/business/home/illustration9.png" alt="" class="img-fluid" />
 					</div>
@@ -691,7 +775,7 @@
 		</section>
 		<!-- /#offerings -->
 
-		<div id="stats">
+		<div id="stats" class="mgn-up-50">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 col-md-4 stat text-center">
@@ -717,18 +801,18 @@
 		</div>
 		<!-- /#stats -->
 
-		<section id="domains">
+		<section id="domains" class="mgn-up-50">
 			<div class="container">
 				<header class="section-header text-center">
 					<h3>Build an online practice and business</h3>
 					<h2>No matter what you're in</h2>
 				</header>
 				<div class="row">
-					<div class="domains-title col-lg-3 align-self-center mgn-bt-30">
+					<!-- <div class="domains-title col-lg-3 align-self-center mgn-bt-30">
 						<h3>Explore your business domain</h3>
-						<a  routerLink="signup" class="btn pointer-cursor prov_btn_join_more_domains">More domains</a>
-					</div>
-					<div class="col-lg-3">
+						<a routerLink="signup" class="btn pointer-cursor prov_btn_join_more_domains">More domains</a>
+					</div> -->
+					<div class="col-lg-4">
 						<div class="card domain-card br-10 text-center">
 							<img class="card-img-top" src="assets/images/business/home/domain1.jpg"
 								alt="Medical professionals" />
@@ -739,7 +823,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-4">
 						<div class="card domain-card text-center">
 							<img class="card-img-top" src="assets/images/business/home/domain2.jpg"
 								alt="Personal care" />
@@ -750,13 +834,14 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3">
+					<div class="col-lg-4">
 						<div class="card domain-card text-center">
 							<img class="card-img-top" src="assets/images/business/home/domain3.jpg"
 								alt="Professionals" />
 							<div class="card-body px-2 py-4">
 								<h5 class="card-title">Professionals</h5>
-								<p class="card-text">Build clientele, Offer virtual consultations, Online appointments</p>
+								<p class="card-text">Build clientele, Offer virtual consultations, Online appointments
+								</p>
 								<!-- <a (click)="doSignuppage()" class="btn-link pointer-cursor prov_btn_join_prof_learn join">Learn More</a> -->
 							</div>
 						</div>
@@ -771,21 +856,22 @@
 			</div>
 			<div class="container">
 				<div class="section-header">
-					<h2><span class="text-shadow">What's new in Jaldee</span></h2>					
+					<h2><span class="text-shadow">What's new in Jaldee</span></h2>
 				</div>
 				<div id="upcoming-carousel">
 					<owl-carousel [options]="carouselTwo" [carouselClasses]="['owl-carousel', 'owl-theme']">
-					<div class="item">
-						<h5 class="text-center"><span class="text-shadow">We have launched medical reports for doctors</span></h5>
-						<img src="assets/images/business/home/upcoming1.jpg" alt="Upcoming Service"
-							class="img-fluid br-10" />
-					</div>
-					<!-- <div class="item">
+						<div class="item">
+							<h5 class="text-center"><span class="text-shadow">We have launched medical reports for
+									doctors</span></h5>
+							<img src="assets/images/business/home/upcoming1.jpg" alt="Upcoming Service"
+								class="img-fluid br-10" />
+						</div>
+						<!-- <div class="item">
 						<h5 class="text-center"><span class="text-shadow">We have launched medical reports for orders</span></h5>
 						<img src="assets/images/business/home/upcoming1.jpg" alt="Upcoming Service"
 							class="img-fluid br-10" />
 					</div> -->
-				</owl-carousel>
+					</owl-carousel>
 				</div>
 			</div>
 		</section>

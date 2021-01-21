@@ -2,6 +2,8 @@ import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, On
 import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -25,11 +27,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     itemQty = 0;
     actions: string;
     constructor(private sharedFunctons: SharedFunctions,
+        private lStorageService: LocalStorageService,
+        private wordProcessor: WordProcessor,
         private cdref: ChangeDetectorRef) {
-        this.server_date = this.sharedFunctons.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
+      console.log(this.item.type);
 
         switch (this.item.type) {
             case 'waitlist':
@@ -65,9 +70,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log(this.service);
                 break;
             case 'item':
-                console.log(this.item);
+            console.log('item');
                 this.service = this.item.item;
-                console.log(this.service);
                 break;
             case 'pitem':
                 this.service = this.item.item;
@@ -127,9 +131,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     getTerminologyTerm(term) {
         const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
         if (this.terminology) {
-            return this.sharedFunctons.firstToUpper((this.terminology[term_only]) ? this.terminology[term_only] : ((term === term_only) ? term_only : term));
+            return this.wordProcessor.firstToUpper((this.terminology[term_only]) ? this.terminology[term_only] : ((term === term_only) ? term_only : term));
         } else {
-            return this.sharedFunctons.firstToUpper((term === term_only) ? term_only : term);
+            return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
         }
     }
     getTimeToDisplay(min) {

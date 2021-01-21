@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-item-details',
@@ -135,7 +136,8 @@ export class ItemDetailsSharedComponent implements OnInit {
     private location: Location,
     public route: ActivatedRoute,
     private dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    private lStorageService: LocalStorageService) {
     this.route.queryParams.subscribe(
       params => {
         this.item = params.item;
@@ -202,7 +204,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   // };
 
   checkout() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.router.navigate(['consumer', 'order', 'cart']);
   }
   getItemQty() {
@@ -221,7 +223,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.addToCart();
   }
   goBack() {
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.location.back();
   }
 
@@ -229,21 +231,21 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.removeFromCart();
   }
   addToCart() {
-    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
-      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
-            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+            this.lStorageService.removeitemfromLocalStorage('order');
           }
         }
       }
     }
     this.orderList.push(this.currentItemObject);
     console.log(this.orderList);
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.getItemQty();
     this.updateCartCount();
 
@@ -262,10 +264,10 @@ export class ItemDetailsSharedComponent implements OnInit {
       if (result) {
         can_remove = true;
         this.orderList = [];
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        this.lStorageService.removeitemfromLocalStorage('order_sp');
+        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+        this.lStorageService.removeitemfromLocalStorage('order_spId');
+        this.lStorageService.removeitemfromLocalStorage('order');
         return true;
       } else {
         can_remove = false;
@@ -280,7 +282,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === this.currentItem.itemId) {
         this.orderList.splice(i, 1);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }

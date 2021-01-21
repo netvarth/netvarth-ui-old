@@ -5,11 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderItemComponent } from '../add-provider-item/add-provider-item.component';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { AddProviderItemImageComponent } from '../add-provider-item-image/add-provider-item-image.component';
 import { projectConstants } from '../../../app.component';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-provider-items-details',
@@ -51,7 +52,8 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
   constructor(private provider_servicesobj: ProviderServices,
     private router: ActivatedRoute, private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    private sharedfunctionObj: SharedFunctions) { }
+    private snackbarService: SnackbarService,
+        private groupService: GroupStorageService) { }
 
   public itemId;
   public selfile: File;
@@ -77,7 +79,7 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
       file: [''],
       caption: 'Itempic'
     });*/
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.editdialogRef) {
@@ -221,7 +223,7 @@ export class ProviderItemsDetailsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.removeItemImage(this.item_list)
       .subscribe(() => {
         this.getitemDetails();
-        this.sharedfunctionObj.openSnackBar(Messages.ITEM_IMGREMOVED);
+        this.snackbarService.openSnackBar(Messages.ITEM_IMGREMOVED);
         this.image_exists = false;
       });
   }

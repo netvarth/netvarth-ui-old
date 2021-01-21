@@ -99,6 +99,20 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div *ngIf="providerLabels.length > 0">
+                        <label class="filterHeaders">Labels</label>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let lbl of providerLabels">
+                          <mat-checkbox
+                            [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                            (change)="setLabelFilter(lbl, $event)">
+                            {{lbl.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
                       <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -132,13 +146,14 @@
           </div>
           <ng-container *ngIf="orders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              (click)="gotoDetails(order)">
+              >
+              <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> #{{order.orderNumber}}
+                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
                 </span>
               </div>
               <div class="main-sec">
@@ -152,15 +167,30 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
-                  <span class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
+                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
                     currency:'INR'}}</span>
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
+            </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
+              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+            </div>
+            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
+            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+                >{{getDisplayformatTruncateLabel(order)}}</span>
+          </div>
+
             </div>
           </ng-container>
         </div>
@@ -242,6 +272,20 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div *ngIf="providerLabels.length > 0">
+                        <label class="filterHeaders">Labels</label>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let lbl of providerLabels">
+                          <mat-checkbox
+                            [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                            (change)="setLabelFilter(lbl, $event)">
+                            {{lbl.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
                       <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -275,13 +319,14 @@
           </div>
           <ng-container *ngIf="orders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              (click)="gotoDetails(order)">
+              >
+              <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> #{{order.orderNumber}}
+                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
                 </span>
               </div>
               <div class="main-sec">
@@ -295,8 +340,11 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
@@ -304,6 +352,18 @@
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
+            </div>
+
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
+              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+            </div>
+            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
+            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+                >{{getDisplayformatTruncateLabel(order)}}</span>
+          </div>
             </div>
           </ng-container>
         </div>
@@ -384,6 +444,20 @@
                             {{status}}</mat-checkbox>
                         </li>
                       </div>
+                      <div *ngIf="providerLabels.length > 0">
+                        <label class="filterHeaders">Labels</label>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox [checked]="allLabelSelected" (change)="setLabelFilter('all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let lbl of providerLabels">
+                          <mat-checkbox
+                            [checked]="selectedLabels[lbl.label] && selectedLabels[lbl.label].indexOf(true) !== -1"
+                            (change)="setLabelFilter(lbl, $event)">
+                            {{lbl.displayName}}</mat-checkbox>
+                        </li>
+                      </div>
                       <!-- <div>
                         <label class="filterHeaders"> Order Mode</label>
                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
@@ -417,13 +491,14 @@
           </div>
           <ng-container *ngIf="historyOrders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index"
-              (click)="gotoDetails(order)">
+              >
+              <div (click)="gotoDetails(order)">
               <div class="top-sec">
                 <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> #{{order.orderNumber}}
+                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
                 </span>
               </div>
               <div class="main-sec">
@@ -437,8 +512,11 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                
                 <div class="mgn-up-15 mgn-bt-10">
-                  <span class="bold"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span> <span
+                  <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
+                  <span
+                    *ngIf="!order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund')"
                     class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
@@ -446,6 +524,18 @@
                   <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
                 </div>
               </div>
+            </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
+              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+            </div>
+            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
+            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
+                >{{getDisplayformatTruncateLabel(order)}}</span>
+          </div>
+
             </div>
           </ng-container>
         </div>

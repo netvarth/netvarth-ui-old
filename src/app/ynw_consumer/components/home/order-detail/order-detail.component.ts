@@ -9,6 +9,8 @@ import { DOCUMENT, Location } from '@angular/common';
 import { projectConstants } from '../../../../app.component';
 import { ActionPopupComponent } from '../action-popup/action-popup.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -264,12 +266,18 @@ buttons: [
     }
 ]
 };
+  retval: Promise<void>;
+  s3url: unknown;
+  terminologiesjson: ArrayBuffer;
+  provider_id;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
     public locationobj: Location,
     public shared_functions: SharedFunctions,
     private router: Router,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
     @Inject(DOCUMENT) public document,
     // private consumer_services: ConsumerServices,
     private sharedServices: SharedServices
@@ -279,8 +287,8 @@ buttons: [
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
       });
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.provider_label = this.shared_functions.getTerminologyTerm('provider');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.checkin_label = 'order';
     this.cust_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
@@ -309,6 +317,8 @@ buttons: [
       (data) => {
         this.waitlist = data;
         console.log(this.waitlist);
+        this.provider_id = this.waitlist.providerAccount.uniqueId;
+        this.gets3curl();
         this.image_list_popup = [];
         if (this.waitlist && this.waitlist.shoppingList) {
           this.imagelist = this.waitlist.shoppingList;
@@ -327,13 +337,45 @@ buttons: [
         this.generateQR();
       },
       (error) => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     this.getStoreContact();
 
 
 
    // this.getFavouriteProvider();
+  }
+
+  gets3curl() {
+    this.retval = this.shared_functions.getS3Url()
+      .then(
+        res => {
+          this.s3url = res;
+          this.getbusinessprofiledetails_json('terminologies', true);
+        });
+  }
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
+    }
+    this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        switch (section) {
+          case 'terminologies': {
+            this.terminologiesjson = res;
+            break;
+          }
+        }
+      });
+  }
+  getTerminologyTerm(term) {
+    const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+    if (this.terminologiesjson) {
+      return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+    } else {
+      return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
+    }
   }
   generateQR() {
     console.log(this.waitlist);
@@ -392,7 +434,7 @@ buttons: [
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   addFavProvider(id, event) {
