@@ -380,6 +380,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     this.statusAction = 'started';
     //   }
     // });
+    if (this.groupService.getitemFromGroupStorage('action')) {
+      this.statusAction = this.groupService.getitemFromGroupStorage('action');
+    }
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -3107,6 +3110,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusClick(status) {
     this.allSelection = false;
     this.statusAction = status;
+    this.groupService.setitemToGroupStorage('action', this.statusAction);
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
     this.resetCheckList();

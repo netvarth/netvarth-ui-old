@@ -387,6 +387,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activateroute.queryParams.subscribe(params => {
       if (params.servStatus) {
         this.statusAction = 'started';
+      } else {
+        if (this.groupService.getitemFromGroupStorage('appt_action')) {
+          this.statusAction = this.groupService.getitemFromGroupStorage('appt_action');
+        }
       }
     });
   }
@@ -2620,6 +2624,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusClick(status) {
     this.allSelection = false;
     this.statusAction = status;
+    this.groupService.setitemToGroupStorage('appt_action', this.statusAction);
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
     this.resetCheckList();

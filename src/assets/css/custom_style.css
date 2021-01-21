@@ -27074,5 +27074,7 @@ color: #fff !important;
   user-select: none;
   margin-left: 25px;
 }
-
+.font-small {
+  font-size: small;
+}
 

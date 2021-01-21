@@ -401,7 +401,11 @@ export class CheckYourStatusComponent implements OnInit {
     return label_status;
   }
   okClick() {
-    this.router.navigate(['']);
+    if (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
+      this.router.navigate(['/consumer']);
+    } else {
+      this.router.navigate(['']);
+    }
   }
   showStatusInput() {
     this.type = '';
