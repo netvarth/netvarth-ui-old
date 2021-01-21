@@ -31,7 +31,6 @@
               "node_modules/owl.carousel/dist/assets/owl.theme.default.css",
               "src/assets/third-party/Admin-LTE/css/AdminLTE.min.css",
               "src/customTheme.scss",
-              "src/assets/css/app.css",
               "src/assets/css/styles.css",
               "src/assets/css/consumer.css",
               "src/assets/css/modal_popups.css",
