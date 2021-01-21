@@ -145,6 +145,6 @@ header li a {
     }
   }
 
-  .page-banner-image {
-    background: #1e4079;
-  }
+ h2.health-title{
+   font-size: 2rem !important;
+ }
