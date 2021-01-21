@@ -211,7 +211,11 @@
                                                 <td data-title="Date & Time" class="td3">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
-                                                            <i class="fa fa-shopping-cart shop_cart_icon"></i>
+                                                                <div *ngIf="his_wait.storePickup"> <img class="ordericon home"
+                                                                    src="../../../../assets/images/Delivery.svg" /></div>
+                                                                <div *ngIf="his_wait.homeDelivery"><img class="ordericon pickup"
+                                                                    src="../../../../assets/images/order/Storepickup.svg" /></div>
+                                                            <!-- <i class="fa fa-shopping-cart shop_cart_icon"></i> -->
                                                         </div>
                                                         <span> &nbsp;{{his_wait.orderDate | date: newDateFormat }},<br>
                                                             {{his_wait.timeSlot.sTime}} -
