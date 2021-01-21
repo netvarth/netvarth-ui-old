@@ -95,6 +95,7 @@ import { GroupStorageService } from './shared/services/group-storage.service';
 import { WordProcessor } from './shared/services/word-processor.service';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
+import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 
 export function init_app(globalService: GlobalService) {
@@ -206,6 +207,7 @@ export function init_app(globalService: GlobalService) {
       useClass: ExtendHttpInterceptor,
       multi: true
     },
+    AuthService,
     SharedServices,
     GlobalFunctions,
     GlobalService,
@@ -222,6 +224,7 @@ export function init_app(globalService: GlobalService) {
     GroupStorageService,
     WordProcessor,
     SnackbarService,
+    GroupStorageService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
