@@ -91,10 +91,11 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
     connect(tokenObj) {
-        alert('efre')
+        // alert('dd')
         console.log(tokenObj.tokenId);
         this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
+            
             name: tokenObj.roomName,
             audio: true,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
@@ -153,26 +154,41 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
            this.result = data;
            console.log(this.result)
            if(this.result === false){
-             this.status = 'Consumer is not ready'
+             this.status = 'Customer is not ready'
+           }
+           else{
+               this.status = 'Ready..'
            }
           console.log(data)
           this.api_loading = false;
         });
     }
     joinVideo(){
+      
         console.log(this.type)
         if(this.type === 'provider'){
-           
-            this.shared_services.getApptMeetingDetailsProvider(this.uuid) .subscribe(data => {
-                this.result = data;
-                this.getStatus();
-                if(this.result === null){
-                   //  this.joinVideo();
-                }
-               console.log(data)
-               this.api_loading = false;
-             },
-            );
+            
+                this.shared_services.getApptMeetingDetailsProvider(this.uuid).subscribe(
+                    (tokenObj: any) => {
+                        console.log(tokenObj);
+                        this.getStatus();
+                        // this.access_token = tokenObj.token;
+                        this.twilioService.localVideo = this.localVideo;
+                        this.twilioService.remoteVideo = this.remoteVideo;
+                        this.connect(tokenObj);
+                    }
+                );
+            
+            // this.shared_services.getApptMeetingDetailsProvider(this.uuid) .subscribe(data => {
+            //     this.result = data;
+            //     this.getStatus();
+            //     if(this.result === null){
+            //        //  this.joinVideo();
+            //     }
+            //    console.log(data)
+            //    this.api_loading = false;
+            //  },
+            // );
         } else{
             this.shared_services.getVideoCall(this.uuid)
             .subscribe(data => {
