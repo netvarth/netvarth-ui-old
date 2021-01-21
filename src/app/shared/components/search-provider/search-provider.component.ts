@@ -12,6 +12,9 @@ import { SignUpComponent } from '../signup/signup.component';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+import { SnackbarService } from '../../services/snackbar.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-search-provider',
@@ -102,9 +105,12 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   constructor(private routerobj: Router, private shared_functions: SharedFunctions,
     private searchdetailserviceobj: SearchDetailServices,
     private shared_service: SharedServices,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService,
     private dialog: MatDialog) {
     this.api_loading = true;
-    this.domainList = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     // this.activaterouterobj.params.subscribe(params => {
     //   this.api_loading = true;
     //   this.provider_id = params.id;
@@ -118,8 +124,8 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     // });
   }
   ngOnInit() {
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
-    this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
   }
   ngOnChanges() {
     if (this.psource) {
@@ -214,7 +220,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
   }
 
   gets3curl() {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.retval = this.shared_functions.getS3Url('provider')
         .then(
           res => {
@@ -228,9 +234,9 @@ export class SearchProviderComponent implements OnInit, OnChanges {
     if (this.terminologiesjson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       if (this.terminologiesjson) {
-        return this.shared_functions.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+        return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
       } else {
-        return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
       }
     } else {
       return term;
@@ -435,7 +441,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
         this.locationjson[passedIndx]['services'] = data;
       },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
 
@@ -501,7 +507,7 @@ export class SearchProviderComponent implements OnInit, OnChanges {
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }

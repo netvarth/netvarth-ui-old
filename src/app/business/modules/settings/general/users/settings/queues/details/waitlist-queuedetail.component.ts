@@ -10,6 +10,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-userwaitlist-queuedetail',
@@ -106,6 +108,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
         private _location: Location,
         private activated_route: ActivatedRoute,
         private fb: FormBuilder,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
         public fed_service: FormMessageDisplayService,
         public provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(params => {
@@ -120,7 +124,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.action = qparams.action;
             }
         });
-        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
     getUser() {
         this.provider_services.getUser(this.userId)
@@ -511,7 +515,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         }
         if (!form_data.qname.replace(/\s/g, '').length) {
             const error = 'Please enter queue name';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         const selser: any = [];
@@ -537,46 +541,46 @@ export class WaitlistQueueDetailComponent implements OnInit {
         }
         if (!found) {
             const error = 'Please select services';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         }
         // Check whether atleast one day is selected
         if (this.selday_arr.length === 0) {
             const error = 'Please select the days';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             // Numeric validation
             if (isNaN(form_data.qcapacity)) {
                 const error = 'Please enter a numeric value for capacity';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qcapacity)) {
                 const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             } else {
                 if (form_data.qcapacity === 0) {
                     const error = 'Maximum ' + this.customer_label + 's served should be greater than 0';
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     return;
                 }
             }
             // Numeric validation
             if (isNaN(form_data.qserveonce)) {
                 const error = 'Please enter a numeric value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             }
             if (!this.shared_Functionsobj.checkIsInteger(form_data.qserveonce)) {
                 const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 return;
             } else {
                 if (form_data.qserveonce === 0 || (form_data.qserveonce > form_data.qcapacity)) {
                     const error = this.customer_label + 's served at a time should be greater than 0 and smaller than Maximum ' + this.customer_label + 's served';
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     return;
                 }
             }
@@ -594,13 +598,13 @@ export class WaitlistQueueDetailComponent implements OnInit {
             }
             // check whether the start and end times are selected
             if (!this.dstart_time || !this.dend_time) {
-                this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelclass': 'snackbarerror' });
                 return;
             }
             // today
             // const curday = new Date();
             if (this.shared_Functionsobj.getminutesOfDay(this.dstart_time) > this.shared_Functionsobj.getminutesOfDay(this.dend_time)) {
-                this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_STIMEERROR, { 'panelclass': 'snackbarerror' });
                 return;
             }
             const curdate = new Date();
@@ -659,7 +663,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.provider_services.addProviderQueue(post_data)
             .subscribe(
                 (data) => {
-                    this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_CREATED, { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_CREATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
                     this.api_loading = false;
                     this.queue_id = data;
@@ -667,7 +671,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     this.action = 'view';
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disableButton = false;
                 }
             );
@@ -679,7 +683,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.provider_services.editProviderQueue(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_UPDATED, { 'panelclass': 'snackbarerror' });
                     this.disableButton = false;
                     this.api_loading = false;
                     this.getQueueDetail();
@@ -692,7 +696,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.disableButton = false;
                 }
             );
@@ -842,7 +846,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
                 this.getQueueDetail();
             },
             error => {
-                this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
 
@@ -851,7 +855,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.provider_services.changeBatchStatus(this.queue_id, event.checked).subscribe(data => {
             this.batchStatus = event.checked;
             this.getQueueDetail();
-            this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         });
 
 
@@ -864,7 +868,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
         this.provider_services.updateBatch(this.queue_id, post_data).subscribe(data => {
             this.showEditSection = false;
             this.getQueueDetail();
-            // this.shared_Functionsobj.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar('Successfull', { 'panelclass': 'snackbarerror' });
         });
     }
     editBatchnames() {

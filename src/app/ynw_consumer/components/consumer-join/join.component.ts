@@ -10,6 +10,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SessionStorageService } from '../../../shared/services/session-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -69,6 +72,9 @@ export class ConsumerJoinComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private sessionStorageService: SessionStorageService,
+    private lStorageService: LocalStorageService,
     public dialog: MatDialog,
     private router: Router,
     @Inject(DOCUMENT) public document
@@ -159,7 +165,7 @@ export class ConsumerJoinComponent implements OnInit {
       'password': data.password,
       'mUniqueId': null
     };
-    this.shared_functions.removeitemfromSessionStorage('tabId');
+    this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     if (this.data.type === 'provider') {
       post_data.mUniqueId = localStorage.getItem('mUniqueId');
@@ -168,21 +174,21 @@ export class ConsumerJoinComponent implements OnInit {
         .then(
           () => {
             const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-            this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // this.dialogRef.close();
             setTimeout(() => {
               this.dialogRef.close();
             }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
-            ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.api_loading = false;
           }
         );
     } else if (this.data.type === 'consumer') {
       if (post_data.loginId.startsWith('55') && this.test_provider === false) {
         setTimeout(() => {
-          ob.api_error = this.shared_functions.getProjectMesssages('TESTACC_LOGIN_NA');
+          ob.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
@@ -191,16 +197,16 @@ export class ConsumerJoinComponent implements OnInit {
           .then(
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
-              this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-              this.shared_functions.setitemonLocalStorage('qrp', data.password);
+              this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+              this.lStorageService.setitemonLocalStorage('qrp', data.password);
               this.dialogRef.close('success');
             },
             error => {
               if (error.status === 401 && error.error === 'Session already exists.') {
-                this.shared_functions.setitemonLocalStorage('qrp', data.password);
+                this.lStorageService.setitemonLocalStorage('qrp', data.password);
                 this.dialogRef.close('success');
               } else {
-                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                 this.api_loading = false;
               }
             }
@@ -284,7 +290,7 @@ export class ConsumerJoinComponent implements OnInit {
           this.step = 4;
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -315,7 +321,7 @@ export class ConsumerJoinComponent implements OnInit {
         },
         error => {
           this.actionstarted = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
 
@@ -357,24 +363,24 @@ export class ConsumerJoinComponent implements OnInit {
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.shared_functions.sendMessage(pdata);
                     const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
-                    this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
-                    this.shared_functions.setitemonLocalStorage('qrp', post_data.password);
+                    this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                    this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
                     this.dialogRef.close('success');
                   },
                   error => {
-                    this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     return false;
                   });
               },
               error => {
-                ob.api_error = this.shared_functions.getProjectErrorMesssages(error);
+                ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                 // this.api_loading = false;
               }
             );
         },
         error => {
           this.actionstarted = false;
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -387,7 +393,7 @@ export class ConsumerJoinComponent implements OnInit {
   onCancelPass() {
     if (this.step === 6) {
       this.step = 7;
-      this.close_message = this.shared_functions.getProjectMesssages('PASSWORD_ERR_MSG');
+      this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
   onFieldBlur(key) {
@@ -395,7 +401,7 @@ export class ConsumerJoinComponent implements OnInit {
   }
   toCamelCase(word) {
     if (word) {
-      return this.shared_functions.toCamelCase(word);
+      return this.wordProcessor.toCamelCase(word);
     } else {
       return word;
     }

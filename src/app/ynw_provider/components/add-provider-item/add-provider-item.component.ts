@@ -9,6 +9,7 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-item-add',
@@ -58,7 +59,8 @@ export class AddProviderItemComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
-    public sharedfunctionObj: SharedFunctions
+    public sharedfunctionObj: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
   }
   taxDetails: any = [];
@@ -192,13 +194,13 @@ export class AddProviderItemComponent implements OnInit {
     this.provider_services.addItem(post_data)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('ITEM_CREATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -212,13 +214,13 @@ export class AddProviderItemComponent implements OnInit {
     this.provider_services.editItem(post_itemdata)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('ITEM_UPDATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
           this.disableButton = false;
         }
@@ -257,7 +259,7 @@ export class AddProviderItemComponent implements OnInit {
     // this.holdtaxable = !this.holdtaxable;
     this.resetApiErrors();
     if (this.taxpercentage <= 0) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
+      this.api_error = this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR');
       setTimeout(() => {
         this.api_error = null;
       }, projectConstants.TIMEOUT_DELAY_LARGE);

@@ -9,6 +9,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import * as moment from 'moment';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 @Component({
   selector: 'app-provider-reimburse-report',
   templateUrl: './provider-reimburse-report.component.html'
@@ -35,7 +37,7 @@ export class ProviderReimburseReportComponent implements OnInit {
   report_status_filter = projectConstants.REPORT_STATUS_FILTER;
   api_error = null;
   api_success = null;
-  filtericonTooltip = this.sharedfunctionObj.getProjectMesssages('FILTERICON_TOOPTIP');
+  filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   breadcrumbs = [
     {
       title: 'Settings',
@@ -85,14 +87,16 @@ export class ProviderReimburseReportComponent implements OnInit {
   statusMultiCtrl: any = [];
   constructor(private dialog: MatDialog, private router: Router,
     public dateformat: DateFormatPipe,
-    private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices) {
+    private sharedfunctionObj: SharedFunctions, private provider_servicesobj: ProviderServices,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService) {
   }
 
   ngOnInit() {
     this.setFilterDateMaxMin();
     this.resetFilter();
     this.getCouponReport();
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
     return JSON.parse(jsonString);

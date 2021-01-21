@@ -9,6 +9,8 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 
 @Component({
@@ -41,7 +43,8 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     public sharedfunctionObj: SharedFunctions,
     private provider_datastorageobj: ProviderDataStorageService,
     @Inject(DOCUMENT) public document,
-
+private wordProcessor: WordProcessor,
+private groupService: GroupStorageService,
     public dialogRef: MatDialogRef<ProviderBprofileSearchPrimaryComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) { }
@@ -94,9 +97,9 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
      return;
     }*/
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
@@ -114,11 +117,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.provider_servicesobj.createPrimaryFields(pdata)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_CREATED');
           this.getBusinessProfile();
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -160,13 +163,13 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
     this.provider_servicesobj.updatePrimaryFields(pdata)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_UPDATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.disableButton = false;
         }
       );
@@ -184,11 +187,11 @@ export class ProviderBprofileSearchPrimaryComponent implements OnInit {
           // console.log('bProfile..' + JSON.stringify(this.bProfile));
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
-          const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
         },
         () => {
 

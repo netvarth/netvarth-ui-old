@@ -5,14 +5,17 @@ import { Router } from '@angular/router';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 
 @Component({
     'selector': 'app-custid',
     'templateUrl': './customer-id.component.html'
 })
 export class CustomerIdSettingsComponent implements OnInit {
-    customer_label = this.shared_functions.getTerminologyTerm('customer');
-    customer_label_upper = this.shared_functions.firstToUpper(this. customer_label);
+    customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
     breadcrumbs = [
         {
             title: 'Settings',
@@ -42,7 +45,9 @@ export class CustomerIdSettingsComponent implements OnInit {
     constructor(
         private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
-        private shared_Functionsobj: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
         private routerobj: Router,
         private dialog: MatDialog
     ) {
@@ -50,7 +55,7 @@ export class CustomerIdSettingsComponent implements OnInit {
 
     ngOnInit() {
         this.getGlobalSettings();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
         this.breadcrumb_moreoptions = {
@@ -105,11 +110,11 @@ export class CustomerIdSettingsComponent implements OnInit {
                 if (result) {
                     this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
                         (data: any) => {
-                            this.shared_Functionsobj.openSnackBar(this.customer_label_upper +  ' Id Configured Successfully');
+                            this.snackbarService.openSnackBar(this.customer_label_upper +  ' Id Configured Successfully');
                             this.inputChanged = false;
                         },
                         (error) => {
-                            this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelclass': 'snackbarerror' });
                         });
                 } else {
                     this.resetCustIdConfig();
@@ -118,11 +123,11 @@ export class CustomerIdSettingsComponent implements OnInit {
         } else {
             this.provider_services.updateCustIdFormat(this.custIdFormat, post_data).subscribe(
                 (data: any) => {
-                    this.shared_Functionsobj.openSnackBar('Customer Id Configured Successfully');
+                    this.snackbarService.openSnackBar('Customer Id Configured Successfully');
                     this.inputChanged = false;
                 },
                 (error) => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelclass': 'snackbarerror' });
                 });
         }
     }

@@ -5,6 +5,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-bprofile-search-socialmedia',
@@ -33,6 +34,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
   api_loading = true;
   constructor(
     public provider_services: ProviderServices,
+    private wordProcessor: WordProcessor,
     public shared_functions: SharedFunctions,
     public dialogRef: MatDialogRef<ProviderBprofileSearchSocialMediaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -78,7 +80,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
     this.provider_services.updateSocialMediaLinks(submit_data)
       .subscribe(
         () => {
-          this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
+          this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
@@ -136,7 +138,7 @@ export class ProviderBprofileSearchSocialMediaComponent implements OnInit {
     const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
     const result = pattern.test(curlabel);
     if (!result) {
-      this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';
+      this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';
       return;
     }
     if (this.curmod === 'add') {

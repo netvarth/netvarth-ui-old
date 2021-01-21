@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { ProviderDataStorageService } from '../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { SnackbarService } from '../../services/snackbar.service';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
     selector: 'app-jaldee-service',
@@ -147,9 +149,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
         public servicesService: ServicesService,
         public shared_service: SharedServices,
         public provider_services: ProviderServices,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
         public router: Router) {
-        this.customer_label = this.sharedFunctons.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.frm_enable_prepayment_cap = Messages.FRM_LEVEL_PREPAYMENT_SETTINGS_MSG;
         this.preSubscription = this.sharedFunctons.getMessage().subscribe(
             (message: any) => {
@@ -422,7 +426,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 },
                 error => {
-                    this.sharedFunctons.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -501,12 +505,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
             serviceActionModel['service'] = form_data;
             if (form_data.serviceType === 'virtualService') {
                 if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && form_data.virtualCallingModes[0].value.charAt(0) === '0') {
-                    this.sharedFunctons.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
                 } else if (!form_data.virtualServiceType) {
-                    this.sharedFunctons.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (!form_data.virtualCallingModes[0].callingMode) {
-                        this.sharedFunctons.openSnackBar(Messages.SELECT_TELE_TOOL, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(Messages.SELECT_TELE_TOOL, { 'panelClass': 'snackbarerror' });
                     } else {
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
@@ -537,7 +541,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     taxapplicableChange() {
         if (!this.taxsettings || (this.taxsettings && this.taxsettings.taxPercentage <= 0)) {
-            this.sharedFunctons.openSnackBar(this.sharedFunctons.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
             this.serviceForm.get('taxable').setValue(false);
         }
     }
@@ -547,7 +551,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else {
             if (this.serviceForm.get('isPrePayment').value === true) {
                 if (!this.paymentsettings.onlinePayment) {
-                    this.sharedFunctons.openSnackBar(Messages.SERVICE_PRE_PAY_ERROR, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.SERVICE_PRE_PAY_ERROR, { 'panelClass': 'snackbarerror' });
                     this.serviceForm.get('isPrePayment').setValue(false);
                     return false;
                 }
@@ -678,7 +682,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
             }
         } else {
-            this.sharedFunctons.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
         }
     }
     getVirtualCallingModesList() {
@@ -770,9 +774,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.sharedFunctons.sendMessage({ 'ttype': 'hide-back' });
         } else {
             if (this.preInfoEnabled && this.preInfoTitle.trim() === '') {
-                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else if (this.postInfoEnabled && this.postInfoTitle.trim() === '') {
-                this.sharedFunctons.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Please add instructions title', { 'panelClass': 'snackbarerror' });
             } else {
                 this.showInfo = false;
                 this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
@@ -790,7 +794,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
     checkUrl(urlData) {
-        if (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom') {
+        if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
             const tempvar = urlData.substring( 0 , 4 );
             if (tempvar !== 'http') {
                 this.tool_id = '';

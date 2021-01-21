@@ -4,6 +4,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { AddInboxMessagesComponent } from '../../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-action-popup',
@@ -30,6 +31,7 @@ export class ActionPopupComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     public dialogRef: MatDialogRef<ActionPopupComponent>) { }
 
   ngOnInit() {
@@ -96,7 +98,7 @@ export class ActionPopupComponent implements OnInit {
           }
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

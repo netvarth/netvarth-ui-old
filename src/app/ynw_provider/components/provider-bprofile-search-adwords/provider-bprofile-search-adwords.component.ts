@@ -2,12 +2,14 @@ import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/component/confirm-box/confirm-box.component';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { AddProviderBprofileSearchAdwordsComponent } from '../add-provider-bprofile-search-adwords/add-provider-bprofile-search-adwords.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { ShowMessageComponent } from '../../../business/modules/show-messages/show-messages.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-bprofile-search-adwords',
@@ -32,7 +34,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   startpageval = 1;
   perpage = 5;
   adwordshowmore = false;
-  emptyMsg = this.sharedfunctionObj.getProjectMesssages('ADWORD_LISTEMPTY');
+  emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
   remadwdialogRef;
   adwdialogRef;
   active_user;
@@ -44,17 +46,18 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
 
   constructor(private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
-    private shared_functions: SharedFunctions,
     private routerobj: Router,
-    private sharedfunctionObj: SharedFunctions) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService:GroupStorageService) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
-    this.addwordTooltip = this.sharedfunctionObj.getProjectMesssages('ADDWORD_TOOLTIP');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.addwordTooltip = this.wordProcessor.getProjectMesssages('ADDWORD_TOOLTIP');
     this.getTotalAllowedAdwordsCnt();
     this.frm_adword_cap = Messages.FRM_LEVEL_PROVIDER_LIC_ADWORDS_MSG.replace('[customer]', this.customer_label);
   }
@@ -128,7 +131,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
         }
       });
     } else {
-      // this.sharedfunctionObj.openSnackBar(Messages.ADWORD_EXCEED_LIMIT, { 'panelClass': 'snackbarerror' });
+      // this.snackbarService.openSnackBar(Messages.ADWORD_EXCEED_LIMIT, { 'panelClass': 'snackbarerror' });
       this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'popup-class'],
@@ -154,7 +157,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       disableClose: true,
       data: {
         'type': 'yes/no',
-        'message': this.sharedfunctionObj.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
+        'message': this.wordProcessor.getProjectMesssages('ADWORD_DELETE').replace('[adword]', '"' + adword.name.replace(/__/g, ' ') + '"')
       }
     });
     this.remadwdialogRef.afterClosed().subscribe(result => {
@@ -168,10 +171,10 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
       .subscribe(
         () => {
           this.getAdwords();
-          this.sharedfunctionObj.openSnackBar(Messages.ADWORD_DELETE_SUCCESS);
+          this.snackbarService.openSnackBar(Messages.ADWORD_DELETE_SUCCESS);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

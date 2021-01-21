@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../../../../../../../ynw_provider/servic
 import { SharedFunctions } from '../../../../../../../../../shared/functions/shared-functions';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../../../../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provideruserbprofilesearch-socialmedia',
@@ -35,6 +36,7 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
   constructor(
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
     public dialogRef: MatDialogRef<ProviderUserBprofileSearchSocialMediaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.bProfile = data.bprofile;
@@ -80,9 +82,9 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
       .subscribe(
         () => {
           if (this.curmod === 'add') {
-            this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
+            this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SOCIALMEDIA_SAVED');
           } else if (this.curmod === 'edit') {
-            this.api_success = this.shared_functions.getProjectMesssages('BPROFILE_SOCIALMEDIA_UPDATE');
+            this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_SOCIALMEDIA_UPDATE');
           }
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
@@ -141,7 +143,7 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
     const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
     const result = pattern.test(curlabel);
     if (!result) {
-      this.api_error = this.shared_functions.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';
+      this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_SOCIAL_URL_VALID'); // 'Please enter a valid URL';
       return;
     }
     if (this.curmod === 'add') {

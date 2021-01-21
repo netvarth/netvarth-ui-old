@@ -209,11 +209,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                             <label>OTP is sent to Your Mobile Number</label>
                                         </div> -->
                                         <div class="form-group">
-                                            <mat-form-field>
+                                            <!-- <mat-form-field> -->
                                                 <input class="number-ip-sm no-padding" matInput placeholder="Enter OTP"
                                                     [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
                                                     autocomplete="off" (keypress)="removSpecChar($event)" maxlength="5">
-                                            </mat-form-field>
+                                            <!-- </mat-form-field> -->
                                         </div>
                                         <mat-dialog-actions>
                                             <div class="resendouter" *ngIf="resetCounterVal==0">
@@ -243,11 +243,11 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                             <ng-container *ngIf="showOTPEmailContainer">
                                 <div class="ynw-common-form-nm otpemailsection">
                                     <div class="form-group">
-                                        <mat-form-field>
+                                        <!-- <mat-form-field> -->
                                             <input type="email" matInput [(ngModel)]="email"
                                                 [ngModelOptions]="{standalone: true}" placeholder="Enter your email id"
                                                 autocomplete="off" />
-                                        </mat-form-field>
+                                        <!-- </mat-form-field> -->
                                     </div>
                                     <mat-dialog-actions>
                                         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">

@@ -4,6 +4,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-social-media',
@@ -14,7 +15,8 @@ export class SocialMediaComponent implements OnInit {
 
     constructor(public routerobj: Router,
         public provider_services: ProviderServices,
-        public shared_functions: SharedFunctions) { }
+        public shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService) { }
     orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     socialLink: any = [];
     social_arr: any = [];
@@ -31,7 +33,7 @@ export class SocialMediaComponent implements OnInit {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
         const filteredList = this.social_arr.filter(social => social.Sockey === media);
@@ -59,12 +61,12 @@ export class SocialMediaComponent implements OnInit {
         this.provider_services.updateSocialMediaLinks(submit_data)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIALMEDIA_SAVED, { 'panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIALMEDIA_SAVED, { 'panelclass': 'snackbarerror' });
                     this.showSave = [];
                     this.getBusinessProfile();
                 },
                 (error) => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

@@ -8,6 +8,9 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { AddProviderWaitlistLocationsComponent } from '../add-provider-waitlist-locations/add-provider-waitlist-locations.component';
 import { ProviderSharedFuctions } from '../../shared/functions/provider-shared-functions';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-waitlist-locations',
@@ -58,25 +61,27 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
   domain: any;
   constructor(
     private provider_services: ProviderServices,
-    private shared_Functionsobj: SharedFunctions,
     private dialog: MatDialog,
     private router: Router,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
     private shared_services: SharedServices,
-    private provider_shared_functions: ProviderSharedFuctions
+    private provider_shared_functions: ProviderSharedFuctions,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService
   ) {
-    this.emptyMsg = this.shared_Functionsobj.getProjectMesssages('ADWORD_LISTEMPTY');
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('ADWORD_LISTEMPTY');
   }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.getBusinessConfiguration();
     // calling the method to get the list of badges related to location
     this.getLocationBadges();
     // this.bProfile = this.provider_datastorage.get('bProfile');
-    this.isCheckin = this.shared_Functionsobj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.dialogRef) {
@@ -199,11 +204,11 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
             if (msg_data['chgstatus'] === 'enable') {
               msg_data['msg'] = msg_data['msg'] + '. ' + Messages.ENBALE_QUEUES;
             }
-            this.shared_Functionsobj.openSnackBar(msg_data['msg']);
+            this.snackbarService.openSnackBar(msg_data['msg']);
             this.getProviderLocations();
           },
             error => {
-              this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
               /*this.api_error = error.error;
               setTimeout(() => {
                 this.resetApiErrors();
@@ -226,7 +231,7 @@ export class ProviderWaitlistLocationsComponent implements OnInit, OnDestroy {
         this.getProviderLocations();
       },
         (error) => {
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           /* this.api_error = error.error;
            setTimeout(() => {
              this.resetApiErrors();

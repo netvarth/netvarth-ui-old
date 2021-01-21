@@ -7,6 +7,9 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { AddProviderCouponsComponent } from '../add-provider-coupons/add-provider-coupons.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-coupons',
@@ -68,17 +71,20 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     private router: Router, private dialog: MatDialog,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
-    private sharedfunctionObj: SharedFunctions) {
-    this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('COUPON_LISTEMPTY');
+    private sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor) {
+    this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }]};
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
     if (this.addcoupdialogRef) {
@@ -99,7 +105,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       },
         error => {
           this.errorExist = true;
-          // this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
   performActions(action) {
@@ -169,7 +175,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': this.sharedfunctionObj.getProjectMesssages('COUPON_DELETE').replace('[name]', coupon.name),
+        'message': this.wordProcessor.getProjectMesssages('COUPON_DELETE').replace('[name]', coupon.name),
         'heading': 'Delete Confirmation'
       }
     });
@@ -183,11 +189,11 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.deleteCoupon(id)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(Messages.COUPON_DELETED);
+          this.snackbarService.openSnackBar(Messages.COUPON_DELETED);
           this.getCoupons();
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -208,7 +214,7 @@ export class ProviderCouponsComponent implements OnInit, OnDestroy {
         this.getJaldeeCoupons();
       },
       error => {
-        this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     );
   }

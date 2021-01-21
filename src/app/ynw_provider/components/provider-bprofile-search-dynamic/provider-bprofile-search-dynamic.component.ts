@@ -5,6 +5,8 @@ import { ProviderDataStorageService } from '../../services/provider-datastorage.
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { QuestionService } from '../dynamicforms/dynamic-form-question.service';
 import { Router } from '@angular/router';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-bprofile-search-dynamic',
@@ -29,11 +31,13 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
     private service: QuestionService,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
     public dialogRef: MatDialogRef<ProviderBprofileSearchDynamicComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.que_type = this.data.type || 'domain_questions';
     this.bProfile = this.data['bProfile'];
     this.grid_row_index = this.data['grid_row_index'];
@@ -135,7 +139,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -166,7 +170,7 @@ export class ProviderBprofileSearchDynamicComponent implements OnInit {
           this.dialogRef.close('reloadlist');
         },
         error => {
-          this.shared_functions.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }

@@ -7,8 +7,10 @@ import { ProviderSharedFuctions } from '../../../../../../../../ynw_provider/sha
 import { Subscription } from 'rxjs';
 import { ServicesService } from '../../../../../../../../shared/modules/service/services.service';
 import { GalleryService } from '../../../../../../../../shared/modules/gallery/galery-service';
+import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { Location } from '@angular/common';
-
 @Component({
     selector: 'app-userservice-detail',
     templateUrl: './waitlistservice-detail.component.html'
@@ -55,13 +57,17 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         private servicesService: ServicesService,
         private galleryService: GalleryService,
         private activated_route: ActivatedRoute,
-        private router: Router, public location: Location,
+        private router: Router,
+        public location: Location,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         private provider_shared_functions: ProviderSharedFuctions) {
         this.activated_route.params.subscribe(
             (params) => {
                 this.service_id = params.sid;
                 this.userId = params.id;
-                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
             }
         );
         this.activated_route.queryParams.subscribe(
@@ -133,11 +139,11 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     .subscribe(
                         () => {
                             this.getGalleryImages();
-                            this.sharedfunctionObj.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
+                            this.snackbarService.openSnackBar(Messages.ITEMIMAGE_UPLOADED, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
                         error => {
-                            this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
@@ -179,7 +185,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         return false;
     }
     getDomainSubdomainSettings() {
-        const user_data = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         const domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;
         return new Promise((resolve, reject) => {
@@ -300,7 +306,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getUserServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -309,12 +315,12 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
         this.provider_services.updateService(post_data)
             .subscribe(
                 () => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_UPDATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_UPDATED'));
                     this.location.back();
                     this.getUserServiceDetail();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -325,7 +331,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getUserServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = false;
                     this.getUserServiceDetail();
                 });
@@ -337,7 +343,7 @@ export class WaitlistServiceDetailComponent implements OnInit, OnDestroy {
                     this.getUserServiceDetail();
                 },
                 (error) => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.servstatus = true;
                     this.getUserServiceDetail();
                 });

@@ -7,6 +7,7 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { WordProcessor } from '../../services/word-processor.service';
 
 export class ForgotPasswordModel {
   constructor(
@@ -64,7 +65,8 @@ export class ForgotPasswordComponent {
     private fb: FormBuilder,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    public shared_functions: SharedFunctions
+    public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
     this.createForm(1);
     this.is_provider = data.is_provider;
@@ -131,7 +133,7 @@ export class ForgotPasswordComponent {
           this.createForm(3);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -152,7 +154,7 @@ export class ForgotPasswordComponent {
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }
@@ -178,7 +180,7 @@ export class ForgotPasswordComponent {
           }, projectConstants.TIMEOUT_DELAY_LARGE6);
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }

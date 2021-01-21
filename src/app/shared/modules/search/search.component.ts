@@ -13,6 +13,9 @@ import * as locationjson from '../../../../assets/json/locations.json';
 import * as metrojson from '../../../../assets/json/metros_capital.json';
 import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
+import { SnackbarService } from '../../services/snackbar.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
@@ -156,6 +159,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
     private searchdataserviceobj: SearchDataStorageService,
+    private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
     private routerobj: Router) {
     this.myControl_prov.valueChanges.subscribe(val => {
       this.filterKeywords(val);
@@ -180,11 +186,11 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.selected_domain = this.passedDomain;
     }
     this.getAllsearchlabels();
-    // const searchlabel = this.shared_functions.getitemfromLocalStorage('srchLabels');
+    // const searchlabel = this.lStorageService.getitemfromLocalStorage('srchLabels');
     // if (searchlabel) {
     //   this.jsonlist = searchlabel.popularSearchLabels.all.labels;
     // }
-    this.moreoptionsTooltip = this.shared_functions.getProjectMesssages('MOREOPTIONS_TOOLTIP');
+    this.moreoptionsTooltip = this.wordProcessor.getProjectMesssages('MOREOPTIONS_TOOLTIP');
     if (this.passedkwdet.kwtyp === 'label') {
       if (this.passedkwdet.kwdomain !== '' && this.passedkwdet.kwdomain !== undefined) {
         this.curlabel.typ = 'label';
@@ -207,7 +213,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   checktoSetLocationtoDefaultLocation() {
     if (this.locationholder.autoname === '' || this.locationholder.autoname === undefined || this.locationholder.autoname === null) {
       /* if the location details are saved in the local storage, fetch them and set it as the location */
-      const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+      const localloc = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
       if (localloc) {
         if (localloc.autoname !== '' && localloc.autoname !== undefined && localloc.autoname !== null) {
           this.locationholder = localloc;
@@ -222,7 +228,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
           this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
           this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-          this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+          this.lStorageService.setitemonLocalStorage('ynw-locdet', this.locationholder);
         }
       } else {
         if (navigator) {
@@ -256,7 +262,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     this.locationholder.lat = projectConstants.SEARCH_DEFAULT_LOCATION.lat;
     this.locationholder.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
     this.locationholder.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
-    this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+    this.lStorageService.setitemonLocalStorage('ynw-locdet', this.locationholder);
   }
   public setLocation(loc) {
     if (loc) {
@@ -268,7 +274,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         typ: loc.typ,
         rank: loc.rank
       };
-      this.shared_functions.setitemonLocalStorage('ynw-locdet', this.locationholder);
+      this.lStorageService.setitemonLocalStorage('ynw-locdet', this.locationholder);
       this.location_data = undefined;
     }
     setTimeout(() => {
@@ -436,7 +442,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       const pdata = { 'ttype': 'popularList', 'target': this.popularSearchList };
       this.shared_functions.sendMessage(pdata);
       if (this.popularSearchList) {
-        this.shared_functions.setitemonLocalStorage('popularSearch', this.popularSearchList);
+        this.lStorageService.setitemonLocalStorage('popularSearch', this.popularSearchList);
       }
     }
 
@@ -574,7 +580,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     }
   }
   getDomainList() {
-    const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig && bconfig.bdata && bconfig.cdate) {
       const bdate = bconfig.cdate;
@@ -596,14 +602,14 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
               cdate: today,
               bdata: this.domainlist_data
             };
-            this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
           }
         );
     }
   }
   getAllsearchlabels() {
     // check whether search labels exists in local storage
-    const srchlabels = this.shared_functions.getitemfromLocalStorage('srchLabels');
+    const srchlabels = this.lStorageService.getitemfromLocalStorage('srchLabels');
     if (srchlabels) {
       this.searchlabels_data = srchlabels || [];
       this.searchdataserviceobj.set(this.searchlabels_data);
@@ -622,7 +628,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.shared_service.getAllSearchlabels()
         .subscribe(
           res => {
-            this.shared_functions.setitemonLocalStorage('srchLabels', res);
+            this.lStorageService.setitemonLocalStorage('srchLabels', res);
             this.searchlabels_data = res || [];
             this.jsonlist = this.searchlabels_data.popularSearchLabels.all.labels;
             if (this.jsonlist) {
@@ -634,7 +640,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
               }
             }
             this.setPopularList(this.jsonlist);
-            this.shared_functions.setitemonLocalStorage('popularSearch', this.jsonlist);
+            this.lStorageService.setitemonLocalStorage('popularSearch', this.jsonlist);
             const pdata = { 'ttype': 'popularSearchList', 'target': this.jsonlist };
             this.shared_functions.sendMessage(pdata);
             this.searchdataserviceobj.set(this.searchlabels_data);
@@ -776,7 +782,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   selectedOption() {
   }
   do_search(labelqpassed?) {
-    this.shared_functions.setitemonLocalStorage('ynw_srchb', 1);
+    this.lStorageService.setitemonLocalStorage('ynw_srchb', 1);
     this.closeMoreoptions();
     // done to handle the case if something is typed in the last text box and nothing else is selected by consumer, but some text is there
     // in such as case the text will be used to search against the index "title"
@@ -1050,7 +1056,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         this.isCurrentLocation = true;
       },
         error => {
-          this.shared_functions.openSnackBar('You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.', { 'panelClass': 'snackbarerror' });
           // this.setDefaultLocation();
         });
     }

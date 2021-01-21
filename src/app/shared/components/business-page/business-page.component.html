@@ -156,18 +156,18 @@
                         *ngIf="showMore">
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10" *ngIf="showMore">
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                <!-- <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
+                                <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10">
                                     <div class="question-header">Area of Specialization</div>
                                     <div class="question-value1">{{businessjson.serviceSubSector.displayName |
                                         capitalizeFirst}}</div>
-                                </div> -->
+                                </div>
                                 <div class="question-main-outer col-md-6 col-xs-12 col-sm-6 mgn-up-10"
                                     *ngFor="let vfield of virtualfieldsCombinedjson">
                                     <div class="question-outer" *ngIf="vfield.value">
                                         <ng-container>
                                             <div class="question-header">{{vfield.displayName}}</div>
                                             <div class="question-value1" *ngIf="vfield.type!= 'object'"
-                                                [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
+                                                [innerHTML]="wordProcessor.firstToUpper(vfield.value) | nl2br">
                                             </div>
                                             <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                                 <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
@@ -349,22 +349,24 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
-                    <div class="col-md-8 col-sm-6 col-xs-12 no-padding">
-                      <h5 class="mgn-bt-5 primary-color"><img  [src]="catalogImage" width="50" height="50" id="catalog-image1"
-                        class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
+                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 no-padding">
+                      <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"  width="50" height="50" id="catalog-image1"
+                        class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
                         <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 catalog-icons no-padding-small">
-                        <span class="pull-left">
-                            <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails"><img class="ordericon home"
-                                    src="../../../../assets/images/Delivery.svg" />&nbsp;Home Delivery</span>
-                            <span class=""  *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp  && activeCatalog.nextAvailablePickUpDetails"><img class="ordericon pickup"
-                                    src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
-                        </span>
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 catalog-icons no-padding-small">
+                        <span class="mgn-rt-10" *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails"><img class="ordericon home"
+                            src="../../../../assets/images/Delivery.svg" />&nbsp;Home Delivery<small  *ngIf="activeCatalog.homeDelivery.deliveryRadius" >(in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</small></span>
+                    <span class="" *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails"><img class="ordericon pickup"
+                            src="../../../../assets/images/order/Storepickup.svg" />&nbsp;Store Pickup</span>
                     </div>
                 </div>
-                <ng-container *ngIf="orderItems.length >0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
+                <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"
+                    [modalImages]="catalogimage_list_popup" [plainGalleryConfig]="customPlainGallerycatalogRowConfig"
+                    [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                <ng-container *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)" >
                     <div class="bus-item-O" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
@@ -375,6 +377,13 @@
                             <button mat-flat-button class="btn-chkout" (click)="checkout();">Checkout</button>
                         </div>
                     </div>
+                </ng-container>
+                <ng-container *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+                    <div class="bus-item-O" >
+                        <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
+                        <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
+                    </div>
+  
                 </ng-container>
             </div>
         </div>

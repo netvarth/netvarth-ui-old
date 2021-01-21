@@ -9,6 +9,9 @@ import { Messages } from '../../constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Location } from '@angular/common';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -66,13 +69,16 @@ export class EditProfileComponent implements OnInit {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public router: Router,
-    private location: Location
+    private location: Location,
+    private groupService: GroupStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) { }
   goBack () {
     this.location.back();
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.editProfileForm = this.fb.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -130,7 +136,7 @@ export class EditProfileComponent implements OnInit {
           }
         },
         error => {
-          this.api_error = this.shared_functions.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.loading = false;
         }
       );
@@ -148,7 +154,7 @@ export class EditProfileComponent implements OnInit {
     }
     let post_data;
     let passtyp;
-    const curuserdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const curuserdet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (sub_data.email) {
       const stat = this.validateEmail(sub_data.email);
       if (!stat) {
@@ -198,23 +204,23 @@ export class EditProfileComponent implements OnInit {
         .subscribe(
           () => {
             // this.api_success = Messages.PROFILE_UPDATE;
-            this.shared_functions.openSnackBar(Messages.PROFILE_UPDATE);
+            this.snackbarService.openSnackBar(Messages.PROFILE_UPDATE);
             this.getProfile(this.curtype);
-            const curuserdetexisting = this.shared_functions.getitemFromGroupStorage('ynw-user');
+            const curuserdetexisting = this.groupService.getitemFromGroupStorage('ynw-user');
             curuserdetexisting['userName'] = sub_data.first_name + ' ' + sub_data.last_name;
             curuserdetexisting['firstName'] = sub_data.first_name;
             curuserdetexisting['lastName'] = sub_data.last_name;
-            this.shared_functions.setitemToGroupStorage('ynw-user', curuserdetexisting);
+            this.groupService.setitemToGroupStorage('ynw-user', curuserdetexisting);
             const pdata = { 'ttype': 'updateuserdetails' };
             this.shared_functions.sendMessage(pdata);
           },
           error => {
             // this.api_error = error.error;
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
     } else {
-      this.shared_functions.openSnackBar(Messages.EMAIL_MISMATCH, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.EMAIL_MISMATCH, { 'panelClass': 'snackbarerror' });
       // this.api_error = Messages.PASSWORD_MISMATCH;
     }
   }

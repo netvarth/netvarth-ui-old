@@ -11,6 +11,9 @@ import { LoginComponent } from '../../components/login/login.component';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../services/word-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -109,6 +112,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public router: Router,
     private _scrollToService: ScrollToService,
     public shared_service: SharedServices,
+    private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService
   ) {
     this.onResize();
     this.evnt = router.events.subscribe(event => {
@@ -159,9 +165,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.pageSource = this.includedfrom;
-    this.inboxiconTooltip = this.shared_functions.getProjectMesssages('INBOXICON_TOOPTIP');
-    this.custsignTooltip = this.shared_functions.getProjectMesssages('CUSTSIGN_TOOPTIP');
-    this.provsignTooltip = this.shared_functions.getProjectMesssages('PROVSIGN_TOOPTIP');
+    this.inboxiconTooltip = this.wordProcessor.getProjectMesssages('INBOXICON_TOOPTIP');
+    this.custsignTooltip = this.wordProcessor.getProjectMesssages('CUSTSIGN_TOOPTIP');
+    this.provsignTooltip = this.wordProcessor.getProjectMesssages('PROVSIGN_TOOPTIP');
     this.getUserdetails();
     this.getBusinessdetFromLocalstorage();
     this.isprovider = this.shared_functions.isBusinessOwner();
@@ -178,7 +184,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // }
     }
     if (this.ctype === 'consumer') {
-    this.getInboxUnreadCnt();
+      this.getInboxUnreadCnt();
     }
   }
   getLicenseDetails(call_type = 'init') {
@@ -198,7 +204,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
   }
   setLicense() {
-    const cuser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const cuser = this.groupService.getitemFromGroupStorage('ynw-user');
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
       if (cuser.new_lic) {
@@ -247,7 +253,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/consumer/faq']);
   }
   getBusinessdetFromLocalstorage() {
-    const bdetails = this.shared_functions.getitemFromGroupStorage('ynwbp');
+    const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (bdetails) {
       this.bname = bdetails.bn || '';
       this.bsector = bdetails.bs || '';
@@ -256,7 +262,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
   getUserdetails() {
-    this.userdet = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.userdet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.userdet) {
       if (this.shared_functions.checkLogin()) {
         this.ctype = this.shared_functions.isBusinessOwner('returntyp');
@@ -356,7 +362,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       );
   }
   upgradeMembership() {
-    this.shared_functions.setitemonLocalStorage('lic_ret', this.router.url);
+    this.lStorageService.setitemonLocalStorage('lic_ret', this.router.url);
     this.router.navigate(['provider', 'settings', 'license', 'upgrade']);
   }
   inboxiconClick() {
@@ -452,6 +458,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['business'], navigationExtras);
   }
   gotoActiveHome() {
-    this.router.navigate(['/']);
+    if (this.consumer_loggedin) {
+      this.router.navigate(['/consumer']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

@@ -7,6 +7,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ReportDataService } from '../reports-data.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-schedule-selection',
@@ -36,14 +38,16 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
-    private report_service: ReportDataService) {
+    private report_service: ReportDataService,
+    private groupService: GroupStorageService,
+    private snackbarService: SnackbarService) {
 
     this.activated_route.queryParams.subscribe(qparams => {
 
       this.reportType = qparams.report_type;
       this.selected_data_id = qparams.data;
 
-      const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.accountType = user.accountType;
       if (this.accountType !== 'BRANCH') {
         this.displayedColumns = ['select', 'name', 'schedule', 'status'];
@@ -135,7 +139,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   // schedule related method------------------------------------------------->
   getSchedules(date?) {
     const filterEnum = {};
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.provider_services.getProviderSchedules(filterEnum).subscribe(
         (schedules: any) => {
           this.schedule_list_for_grid = [];
@@ -191,7 +195,7 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     this.schedules_selected = this.selection.selected;
 
     if (this.selection.selected.length === 0) {
-      this.shared_functions.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
 
     } else {
 

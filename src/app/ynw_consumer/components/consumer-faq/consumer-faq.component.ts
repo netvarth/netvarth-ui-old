@@ -23,7 +23,7 @@ export class ConsumerFaqComponent implements  OnInit {
   ) { }
   ngOnInit() {
     this.activeMenu = 'searchh';
-    // this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    // this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     // this.domain = this.active_user.sector;
     // if (this.target) {
     //   // this.triggerScrollTo(this.target);

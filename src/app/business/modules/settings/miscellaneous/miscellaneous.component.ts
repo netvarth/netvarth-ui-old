@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-miscellaneous',
@@ -33,10 +35,11 @@ export class MiscellaneousComponent implements OnInit {
         private routerobj: Router,
         public shared_functions: SharedFunctions,
         private provider_services: ProviderServices,
-        private sharedfunctionObj: SharedFunctions,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService
     ) {
-        this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
-        this.provider_label = this.sharedfunctionObj.getTerminologyTerm('provider');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     }
     ngOnInit() {
         this.getDomainSubdomainSettings();
@@ -81,7 +84,7 @@ export class MiscellaneousComponent implements OnInit {
         this.routerobj.navigate(['/provider/' + this.domain + '/miscellaneous->' + mod]);
     }
     getDomainSubdomainSettings() {
-        const user_data = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user_data = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user_data.accountType;
         this.domain = user_data.sector || null;
         const sub_domain = user_data.subSector || null;

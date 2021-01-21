@@ -8,6 +8,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
 import * as moment from 'moment';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-timewindowpopup',
@@ -69,6 +70,7 @@ export class TimewindowPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
     private fb: FormBuilder,
+    private snackbarService: SnackbarService,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
@@ -96,12 +98,12 @@ export class TimewindowPopupComponent implements OnInit {
 
   onSubmit(form_data) { 
     if (!this.dstart_time || !this.dend_time) {
-        this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(Messages.WAITLIST_QUEUE_SELECTTIME, { 'panelClass': 'snackbarerror' });
         return;
     }
     // today
     if (this.sharedfunctionObj.getminutesOfDay(this.dstart_time) > this.sharedfunctionObj.getminutesOfDay(this.dend_time)) {
-        this.sharedfunctionObj.openSnackBar(Messages.WAITLIST_WINDOW_STIMEERROR, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(Messages.WAITLIST_WINDOW_STIMEERROR, { 'panelClass': 'snackbarerror' });
         return;
     }
     const curdatestore = new Date();

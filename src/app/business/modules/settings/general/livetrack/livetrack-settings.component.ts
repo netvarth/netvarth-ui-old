@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -14,8 +16,8 @@ export class LiveTrackSettingsComponent implements OnInit {
     livetrack_statusstr: string;
     cust_domain_name = '';
     custs_name = '';
-    customer_label = this.shared_functions.getTerminologyTerm('customer');
-    customer_label_upper = this.shared_functions.firstToUpper(this. customer_label);
+    customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    customer_label_upper = this.wordProcessor.firstToUpper(this. customer_label);
     breadcrumbs_init = [
         {
             title: 'Settings',
@@ -33,11 +35,13 @@ export class LiveTrackSettingsComponent implements OnInit {
     breadcrumb_moreoptions: any = [];
     domain;
     constructor(private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions,
+        private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
+        private snackbarService: SnackbarService,
         private router: Router) {
     }
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.getLiveTrackStatus();
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
@@ -66,11 +70,11 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.provider_services.setLivetrack(is_livetrack)
             .subscribe(
                 () => {
-                    this.shared_functions.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getLiveTrackStatus();
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.getLiveTrackStatus();
                 }
             );

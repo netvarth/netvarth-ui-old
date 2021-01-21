@@ -5,6 +5,8 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -41,6 +43,8 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
         public dialogRef: MatDialogRef<AddcatalogimageComponent>,
         public sharedfunctionObj: SharedFunctions,
         private provider_services: ProviderServices,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
         private router: Router,
     ) {
 
@@ -123,12 +127,12 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadCatalogImages(this.source_id, submit_data).subscribe((data) => {
-            this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+            this.snackbarService.openSnackBar('Image uploaded successfully');
             this.close();
             this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
         },
             error => {
-                this.error_msg = this.sharedfunctionObj.getProjectErrorMesssages(error);
+                this.error_msg = this.wordProcessor.getProjectErrorMesssages(error);
             });
     }
     actionCompleted() {

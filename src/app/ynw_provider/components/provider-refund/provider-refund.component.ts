@@ -103,10 +103,10 @@ export class ProviderRefundComponent implements OnInit {
               }, projectConstants.TIMEOUT_DELAY);
             } else {
               this.loading = false;
-              this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(data['response']);
+              this.api_error = this.wordProcessor.getProjectErrorMesssages(data['response']);
             }
           }, error => {
-            this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.loading = false;
           });
       }
@@ -138,14 +138,14 @@ export class ProviderRefundComponent implements OnInit {
     if (this.selected_addon) {
       this.provider_services.addAddonPackage(this.selected_addon)
         .subscribe(() => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('ADDON_ADDED');
+          this.api_success = this.wordProcessor.getProjectMesssages('ADDON_ADDED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
           error => {
-            // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
-            this.sharedfunctionObj.apiErrorAutoHide(this, error);
+            // this.api_error = this.wordProcessor.apiErrorAutoHide(this, error);
+            this.wordProcessor.apiErrorAutoHide(this, error);
           }
         );
     }

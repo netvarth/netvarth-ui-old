@@ -17,6 +17,10 @@ import { trigger, style, transition, animate, keyframes, query, stagger } from '
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
+import { WordProcessor } from '../../services/word-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { SnackbarService } from '../../services/snackbar.service';
+import { GroupStorageService } from '../../services/group-storage.service';
 // import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonType, ButtonsStrategy } from 'angular-modal-gallery';
 
 @Component({
@@ -196,6 +200,10 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     private activaterouterobj: ActivatedRoute,
     private shared_service: SharedServices,
     private shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
     public router: Router,
     private searchdetailserviceobj: SearchDetailServices,
     private dialog: MatDialog) {
@@ -204,14 +212,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.setSystemDate();
-    this.loc_details = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
-    this.server_date = this.shared_functions.getitemfromLocalStorage('sysdate');
+    this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.checkRefineSpecial();
-    this.couponTooltip = this.shared_functions.getProjectMesssages('COUPON_TOOPTIP');
-    this.jdnTooltip = this.shared_functions.getProjectMesssages('JDN_TOOPTIP');
-    this.commTooltip = this.shared_functions.getProjectMesssages('COMM_TOOPTIP');
-    this.refTooltip = this.shared_functions.getProjectMesssages('REF_TOOPTIP');
-    this.bNameTooltip = this.shared_functions.getProjectMesssages('BUSSNAME_TOOPTIP');
+    this.couponTooltip = this.wordProcessor.getProjectMesssages('COUPON_TOOPTIP');
+    this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
+    this.commTooltip = this.wordProcessor.getProjectMesssages('COMM_TOOPTIP');
+    this.refTooltip = this.wordProcessor.getProjectMesssages('REF_TOOPTIP');
+    this.bNameTooltip = this.wordProcessor.getProjectMesssages('BUSSNAME_TOOPTIP');
     this.showrefinedsection = false; // this is done to override all conditions and to hide the refined filter section by default
     this.getDomainListMain()
       .then(data => {
@@ -222,13 +230,13 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             this.setEnvironment(false);
           });
       });
-    const activeUser = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
     }
     this.nosearch_results = false;
-    this.retscrolltop = this.shared_functions.getitemFromGroupStorage('sctop') || 0;
-    this.shared_functions.setitemonLocalStorage('sctop', 0);
+    this.retscrolltop = this.groupService.getitemFromGroupStorage('sctop') || 0;
+    this.lStorageService.setitemonLocalStorage('sctop', 0);
   }
   stringToInt(stringVal) {
     return parseInt(stringVal, 0);
@@ -260,8 +268,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     this.scrolltop = window.pageYOffset;
   }
   checkRefineSpecial() {
-    const ynwsrchbuttonClicked = this.shared_functions.getitemfromLocalStorage('ynw_srchb');
-    this.shared_functions.removeitemfromLocalStorage('ynw_srchb');
+    const ynwsrchbuttonClicked = this.lStorageService.getitemfromLocalStorage('ynw_srchb');
+    this.lStorageService.removeitemfromLocalStorage('ynw_srchb');
     if (ynwsrchbuttonClicked === 1) {
       this.hideRefineifOneresultchk = true;
     } else {
@@ -273,12 +281,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.server_date = res;
-          this.shared_functions.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   getDomainListMain() {
     return new Promise((resolve, reject) => {
-      const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+      const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
       let run_api = true;
       if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
         const bdate = bconfig.cdate;
@@ -300,7 +308,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 cdate: today,
                 bdata: this.domainlist_data
               };
-              this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+              this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
               resolve(res);
             }
           );
@@ -345,7 +353,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   checklocationExistsinStorage() {
-    // const localloc = this.shared_functions.getitemfromLocalStorage('ynw-locdet');
+    // const localloc = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     const holdLocObj = {
       autoname: this.locautoname || '',
       name: this.locname || '',
@@ -360,7 +368,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       holdLocObj.lon = projectConstants.SEARCH_DEFAULT_LOCATION.lon;
       holdLocObj.typ = projectConstants.SEARCH_DEFAULT_LOCATION.typ;
     }
-    this.shared_functions.setitemonLocalStorage('ynw-locdet', holdLocObj);
+    this.lStorageService.setitemonLocalStorage('ynw-locdet', holdLocObj);
   }
 
   setSearchfields(obj, src) {
@@ -1382,7 +1390,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   getSubdomainofaSpecialization(special, domain) {
     let retarr = { 'dom': '', 'subdom_name': '', 'subdom_dispname': '' };
     if (this.domainlist_data === undefined) {
-      const bconfig = this.shared_functions.getitemfromLocalStorage('ynw-bconf');
+      const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
       if (bconfig && bconfig.bdata) { // case if data is there in local storage
         this.domainlist_data = bconfig.bdata;
       } else {
@@ -1395,7 +1403,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                 cdate: today,
                 bdata: this.domainlist_data
               };
-              this.shared_functions.setitemonLocalStorage('ynw-bconf', postdata);
+              this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
             }
           );
       }
@@ -1557,7 +1565,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (textstr !== '') {
       textstr = ' ' + textstr;
     }
-    const userobj = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const userobj = this.groupService.getitemFromGroupStorage('ynw-user');
     let testUser = false;
     if (userobj) {
       const phno = (userobj.primaryPhoneNumber.toString());
@@ -1685,11 +1693,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const pass_data = {
             accountId: myidarr[0],
             sector: claimdata['sector'],
-            subSector: claimdata['subSector']
+            subSector: claimdata['subSector'],
+            phoneNo: (claimdata['userProfile'].primaryMobileNo) ? claimdata['userProfile'].primaryMobileNo : '',
+            firstName: (claimdata['userProfile'].firstName) ? claimdata['userProfile'].firstName : '',
+            lastName: (claimdata['userProfile'].lastName) ? claimdata['userProfile'].lastName : ''
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }
@@ -1706,7 +1717,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     // });
     // this.claimdialogRef.afterClosed().subscribe(result => {
     // });
-    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector } });
+    this.router.navigate(['business', 'signup'], { queryParams: { claimable: true, phoneNo: passData.phoneNo, accountId: passData.accountId, sector: passData.sector, subSector: passData.subSector, firstName: passData.firstName, lastName: passData.lastName } });
   }
 
   checkinClicked(obj, chdatereq) {
@@ -1772,7 +1783,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   doLogin(state, origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     let is_test_account = null;
     if (current_provider) {
@@ -1885,7 +1896,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       const providforDetails = obj.fields.unique_id;
       const locId = obj.fields.location_id1;
       // check whether logged in as consumer
-      this.shared_functions.setitemToGroupStorage('sctop', this.scrolltop);
+      this.groupService.setitemToGroupStorage('sctop', this.scrolltop);
       // if (this.shared_functions.checkLogin()) {
       // const ctype = this.shared_functions.isBusinessOwner('returntyp');
       // if (ctype === 'consumer') {
@@ -2011,12 +2022,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     if (terminologies !== null) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       if (terminologies) {
-        return this.shared_functions.firstToUpper((terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term));
+        return this.wordProcessor.firstToUpper((terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term));
       } else {
-        return this.shared_functions.firstToUpper((term === term_only) ? term_only : term);
+        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
       }
     } else {
-      return this.shared_functions.firstToUpper(term);
+      return this.wordProcessor.firstToUpper(term);
     }
   }
   checkserviceClicked(name, obj, origin) {

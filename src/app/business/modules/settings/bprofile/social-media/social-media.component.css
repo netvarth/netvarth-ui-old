@@ -29,15 +29,18 @@
 .inst, .site {
     font-size: 5rem;
 }
-.bglobe {
+.socialmedia .youTube {
+    height: 60px;
     width: 75px;
-}
-.youtube {
+  }
+  .socialmedia .instagram {
+    height: 75px;
     width: 75px;
-}
-.insta {
+  }
+  .socialmedia .bizyGlobe {
+    height: 75px;
     width: 75px;
-}
+  }
 @media(max-width: 550px) {
     .socialmedia .social-box {
         width: 85%;

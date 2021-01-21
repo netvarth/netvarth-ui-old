@@ -17,6 +17,10 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/appointment-confirm-popup.component';
 import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 // import { CountryCode } from 'ngx-intl-tel-input/lib/data/country-code';
 @Component({
     selector: 'app-consumer-appointment',
@@ -255,6 +259,10 @@ export class ConsumerAppointmentComponent implements OnInit {
         public provider_services: ProviderServices,
         public datastorage: CommonDataStorageService,
         public location: Location,
+        private wordProcessor: WordProcessor,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService,
         public dialog: MatDialog) {
         this.route.queryParams.subscribe(
             params => {
@@ -295,7 +303,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             newWhatsapp: new FormControl(undefined),
             newPhone: new FormControl(undefined)
         });
-        this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.carouselOne = {
             dots: false,
             nav: true,
@@ -311,7 +319,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             loop: false,
             responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 2 }, 1200: { items: 3 } }
         };
-        const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         if (activeUser) {
             this.isfirstCheckinOffer = activeUser.firstCheckIn;
             this.customer_data = activeUser;
@@ -424,8 +432,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         return found;
     }
     setTerminologyLabels() {
-        this.checkinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlist'));
-        this.CheckedinLabel = this.sharedFunctionobj.firstToUpper(this.sharedFunctionobj.getTerminologyTerm('waitlisted'));
+        this.checkinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlist'));
+        this.CheckedinLabel = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('waitlisted'));
         if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
             this.main_heading = this.get_token_cap;
         } else {
@@ -770,7 +778,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (error === '') {
                 this.saveCheckin();
             } else {
-                this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 this.apptdisable = false;
             }
         }
@@ -804,7 +812,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (this.sel_ser_det.serviceType === 'virtualService') {
                 for (const i in this.sel_ser_det.virtualCallingModes) {
                     if (this.sel_ser_det.virtualCallingModes[i].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[i].callingMode === 'Phone') {
-                        this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                         this.is_wtsap_empty = true;
                         break;
                     }
@@ -867,8 +875,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             }
         }
         // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-        //     // this.api_error = this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR');
-        //     this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+        //     // this.api_error = this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR');
+        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
         //     return;
         // }
         // if (this.partySizeRequired) {
@@ -904,7 +912,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.appointment.uid, type: 'reschedule' } });
                 },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.apptdisable = false;
                 });
     }
@@ -947,8 +955,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             },
                 error => {
-                    this.api_error = this.sharedFunctionobj.getProjectErrorMesssages(error);
-                    this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.apptdisable = false;
                 });
@@ -962,14 +970,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             const stat = this.validateEmail(this.payEmail.trim());
             if (!stat) {
                 this.emailerror = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         if (this.payEmail1) {
             const stat1 = this.validateEmail(this.payEmail1.trim());
             if (!stat1) {
                 this.email1error = 'Please enter a valid email.';
-                this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
             }
         }
         // return new Promise((resolve) => {
@@ -993,12 +1001,12 @@ export class ConsumerAppointmentComponent implements OnInit {
                         },
                         error => {
                             this.api_error = error.error;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         });
             }
         } else {
             this.email1error = 'Email and Re-entered Email do not match';
-            this.sharedFunctionobj.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.email1error, { 'panelClass': 'snackbarerror' });
         }
     }
     // handleGoBack(cstep) {
@@ -1067,11 +1075,11 @@ export class ConsumerAppointmentComponent implements OnInit {
                     obj.source.checked = false; // preventing the current checkbox from being checked
                     if (this.maxsize > 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
 
                     } else if (this.maxsize === 1) {
                         // this.api_error = 'Only ' + this.maxsize + ' member can be selected';
-                        this.sharedFunctionobj.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
                     }
                 }
             }
@@ -1161,7 +1169,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
                 // this.goBack();
                 setTimeout(() => {
@@ -1169,11 +1177,11 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }, projectConstants.TIMEOUT_DELAY);
             },
                 error => {
-                    this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
                 });
         } else {
-            this.sharedFunctionobj.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
             this.disable = false;
         }
     }
@@ -1397,7 +1405,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     //                             this.setServiceDetails(this.sel_ser);
     //                             this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     //                         } else {
-    //                             this.sharedFunctionobj.openSnackBar(this.sharedFunctionobj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+    //                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     //                         }
     //                     }
     //                 }
@@ -1455,9 +1463,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (input) {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Selected image type not supported');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+                    this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1500,7 +1508,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 () => {
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -1533,7 +1541,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.sharedFunctionobj.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -1598,8 +1606,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                         if (this.terminologiesjson.length === 0) {
                             this.getbusinessprofiledetails_json('terminologies', true);
                         } else {
-                            this.datastorage.set('terminologies', this.terminologiesjson);
-                            this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                            // this.datastorage.set('terminologies', this.terminologiesjson);
+                            this.wordProcessor.setTerminologies(this.terminologiesjson);
                         }
                     }
                     this.api_loading1 = false;
@@ -1628,8 +1636,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                         break;
                     case 'terminologies':
                         this.terminologiesjson = res;
-                        this.datastorage.set('terminologies', this.terminologiesjson);
-                        this.sharedFunctionobj.setTerminologies(this.terminologiesjson);
+                        // this.datastorage.set('terminologies', this.terminologiesjson);
+                        this.wordProcessor.setTerminologies(this.terminologiesjson);
                         this.setTerminologyLabels();
                         break;
                     case 'businessProfile':
@@ -1716,7 +1724,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     addCallingmode() {
         if (this.callingModes === '' || this.callingModes.toString().length < 10 || this.callingModes.charAt(0) === '0'
         ) {
-            this.sharedFunctionobj.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
         } else if (this.callingModes && this.callingModes.toString().length === 10 || this.callingModes.charAt(0) === '0'
         ) {
             this.showInputSection = true;
@@ -1780,7 +1788,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             }
             if (found) {
                 this.couponvalid = true;
-                this.sharedFunctionobj.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 this.action = '';
             } else {
                 this.api_cp_error = 'Coupon invalid';
@@ -2050,7 +2058,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         },
                         error => {
                             this.api_error = error.error;
-                            this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                             this.payEmail = this.userData.userProfile.email;
                             return false;
                         }
@@ -2108,7 +2116,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         //                 error => {
         //                     this.api_error = error.error;
         //                     this.noEmailError = false;
-        //                     this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //                 });
         //     }
         // } else if (this.userEmail && this.payEmail.trim() == '') {
@@ -2143,7 +2151,7 @@ export class ConsumerAppointmentComponent implements OnInit {
 
     showConfirmPopup(post_Data) {
         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-            this.sharedFunctionobj.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
             this.apptdisable = false
         } else {
             const checkinconfirmdialogRef = this.dialog.open(AppointmentConfirmPopupComponent, {

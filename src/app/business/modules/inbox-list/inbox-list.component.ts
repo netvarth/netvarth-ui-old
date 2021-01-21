@@ -10,6 +10,9 @@ import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -54,10 +57,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public shared_service: SharedServices,
-    private routerobj: Router) { }
+    private routerobj: Router,
+    private groupService: GroupStorageService,
+    public wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService) { }
 
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = {
       'show_learnmore': true, 'scrollKey': 'inbox',
@@ -65,7 +71,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
           { 'title': 'Help', 'type': 'learnmore' }]
   };
     this.getUsers();
-    this.terminologies = this.shared_functions.getTerminologies();
+    this.terminologies = this.wordProcessor.getTerminologies();
     this.inbox_services.getBussinessProfile()
       .subscribe(
         (data: any) => {
@@ -226,7 +232,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.users = data;
       },
       (error: any) => {
-        this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   performActions(action) {

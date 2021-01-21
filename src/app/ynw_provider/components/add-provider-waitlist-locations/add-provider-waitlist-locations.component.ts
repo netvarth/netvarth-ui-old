@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { GoogleMapComponent } from '../googlemap/googlemap.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-add-locations',
@@ -65,6 +66,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     public provider_services: ProviderServices,
     private provider_datastorageobj: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
+    private wordProcessor: WordProcessor,
     private dialog: MatDialog
   ) {
     this.data_source = data.source;
@@ -242,7 +244,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
+        this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         this.disableButton = false;
         return;
       }
@@ -265,16 +267,16 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         .subscribe(
           () => {
             if (this.forbadge === true) {
-              this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
+              this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
             } else {
-              this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+              this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
             }
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
-            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.disableButton = false;
           }
         );
@@ -283,14 +285,14 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         .subscribe(
           () => {
             this.api_error = '';
-            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
+            this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_CREATED');
             setTimeout(() => {
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
             this.api_success = '';
-            this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+            this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
             this.disableButton = false;
           }
         );
@@ -349,7 +351,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       const pattern2 = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
       const result2 = pattern2.test(curlabel);
       if (result2) {
-        this.api_error = this.sharedfunctionobj.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
+        this.api_error = this.wordProcessor.getProjectMesssages('BPROFILE_LOCNAME_BLANK'); // 'Phone label should not be blank';
         this.disableButton = false;
         return;
       }
@@ -375,9 +377,9 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       .subscribe(
         () => {
           if (this.forbadge === true) {
-            this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
+            this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_AMINITIES_SAVED');
           } else {
-            this.api_success = (this.data.type === 'add') ? this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+            this.api_success = (this.data.type === 'add') ? this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_CREATED') : this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
           }
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
@@ -403,13 +405,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.provider_services.addProviderLocation(post_data)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_CREATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
         }
       );
@@ -429,13 +431,13 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
     this.provider_services.editProviderLocation(post_data)
       .subscribe(
         () => {
-          this.api_success = this.sharedfunctionobj.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_UPDATED');
           setTimeout(() => {
             this.dialogRef.close('reloadlist');
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionobj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           this.api_loading = false;
         }
       );

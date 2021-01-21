@@ -1,10 +1,14 @@
 <!-- <p>order-items works!</p> -->
-
+<section *ngIf="!loading"  class="mat-scrool">
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
    Add More Items here
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div class="bus-item-O" *ngFor="let item of orderItems">
-    <app-card [item]="item"  [extras]="orderList" ></app-card>
+<div  class="mat-scrool" class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20 mgn-up-20 scro">
+  <div class="bus-item-O" *ngFor="let item of orderItems">
+    <!-- <span> {{item.item.displayName}} </span> -->
+      <app-card [item]="item" [extras]="orderList" (actionPerformed)="cardClicked($event)" ></app-card>
+  </div>
 </div>
+</section>

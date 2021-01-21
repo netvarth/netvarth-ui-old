@@ -617,7 +617,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="card" *ngIf="customerAction === 'inbox' && !loading">
+                <div class="card p0" *ngIf="customerAction === 'inbox' && !loading">
                     <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
                         (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                 </div>

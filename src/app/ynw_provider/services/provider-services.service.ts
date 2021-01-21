@@ -1720,6 +1720,14 @@ export class ProviderServices {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);
    }
+   updateProviderOrders(data) {
+      const url = 'provider/orders';
+      return this.servicemeta.httpPut(url, data);
+   }
+   updateProviderOrderItems(uuid) {
+      const url = 'provider/orders/item' + uuid;
+      return this.servicemeta.httpPut(url);
+   }
    getProviderTodayOrders(filter = {}) {
       const url = 'provider/orders';
       return this.servicemeta.httpGet(url, null, filter);
@@ -1791,7 +1799,7 @@ export class ProviderServices {
       const url = 'provider/order/settings/' + status;
       return this.servicemeta.httpPut(url);
    }
-   addCatalogItems(id,data) {
+   addCatalogItems(id, data) {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpPost(url, data);
    }
@@ -1799,7 +1807,7 @@ export class ProviderServices {
       const url = 'provider/catalog/' + id + '/items';
       return this.servicemeta.httpDelete(url, data);
    }
-   deleteCatalogItem(id,itemid) {
+   deleteCatalogItem(id, itemid) {
       const url = 'provider/catalog/' + id + '/item/' + itemid;
       return this.servicemeta.httpDelete(url);
    }
@@ -1835,5 +1843,13 @@ export class ProviderServices {
    addLabeltoMultipleAppt(data) {
       const url = 'provider/appointment/labelBatch';
       return this.servicemeta.httpPost(url, data);
+   }
+   addLabeltoMultipleOrder(data) {
+      const url = 'provider/orders/labelBatch';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelfromOrder(uuid, label) {
+      const url = 'provider/orders/label/' + uuid + '/' + label;
+      return this.servicemeta.httpDelete(url);
    }
 }

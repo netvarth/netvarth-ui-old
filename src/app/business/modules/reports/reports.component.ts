@@ -5,6 +5,8 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './generated-report/criteria-dialog/criteria-dialog.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-reports',
@@ -12,6 +14,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit {
+  msg = 'Do you really want to delete this report ? ';
   order_criteria: any[];
   appointmentReports = [];
   donationReports = [];
@@ -29,6 +32,7 @@ export class ReportsComponent implements OnInit {
   constructor(private router: Router, private report_dataService: ReportDataService,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     private dialog: MatDialog) {
     this.report_dataService.updateCustomers('All');
     this.report_dataService.updatedQueueDataSelection('All');
@@ -95,12 +99,25 @@ export class ReportsComponent implements OnInit {
     });
   }
   deletCriteria(del_item) {
-    this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
-      if (data) {
-        this.getCriteriaList();
-        this.shared_functions.openSnackBar('Report Deleted');
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': this.msg
       }
     });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.deleteCriteria(del_item.reportName, del_item.reportType).subscribe(data => {
+          if (data) {
+            this.getCriteriaList();
+            this.snackbarService.openSnackBar('Report Deleted');
+          }
+        });
+      }
+    });
+
   }
   viewCriteria(details) {
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
@@ -125,7 +142,7 @@ export class ReportsComponent implements OnInit {
       this.generatedReport(res);
     },
       (error) => {
-        this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
 
   }
@@ -138,7 +155,7 @@ export class ReportsComponent implements OnInit {
           },
           error => {
             reject(error);
-            this.shared_functions.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           }
         );
     });

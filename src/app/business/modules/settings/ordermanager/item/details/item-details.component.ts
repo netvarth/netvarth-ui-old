@@ -10,6 +10,8 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 @Component({
     'selector': 'app-item-details',
@@ -134,11 +136,13 @@ export class ItemDetailsComponent implements OnInit {
         private router: Router,
         public dialog: MatDialog,
         private fb: FormBuilder,
-        public fed_service: FormMessageDisplayService) {
+        public fed_service: FormMessageDisplayService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor) {
         this.activated_route.params.subscribe(
             (params) => {
                 this.item_id = params.id;
-                this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.item_id) {
                     if (this.item_id === 'add') {
                         const breadcrumbs = [];
@@ -376,7 +380,7 @@ export class ItemDetailsComponent implements OnInit {
     handleTaxablechange() {
         this.resetApiErrors();
         if (this.taxpercentage <= 0) {
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
             setTimeout(() => {
                 this.api_error = null;
             }, projectConstants.TIMEOUT_DELAY_LARGE);
@@ -400,7 +404,7 @@ export class ItemDetailsComponent implements OnInit {
     onSubmit(form_data, isfrom?) {
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
            // this.api_error = 'Please enter valid promotional value';
-            this.sharedfunctionObj.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (!this.showPromotionalPrice) {
@@ -408,25 +412,25 @@ export class ItemDetailsComponent implements OnInit {
         }
         if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
            // this.api_error = 'Please enter custom label';
-           this.sharedfunctionObj.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
+           this.snackbarService.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
             return;
         }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
            // this.api_error = 'Please enter valid price';
-           this.sharedfunctionObj.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
+           this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (iprice < 0) {
             //this.api_error = 'Price should not be a negative value';
-            this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (form_data.promotionalPrice) {
             const proprice = parseFloat(form_data.price);
             if (proprice < 0) {
               //  this.api_error = 'Price should not be a negative value';
-              this.sharedfunctionObj.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
                 return;
             }
         }
@@ -501,7 +505,7 @@ export class ItemDetailsComponent implements OnInit {
                     if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                         this.saveImages(data);
                     }
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_CREATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
                     this.api_loading = false;
                     if (isFrom === 'saveadd') {
                         this.disableButton = false;
@@ -527,7 +531,7 @@ export class ItemDetailsComponent implements OnInit {
                     }
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -541,12 +545,12 @@ export class ItemDetailsComponent implements OnInit {
         this.provider_services.editItem(post_itemdata)
             .subscribe(
                 () => {
-                    this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ITEM_UPDATED'));
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_UPDATED'));
                     this.api_loading = false;
                     this.router.navigate(['provider', 'settings', 'ordermanager', 'items']);
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
                     this.disableButton = false;
                 }
@@ -627,7 +631,7 @@ export class ItemDetailsComponent implements OnInit {
         submit_data.append('properties', blobPropdata);
         this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
             // if (this.action === 'edit') {
-            // this.sharedfunctionObj.openSnackBar('Image uploaded successfully');
+            // this.snackbarService.openSnackBar('Image uploaded successfully');
             // }
             this.getItem(id).then(
                 (item) => {
@@ -640,7 +644,7 @@ export class ItemDetailsComponent implements OnInit {
             this.api_loading = false;
         },
             error => {
-                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 this.getItem(id).then(
                     (item) => {
                         this.item = item;
@@ -697,9 +701,9 @@ export class ItemDetailsComponent implements OnInit {
         if (input) {
             for (const file of input) {
                 if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
-                    this.sharedfunctionObj.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
                 } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-                    this.sharedfunctionObj.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     if (type) {
                     this.selectedMessageMain.files.push(file);
@@ -772,7 +776,7 @@ export class ItemDetailsComponent implements OnInit {
                             }
                         },
                             error => {
-                                this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                             });
                 }
             });

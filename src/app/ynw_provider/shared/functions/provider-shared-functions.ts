@@ -4,6 +4,8 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../../../business/modules/check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Injectable()
 export class ProviderSharedFuctions {
@@ -18,7 +20,9 @@ export class ProviderSharedFuctions {
   jaldeecoupon_list: any = [];
   mandatoryAdditionalInfo: any = [];
   constructor(public dialog: MatDialog, public shared_functions: SharedFunctions,
-    public common_datastorage: CommonDataStorageService) {
+    public common_datastorage: CommonDataStorageService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService) {
 
   }
 
@@ -33,16 +37,16 @@ export class ProviderSharedFuctions {
       chgstatus = 'enable';
       chstatusmsg = 'enabled';
     }
-    let msg = this.shared_functions.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
+    let msg = this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
     msg = msg.replace('[status]', chstatusmsg);
 
     ob.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
       .subscribe(() => {
-        this.shared_functions.openSnackBar(msg);
+        this.snackbarService.openSnackBar(msg);
         this.queueReloadApi(ob, source);
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.queueReloadApi(ob, source);
         });
   }
@@ -57,16 +61,16 @@ export class ProviderSharedFuctions {
       chgstatus = 'ENABLED';
       chstatusmsg = 'enabled';
     }
-    let msg = this.shared_functions.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
+    let msg = this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
     msg = msg.replace('[status]', chstatusmsg);
 
     ob.provider_services.changeProviderScheduleStatus(obj.id, chgstatus)
       .subscribe(() => {
-        this.shared_functions.openSnackBar(msg);
+        this.snackbarService.openSnackBar(msg);
         this.scheduleReloadApi(ob, source);
       },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.scheduleReloadApi(ob, source);
         });
   }
@@ -216,7 +220,7 @@ export class ProviderSharedFuctions {
         chgstatus = 'enable';
         chstatusmsg = 'enabled';
       }
-      let msg = this.shared_functions.getProjectMesssages('WAITLIST_LOCATION_CHG_STATLOCATION').replace('[locname]', obj.place);
+      let msg = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATION_CHG_STATLOCATION').replace('[locname]', obj.place);
       msg = msg.replace('[status]', chstatusmsg);
       resolve({ msg: msg, chgstatus: chgstatus });
     });
@@ -250,7 +254,7 @@ export class ProviderSharedFuctions {
     } else {
       chstatusmsg = 'enabled';
     }
-    let msg = this.shared_functions.getProjectMesssages('WAITLIST_SERVICE_CHG_STAT').replace('[sername]', service.name);
+    let msg = this.wordProcessor.getProjectMesssages('WAITLIST_SERVICE_CHG_STAT').replace('[sername]', service.name);
     msg = msg.replace('[status]', chstatusmsg);
     if (service.status === 'ACTIVE') {
       ob.disableService(service, msg);
@@ -295,9 +299,9 @@ export class ProviderSharedFuctions {
               case 'Completed': status_msg = 'completed'; break;
               case 'Cancelled': status_msg = 'cancelled'; break;
             }
-            // const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+            // const msg = this.wordProcessor.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
             if (!showMessage) {
-              this.shared_functions.openSnackBar('Appointment status changed to ' + status_msg);
+              this.snackbarService.openSnackBar('Appointment status changed to ' + status_msg);
             }
           },
           error => {
@@ -305,7 +309,7 @@ export class ProviderSharedFuctions {
             // waitlist.disableStartbtn = false;
             // waitlist.disableArrivedbtn = false;
             const errMsg = error.error.replace('[checkedIn]', 'checked-in');
-            this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
             reject();
           }
         );
@@ -328,11 +332,11 @@ export class ProviderSharedFuctions {
             }
             if (!showMessage) {
               if (waitlist.token) {
-                const msg = this.shared_functions.getProjectMesssages('WAITLISTTOKEN_STATUS_CHANGE').replace('[status]', status_msg);
-                this.shared_functions.openSnackBar(msg);
+                const msg = this.wordProcessor.getProjectMesssages('WAITLISTTOKEN_STATUS_CHANGE').replace('[status]', status_msg);
+                this.snackbarService.openSnackBar(msg);
               } else {
-                const msg = this.shared_functions.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
-                this.shared_functions.openSnackBar(msg);
+                const msg = this.wordProcessor.getProjectMesssages('WAITLIST_STATUS_CHANGE').replace('[status]', status_msg);
+                this.snackbarService.openSnackBar(msg);
               }
             }
           },
@@ -341,7 +345,7 @@ export class ProviderSharedFuctions {
             waitlist.disableStartbtn = false;
             waitlist.disableArrivedbtn = false;
             const errMsg = error.error.replace('[checkedIn]', 'checked-in');
-            this.shared_functions.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(errMsg, { 'panelClass': 'snackbarerror' });
             reject(error);
           }
         );
@@ -350,7 +354,7 @@ export class ProviderSharedFuctions {
 
   addConsumerInboxMessage(waitlist, Cthis?, appt?) {
     const uuids = [];
-    let type;
+    let type;    
     let ynwUuid;
     let uuid;
     let name;
@@ -360,7 +364,9 @@ export class ProviderSharedFuctions {
     if (waitlist.length > 1) {
       type = 'multiple';
       for (const watlst of waitlist) {
-        if (appt) {
+        if (appt === 'appt') {
+          uuids.push(watlst.uid);
+        } else if(appt === 'order-provider'){
           uuids.push(watlst.uid);
         } else {
           uuids.push(watlst.ynwUuid);
@@ -368,13 +374,20 @@ export class ProviderSharedFuctions {
       }
     } else {
       type = 'single';
-      if (appt) {
+      if (appt === 'appt') {
         uuid = waitlist[0].uid || null;
         name = waitlist[0].appmtFor[0].firstName ? waitlist[0].appmtFor[0].firstName : '' + ' ' +
           waitlist[0].appmtFor[0].lastName ? waitlist[0].appmtFor[0].lastName : '';
         email = waitlist[0].providerConsumer.email;
         phone = waitlist[0].providerConsumer.phoneNo;
-      } else {
+      } else if(appt === 'order-provider') {
+        console.log(waitlist);
+        uuid = waitlist[0].uid || null;
+        name = waitlist[0].orderFor.firstName ? waitlist[0].orderFor.firstName : '' + ' ' +
+               waitlist[0].orderFor.lastName ? waitlist[0].orderFor.lastName : '';
+        email = waitlist[0].email;
+        phone = waitlist[0].phoneNumber;   
+      } else { 
         uuid = waitlist[0].ynwUuid || null;
         name = waitlist[0].waitlistingFor[0].firstName ? waitlist[0].waitlistingFor[0].firstName : '' + ' ' +
           waitlist[0].waitlistingFor[0].lastName ? waitlist[0].waitlistingFor[0].lastName : '';
@@ -389,7 +402,7 @@ export class ProviderSharedFuctions {
       ynwUuid = uuids;
     }
     const terminologies = this.common_datastorage.get('terminologies');
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       Cthis.sendmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -443,7 +456,7 @@ export class ProviderSharedFuctions {
       ynwcustid = custids;
     }
     const terminologies = this.common_datastorage.get('terminologies');
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.sendglobalmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],

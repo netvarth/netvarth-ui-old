@@ -6,6 +6,10 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SessionStorageService } from '../../../shared/services/session-storage.service';
 @Component({
   selector: 'app-provider-waitlist',
   templateUrl: './provider-waitlist-component.html'
@@ -52,9 +56,13 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     private router: Router,
     private routerobj: Router,
     private shared_functions: SharedFunctions,
-    private shared_services: SharedServices) {
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    private shared_services: SharedServices,
+    private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private sessionStorageService: SessionStorageService) {
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   frm_set_ser_cap = '';
   domain;
@@ -62,9 +70,9 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
   frm_set_loc_cap = Messages.FRM_LEVEL_SETT_LOC_MSG;
   frm_set_working_hr_cap = Messages.FRM_LEVEL_SETT_WORKING_HR_MSG;
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
-    this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loading = true;
     this.getBusinessProfile();
     this.getWaitlistMgr();
@@ -83,7 +91,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
             this.getWaitlistMgr();
           }
         });
-    this.isCheckin = this.shared_functions.getitemfromSessionStorage('isCheckin');
+    this.isCheckin = this.sessionStorageService.getitemfromSessionStorage('isCheckin');
   }
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
@@ -149,7 +157,7 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     if (this.locationExists) {
       this.router.navigate(['provider', 'settings', 'q-manager', 'queues']);
     } else {
-      this.shared_functions.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
     }
   }
   goDepartments() {
@@ -202,10 +210,10 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
               this.multipeLocationAllowed = true;
             }
             if (this.multipeLocationAllowed === true) {
-              this.locName = this.shared_functions.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
+              this.locName = this.wordProcessor.getProjectMesssages('WAITLIST_LOCATIONS_CAP');
             }
             if (this.multipeLocationAllowed === false) {
-              this.locName = this.shared_functions.getProjectMesssages('WIZ_LOCATION_CAP');
+              this.locName = this.wordProcessor.getProjectMesssages('WIZ_LOCATION_CAP');
             }
           }
         }
@@ -225,12 +233,12 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.provider_services.setAcceptOnlineCheckin(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.getWaitlistMgr();
         }
       );
@@ -241,12 +249,12 @@ export class ProviderWaitlistComponent implements OnInit, OnDestroy {
     this.provider_services.setFutureCheckinStatus(is_check)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

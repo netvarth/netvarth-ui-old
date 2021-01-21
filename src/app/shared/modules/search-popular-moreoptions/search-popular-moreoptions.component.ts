@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Messages } from '../../constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-popularsearch-moreoptions',
@@ -20,13 +21,14 @@ export class SearchPopularMoreOptionsComponent implements OnInit {
   @Input() origin;
   @Output() searchpopularmoreclick = new EventEmitter<any>();
 
-  constructor(public sharedfunctionObj: SharedFunctions) { }
+  constructor(public sharedfunctionObj: SharedFunctions,
+    private lStorageService: LocalStorageService) { }
 
   ngOnInit() {
     if (this.origin === 'header') {
       this.jsonlist = this.passedPSearches;
     } else {
-      const searchlabel = this.sharedfunctionObj.getitemfromLocalStorage('srchLabels');
+      const searchlabel = this.lStorageService.getitemfromLocalStorage('srchLabels');
       this.jsonlist = searchlabel.popularSearchLabels.all.labels;
     }
   }

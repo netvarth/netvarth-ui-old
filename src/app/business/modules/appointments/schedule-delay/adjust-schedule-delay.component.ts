@@ -7,6 +7,9 @@ import { projectConstants } from '../../../../app.component';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 @Component({
   selector: 'app-adjust-schedule-delay',
   templateUrl: './adjust-schedule-delay.component.html'
@@ -78,12 +81,14 @@ export class AdjustscheduleDelayComponent implements OnInit {
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
-    private shared_functions: SharedFunctions
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private groupService: GroupStorageService
   ) {
-    this.customer_label = this.sharedfunctionObj.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   ngOnInit() {
-    const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.breadcrumbs = [
@@ -106,7 +111,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // if (!this.data.queues || !this.data.queue_id) {
     //   this.closePopup('error');
     // }
-    const loc = this.sharedfunctionObj.getitemFromGroupStorage('loc_id');
+    const loc = this.groupService.getitemFromGroupStorage('loc_id');
     this.sel_loc = loc.id;
     this.getBussinessProfileApi()
       .then(
@@ -211,7 +216,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   }
   initDepartments(accountId) {
     const _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise<void>(function (resolve, reject) {
       _this.shared_services.getProviderDept(accountId).subscribe(data => {
         _this.departmentlist = data;
         _this.filterDepart = _this.departmentlist.filterByDept;
@@ -291,7 +296,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
               this.setServiceDetails(this.sel_ser);
               this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
             } else {
-              this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
             }
           }
         });
@@ -325,7 +330,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
       this.setServiceDetails(this.sel_ser);
       this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     } else {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('NO_SERVICE_IN_DEPARTMENT'), { 'panelClass': 'snackbarerror' });
     }
   }
   getServicebyLocationId(locid, pdate) {
@@ -379,12 +384,12 @@ export class AdjustscheduleDelayComponent implements OnInit {
       .subscribe(
         () => {
           if ((this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) && form_data.send_message) {
-            // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY');
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
+            // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
           } else {
-            // this.api_success = this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG');
-            this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
+            // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG');
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
           }
           setTimeout(() => {
@@ -392,13 +397,13 @@ export class AdjustscheduleDelayComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY_LARGE);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.sharedfunctionObj.apiErrorAutoHide(this, error);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.wordProcessor.apiErrorAutoHide(this, error);
           this.disableButton = false;
         }
       );
     // } else {
-    //   this.sharedfunctionObj.apiErrorAutoHide(this, this.sharedfunctionObj.getProjectMesssages('ADD_DELAY_TIME_ERROR'));
+    //   this.wordProcessor.apiErrorAutoHide(this, this.wordProcessor.getProjectMesssages('ADD_DELAY_TIME_ERROR'));
     // }
   }
   getScheduleDelay(queue_id) {

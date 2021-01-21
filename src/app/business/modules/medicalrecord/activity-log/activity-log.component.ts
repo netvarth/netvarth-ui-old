@@ -5,6 +5,8 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { MatTableDataSource } from '@angular/material/table';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { projectConstants } from '../../../../app.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -32,7 +34,9 @@ export class ActivityLogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
-    private datePipe: DateFormatPipe
+    private datePipe: DateFormatPipe,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService
   ) {
     this.mrId = this.data.mrId;
 
@@ -65,7 +69,7 @@ export class ActivityLogComponent implements OnInit {
         }
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
 }

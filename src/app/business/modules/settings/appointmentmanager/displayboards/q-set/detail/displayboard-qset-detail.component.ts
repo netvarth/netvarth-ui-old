@@ -11,6 +11,10 @@ import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { GroupStorageService } from '../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
+import { LocalStorageService } from '../../../../../../../shared/services/local-storage.service';
 
 @Component({
     selector: 'app-displayboard-qset-detail-appt',
@@ -96,11 +100,15 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         public provider_services: ProviderServices,
         private router: Router,
         private shared_Functionsobj: SharedFunctions,
-        public provider_shared_functions: ProviderSharedFuctions
+        public provider_shared_functions: ProviderSharedFuctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService
     ) {
-        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
-        this.provider_label = this.shared_Functionsobj.getTerminologyTerm('provider');
-        const user = this.shared_Functionsobj.getitemFromGroupStorage('ynw-user');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
     }
     ngOnInit() {
@@ -131,7 +139,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.filterLabelbySearch();
             });
         this.resetFields();
-        const loc_details = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
+        const loc_details = this.groupService.getitemFromGroupStorage('loc_id');
         if (loc_details) {
             this.locName = loc_details.place;
         }
@@ -404,7 +412,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'qBoardConditions': this.qboardConditions
             };
             this.provider_services.createDisplayboardQSetAppointment(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('QSET_ADD'), { 'panelclass': 'snackbarerror' });
                 const actionObj = {
                     source: this.source,
                     refresh: true
@@ -418,7 +426,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
             },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
         if (this.actionparam === 'edit') {
@@ -432,7 +440,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 'qBoardConditions': this.qboardConditions
             };
             this.provider_services.updateDisplayboardQSetAppointment(post_data).subscribe(data => {
-                this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('QSET_UPDATE'), { 'panelclass': 'snackbarerror' });
                 const actionObj = {
                     source: this.source,
                     refresh: true
@@ -447,7 +455,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.actionparam = 'view';
             },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         }
     }
@@ -469,7 +477,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
     }
     getProviderServices() {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             const params = { 'status-eq': 'ACTIVE', 'serviceType-eq': 'physicalService' };
             if (this.userIds && this.userIds.length > 0) {
                 params['provider-eq'] = this.userIds.toString();
@@ -489,7 +497,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
     }
     getDepartments() {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             this.departments = [];
             this.provider_services.getDepartments()
                 .subscribe(
@@ -508,7 +516,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                         this.departmentList = this.departments;
                     },
                     error => {
-                        this.shared_Functionsobj.apiErrorAutoHide(this, error);
+                        this.wordProcessor.apiErrorAutoHide(this, error);
                     }
                 );
         });
@@ -523,7 +531,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
     }
     getProviderQueues() {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             // const activeQueues: any = [];
             let queue_list: any = [];
             const params = {};
@@ -812,7 +820,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 });
     }
     getBussinessProfile() {
-        const bconf = this.shared_Functionsobj.getitemfromLocalStorage('ynw-bconf');
+        const bconf = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
         this.provider_services.getBussinessProfile()
             .subscribe((data: any) => {
                 for (const domains of bconf.bdata) {
@@ -824,9 +832,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     }
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {
-            this.shared_Functionsobj.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
         } else if (this.boardDisplayname === '') {
-            this.shared_Functionsobj.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
         } else {
             this.step = step;
         }

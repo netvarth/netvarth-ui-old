@@ -20,6 +20,10 @@ import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../../business/modules/visualizer/visualize.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { GroupStorageService } from '../../services/group-storage.service';
+import { SnackbarService } from '../../services/snackbar.service';
+import { WordProcessor } from '../../services/word-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-provider-detail',
@@ -272,18 +276,21 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
-    private locationobj: Location
-
+    private locationobj: Location,
+    private groupService: GroupStorageService,
+private lStorageService: LocalStorageService,
+private snackbarService: SnackbarService,
+public wordProcessor: WordProcessor
   ) {
     this.getDomainList();
-    // this.domainList = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
+    // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
   }
 
   getDomainList() {
-    const bconfig = this.sharedFunctionobj.getitemfromLocalStorage('ynw-bconf');
+    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     let run_api = true;
     if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
       const bdate = bconfig.cdate;
@@ -310,7 +317,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               cdate: today,
               bdata: this.domainList
             };
-            this.sharedFunctionobj.setitemonLocalStorage('ynw-bconf', postdata);
+            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
           }
         );
     }
@@ -321,10 +328,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.provider_id = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
-    this.server_date = this.sharedFunctionobj.getitemfromLocalStorage('sysdate');
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
-    this.loc_details = this.sharedFunctionobj.getitemfromLocalStorage('ynw-locdet');
-    this.jdnTooltip = this.sharedFunctionobj.getProjectMesssages('JDN_TOOPTIP');
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+    this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -448,7 +455,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.server_date = res;
-          this.sharedFunctionobj.setitemonLocalStorage('sysdate', res);
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
         });
   }
   gets3curl() {
@@ -471,7 +478,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         }
       );
   }
@@ -1150,7 +1157,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.locationjson[passedIndx]['checkins'] = data;
       },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
   }
   getWaitlistingFor(obj) {
@@ -1266,7 +1273,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
           }
         }, error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
     }
   }
@@ -1279,7 +1286,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.isInFav = true;
           },
             error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             });
       } else if (mod === 'remove') {
         this.shared_services.removeProviderfromFavourite(accountid)
@@ -1287,7 +1294,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.isInFav = false;
           },
             error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             });
       }
     } else {
@@ -1393,7 +1400,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   doLogin(origin?, passParam?) {
-    // this.shared_functions.openSnackBar('You need to login to check in');
+    // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
     // let is_test_account = null;
     // if (current_provider) {
@@ -1591,9 +1598,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
       // const terminologies = this.common_datastorage.get('terminologies');
       if (this.terminologiesjson) {
-        return this.sharedFunctionobj.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
+        return this.wordProcessor.firstToUpper((this.terminologiesjson[term_only]) ? this.terminologiesjson[term_only] : ((term === term_only) ? term_only : term));
       } else {
-        return this.sharedFunctionobj.firstToUpper((term === term_only) ? term_only : term);
+        return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
       }
     } else {
       return term;
@@ -1647,7 +1654,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           };
           this.SignupforClaimmable(pass_data);
         }, error => {
-          this.sharedFunctionobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
     } else {
     }
@@ -1919,11 +1926,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             }
           },
             error => {
-              this.sharedFunctionobj.apiErrorAutoHide(this, error);
+              this.wordProcessor.apiErrorAutoHide(this, error);
             });
       },
         error => {
-          this.sharedFunctionobj.apiErrorAutoHide(this, error);
+          this.wordProcessor.apiErrorAutoHide(this, error);
         });
     if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
       for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
@@ -2001,7 +2008,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               });
             this.catalogimage_list_popup.push(imgobj);
           }
-          //this.updateLocalStorageItems();
+          // this.updateLocalStorageItems();
           this.catlogArry();
           this.advance_amount = this.activeCatalog.advanceAmount;
           if (this.activeCatalog.pickUp) {
@@ -2051,29 +2058,29 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // OrderItem add to cart
   addToCart(itemObj) {
     const item = itemObj.item;
-    const spId = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
       this.orderList = [];
-      this.sharedFunctionobj.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
       this.orderList.push(itemObj);
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
       this.getItemQty(item);
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
-            this.sharedFunctionobj.removeitemfromLocalStorage('order');
+            this.lStorageService.removeitemfromLocalStorage('order');
           }
         } else {
           this.orderList.push(itemObj);
-          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
           this.getItemQty(item);
         }
       } else {
         this.orderList.push(itemObj);
-        this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
         this.getItemQty(item);
       }
@@ -2096,10 +2103,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (result) {
         can_remove = true;
         this.orderList = [];
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-        this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-        this.sharedFunctionobj.removeitemfromLocalStorage('order');
+        this.lStorageService.removeitemfromLocalStorage('order_sp');
+        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+        this.lStorageService.removeitemfromLocalStorage('order_spId');
+        this.lStorageService.removeitemfromLocalStorage('order');
         return true;
       } else {
         can_remove = false;
@@ -2115,12 +2122,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
         if (this.orderList.length > 0 && this.orderList !== null) {
-          this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
         } else {
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_sp');
-          this.sharedFunctionobj.removeitemfromLocalStorage('chosenDateTime');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order_spId');
-          this.sharedFunctionobj.removeitemfromLocalStorage('order');
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
         }
 
         break;
@@ -2156,8 +2163,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-      this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
           account_id: this.provider_bussiness_id,
@@ -2179,8 +2186,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place
     };
-    this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-    this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         item: JSON.stringify(item),
@@ -2208,8 +2215,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     return qty;
   }
   catlogArry() {
-    if (this.sharedFunctionobj.getitemfromLocalStorage('order') !== null) {
-      this.orderList = this.sharedFunctionobj.getitemfromLocalStorage('order');
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     }
     this.getTotalItemAndPrice();
   }
@@ -2219,7 +2226,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   showOrderFooter() {
     let showFooter = false;
-    this.spId_local_id = this.sharedFunctionobj.getitemfromLocalStorage('order_spId');
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (this.spId_local_id !== null) {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (this.spId_local_id !== this.provider_bussiness_id) {
@@ -2243,7 +2250,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       account_id: this.provider_bussiness_id
 
     };
-    this.sharedFunctionobj.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {
@@ -2258,8 +2265,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-      // this.sharedFunctionobj.setitemonLocalStorage('order', this.orderList);
-      this.sharedFunctionobj.setitemonLocalStorage('order_sp', businessObject);
+     // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       this.router.navigate(['order', 'shoppingcart', 'checkout']);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };

@@ -6,6 +6,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-add-member',
@@ -30,6 +31,7 @@ export class AddProviderMemberComponent implements OnInit {
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
+    private wordProcessor: WordProcessor,
     public sharedfunctionObj: SharedFunctions
   ) {
   }
@@ -77,7 +79,7 @@ export class AddProviderMemberComponent implements OnInit {
     this.provider_services.addMembers(post_data)
       .subscribe(
         data => {
-          this.api_success = this.sharedfunctionObj.getProjectMesssages('MEMBER_CREATED');
+          this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
           setTimeout(() => {
             const response = {
               response: 'reloadlist',
@@ -87,7 +89,7 @@ export class AddProviderMemberComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+          this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
         }
       );
   }

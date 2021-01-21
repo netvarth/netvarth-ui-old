@@ -15,6 +15,8 @@ import { WindowRefService } from '../../../../shared/services/windowRef.service'
 import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-order-bill',
@@ -117,6 +119,8 @@ export class OrderBillComponent implements OnInit {
       public sharedfunctionObj: SharedFunctions,
       public sharedServices: SharedServices,
       public _sanitizer: DomSanitizer,
+      private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
       private activated_route: ActivatedRoute,
       private dialog: MatDialog,
       private locationobj: Location,
@@ -323,7 +327,7 @@ export class OrderBillComponent implements OnInit {
                           this.paywithRazorpay(data);
                       } else {
                           this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                          this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                           setTimeout(() => {
                               this.document.getElementById('payuform').submit();
                           }, 2000);
@@ -331,7 +335,7 @@ export class OrderBillComponent implements OnInit {
                   },
                   error => {
                       this.resetApiError();
-                      this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   }
               );
       }
@@ -365,14 +369,14 @@ export class OrderBillComponent implements OnInit {
               .subscribe(
                   data => {
                       this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
                       setTimeout(() => {
                           this.document.getElementById('paytmform').submit();
                       }, 2000);
                   },
                   error => {
                       this.resetApiError();
-                      this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   }
               );
       }
@@ -387,7 +391,7 @@ export class OrderBillComponent implements OnInit {
       if (this.checkCouponValid(this.jCoupon)) {
           this.applyAction(this.jCoupon, this.bill_data.uuid);
       } else {
-          this.sharedfunctionObj.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
       }
   }
   clearJCoupon() {
@@ -400,7 +404,7 @@ export class OrderBillComponent implements OnInit {
    * @param data Data to be sent as request body
    */
   applyAction(action, uuid) {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
           this.sharedServices.applyCoupon(action, uuid, this.accountId).subscribe
               (billInfo => {
                   this.bill_data = billInfo;
@@ -409,7 +413,7 @@ export class OrderBillComponent implements OnInit {
                   resolve();
               },
                   error => {
-                      this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                       reject(error);
                   });
       });
@@ -645,7 +649,7 @@ export class OrderBillComponent implements OnInit {
    * Cash Button Pressed
    */
   cashPayment() {
-      this.sharedfunctionObj.openSnackBar(this.sharedfunctionObj.getProjectMesssages('CASH_PAYMENT'));
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
   getCouponList() {
       const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();

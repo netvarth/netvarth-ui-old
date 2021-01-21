@@ -4,6 +4,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
     selector: 'app-update-notification',
@@ -19,7 +20,8 @@ export class UpdateNotificationComponent implements OnInit {
     constructor(public dialogRef: MatDialogRef<UpdateNotificationComponent>,
         private provider_services: ProviderServices,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        public shared_functions: SharedFunctions) {
+        public shared_functions: SharedFunctions,
+        private snackbarService: SnackbarService) {
         this.virtualCallModesList = this.data.callingmodeList;
         this.mode = this.data.mode;
         const filtererList = this.virtualCallModesList.filter(mode => mode.callingMode === this.mode);
@@ -40,7 +42,7 @@ export class UpdateNotificationComponent implements OnInit {
             result = pattern.test(this.callingMode);
         }
         if (!result) {
-            this.shared_functions.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         } else {
             this.virtualCallModesList.forEach(modes => {
@@ -71,21 +73,21 @@ export class UpdateNotificationComponent implements OnInit {
             this.provider_services.addVirtualCallingModes(postdata).subscribe(
                 (data) => {
                     if (this.mode === 'WhatsApp') {
-                        this.shared_functions.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Whatsapp mode added successfully', { 'panelclass': 'snackbarerror' });
                         this.dialogRef.close();
                     } else if (this.mode === 'Zoom') {
-                        this.shared_functions.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Zoom mode added successfully', { 'panelclass': 'snackbarerror' });
                         this.dialogRef.close();
                     } else if (this.mode === 'GoogleMeet') {
-                        this.shared_functions.openSnackBar('Google Meet added successfully', { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Google Meet added successfully', { 'panelclass': 'snackbarerror' });
                         this.dialogRef.close();
                     } else if (this.mode === 'Phone') {
-                        this.shared_functions.openSnackBar('Phone added successfully', { 'panelclass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar('Phone added successfully', { 'panelclass': 'snackbarerror' });
                         this.dialogRef.close();
                     }
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }

@@ -207,7 +207,7 @@
                     </div>
                   </div>
                   <span (click)="filed.click()" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'">
-                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">upload shoppinglist</a>
+                    <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)"><a class="uploadshoppinglist-btn">Upload Shopping List</a>
                   </span>
                   <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                     <div class="bill-section-content">
@@ -477,13 +477,21 @@
                             </div> -->
 
                             <div class="col-md-6 col-xs-12 col-sm-8 form-group" *ngIf="isfutureAvailableTime">
-                              <mat-form-field>
+                              <!-- <mat-form-field>
                                 <mat-select placeholder="Time windows" [(ngModel)]="timeWindows" >
                                   <mat-option *ngFor=" let stat of availableTimewindows" [value]="stat">
                                     {{stat.sTime}} -  {{stat.eTime}}
                                   </mat-option>
                                 </mat-select>
-                              </mat-form-field>
+                              </mat-form-field> -->
+                              <mat-chip-list class="">
+                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index" 
+                                (click)="handleQueueSelection(queue, i)">
+                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                    {{queue['sTime'] + ' - ' +
+                                    queue['eTime']}}
+                                </mat-chip>
+                            </mat-chip-list>
                             </div>
                             <div  *ngIf="!isfutureAvailableTime">
                                 <p>No timings are available</p>
@@ -491,7 +499,7 @@
                           </div>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                          <button (click)="goBackToCheckout(futureAvailableTime)" [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
+                          <button (click)="goBackToCheckout(futureAvailableTime ,queue)" [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
                             type="button">Ok</button>
                         </div>
                       </div>

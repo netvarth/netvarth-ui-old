@@ -141,8 +141,8 @@
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                           <ul class="bus-actions bus-actions-horiz no-padding">
-                              <li class="more_less centeralign"><a class="more_less mgn-lt-3 lnk pointer-cursor"
-                                      (click)="redirectToHistory()">History</a></li>
+                              <!-- <li class="more_less centeralign"><a class="more_less mgn-lt-3 lnk pointer-cursor"
+                                      (click)="redirectToHistory()" *ngIf="businessjson && businessjson.claimStatus!='Unclaimed'">History</a></li> -->
                               <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
                                       class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
                                       (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
@@ -175,7 +175,7 @@
                                       <ng-container>
                                           <div class="question-header">{{vfield.displayName}}</div>
                                           <div class="question-value1" *ngIf="vfield.type!= 'object'"
-                                              [innerHTML]="sharedFunctionobj.firstToUpper(vfield.value) | nl2br">
+                                              [innerHTML]="wordProcessor.firstToUpper(vfield.value) | nl2br">
                                           </div>
                                           <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                               <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
@@ -358,10 +358,10 @@
               </ng-container>
 
               <!-- Order Catalog-->
-              <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderItems && orderItems.length > 0 && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
+              <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderstatus" >
                   <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 no-padding">
-                      <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage" width="50" height="50" id="catalog-image1"
-                        class="rounded">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
+                      <h5 class="mgn-bt-5 primary-color"><img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])"  [src]="catalogImage" width="50" height="50" id="catalog-image1"
+                        class="rounded pointer-cursor">&nbsp;&nbsp;{{activeCatalog.catalogName}}</h5>
                       <!-- <p class="module-nomargin line-clamp">{{activeCatalog.catalogDesc}}</p>    -->
                       <p class="module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
                       <p *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}</p>
@@ -395,7 +395,7 @@
               <ng-container *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
                   <div class="bus-item-O" >
                       <!-- <span (click)="shoppinglistupload()" class="popular_more">Upload shoppinglist</span> -->
-                      <a (click)="shoppinglistupload()" class="like-btn">Upload shoppinglist</a>
+                      <a (click)="shoppinglistupload()" class="like-btn">Upload Shopping List</a>
                   </div>
 
               </ng-container>

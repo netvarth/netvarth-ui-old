@@ -1495,7 +1495,11 @@
                                              <button mat-menu-item
                                                      (click)="showBookingDetails(oder)">
                                                      <i class="fa fa-sticky-note-o"></i>Order details
-                                                 </button>
+                                            </button>
+                                            <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                <i class="fa chat-icon"></i>
+                                                {{send_msg_cap}}
+                                            </button>    
                                      </mat-menu>
                                     </td>
                                 </tr>
@@ -1568,6 +1572,10 @@
                                                          (click)="showBookingDetails(oder)">
                                                          <i class="fa fa-sticky-note-o"></i>Order details
                                                      </button>
+                                                <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                     <i class="fa chat-icon"></i>
+                                                      {{send_msg_cap}}
+                                                </button>   
                                          </mat-menu>
                                         </td>
                                     </tr>
@@ -1650,6 +1658,10 @@
                                                      (click)="showBookingDetails(oder)">
                                                      <i class="fa fa-sticky-note-o"></i>Order details
                                                  </button>
+                                             <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                    <i class="fa chat-icon"></i>
+                                                    {{send_msg_cap}}
+                                                </button>   
                                      </mat-menu>
                                     </td>
                                 </tr>
@@ -1722,6 +1734,10 @@
                                                          (click)="showBookingDetails(oder)">
                                                          <i class="fa fa-sticky-note-o"></i>Order details
                                                      </button>
+                                                <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                       <i class="fa chat-icon"></i>
+                                                       {{send_msg_cap}}
+                                                </button>   
                                          </mat-menu>
                                         </td>
                                     </tr>

@@ -5,6 +5,7 @@ import { FormMessageDisplayService } from '../../../shared//modules/form-message
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-checkin-consumer-add-member',
@@ -33,13 +34,14 @@ export class CheckinAddMemberComponent implements OnInit {
   @Input() globalsettings: any;
   constructor(
     public fed_service: FormMessageDisplayService,
-    public sharedservice: SharedServices, public shared_functions: SharedFunctions
+    public sharedservice: SharedServices, public shared_functions: SharedFunctions,
+    private wordProcessor: WordProcessor
   ) {
   }
 
   ngOnInit() {
     console.log(this.globalsettings);
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   valuechange() {
     const retobj = {

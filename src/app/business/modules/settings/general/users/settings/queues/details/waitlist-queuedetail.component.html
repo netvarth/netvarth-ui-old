@@ -23,7 +23,7 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
                             <div class="cl1">
                                 <span class="editbt" (click)="addEditProviderQueue()"
-                                    *ngIf="queue_data.queueState=='ENABLED' && !queue_data.instantQueue"></span>
+                                    *ngIf="!queue_data.instantQueue"></span>
                                 <div class="ot-it que">
                                     <div class="row col-sm-12 padleft" style="display: flex;">
                                         <h4>{{queue_data.name | capitalizeFirst}}</h4>

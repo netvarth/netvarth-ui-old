@@ -1,11 +1,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { Location } from '@angular/common';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-addon-detail',
@@ -24,10 +24,9 @@ export class AddonDetailComponent implements OnInit {
   constructor(
     private activaterouterobj: ActivatedRoute,
     private provider_servicesobj: ProviderServices,
-    // private routerobj: Router,
-    private sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
     private location: Location,
+    private snackbarService: SnackbarService
   ) {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       this.disp_name = qparams.disp_name;
@@ -80,7 +79,7 @@ export class AddonDetailComponent implements OnInit {
     this.provider_servicesobj.addAddonPackage(id)
         .subscribe((data) => {
           if (data) {
-            this.sharedfunctionObj.openSnackBar('Addon added');
+            this.snackbarService.openSnackBar('Addon added');
             this.getUpgradableaddonPackages();
             // this.routerobj.navigate(['provider', 'license']);
             setTimeout(() => {
@@ -89,8 +88,8 @@ export class AddonDetailComponent implements OnInit {
           }
         },
           error => {
-            // this.api_error = this.sharedfunctionObj.apiErrorAutoHide(this, error);
-            this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            // this.api_error = this.wordProcessor.apiErrorAutoHide(this, error);
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
         );
   }

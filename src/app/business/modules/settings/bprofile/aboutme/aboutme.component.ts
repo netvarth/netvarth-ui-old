@@ -15,6 +15,9 @@ import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup
 import { ProviderBprofileSearchDynamicComponent } from '../../../../../ynw_provider/components/provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
 import { QuestionService } from '../../../../../ynw_provider/components/dynamicforms/dynamic-form-question.service';
 import { ProviderSharedFuctions } from '../../../../../ynw_provider/shared/functions/provider-shared-functions';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-aboutme',
@@ -86,6 +89,9 @@ export class AboutMeComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private groupService: GroupStorageService,
     private routerobj: Router,
     private dialog: MatDialog,
     private provider_datastorageobj: ProviderDataStorageService,
@@ -139,11 +145,11 @@ export class AboutMeComponent implements OnInit {
     //  return;
     // }
     if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
-      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_NAME_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
+      // this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+      this.snackbarService.openSnackBar(Messages.BUSINESS_NAME_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-      // this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
-      this.sharedfunctionObj.openSnackBar(Messages.BUSINESS_DESC_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
+      // this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+      this.snackbarService.openSnackBar(Messages.BUSINESS_DESC_MAX_LENGTH_MSG, { 'panelClass': 'snackbarerror' });
     } else {
       const post_itemdata = {
         'businessName': form_data.bname,
@@ -165,7 +171,7 @@ export class AboutMeComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
-          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
+          this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           // console.log(this.domain_fields_mandatory.length);
           // console.log(this.subdomain_fields_mandatory.length);
@@ -177,7 +183,7 @@ export class AboutMeComponent implements OnInit {
 
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -195,15 +201,15 @@ export class AboutMeComponent implements OnInit {
     this.provider_services.updatePrimaryFields(pdata)
       .subscribe(
         () => {
-          // this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
-          this.sharedfunctionObj.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
+          // this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_UPDATED');
+          this.snackbarService.openSnackBar(Messages.BPROFILE_ABOUT_UPDATED);
           this.disableButton = false;
           setTimeout(() => {
             this.redirecToBprofile();
           }, projectConstants.TIMEOUT_DELAY);
         },
         error => {
-          this.sharedfunctionObj.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
           this.disableButton = false;
         }
       );
@@ -244,11 +250,11 @@ export class AboutMeComponent implements OnInit {
             });
           this.provider_datastorageobj.set('bProfile', data);
           // getting the user details saved in local storage
-          const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+          const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
           // setting the status of the customer from the profile details obtained from the API call
           loginuserdata.accStatus = this.bProfile.status;
           // Updating the status (ACTIVE / INACTIVE) in the local storage
-          this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
+          this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
           // this.getProviderLogo();
         },
         () => {
@@ -576,7 +582,7 @@ export class AboutMeComponent implements OnInit {
           if (str !== '') {
             str += ', ';
           }
-          // str += this.sharedfunctionobj.firstToUpper(fld.value[i]);
+          // str += this.wordProcessor.firstToUpper(fld.value[i]);
           str += this.getFieldDetails(passArray, field.value[i], field.name);
         }
         retfield = str;
@@ -609,7 +615,7 @@ export class AboutMeComponent implements OnInit {
         if (str !== '') {
           str += ', ';
         }
-        str += this.sharedfunctionObj.firstToUpper(fld.value[i]);
+        str += this.wordProcessor.firstToUpper(fld.value[i]);
       }
       return str;
     }
@@ -680,7 +686,7 @@ export class AboutMeComponent implements OnInit {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }
@@ -693,7 +699,7 @@ export class AboutMeComponent implements OnInit {
         },
         (error) => {
           this.getBusinessProfile(); // refresh data ;
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
   }

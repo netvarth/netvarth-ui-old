@@ -6,6 +6,9 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, NavigationExtras } from '@angular/router';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -59,19 +62,22 @@ export class ItemsComponent implements OnInit, OnDestroy {
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
         private routerobj: Router,
-        private sharedfunctionObj: SharedFunctions) {
-        this.emptyMsg = this.sharedfunctionObj.getProjectMesssages('ITEM_LISTEMPTY');
+        private sharedfunctionObj: SharedFunctions,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        private groupService: GroupStorageService) {
+        this.emptyMsg = this.wordProcessor.getProjectMesssages('ITEM_LISTEMPTY');
     }
 
     ngOnInit() {
         this.itemHead = {type: 'item-head'}
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
-        this.active_user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
 
         this.getitems();
         this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
-        this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+        this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
     }
     ngOnDestroy() {
         if (this.additemdialogRef) {
@@ -163,7 +169,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
                     this.getitems();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         } else {
@@ -172,7 +178,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
                     this.getitems();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
         }
@@ -184,7 +190,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
                     this.getitems();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -214,7 +220,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': this.sharedfunctionObj.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
+                'message': this.wordProcessor.getProjectMesssages('ITEM_DELETE').replace('[name]', item.displayName)
             }
         });
         this.removeitemdialogRef.afterClosed().subscribe(result => {
@@ -231,7 +237,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
                     this.getitems();
                 },
                 error => {
-                    this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

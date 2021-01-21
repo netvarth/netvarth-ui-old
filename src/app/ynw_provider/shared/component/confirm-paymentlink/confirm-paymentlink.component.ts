@@ -8,6 +8,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
 import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -72,15 +74,17 @@ export class ConfirmPatmentLinkComponent implements OnInit {
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
     private dialog: MatDialog,
-    public shared_functions: SharedFunctions) {
+    public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor) {
     this.uuid = this.data.uuid;
     this.mobilenumber = this.data.mobilenumber;
     this.emailId = this.data.emailId;
     this.source = this.data.source;
     this.calculationMode = this.data.calc_mode;
     this.showToken = this.data.showToken;
-    this.customer_label = this.shared_functions.getTerminologyTerm('customer');
-    this.checkin_label = this.shared_functions.getTerminologyTerm('waitlist');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
   }
   ngOnInit() {
     console.log('confrm payment link');
@@ -141,15 +145,15 @@ export class ConfirmPatmentLinkComponent implements OnInit {
       this.pay_link.emailNotification = 'false';
     }
     if (!form_data.mobile_number && !form_data.email_id) {
-      this.shared_functions.openSnackBar('Please provide atleast one field', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please provide atleast one field', { 'panelClass': 'snackbarerror' });
     } else {
       this.provider_services.Paymentlink(this.pay_link)
         .subscribe(() => {
           this.dialogRef.close();
-          this.shared_functions.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
+          this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT_link);
         },
           error => {
-            this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           });
     }
   }
@@ -182,7 +186,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   gotoSmsAddon() {
     this.dialogRef.close();
     if (this.corpSettings && this.corpSettings.isCentralised) {
-      this.shared_functions.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
   } else {
       this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
           width: '50%',

@@ -15,21 +15,21 @@
     </div>
 </div>
 <div *ngIf="for_view" class="view-pad">
-    <h1 mat-dialog-title class="head-t">Criteria Details</h1>
+    <h1 mat-dialog-title class="head-t"> Report  Details</h1>
     <hr>
     <div mat-dialog-content class="no-padding-small">
         <table>
             <tr>
-                <td>Report Name : </td>
+                <td>Name : </td>
                 <td>{{data.content.reportName}}</td>
             </tr>
             <tr>
-                <td>Report Type : </td>
+                <td> Type : </td>
                 <td>{{data.content.reportType}}</td>
             </tr>
             <tr>
                 <td>Date Category : </td>
-                <td>{{data.content.reportDateCategory}}</td>
+                <td>{{getReportDateCategoryName(data.content.reportDateCategory)}}</td>
             </tr>
             <!-- <tr>
                 <td>Criterias :</td>

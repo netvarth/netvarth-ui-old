@@ -12,6 +12,10 @@ import { FormMessageDisplayService } from '../../../../../../shared/modules/form
 import * as moment from 'moment';
 import { ShowMessageComponent } from '../../../../../../business/modules/show-messages/show-messages.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-waitlist-queues',
@@ -115,19 +119,23 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private dialog: MatDialog,
-        private fb: FormBuilder) { }
+        private fb: FormBuilder,
+        private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor) { }
 
     ngOnInit() {
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
         this.api_loading = true;
-        if (this.shared_Functionsobj.getitemFromGroupStorage('loc_id')) {
-            this.selected_location = this.shared_Functionsobj.getitemFromGroupStorage('loc_id');
+        if (this.groupService.getitemFromGroupStorage('loc_id')) {
+            this.selected_location = this.groupService.getitemFromGroupStorage('loc_id');
         }
         this.breadcrumb_moreoptions = {
             'actions': [{ 'title': this.new_serv_cap, 'type': 'timewindow' }, { 'title': 'Help', 'type': 'learnmore' }]
         };
-        this.customer_label = this.shared_Functionsobj.getTerminologyTerm('customer');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.initializeQs();
         this.getLicenseUsage();
     }
@@ -145,7 +153,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         const curtime = {};
         if (this.action !== 'edit') {
             if (this.fromDateCaption === 'Now') {
-                const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+                const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
                 const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                 curtime['hour'] = parseInt(moment(new Date(today), ['hh:mm A']).format('HH'), 10);
                 curtime['minutes'] = parseInt(moment(new Date(today), ['hh:mm A']).format('mm'), 10);
@@ -210,7 +218,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * Method to get locations
      */
     getLocations() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.getProviderLocations()
                 .subscribe(
                     data => {
@@ -283,7 +291,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.location = q.location;
     }
     getQs() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             // const filter = {
             //     'scope-eq': 'account'
             // };
@@ -306,7 +314,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             this.disabledQs = [];
                             const activeQs = [];
                             allQs = data;
-                            const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+                            const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
                             const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
                             const today = new Date(todaydt);
                             const dd = today.getDate();
@@ -366,7 +374,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     }
     getServices() {
         const params = { 'status-eq': 'ACTIVE', 'serviceType-neq': 'donationService' };
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.getServicesList(params)
                 .subscribe(data => {
                     this.services_list = data;
@@ -382,7 +390,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * To get Available Instant Queue Details
      */
     isAvailableNow() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.provider_services.isAvailableNow()
                 .subscribe(data => {
                     this.qAvailability = data;
@@ -542,7 +550,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
      * @param instantQ instantQ Object
      */
     onSubmit(instantQ) {
-        const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+        const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
@@ -600,14 +608,14 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         instantQInput['instantQueue'] = true;
         if (!this.shared_Functionsobj.checkIsInteger(instantQ.qcapacity)) {
             const error = 'Please enter an integer value for Maximum ' + this.customer_label + 's served';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (!this.shared_Functionsobj.checkIsInteger(instantQ.qserveonce)) {
             const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
-            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
-          this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          return;
+            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.customer_label + 's served.';
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            return;
         } else {
             if (this.action === 'edit') {
                 this.updateInstantQ(instantQInput);
@@ -624,12 +632,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.provider_services.addInstantQ(post_data)
             .subscribe(
                 () => {
-                    this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
                     this.showInstantQFlag = false;
                     this.initializeQs();
                 },
                 (error) => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }
@@ -640,17 +648,17 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     updateInstantQ(post_data) {
         if (post_data.services.length === 0) {
             const error = 'Please select services';
-            this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else {
             this.provider_services.editInstantQ(post_data)
                 .subscribe(
                     () => {
-                        this.shared_Functionsobj.openSnackBar(this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CREATED'), { 'panelClass': 'snackbarnormal' });
                         this.showInstantQFlag = false;
                         this.initializeQs();
                     },
                     (error) => {
-                        this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     }
                 );
         }
@@ -682,12 +690,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         }
         this.provider_services.changeSamedayCheckinStatus(qObj.id, !qObj.onlineCheckIn)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Same day online check-ins ' + chstatusmsg + ' successfully');
+                this.snackbarService.openSnackBar('Same day online check-ins ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
                     this.initializeQs();
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     /**
@@ -704,12 +712,12 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         }
         this.provider_services.changeFutureCheckinStatus(qObj.id, !qObj.futureWaitlist)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar('Future Checkin ' + chstatusmsg + ' successfully');
+                this.snackbarService.openSnackBar('Future Checkin ' + chstatusmsg + ' successfully');
                 this.initializeQs();
             },
                 error => {
                     this.initializeQs();
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     /**
@@ -738,15 +746,15 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             chgstatus = 'enable';
             chstatusmsg = 'enabled';
         }
-        let msg = this.shared_Functionsobj.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
+        let msg = this.wordProcessor.getProjectMesssages('WAITLIST_QUEUE_CHG_STAT').replace('[qname]', obj.name);
         msg = msg.replace('[status]', chstatusmsg);
         this.provider_services.changeProviderQueueStatus(obj.id, chgstatus)
             .subscribe(() => {
-                this.shared_Functionsobj.openSnackBar(msg);
+                this.snackbarService.openSnackBar(msg);
                 this.initializeQs();
             },
                 error => {
-                    this.shared_Functionsobj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
     /**
@@ -759,7 +767,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.shared_services.getSystemDate()
             .subscribe(
                 res => {
-                    this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
+                    this.lStorageService.setitemonLocalStorage('sysdate', res);
                     this.getQs().then(
                         () => {
                             this.isAvailableNow().then(
@@ -785,7 +793,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.shared_services.getSystemDate()
             .subscribe(
                 res => {
-                    this.shared_Functionsobj.setitemonLocalStorage('sysdate', res);
+                    this.lStorageService.setitemonLocalStorage('sysdate', res);
                     let server_date;
                     server_date = res;
                     this.createForm(server_date);
@@ -929,7 +937,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         } else {
             this.todayQLoading[index] = true;
         }
-        const server_date = this.shared_Functionsobj.getitemfromLocalStorage('sysdate');
+        const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate() + 1;
@@ -977,7 +985,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         const status = (q.batch) ? 'disabled' : 'enabled';
         this.provider_services.changeBatchStatus(q.id, !q.batch).subscribe(data => {
             this.getQs();
-            this.shared_Functionsobj.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Batch mode ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         });
     }
     redirecToQmanager() {
@@ -1010,15 +1018,15 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         this.provider_services.getLicenseUsage()
             .subscribe(
                 data => {
-                   this.use_metric = data;
-                   this.usage_metric = this.use_metric.metricUsageInfo;
-                   this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
-                   this.adon_total = this.adon_info[0].total;
-                   this.adon_used = this.adon_info[0].used;
-                   this.disply_name = this.adon_info[0].metricName;
+                    this.use_metric = data;
+                    this.usage_metric = this.use_metric.metricUsageInfo;
+                    this.adon_info = this.usage_metric.filter(sch => sch.metricName === 'Queues/Schedules/Services');
+                    this.adon_total = this.adon_info[0].total;
+                    this.adon_used = this.adon_info[0].used;
+                    this.disply_name = this.adon_info[0].metricName;
                 },
                 error => {
-                    this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
     }

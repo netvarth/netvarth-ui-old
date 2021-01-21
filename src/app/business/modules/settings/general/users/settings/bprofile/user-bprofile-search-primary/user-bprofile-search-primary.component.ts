@@ -9,6 +9,8 @@ import { SharedFunctions } from '../../../../../../../../shared/functions/shared
 import { ProviderDataStorageService } from '../../../../../../../../ynw_provider/services/provider-datastorage.service';
 import { projectConstants } from '../../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-user-bprofile-search-primary',
@@ -39,7 +41,9 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         public provider_servicesobj: ProviderServices,
         public sharedfunctionObj: SharedFunctions,
+        private groupService: GroupStorageService,
         private provider_datastorageobj: ProviderDataStorageService,
+        private wordProcessor: WordProcessor,
         @Inject(MAT_DIALOG_DATA) public data: any,
         @Inject(DOCUMENT) public document,
         public dialogRef: MatDialogRef<UserBprofileSearchPrimaryComponent>
@@ -51,8 +55,8 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         // calling method to create the form
         this.createForm();
         // this.elementRef.nativeElement.focus();
-        // const bConfig = this.sharedfunctionObj.getitemfromLocalStorage('ynw-bconf');
-        // const user = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+        // const bConfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
+        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
         // if (bConfig && bConfig.bdata) {
         //     for (let i = 0; i < bConfig.bdata.length; i++) {
         //         if (user.sector === bConfig.bdata[i].domain) {
@@ -73,7 +77,7 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         //                     cdate: today,
         //                     bdata: res
         //                 };
-        //                 this.sharedfunctionObj.setitemonLocalStorage('ynw-bconf', postdata);
+        //                 this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
         //             }
         //         );
         // }
@@ -126,9 +130,9 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
             form_data.bdesc = form_data.bdesc.trim();
         }
         if (form_data.bname.length > projectConstants.BUSINESS_NAME_MAX_LENGTH) {
-            this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
+            this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_NAME_MAX_LENGTH_MSG');
         } else if (form_data.bdesc && form_data.bdesc.length > projectConstants.BUSINESS_DESC_MAX_LENGTH) {
-            this.api_error = this.sharedfunctionObj.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
+            this.api_error = this.wordProcessor.getProjectMesssages('BUSINESS_DESC_MAX_LENGTH_MSG');
         } else {
             const post_itemdata = {
                 'businessName': form_data.bname,
@@ -155,13 +159,13 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         this.provider_servicesobj.patchUserbProfile(pdata, this.data.userId)
             .subscribe(
                 () => {
-                    this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_CREATED');
+                    this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_CREATED');
                     setTimeout(() => {
                         this.dialogRef.close('reloadlist');
                     }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
-                    this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     this.disableButton = false;
                 }
             );
@@ -173,13 +177,13 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
         this.provider_servicesobj.createUserbProfile(pdata, this.data.userId)
             .subscribe(
                 () => {
-                    this.api_success = this.sharedfunctionObj.getProjectMesssages('BPROFILE_UPDATED');
+                    this.api_success = this.wordProcessor.getProjectMesssages('BPROFILE_UPDATED');
                     setTimeout(() => {
                         this.dialogRef.close('reloadlist');
                     }, projectConstants.TIMEOUT_DELAY);
                 },
                 error => {
-                    this.api_error = this.sharedfunctionObj.getProjectErrorMesssages(error);
+                    this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     this.disableButton = false;
                 }
             );
@@ -192,11 +196,11 @@ export class UserBprofileSearchPrimaryComponent implements OnInit {
                     this.bProfile = data;
                     this.provider_datastorageobj.set('bProfile', data);
                     // getting the user details saved in local storage
-                    const loginuserdata = this.sharedfunctionObj.getitemFromGroupStorage('ynw-user');
+                    const loginuserdata = this.groupService.getitemFromGroupStorage('ynw-user');
                     // setting the status of the customer from the profile details obtained from the API call
                     loginuserdata.accStatus = this.bProfile.status;
                     // Updating the status (ACTIVE / INACTIVE) in the local storage
-                    this.sharedfunctionObj.setitemToGroupStorage('ynw-user', loginuserdata);
+                    this.groupService.setitemToGroupStorage('ynw-user', loginuserdata);
                 },
                 () => {
 

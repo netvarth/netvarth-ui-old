@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ProviderServices } from '../../services/provider-services.service';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-provider-payment-history',
@@ -47,13 +48,14 @@ export class ProviderPaymentHistoryComponent implements OnInit {
 
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router,
-    private sharedfunctionObj: SharedFunctions,
+    private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
     private locationobj: Location
   ) { }
   ngOnInit() {
     this.getPaymentHistoryCount();
     this.getPaymentHistory();
-    this.isCheckin = this.sharedfunctionObj.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
 
   getPaymentHistoryCount() {
@@ -75,7 +77,7 @@ export class ProviderPaymentHistoryComponent implements OnInit {
         this.payment_history = data;
       },
         error => {
-          this.sharedfunctionObj.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.load_complete = 1;
         },
         () => {

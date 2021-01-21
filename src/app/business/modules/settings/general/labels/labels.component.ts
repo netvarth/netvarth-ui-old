@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
     selector: 'app-labels',
@@ -34,7 +36,9 @@ source;
     constructor(private router: Router,
         private _location: Location, public activateroute: ActivatedRoute,
         private provider_services: ProviderServices,
-        private shared_functions: SharedFunctions) {
+        private snackbarService:SnackbarService,
+        private groupService: GroupStorageService,
+        private  wordProcessor: WordProcessor) {
             this.activateroute.queryParams.subscribe(params => {
                this.source = params.source;
               });
@@ -46,7 +50,7 @@ source;
         };
 
         this.getLabels();
-        const user = this.shared_functions.getitemFromGroupStorage('ynw-user');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = user.sector;
     }
     getLabels() {
@@ -61,7 +65,7 @@ source;
                 },
                 error => {
                     this.api_loading = false;
-                    this.shared_functions.apiErrorAutoHide(this, error);
+                    this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
     }
@@ -94,7 +98,7 @@ source;
                 this.getLabels();
             },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
     }
@@ -102,15 +106,15 @@ source;
         const status = (label.status === 'ENABLED') ? 'DISABLED' : 'ENABLED';
         const statusmsg = (label.status === 'ENABLED') ? ' disabled' : ' enabled';
         this.provider_services.updateLabelStatus(label.id, status).subscribe(data => {
-            this.shared_functions.openSnackBar(label.displayName + statusmsg + ' successfully');
+            this.snackbarService.openSnackBar(label.displayName + statusmsg + ' successfully');
             this.getLabels();
         },
             error => {
-                this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
     redirecToGeneral() {
-        if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer') {
+        if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer' || this.source === 'order') {
             this._location.back();
         } else {
         this.router.navigate(['provider', 'settings' , 'general']);

@@ -10,6 +10,9 @@ import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenance-msg.component';
+import { SnackbarService } from '../services/snackbar.service';
+import { SessionStorageService } from '../services/session-storage.service';
+import { LocalStorageService } from '../services/local-storage.service';
 // import { version } from '../constants/version' ;
 
 @Injectable()
@@ -43,7 +46,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   stopThisRequest = false;
 
   constructor(private router: Router, private shared_functions: SharedFunctions,
-    public shared_services: SharedServices, private dialog: MatDialog) { }
+    public shared_services: SharedServices, private dialog: MatDialog,
+    private snackbarService: SnackbarService,
+    private sessionStorageService: SessionStorageService,
+    private lStorageService: LocalStorageService) { }
 
   private _refreshSubject: Subject<any> = new Subject<any>();
   private _maintananceSubject: Subject<any> = new Subject<any>();
@@ -90,12 +96,12 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   //     // to get new access token and refresh token pair
   //     // this.sessionService.refreshToken().subscribe(this._refreshSubject);
   //     this.shared_functions.removeitemfromSessionStorage('tabId');
-  //     const ynw_user = this.shared_functions.getitemfromLocalStorage('ynw-credentials');
+  //     const ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
   //     if (!ynw_user) {
   //       window.location.reload();
   //     }
   //     const phone_number = ynw_user.loginId;
-  //     // const enc_pwd = this.shared_functions.getitemfromLocalStorage('jld');
+  //     // const enc_pwd = this.lStorageService.getitemfromLocalStorage('jld');
   //     const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
   //     const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
   //     const post_data = {
@@ -104,7 +110,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   //       'password': password,
   //       'mUniqueId': ynw_user.mUniqueId
   //     };
-  //     const activeuser = this.shared_functions.getitemfromLocalStorage('isBusinessOwner');
+  //     const activeuser = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
   //     // this.shared_functions.doLogout().then(
   //     //   (refreshSubject: any) => {
   //     //     this._refreshSubject.next(refreshSubject);
@@ -230,7 +236,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return next.handle(this.updateHeader(req, url)).pipe(
               retry(2),
                 // catchError((errorN: HttpErrorResponse) => {
-                this.shared_functions.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar(Messages.NETWORK_ERROR, { 'panelClass': 'snackbarerror' });
               return EMPTY;
               // }),
               // delay(10000);
@@ -250,7 +256,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
                 return throwError(error);
               }
             } else if (error.status === 303) {
-              this.shared_functions.setitemonLocalStorage('unClaimAccount', true);
+              this.lStorageService.setitemonLocalStorage('unClaimAccount', true);
               return throwError(error);
             } else {
               return throwError(error);
@@ -266,8 +272,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
-    if (this.shared_functions.getitemfromSessionStorage('tabId')) {
-      req = req.clone({ headers: req.headers.append('tab', this.shared_functions.getitemfromSessionStorage('tabId')), withCredentials: true });
+    if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
+      req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
       req.headers.delete('tab');
     }

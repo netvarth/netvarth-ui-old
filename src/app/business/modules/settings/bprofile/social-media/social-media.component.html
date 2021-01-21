@@ -18,7 +18,7 @@
                     <div style="font-size: 10px;">Add your {{social.displayName}} page URL to your Jaldee page.</div>
                     <div class="disp-flex ynw-common-form-nm no-padding form-group">
                         <mat-form-field>
-                            <input [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)" matInput type="text" class="form-control mgn-up-10"
+                            <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" matInput type="text" class="form-control mgn-up-10"
                               placeholder="Insert link">
                           </mat-form-field>
                     <!-- <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)"

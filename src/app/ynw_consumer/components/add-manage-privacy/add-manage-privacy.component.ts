@@ -4,6 +4,7 @@ import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-add-manage-privacy',
@@ -30,6 +31,7 @@ export class AddManagePrivacyComponent implements OnInit {
     private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.provider = data.provider;
@@ -46,11 +48,11 @@ export class AddManagePrivacyComponent implements OnInit {
     this.consumer_services.managePrivacy(this.provider.id, status)
       .subscribe(
         () => {
-          this.shared_functions.openSnackBar(Messages.Manage_Privacy);
+          this.snackbarService.openSnackBar(Messages.Manage_Privacy);
           this.dialogRef.close({ message: 'reloadlist', data: this.manage_privacy_values });
         },
         error => {
-          this.shared_functions.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
 
   }
