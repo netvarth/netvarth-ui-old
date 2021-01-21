@@ -90,6 +90,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   view_more = false;
   multiSelection = false;
   timetype;
+  spName: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -228,6 +229,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.getCheckInHistory(this.waitlist_data.ynwUuid);
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
+             this.spName = this.waitlist_data.provider.businessName;
              this.spfname = this.waitlist_data.provider.firstName;
              this.splname = this.waitlist_data.provider.lastName;
           }

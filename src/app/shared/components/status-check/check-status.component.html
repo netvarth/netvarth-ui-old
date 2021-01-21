@@ -142,11 +142,12 @@
                       {{statusInfo.queue.queueEndTime}}</td>
                   </tr>
                   <tr *ngIf="type=='order'">
-                    <td width="48%" align="right">Time window </td>
+                    <td width="48%" align="right" *ngIf="statusInfo.storePickup">Store pickup Time</td>
+                    <td width="48%" align="right" *ngIf="statusInfo.homeDelivery">Delivery Time</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td> {{statusInfo.orderDate | date: newDateFormat }},
-                      {{statusInfo.orderTimeWindow.timeSlots[0].sTime}} -
-                      {{statusInfo.orderTimeWindow.timeSlots[0].eTime}}</td>
+                      {{statusInfo.timeSlot.sTime}} -
+                      {{statusInfo.timeSlot.eTime}}</td>
                   </tr>
                   <tr *ngIf="type=='appt'">
                     <td width="48%" align="right">Appointment Time </td>
