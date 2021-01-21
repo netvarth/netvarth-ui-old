@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, HostListener} from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -199,6 +199,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   futureOrderslst: any = [];
   orders;
   showOrder = false;
+  screenWidth: number;
+  no_of_grids: number;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -208,8 +210,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService:SnackbarService,
+    private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer) {
+    this.onResize();
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
         this.api_loading = true;
@@ -226,6 +229,26 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselOne;
   public carouselDonations;
   public carouselAppointments;
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+       divider = divident / 3;
+    } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
+      divider = divident / 3;
+    } else if (this.screenWidth > 375 && this.screenWidth < 700) {
+      divider = divident / 2;
+    } else if (this.screenWidth < 375) {
+      divider = divident / 1;
+    }
+    this.no_of_grids = Math.round(divident / divider);
+    console.log(this.screenWidth);
+    console.log(this.no_of_grids);
+  }
 
   ngOnInit() {
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');

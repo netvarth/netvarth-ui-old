@@ -10,6 +10,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provi
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
 
 @Component({
   selector: 'app-order-dashboard',
@@ -72,6 +73,7 @@ export class OrderDashboardComponent implements OnInit {
   labelsCount: any = [];
   selectedLabels: any = [];
   allLabelSelected: any = [];
+  displayLabeldialogRef;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -425,6 +427,8 @@ export class OrderDashboardComponent implements OnInit {
     });
   }
   getDisplayname(label) {
+    console.log(label);
+    console.log(this.allLabels);
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
@@ -433,6 +437,48 @@ export class OrderDashboardComponent implements OnInit {
       }
     }
   }
+  getDisplayformatOflabel(labeldetails) {
+    if (labeldetails.label) {
+    let labelString = ' ';
+    let len;
+    Object.keys(labeldetails.label).forEach(key => {
+      labelString = labelString + key + ' ';
+    });
+    if (labelString.length > 40) {
+      len = 0;
+    } else {
+      len = 1;
+    }
+    return len;
+  }
+}
+
+
+  getDisplayformatTruncateLabel(labeldetails) {
+    let labelString = ' ';
+    Object.keys(labeldetails.label).forEach(key => {
+      labelString = labelString + key + ' ';
+    });
+    if (labelString.length > 40) {
+      labelString = labelString.substr(0, 40);
+    }
+    return labelString;
+  }
+  displayLabel(order) {
+    this.displayLabeldialogRef = this.dialog.open(DisplaylabelpopupComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: order
+
+    });
+    this.displayLabeldialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+
   labelfilterClicked(index, label) {
     delete this.labelMultiCtrl[label];
     this.labelFilter[index] = !this.labelFilter[index];
