@@ -668,14 +668,14 @@ export class ConsumerCheckinComponent implements OnInit {
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.isAvailable);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
@@ -1157,9 +1157,8 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
-        if (this.userData.userProfile.email) {
+        if (this.userData.userProfile.email && this.waitlist_for[0]) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
-            console.log(this.waitlist_for);
         }
         if (this.waitlist_for.length === 0) {
             this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
