@@ -214,3 +214,14 @@
     font-size: 1rem!important;
     font-weight: 700!important;
 }
+.prenotes {
+  border: 1px solid #cccccc80;
+  padding: 10px;
+  max-height: 100px;
+  overflow: auto;
+}
+.preinfo-title {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+}
