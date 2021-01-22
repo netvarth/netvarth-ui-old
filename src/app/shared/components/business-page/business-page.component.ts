@@ -2545,13 +2545,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
-          // console.log(cat)
-          // if(catalogs.length > 1) {
-          //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
-          //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
-          //     this.itemCount++;
-          //   }
-          // } else if (catalogs.length === 1) {
           this.shared_services.setOrderDetails(this.activeCatalog);
           if (this.activeCatalog && this.activeCatalog.catalogItem) {
             for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
@@ -2565,7 +2558,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
-          // }
           this.orderItems = orderItems;
           console.log(this.orderItems);
         }

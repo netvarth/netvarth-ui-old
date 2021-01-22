@@ -2031,12 +2031,6 @@ public wordProcessor: WordProcessor
               }
             }
           }
-          // if(catalogs.length > 1) {
-          //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
-          //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
-          //     this.itemCount++;
-          //   }
-          // } else if (catalogs.length === 1) {
           this.shared_services.setOrderDetails(this.activeCatalog);
           for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
             const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
@@ -2048,7 +2042,6 @@ public wordProcessor: WordProcessor
             this.itemCount++;
           }
           }
-          // }
           this.orderItems = orderItems;
         }
       );
