@@ -244,6 +244,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 (id) => {
                     this.service_id = id;
+                    this.router.navigate(['provider', 'settings', 'donationmanager', 'causes']);
                     this.getServiceDetail();
                 },
                 error => {
@@ -256,6 +257,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_UPDATED'));
+                    this.router.navigate(['provider', 'settings', 'donationmanager', 'causes']);
                     this.getServiceDetail();
                 },
                 error => {
