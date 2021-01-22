@@ -1242,3 +1242,12 @@ ngx-intl-tel-input input {
   font-weight: 600;
   font-size: 1rem;
 }
+.line-clamp {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+.module-nomargin {
+  /* margin: 0 0 1em 0; */
+  overflow: hidden !important;
+}
