@@ -6,6 +6,7 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 @Component({
     selector: 'app-label',
     templateUrl: './label.component.html'
@@ -65,12 +66,14 @@ export class LabelComponent implements OnInit {
     exceedLimit = false;
     labelcaption = 'Create Label';
     labelStatus = false;
+    source;
     constructor(private router: Router,
         private activated_route: ActivatedRoute,
         private provider_services: ProviderServices,
         public fed_service: FormMessageDisplayService,
-        private snackbarService:SnackbarService,
-        private  wordProcessor: WordProcessor) {
+        private snackbarService: SnackbarService,
+        private wordProcessor: WordProcessor,
+        public _location: Location) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
         this.activated_route.params.subscribe(params => {
@@ -84,6 +87,10 @@ export class LabelComponent implements OnInit {
         );
         this.activated_route.queryParams.subscribe(
             qparams => {
+                console.log(qparams);
+                if (qparams.source) {
+                    this.source = qparams.source;
+                }
                 this.label_id = qparams.id;
                 if (this.label_id) {
                     this.editLabelbyId(qparams.id);
@@ -272,6 +279,10 @@ export class LabelComponent implements OnInit {
         }
     }
     redirecToGeneral() {
-        this.router.navigate(['provider', 'settings', 'general', 'labels']);
+        if (this.source === 'appt' || this.source === 'checkin' || this.source === 'customer' || this.source === 'order') {
+            this._location.back();
+        } else {
+            this.router.navigate(['provider', 'settings', 'general', 'labels']);
+        }
     }
 }

@@ -76,7 +76,12 @@ source;
         }
     }
     addLabel() {
-        this.router.navigate(['provider/settings/general/labels/add']);
+        const navigationExtras: NavigationExtras = {
+            queryParams: { source: this.source }
+        };
+        console.log(navigationExtras);
+        this.router.navigate(['provider', 'settings', 'general',
+        'labels','add'], navigationExtras);
     }
     editLabel(label) {
         const navigationExtras: NavigationExtras = {

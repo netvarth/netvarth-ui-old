@@ -26470,10 +26470,18 @@ hr {
   font-size: 1.25rem;
 }
 .BizyGlobe {
-  background: url(../images/BG_icon_sqr.jpg) no-repeat scroll 0 0/20px 20px !important;
+  background: url(../images/BG_icon.png) no-repeat scroll 0 0/20px 20px !important;
+}
+.youTube {
+  content: url(../images/yt_icon_rgb.png) !important;
+  width: 20px;
+}
+.instagram {
+  content: url(../images/insta.png) !important;
+  width: 20px;
 }
 .bizyGlobe {
-  content: url(../images/BG_icon_sqr.jpg) !important;
+  content: url(../images/BG_icon.png) !important;
   width: 20px;
 }
 .primary-color{
@@ -27140,4 +27148,8 @@ color: #fff !important;
 }
 .font-small {
   font-size: small;
+}
+
+.font-size-9 {
+  font-size: 0.9rem;
 }

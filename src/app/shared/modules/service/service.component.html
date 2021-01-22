@@ -420,13 +420,13 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 </mat-accordion> -->
       </div>
       <div class="mgn-bt-20">
-        <a class="no-padding underline pointer-cursor" (click)="advancedClick()" *ngIf="!is_donation"
+        <a class="no-padding underline pointer-cursor" (click)="advancedClick()"
           style="font-size: 1.1rem;">
           Customization</a>
         <!-- <div class="settings_info" *ngIf="!is_donation">
  Live tracking and more</div> -->
       </div>
-      <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings && !is_donation">
+      <div class="row mgn-lt-5 mgn-up-20" *ngIf="showAdvancedSettings">
         <div class="form-group box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="disp-flex">
             <label class="col-form-label">Custom field to collect additional information from your {{customer_label}}s
@@ -473,7 +473,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </div>
         </div>
         <div class="form-group mgn-up-20 col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"
-          *ngIf="!is_virtual_serv && is_lvtrack_enable">
+          *ngIf="!is_virtual_serv && is_lvtrack_enable && !is_donation">
           <div class="disp-flex">
             <label class="col-form-label">Enable live track to locate your {{customer_label}}&nbsp;&nbsp;
             </label>

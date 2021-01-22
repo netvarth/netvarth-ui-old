@@ -84,6 +84,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  monthFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
@@ -240,9 +241,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
        divider = divident / 3;
     } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
       divider = divident / 3;
-    } else if (this.screenWidth > 375 && this.screenWidth < 700) {
+    } else if (this.screenWidth > 420 && this.screenWidth < 700) {
       divider = divident / 2;
-    } else if (this.screenWidth < 375) {
+    } else if (this.screenWidth < 420) {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);

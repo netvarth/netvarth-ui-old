@@ -138,6 +138,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   // timeWindows;
   nextAvailableTimeQueue: any = [];
   queue;
+  selected_coupons: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -163,6 +164,11 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.catalog_Id = this.chosenDateDetails.catlog_id;
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
+    if(this.chosenDateDetails.selected_coupons) {
+      this.selected_coupons = this.chosenDateDetails.selected_coupons;
+      console.log(this.selected_coupons);
+    }
+
     if (this.choose_type === 'store') {
       this.store_pickup = true;
       this.storeChecked = true;
@@ -523,7 +529,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'countryCode': this.customer_countrycode,
             'phoneNumber': this.customer_phoneNumber,
             'email': this.customer_email,
-            'orderNote': this.orderlistNote
+            'orderNote': this.orderlistNote,
+            // 'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
@@ -547,7 +554,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           'countryCode': this.customer_countrycode,
           'phoneNumber': this.customer_phoneNumber,
           'email': this.customer_email,
-          'orderNote': this.orderNote
+          'orderNote': this.orderNote,
+          'coupons': this.selected_coupons
         };
         this.confirmOrder(post_Data);
       }
@@ -583,7 +591,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'countryCode': this.customer_countrycode,
             'phoneNumber': contactNumber,
             'email': contact_email,
-            'orderNote': this.orderlistNote
+            'orderNote': this.orderlistNote,
+            // 'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
@@ -606,7 +615,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           'countryCode': this.customer_countrycode,
           'phoneNumber': contactNumber,
           'email': contact_email,
-          'orderNote': this.orderNote
+          'orderNote': this.orderNote,
+          'coupons': this.selected_coupons
         };
         this.confirmOrder(post_Data);
        }

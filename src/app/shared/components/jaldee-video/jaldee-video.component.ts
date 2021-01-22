@@ -6,6 +6,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ActivatedRoute, Router ,NavigationExtras } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../../../src/app/ynw_consumer/components/consumer-join/join.component';
 import { MatDialog } from '@angular/material/dialog';
+import { GroupStorageService } from '../../services/group-storage.service';
 @Component({
   selector: 'app-jaldee-video',
   templateUrl: './jaldee-video.component.html'
@@ -38,6 +39,7 @@ export class JaldeeVideoComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
     public router: Router,
+    private groupService: GroupStorageService,
     public date_format: DateFormatPipe
   ) {
     this.activated_route.params.subscribe(
@@ -49,7 +51,7 @@ export class JaldeeVideoComponent implements OnInit {
       });
   }
   ngOnInit() {
-    const activeUser = this.sharedFunctionobj.getitemFromGroupStorage('ynw-user');
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.getVideo();
     }

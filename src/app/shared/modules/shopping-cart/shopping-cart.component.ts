@@ -201,6 +201,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.sel_checkindate = this.chosenDateDetails.order_date;
       this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
+      // this.selected_coupons = this.chosenDateDetails.selected_coupon
     } else {
       this.storeChecked = true;
     }
@@ -350,6 +351,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
         this.s3CouponsList = res;
+        console.log(this.s3CouponsList);
         if (this.s3CouponsList.length > 0) {
           this.showCouponWB = true;
         }
@@ -437,7 +439,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         nextAvailableTime: this.nextAvailableTime,
         order_date: this.sel_checkindate,
         advance_amount: this.catalog_details.advance_amount,
-        account_id: this.account_id
+        account_id: this.account_id,
+        selected_coupons:this.selected_coupons
 
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);

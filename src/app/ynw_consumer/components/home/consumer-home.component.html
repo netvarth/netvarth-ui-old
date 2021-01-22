@@ -93,7 +93,7 @@
                             TODAY
                         </div>
                         <div *ngIf="today_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="190px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="210px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of todayBookings;"
                                     (click)="showBookingDetails(booking)">
                                     <!-- Appointments -->
@@ -119,8 +119,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -171,8 +171,9 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-30 pad-lt-40">
-                                                <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div>
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div> -->
+                                                <div class="ordr_no font-size-9">Today, {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -181,34 +182,41 @@
 
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl">Appointment for</div>
+                                                        <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                                                            {{booking.appmtFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
-                                                        {{booking.appmtFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -268,9 +276,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -323,7 +331,7 @@
                                             <!-- Basic Info -->
                                             <div
                                                 class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <span class="ordr_no">
+                                                <!-- <span class="ordr_no">
                                                     <span
                                                         *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
                                                         Now
@@ -348,7 +356,9 @@
                                                         *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
                                                         Starts at : {{booking.serviceTime}}
                                                     </span>
-                                                </span>
+                                                </span> -->
+                                                <div class="ordr_no font-size-9">Today, {{booking.queue.queueStartTime}} -
+                                                    {{booking.queue.queueEndTime}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -357,34 +367,43 @@
 
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
+                                                        <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
+                                                        </div>
+                                                        <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
+                                                            {{booking.waitlistingFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -447,7 +466,7 @@
                             <span><a class="show_more">Show more...</a></span>
                         </div>
                         <div class="mgn-up-10 mgn-bt-10 grid-card" *ngIf="more_tdybookingsShow">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="190px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="210px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of todayBookings_more;"
                                     (click)="showBookingDetails(booking)">
                                     <!-- Appointments -->
@@ -473,8 +492,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -525,8 +544,9 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-30 pad-lt-40">
-                                                <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div>
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}</div> -->
+                                                <div class="ordr_no font-size-9">Today, {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -535,35 +555,42 @@
 
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
 
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl">Appointment for</div>
+                                                        <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                                                            {{booking.appmtFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
-                                                        {{booking.appmtFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -621,9 +648,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -676,7 +703,7 @@
                                             <!-- Basic Info -->
                                             <div
                                                 class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <span class="ordr_no">
+                                                <!-- <span class="ordr_no">
                                                     <span
                                                         *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
                                                         Now
@@ -701,7 +728,9 @@
                                                         *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
                                                         Starts at : {{booking.serviceTime}}
                                                     </span>
-                                                </span>
+                                                </span> -->
+                                                <div class="ordr_no font-size-9">Today, {{booking.queue.queueStartTime}} -
+                                                    {{booking.queue.queueEndTime}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -710,36 +739,45 @@
 
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
 
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
 
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
+                                                        <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
+                                                        </div>
+                                                        <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
+                                                            {{booking.waitlistingFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -808,17 +846,18 @@
                             UPCOMING
                         </div>
                         <div *ngIf="future_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="210px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of futureBookings;"
                                     (click)="showBookingDetails(booking)">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
                                         <!-- Header Date -->
-                                        <mat-grid-tile-header>
+
+                                        <!-- <mat-grid-tile-header>
                                             <div class="center">
                                                 <div>{{booking.appmtDate | date: newDateFormat}}</div>
                                             </div>
-                                        </mat-grid-tile-header>
+                                        </mat-grid-tile-header> -->
 
                                         <!-- Body -->
                                         <div
@@ -843,8 +882,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -876,9 +915,11 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-30 pad-lt-40">
-                                                <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
-                                                </div>
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
+                                                </div> -->
+                                                <div class="ordr_no font-size-9">{{booking.appmtDate | date: monthFormat}},
+                                                    {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -887,34 +928,41 @@
 
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl">Appointment for</div>
+                                                        <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                                                            {{booking.appmtFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
-                                                        {{booking.appmtFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -950,11 +998,11 @@
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <!-- Header Date -->
-                                        <mat-grid-tile-header>
+                                        <!-- <mat-grid-tile-header>
                                             <div class="center">
                                                 <div>{{booking.date | date: newDateFormat}}</div>
                                             </div>
-                                        </mat-grid-tile-header>
+                                        </mat-grid-tile-header> -->
 
                                         <!-- Body -->
                                         <div
@@ -978,9 +1026,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1033,7 +1081,7 @@
                                             <!-- Basic Info -->
                                             <div
                                                 class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <span class="ordr_no">
+                                                <!-- <span class="ordr_no">
                                                     <span
                                                         *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
                                                         Now
@@ -1058,7 +1106,10 @@
                                                         *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
                                                         Starts at : {{booking.serviceTime}}
                                                     </span>
-                                                </span>
+                                                </span> -->
+                                                <div class="ordr_no font-size-9">{{booking.date | date: monthFormat}},
+                                                    {{booking.queue.queueStartTime}} - {{booking.queue.queueEndTime}}
+                                                </div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -1067,34 +1118,43 @@
 
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
+                                                        <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
+                                                        </div>
+                                                        <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
+                                                            {{booking.waitlistingFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1158,17 +1218,17 @@
                             <span><a class="show_more">Show more...</a></span>
                         </div>
                         <div class="mgn-up-10 mgn-bt-10 grid-card" *ngIf="more_futrbookingsShow">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="190px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="210px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let booking of futureBookings_more;"
                                     (click)="showBookingDetails(booking)">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
                                         <!-- Header Date -->
-                                        <mat-grid-tile-header>
+                                        <!-- <mat-grid-tile-header>
                                             <div class="center">
                                                 <div>{{booking.appmtDate | date: newDateFormat}}</div>
                                             </div>
-                                        </mat-grid-tile-header>
+                                        </mat-grid-tile-header> -->
 
                                         <!-- Body -->
                                         <div
@@ -1193,8 +1253,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -1226,9 +1286,11 @@
 
                                             <!-- Basic info -->
                                             <div
-                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-30 pad-lt-40">
-                                                <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
-                                                </div>
+                                                class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
+                                                <!-- <div class="ordr_no">{{getSingleTime(booking.appmtTime)}}
+                                                </div> -->
+                                                <div class="ordr_no font-size-9">{{booking.appmtDate | date: monthFormat}},
+                                                    {{getSingleTime(booking.appmtTime)}}</div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -1237,34 +1299,41 @@
 
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl">Appointment for</div>
+                                                        <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                                                            {{booking.appmtFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
-                                                        {{booking.appmtFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1300,11 +1369,11 @@
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <!-- Header Date -->
-                                        <mat-grid-tile-header>
+                                        <!-- <mat-grid-tile-header>
                                             <div class="center">
                                                 <div>{{booking.date | date: newDateFormat}}</div>
                                             </div>
-                                        </mat-grid-tile-header>
+                                        </mat-grid-tile-header> -->
 
                                         <!-- Body -->
                                         <div
@@ -1328,9 +1397,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1383,7 +1452,7 @@
                                             <!-- Basic Info -->
                                             <div
                                                 class="col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xs-10 mgn-up-25 pad-lt-40">
-                                                <span class="ordr_no">
+                                                <!-- <span class="ordr_no">
                                                     <span
                                                         *ngIf="!booking.token && !booking.serviceTime && (booking.appxWaitingTime == 0 && booking.waitlistStatus != 'cancelled' && booking.waitlistStatus != 'done')">
                                                         Now
@@ -1408,7 +1477,10 @@
                                                         *ngIf="booking.serviceTime && ( booking.appxWaitingTime >=0 && booking.token && (booking.waitlistStatus !== 'cancelled' && booking.waitlistStatus !=='done'))">
                                                         Starts at : {{booking.serviceTime}}
                                                     </span>
-                                                </span>
+                                                </span> -->
+                                                <div class="ordr_no font-size-9">{{booking.date | date: monthFormat}},
+                                                    {{booking.queue.queueStartTime}} - {{booking.queue.queueEndTime}}
+                                                </div>
                                                 <div class="sp_name wrap_txt"
                                                     (click)="providerDetail(booking.providerAccount,$event)">
                                                     {{booking.providerAccount.businessName || '' |
@@ -1417,34 +1489,43 @@
 
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service</div>
-                                                    <div class="prov_nme wrap_txt max-w-150 disply-flex">
-                                                        <span [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
-                                                            <span>
-                                                                <i class="fa phon-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                <i class="fa meet-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                <i class="fa zoom-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                <i class="fa wtsapaud-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
-                                                                <i class="fa wtsapvid-icon"
-                                                                    *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
-                                                            </span>
-                                                            {{booking.service.name |
-                                                            capitalizeFirst}}</span>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    <div class="pull-left">
+                                                        <div class="prov_lbl">Service</div>
+                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                            <span
+                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                                <span>
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'WhatsApp' && booking.service.virtualServiceType ==='videoService'"></i>
+                                                                </span>
+                                                                {{booking.service.name |
+                                                                capitalizeFirst}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <div class="prov_lbl" *ngIf="booking.showToken">Token for</div>
+                                                        <div class="prov_lbl" *ngIf="!booking.showToken">Check-in for
+                                                        </div>
+                                                        <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
+                                                            {{booking.waitlistingFor[0].lastName}}</div>
                                                     </div>
                                                 </div>
-                                                <div class="disply-flex" *ngIf="booking.provider">
-                                                    <div class="prov_lbl">Provider</div>
-                                                    <div class="prov_nme">{{booking.provider.businessName}}</div>
-                                                </div>
-                                                <div class="disply-flex">
-                                                    <div class="prov_lbl">Service for</div>
-                                                    <div class="prov_nme"> {{booking.waitlistingFor[0].firstName}}
-                                                        {{booking.waitlistingFor[0].lastName}}</div>
+                                                <div
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+                                                    <div class="pull-left" *ngIf="booking.provider">
+                                                        <div class="prov_lbl">Provider</div>
+                                                        <div class="prov_nme">{{booking.provider.businessName}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -1514,7 +1595,7 @@
 
                     <!-- Order Section -->
                     <!-- If there is no order -->
-                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == undefined) && !loading) && showOrder"
+                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == 0) && !loading) && showOrder"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No Active Orders</p>
                     </div>

@@ -5,6 +5,9 @@ header.site-header {
 .account-links {
     padding: 15px 5px 0px 5px !important;
 }
+h6 {
+	font-size: 1rem !important;
+}
   a {
     color: #000;
   }
