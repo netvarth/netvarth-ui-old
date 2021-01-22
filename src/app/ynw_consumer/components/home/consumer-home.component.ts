@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject, HostListener} from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -202,6 +202,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showOrder = false;
   screenWidth: number;
   no_of_grids: number;
+  bookingStatusClasses = projectConstantsLocal.BOOKING_STATUS_CLASS;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -238,7 +239,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     let divider;
     const divident = this.screenWidth / 37.8;
     if (this.screenWidth > 1000) {
-       divider = divident / 3;
+      divider = divident / 3;
     } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
       divider = divident / 3;
     } else if (this.screenWidth > 420 && this.screenWidth < 700) {
@@ -252,6 +253,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
@@ -1069,7 +1071,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (type === 'appt') {
       pass_ob['appt'] = type;
       pass_ob['uuid'] = waitlist.uid;
-    }else if(type === 'orders') {
+    } else if (type === 'orders') {
       pass_ob['orders'] = type;
       pass_ob['uuid'] = waitlist.uid;
     } else {
@@ -1973,5 +1975,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showBookings() {
     this.showOrder = false;
   }
-
+  getBookingStatusClass(status) {
+    const retdet = this.bookingStatusClasses.filter(
+      soc => soc.value === this.wordProcessor.firstToUpper(status));
+    if (retdet[0]) {
+      return retdet[0].class;
+    } else {
+      return '';
+    }
+  }
 }
