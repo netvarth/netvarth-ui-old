@@ -26727,8 +26727,11 @@ color: #fff !important;
 .orange {
   color: orange;
 }
-.yellow {
+.yellow-green {
   color: yellowgreen;
+}
+.yellow {
+  color: yellow;
 }
 .black {
   color: black;
@@ -27079,4 +27082,7 @@ color: #fff !important;
 }
 .font-size-9 {
   font-size: 0.9rem !important;
+}
+.dark-green {
+  color: green;
 }
