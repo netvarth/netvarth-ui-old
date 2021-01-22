@@ -162,6 +162,7 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 this.submit_btn = Messages.UPDATE_BTN;
             } else {
                 this.submit_btn = Messages.SAVE_BTN;
+                this.labelMultiCtrl = 'all';
             }
             this.api_loading = false;
         }, 200);
@@ -254,6 +255,8 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.boardDisplayname = this.displayBoardData.displayName;
             this.selectedWtlstList = this.displayBoardData.qBoardConditions.wlStatus;
             this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
+            console.log(Object.keys(this.displayBoardData.qBoardConditions.labels).length);
+            if (Object.keys(this.displayBoardData.qBoardConditions.labels).length > 0) {
             Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
                 for (let i = 0; i < this.providerLabels.length; i++) {
                     if (this.providerLabels[i].label === key) {
@@ -264,6 +267,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                     }
                 }
             });
+        } else {
+            this.labelMultiCtrl = 'all';
+        }
             if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
                 for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
                     for (let i = 0; i < this.departments.length; i++) {
@@ -838,8 +844,12 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         });
         this.labelsList.splice(index, 1);
     }
-    providerLabelSelection(label) {
-        this.labelList[label.label] = true;
+    providerLabelSelection(label?) {
+        if (label) {
+            this.labelList[label.label] = true;
+        } else {
+            this.labelList = {};
+        }
     }
     // providerLabelSelection(label) {
     //     this.labelList = {};
