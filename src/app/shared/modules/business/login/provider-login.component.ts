@@ -17,7 +17,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-plogin',
   templateUrl: './provider-login.component.html',
-  styleUrls: ['../../../../../assets/css/pages/login/login-2.css', '../../../../../assets/css/pages/login/login-2.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
+  styleUrls: ['../../../../../assets/css/pages/login/login-3.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
 export class ProviderLoginComponent implements OnInit {
   show_jaldeegrow = true;
