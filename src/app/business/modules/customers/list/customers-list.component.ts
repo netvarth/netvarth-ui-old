@@ -17,7 +17,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
-  styleUrls: ['./customers-list.component.css']
+  styleUrls: ['./customers-list.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class CustomersListComponent implements OnInit {

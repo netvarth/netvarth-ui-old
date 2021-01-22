@@ -4,9 +4,6 @@
 .customersList .pitch_blu {
   color: #1e4079 !important;
 }
-.customersList h2 {
-  font-family: Roboto !important;
-}
 @media screen and (max-width: 1000px) {
     .customersList .part2 {
       display: none;
@@ -18,3 +15,24 @@
         display: none;
     }
   }
+
+.customersList .card {
+  border-radius: 0 !important;
+}  
+.customersList .grp_label {
+  border: 1px solid #80808042 !important;
+}
+.customersList .grp_label:hover {
+  cursor: pointer;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.customersList .selected_customers {
+  font-size: 0.7rem !important;
+  color: green !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.customersList .font-1 {
+  font-size: 1rem !important;
+}
