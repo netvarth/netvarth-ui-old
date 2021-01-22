@@ -2559,8 +2559,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
               const showpric = this.activeCatalog.showPrice;
+              if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
               orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item , 'showpric':showpric });
               this.itemCount++;
+              }
             }
           }
           // }
