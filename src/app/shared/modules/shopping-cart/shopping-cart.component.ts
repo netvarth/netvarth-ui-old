@@ -148,7 +148,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
-      this.orderList = JSON.parse(localStorage.getItem('order'));
+      this.orderList = JSON.parse( localStorage.getitem('order'));
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.orderCount = this.orders.length;
       this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
@@ -201,12 +201,16 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.sel_checkindate = this.chosenDateDetails.order_date;
       this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-      // this.selected_coupons = this.chosenDateDetails.selected_coupon
+       this.selected_coupons = this.chosenDateDetails.selected_coupons;
+
+       this.couponvalid = true;
+       this.action = '';
     } else {
       this.storeChecked = true;
     }
 
   }
+
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -469,7 +473,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   goBackCart(selectedTimeslot,queue) {
     console.log(queue);
     console.log(selectedTimeslot);
-    let selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    const selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
     console.log(selectqueue);
      this.nextAvailableTime = selectqueue;
     // this.nextAvailableTime = selectedTimeslot;
@@ -706,7 +710,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       //   }
       // });
       console.log(this.orderList);
-  
+
     }
   });
   }
