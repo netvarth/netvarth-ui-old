@@ -2015,12 +2015,12 @@ pre {
     .table-responsive-xxl > .table-bordered {
       border: 0; } }
 
-.table-responsive {
+.table-responsive1 {
   display: block;
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch; }
-  .table-responsive > .table-bordered {
+  .table-responsive1 > .table-bordered {
     border: 0; }
 
 .form-control {
@@ -60014,11 +60014,11 @@ body.swal2-height-auto {
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: sans-serif;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+  font-family: sans-serif !important;
+  -moz-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  -webkit-text-size-adjust: 100% !important;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 html,
@@ -60026,9 +60026,9 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0px;
-  font-size: 13px !important;
+  font-size: 13px !important !important;
   font-weight: 400;
-  font-family: Poppins, Helvetica, "sans-serif";
+  font-family: Poppins, Helvetica, "sans-serif" !important;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }

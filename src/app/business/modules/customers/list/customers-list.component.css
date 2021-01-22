@@ -36,3 +36,30 @@
 .customersList .font-1 {
   font-size: 1rem !important;
 }
+.customersList .row_data {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+.customersList .mat-flat-button {
+  background: #1e4079;
+  color: white;
+  line-height: 26px !important;
+  border-radius: 5px;
+}
+.customersList .prof_btn {
+  background: white !important;
+  color: #235489 !important;
+  border: 1px solid #1e4079 !important;
+  font-weight: 600 !important;
+}
+.customersList .add_btn {
+  line-height: 35px !important;
+}
+.customersList .search {
+  height: calc(1.35em + 1.1rem + 2px);
+  /* padding: 0.55rem 0.75rem; */
+  font-size: 0.7rem !important;
+  line-height: 1 !important;
+  border-radius: 2rem !important;
+  float: right !important;
+}

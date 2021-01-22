@@ -142,7 +142,7 @@
                 <td class="four pull-right">
                   <span>
                     <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
-                      <mat-icon>more_vert</mat-icon>
+                      <mat-icon>more_horiz</mat-icon>
                     </button>
                   </span>
                   <mat-menu #appMenu="matMenu">
@@ -207,117 +207,197 @@
 <section class="customersList">
   <div class="row p-3">
     <div class="col-lg-4">
-        <!--begin::Mixed Widget 14-->
-        <div class="card card-custom card-stretch gutter-b pitch_blu">
-            <div class="card grp_label mb-2">All patients</div>
-            <div class="card grp_label mb-2">Regular patients
-              <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
-            </div>
-            <div class="card grp_label mb-2">VIP patients
-              <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
-            </div>
+      <!--begin::Mixed Widget 14-->
+      <div class="card card-custom card-stretch gutter-b pitch_blu">
+        <div class="card grp_label mb-2">All patients</div>
+        <div class="card grp_label mb-2">Regular patients
+          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
         </div>
-        <!--end::Mixed Widget 14-->
+        <div class="card grp_label mb-2">VIP patients
+          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
+        </div>
+        <div class="card grp_label mb-2">Other patients
+          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
+        </div>
+      </div>
+      <!--end::Mixed Widget 14-->
     </div>
     <div class="col-lg-8">
-        <!--begin::Advance Table Widget 4-->
-        <div class="card card-custom card-stretch gutter-b no-padding">
-            <!--begin::Header-->
-            <div class="p-4">
-                <h3 class="align-items-start flex-column">
-                    <span class="card-label font-1 font-weight-bolder text-dark">All Patients</span>
-                    
-                </h3>
-            </div>
-              <div class="card-toolbar">
-                <button type="button" class="btn btn-primary btn-sm mr-2">Add Patient</button>
-                <button type="button" class="btn btn-primary btn-sm mr-2">Create Group</button>
-            </div>
-            <!--end::Header-->
+      <!--begin::Advance Table Widget 4-->
+      <div class="card card-custom card-stretch gutter-b no-padding">
+        <!--begin::Header-->
+        <div class="p-3">
+          <h3 class="align-items-start flex-column">
+            <span class="card-label font-1 font-weight-bolder text-dark">All Patients</span>
 
-            <!--begin::Body-->
-            <div class="card-body pt-0 pb-3">
-                <div class="tab-content">
-                    <!--begin::Table-->
-                    <div class="table-responsive">
-                        <table
-                            class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                            <!-- <thead>
-                                <tr class="text-left text-uppercase">
-                                    <th style="min-width: 250px" class="pl-7"><span
-                                            class="text-dark-75">products</span></th>
-                                    <th style="min-width: 100px">earnings</th>
-                                    <th style="min-width: 100px">comission</th>
-                                    <th style="min-width: 100px">company</th>
-                                    <th style="min-width: 130px">rating</th>
-                                    <th style="min-width: 80px"></th>
-                                </tr>
-                            </thead> -->
-                           
-                            <tbody>
-                                <tr>
-                                    <td class="pl-0 py-8">
-                                        <div class="d-flex align-items-center">
-                                            <div class="">
-                                                <span class="symbol-label">
-                                                  <input type="checkbox" checked="checked" name="Checkboxes4">
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <a href="#"
-                                                    class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Brad
-                                                    Simmons</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                            20
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                           97884457784
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                            Fri,Jan 1, 2021
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button>message</button>
-                                    </td>
-                                    <td class="pr-0 text-right">
-                                      <button>Profile</button>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--end::Table-->
-                </div>
-            </div>
-            <!--end::Body-->
+          </h3>
         </div>
-        <!--end::Advance Table Widget 4-->
+        <div class="p-2 row">
+          <div class="col-sm-12 col-lg-7 col-xs-12 col-md-12 mb-4">
+            <button mat-flat-button class="font-size-xs add_btn">Add Patient</button> &nbsp;&nbsp;&nbsp;
+          <button mat-flat-button class="font-size-xs add_btn">Create Group</button>
+          </div>
+          <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
+              <input type="search" class="form-control search" placeholder="search" aria-controls="kt_datatable1">
+          </div>
+        </div>
+        <!--end::Header-->
+
+        <!--begin::Body-->
+        <div class="card-body pt-0 pb-3">
+          <div class="tab-content">
+            <!--begin::Table-->
+            <div class="table-responsive1">
+              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+           
+
+                <tbody>
+                  <tr class="row_data border-bottom">
+                    <td class="pl-0 py-4">
+                      <div class="d-flex align-items-center">
+                        <div class="pr-3">
+                          <span class="symbol-label">
+                            <input type="checkbox" checked="checked" name="Checkboxes4">
+                          </span>
+                        </div>
+                        <div>
+                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
+                            Simmons</a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="text-dark-75  d-block ">
+                        20
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        97884457784
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        Fri,Jan 1, 2021
+                      </span>
+                    </td>
+                    <td>
+                      <button mat-flat-button>Message</button>
+                    </td>
+                    <td>
+                      <button mat-flat-button class="prof_btn">Profile</button>
+                    </td>
+                    <td class="pr-0 text-right">
+                      <button type="button" mat-icon-button>
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="row_data border-bottom">
+                    <td class="pl-0 py-4">
+                      <div class="d-flex align-items-center">
+                        <div class="pr-3">
+                          <span class="symbol-label">
+                            <input type="checkbox" checked="checked" name="Checkboxes4">
+                          </span>
+                        </div>
+                        <div>
+                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
+                            Simmons</a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="text-dark-75  d-block ">
+                        20
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        97884457784
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        Fri,Jan 1, 2021
+                      </span>
+                    </td>
+                    <td>
+                      <button mat-flat-button>Message</button>
+                    </td>
+                    <td>
+                      <button mat-flat-button class="prof_btn">Profile</button>
+                    </td>
+                    <td class="pr-0 text-right">
+                      <button type="button" mat-icon-button>
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="row_data border-bottom">
+                    <td class="pl-0 py-4">
+                      <div class="d-flex align-items-center">
+                        <div class="pr-3">
+                          <span class="symbol-label">
+                            <input type="checkbox" checked="checked" name="Checkboxes4">
+                          </span>
+                        </div>
+                        <div>
+                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
+                            Simmons</a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="text-dark-75  d-block ">
+                        20
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        97884457784
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block">
+                        Fri,Jan 1, 2021
+                      </span>
+                    </td>
+                    <td>
+                      <button mat-flat-button>Message</button>
+                    </td>
+                    <td>
+                      <button mat-flat-button class="prof_btn">Profile</button>
+                    </td>
+                    <td class="pr-0 text-right">
+                      <button type="button" mat-icon-button>
+                        <mat-icon>more_horiz</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <!--end::Table-->
+          </div>
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Advance Table Widget 4-->
     </div>
-</div>
+  </div>
 
 
-<script src="../../../../../assets/plugins/global/plugins.bundle.js"></script>
-    <script src="../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-    <script src="../../../../../assets/js/scripts.bundle.js"></script>
-    <!--end::Global Theme Bundle-->
+  <script src="../../../../../assets/plugins/global/plugins.bundle.js"></script>
+  <script src="../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+  <script src="../../../../../assets/js/scripts.bundle.js"></script>
+  <!--end::Global Theme Bundle-->
 
 
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="../../../../../assets/js/pages/widgets.js"></script>
-    <!--end::Page Scripts-->
+  <!--begin::Page Scripts(used by this page)-->
+  <script src="../../../../../assets/js/pages/widgets.js"></script>
+  <!--end::Page Scripts-->
 </section>
 
 
