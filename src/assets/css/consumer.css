@@ -6942,7 +6942,7 @@ margin-top: 7px;
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-footer {
   border-top: 3px solid #80808052;
   background: none !important;
-  height: 25%;
+  height: 15%;
 }
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-header {
   background: #183e79 !important;
@@ -7058,6 +7058,6 @@ margin-top: 7px;
   width: 100%;
   text-align: center;
 }
-.consumer-dash .grid-card .mgn-top-10 {
+/* .consumer-dash .grid-card .mgn-top-10 {
   margin-top: -10px;
-}
+} */

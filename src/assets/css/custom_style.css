@@ -27077,4 +27077,6 @@ color: #fff !important;
 .font-small {
   font-size: small;
 }
-
+.font-size-9 {
+  font-size: 0.9rem;
+}
