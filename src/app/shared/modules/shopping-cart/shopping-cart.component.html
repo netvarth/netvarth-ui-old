@@ -30,19 +30,19 @@
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.displayName}}</div>
-                        <div  *ngIf="catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                        <div  *ngIf="catalog_loading && catalog_details && catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div>
                            <span class="add_nte" (click)="addNotes(item,i)">
                                {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                           </span> &nbsp; 
+                           </span> &nbsp;
                            <span class="add_nte" (click)="deleteNotes(item,i)">
                               <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
                            </span>
-                        </div>                    
+                        </div>
 
                       </div>
-                      
+
                     </div>
 
                     <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
@@ -142,13 +142,14 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_details.showPrice">
+                  <div class="order-label mt-2" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                    *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
+                  <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
+                    Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
+                </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_loading && catalog_details && catalog_details.showPrice">
                     <div class="oder-sumary-txt">Order Summary</div>
-                    <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
-                      *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
-                    <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                      Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
-                  </div>
+
                     <div class="order-label">
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
@@ -160,7 +161,7 @@
                     </div>
                   </ng-container>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_details.showPrice">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_loading &&catalog_details && catalog_details.showPrice">
                     <div class="flex1">SUB TOTAL</div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
@@ -209,12 +210,12 @@
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
                           <!-- <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime"> -->
                             <!-- <p>{{futureAvailableTime}}</p> -->
-                       
+
                           <!-- <div *ngIf="!isfutureAvailableTime">
                             <p>No timings are available</p>
                           </div> -->
                             <mat-chip-list class="" *ngIf="isfutureAvailableTime" >
-                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index" 
+                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
                                 (click)="handleQueueSelection(queue, i)">
                                 <!-- [selected]="queue(i) === nextAvailableTime"> -->
                                     {{queue['sTime'] + ' - ' +
@@ -226,7 +227,7 @@
                             <div *ngIf="!isfutureAvailableTime">
                               <p>No timings are available</p>
                             </div>
-                
+
 
                         </div>
 

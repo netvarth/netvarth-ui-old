@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
+  catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
   isfutureAvailableTime: boolean;
@@ -105,6 +106,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
+    this.orderList = this.lStorageService.getitemfromLocalStorage('order');
+    this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+    this.orderCount = this.orders.length;
     this.gets3curl();
     this.fetchCatalog();
 
@@ -118,6 +123,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
+      this.catalog_loading = true;
       this.catalog_details = data;
       console.log(this.catalog_details);
       if (this.catalog_details) {
@@ -148,10 +154,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
-      this.orderList = JSON.parse( localStorage.getitem('order'));
-      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      this.orderCount = this.orders.length;
-      this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
       this.getStoreContact();
       this.showfuturediv = false;
       this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -201,10 +203,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       this.sel_checkindate = this.chosenDateDetails.order_date;
       this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-       this.selected_coupons = this.chosenDateDetails.selected_coupons;
-
-       this.couponvalid = true;
-       this.action = '';
+      if (this.chosenDateDetails.selected_coupons.length > 0) {
+        this.selected_coupons = this.chosenDateDetails.selected_coupons;
+        this.couponsList = this.chosenDateDetails.couponsList;
+        this.couponvalid = true;
+        this.action = '';
+      }
     } else {
       this.storeChecked = true;
     }
@@ -444,7 +448,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         order_date: this.sel_checkindate,
         advance_amount: this.catalog_details.advance_amount,
         account_id: this.account_id,
-        selected_coupons:this.selected_coupons
+        selected_coupons: this.selected_coupons,
+        couponsList: this.couponsList
+
 
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
@@ -463,19 +469,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
-    if (this.action === 'changeTime') {
+    if (this.action === 'changeTime' || this.action === 'coupons') {
       this.action = '';
     } else {
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.location.back();
     }
   }
-  goBackCart(selectedTimeslot,queue) {
+  goBackCart(selectedTimeslot, queue) {
     console.log(queue);
     console.log(selectedTimeslot);
-    const selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     console.log(selectqueue);
-     this.nextAvailableTime = selectqueue;
+    this.nextAvailableTime = selectqueue;
     // this.nextAvailableTime = selectedTimeslot;
     this.action = '';
   }
@@ -685,34 +691,34 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       // console.log(this.orderList);
     });
   }
-  deleteNotes(item, index){
+  deleteNotes(item, index) {
     console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-         'message': 'Do you want to Delete this Note?',
-     }
-     });
-  this.canceldialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      console.log(this.orderList);
-      this.orderList.map((Item, i) => {
-        if (Item.item.itemId === item.item.itemId) {
-          console.log(Item.consumerNote);
-          Item['consumerNote'] = Item.consumerNote.splice;
-        }
-      });
-      // this.orders.map((Item, i) => {
-      //   if (Item.item.itemId === item.item.itemId) {
-      //     Item['consumerNote'] = Item.consumerNote.splice;
-      //   }
-      // });
-      console.log(this.orderList);
+        'message': 'Do you want to Delete this Note?',
+      }
+    });
+    this.canceldialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(this.orderList);
+        this.orderList.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            console.log(Item.consumerNote);
+            Item['consumerNote'] = Item.consumerNote.splice;
+          }
+        });
+        // this.orders.map((Item, i) => {
+        //   if (Item.item.itemId === item.item.itemId) {
+        //     Item['consumerNote'] = Item.consumerNote.splice;
+        //   }
+        // });
+        console.log(this.orderList);
 
-    }
-  });
+      }
+    });
   }
   sidebar() {
     this.showSide = !this.showSide;
@@ -736,7 +742,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log(index);
     this.queue = queue;
     console.log(this.queue);
-}
+  }
 }
 
 
