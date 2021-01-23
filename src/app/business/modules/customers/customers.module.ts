@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { CustomerActionsComponent } from './customer-actions/customer-actions.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
+import { CustomerGroupComponent } from './customer-group/customer-group.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
         CustomersListComponent,
         CustomerDetailComponent,
         CustomerSearchComponent,
-        CustomerActionsComponent
+        CustomerActionsComponent,
+        CustomerGroupComponent
     ],
     entryComponents: [
         CustomerActionsComponent

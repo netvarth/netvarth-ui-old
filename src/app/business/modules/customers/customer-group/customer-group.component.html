@@ -1,0 +1,20 @@
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;">
+    Customer group
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+</h1>
+<div>
+    <div>
+        <input type="test" [(ngModel)]="name" placeholder="Name" autocomplete="off" />
+    </div>
+    <div>
+        <input type="test" [(ngModel)]="displayName" placeholder="Display Name" autocomplete="off" />
+    </div>
+    <div>
+        <input type="test" [(ngModel)]="description" placeholder="Description" autocomplete="off" />
+    </div>
+    <div>
+        <button type="button" (click)="customerGroup()">{{(data.type === 'add') ? 'Create' : 'Update'}}</button>
+    </div>
+</div>
+<!-- group-eq -->

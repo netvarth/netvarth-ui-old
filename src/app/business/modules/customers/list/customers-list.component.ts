@@ -14,6 +14,7 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { CustomerGroupComponent } from '../customer-group/customer-group.component';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -100,6 +101,10 @@ export class CustomersListComponent implements OnInit {
   labelFilterData = '';
   allLabels: any = [];
   visibility = false;
+  groups: any = [];
+  selectedGroup;
+  searchValue;
+  showCustomers = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -124,11 +129,13 @@ export class CustomersListComponent implements OnInit {
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
   ngOnInit() {
+    this.selectedGroup = 'all';
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.subdomain = user.subSector;
     this.getCustomersList(true);
     this.getLabel();
+    this.getCustomerGroup();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
@@ -269,6 +276,9 @@ export class CustomersListComponent implements OnInit {
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;
     }
+    if (this.selectedGroup !== 'all' && !this.showCustomers) {
+      api_filter['group-eq'] = this.selectedGroup.id;
+    }
     if (this.filter.mobile !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
       const mval = pattern.test(this.filter.mobile);
@@ -342,7 +352,10 @@ export class CustomersListComponent implements OnInit {
       this.allCustomerSelected = false;
     }
   }
-  CustomersInboxMessage() {
+  CustomersInboxMessage(customer) {
+    if (customer) {
+      this.selectedcustomersformsg.push(customer);
+    }
     let customerlist = [];
     customerlist = this.selectedcustomersformsg;
     this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'customer-list')
@@ -431,7 +444,10 @@ export class CustomersListComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  showLabelPopup() {
+  showLabelPopup(customer) {
+    if (customer) {
+      this.selectedcustomersformsg.push(customer);
+    }
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -497,6 +513,54 @@ export class CustomersListComponent implements OnInit {
   }
   seeVisible() {
     this.visibility = true;
+  }
+  customerGroupSelection(group) {
+    this.selectedGroup = group;
+    console.log(this.selectedGroup);
+    this.getCustomersList();
+  }
+  getCustomerGroup() {
+    this.provider_services.getCustomerGroup().subscribe((data: any) => {
+      this.groups = data;
+    });
+  }
+  createCustomerGroup(type) {
+    const dialogRef = this.dialog.open(CustomerGroupComponent, {
+      width: '80%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        type: type,
+        details: this.selectedGroup
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  search(event) {
+    this.filter.first_name = this.searchValue;
+    console.log(event.keyCode);
+    if (event.keyCode === 13) {
+      this.getCustomersList();
+    }
+  }
+  addCustomerToGroup() {
+    console.log(this.selectedcustomersformsg);
+    const ids = [];
+    for (let customer of this.selectedcustomersformsg) {
+      ids.push(customer.id);
+    }
+    this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
+      (data: any) => {
+
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  showCustomerstoAdd() {
+    this.showCustomers = !this.showCustomers;
   }
 }
 

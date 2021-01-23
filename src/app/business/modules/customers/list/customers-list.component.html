@@ -209,15 +209,9 @@
     <div class="col-lg-4">
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
-        <div class="card grp_label mb-2">All patients</div>
-        <div class="card grp_label mb-2">Regular patients
-          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
-        </div>
-        <div class="card grp_label mb-2">VIP patients
-          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
-        </div>
-        <div class="card grp_label mb-2">Other patients
-          <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div>
+        <div class="card grp_label mb-2" (click)="customerGroupSelection('all')">All patients</div>
+        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)">{{group.groupName}}
+          <!-- <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div> -->
         </div>
       </div>
       <!--end::Mixed Widget 14-->
@@ -228,17 +222,23 @@
         <!--begin::Header-->
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="card-label font-1 font-weight-bolder text-dark">All Patients</span>
-
+            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all'">All Patients</span>
+            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
           </h3>
         </div>
         <div class="p-2 row">
           <div class="col-sm-12 col-lg-7 col-xs-12 col-md-12 mb-4">
-            <button mat-flat-button class="font-size-xs add_btn">Add Patient</button> &nbsp;&nbsp;&nbsp;
-          <button mat-flat-button class="font-size-xs add_btn">Create Group</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()" *ngIf="!showCustomers">Create Patient</button>
+            &nbsp;&nbsp;&nbsp;
+            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoAdd()" *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('add')" *ngIf="selectedGroup == 'all'">Create Group</button>
+            &nbsp;&nbsp;&nbsp;
+            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('edit')" *ngIf="selectedGroup !== 'all' && !showCustomers">Edit Group</button> 
+             &nbsp;&nbsp;&nbsp;
+            <button mat-flat-button class="font-size-xs add_btn" (click)="addCustomerToGroup()" *ngIf="selectedGroup !== 'all' && showCustomers">Add</button>
           </div>
           <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
-              <input type="search" class="form-control search" placeholder="search" aria-controls="kt_datatable1">
+            <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1" [(ngModel)]="searchValue" (keypress)="search($event)">
           </div>
         </div>
         <!--end::Header-->
@@ -249,132 +249,84 @@
             <!--begin::Table-->
             <div class="table-responsive1">
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-           
-
                 <tbody>
-                  <tr class="row_data border-bottom">
+                  <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index">
                     <td class="pl-0 py-4">
                       <div class="d-flex align-items-center">
                         <div class="pr-3">
                           <span class="symbol-label">
-                            <input type="checkbox" checked="checked" name="Checkboxes4">
+                            <input type="checkbox" checked="checked" name="Checkboxes4" [checked]="customerSelected[i]"
+                              (change)="selectcustomers(i)">
                           </span>
                         </div>
                         <div>
-                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
-                            Simmons</a>
+                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">{{customer.firstName}}
+                            {{customer.lastName}}</a>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <span class="text-dark-75  d-block ">
-                        20
+                      <span class="text-dark-75 d-block ">
+                        {{customer.jaldeeId}}
                       </span>
                     </td>
                     <td>
-                      <span class="text-dark-75 d-block">
-                        97884457784
+                      <span class="text-dark-75 d-block" *ngIf="customer.phoneNo">
+                        {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
                     <td>
-                      <span class="text-dark-75 d-block">
-                        Fri,Jan 1, 2021
+                      <span class="text-dark-75 d-block" *ngIf="customer.dob">
+                        {{customer.dob | date : dateFormat}}
                       </span>
                     </td>
                     <td>
-                      <button mat-flat-button>Message</button>
+                      <button mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
                     </td>
                     <td>
-                      <button mat-flat-button class="prof_btn">Profile</button>
+                      <button mat-flat-button class="prof_btn" (click)="viewCustomer(customer)">Profile</button>
                     </td>
                     <td class="pr-0 text-right">
-                      <button type="button" mat-icon-button>
+                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
+                      <mat-menu #menu="matMenu">
+                        <button type="button" mat-menu-item (click)="editCustomer(customer)">
+                          <i class="icon-edit"></i>
+                          Edit
+                        </button>
+                        <button type="button" (click)="showLabelPopup(customer)" mat-menu-item>
+                          <i class="label-icon"></i>
+                          <span>Label</span>
+                        </button>
+                        <button
+                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                          mat-menu-item (click)="listMedicalrecords(customer)">
+                          <i class="medicalrecordlisticon-customer"></i>
+                          List of MedicalRecords
+                        </button>
+                        <button
+                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                          mat-menu-item (click)="lastvisits(customer)">
+                          <i class="viewdetails-icon-customer"></i>
+                          Last visits
+                        </button>
+                        <button
+                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                          mat-menu-item (click)="medicalRecord(customer)">
+                          <i class="medicalrecord-icon-customer"></i>
+                          MedicalRecord
+                        </button>
+                        <button
+                          *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                          mat-menu-item (click)="prescription(customer)">
+                          <i class="mr-rx-icon-customer"></i>
+                          Prescription
+                        </button>
+                      </mat-menu>
                     </td>
                   </tr>
-                  <tr class="row_data border-bottom">
-                    <td class="pl-0 py-4">
-                      <div class="d-flex align-items-center">
-                        <div class="pr-3">
-                          <span class="symbol-label">
-                            <input type="checkbox" checked="checked" name="Checkboxes4">
-                          </span>
-                        </div>
-                        <div>
-                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
-                            Simmons</a>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-dark-75  d-block ">
-                        20
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block">
-                        97884457784
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block">
-                        Fri,Jan 1, 2021
-                      </span>
-                    </td>
-                    <td>
-                      <button mat-flat-button>Message</button>
-                    </td>
-                    <td>
-                      <button mat-flat-button class="prof_btn">Profile</button>
-                    </td>
-                    <td class="pr-0 text-right">
-                      <button type="button" mat-icon-button>
-                        <mat-icon>more_horiz</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr class="row_data border-bottom">
-                    <td class="pl-0 py-4">
-                      <div class="d-flex align-items-center">
-                        <div class="pr-3">
-                          <span class="symbol-label">
-                            <input type="checkbox" checked="checked" name="Checkboxes4">
-                          </span>
-                        </div>
-                        <div>
-                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">Brad
-                            Simmons</a>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-dark-75  d-block ">
-                        20
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block">
-                        97884457784
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block">
-                        Fri,Jan 1, 2021
-                      </span>
-                    </td>
-                    <td>
-                      <button mat-flat-button>Message</button>
-                    </td>
-                    <td>
-                      <button mat-flat-button class="prof_btn">Profile</button>
-                    </td>
-                    <td class="pr-0 text-right">
-                      <button type="button" mat-icon-button>
-                        <mat-icon>more_horiz</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
+
 
                 </tbody>
               </table>
