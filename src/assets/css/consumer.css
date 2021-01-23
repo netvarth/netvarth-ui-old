@@ -6649,6 +6649,11 @@ margin-top: 7px;
   border-radius: 20%;
   background: #fcebbe54;
 }
+.resch-box .consumer-reschedule-icon {
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+}
 .consumer-dash .chckn-icon {
   content: url(../images/myjaldee/Checkin-01.svg);
   position: relative;
