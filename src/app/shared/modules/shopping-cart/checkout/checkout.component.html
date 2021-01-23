@@ -360,6 +360,7 @@
                   <div class="snd_msg_outer">
                       <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                     </div>
+                    <span class="form-level-settings" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge"> Delivery charge &#x20B9;{{getTaxCharges()}} will added to the bill.</span>
                       <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                       [plainGalleryConfig]="customPlainGalleryRowConfig"
                       [buttonsConfig]="customButtonsFontAwesomeConfig"

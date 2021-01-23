@@ -1232,7 +1232,7 @@ ngx-intl-tel-input input {
   height: 40px !important;
 }
 .prenotes {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc80;
   padding: 10px;
   max-height: 100px;
   overflow: auto;

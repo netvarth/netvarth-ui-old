@@ -39,6 +39,11 @@
                                                             {{this.businessjson.businessName}} -->
                                                         </h6>
                                                     </div>
+                                                    <div class="prenotes mgn-bt-10" *ngIf="sel_ser_det.preInfoEnabled">
+                                                        <div class="preinfo-title">{{sel_ser_det.preInfoTitle}}</div>
+                                                        <div [innerHTML]="sel_ser_det.preInfoText">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -91,7 +96,7 @@
                                                             <mat-chip (click)="handleSideScreen('note')"><a
                                                                     class="lnk action pointer-cursor"><i
                                                                         class="fa fa-file-text-o mgn-rt-5"
-                                                                        aria-hidden="true"></i>Add notes
+                                                                        aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
                                                                 </a>
                                                             </mat-chip>
                                                         </mat-chip-list>

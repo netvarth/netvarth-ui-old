@@ -186,7 +186,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -225,9 +225,9 @@
                                             <!-- Actions and status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                                 </div>
                                                 <div class="mgn-lft-10">
@@ -371,7 +371,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -410,7 +410,7 @@
                                             <!-- Actions and Status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -421,7 +421,7 @@
                                                             | capitalizeFirst}}</span>
                                                     </span>
 
-                                                    <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                    <span  [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                             Checked-in
@@ -559,7 +559,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
 
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
@@ -597,9 +597,9 @@
                                             <!-- Actions and status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                                 </div>
                                                 <div class="mgn-lft-10">
@@ -743,7 +743,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
 
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
@@ -784,7 +784,7 @@
                                             <!-- Actions and Status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -795,7 +795,7 @@
                                                             | capitalizeFirst}}</span>
                                                     </span>
 
-                                                    <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                             Checked-in
@@ -932,7 +932,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -969,9 +969,9 @@
                                         <!-- Actions and status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                             </div>
                                             <div class="mgn-lft-10">
@@ -1122,7 +1122,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1163,7 +1163,7 @@
                                         <!-- Actions and Status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -1174,7 +1174,7 @@
                                                         | capitalizeFirst}}</span>
                                                 </span>
 
-                                                <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                         Checked-in
@@ -1303,7 +1303,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1340,9 +1340,9 @@
                                         <!-- Actions and status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                             </div>
                                             <div class="mgn-lft-10">
@@ -1493,7 +1493,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1534,7 +1534,7 @@
                                         <!-- Actions and Status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -1545,7 +1545,7 @@
                                                         | capitalizeFirst}}</span>
                                                 </span>
 
-                                                <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                <span  [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                         Checked-in
