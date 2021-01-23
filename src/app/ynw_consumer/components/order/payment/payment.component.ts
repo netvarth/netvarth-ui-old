@@ -166,7 +166,7 @@ export class PaymentComponent implements OnInit {
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
         console.log(this.checkIn_type);
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.livetrack, this.accountId, this.uuid, this.prepayment);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.livetrack, this.accountId, this.prepayment);
     }
 
 }

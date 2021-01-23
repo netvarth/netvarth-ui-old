@@ -47,7 +47,7 @@ export class RazorpayService {
       rzp.open();
     });
   }
-  payWithRazor(razorModel, usertype, checkin_type?, livetrack?, account_id?, uuid?, prepayment?, uuids?) {
+  payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?) {
     let razorInterval;
     razorModel.retry = false;
     //   theme: {
@@ -88,7 +88,7 @@ export class RazorpayService {
           this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
         } else if (checkin_type === 'donations') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer', 'donations']));
+          this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], { queryParams: { 'uuid': uuid} }));
         } else if (checkin_type === 'payment_link') {
           this.ngZone.run(() => this.router.navigate(['pay', livetrack], navigationExtras));
         } else if (checkin_type === 'checkin_prepayment') {
