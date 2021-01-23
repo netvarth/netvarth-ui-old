@@ -20,7 +20,7 @@
           </div> -->
           <div *ngIf="coupon.discountType == 'PERCENTAGE'" >Discount Value: {{coupon.discountValue}}%
           </div>
-          <div *ngIf="coupon.discountType == 'AMOUNT'" >Discount Value: ₹{{coupon.discountValue}}
+          <div *ngIf="coupon.discountType == 'AMOUNT'" >Discount Value:  {{formatPrice(coupon.discountValue)}}
             </div>
             <div class="outer4">
               <div class="coupon_validity">
