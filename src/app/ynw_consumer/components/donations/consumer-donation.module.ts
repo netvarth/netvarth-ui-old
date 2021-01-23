@@ -13,11 +13,13 @@ import { ConsumerDonationsComponent } from './donations.component';
 import { ConsumerDonationComponent } from './details/consumer-donation.component';
 import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { ConfirmPageComponent } from './details/confirm-page/confirm-page.component';
 
 @NgModule({
     declarations: [
         ConsumerDonationComponent,
-        ConsumerDonationsComponent
+        ConsumerDonationsComponent,
+        ConfirmPageComponent
     ],
     imports: [
         FormMessageDisplayModule,

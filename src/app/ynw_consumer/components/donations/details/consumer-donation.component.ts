@@ -215,6 +215,7 @@ export class ConsumerDonationComponent implements OnInit {
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
     phoneError: string;    
     dialCode;
+    uid;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -522,6 +523,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.api_loading = true;
         this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
+                this.uid = data['uid'];
                 const payInfo = {
                     'amount': post_Data.donationAmount,
                     'custId': this.customer_data.id,
@@ -575,7 +577,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid);
     }
     addEmail() {
         this.resetApiErrors();

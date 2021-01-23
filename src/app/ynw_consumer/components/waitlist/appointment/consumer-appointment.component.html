@@ -60,6 +60,8 @@
                                                     {{sel_ser_det.name}}
                                                 </h6>
                                                 <div class="mgn-bt-15" style="font-size: 1rem;" *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                      <p  class="module-nomargin line-clamp" *ngIf="sel_ser_det.description && !showmoreSpec"  (click)="showSpec()">{{sel_ser_det.description}}</p>
+                                                    <p *ngIf="showmoreSpec" (click)="showSpec()">{{sel_ser_det.description}}</p>
                                                     <span *ngIf="sel_ser_det.price && type != 'reschedule'">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
