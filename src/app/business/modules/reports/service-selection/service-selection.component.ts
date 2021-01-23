@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { ReportDataService } from '../reports-data.service';
   templateUrl: './service-selection.component.html',
   styleUrls: ['./service-selection.component.css']
 })
-export class ServiceSelectionComponent implements OnInit, AfterViewInit {
+export class ServiceSelectionComponent implements OnInit {
 
   accountType: any;
   selected_data_id: number;
@@ -122,10 +122,7 @@ export class ServiceSelectionComponent implements OnInit, AfterViewInit {
 
 
   }
-  ngAfterViewInit() {
-    this.paginator._intl.itemsPerPageLabel = 'Services per page';
 
-  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;

@@ -47,6 +47,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
+  catalog_loading = false;
   catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   clear_cart_dialogRef: any;
@@ -1996,7 +1997,9 @@ public wordProcessor: WordProcessor
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
-          this.activeCatalog = catalogs[0];
+          console.log(catalogs);
+          this.catalog_loading = true;
+           this.activeCatalog = catalogs[0];
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
@@ -2031,22 +2034,17 @@ public wordProcessor: WordProcessor
               }
             }
           }
-          // if(catalogs.length > 1) {
-          //   for (let cIndex = 0; cIndex < catalogs.length; cIndex++){
-          //     orderItems.push({ 'type': 'catalog', 'item': catalogs[cIndex] });
-          //     this.itemCount++;
-          //   }
-          // } else if (catalogs.length === 1) {
           this.shared_services.setOrderDetails(this.activeCatalog);
           for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
             const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
             const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
             const showpric = this.activeCatalog.showPrice;
+            if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
             orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
             this.itemCount++;
           }
-          // }
+          }
           this.orderItems = orderItems;
         }
       );
@@ -2267,7 +2265,14 @@ public wordProcessor: WordProcessor
       };
      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);

@@ -13,6 +13,7 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
+import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,13 @@ import { OrderItemsComponent } from './order-items/order-items.component';
     OrderDetailsComponent,
     OrderActionsComponent,
     OrderEditComponent,
-    OrderItemsComponent
+    OrderItemsComponent,
+    DisplaylabelpopupComponent
   ],
   entryComponents: [
     OrderActionsComponent,
-    OrderItemsComponent
+    OrderItemsComponent,
+    DisplaylabelpopupComponent
   ],
   imports: [
     CommonModule,

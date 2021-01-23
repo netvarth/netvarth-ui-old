@@ -132,12 +132,13 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.getitems().then(
       (data) => {
         console.log(this.cataId);
+        this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         if (this.action === 'edit' || this.action === 'add' && this.cataId !== 'add') {
           // this.heading = 'Edit catalog items';
           this.heading = 'Edit'; 
           this.getCatalog();
         } else {
-          this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+         // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
           if (this.addCatalogItems && this.addCatalogItems.length > 0) {
             this.selectedCount = this.addCatalogItems.length;
            for (const itm of this.catalogItem) {
@@ -173,6 +174,20 @@ export class AddItemsComponent implements OnInit, OnDestroy {
           this.itemsforadd = [];
           this.itemsforadd = this.catalogItem.filter(o1 => this.seletedCatalogItems.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
         console.log(this.itemsforadd);
+        if (this.addCatalogItems && this.addCatalogItems.length > 0 && this.itemsforadd.length > 0) {
+          this.selecteditemCount = this.addCatalogItems.length;
+          for (const itm of this.itemsforadd) {
+            for (const selitem of this.addCatalogItems) {
+               if (itm.itemId === selitem.item.itemId) {
+                itm.selected = true;
+                itm.id = selitem.id;
+                itm.minQuantity = selitem.minQuantity;
+                itm.maxQuantity = selitem.maxQuantity;
+               }
+          }
+        }
+
+         }
         }
         this.api_loading = false;
       });
@@ -418,7 +433,13 @@ selectedaddItems() {
     }
   }
   if (this.catalogSelectedItemsadd.length > 0) {
-  this.addItems(this.catalogSelectedItemsadd);
+    this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
+    const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'edit',
+                      isFrom: true }
+    };
+    this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+//  this.addItems(this.catalogSelectedItemsadd);
   }
     }
 

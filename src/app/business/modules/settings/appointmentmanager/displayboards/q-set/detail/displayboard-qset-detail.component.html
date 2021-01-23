@@ -273,6 +273,10 @@
                             (click)="labelClick(label)">
                             {{label.displayName}}
                         </mat-option> -->
+                        <mat-option [value]="'all'"
+                        (click)="providerLabelSelection()">
+                        -- Select Label --
+                    </mat-option>
                         <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                             (click)="providerLabelSelection(label)">
                             {{label.displayName}}

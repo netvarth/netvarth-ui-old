@@ -6505,6 +6505,9 @@
 .consumer-dash .c-checkins .table-outer1 {
   padding:unset !important;
 }
+/* .consumer-dash .booking-dash {
+  background: #efe9e94d !important;
+} */
 .consumer-dash .c-checkins .table-outer1  .booking-dash tbody tr:hover {
   -webkit-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
@@ -6517,7 +6520,7 @@
 .tdisplay-block {
   display: block!important;
 }
-.consumer-dash .card.c-checkins table h4 {
+.consumer-dash .card.c-checkins table h4, .consumer-dash .grid-card h4 {
   color: rgb(24 62 121 / 85%);
 }
 .consumer-dash .card.c-checkins .table .upcoming {
@@ -6625,6 +6628,32 @@ padding-right: 1px;
 width: 25px;
 margin-top: 7px;
 }
+.consumer-dash .grid-card .appt-icon {
+  content: url(../images/myjaldee/Appoinment-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 45px;
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+  padding: 4px;
+  border-radius: 20%;
+  background: #fcebbe54;
+}
+.consumer-dash .grid-card .consumer-reschedule-icon {
+  content: url(../images/Reschedule-01-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 30px;
+  padding: 4px;
+  border-radius: 20%;
+  background: #fcebbe54;
+}
+.resch-box .consumer-reschedule-icon {
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+}
 .consumer-dash .chckn-icon {
   content: url(../images/myjaldee/Checkin-01.svg);
   position: relative;
@@ -6632,12 +6661,36 @@ margin-top: 7px;
   width: 29px;
   margin-top: 5px;
 }
+.consumer-dash .grid-card .chckn-icon {
+  content: url(../images/myjaldee/Checkin-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 43px;
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+  padding: 4px;
+  border-radius: 20%;
+  background: #fcebbe54;
+}
 .consumer-dash .token-icon {
   content: url(../images/myjaldee/token-01.svg);
   position: relative;
   padding-right: 1px;
   width: 25px;
   margin-top: 7px;
+}
+.consumer-dash .grid-card .token-icon {
+  content: url(../images/myjaldee/token-01.svg);
+  position: relative;
+  padding-right: 1px;
+  width: 45px;
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+  padding: 4px;
+  border-radius: 20%;
+  background: #fcebbe54;
 }
 .consumer-dash .circle-tokens {
   /* background: rgb(252 235 190); */
@@ -6731,7 +6784,6 @@ margin-top: 7px;
 }
 .consumer-dash .userName {
   color: blue;
-  font-style: italic;
   font-size: 0.85rem !important;
 }
 .checkin-details .est-tok-time {
@@ -6813,16 +6865,25 @@ margin-top: 7px;
 .store_pick_ico {
   content: url(../images/order/Storepickup.svg);
   position: relative;
-  padding-right: 1px;
-  width: 25px;
-  margin-top: 7px;
+  width: 50px;
+  margin-top: 5px;
+  border: 2px solid #f1b616ba;
+  border-radius: 10%;
+  padding: 5px;
+  margin-left: 4px;
+  background: #fcebbea1;
 }
 .hom_deliver_ico {
   content: url(../images/order/Delivery.svg);
   position: relative;
-  padding-right: 1px;
-  width: 25px;
-  margin-top: 7px;
+  width: 50px;
+  margin-top: 5px;
+  border: 2px solid #f1b616ba;
+  border-radius: 10%;
+  padding: 5px;
+  margin-left: 4px;
+  background: #fcebbea1;
+
 }
 .consumer-dash .item-btn-div {
   margin-right: 10px;
@@ -6833,6 +6894,9 @@ margin-top: 7px;
 }
 .consumer-dash .mgn-lft-2{
   margin-left: 2px;
+}
+.consumer-dash .mgn-lft-10{
+  margin-left: 10px !important;
 }
 .bookin_ico {
   content: url(../images/myjaldee/calendar.svg);
@@ -6860,4 +6924,142 @@ margin-top: 7px;
 .consmr_hme_sec .c_card.card {
   box-shadow: none !important;
   height: 800px;
+} */
+
+
+
+/* card style */
+.consumer-dash .grid-card {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.consumer-dash .grid-card .mat-grid-tile{
+  cursor: pointer;
+  /* box-shadow: 5px 5px 5px 0px #cccccc60; */
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  border-radius: 5px;
+  /* border: 2px solid #3d5d8e7d !important; */
+  background: white;
+}
+.consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-footer {
+  border-top: 3px solid #80808052;
+  background: none !important;
+  height: 15%;
+}
+.consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-header {
+  background: #183e79 !important;
+  height: 10%;
+  font-size: 0.8rem;
+}
+.consumer-dash .grid-card .mat-grid-tile:hover {
+  /* background: #fcebbe ; */
+  box-shadow: 1px 1px 0px #cac8c880, 2px 2px 0px #cac8c880, 3px 3px 0px #cac8c880, 4px 4px 0px #cac8c880, 5px 5px 0px #cac8c880, 6px 6px 0px #cac8c880 !important;
+}
+.consumer-dash .day_hed {
+  font-size: .875rem;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-left: 20px;
+  color: rgb(24 62 121);
+}
+.consumer-dash .card_ico {
+  border-radius: 100%;
+  line-height: 2.5;
+  margin-top: 4px;
+  margin-left: 2px;
+}
+.consumer-dash .fit_in {
+  height: 100%;
+  overflow: auto;
+}
+.consumer-dash .grid-card .ordr_no {
+  color: black;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.consumer-dash .grid-card .sp_name {
+  color: #183e79;
+  font-weight: 600;
+}
+.consumer-dash .grid-card .setAtBottom {
+  bottom: 0;
+  position: absolute;
+}
+.consumer-dash .grid-card .ln-ht-o {
+  line-height: 1.5;
+}
+.consumer-dash .grid-card .ordr_status {
+  font-size: 0.9rem;
+  color: #183e79ab;
+  font-weight: 600;
+}
+.consumer-dash .grid-card .btns {
+  background: #183e79d6;
+  color: white;
+}
+.consumer-dash .grid-card .mat-flat-button {
+  line-height: 25px !important;
+  border-radius: 5px !important;
+}
+.consumer-dash .grid-card .more_opt {
+  position: absolute;
+  z-index: 9;
+  right: 0;
+}
+.consumer-dash .grid-card .book_stats {
+  font-size: small;
+  font-weight: 600;
+  color: #673ab7f2;
+  margin-top: auto !important;
+  margin-bottom: auto;
+}
+.consumer-dash .grid-card .pad-lt-40 {
+  padding-left: 40px;
+}
+.consumer-dash .grid-card .pad-lt-10 {
+  padding-left: 10px;
+}
+.consumer-dash .grid-card .serv_nme_lbl {
+  --text-opacity: 1;
+  color: #718096;
+  color: rgba(113, 128, 150, var(--text-opacity));
+  font-size: 0.75rem;
+  flex: 0.5;
+}
+.consumer-dash .grid-card .serv_nme {
+  --text-opacity: 1;
+  color: black;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.consumer-dash .grid-card .prov_lbl {
+  font-size: 0.8rem;
+  color: grey;
+  flex: 1;
+}
+.consumer-dash .grid-card .prov_nme {
+  font-size: 0.8rem;
+  color: #000000cf;
+  font-weight: 600;
+}
+.consumer-dash .grid-card .wrap_txt {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.consumer-dash .grid-card .max-w-150 {
+  max-width: 180px;
+}
+.consumer-dash .show_more {
+  color: #3d5d8e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.consumer-dash .grid-card .center {
+  width: 100%;
+  text-align: center;
+}
+/* .consumer-dash .grid-card .mgn-top-10 {
+  margin-top: -10px;
 } */

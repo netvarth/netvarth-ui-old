@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -15,7 +14,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
   templateUrl: './schedule-selection.component.html',
   styleUrls: ['./schedule-selection.component.css']
 })
-export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
+export class ScheduleSelectionComponent implements OnInit {
 
   accountType: any;
   selected_data: any = [];
@@ -32,7 +31,6 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
   select_All = Messages.SELECT_ALL;
   public schedule_dataSource = new MatTableDataSource<any>([]);
   selection = new SelectionModel(true, []);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns = ['select', 'name', 'schedule', 'status', 'userName'];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
@@ -112,15 +110,12 @@ export class ScheduleSelectionComponent implements OnInit, AfterViewInit {
     return schedule_list;
 
   }
-  ngAfterViewInit() {
 
-    this.paginator._intl.itemsPerPageLabel = 'schedules per page';
-
-  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.schedule_dataSource.data.length;
+    console.log(numSelected, numRows);
     return numSelected === numRows;
   }
 

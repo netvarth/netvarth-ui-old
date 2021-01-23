@@ -651,7 +651,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   }
 
   setPopularList(jsonlist) {
-    const plen = 4;
+    const plen = 2;
     let jIndex = 0;
     this.jsonArrayList[0] = [];
    for (let i = 0; i < jsonlist.length; i++) {

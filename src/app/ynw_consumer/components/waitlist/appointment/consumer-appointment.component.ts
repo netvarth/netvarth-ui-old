@@ -249,6 +249,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     changedcallingModes;
     newselected_phone;
     bookingForm: FormGroup;
+    showmoreSpec = false;
     @ViewChild('imagefile') fileInput: ElementRef;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -2187,4 +2188,11 @@ export class ConsumerAppointmentComponent implements OnInit {
     changeBookingFields() {
         this.editBookingFields = true;
     }
+    showSpec() {
+        if (this.showmoreSpec) {
+          this.showmoreSpec = false;
+        } else {
+          this.showmoreSpec = true;
+        }
+      }
 }

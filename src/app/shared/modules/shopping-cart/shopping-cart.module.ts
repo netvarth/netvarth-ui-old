@@ -19,9 +19,9 @@ import { FormMessageDisplayModule } from '../form-message-display/form-message-d
 import { GalleryModule } from '@ks89/angular-modal-gallery';
 @NgModule({
     imports: [
+      CommonModule,
       ShoppingCartRoutingModule,
       RouterModule,
-      CommonModule,
       HeaderModule,
       MatRadioModule,
       MatDatepickerModule,

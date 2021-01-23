@@ -380,6 +380,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     this.statusAction = 'started';
     //   }
     // });
+    if (this.groupService.getitemFromGroupStorage('action')) {
+      this.statusAction = this.groupService.getitemFromGroupStorage('action');
+    }
   }
   payStatusList = [
     { pk: 'NotPaid', value: 'Not Paid' },
@@ -2108,8 +2111,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
-      } else {
-        return label;
       }
     }
   }
@@ -2596,10 +2597,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               }
               checkin_html += '</thead>';
               for (let i = 0; i < this.historyCheckins.length; i++) {
+                const fname = (this.historyCheckins[i].waitlistingFor[0].firstName) ? this.historyCheckins[i].waitlistingFor[0].firstName : '';
+                const lname = (this.historyCheckins[i].waitlistingFor[0].lastName) ? this.historyCheckins[i].waitlistingFor[0].lastName : '';
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
-                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].waitlistingFor[0].firstName + ' ' + this.historyCheckins[i].waitlistingFor[0].lastName + '</td>';
+                checkin_html += '<td style="padding:10px">' + fname + ' ' + lname + '</td>';
                 checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
                 if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
                   const labels = [];
@@ -3107,6 +3110,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   statusClick(status) {
     this.allSelection = false;
     this.statusAction = status;
+    this.groupService.setitemToGroupStorage('action', this.statusAction);
     this.chkSelectAppointments = false;
     this.chkStartedSelectAppointments = false;
     this.resetCheckList();

@@ -1232,7 +1232,7 @@ ngx-intl-tel-input input {
   height: 40px !important;
 }
 .prenotes {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc80;
   padding: 10px;
   max-height: 100px;
   overflow: auto;
@@ -1241,4 +1241,13 @@ ngx-intl-tel-input input {
   margin-bottom: 10px;
   font-weight: 600;
   font-size: 1rem;
+}
+.line-clamp {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+.module-nomargin {
+  /* margin: 0 0 1em 0; */
+  overflow: hidden !important;
 }

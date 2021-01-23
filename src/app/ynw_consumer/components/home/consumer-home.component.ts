@@ -1,6 +1,6 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -84,6 +84,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   fav_providers_id_list = [];
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  monthFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
@@ -199,6 +200,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   futureOrderslst: any = [];
   orders;
   showOrder = false;
+  screenWidth: number;
+  no_of_grids: number;
+  bookingStatusClasses = projectConstantsLocal.BOOKING_STATUS_CLASS;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -208,8 +212,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService:SnackbarService,
+    private snackbarService: SnackbarService,
     public _sanitizer: DomSanitizer) {
+    this.onResize();
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.source && (qparams.source === 'checkin_prepayment' || qparams.source === 'appt_prepayment')) {
         this.api_loading = true;
@@ -227,7 +232,28 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   public carouselDonations;
   public carouselAppointments;
 
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+      divider = divident / 3;
+    } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
+      divider = divident / 3;
+    } else if (this.screenWidth > 420 && this.screenWidth < 700) {
+      divider = divident / 2;
+    } else if (this.screenWidth < 420) {
+      divider = divident / 1;
+    }
+    this.no_of_grids = Math.round(divident / divider);
+    console.log(this.screenWidth);
+    console.log(this.no_of_grids);
+  }
+
   ngOnInit() {
+    console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
@@ -1045,7 +1071,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (type === 'appt') {
       pass_ob['appt'] = type;
       pass_ob['uuid'] = waitlist.uid;
-    }else if(type === 'orders') {
+    } else if (type === 'orders') {
       pass_ob['orders'] = type;
       pass_ob['uuid'] = waitlist.uid;
     } else {
@@ -1949,5 +1975,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showBookings() {
     this.showOrder = false;
   }
-
+  getBookingStatusClass(status) {
+    const retdet = this.bookingStatusClasses.filter(
+      soc => soc.value === this.wordProcessor.firstToUpper(status));
+    if (retdet[0]) {
+      return retdet[0].class;
+    } else {
+      return '';
+    }
+  }
 }

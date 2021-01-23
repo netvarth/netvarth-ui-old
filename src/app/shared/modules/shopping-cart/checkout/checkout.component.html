@@ -5,7 +5,7 @@
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
       <div class="panel panel-default">
         <div class="panel-heading top-row">
-  
+
           <!-- <a class="pull-left back-btn mgn-up-5"><i class="fa fa-arrow-left"></i></a> -->
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
             <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
@@ -23,10 +23,10 @@
                   <span class=" mgn-lt-10 amount">Go to cart</span>
                 </h5>
               </div>
-  
+
               <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small" *ngIf="action==''">
                 <div class="col-md-12 no-padding-small mgn-up-30">
-  
+
                   <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
                     <mat-step label="Step1" [completed]="isLoggedIn()" >
                       <!-- <ng-template matStepperIcon="edit">
@@ -45,7 +45,7 @@
                       <div>
                         <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                       </div>
-  
+
                     </mat-step>
                     <mat-step label="Step 2">
                       <ng-template matStepLabel>Delivery options</ng-template>
@@ -83,22 +83,22 @@
                               <span *ngIf="isFuturedate">
                                   {{nextAvailableTime}}
                               </span>
-  
+
                           </h4>
                       </div>
                     </div>
                       <div>
                         <!-- <button mat-button matStepperPrevious>Back</button> -->
                         <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
-  
+
                       </div>
-  
-  
+
+
                     </mat-step>
                     <mat-step label="Step 3">
                       <ng-template matStepLabel *ngIf="(!home_delivery && store_pickup)||choose_type=='store'"> Contact Details</ng-template>
                       <ng-template matStepLabel *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">Fill out your address</ng-template>
-  
+
                       <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                       <mat-grid-list cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'" class="mgn-bt-20">
                         <mat-grid-tile *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
@@ -149,7 +149,7 @@
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
                           </div>
                         </div>
-  
+
                         <div class="ph-outline">
                           <input class="ph-ip" formControlName="email">
                           <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
@@ -159,12 +159,12 @@
                           <input matInput placeholder="Enter your email" value=""formControlName="email">
                         </mat-form-field> -->
                       </form>
-  
+
                     </ng-container>
                     </mat-step>
-  
+
                   </mat-vertical-stepper>
-  
+
                 </div>
               </div>
               <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey"  *ngIf="action==''">
@@ -199,7 +199,7 @@
                       </div>
                       <div class="prov-loc">
                           {{businessDetails.blocation}}
-  
+
                       </div>
                       <div class="prov-loc store-cntct" (click)="sidebar()">
                         <i class="fa fa-home store_ico"></i>Store Contact
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="list-content" style="text-align: left;"
                                   *ngFor="let item of orders; let i = index">
-  
+
                                   <div class="copy one">
                                     <div class="col-a col-b cd-b">
                                       <div class="mgn-up-10">
@@ -249,21 +249,21 @@
                                             <div *ngIf="catalog_details.showPrice" class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
                                           </div>
                                         </div>
-  
+
                                       </div>
                                     </div>
                                   </div>
-  
+
                                 </div>
                                 <div class="snd_msg_outer">
                                   <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderNote"></textarea>
                                   <!-- <div class="snd_msg_lbl">Any notes?Write here...</div> -->
                                 </div>
-  
+
                               </div>
-  
+
                             </div>
-                            
+
                             <div class="" *ngIf="catalog_details.showPrice" >
                               <div class="bill-details-txt">
                                 Bill Details
@@ -287,19 +287,19 @@
                                 </div>
                               </div>
                             </div>
-  
+
                             <!-- <div class="" *ngIf="this.orderType === 'SHOPPINGLIST'">
-                                
+
                               </div> -->
-  
+
                           </div>
                         </div>
                           <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
                   </div>
-  
-                  
+
+
                   <div *ngIf="image_list_popup && this.orderType === 'SHOPPINGLIST'">
                     <ul class="shoppinglist-gal">
                       <ng-container *ngFor="let file of image_list_popup;let i = index">
@@ -360,6 +360,7 @@
                   <div class="snd_msg_outer">
                       <textarea placeholder="Any notes? Write here..." class="txtArea" [(ngModel)]="orderlistNote"></textarea>
                     </div>
+                    <span class="form-level-settings" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge"> Delivery charge &#x20B9;{{getTaxCharges()}} will added to the bill.</span>
                       <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
                       [plainGalleryConfig]="customPlainGalleryRowConfig"
                       [buttonsConfig]="customButtonsFontAwesomeConfig"
@@ -368,6 +369,13 @@
                       <!-- <div (click)="filed.click()">
                           <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">uploadshoppinglist
                         </div> --><br>
+                        <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                          *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
+                        <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
+                          Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
+                      </div>
+
+
                       <div>
                           <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
@@ -433,19 +441,19 @@
                         (buttonBeforeHook)="onButtonBeforeHook()"
                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 </div>
-               
-  
-  
+
+
+
   </div> -->
-  
+
                 </div>
               </div>
-              <div class="panel-body no-padding"  *ngIf="action=='timeChange'">
+              <div class="panel-body no-padding">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                   <div class="card p0">
                     <div class="copy locd">
-  
-  
+
+
                       <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                         *ngIf="action=='timeChange'">
                         <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
@@ -455,7 +463,7 @@
                           <div class="pull-left brd-round brd-light mgn-up-20">
                             <div class="icon-minus pull-left" (click)="calculateDate(-1)">
                             </div>
-  
+
                             <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
                             <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
                           </div>
@@ -485,7 +493,7 @@
                                 </mat-select>
                               </mat-form-field> -->
                               <mat-chip-list class="">
-                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index" 
+                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
                                 (click)="handleQueueSelection(queue, i)">
                                 <!-- [selected]="queue(i) === nextAvailableTime"> -->
                                     {{queue['sTime'] + ' - ' +
@@ -503,16 +511,79 @@
                             type="button">Ok</button>
                         </div>
                       </div>
+
+
+                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
+                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Apply promocode</div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" *ngIf="showCouponWB">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
+                              <i class="icon-bell"></i>{{applied_inbilltime}}
+                            </div>
+                            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
+                              <div class="input-group">
+                                <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
+                                  placeholder="Enter coupon code" type="text" class="form-control"
+                                  [(ngModel)]="selected_coupon">
+                                <span class="input-group-btn">
+                                  <button class="btn bt3 btn-default coupon-apply-btn"
+                                    (click)="applyCoupons(selected_coupon)" type="button">Add</button>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;"
+                              *ngIf="api_cp_error !== null">
+                              {{api_cp_error}}</div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
+
+                            </div>
+                          </div>
+                          <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
+                            *ngIf="couponsList && couponsList.length>0">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                              *ngFor="let coupon of couponsList let i=index">
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
+                                <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
+                                  {{coupon.couponCode}} </div>
+                                <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
+                                  <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
+                                      class="pointer-cursor lnk read-more-checkin">Read
+                                      T & C </a></span>
+                                  <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
+                                        (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
+                                        [matTooltip]="'Remove Coupon'"></i></a></span>
+                                </div>
+                              </div>
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
+                                *ngIf="coupon.showme">
+                                {{coupon.instructions}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer" *ngIf="coupon_status">
+                          <div class="form-group">
+                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
+                              applied
+                              successfully</span>
+                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
+                              valid</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-  
+              </div>
+
+
             </div>
           </div>
         </div>
         <div class="clearfix"></div>
       </div>
-    </div>
+
   </section>
-  
