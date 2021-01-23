@@ -228,14 +228,16 @@
         </div>
         <div class="p-2 row">
           <div class="col-sm-12 col-lg-7 col-xs-12 col-md-12 mb-4">
-            <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()" *ngIf="!showCustomers">Create Patient</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()" *ngIf="!showCustomers && !showRemove">Create Patient</button>
             &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoAdd()" *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoAdd()" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove">Add Patient</button> &nbsp;&nbsp;&nbsp;
+            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoRemove()" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove && customers.length > 0">Remove Patient</button>
             <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('add')" *ngIf="selectedGroup == 'all'">Create Group</button>
             &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('edit')" *ngIf="selectedGroup !== 'all' && !showCustomers">Edit Group</button> 
+            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('edit')" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove">Edit Group</button> 
              &nbsp;&nbsp;&nbsp;
             <button mat-flat-button class="font-size-xs add_btn" (click)="addCustomerToGroup()" *ngIf="selectedGroup !== 'all' && showCustomers">Add</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="removeCustomerFromGroup()" *ngIf="selectedGroup !== 'all' && showRemove">Remove</button>
           </div>
           <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1" [(ngModel)]="searchValue" (keypress)="search($event)">
@@ -256,7 +258,7 @@
                         <div class="pr-3">
                           <span class="symbol-label">
                             <input type="checkbox" checked="checked" name="Checkboxes4" [checked]="customerSelected[i]"
-                              (change)="selectcustomers(i)">
+                              (change)="selectcustomers(i)" [disabled]="showText(customer)">
                           </span>
                         </div>
                         <div>
@@ -264,6 +266,7 @@
                             {{customer.lastName}}</a>
                         </div>
                       </div>
+                      <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div>
                     </td>
                     <td>
                       <span class="text-dark-75 d-block ">

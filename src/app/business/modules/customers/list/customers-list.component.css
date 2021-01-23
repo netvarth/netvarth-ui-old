@@ -66,3 +66,10 @@
 .label-icon {
   width: 20px !important;
 }
+.customer-added {
+  color: gray;
+  margin-left: 25px;
+  font-size: 0.7rem;
+  font-weight: normal;
+  font-style: italic;
+}

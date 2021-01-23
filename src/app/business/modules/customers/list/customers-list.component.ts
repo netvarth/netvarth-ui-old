@@ -105,6 +105,8 @@ export class CustomersListComponent implements OnInit {
   selectedGroup;
   searchValue;
   showCustomers = false;
+  groupCustomers;
+  showRemove = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -164,6 +166,7 @@ export class CustomersListComponent implements OnInit {
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
     this.resetList();
+    this.customers = [];
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
       .then(
@@ -174,6 +177,7 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
+                console.log(this.customers);
                 this.apiloading = false;
                 this.loadComplete = true;
               },
@@ -275,9 +279,6 @@ export class CustomersListComponent implements OnInit {
     }
     if (this.filter.email !== '') {
       api_filter['email-eq'] = this.filter.email;
-    }
-    if (this.selectedGroup !== 'all' && !this.showCustomers) {
-      api_filter['group-eq'] = this.selectedGroup.id;
     }
     if (this.filter.mobile !== '') {
       const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
@@ -515,9 +516,15 @@ export class CustomersListComponent implements OnInit {
     this.visibility = true;
   }
   customerGroupSelection(group) {
+    this.showCustomers = false;
+    this.showRemove = false;
     this.selectedGroup = group;
     console.log(this.selectedGroup);
-    this.getCustomersList();
+    if (this.selectedGroup == 'all') {
+      this.getCustomersList();
+    } else {
+      this.getCustomerListByGroup();
+    }
   }
   getCustomerGroup() {
     this.provider_services.getCustomerGroup().subscribe((data: any) => {
@@ -535,7 +542,7 @@ export class CustomersListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+this.getCustomerGroup();
     });
   }
   search(event) {
@@ -553,14 +560,79 @@ export class CustomersListComponent implements OnInit {
     }
     this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
       (data: any) => {
-
+        this.showCustomers = false;
+        this.getCustomerListByGroup();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  removeCustomerFromGroup() {
+    console.log(this.selectedcustomersformsg);
+    const ids = [];
+    for (let customer of this.selectedcustomersformsg) {
+      ids.push(customer.id);
+    }
+    console.log(ids);
+    this.provider_services.removeCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
+      (data: any) => {
+        this.showCustomers = false;
+        this.getCustomerListByGroup();
       },
       error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
   showCustomerstoAdd() {
-    this.showCustomers = !this.showCustomers;
+    this.showCustomers = true;
+    console.log(this.groupCustomers);
+    this.getCustomersList();
+  }
+  getCustomerListByGroup() {
+    this.apiloading = true;
+    this.resetList();
+    this.customers = this.groupCustomers = [];
+    let api_filter = {
+      'groups-eq': this.selectedGroup.id
+    };
+    this.getCustomersListCount(api_filter)
+      .then(
+        result => {
+          this.customer_count = result;
+          api_filter = this.setPaginationFilter(api_filter);
+          this.provider_services.getProviderCustomers(api_filter)
+            .subscribe(
+              data => {
+                this.customers = this.groupCustomers = data;
+                console.log(this.customers);
+                this.apiloading = false;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apiloading = false;
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.apiloading = false;
+        }
+      );
+  }
+  showText(customer) {
+    if (this.selectedGroup !== 'all' && this.showCustomers) {
+      const fitlerArray = this.groupCustomers.filter(custom => custom.id === customer.id);
+      if (fitlerArray[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  showCustomerstoRemove() {
+    this.showRemove = true;
   }
 }
 

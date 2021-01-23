@@ -1877,8 +1877,8 @@ export class ProviderServices {
       const url = 'provider/customers/group/' + name;
       return this.servicemeta.httpPost(url, data);
    }
-   removeCustomerToGroup(id, name) {
-      const url = 'provider/' + id + '/customers/group/' + name;
-      return this.servicemeta.httpDelete(url);
+   removeCustomerToGroup(name, data) {
+      const url = 'provider/customers/group/' + name;
+      return this.servicemeta.httpDelete(url, data);
    }
 }
