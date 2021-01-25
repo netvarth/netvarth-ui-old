@@ -47,6 +47,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
   ]
 })
 export class ProviderDetailComponent implements OnInit, OnDestroy {
+  catalog_loading = false;
   catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   clear_cart_dialogRef: any;
@@ -1996,7 +1997,9 @@ public wordProcessor: WordProcessor
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
-          this.activeCatalog = catalogs[0];
+          console.log(catalogs);
+          this.catalog_loading = true;
+           this.activeCatalog = catalogs[0];
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
@@ -2262,7 +2265,14 @@ public wordProcessor: WordProcessor
       };
      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      this.router.navigate(['order', 'shoppingcart', 'checkout']);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);

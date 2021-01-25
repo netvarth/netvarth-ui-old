@@ -730,6 +730,10 @@ export class SharedServices {
     const url = 'consumer/donation';
     return this.servicemeta.httpGet(url, null, params);
   }
+  getConsumerDonationByUid(uid) {
+    const url = 'consumer/donation/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
   getConsumerDonationServices(accountid) {
     const url = 'consumer/donation/services?account=' + accountid;
     return this.servicemeta.httpGet(url);

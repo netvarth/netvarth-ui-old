@@ -1657,7 +1657,7 @@ sup {
 }
 
 .red {
-  color: red !important
+  color: red !important;
 }
 
 .white {
@@ -3382,7 +3382,7 @@ figcaption {
 }
 
 .greenc {
-  color: #00cc96;
+  color: #00cc96 !important;
 }
 
 .greenb {
@@ -26725,10 +26725,13 @@ color: #fff !important;
   padding-right: 10px !important;
 }
 .orange {
-  color: orange;
+  color: orange !important;
+}
+.yellow-green {
+  color: yellowgreen;
 }
 .yellow {
-  color: yellowgreen;
+  color: #f0f002 !important;
 }
 .black {
   color: black;
@@ -27151,5 +27154,8 @@ color: #fff !important;
 }
 
 .font-size-9 {
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
+}
+.dark-green {
+  color: green !important;
 }

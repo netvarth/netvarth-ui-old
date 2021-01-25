@@ -106,7 +106,7 @@
                                                 <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div *ngIf="booking.isRescheduled">
+                                                <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </div>
@@ -119,8 +119,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -186,7 +186,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -225,9 +225,9 @@
                                             <!-- Actions and status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                                 </div>
                                                 <div class="mgn-lft-10">
@@ -276,9 +276,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item  
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -371,7 +371,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -410,7 +410,7 @@
                                             <!-- Actions and Status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -421,7 +421,7 @@
                                                             | capitalizeFirst}}</span>
                                                     </span>
 
-                                                    <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                    <span  [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                             Checked-in
@@ -479,7 +479,7 @@
                                                 <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div *ngIf="booking.isRescheduled">
+                                                <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </div>
@@ -492,8 +492,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -559,7 +559,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
 
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
@@ -597,9 +597,9 @@
                                             <!-- Actions and status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                                 </div>
                                                 <div class="mgn-lft-10">
@@ -648,9 +648,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item  
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -743,7 +743,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
 
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
@@ -784,7 +784,7 @@
                                             <!-- Actions and Status -->
                                             <mat-grid-tile-footer>
                                                 <div class="book_stats mgn-up-20">
-                                                    <span
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -795,7 +795,7 @@
                                                             | capitalizeFirst}}</span>
                                                     </span>
 
-                                                    <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                    <span [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                         <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                         <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                             Checked-in
@@ -869,7 +869,7 @@
                                                 <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div *ngIf="booking.isRescheduled">
+                                                <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </div>
@@ -882,8 +882,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -932,7 +932,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -969,9 +969,9 @@
                                         <!-- Actions and status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                             </div>
                                             <div class="mgn-lft-10">
@@ -1026,9 +1026,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item  
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1122,7 +1122,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1163,7 +1163,7 @@
                                         <!-- Actions and Status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -1174,7 +1174,7 @@
                                                         | capitalizeFirst}}</span>
                                                 </span>
 
-                                                <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                         Checked-in
@@ -1240,7 +1240,7 @@
                                                 <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div *ngIf="booking.isRescheduled">
+                                                <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </div>
@@ -1253,8 +1253,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -1303,7 +1303,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1340,9 +1340,9 @@
                                         <!-- Actions and status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                             </div>
                                             <div class="mgn-lft-10">
@@ -1397,9 +1397,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item  
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                         (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1493,7 +1493,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt max-w-150 disply-flex">
+                                                        <div class="prov_nme wrap_txt disply-flex">
                                                             <span
                                                                 [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
                                                                 <span>
@@ -1534,7 +1534,7 @@
                                         <!-- Actions and Status -->
                                         <mat-grid-tile-footer>
                                             <div class="book_stats mgn-up-20">
-                                                <span
+                                                <span [class]="getBookingStatusClass(booking.waitlistStatus)"
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'arrived')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
@@ -1545,7 +1545,7 @@
                                                         | capitalizeFirst}}</span>
                                                 </span>
 
-                                                <span *ngIf="(booking.service.serviceType !== 'virtualService')">
+                                                <span  [class]="getBookingStatusClass(booking.waitlistStatus)" *ngIf="(booking.service.serviceType !== 'virtualService')">
                                                     <span *ngIf="booking.waitlistStatus=='done'">Completed</span>
                                                     <span *ngIf="booking.waitlistStatus=='checkedIn'">
                                                         Checked-in
@@ -1595,7 +1595,7 @@
 
                     <!-- Order Section -->
                     <!-- If there is no order -->
-                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == 0) && !loading) && showOrder"
+                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == undefined) && !loading) && showOrder"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No Active Orders</p>
                     </div>
@@ -1632,6 +1632,10 @@
 
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
+                                                </button>
+                                                <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                    <i class="fa chat-icon"></i>
+                                                    {{send_msg_cap}}
                                                 </button>
                                             </mat-menu>
                                         </div>
@@ -1709,6 +1713,10 @@
 
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
+                                                    </button>
+                                                    <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                        <i class="fa chat-icon"></i>
+                                                        {{send_msg_cap}}
                                                     </button>
                                                 </mat-menu>
                                             </div>
@@ -1788,6 +1796,10 @@
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
                                                 </button>
+                                                <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                    <i class="fa chat-icon"></i>
+                                                    {{send_msg_cap}}
+                                                </button>
                                             </mat-menu>
                                         </div>
                                         <div
@@ -1865,6 +1877,10 @@
 
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
+                                                    </button>
+                                                    <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
+                                                        <i class="fa chat-icon"></i>
+                                                        {{send_msg_cap}}
                                                     </button>
                                                 </mat-menu>
                                             </div>
