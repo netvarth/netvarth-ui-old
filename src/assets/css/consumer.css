@@ -6643,11 +6643,26 @@ margin-top: 7px;
 .consumer-dash .grid-card .consumer-reschedule-icon {
   content: url(../images/Reschedule-01-01.svg);
   position: relative;
-  padding-right: 1px;
+  /* padding-right: 1px;
   width: 30px;
   padding: 4px;
   border-radius: 20%;
+  background: #fcebbe54; */
+  padding-right: 1px;
+  margin-top: 7px;
+  margin-left: 10px;
+  border: 2px solid #f5c84d;
+  padding: 4px;
+  border-radius: 20%;
   background: #fcebbe54;
+}
+.consumer-dash .grid-card .resche_ico_wtlist {
+  content: url(../images/Reschedule-01-01.svg);
+  width: 25px;
+  position: absolute;
+  right: 0;
+  padding-right: 5px;
+  z-index: 5;
 }
 .resch-box .consumer-reschedule-icon {
   margin-top: 7px;
@@ -6944,7 +6959,7 @@ margin-top: 7px;
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-footer {
   border-top: 3px solid #80808052;
   background: none !important;
-  height: 15%;
+  height: 20%;
 }
 .consumer-dash .grid-card .mat-grid-tile .mat-grid-tile-header {
   background: #183e79 !important;
@@ -7063,3 +7078,57 @@ margin-top: 7px;
 /* .consumer-dash .grid-card .mgn-top-10 {
   margin-top: -10px;
 } */
+
+.consumer-dash .grid-card .anim {
+  animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #001F3F;
+  }
+  100% {
+    background-color: #FF4136;
+  }
+}
+/* The ribbon */
+
+.consumer-dash .grid-card .ribbon{
+  position: absolute;
+    padding: 0 0.5em;
+    font-size: 0.8rem;
+    z-index: 10;
+    margin: 0 0 0 -0.625em;
+    line-height: 2em;
+    min-width: 25%;
+    max-width: fit-content;
+    color: #183e79;
+    font-weight: 600;
+    border-radius: 0 0.156em 0.156em 0;
+    background: rgb(245 200 77);
+    box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+}
+
+.consumer-dash .grid-card .ribbon:after{
+  content: '';
+  position: absolute;
+  border-style: solid;
+}
+
+.consumer-dash .grid-card .ribbon:before{
+  width: 0.469em;
+  height: 100%;
+  padding: 0 0 0.438em;
+  top:0;
+  left: -0.469em;
+  background:inherit;
+  border-radius: 0.313em 0 0 0.313em;
+}
+
+.consumer-dash .grid-card .ribbon:after{
+  right: -1em;
+  border-width: 0.99em 1em 1em 3em;
+  border-color: #f5c84d transparent #f5c84d #f5c84d;
+  z-index: -1;
+}
+

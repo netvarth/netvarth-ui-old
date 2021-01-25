@@ -257,6 +257,8 @@
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                                </div>
 
                                             <!-- icon -->
                                             <div
@@ -430,8 +432,8 @@
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                             | capitalizeFirst}}</span>
                                                     </span>
-                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                        <i class="consumer-reschedule-icon"
+                                                    <span *ngIf="booking.isRescheduled">
+                                                        <i class="resche_ico_wtlist"
                                                             [matTooltip]="'Rescheduled'"></i>
                                                     </span>
                                                 </div>
@@ -629,6 +631,8 @@
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -804,8 +808,8 @@
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                             | capitalizeFirst}}</span>
                                                     </span>
-                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                        <i class="consumer-reschedule-icon"
+                                                    <span *ngIf="booking.isRescheduled">
+                                                        <i class="resche_ico_wtlist"
                                                             [matTooltip]="'Rescheduled'"></i>
                                                     </span>
                                                 </div>
@@ -861,7 +865,7 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-20 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-10 no-padding">
 
                                             <!-- Icon -->
                                             <div
@@ -1006,7 +1010,9 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 fit_in no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -1183,8 +1189,8 @@
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                         | capitalizeFirst}}</span>
                                                 </span>
-                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                    <i class="consumer-reschedule-icon"
+                                                <span *ngIf="booking.isRescheduled">
+                                                    <i class="resche_ico_wtlist"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </span>
                                             </div>
@@ -1232,7 +1238,7 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-20 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-10 no-padding">
 
                                             <!-- Icon -->
                                             <div
@@ -1377,7 +1383,9 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 fit_in no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -1554,8 +1562,8 @@
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                         | capitalizeFirst}}</span>
                                                 </span>
-                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                    <i class="consumer-reschedule-icon"
+                                                <span *ngIf="booking.isRescheduled">
+                                                    <i class="resche_ico_wtlist"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </span>
                                             </div>
