@@ -7132,5 +7132,6 @@ margin-top: 7px;
   border-width: 0.99em 1em 1em 3em;
   border-color: #f5c84d transparent #f5c84d #f5c84d;
   z-index: -1;
+  box-shadow: 0 8px 6px -6px #00000085;
 }
 
