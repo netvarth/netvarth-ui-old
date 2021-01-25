@@ -6973,9 +6973,11 @@ margin-top: 7px;
 .consumer-dash .day_hed {
   font-size: .875rem;
   font-weight: 600;
-  margin-top: 10px;
-  margin-left: 20px;
+  /* margin-top: 10px;
+  margin-left: 20px; */
   color: rgb(24 62 121);
+  background: #ffefc9;
+  padding: 15px;
 }
 .consumer-dash .card_ico {
   border-radius: 100%;
