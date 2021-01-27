@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-consumer-donations',
@@ -26,6 +27,7 @@ export class ConsumerDonationsComponent implements OnInit {
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
     donations: any = [];
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices) {
 

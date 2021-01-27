@@ -25,8 +25,7 @@
                                         <div class="listing" *ngFor="let donation of donations; let i = index">
                                             <div class="wrap">
                                                 <div class="td one">
-                                                    <span class="date">{{stringtoDate(donation.date,
-											'date')}}</span>
+                                                    <span class="date"> {{donation.date | date: newDateFormat}} </span>
                                                 </div>
                                                 <div class="td two">
                                                     <span>{{donation.service.name  |
