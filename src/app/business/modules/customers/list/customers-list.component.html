@@ -246,10 +246,10 @@
                 class="fa fa-trash" aria-hidden="true"></i>
             </button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
-              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon"><i
+              *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon"><i
                 class="fa fa-comments" aria-hidden="true"></i> </button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showLabelPopup()"
-              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
+              *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
@@ -313,6 +313,10 @@
                           <i class="icon-edit"></i>
                           Edit
                         </button>
+                        <button type="button" mat-menu-item (click)="removeCustomerFromGroup(customer)" *ngIf="selectedGroup !== 'all'">
+                          <i class="fa fa-trash"></i>
+                          Remove from group
+                        </button>
                         <button type="button" (click)="showLabelPopup(customer)" mat-menu-item>
                           <i class="label-icon"></i>
                           <span>Label</span>
@@ -333,7 +337,7 @@
                           *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                           mat-menu-item (click)="medicalRecord(customer)">
                           <i class="medicalrecord-icon-customer"></i>
-                          MedicalRecord
+                          Medical Record
                         </button>
                         <button
                           *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'"

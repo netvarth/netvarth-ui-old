@@ -571,8 +571,11 @@ export class CustomersListComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  removeCustomerFromGroup() {
+  removeCustomerFromGroup(customer?) {
     const ids = [];
+    if (customer) {
+      this.selectedcustomersformsg.push(customer);
+    }
     for (let customer of this.selectedcustomersformsg) {
       ids.push(customer.id);
     }
