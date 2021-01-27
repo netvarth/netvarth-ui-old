@@ -226,6 +226,7 @@ export class DonationsComponent implements OnInit {
   getDonationsList(from_oninit = true) {
     this.selectedDonations = [];
     this.donationsSelected = [];
+    this.selectAll = false;
     let filter = this.setFilterForApi();
     this.getDonationsCount(filter)
       .then(
