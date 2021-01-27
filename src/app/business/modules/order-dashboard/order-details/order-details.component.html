@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0">
+        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
                 <div class="pull-left bold font11">
                     Order Items
