@@ -265,13 +265,13 @@ export class OrderHistoryComponent implements OnInit {
       autoFocus: true,
       data: {
         'detail': waitlist,
-        'isFrom': 'appointment'
+        'isFrom': 'order'
       }
     });
 
     this.ratedialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-        // this.getHistroy();
+         this.getHistroy();
       }
     });
   }
