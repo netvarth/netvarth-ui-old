@@ -77,3 +77,25 @@
   font-size: 1.1rem;
   color: white !important;
 }
+.customersList .highlight{
+    box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
+    border: 2px dashed #1e4079 !important;
+  }
+.customersList .fa-filter {
+  position: absolute;
+  margin-top: 10px;
+  right: 0;
+  width: 40px;
+  color: #1e4079;
+  cursor: pointer;
+}  
+.customersList .center {
+  margin-left: auto;
+  margin-right: auto !important;
+}
+.customersList .filter .cdk-overlay-pane {
+  height: 100%;
+}
+.customersList .filterClosebtn {
+  background: #1e4079 !important;
+}
