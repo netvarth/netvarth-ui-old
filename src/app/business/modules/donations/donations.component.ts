@@ -486,3 +486,4 @@ export class DonationsComponent implements OnInit {
     this.routerobj.navigate(['provider', 'donations', donation.uid]);
   }
 }
+
