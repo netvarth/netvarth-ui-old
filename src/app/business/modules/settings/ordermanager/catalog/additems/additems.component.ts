@@ -365,7 +365,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
       (data) => {
         this.api_loading = false;
-        this.snackbarService.openSnackBar('Items addeded');
+        this.snackbarService.openSnackBar('Items added');
         const navigationExtras: NavigationExtras = {
         queryParams: { action: 'edit',
                         isFrom: true }

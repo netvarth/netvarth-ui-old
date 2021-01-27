@@ -186,9 +186,9 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div 
+                                                        [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -236,10 +236,9 @@
                                                         mat-flat-button class="btns"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                    <button
-                                                        *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                        mat-flat-button class="btns">Paid
-                                                        &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                    <span
+                                                        *ngIf="booking.amountPaid"class="amtPaid">Paid
+                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -257,6 +256,8 @@
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                                </div>
 
                                             <!-- icon -->
                                             <div
@@ -371,9 +372,8 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -430,8 +430,8 @@
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                             | capitalizeFirst}}</span>
                                                     </span>
-                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                        <i class="consumer-reschedule-icon"
+                                                    <span *ngIf="booking.isRescheduled">
+                                                        <i class="resche_ico_wtlist"
                                                             [matTooltip]="'Rescheduled'"></i>
                                                     </span>
                                                 </div>
@@ -441,10 +441,9 @@
                                                         mat-flat-button class="btns"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                    <button
-                                                        *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                        mat-flat-button class="btns">Paid
-                                                        &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                    <span
+                                                        *ngIf="booking.amountPaid" class="amtPaid">Paid
+                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -559,10 +558,9 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
 
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -608,10 +606,9 @@
                                                         mat-flat-button class="btns"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                    <button
-                                                        *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                        mat-flat-button class="btns">Paid
-                                                        &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                    <span
+                                                        *ngIf="booking.amountPaid"  class="amtPaid">Paid
+                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -629,6 +626,8 @@
                                     <ng-container *ngIf="booking.waitlistStatus">
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -743,10 +742,9 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
 
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -804,8 +802,8 @@
                                                             *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                             | capitalizeFirst}}</span>
                                                     </span>
-                                                    <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                        <i class="consumer-reschedule-icon"
+                                                    <span *ngIf="booking.isRescheduled">
+                                                        <i class="resche_ico_wtlist"
                                                             [matTooltip]="'Rescheduled'"></i>
                                                     </span>
                                                 </div>
@@ -815,10 +813,9 @@
                                                         mat-flat-button class="btns"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                    <button
-                                                        *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                        mat-flat-button class="btns">Paid
-                                                        &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                    <span
+                                                        *ngIf="booking.amountPaid" class="amtPaid">Paid
+                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -861,7 +858,7 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-20 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-10 no-padding">
 
                                             <!-- Icon -->
                                             <div
@@ -932,9 +929,8 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -980,10 +976,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
+                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1006,7 +1001,9 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 fit_in no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -1122,9 +1119,8 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1183,8 +1179,8 @@
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                         | capitalizeFirst}}</span>
                                                 </span>
-                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                    <i class="consumer-reschedule-icon"
+                                                <span *ngIf="booking.isRescheduled">
+                                                    <i class="resche_ico_wtlist"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </span>
                                             </div>
@@ -1194,10 +1190,10 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="booking.amountPaid"
+                                                    class="amtPaid">Paid
+                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -1232,7 +1228,7 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-20 no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in mgn-up-10 no-padding">
 
                                             <!-- Icon -->
                                             <div
@@ -1303,9 +1299,8 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1351,10 +1346,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
+                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1377,7 +1371,9 @@
 
                                         <!-- Body -->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 fit_in no-padding">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 fit_in no-padding">
+                                            <div *ngIf="booking.token" class="ribbon">&nbsp;&nbsp;Token {{booking.token}}
+                                            </div>
 
                                             <!-- icon -->
                                             <div
@@ -1493,9 +1489,8 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div class="prov_nme wrap_txt disply-flex">
-                                                            <span
-                                                                [class.mgn-top-10]="booking.service.serviceType === 'virtualService'">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                            <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="booking.service.serviceType === 'virtualService' && booking.service.virtualCallingModes.length > 0  && booking.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -1554,8 +1549,8 @@
                                                         *ngIf="booking.waitlistStatus!=='done' && booking.waitlistStatus !=='checkedIn'">{{booking.waitlistStatus
                                                         | capitalizeFirst}}</span>
                                                 </span>
-                                                <span *ngIf="booking.isRescheduled" class="circle-tokens">
-                                                    <i class="consumer-reschedule-icon"
+                                                <span *ngIf="booking.isRescheduled">
+                                                    <i class="resche_ico_wtlist"
                                                         [matTooltip]="'Rescheduled'"></i>
                                                 </span>
                                             </div>
@@ -1565,10 +1560,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="booking.amountPaid && booking.paymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{booking.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
+                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -1662,10 +1656,9 @@
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                            <button
-                                                *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'"
-                                                mat-flat-button class="btns">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</button> &nbsp;&nbsp;
+                                            <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid" class="amtPaid">Paid
+                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1740,10 +1733,10 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid"
+                                                    class="amtPaid">Paid
+                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1825,10 +1818,10 @@
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                            <button
-                                                *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'"
-                                                mat-flat-button class="btns">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</button> &nbsp;&nbsp;
+                                            <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid"
+                                                class="amtPaid">Paid
+                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1904,10 +1897,10 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <button
-                                                    *ngIf="oder.bill && oder.bill.amountPaid && oder.bill.billPaymentStatus !== 'FullyPaid'"
-                                                    mat-flat-button class="btns">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</button> &nbsp;&nbsp;
+                                                <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid"
+                                                    class="amtPaid">Paid
+                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"

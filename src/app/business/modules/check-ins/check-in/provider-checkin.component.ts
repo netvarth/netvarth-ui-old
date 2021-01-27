@@ -1103,7 +1103,7 @@ provider_label = '';
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
@@ -1772,6 +1772,7 @@ provider_label = '';
         dataToSend.append('captions', blobPropdata);
         this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
+        // this.shared_services.addProviderWaitlistAttachment(uuid,dataToSend)
             .subscribe(
                 () => {
                 },

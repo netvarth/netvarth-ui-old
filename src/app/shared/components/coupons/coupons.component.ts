@@ -49,4 +49,7 @@ export class CouponsComponent implements OnInit {
       this.couponsList[i].adwordshowmore = true;
     }
   }
+  formatPrice(price) {
+    return this.shared_functions.print_PricewithCurrency(price);
+  }
 }
