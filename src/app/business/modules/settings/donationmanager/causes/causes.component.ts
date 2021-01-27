@@ -25,7 +25,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     api_error = null;
     api_success = null;
     breadcrumb_moreoptions: any = [];
-    add_button = Messages.ADD_BUTTON;
+    add_button ='Click to create a cause';
     tooltipcls = projectConstants.TOOLTIP_CLS;
     breadcrumbs = [
         {
