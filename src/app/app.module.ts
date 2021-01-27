@@ -68,8 +68,8 @@ import { SessionStorageService } from './shared/services/session-storage.service
 import { SnackbarService } from './shared/services/snackbar.service';
 import { WordProcessor } from './shared/services/word-processor.service';
 import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
-import { CommonDataStorageService } from './shared/services/common-datastorage.service';e
-xport function init_app(globalService: GlobalService) {
+import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
 
