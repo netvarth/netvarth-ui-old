@@ -264,7 +264,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 const imgobj = new Image(i,
                   {
                     img: this.selectedImagelist.base64[i],
-                    description: ''
+                    description: this.selectedImagelist.caption[i] || ''
                   }, this.selectedImagelist.files[i].name);
                 this.image_list_popup.push(imgobj);
               }
@@ -808,7 +808,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log(dataToSend);
         for (const pic of this.selectedImagelist.files) {
           dataToSend.append('attachments', pic, pic['name']);
-          captions[i] = 'caption';
+          captions[i] = this.selectedImagelist.caption[i] || '';
           i++;
         }
       }
@@ -1157,7 +1157,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
     this.selectedImagelist.files.splice(img.id, 1);
     this.selectedImagelist.base64.splice(img.id, 1);
-
+    this.selectedImagelist.caption.splice(img.id, 1);
     console.log(this.image_list_popup);
     console.log(this.selectedImagelist.files);
   }
@@ -1186,6 +1186,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
       this.selectedImagelist.files.splice(idex, 1);
       this.selectedImagelist.base64.splice(idex, 1);
+      this.selectedImagelist.caption.splice(idex, 1);
       // this.image_list_popup.splice(idex, 1);
 
       console.log(this.selectedImagelist.files);
