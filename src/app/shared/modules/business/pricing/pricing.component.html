@@ -1,17 +1,18 @@
 <section id="prov_home_n">
-  <header class="site-header">
+  <!-- <header class="site-header">
     <div class="container">
       <div class="row align-items-center hidden-xs hidden-sm">
-        <div class="site-branding col-md-4 col-lg-4 mb-4 mb-lg-0">
+        <div class="site-branding col-md-3 col-lg-3 mb-4 mb-lg-0">
           <a routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"
               class="img-fluid logo" /></a>
         </div>
-        <div class="col-md-8 col-lg-8 site-header--links">
+        <div class="col-md-9 col-lg-9 site-header--links">
           <div class="account-links pull-right">
             <a class="active">Pricing</a>
             <a href="https://contact.jaldee.com"><span class="mgn-lt-20 ">Contact Us</span></a>
-            <a class="mgn-lt-20 mgn-rt-30" href="https://wa.me/917306823011" aria-expanded="false"><i
+            <a class="mgn-lt-20" href="https://wa.me/917306823011" aria-expanded="false"><i
                 class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+            <a class="mgn-lt-20 mgn-rt-30" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
             <a class="pointer-cursor" class="login-link">
               <a routerLink="/business/login" class="prov_btn_login_top btn join">Log in</a>
               <a routerLink="/business/signup" class="prov_btn_join_top btn join">Start For Free</a></a>
@@ -32,325 +33,547 @@
         <div class="col-12 col-xs-12 col-sm-12 mgn-up-10">
           <a class="pointer-cursor pull-right mgn-lt-20 mgn-rt-5" href="https://wa.me/917306823011"
             aria-expanded="false"><i class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a>
+        <a class="mgn-lt-20 mgn-rt-30" href="https://t.me/Jaldeekaro" aria-expanded="false"><i class="fa fa-telegram"></i>&nbsp;Telegram Us</a>
           <a href="https://contact.jaldee.com" class="pointer-cursor pull-right"><span class="mgn-lt-20">Contact
               Us</span></a>
           <a class="pointer-cursor pull-right active mgn-lt-20">Pricing</a>
         </div>
       </div>
     </div>
+  </header> -->
+  <header class="site-header">
+    <a class="logo" routerLink="/business"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee Business"
+        style="height: 3rem;"></a>
+    <a class="pointer-cursor" class="account-links pull-right">
+      <a routerLink="/business/login" class="prov_btn_login_top btn join">Log in</a>
+      <a routerLink="/business/signup" class="prov_btn_join_top btn join">Start For Free</a>
+    </a>
+    <input class="menu-btn" type="checkbox" id="menu-btn" />
+    <label class="menu-icon pull-right" for="menu-btn"><span class="navicon"></span></label>
+    <ul class="menu">
+      <li><a [routerLink]="['/business']" [queryParams]="{type: 'features'}">Features</a></li>
+      <li class="active"><a routerLink="pricing">Pricing</a></li>
+      <li><a href="https://contact.jaldee.com">Contact Us</a></li>
+      <li><a class="nav-item nav-link " href="https://wa.me/917306823011" aria-expanded="false"><i
+            class="fa fa-whatsapp"></i>&nbsp;WhatsApp Us</a></li>
+      <li><a class="nav-item nav-link " href="https://t.me/Jaldeekaro" aria-expanded="false"><i
+            class="fa fa-telegram"></i>&nbsp;Telegram Us</a></li>
+    </ul>
   </header>
   <main id="page-container">
 
 
     <div class="page-banner">
-      <div class="page-banner-image"
-        style="background: url('assets/images/business/home/pricing-banner.jpg') no-repeat center / cover;"></div>
+      <!-- style="background: url('assets/images/business/home/pricing-banner.jpg') no-repeat center / cover;" -->
+      <div class="page-banner-image"></div>
       <div class="container">
-        <div class="page-banner-content text-light d-flex flex-column justify-content-center">
-          <h1 class="page-title text-light text-shadow">Pricing</h1>
+        <div class="page-banner-content text-light">
+          <section class="info3 cid-sfXLhVRgca" id="info3-4">
+            <div class="row justify-content-center ">
+              <div class="col-12 col-lg-10">
+                <div class="card-wrapper">
+                  <div class="card-box align-center">
+                    <h4 class="card-title mbr-fonts-style align-center mb-4 display-1">
+                      <strong><br/></strong><br/><strong>Start for free. Pay later.</strong>
+                    </h4>
+                    <p class="mbr-text mbr-fonts-style mb-4 display-7">Get a FREE 30-day trial of Jaldee Premium
+                      <br />✔️ No credit card needed
+                      <br />✔️ Cancel at any time<br/>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="content6 cid-slU8Ni9tPp" id="content6-e">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                  <hr class="line" />
+                  <p class="mbr-text align-center mbr-fonts-style my-4 display-7">We offer discounts for charities and
+                    non-profits. Contact Jaldee Sales to check if you qualify. <br/></p>
+                  <hr class="line" />
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="content11 cid-slU953H4ay mgn-up-10" id="content11-f">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10">
+                  <div class="mbr-section-btn align-center"><a class="btn-started display-4 mgn-rt-5" href="">GET
+                      STARTED FREE</a>
+                    <a class="btn-contact display-4" href="">CONTACT SALES</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- <h1 class="page-title text-light text-shadow">Pricing</h1>
           <span class="breadcrumbs text-light text-shadow">All first time users get a FREE 30-day Jaldee Premium plan (worth <span class="rupee-font">&#8377;1499</span>)</span>          
+          <div class="plan-contact d-flex mgn-up-20">
+            <span class="contact-info contact-info--phone mgn-rt-30">
+              <strong>Speak with us</strong><br/>
+              +91 8880 125000
+            </span>
+            <span class="contact-info contact-info--chat">
+              <strong>Want to discuss?</strong><br/>
+              Live Chat Now
+            </span>
+          </div> -->
         </div>
       </div>
     </div>
 
-    <section id="pricing" class="page-content mt-5">
-      <div class="container">
+    <section id="pricing" class="page-content pricing">
+      <div class="container-fluid">
         <div class="row">
-
-          <div class="col-lg-4 col-sm-6">
-            <div class="pricing-plan">
-              <div class="plan-header text-center">
-                <h2 class="plan-title">Jaldee Starter</h2>
-                <h5 class="plan-subtitle">&nbsp;</h5>
+          <div class="col-12 col-md-6 align-center col-lg-4">
+            <div class="plan">
+              <div class="plan-header">
+                <h6 class="plan-title mbr-fonts-style mb-3 display-5"><strong>Jaldee Starter</strong></h6>
+                <div class="plan-price">
+                  <p class="price mbr-fonts-style m-0 display-1"><strong>&#8377; 0</strong></p>
+                  <!-- <p><strong>&#8377; 0/-</strong></p> -->
+                  <p></p>
+                  <p class="price-term mbr-fonts-style mb-3 display-7"><strong>- </strong>No monthly charges. Pay as you
+                    use.</p>
+                </div>
               </div>
               <div class="plan-body">
-                <!-- <div class="plan-description">
-                  Suitable for potential superstartups and brand revamps for companies.
-                </div> -->
-                <ul class="plan-features">
-                  <li>30 Bookings per month</li>
-                  <li>10 Bookings per day</li>
-                  <li>Create up to 2 Schedules</li>
-                  <li> Jaldee Link</li>
-                  <li>Jaldee QR Code</li>
-                  <li>Video Consultations</li>
-                  <li>POS & Billing</li>
-                  <li>Create up to 10 Items</li>
-                  <li>Link Bank Account</li>
-                  <li>15 SMS per month</li>
-                  <li>Unlimited E-mail</li>
-                  <li>Unlimited in-app messaging</li>
-                  <li>Single User</li>
-                  <li>300 Business Profile View per month</li>
-                  <li>30 Business Profile Views per day</li>
-                  <li>15 Online Inquiries per month</li>
-                  <!-- <li>24/7 support</li>
-                  <li>100% 5 star Google reviews</li>
-                  <li>Free Hosting for 3 months</li>
-                  <li>Our brands good</li>
-                  <li>Free marketing strategy form-good for now</li> -->
-                </ul>
+                <div class="plan-list mb-4">
+                  <ul class="list-group mbr-fonts-style list-group-flush display-7">
+                    <li class="list-group-item"><strong>FEATURES<br/></strong><br/><strong>Multichannel
+                        bookings<br/>Appointment Manager<br/>QManager<br/>Donation Manager<br/>Jaldee Website and QR
+                        Code<br/>Jaldee.com listing<br/>Private Customer Database<br/>Online
+                        Payments</strong><br/><br/><strong>LIMITS<br/></strong><br/><em><strong>Your Jaldee Website
+                          Limits:</strong><br/></em>Up to 300 bookings or orders per
+                      month<br/><strong><br/></strong><em><strong>Jaldee Listing Limits:<br/>(Charges on bookings coming
+                          through Jaldee.com)&nbsp;</strong><br/></em>&#8377; 49/- per booking for healthcare
+                      domain<br/>&#8377;
+                      19/- per booking for non-healthcare domain<br/>10% commission on all orders<br/><br/><a
+                        (click)="triggerScrollTo('addOns')" class="text-primary pointer-cursor">View Add
+                        Ons&nbsp;&gt;</a></li>
+                  </ul>
+                </div>
+                <div class="mbr-section-btn text-center pad-bt-25"><a routerLink="/business/signup"
+                    class="btn btn-primary display-4">Get started for FREE</a></div>
               </div>
-              <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 align-center col-lg-4">
+            <div class="plan">
+              <div class="plan-header">
+                <h6 class="plan-title mbr-fonts-style mb-3 display-5">
+                  <strong>Jaldee Basic</strong>
+                </h6>
+                <div class="plan-price">
+                  <p class="price mbr-fonts-style m-0 display-1"><strong>&#8377; 499<br/></strong></p>
+                  <p class="price-term mbr-fonts-style mb-3 display-7">- All the basic essentials you need to manage
+                    your business&nbsp;<br/></p>
                 </div>
-                <div class="plan-price text-center">
-                  <span class="rupee-font">&#8377;199</span>
-                  <div class="text-center">per month</div>
+              </div>
+              <div class="plan-body">
+                <div class="plan-list mb-4">
+                  <ul class="list-group mbr-fonts-style list-group-flush display-7">
+                    <li class="list-group-item"><strong>FEATURES</strong><br/><br/><strong>Everything in Jaldee
+                        Starter&nbsp;<br/>+<br/>POS &amp; Billing<br/>SMS and E-mail campaigns<br/>Tele-health
+                        consultation<br/>TV Display Board</strong><br/><br/><strong>LIMITS</strong><br/><br/><em><strong>Your
+                          Jaldee Website Limits:</strong></em><br/>Up to 1000 bookings or orders per
+                      month<br/><br/><em><strong>Jaldee Listing Limits:<br/>(Limits on bookings coming through
+                          Jaldee.com)&nbsp;</strong><br/></em>Up to 100 bookings or orders per month<br/><br/>Afterwards
+                      each booking or order will be charged as follows:<br/>&#8377; 29/- per booking for healthcare
+                      domain<br/>&#8377; 9/- per booking for non-healthcare domain
+                      <br/>5% commission on all orders<br/><br/><a (click)="triggerScrollTo('addOns')"
+                        class="text-primary pointer-cursor" style="font-size: 0.9rem;">View Add Ons &gt;</a><br/>
+                    </li>
+                  </ul>
                 </div>
-                
-                <div class="text-center">
-                  <a routerLink="/business/signup" class="btn plan-btn">Get Started</a>
+                <div class="mbr-section-btn text-center pad-bt-25"><a routerLink="/business/signup"
+                    class="btn btn-primary display-4">Get started for FREE</a>
                 </div>
               </div>
             </div>
-          </div> <!-- /.plan -->
-          <!-- /.col-->
-
-          <div class="col-lg-4 col-sm-6">
-            <div class="pricing-plan">
-              <div class="plan-header text-center">
-                <h2 class="plan-title">Jaldee Basic</h2>
-                <h5 class="plan-subtitle">&nbsp;</h5>
+          </div>
+          <div class="col-12 col-md-6 align-center col-lg-4">
+            <div class="plan">
+              <div class="plan-header">
+                <h6 class="plan-title mbr-fonts-style mb-3 display-5"><strong>Jaldee Premium</strong></h6>
+                <div class="plan-price">
+                  <p class="price mbr-fonts-style m-0 display-1"><strong>&#8377; 1499</strong></p>
+                  <p class="price-term mbr-fonts-style mb-3 display-7">- Best for individual medical practitioners and
+                    small clinics
+                    <br/>
+                  </p>
+                </div>
               </div>
               <div class="plan-body">
-                <!-- <div class="plan-description">
-                  Suitable for potential superstartups and brand revamps for companies.
-                </div> -->
-                <ul class="plan-features">
-                  <li>300 Bookings per month</li>
-                  <li>25 Bookings per day</li>
-                  <li>Create up to 4 Schedules</li>
-                  <li>Jaldee Link</li>
-                  <li>Jaldee QR Code</li>
-                  <li>Video Consultations</li>
-                  <li>POS & Billing</li>
-                  <li>Create up to 50 Items</li>
-                  <li>Link Bank Account</li>
-                  <li>30 SMS per month</li>
-                  <li>Unlimited E-mail</li>
-                  <li>Unlimited in-app messaging</li>
-                  <li>Single User</li>
-                  <li>1 Jaldee Coupon per month</li>
-                  <li>1000 Business Profile Views per month</li>
-                  <li>100 Business Profile Views per day</li>
-                  <li>50 Online Inquiries per month</li>
-                  <!-- <li>100% 5 star Google reviews</li>
-                  <li>Free Hosting for 3 months</li>
-                  <li>Our brands good</li>
-                  <li>Free marketing strategy form-good for now</li> -->
-                </ul>
-              </div>
-              <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
+                <div class="plan-list mb-4">
+                  <ul class="list-group mbr-fonts-style list-group-flush display-7">
+                    <li class="list-group-item"><strong>FEATURES</strong><br/><br/><strong>Everything in Jaldee
+                        Basic&nbsp;<br/>+<br/>Multidepartment and Multispecialization<br/>Medical
+                        Records<br/>E-prescription<br/>Customer Live Tracking<br/>Custom Domain Name<br/>Discount
+                        Coupons<br/>B2B Referral Network<br/>Jaldee FrontDesk Lite<br/>Dedicated Relationship
+                        Manager</strong><br/><br/><strong>LIMITS</strong><br/><br/><em><strong>Your Jaldee Website
+                          Limits:</strong></em><br/>Up to 5000 bookings or orders per month<br/><br/><em><strong>Jaldee
+                          Listing Limits:<br/>(Limits on bookings coming through Jaldee.com)</strong><br/></em>Up to 100
+                      bookings or orders per month<br/><br/>Afterwards each booking or order will be charged as
+                      follows:<br/>&#8377; 29/- per booking for healthcare domain<br/>&#8377; 9/- per booking for
+                      non-healthcare
+                      domain<br/>5% commission on all orders<br/><br/><a (click)="triggerScrollTo('addOns')"
+                        class="text-primary pointer-cursor">View Add
+                        Ons &gt;</a></li>
+                  </ul>
                 </div>
-                <div class="plan-price text-center">
-                  <span class="rupee-font">&#8377;499</span>
-                  <div class="text-center">per month</div>
-                </div>
-               
-                <div class="text-center">
-                  <a routerLink="/business/signup" class="btn plan-btn">Get Started</a>
+                <div class="mbr-section-btn text-center pad-bt-25"><a routerLink="/business/signup"
+                    class="btn btn-primary display-4">Get started for FREE</a>
                 </div>
               </div>
             </div>
-          </div> <!-- /.plan -->
-          <!-- /.col-->
+          </div>
 
-          <div class="col-lg-4 col-sm-6">
-            <div class="pricing-plan">
-              <div class="plan-header text-center">
-                <h2 class="plan-title">Jaldee Premium</h2>
-                <h5 class="plan-subtitle">&nbsp;</h5>
+          <div class="col-12 col-md-6 align-center col-lg-4">
+            <div class="plan">
+              <div class="plan-header">
+                <h6 class="plan-title mbr-fonts-style mb-3 display-5"><strong>Jaldee Team</strong></h6>
+                <div class="plan-price">
+                  <p class="price mbr-fonts-style m-0 display-1"><strong>&#8377; 2999</strong></p>
+                  <p class="price-term mbr-fonts-style mb-3 display-7">-Manage up to&nbsp;5000
+                      customers/month <br />- Best for large clinics and&nbsp;small hospitals
+                  </p>
+                </div>
               </div>
               <div class="plan-body">
-                <!-- <div class="plan-description">
-                  (Free 30-day trail when you sign up)
-                </div> -->
-                <ul class="plan-features">
-                  <li>500 Bookings per month</li>
-                  <li>50 Bookings per day</li>
-                  <li>Create up to 12 Schedules</li>
-                  <li>Jaldee Link</li>
-                  <li>Jaldee QR Code</li>
-                  <li>Video Consultations</li>
-                  <li>POS & Billing</li>
-                  <li>Create up to 300 Items</li>
-                  <li>Link Bank Account</li>
-                  <li>75 SMS per month</li>
-                  <li>Unlimited E-mail</li>
-                  <li>Unlimited in-app messaging</li>
-                  <li>Multi User- Up to 2 users</li>
-                  <li>3 Jaldee Coupons per month</li>
-                  <li>Live Track Customers</li>
-                  <li>Unlimited Business Profile Views</li>
-                  <li>Unlimited Business Profile Views per day</li>
-                  <li>Unlimited Online Inquiries per month</li>
-                  <li>2 Jaldee Keywords</li>
-                  <!-- <li>Our brands good</li>
-                  <li>Free marketing strategy form-good for now</li> -->
-                </ul>
-              </div>
-              <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
+                <div class="plan-list mb-4">
+                  <ul class="list-group mbr-fonts-style list-group-flush display-7">
+                    <li class="list-group-item">
+                      <strong>FEATURES</strong><br/><br/>
+                      <strong>Everything in Jaldee Premium<br/>+<br/>
+                        Multi-user functionality<br/>
+                        Personalized Mobile Application<br/>
+                        Search Engine Optimization<br/>
+                        Performance Analytics<br/>
+                        Jaldee FrontDesk Full</strong>
+                      <br/><br/>
+                      <strong>LIMITS</strong><br/><br/>
+                      <em><strong>Your Jaldee Website Limits:</strong><br/></em>
+                      Up to 10000 bookings or orders per month<br/><br/>
+                      <strong>Jaldee Listing Limits:</strong><br/>
+                      (Limits on bookings coming through Jaldee.com)&nbsp;&nbsp;<br/>
+                      Up to 500 bookings or orders per month<br/><br/>
+                      <strong>Jaldee Listing Limits:<br/>
+                        (Charges on bookings coming through Jaldee.com)&nbsp;
+                      </strong><br/>
+                      Rs. 19/- per booking for healthcare domain&nbsp;<br/>
+                      Rs. 9/- per booking for non-healthcare domain&nbsp;<br/>
+                      5% commission on all orders<br/><br/>
+                      <a (click)="triggerScrollTo('addOns')" class="text-primary pointer-cursor">View&nbsp;Add Ons
+                        &gt;</a><br/>
+                    </li>
+                  </ul>
                 </div>
-                <div class="plan-price text-center rupee-font">
-                  <span class="rupee-font">&#8377;1499</span>
-                  <div class="text-center">per month</div>
-                </div>
-                
-                <div class="text-center">
-                  <a routerLink="/business/signup" class="btn plan-btn">Get Started</a>
-                </div>
+                <div class="mbr-section-btn text-center pad-bt-25"><a routerLink="/business/signup"
+                    class="btn btn-primary display-4">Get started for FREE</a></div>
               </div>
             </div>
-          </div> <!-- /.plan -->
-          <!-- /.col-->
+          </div>
 
-          <div class="col-lg-4 col-sm-6">
-            <div class="pricing-plan">
-              <div class="plan-header text-center">
-                <h2 class="plan-title">Jaldee Team</h2>
-                <h5 class="plan-subtitle">&nbsp;</h5>
+          <div class="col-12 col-md-6 align-center col-lg-4">
+            <div class="plan">
+              <div class="plan-header">
+                <h6 class="plan-title mbr-fonts-style mb-3 display-5"><strong>Jaldee Enterprise</strong></h6>
+                <div class="plan-price">
+                  <p class="price mbr-fonts-style m-0 display-2"><strong>&#8377; 7999<br/></strong></p>
+                  <p class="price-term mbr-fonts-style mb-3 display-7">- Manage unlimited&nbsp;customers/month
+                    <br />- Best for large hospitals and institutions
+                  </p>
+                </div>
               </div>
               <div class="plan-body">
-                <!-- <div class="plan-description">
-                  Suitable for potential superstartups and brand revamps for companies.
-                </div> -->
-                <ul class="plan-features">
-                  <li>2000 Bookings per month</li>
-                  <li>100 Bookings per day</li>
-                  <li>Create up to 50 Schedules</li>
-                  <li>Jaldee Link</li>
-                  <li>Jaldee QR Code</li>
-                  <li>Video Consultations</li>
-                  <li>POS & Billing</li>
-                  <li>Create Unlimited Items</li>
-                  <li>Link Bank Account</li>
-                  <li>200 SMS per month</li>
-                  <li>Unlimited E-mail</li>
-                  <li>Unlimited in-app messaging</li>
-                  <li>Multi User- Up to 5 users</li>
-                  <li>10 Jaldee Coupons per month</li>
-                  <li>Live Track Customers</li>
-                  <li>Unlimited Business Profile Views per month</li>
-                  <li>Unlimited Business Profile Views per day</li>
-                  <li>Unlimited Online Inquiries per month</li>
-                  <li>Jaldee Verification</li>
-                  <li>5 Jaldee Keywords</li>
-                  <!-- <li>Free marketing strategy form-good for now</li> -->
-                </ul>
-              </div>
-              <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
+                <div class="plan-list mb-4">
+                  <ul class="list-group mbr-fonts-style list-group-flush display-7">
+                    <li class="list-group-item">
+                      <strong>FEATURES</strong><br/><br/>
+                      <strong>Everything in Jaldee Team<br/>+<br/>
+                        Dedicated Call Centers<br/>
+                        Dedicated Advertisements<br/>
+                        WhatsApp and Telegram Chatbot<br/>
+                        Pharmacy and Lab Integration
+                      </strong><br/><br/>
+                      <strong>LIMITS</strong><br/><br/>
+                      <strong>Your Jaldee Website Limits:</strong>
+                      Unlimited bookings or orders&nbsp;<br/><br/>
+                      <strong>Jaldee Listing Limits:</strong>
+                      (Limits on bookings coming through Jaldee.com) <br/>
+                      Unlimited bookings or orders<br/><br/>
+                      <strong>Jaldee Listing Limits:
+                        (Charges on bookings coming through Jaldee.com)
+                      </strong>
+                      Rs. 19/- per booking for healthcare domain<br/>
+                      Rs. 9/- per booking for non-healthcare domain<br/>
+                      5% commission on all orders<br/><br/>
+                      <a (click)="triggerScrollTo('addOns')" class="text-primary pointer-cursor">View
+                        Add Ons &gt;</a>                     
+                    </li>
+                  </ul>
                 </div>
-                <div class="plan-price text-center">
-                  <span class="rupee-font">&#8377;2999</span>
-                  <div class="text-center">per month</div>
-                </div>
-                
-                <div class="text-center">
-                  <a routerLink="/business/signup" class="btn plan-btn">Get Started</a>
-                </div>
+                <div class="mbr-section-btn text-center pad-bt-25"><a routerLink="/business/signup"
+                    class="btn btn-primary display-4">Get started for FREE</a></div>
               </div>
             </div>
-          </div> <!-- /.plan -->
-          <!-- /.col-->
-
-          <div class="col-lg-4 col-sm-6">
-            <div class="pricing-plan">
-              <div class="plan-header text-center">
-                <h2 class="plan-title">Jaldee Enterprise</h2>
-                <h5 class="plan-subtitle">&nbsp;</h5>
-              </div>
-              <div class="plan-body">
-                <!-- <div class="plan-description">
-                  Suitable for potential superstartups and brand revamps for companies.
-                </div> -->
-                <ul class="plan-features">
-                  <li>5000 Bookings per month</li>
-                  <li>200 Bookings per day</li>
-                  <li>Create up to 200 Schedules</li>
-                  <li>Jaldee Link</li>
-                  <li>Jaldee QR Code</li>
-                  <li>Video Consultations</li>
-                  <li>POS & Billing</li>
-                  <li>Create Unlimited Items</li>
-                  <li>Link Bank Account</li>
-                  <li>500 SMS per month</li>
-                  <li>Unlimited E-mail</li>
-                  <li>Unlimited in-app messaging</li>
-                  <li>Multi User- Up to 25 users</li>
-                  <li>Unlimited Jaldee Coupons</li>
-                  <li>Live Track Customers</li>
-                  <li>Unlimited Business Profile Views per month</li>
-                  <li>Unlimited Business Profile Views per day</li>
-                  <li>Unlimited Online Inquiries per month</li>
-                  <li>Jaldee Verification</li>
-                  <li>25 Jaldee Keywords</li>
-                  <!-- <li>Free marketing strategy form-good for now</li> -->
-                </ul>
-              </div>
-              <div class="plan-footer">
-                <div class="plan-contact d-flex">
-                  <span class="contact-info contact-info--phone">
-                    <strong>Speak with us</strong><br>
-                    +91 8880 125000
-                  </span>
-                  <span class="contact-info contact-info--chat">
-                    <strong>Want to discuss?</strong><br>
-                    Live Chat Now
-                  </span>
-                </div>
-                <div class="plan-price text-center ">
-                  <span class="rupee-font">&#8377;7999</span>
-                  <div class="text-center">per month</div>
-                </div>
-                
-                <div class="text-center">
-                  <a routerLink="/business/signup" class="btn plan-btn">Get Started</a>
-                </div>
-              </div>
-            </div>
-          </div> <!-- /.plan -->
-          <!-- /.col-->
+          </div>
         </div>
       </div>
-
     </section>
+    <!-- <section>
+      <a (click)="triggerScrollTo('pricing')" class="text-primary pointer-cursor">&lt; Back to pricing</a>
+    </section> -->
+    <section class="" id="addOns">
+      
+      <section class="content4 cid-shN2tvVMwx mgn-up-50" id="content4-1a">
+        <div class="container">
+          <a (click)="triggerScrollTo('pricing')" class="text-primary pointer-cursor mgn-up-10">&lt; Back to pricing</a>
+          <div class="row justify-content-center">
+            <div class="title col-md-12 col-lg-10">
+              <h3 class="mbr-section-title mbr-fonts-style align-center display-2 mgn-up-50 mgn-bt-50">
+                <strong>Jaldee Add Ons</strong>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content10 cid-shN1xeMSHm" id="content10-14">
 
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Jaldee Messaging - Buy SMS credits
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Jaldee messaging 1000 - Rs. 250 per month
+                <br/>Jaldee messaging 2500 - Rs. 625 per month
+                <br/>Jaldee messaging 10000 - Rs. 2500 per month
+                <br/>Jaldee messaging 25000 - Rs. 6250 per month
+                <br/>Note: Jaldee messaging means only SMS
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1xzhomR" id="content10-15">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Queues / Schedules / Services - Add more
+                Queues/ Schedules/ Services
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Min pkg - Team and above
+                <br/>Queues/Schedules/Services 25 - Rs. 299/month
+                <br/>Queues/Schedules/Services 50 - Rs. 599/month
+                <br/>Queues/Schedules/Services 100 - Rs. 1199/month
+                <br/>Queues/Schedules/Services 500 - Rs. 2399/month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1wPfeQp" id="content10-13">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">QBoards - Buy Qboards
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Min pkg - Basic and above
+                <br/>QBoards Lite 1 - Rs.399 per month
+                <br/>QBoards Lite 2 - Rs.759 per month
+                <br/>QBoards 5 - Rs.1499 per month
+                <br/>QBoards 10 - Rs.2499 per month
+                <br/>QBoards 25 - Rs.4999 per month
+                <br/>QBoards 100 - Rs.19999 per month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1wpQ1pj" id="content10-12">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Jaldee Discount Network(JDN)
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Rs.499 for lifetime&nbsp;<br/></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1xUEv6g" id="content10-16">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">QBoards
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Minimum pkg - Basic and above
+                <br/>QBoards Lite 1 for Rs.399 per month
+                <br/>QBoards Lite 2 for Rs.759 per month
+                <br/>QBoards 5 for Rs.1499 per month
+                <br/>QBoards 10 for Rs.2499 per month
+                <br/>QBoards 25 for Rs.4999 per month
+                <br/>QBoards 100 for Rs.19999 per month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1ydoFou" id="content10-17">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Business profile views - Buy unlimited
+                business profile views
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Unlimited business views - Rs.99 per month&nbsp;<br/></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1yvula4" id="content10-18">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Online enquiries - Add more online
+                enquiries
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">online enquiries 100 - Rs.49 per month
+                <br/>online enquiries 1000 - Rs.149 per month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1vKecp0" id="content10-11">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Storage (per month) - Buy additional
+                storage
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">(0.5gb) - 25 Rs/month
+                <br/>(2GB) - 59 Rs/month
+                <br/>5 gb - 99 Rs/month
+                <br/>15 gb - 199 Rs/month
+                <br/>100 gb - 1499 Rs/month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1yMXV48" id="content10-19">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Search keywords (Jaldee.com) - Add more
+                search keywords
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Pack of 5 search keywords - 250 Rs/month
+                <br/>Pack of 20 search keywords - 1000 Rs/month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1viqOJ0" id="content10-10">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Multi user - Add more users
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Min pkg - team and above
+                <br/>Multi user 25 - Rs. 17999 per month
+                <br/>Multi user 50 - Rs. 29999 per month
+                <br/>Multi user 100 - Rs. 49999 per month
+                <br/>Multi user 250 - Rs. 99999 per month
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content10 cid-shN1v06OnH" id="content10-z">
+
+        <div class="container">
+          <div class="row justify-content-center mgn-bt-50">
+            <div class="col-12 col-md">
+
+              <h6 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5">Transaction charges - Additional charge
+                after freebies
+                <div><br/></div>
+              </h6>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <p class="mbr-text mbr-fonts-style display-7">Flat 3Rs/transaction (for all packages)&nbsp;<br/></p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container mgn-bt-20">
+      <a (click)="triggerScrollTo('pricing')" class="text-primary pointer-cursor mgn-up-10">&lt; Back to pricing</a>
+      </div>
+    </section>
 
     <section id="support">
       <div class="container">

@@ -9,10 +9,10 @@
 </section>
 <section>
     <div class="ordermgmt col-sm-12 col-md-12 col-lg-12 col-xs-12">
-        <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20 disp-flex" style="margin-bottom: 10px">
-            <i class="ordermgmt-icon mgn-rt-5"></i>
-            <div>
-                <label>
+        <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20" style="margin-bottom: 10px">
+                
+            <div><i class="ordermgmt-icon"></i>
+                <label >
                     Online Order Manager
                     <mat-slide-toggle class="mgn-lt-20" [(ngModel)]="orderstatus" (change)="handleOrderStatus($event)">
                     </mat-slide-toggle>&nbsp;{{pos_statusstr}}

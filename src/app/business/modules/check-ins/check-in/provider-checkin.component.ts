@@ -609,6 +609,7 @@ provider_label = '';
                                     // _this.serviceslist = services;
                                     if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
                                         _this.servicesjson = [];
+                                        _this.serviceslist = [];
                                         for (let i = 0; i < services.length; i++) {
                                             if (services[i].serviceType !== 'virtualService') {
                                                 _this.servicesjson.push(services[i]);
@@ -1102,7 +1103,7 @@ provider_label = '';
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
@@ -1670,14 +1671,16 @@ provider_label = '';
         this.selectedUser = user;
         this.queuejson = [];
         this.servicesjson = this.serviceslist;
-        const newserviceArray = [];
+        let newserviceArray = [];
         if (user.id && user.id !== 0) {
+            newserviceArray = [];
             for (let i = 0; i < this.servicesjson.length; i++) {
                 if (this.servicesjson[i].provider && user.id === this.servicesjson[i].provider.id) {
                     newserviceArray.push(this.serviceslist[i]);
                 }
             }
         } else {
+            newserviceArray = [];
             for (let i = 0; i < this.servicesjson.length; i++) {
                 if (!this.servicesjson[i].provider && this.servicesjson[i].department === this.selected_dept) {
                     newserviceArray.push(this.serviceslist[i]);
@@ -1769,6 +1772,7 @@ provider_label = '';
         dataToSend.append('captions', blobPropdata);
         this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
             dataToSend)
+        // this.shared_services.addProviderWaitlistAttachment(uuid,dataToSend)
             .subscribe(
                 () => {
                 },

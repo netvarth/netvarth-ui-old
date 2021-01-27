@@ -871,9 +871,9 @@ export const projectConstantsLocal = {
     { value: 'NotPaid', class: 'red' },
     { value: 'PartiallyPaid', class: 'orange' },
     { value: 'FullyPaid', class: 'greenc' },
-    { value: 'Refund', class: 'yellow' },
-    { value: 'PartiallyRefunded', class: 'yellow' },
-    { value: 'FullyRefunded', class: 'yellow' }
+    { value: 'Refund', class: 'yellow-green' },
+    { value: 'PartiallyRefunded', class: 'yellow-green' },
+    { value: 'FullyRefunded', class: 'yellow-green' }
   ],
   BILL_PAYMENT_STATUS_WITH_DISPLAYNAME: {
     NotPaid: 'Not Paid',
@@ -897,6 +897,16 @@ export const projectConstantsLocal = {
     { value: 'In Transit', class: 'intransit-icon' },
     { value: 'Shipped', class: 'shipped-icon' },
     { value: 'Cancelled', class: 'order-cancelled-icon' }
+  ],
+   BOOKING_STATUS_CLASS: [
+    { value: 'Done', class: 'dark-green' },
+    { value: 'Started', class: 'orange' },
+    { value: 'Arrived', class: 'yellow' },
+    { value: 'CheckedIn', class: 'greenc' },
+    { value: 'Cancelled', class: 'red' },
+    { value: 'Completed', class: 'dark-green' },
+    { value: 'Rejected', class: 'red' },
+    { value: 'Confirmed', class: 'greenc' }
   ],
   ADDON_ICON_CLASS: [
     { value: 'Cloud Storage', class: 'fa ico_cloud' },

@@ -148,6 +148,7 @@ export function init_app(globalService: GlobalService) {
       useClass: ExtendHttpInterceptor,
       multi: true
     },
+    AuthService,
     SharedServices,
     GlobalFunctions,
     GlobalService,
@@ -162,6 +163,7 @@ export function init_app(globalService: GlobalService) {
     GroupStorageService,
     WordProcessor,
     SnackbarService,
+    GroupStorageService,
     Title,
     CommonDataStorageService,
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },

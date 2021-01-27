@@ -20,6 +20,7 @@ import { projectConstantsLocal } from '../../../../shared/constants/project-cons
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { Messages } from '../../../constants/project-messages';
 
 
 @Component({
@@ -28,6 +29,11 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  provider_id: any;
+  s3url;
+  retval: Promise<void>;
+  api_loading1: boolean;
+  coupon_status = null;
   checkoutDisabled: boolean;
   loading = true;
   disabled = false;
@@ -74,7 +80,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   emailId;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
-
+  tooltipcls = '';
   linear: boolean;
   catalog_details: any;
   trackUuid;
@@ -90,6 +96,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   storeAvailableDates: any = [];
   homeAvailableDates: any = [];
   hold_sel_checkindate;
+  applied_inbilltime = Messages.APPLIED_INBILLTIME;
   ddate;
   isfutureAvailableTime = false;
   storeContactNw: any;
@@ -97,40 +104,40 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   orderType = '';
   image_list_popup: Image[];
   selectedImagelist = {
-        files: [],
-        base64: [],
-        caption: []
-    };
-    imagelist = {
-      files: [],
-      base64: [],
-      caption: []
+    files: [],
+    base64: [],
+    caption: []
+  };
+  imagelist = {
+    files: [],
+    base64: [],
+    caption: []
   };
   shoppinglistdialogRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
-};
-customButtonsFontAwesomeConfig: ButtonsConfig = {
-  visible: true,
-  strategy: ButtonsStrategy.CUSTOM,
-  buttons: [
-    {
-      className: 'fa fa-trash-o',
-      type: ButtonType.DELETE,
-      ariaLabel: 'custom plus aria label',
-      title: 'Delete',
-      fontSize: '20px'
-  },
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
       {
-          className: 'inside close-image',
-          type: ButtonType.CLOSE,
-          ariaLabel: 'custom close aria label',
-          title: 'Close',
-          fontSize: '20px'
+        className: 'fa fa-trash-o',
+        type: ButtonType.DELETE,
+        ariaLabel: 'custom plus aria label',
+        title: 'Delete',
+        fontSize: '20px'
+      },
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
       }
-  ]
-};
+    ]
+  };
 
 
   canceldialogRef: any;
@@ -138,6 +145,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   // timeWindows;
   nextAvailableTimeQueue: any = [];
   queue;
+  couponvalid = true;
+  api_cp_error = null;
+  s3CouponsList: any = [];
+  selected_coupons: any = [];
+  couponsList: any = [];
+  selected_coupon;
+  showCouponWB: boolean;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -151,11 +165,13 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     private lStorageService: LocalStorageService
 
   ) {
-    // this.route.queryParams.subscribe(
-    //   qParams => {
-    //    this.selectedImagelist = qParams.uploadlist;
-    //     console.log(this.selectedImagelist);
-    //   });
+    this.route.queryParams.subscribe(
+      params => {
+        this.provider_id = params.providerId;
+      });
+
+
+
     this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
     this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
@@ -163,6 +179,15 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.catalog_Id = this.chosenDateDetails.catlog_id;
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
+    if (this.chosenDateDetails.selected_coupons) {
+      if (this.chosenDateDetails.selected_coupons.length > 0) {
+        this.selected_coupons = this.chosenDateDetails.selected_coupons;
+        console.log(this.selected_coupons);
+      }
+    } if (this.chosenDateDetails.couponsList) {
+      this.couponsList = this.chosenDateDetails.couponsList;
+    }
+
     if (this.choose_type === 'store') {
       this.store_pickup = true;
       this.storeChecked = true;
@@ -219,6 +244,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
       if (this.orderType === 'SHOPPINGLIST') {
+      	  // this.gets3curl();
           // this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
           //   width: '50%',
           //   panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -228,25 +254,25 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
           //   }
         // });
         this.shoppinglistdialogRef.afterClosed().subscribe(result => {
-            if (result) {
+          if (result) {
             console.log(result);
             this.selectedImagelist = result;
             console.log(this.selectedImagelist.files);
             this.image_list_popup = [];
             if (this.selectedImagelist.files.length > 0) {
-            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-              const imgobj = new Image(i,
+              for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+                const imgobj = new Image(i,
                   {
-                      img: this.selectedImagelist.base64[i],
-                      description: ''
+                    img: this.selectedImagelist.base64[i],
+                    description: ''
                   }, this.selectedImagelist.files[i].name);
-              this.image_list_popup.push(imgobj);
-          }
-          console.log(this.image_list_popup);
+                this.image_list_popup.push(imgobj);
+              }
+              console.log(this.image_list_popup);
 
             }
           }
-          });
+        });
       }
       this.advance_amount = this.catalog_details.advanceAmount;
       this.loading = false;
@@ -309,12 +335,115 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
 
 
   }
+  gets3curl() {
+    this.api_loading1 = true;
+    this.retval = this.sharedFunctionobj.getS3Url()
+      .then(
+        res => {
+          this.s3url = res;
+          this.getbusinessprofiledetails_json('coupon', true);
+          this.api_loading1 = false;
+        },
+        () => {
+          this.api_loading1 = false;
+        }
+      );
+  }
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList = res;
+        console.log(this.s3CouponsList);
+        if (this.s3CouponsList.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
+  }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
   getItemPrice(item) {
     const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
     return item.price * qty;
+  }
+  applyPromocode() {
+    this.action = 'coupons';
+  }
+  toggleterms(i) {
+    if (this.couponsList[i].showme) {
+      this.couponsList[i].showme = false;
+    } else {
+      this.couponsList[i].showme = true;
+    }
+  }
+
+  applyCoupons(jCoupon) {
+    this.api_cp_error = null;
+    this.couponvalid = true;
+    const couponInfo = {
+      'couponCode': '',
+      'instructions': ''
+    };
+    if (jCoupon) {
+      const jaldeeCoupn = jCoupon.trim();
+      if (this.checkCouponExists(jaldeeCoupn)) {
+        this.api_cp_error = 'Coupon already applied';
+        this.couponvalid = false;
+        return false;
+      }
+      this.couponvalid = false;
+      let found = false;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
+        }
+      }
+      if (found) {
+        this.couponvalid = true;
+        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.action = '';
+      } else {
+        this.api_cp_error = 'Coupon invalid';
+      }
+    } else {
+      this.api_cp_error = 'Enter a Coupon';
+    }
+  }
+  removeJCoupon(i) {
+    this.selected_coupons.splice(i, 1);
+    this.couponsList.splice(i, 1);
+  }
+  removeCoupons() {
+    this.selected_coupons = [];
+    this.couponsList = [];
+    this.coupon_status = null;
+  }
+  checkCouponExists(couponCode) {
+    let found = false;
+    for (let index = 0; index < this.selected_coupons.length; index++) {
+      if (couponCode === this.selected_coupons[index]) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+  clearCouponErrors() {
+    this.couponvalid = true;
+    this.api_cp_error = null;
   }
   getProfile() {
     this.sharedFunctionobj.getProfile()
@@ -431,37 +560,37 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     });
   }
   deleteAddress(address, index) {
-      this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-           'message': 'Do you want to Delete this address?',
-       }
-       });
+    this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to Delete this address?',
+      }
+    });
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.added_address.splice(index , 1);
-      this.shared_services.updateConsumeraddress(this.added_address)
-      .subscribe(
-        data => {
-          if(data){
-            this.getaddress();
-          }
-         this.snackbarService.openSnackBar('Address Updated successfully');
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-      // this.getaddress();
+        this.added_address.splice(index, 1);
+        this.shared_services.updateConsumeraddress(this.added_address)
+          .subscribe(
+            data => {
+              if (data) {
+                this.getaddress();
+              }
+              this.snackbarService.openSnackBar('Address Updated successfully');
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+        // this.getaddress();
       }
     });
   }
   goBack() {
     console.log(this.action);
-    if (this.action === 'timeChange') {
+    if (this.action === 'timeChange' || this.action === 'coupons') {
       this.action = '';
     } else {
       const chosenDateTime = {
@@ -469,7 +598,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
         catlog_id: this.catalog_details.id,
         nextAvailableTime: this.nextAvailableTime,
         order_date: this.sel_checkindate,
-        account_id: this.account_id
+        account_id: this.account_id,
+        selected_coupons: this.selected_coupons,
+        couponsList: this.couponsList
 
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
@@ -523,38 +654,40 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'countryCode': this.customer_countrycode,
             'phoneNumber': this.customer_phoneNumber,
             'email': this.customer_email,
-            'orderNote': this.orderlistNote
+            'orderNote': this.orderlistNote,
+            'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
-         const post_Data = {
-          'homeDelivery': true,
-          'homeDeliveryAddress': this.selectedAddress,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': 0
-          },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
-          },
-          'orderItem': this.getOrderItems(),
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'phoneNumber': this.customer_phoneNumber,
-          'email': this.customer_email,
-          'orderNote': this.orderNote
-        };
-        this.confirmOrder(post_Data);
+          const post_Data = {
+            'homeDelivery': true,
+            'homeDeliveryAddress': this.selectedAddress,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': 0
+            },
+            'timeSlot': {
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+            },
+            'orderItem': this.getOrderItems(),
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'phoneNumber': this.customer_phoneNumber,
+            'email': this.customer_email,
+            'orderNote': this.orderNote,
+            'coupons': this.selected_coupons
+          };
+          this.confirmOrder(post_Data);
+        }
       }
     }
-    }
     if (this.delivery_type === 'store') {
-       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
+      if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
@@ -583,33 +716,35 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
             'countryCode': this.customer_countrycode,
             'phoneNumber': contactNumber,
             'email': contact_email,
-            'orderNote': this.orderlistNote
+            'orderNote': this.orderlistNote,
+            // 'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
-        const post_Data = {
-          'storePickup': true,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': 0
-          },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
-          },
-          'orderItem': this.getOrderItems(),
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'phoneNumber': contactNumber,
-          'email': contact_email,
-          'orderNote': this.orderNote
-        };
-        this.confirmOrder(post_Data);
-       }
+          const post_Data = {
+            'storePickup': true,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': 0
+            },
+            'timeSlot': {
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+              // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
+              // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+            },
+            'orderItem': this.getOrderItems(),
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'phoneNumber': contactNumber,
+            'email': contact_email,
+            'orderNote': this.orderNote,
+            'coupons': this.selected_coupons
+          };
+          this.confirmOrder(post_Data);
+        }
       }
     }
 
@@ -683,104 +818,104 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateConsumerOrderlist(this.account_id, dataToSend)
-      .subscribe(data => {
-        const retData = data;
-        this.checkoutDisabled = false;
-        let prepayAmount;
-        const uuidList = [];
-        Object.keys(retData).forEach(key => {
-          if (key === '_prepaymentAmount') {
-            prepayAmount = retData['_prepaymentAmount'];
+        .subscribe(data => {
+          const retData = data;
+          this.checkoutDisabled = false;
+          let prepayAmount;
+          const uuidList = [];
+          Object.keys(retData).forEach(key => {
+            if (key === '_prepaymentAmount') {
+              prepayAmount = retData['_prepaymentAmount'];
+            } else {
+              this.trackUuid = retData[key];
+              uuidList.push(retData[key]);
+            }
+          });
+
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              account_id: this.account_id,
+              type_check: 'order_prepayment',
+              prepayment: prepayAmount,
+              uuid: this.trackUuid
+            }
+          };
+          if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+              .subscribe(res => {
+                console.log(res);
+                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+              });
           } else {
-            this.trackUuid = retData[key];
-            uuidList.push(retData[key]);
+            this.orderList = [];
+            this.lStorageService.removeitemfromLocalStorage('order_sp');
+            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+            this.lStorageService.removeitemfromLocalStorage('order_spId');
+            this.lStorageService.removeitemfromLocalStorage('order');
+            this.snackbarService.openSnackBar('Your Order placed successfully');
+            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
-        });
-
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            account_id: this.account_id,
-            type_check: 'order_prepayment',
-            prepayment: prepayAmount,
-            uuid: this.trackUuid
+        },
+          error => {
+            this.checkoutDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
-        };
-        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
-          this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
-            .subscribe(res => {
-              console.log(res);
-              this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
-            });
-        } else {
-          this.orderList = [];
-          this.lStorageService.removeitemfromLocalStorage('order_sp');
-          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-          this.lStorageService.removeitemfromLocalStorage('order_spId');
-          this.lStorageService.removeitemfromLocalStorage('order');
-          this.snackbarService.openSnackBar('Your Order placed successfully');
-          this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-        }
-      },
-      error => {
-        this.checkoutDisabled = false;
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
 
-    );
+        );
     } else {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
-      .subscribe(data => {
-        const retData = data;
-        this.checkoutDisabled = false;
-        let prepayAmount;
-        const uuidList = [];
-        Object.keys(retData).forEach(key => {
-          if (key === '_prepaymentAmount') {
-            prepayAmount = retData['_prepaymentAmount'];
-          } else {
-            this.trackUuid = retData[key];
-            uuidList.push(retData[key]);
-          }
-        });
-
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            account_id: this.account_id,
-            type_check: 'order_prepayment',
-            prepayment: prepayAmount,
-            uuid: this.trackUuid
-          }
-        };
-        if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
-          this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
-            .subscribe(res => {
-              console.log(res);
-              this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
-            });
-        } else {
-          this.orderList = [];
-          this.lStorageService.removeitemfromLocalStorage('order_sp');
-          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-          this.lStorageService.removeitemfromLocalStorage('order_spId');
-          this.lStorageService.removeitemfromLocalStorage('order');
-          this.snackbarService.openSnackBar('Your Order placed successfully');
-          this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-        }
-      },
-        error => {
+        .subscribe(data => {
+          const retData = data;
           this.checkoutDisabled = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
+          let prepayAmount;
+          const uuidList = [];
+          Object.keys(retData).forEach(key => {
+            if (key === '_prepaymentAmount') {
+              prepayAmount = retData['_prepaymentAmount'];
+            } else {
+              this.trackUuid = retData[key];
+              uuidList.push(retData[key]);
+            }
+          });
 
-      );
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              account_id: this.account_id,
+              type_check: 'order_prepayment',
+              prepayment: prepayAmount,
+              uuid: this.trackUuid
+            }
+          };
+          if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+              .subscribe(res => {
+                console.log(res);
+                this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
+              });
+          } else {
+            this.orderList = [];
+            this.lStorageService.removeitemfromLocalStorage('order_sp');
+            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+            this.lStorageService.removeitemfromLocalStorage('order_spId');
+            this.lStorageService.removeitemfromLocalStorage('order');
+            this.snackbarService.openSnackBar('Your Order placed successfully');
+            this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+          }
+        },
+          error => {
+            this.checkoutDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+
+        );
     }
   }
-  goBackToCheckout(selectesTimeslot , queue) {
+  goBackToCheckout(selectesTimeslot, queue) {
     this.action = '';
     console.log(queue);
-    const selectqueue = queue['sTime'] + ' - ' +     queue['eTime'];
+    const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     // this.nextAvailableTime = selectesTimeslot;
@@ -818,7 +953,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark +  ',' + address.city + ',' + address.countryCode +  ' ' + address.phoneNumber + '</br>' + address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
     console.log(this.selectedAddress);
   }
   // handleFuturetoggle() {
@@ -1018,99 +1153,98 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   deleteTempImage(img, index) {
     console.log(img);
     // this.image_list_popup.splice(index, 1);
-  //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
- // console.log(idex);
-   this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+    //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
+    // console.log(idex);
+    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
     this.selectedImagelist.files.splice(img.id, 1);
     this.selectedImagelist.base64.splice(img.id, 1);
 
     console.log(this.image_list_popup);
-     console.log(this.selectedImagelist.files);
-}
-openImageModalRow(image: Image) {
-  const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-  this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-}
-
-private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-  return image ? images.indexOf(image) : -1;
-}
-
-onButtonBeforeHook(event) {
-  console.log(event);
-  if (!event || !event.button) {
-    return;
-}
-if (event.button.type === ButtonType.DELETE) {
-
-    console.log(event.image.plain);
     console.log(this.selectedImagelist.files);
-   console.log(this.image_list_popup);
-  // this.deletemodelboxImage(event.image.plain);
-   const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
- console.log(idex);
- this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
-  this.selectedImagelist.files.splice(idex, 1);
-  this.selectedImagelist.base64.splice(idex, 1);
- // this.image_list_popup.splice(idex, 1);
+  }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
 
-   console.log(this.selectedImagelist.files);
-   console.log(this.image_list_popup);
-}
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
 
-}
-deletemodelboxImage(name) {
-  console.log(name);
- const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
- console.log(idex);
-  this.selectedImagelist.files.splice(idex, 1);
-  this.selectedImagelist.base64.splice(idex, 1);
-  this.image_list_popup.splice(idex, 1);
-  console.log(this.selectedImagelist.files);
- // this.image_list_popup = [];
-//   if (this.selectedImagelist.files.length > 0) {
-//   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-//     const imgobj = new Image(i,
-//         {
-//             img: this.selectedImagelist.base64[i],
-//             description: ''
-//         });
-//     this.image_list_popup.push(imgobj);
-// }
-// console.log(this.image_list_popup);
+  onButtonBeforeHook(event) {
+    console.log(event);
+    if (!event || !event.button) {
+      return;
+    }
+    if (event.button.type === ButtonType.DELETE) {
 
-//   }
-console.log(this.image_list_popup);
-}
-onButtonAfterHook() { }
+      console.log(event.image.plain);
+      console.log(this.selectedImagelist.files);
+      console.log(this.image_list_popup);
+      // this.deletemodelboxImage(event.image.plain);
+      const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
+      console.log(idex);
+      this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
+      this.selectedImagelist.files.splice(idex, 1);
+      this.selectedImagelist.base64.splice(idex, 1);
+      // this.image_list_popup.splice(idex, 1);
 
-imageSelect(event) {
+      console.log(this.selectedImagelist.files);
+      console.log(this.image_list_popup);
+    }
+
+  }
+  deletemodelboxImage(name) {
+    console.log(name);
+    const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
+    console.log(idex);
+    this.selectedImagelist.files.splice(idex, 1);
+    this.selectedImagelist.base64.splice(idex, 1);
+    this.image_list_popup.splice(idex, 1);
+    console.log(this.selectedImagelist.files);
+    // this.image_list_popup = [];
+    //   if (this.selectedImagelist.files.length > 0) {
+    //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+    //     const imgobj = new Image(i,
+    //         {
+    //             img: this.selectedImagelist.base64[i],
+    //             description: ''
+    //         });
+    //     this.image_list_popup.push(imgobj);
+    // }
+    // console.log(this.image_list_popup);
+
+    //   }
+    console.log(this.image_list_popup);
+  }
+  onButtonAfterHook() { }
+
+  imageSelect(event) {
     const input = event.target.files;
     if (input) {
-        for (const file of input) {
-            if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
-                this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-            } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
-                this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-          } else {
-                    this.selectedImagelist.files.push(file);
-                     const reader = new FileReader();
-                      reader.onload = (e) => {
-                        this.selectedImagelist.base64.push(e.target['result']);
-                        this.image_list_popup = [];
-                        for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-                            const imgobj = new Image(i,
-                                {
-                                    img: this.selectedImagelist.base64[i],
-                                    description: ''
-                                }, this.selectedImagelist.files[i].name);
-                            this.image_list_popup.push(imgobj);
-                        }
-                };
-                reader.readAsDataURL(file);
+      for (const file of input) {
+        if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        } else {
+          this.selectedImagelist.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedImagelist.base64.push(e.target['result']);
+            this.image_list_popup = [];
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: ''
+                }, this.selectedImagelist.files[i].name);
+              this.image_list_popup.push(imgobj);
             }
+          };
+          reader.readAsDataURL(file);
         }
-                }
+      }
     }
     editshoppinglist() {
       this.imagelist = this.selectedImagelist;

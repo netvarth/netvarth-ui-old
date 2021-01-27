@@ -6,7 +6,6 @@ import { PhomeComponent } from './phome.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PricingModule } from '../pricing/pricing.module';
-// import { ProvidersignupComponent } from '../providersignup/providersignup.component';
 // import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { ContactusModule } from '../contactus/contactus.module';
 import { LazyModule } from '../../lazy-load/lazy.module';

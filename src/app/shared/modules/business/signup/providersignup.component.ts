@@ -1,8 +1,8 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -151,11 +151,11 @@ export class ProvidersignupComponent implements OnInit {
   scInfo;
   scCode_Ph;
   claimDetails;
-  constructor(public dialogRef: MatDialogRef<ProvidersignupComponent>,
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices, public activatedRoute: ActivatedRoute,
-    private router: Router, private provider_services: ProviderServices,
+    private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
@@ -588,9 +588,9 @@ export class ProvidersignupComponent implements OnInit {
       return word;
     }
   }
-  closePwdScreen() {
-    this.dialogRef.close();
-  }
+  // closePwdScreen() {
+  //   this.dialogRef.close();
+  // }
   continuetoPwd() {
     this.step = 4;
   }
@@ -606,10 +606,10 @@ export class ProvidersignupComponent implements OnInit {
       this.close_message = this.wordProcessor.getProjectMesssages('PASSWORD_ERR_MSG');
     }
   }
-  goBusinessClicked() {
-    this.dialogRef.close();
-    this.router.navigate(['/business']);
-  }
+  // goBusinessClicked() {
+  //   this.dialogRef.close();
+  //   this.router.navigate(['/business']);
+  // }
   // corporate_branch(){
   //   this.CorporateBranch = 'co_branch';
   // }

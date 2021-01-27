@@ -1520,8 +1520,10 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             console.log(postdata);
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
-            postdata['catalogItem'] = this.catalogItems;
-            this.editCatalog(postdata);
+           // postdata['catalogItem'] = this.catalogItems;
+           postdata['catalogItem'] = this.seletedCatalogItems;
+           console.log(postdata);
+           this.editCatalog(postdata);
         }
     }
     addCatalog(post_data) {

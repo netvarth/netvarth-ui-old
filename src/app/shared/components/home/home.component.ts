@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -13,9 +13,10 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   images = {
     jaldee_find: 'assets/images/home/jaldee_find.svg',
     jaldee_find_img: 'assets/images/home/01_26.jpg',
@@ -54,7 +55,16 @@ export class HomeComponent implements OnInit {
     private titleService: Title,
     private metaService: Meta
   ) { }
-
+ngOnDestroy() {
+  // alert('destroy');
+  // let a = document.getElementById('hubspot-messages-iframe-container');
+  //   a.setAttribute('style', 'visibility:hidden !important');
+}
+ngAfterViewInit() {
+  // alert('init');
+  // let a = document.getElementById('hubspot-messages-iframe-container');
+  // a.setAttribute('style', 'visibility:visible !important');
+}
   ngOnInit() {
     this.titleService.setTitle('Jaldee - Avoid Waiting in Line');
     this.metaService.addTags([

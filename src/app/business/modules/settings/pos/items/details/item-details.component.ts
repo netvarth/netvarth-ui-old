@@ -354,7 +354,7 @@ export class ItemDetailsComponent implements OnInit {
             'note': note,
             'price': this.item.price || '',
             'taxable': this.holdtaxable,
-            'showOnLandingpage': this.item.isShowOnLandingpage,
+           'showOnLandingpage': this.item.isShowOnLandingpage,
             'stockAvailable': this.item.isStockAvailable,
             'promotionalPrice': value || 0,
             'promotionalPriceType': this.item.promotionalPriceType === 'NONE' ? 'FIXED' : this.item.promotionalPriceType,

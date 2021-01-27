@@ -73,9 +73,9 @@ export class MedicalrecordListComponent implements OnInit {
     return serviceName;
 
   }
-  getBookingName(bookingType) {
-    let bkgType = '';
-    switch (bookingType) {
+  getBookingName(mr) {
+   let bkgType = '';
+    switch (mr.bookingType) {
       case 'FOLLOWUP': {
         bkgType = 'Follow up';
         break;
@@ -85,7 +85,12 @@ export class MedicalrecordListComponent implements OnInit {
         break;
       }
       case 'TOKEN': {
-        bkgType = 'Check-ins/Tokens';
+        if(mr.showTokenId) {
+          bkgType = 'Token';
+        } else{
+          bkgType = 'Check-in';
+        }
+        bkgType;
         break;
       }
     }

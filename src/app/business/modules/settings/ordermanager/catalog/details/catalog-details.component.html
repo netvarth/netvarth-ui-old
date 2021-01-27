@@ -254,7 +254,8 @@
                       </div>
 
                       <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
-                        <h6>{{catalogItems.length}} items are selected</h6>
+                        <h6>{{catalogItems.length}} items are in your catalog</h6>
+                        <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
                         <a *ngIf="item_count !== catalogItems.length" class="pointlist" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
                         <a class="pointlist" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
                           <a class="pointlist" (click)="gotoItems()"><u>Create items</u></a>
