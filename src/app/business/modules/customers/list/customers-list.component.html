@@ -210,7 +210,8 @@
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')">All patients</div>
-        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)">
+        <div class="card grp_label mb-2" *ngFor="let group of groups; let i = index"
+          (click)="customerGroupSelection(group, i)" [ngClass]="{'highlight': selectedRowIndex == i}">
           {{group.groupName}}
           <!-- <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div> -->
         </div>
@@ -230,7 +231,7 @@
           </h3>
         </div>
         <div class="p-2 row">
-          <div class="col-sm-12 col-lg-7 col-xs-12 col-md-12 mb-4">
+          <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()"
               *ngIf="!showCustomers">Create Patient</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
@@ -252,9 +253,73 @@
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="label-icon"></i></button>
           </div>
-          <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
+          <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter">
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
               [(ngModel)]="searchValue" (keypress)="search($event)">
+            <i class="fa fa-filter" [matMenuTriggerFor]="filter"></i>
+            <mat-menu #filter="matMenu">
+              <aside class="filterSidebar">
+                <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
+                  <div class="filterClosebtn">
+                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                    <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                      [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+                  </div>
+                  <ul class="sidebar-menu">
+                    <div class="filterTextinput">
+                      <li class="filterli">
+                        <input type="text" #jaldeeid (blur)="doSearch()" (keyup)="focusInput($event,lName)"
+                          class="filterTextbox" [(ngModel)]="filter.jaldeeid" placeholder="{{customer_label | capitalizeFirst}} id">
+                      </li>
+                    </div>
+                    <div class="filterTextinput">
+                      <li class="filterli">
+                        <input type="text" #Ffname (blur)="doSearch()" (keyup)="focusInput($event,lName)"
+                          class="filterTextbox" [(ngModel)]="filter.first_name" placeholder="First Name">
+                      </li>
+                    </div>
+                    <div class="filterTextinput">
+                      <li class="filterli">
+                        <input type="text" #lName (blur)="doSearch()" (keyup)="focusInput($event,Fmobile)"
+                          class="filterTextbox" [(ngModel)]="filter.last_name" placeholder="Last Name">
+                      </li>
+                    </div>
+                    <div class="filterTextinput">
+                      <li class="filterli filterDatepicker">
+                        <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                          #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox"
+                          placeholder="Date of birth" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </li>
+                    </div>
+                    <div class="filterTextinput">
+                      <li class="filterli">
+                        <input type="text" id="txt_mobile" [(ngModel)]="filter.mobile" #Fmobile (blur)="doSearch()"
+                          (keyup)="focusInput($event, Femail)" (keypress)="isNumeric($event)" maxlength="10"
+                          class="filterTextbox" placeholder="Phone Number">
+                      </li>
+                    </div>
+                    <div class="filterTextinput">
+                      <li class="filterli filterDatepicker">
+                        <input type="text" id="txt_email" [(ngModel)]="filter.email" #Femail (blur)="doSearch()"
+                          (keyup)="focusInput($event, Fdate)" class="filterTextbox" placeholder="Email">
+                      </li>
+                    </div>
+                    <div *ngIf="providerLabels.length > 0">
+                      <label class="filterHeaders">Labels</label>
+                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                        *ngFor="let lbl of providerLabels">
+                        <mat-checkbox [checked]="selectedLabels[lbl.label]" (change)="setLabelFilter(lbl, $event)">
+                          {{lbl.displayName}}</mat-checkbox>
+                      </li>
+                    </div>
+                  </ul>
+                </section>
+              </aside>
+            </mat-menu>
           </div>
         </div>
         <!--end::Header-->
@@ -266,6 +331,19 @@
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                <thead>
+                  <tr class="text-left text-uppercase">
+                    <th style="min-width: 250px" class="pl-7"><span class="text-dark-75">
+                        <input type="checkbox">
+                        Name</span></th>
+                    <th style="min-width: 100px">Id</th>
+                    <th style="min-width: 100px">Phone</th>
+                    <th style="min-width: 100px"></th>
+                    <th style="min-width: 130px"></th>
+                    <th style="min-width: 80px"></th>
+                    <th style="min-width: 80px"></th>
+                  </tr>
+                </thead>
                 <tbody>
                   <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index">
                     <td class="pl-0 py-4">
@@ -353,6 +431,39 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="d-flex center py-2 mr-3">
+                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-back icon-xs"></i></a>
+            
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">25</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">26</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
+                    <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
+            
+                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-arrow-next icon-xs"></i></a>
+                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+                </div>
+                <!-- <div class="d-flex align-items-center py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-2 text-muted">Loading...</div>
+                        <div class="spinner spinner-primary mr-10"></div>
+                    </div>
+            
+                    <select class="form-control form-control-sm text-primary font-weight-bold mr-4 border-0 bg-light-primary" style="width: 75px;">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="text-muted">Displaying 10 of 230 records</span>
+                </div> -->
+            </div>
             </div>
             <!--end::Table-->
           </div>

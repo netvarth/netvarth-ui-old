@@ -107,6 +107,7 @@ export class CustomersListComponent implements OnInit {
   searchValue;
   showCustomers = false;
   groupCustomers;
+  selectedRowIndex: any;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -523,10 +524,13 @@ export class CustomersListComponent implements OnInit {
   seeVisible() {
     this.visibility = true;
   }
-  customerGroupSelection(group) {
+  customerGroupSelection(group, index?) {
+    if (index) {
+    this.selectedRowIndex = index;
+    }
     this.showCustomers = false;
     this.selectedGroup = group;
-    if (this.selectedGroup == 'all') {
+    if (this.selectedGroup === 'all') {
       this.getCustomersList();
     } else {
       this.getCustomerListByGroup();
