@@ -210,7 +210,8 @@
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')">All patients</div>
-        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)">{{group.groupName}}
+        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)">
+          {{group.groupName}}
           <!-- <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div> -->
         </div>
       </div>
@@ -222,25 +223,38 @@
         <!--begin::Header-->
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all'">All Patients</span>
-            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
+            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all'">All
+              Patients</span>
+            <span class="card-label font-1 font-weight-bolder text-dark"
+              *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
           </h3>
         </div>
         <div class="p-2 row">
           <div class="col-sm-12 col-lg-7 col-xs-12 col-md-12 mb-4">
-            <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()" *ngIf="!showCustomers && !showRemove">Create Patient</button>
-            &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoAdd()" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove">Add Patient</button> &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="showCustomerstoRemove()" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove && customers.length > 0">Remove Patient</button>
-            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('add')" *ngIf="selectedGroup == 'all'">Create Group</button>
-            &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="createCustomerGroup('edit')" *ngIf="selectedGroup !== 'all' && !showCustomers && !showRemove">Edit Group</button> 
-             &nbsp;&nbsp;&nbsp;
-            <button mat-flat-button class="font-size-xs add_btn" (click)="addCustomerToGroup()" *ngIf="selectedGroup !== 'all' && showCustomers">Add</button>
-            <button mat-flat-button class="font-size-xs add_btn" (click)="removeCustomerFromGroup()" *ngIf="selectedGroup !== 'all' && showRemove">Remove</button>
+            <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()"
+              *ngIf="!showCustomers">Create Patient</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
+              *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="createCustomerGroup('add')"
+              *ngIf="selectedGroup == 'all'">Create Group</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="createCustomerGroup('edit')"
+              *ngIf="selectedGroup !== 'all' && !showCustomers">Edit Group</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
+              *ngIf="selectedGroup !== 'all' && showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0">Add</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="removeCustomerFromGroup()"
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
+                class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon"><i
+                class="fa fa-comments" aria-hidden="true"></i> </button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showLabelPopup()"
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
+                class="label-icon"></i></button>
           </div>
           <div class="col-sm-6 col-lg-5 col-xs-12 col-md-6">
-            <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1" [(ngModel)]="searchValue" (keypress)="search($event)">
+            <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
+              [(ngModel)]="searchValue" (keypress)="search($event)">
           </div>
         </div>
         <!--end::Header-->
@@ -250,6 +264,7 @@
           <div class="tab-content">
             <!--begin::Table-->
             <div class="table-responsive1">
+              <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <tbody>
                   <tr class="row_data border-bottom" *ngFor="let customer of customers; let i=index">
@@ -329,8 +344,9 @@
                       </mat-menu>
                     </td>
                   </tr>
-
-
+                  <tr *ngIf="!apiloading && customers.length === 0">
+                    No customers found
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -354,10 +370,3 @@
   <script src="../../../../../assets/js/pages/widgets.js"></script>
   <!--end::Page Scripts-->
 </section>
-
-
-
-
-<div *ngIf="apiloading" style="margin-top: 100px">
-  <app-common-innerloading-spinner></app-common-innerloading-spinner>
-</div>

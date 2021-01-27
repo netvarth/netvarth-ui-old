@@ -15,6 +15,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { CustomerGroupComponent } from '../customer-group/customer-group.component';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-customers-list',
   templateUrl: './customers-list.component.html',
@@ -106,7 +107,6 @@ export class CustomersListComponent implements OnInit {
   searchValue;
   showCustomers = false;
   groupCustomers;
-  showRemove = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -177,7 +177,6 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
-                console.log(this.customers);
                 this.apiloading = false;
                 this.loadComplete = true;
               },
@@ -338,6 +337,11 @@ export class CustomersListComponent implements OnInit {
       if (!this.selectedcustomersformsg[0].phoneNo && !this.selectedcustomersformsg[0].email) {
         this.hide_msgicon = true;
       }
+    } else {
+      const customerList = this.selectedcustomersformsg.filter(customer => customer.phoneNo || customer.email);
+      if (customerList.length === 0) {
+        this.hide_msgicon = true;
+      }
     }
     for (let i = 0; i < this.customerSelected.length; i++) {
       if (this.customerSelected[i]) {
@@ -353,7 +357,7 @@ export class CustomersListComponent implements OnInit {
       this.allCustomerSelected = false;
     }
   }
-  CustomersInboxMessage(customer) {
+  CustomersInboxMessage(customer?) {
     if (customer) {
       this.selectedcustomersformsg.push(customer);
     }
@@ -445,7 +449,7 @@ export class CustomersListComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  showLabelPopup(customer) {
+  showLabelPopup(customer?) {
     if (customer) {
       this.selectedcustomersformsg.push(customer);
     }
@@ -460,7 +464,11 @@ export class CustomersListComponent implements OnInit {
     });
     notedialogRef.afterClosed().subscribe(result => {
       this.getLabel();
-      this.getCustomersList();
+      if (this.selectedGroup == 'all') {
+        this.getCustomersList();
+      } else {
+        this.getCustomerListByGroup();
+      }
     });
   }
   selectAll() {
@@ -517,9 +525,7 @@ export class CustomersListComponent implements OnInit {
   }
   customerGroupSelection(group) {
     this.showCustomers = false;
-    this.showRemove = false;
     this.selectedGroup = group;
-    console.log(this.selectedGroup);
     if (this.selectedGroup == 'all') {
       this.getCustomersList();
     } else {
@@ -542,18 +548,16 @@ export class CustomersListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-this.getCustomerGroup();
+      this.getCustomerGroup();
     });
   }
   search(event) {
     this.filter.first_name = this.searchValue;
-    console.log(event.keyCode);
     if (event.keyCode === 13) {
       this.getCustomersList();
     }
   }
   addCustomerToGroup() {
-    console.log(this.selectedcustomersformsg);
     const ids = [];
     for (let customer of this.selectedcustomersformsg) {
       ids.push(customer.id);
@@ -568,24 +572,34 @@ this.getCustomerGroup();
       });
   }
   removeCustomerFromGroup() {
-    console.log(this.selectedcustomersformsg);
     const ids = [];
     for (let customer of this.selectedcustomersformsg) {
       ids.push(customer.id);
     }
-    console.log(ids);
-    this.provider_services.removeCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
-      (data: any) => {
-        this.showCustomers = false;
-        this.getCustomerListByGroup();
-      },
-      error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Are you sure want to remove?',
+        'type': 'yes/no'
+      }
+    });
+    removeitemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.removeCustomerFromGroup(this.selectedGroup.groupName, ids).subscribe(
+          (data: any) => {
+            this.showCustomers = false;
+            this.getCustomerListByGroup();
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      }
+    });
   }
   showCustomerstoAdd() {
     this.showCustomers = true;
-    console.log(this.groupCustomers);
     this.getCustomersList();
   }
   getCustomerListByGroup() {
@@ -604,7 +618,6 @@ this.getCustomerGroup();
             .subscribe(
               data => {
                 this.customers = this.groupCustomers = data;
-                console.log(this.customers);
                 this.apiloading = false;
               },
               error => {
@@ -631,8 +644,4 @@ this.getCustomerGroup();
       return false;
     }
   }
-  showCustomerstoRemove() {
-    this.showRemove = true;
-  }
 }
-

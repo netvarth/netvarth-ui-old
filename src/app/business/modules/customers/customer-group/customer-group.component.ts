@@ -10,7 +10,6 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 })
 export class CustomerGroupComponent implements OnInit {
   name;
-  displayName;
   description;
   groupDetails;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
@@ -20,7 +19,6 @@ export class CustomerGroupComponent implements OnInit {
     console.log(this.data);
     this.groupDetails = this.data.details;
     this.name = this.groupDetails.groupName;
-    // this.displayName = this.groupDetails.displayName;
     this.description = this.groupDetails.description;
   }
 
@@ -29,7 +27,6 @@ export class CustomerGroupComponent implements OnInit {
   customerGroup() {
     const postData = {
       'groupName': this.name,
-      'displayName': this.displayName,
       'description': this.description
     };
     if (this.data.type === 'add') {
