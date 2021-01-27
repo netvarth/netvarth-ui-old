@@ -99,3 +99,6 @@
 .customersList .filterClosebtn {
   background: #1e4079 !important;
 }
+.customersList .fade:not(.show) {
+  opacity: 2 !important;
+ }
