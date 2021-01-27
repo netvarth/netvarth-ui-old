@@ -328,7 +328,7 @@ buttons: [
               i,
               { // modal
                   img: this.imagelist[i].s3path,
-                  description: ''
+                  description: this.imagelist[i].caption || ''
               });
               console.log(imgobj);
           this.image_list_popup.push(imgobj);
