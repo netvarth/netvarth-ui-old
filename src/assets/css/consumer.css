@@ -7134,4 +7134,11 @@ margin-top: 7px;
   z-index: -1;
   box-shadow: 0 8px 6px -6px #00000085;
 }
+.consumer-dash .grid-card .mgn-tp-8 {
+  margin-top: -8px;
+}
+.consumer-dash .grid-card .amtPaid {
+  color: black;
+  font-family: monospace;
+}
 
