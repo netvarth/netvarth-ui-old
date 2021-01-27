@@ -69,6 +69,7 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { WordProcessor } from './shared/services/word-processor.service';
 import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { AuthService } from './shared/services/auth-service';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
