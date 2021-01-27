@@ -1627,6 +1627,10 @@
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
                                                 </button>
+                                                <button mat-menu-item >
+                                                    <span class="rate-service" [class.rated]="isRated(oder)"
+                                                        (click)="rateService(oder,'order')">{{rate_visit}}</span>
+                                                </button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
@@ -1706,6 +1710,10 @@
 
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
+                                                    </button>
+                                                    <button mat-menu-item >
+                                                        <span class="rate-service" [class.rated]="isRated(oder)"
+                                                            (click)="rateService(oder,'order')">{{rate_visit}}</span>
                                                     </button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                         <i class="fa chat-icon"></i>
