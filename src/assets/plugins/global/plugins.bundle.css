@@ -117,17 +117,17 @@
   font-size: 1rem; }
 
 .ki:before {
-  font-family: "Ki";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  line-height: 1;
-  text-decoration: inherit;
-  text-rendering: optimizeLegibility;
-  text-transform: none;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased; }
+  font-family: "Ki" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  line-height: 1 !important;
+  text-decoration: inherit !important;
+  text-rendering: optimizeLegibility !important;
+  text-transform: none !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: antialiased !important;
+  font-smoothing: antialiased !important; }
 
 .ki-double-arrow-next:before {
   content: "\f100"; }

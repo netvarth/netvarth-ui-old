@@ -245,7 +245,11 @@
                         <div class="modal-body">
                           <div class="form-group">
                             <label for="exampleInputPassword1">Name <span class="text-danger">*</span></label>
-                            <input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Password"/>
+                            <input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Name"/>
+                          </div>
+                          <div class="form-group mb-1">
+                            <label for="exampleTextarea">Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control1" id="exampleTextarea" rows="4"></textarea>
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -355,15 +359,15 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 250px" class="pl-7"><span class="text-dark-75">
+                    <th style="min-width: 150px" class="pl-7"><span class="text-dark-75">
                         <input type="checkbox">
                         Name</span></th>
-                    <th style="min-width: 100px">Id</th>
-                    <th style="min-width: 100px">Phone</th>
-                    <th style="min-width: 100px"></th>
-                    <th style="min-width: 130px"></th>
-                    <th style="min-width: 80px"></th>
-                    <th style="min-width: 80px"></th>
+                    <th class="hide_th" style="min-width: 100px">Id</th>
+                    <th class="hide_th" style="min-width: 100px">Phone</th>
+                    <th class="hide_th" style="min-width: 10px"></th>
+                    <th style="min-width: 50px"></th>
+                    <th style="min-width: 50px"></th>
+                    <th style="min-width: 10px"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -383,26 +387,28 @@
                       </div>
                       <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div>
                     </td>
-                    <td>
+                    <td class="hide_th">
                       <span class="text-dark-75 d-block ">
                         {{customer.jaldeeId}}
                       </span>
                     </td>
-                    <td>
+                    <td class="hide_th">
                       <span class="text-dark-75 d-block" *ngIf="customer.phoneNo">
                         {{customer.countryCode}} {{customer.phoneNo}}
                       </span>
                     </td>
-                    <td>
+                    <td class="hide_th">
                       <span class="text-dark-75 d-block" *ngIf="customer.dob">
                         {{customer.dob | date : dateFormat}}
                       </span>
                     </td>
                     <td>
-                      <button mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
+                      <button class="hide_th" mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
+                      <i class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
                     </td>
                     <td>
-                      <button mat-flat-button class="prof_btn" (click)="viewCustomer(customer)">Profile</button>
+                      <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Profile</button>
+                      <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
                     </td>
                     <td class="pr-0 text-right">
                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">

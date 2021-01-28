@@ -4,17 +4,26 @@
 .customersList .pitch_blu {
   color: #1e4079 !important;
 }
-@media screen and (max-width: 1000px) {
-    .customersList .part2 {
-      display: none;
+.customersList .hide_th {
+  /* display: inline-block !important; */
+}
+.customersList .hidden_th {
+  display: none !important;
+}
+
+@media screen and (max-width: 1218px) {
+    .customersList .hide_th {
+      display: none !important;
     }
-    .customersList .visible {
-        display: inherit !important;
+    .customersList .hidden_th {
+      display: inline-block !important;
     }
-    .customersList .invisible {
-        display: none;
-    }
+} 
+@media screen and (max-width: 385px) {
+  .customersList .card-body {
+    padding: 0 !important;
   }
+} 
 
 .customersList .card {
   border-radius: 0 !important;
