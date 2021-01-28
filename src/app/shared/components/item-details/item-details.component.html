@@ -71,6 +71,9 @@
                     <p class="title-style" *ngIf="isPrice && showitemprice">
                       <span class="rupee-font" style="font-size: xx-large">&#8377;{{currentItem.price}}</span> &nbsp;
                     </p>
+                    <p class="title-style" *ngIf="!currentItem.isStockAvailable">
+                      <span  style="font-size: x-large;color: red"><sup>*</sup>Out of stock</span> &nbsp;
+                    </p>
                   </div>
                   <div class="col-md-12  mr-area">
                     <p *ngIf = "currentItem.itemDesc" class="m0 question-header">Description</p>
@@ -88,13 +91,13 @@
                   </div>
                   <div class="col-md-12 pad-lt-25 mgn-bt-50">
                     <div class="btn-lt pull-left">
-                      <button [ngClass]="{'disabled1': currentItemObject.minqty === getItemQty()}" (click)="decrement()">-</button>
+                      <button [ngClass]="{'disabled1': currentItemObject.minqty === getItemQty()|| !currentItem.isStockAvailable}" (click)="decrement()">-</button>
                     </div>
                     <div class="count-o pull-left">
                       {{getItemQty()}}
                     </div>
                     <div class="btn-rt pull-left">
-                      <button [ngClass]="{'disabled1': currentItemObject.maxqty === getItemQty()}" (click)="increment()">+</button>
+                      <button [ngClass]="{'disabled1': currentItemObject.maxqty === getItemQty()|| !currentItem.isStockAvailable}" (click)="increment()">+</button>
                     </div>
                   </div>
                   <div class="col-md-12  mr-area">
