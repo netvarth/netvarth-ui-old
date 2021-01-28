@@ -2330,19 +2330,41 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openAttachmentGallery(appt) {
     this.image_list_popup_temp = [];
-    this.image_list_popup = [];
-    this.provider_services.getProviderAttachments(appt.uid).subscribe(
+    this.image_list_popup = []; 
+    // this.provider_services.getProviderAttachments(appt.uid).subscribe(
+    this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
+        console.log(communications);
         let count = 0;
+        // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+        //   if (communications[comIndex].attachements) {
+        //     for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+        //       const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+        //       let imagePath = thumbPath;
+        //       const description = communications[comIndex].attachements[attachIndex].s3path;
+        //       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+        //       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+        //         imagePath = communications[comIndex].attachements[attachIndex].s3path;
+        //       }
+        //       const imgobj = new Image(
+        //         count,
+        //         { // modal
+        //           img: imagePath,
+        //           description: description
+        //         },
+        //       );
+        //       this.image_list_popup_temp.push(imgobj);
+        //       count++;
+        //     }
+        //   }
+        // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          if (communications[comIndex].attachements) {
-            for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-              const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+             const thumbPath = communications[comIndex].thumbPath;
               let imagePath = thumbPath;
-              const description = communications[comIndex].attachements[attachIndex].s3path;
+              const description = communications[comIndex].s3path;
               const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
               if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                imagePath = communications[comIndex].attachements[attachIndex].s3path;
+                imagePath = communications[comIndex].s3path;
               }
               const imgobj = new Image(
                 count,
@@ -2353,8 +2375,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               );
               this.image_list_popup_temp.push(imgobj);
               count++;
-            }
-          }
         }
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;

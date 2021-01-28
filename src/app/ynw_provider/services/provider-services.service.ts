@@ -1514,6 +1514,14 @@ export class ProviderServices {
       const url = 'provider/communications/' + uuid;
       return this.servicemeta.httpGet(url);
    }
+   getProviderAppointmentAttachmentsByUuid(uuid) {
+      const url = 'provider/appointment/attachment/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderWaitlistAttachmentsByUuid(uuid) {
+      const url = 'provider/waitlist/attachment/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
    getAccountContactInfo() {
       const url = 'provider/contact';
       return this.servicemeta.httpGet(url);
