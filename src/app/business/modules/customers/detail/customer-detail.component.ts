@@ -16,7 +16,9 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 
 @Component({
     selector: 'app-customer-detail',
-    templateUrl: './customer-detail.component.html'
+    templateUrl: './customer-detail.component.html',
+    styleUrls: ['../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
+
 })
 export class CustomerDetailComponent implements OnInit {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;

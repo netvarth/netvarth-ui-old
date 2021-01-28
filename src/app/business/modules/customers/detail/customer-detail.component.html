@@ -78,7 +78,7 @@
                         </ul>
                     </div>
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                        <div class="lbl col-sm-12 col-md-6 col-lg-6" style="padding-top: 0px !important;padding: 2.25rem;">
                             <div class="mgn-up-20 mgn-bt-10 red" *ngIf="customerErrorMsg !== '' && !loading">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i> {{customerErrorMsg}}
                             </div>
@@ -103,10 +103,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group">
                                         <label class="form-control-label" >Mobile #</label>
+                                        <div class="input-group">
                                         <div class="input-group-prepend"><span class="input-group-text">+91</span></div>
-                                        <input type="text" class="form-control is-invalid" (keypress)="isNumeric($event)" id="mobile_number"
+                                        <input type="text" class="form-control1" (keypress)="isNumeric($event)" id="mobile_number"
                                         placeholder="{{mobile_cap}} " formControlName="mobile_number"
                                         autocomplete="off" maxlength=10 />
+                                        </div>
                                     </div>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
@@ -135,7 +137,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group">
                                         <label class="form-control-label" >{{customerPlaceholder | capitalizeFirst}}</label>
-                                        <input type="text" class="form-control is-invalid" id="customer_id" placeholder="{{customerPlaceholder | capitalizeFirst}}"
+                                        <input type="text" class="form-control1" id="customer_id" placeholder="{{customerPlaceholder | capitalizeFirst}}"
                                         formControlName="customer_id" autocomplete="off"
                                             (blur)="onFieldBlur('customer_id')"/>
                                     </div>
@@ -154,7 +156,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group">
                                         <label class="form-control-label" >First Name</label>
-                                        <input type="text" class="form-control is-invalid" id="first_name" placeholder="First Name"
+                                        <input type="text" class="form-control1" id="first_name" placeholder="First Name"
                                         formControlName="first_name" autocomplete="off"
                                             (blur)="onFieldBlur('first_name')"/>
                                     </div>
@@ -174,7 +176,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group">
                                         <label class="form-control-label" >Last Name</label>
-                                        <input type="text" class="form-control is-invalid" id="last_name" placeholder="Last Name"
+                                        <input type="text" class="form-control1" id="last_name" placeholder="Last Name"
                                         formControlName="last_name" autocomplete="off"
                                             (blur)="onFieldBlur('last_name')"/>
                                     </div>
@@ -194,7 +196,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group">
                                         <label class="form-control-label" >Email</label>
-                                        <input type="text" class="form-control is-invalid" id="email_id" placeholder="Email(user@xyz.com)"
+                                        <input type="text" class="form-control1" id="email_id" placeholder="Email(user@xyz.com)"
                                         formControlName="email_id" autocomplete="off"
                                             (blur)="onFieldBlur('email_id')"/>
                                     </div>
@@ -236,7 +238,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </mat-form-field> -->
                                     <div class="form-group mb-1">
                                         <label for="exampleTextarea">Address</label>
-                                        <textarea type="text" class="form-control" id="exampleTextarea" id="address" placeholder="Address"
+                                        <textarea type="text" class="form-control1" id="exampleTextarea" id="address" placeholder="Address"
                                         formControlName="address"></textarea>
                                     </div>
                                 </div>
