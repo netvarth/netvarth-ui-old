@@ -76,11 +76,12 @@
                                                         <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
                                                             <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
                                                         </div>
-                                                        
+
 
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
+                                                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="msgCount" matBadgeOverlap=false>sms</mat-icon>
                                                 <div class="txt-custdet">Delivery Type</div>
                                                 <div *ngIf="waitlist.storePickup" class="txt-cust-name">Store Pick Up</div>
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
@@ -96,9 +97,9 @@
                                                         </ngx-qrcode>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
-                                         
+
 
                                         </div>
                                     </div>
@@ -122,9 +123,9 @@
                                         </mat-button-toggle-group>
                                     </div>
                                     </div>
-                                    
+
                                     <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="waitlist.shoppingList">
-                                       
+
                                             <ul class="orderdetailgalul">
                                             <li *ngFor="let file of waitlist.shoppingList;let i = index "style="list-style: none;">
                                               <div class="orderdetailgalimg_outer">
@@ -134,7 +135,7 @@
                                             </div>
                                             </li>
                                             </ul>
-                                          
+
                                     </div> -->
 
                                     <!-- Item list -->
@@ -220,7 +221,7 @@
                                                         <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
                                                                 *ngIf="image_list_popup[2].modal.img"
                                                                 [src]="image_list_popup[2].modal.img" /></div>
-                                                       
+
                                                         <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                                                             *ngIf="(image_list_popup.length-3)==0">
                                                             <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -235,12 +236,12 @@
                                             [buttonsConfig]="customButtonsFontAwesomeConfig"
                                             (buttonBeforeHook)="onButtonBeforeHook()"
                                             (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                                               
-                                              
+
+
                                         </div>
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
 
@@ -251,3 +252,4 @@
         </div>
     </div>
 </section>
+

@@ -1,0 +1,47 @@
+.ownermsg
+ {
+   height:40px;
+   width:400px;
+   border-radius: 5px;
+   background-color: #3c8dbc;
+   color:white;
+
+
+ }
+ .receivermsg
+ {
+   height:40px;
+   width:400px;
+   border-radius: 5px;
+   background-color: lightblue;
+   color:black;
+
+
+ }
+ .fontStyle{
+    font-size:12px !important;
+    margin:15px  !important;
+    font-style: italic !important;
+    padding:10px;
+    font-weight:bold;
+ }
+ div .time {
+   width:400px;
+ }
+ footer {
+  text-align: center;
+  padding: 3px;
+  background-color: lightgrey;
+  color: white;
+  height:50px;
+}
+.main{
+  border:1px solid black;
+}
+.btn-primary:hover {
+  border-color: blue !important;
+}
+.text-muted {
+  color: #6c757dd9 !important;
+  font-size:75% !important;
+}

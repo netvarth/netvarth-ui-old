@@ -717,7 +717,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             'phoneNumber': contactNumber,
             'email': contact_email,
             'orderNote': this.orderlistNote,
-            // 'coupons': this.selected_coupons
+             'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
@@ -911,6 +911,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         );
     }
   }
+
   goBackToCheckout(selectesTimeslot, queue) {
     this.action = '';
     console.log(queue);

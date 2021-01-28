@@ -36,7 +36,7 @@ export class OrderDashboardComponent implements OnInit {
     orderNumber: '',
     orderStatus: 'all',
     orderMode: 'all'
-  }; // same in resetFilter Fn
+  }; // same in resetFilter Fns
   filters = {
     first_name: false,
     last_name: false,
@@ -47,6 +47,7 @@ export class OrderDashboardComponent implements OnInit {
     orderStatus: false,
     orderMode: false
   };
+
   customerIdTooltip = '';
   customer_label = '';
   selected_type = 'all';
@@ -159,6 +160,7 @@ export class OrderDashboardComponent implements OnInit {
       this.loading = false;
     });
   }
+
   getProviderFutureOrders() {
     this.loading = true;
     let filter = {};

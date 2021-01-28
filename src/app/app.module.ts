@@ -97,6 +97,7 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { CommunicationComponent } from './shared/components/communication/communication.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -133,7 +134,8 @@ export function init_app(globalService: GlobalService) {
     JaldeeBlogComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
-    ItemDetailsSharedComponent
+    ItemDetailsSharedComponent,
+    CommunicationComponent
   ],
   entryComponents: [
     SignUpComponent,

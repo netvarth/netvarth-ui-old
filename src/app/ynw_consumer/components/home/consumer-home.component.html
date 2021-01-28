@@ -186,7 +186,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div 
+                                                        <div
                                                         [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
                                                             <span>
                                                                 <span>
@@ -1845,7 +1845,7 @@
                             </mat-grid-list>
                         </div>
                         <!-- show more -->
-                        <div *ngIf="!more_futrOrdersShow && total_future_order.length > 3" (click)="showMoreFutOrders()"
+                        <div *ngIf="!more_futrOrdersShow && total_future_order &&total_future_order.length > 3" (click)="showMoreFutOrders()"
                             class="mgn-up-10 mgn-bt-10 pad-lt-10">
                             <span><a class="show_more">Show more...</a></span>
                         </div>
