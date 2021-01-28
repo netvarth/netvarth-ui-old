@@ -1699,10 +1699,10 @@ export class AppointmentComponent implements OnInit {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
-        if (this.consumerNote === '') {
-            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
-        }
-        dataToSend.append('message', this.consumerNote);
+        // if (this.consumerNote === '') {
+        //     this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
+        // }
+        // dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;
         if (this.selectedMessage) {
@@ -1715,10 +1715,10 @@ export class AppointmentComponent implements OnInit {
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
         // this.shared_services.addConsumerAppointmentNote(this.account_id, uuid,
-        this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
+        // this.shared_services.addProviderAppointmentNote(uuid, dataToSend)
+        //     .subscribe(
+       this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
             .subscribe(
-    //    this.shared_services.addProviderAppointmentAttachment(uuid, dataToSend)
-            // .subscribe(
                 () => {
                 },
                 error => {
