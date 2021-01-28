@@ -928,4 +928,21 @@ export class SharedServices {
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
+  addProviderWaitlistAttachment(uuid, body) {
+    const url = 'provider/waitlist/' + uuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerWaitlistAttachment(accountid, uuid, body) {
+    const url = 'consumer/waitlist/' + uuid + '/attachment' +'?account=' + accountid;;
+    return this.servicemeta.httpPost(url, body);
+  }
+  addProviderAppointmentAttachment(uuid, body) {
+    const url = 'provider/appointment/' + uuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerAppointmentAttachment(accountid, uuid, body) {
+    const url = 'consumer/appointment/' + uuid + '/attachment' +'?account=' + accountid;;
+    return this.servicemeta.httpPost(url, body);
+  }
+
 }
