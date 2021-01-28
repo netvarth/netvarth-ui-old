@@ -127,7 +127,10 @@
 
                 <!--begin::Form group-->
                 <div class="form-group">
+                  <div _ngcontent-eec-c483="" class="d-flex justify-content-between mt-n5">
                     <label class="font-size-h6 font-weight-bolder text-dark" style="text-align: left !important;">Mobile/Email</label>
+                  </div>
+                    
                     <input class="form-control  py-7 px-6 rounded-lg border-0" type="text" id="emailId" 
                     formControlName="emailId" autocomplete="off" (keyup)="handlekeyup($event)"/>
                 </div>
@@ -149,8 +152,8 @@
 
                 <!--begin::Action-->
                 <div class="pb-lg-0 pb-5">
-                    <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Login</button>
-                    <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">Join as a service provider</button>
+                    <button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-lg px-8 py-2 my-3 mr-3">Login</button>
+                    <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button" class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service provider</button>
                 </div>
                 <!--end::Action-->
             </form>
