@@ -5,6 +5,7 @@ import { TwilioService } from "../../../shared/services/twilio-service";
 import { Location } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
+import { Title } from "@angular/platform-browser";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -32,8 +33,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
         private _location: Location,
-        private meetService: MeetService
+        private meetService: MeetService,
+        private titleService: Title
     ) {
+        this.titleService.setTitle('Jaldee Business - Video');
         this.renderer = rendererFactory.createRenderer(null, null);
         console.log(this.renderer);
         this.activateroute.params.subscribe(

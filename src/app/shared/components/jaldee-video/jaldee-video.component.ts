@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../../../src/app/ynw_consumer/components/consumer-join/join.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../services/group-storage.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-jaldee-video',
   templateUrl: './jaldee-video.component.html'
@@ -40,8 +41,10 @@ export class JaldeeVideoComponent implements OnInit {
     private dialog: MatDialog,
     public router: Router,
     private groupService: GroupStorageService,
-    public date_format: DateFormatPipe
+    public date_format: DateFormatPipe,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Jaldee - Meetings');
     this.activated_route.params.subscribe(
       qparams => {
         if (qparams.phonenumber !== 'new') {
