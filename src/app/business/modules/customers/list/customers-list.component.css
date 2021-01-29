@@ -111,3 +111,6 @@
 .customersList .fade:not(.show) {
   opacity: 2 !important;
  }
+ .max-hgt-20 {
+   max-height: 20px;
+ }

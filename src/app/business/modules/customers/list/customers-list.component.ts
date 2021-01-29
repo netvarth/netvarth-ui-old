@@ -224,7 +224,6 @@ export class CustomersListComponent implements OnInit {
     return this.shared_functions.isNumeric(evt);
   }
   doSearch() {
-    console.log(this.selectedGroup);
     if (this.selectedGroup == 'all') {
       this.getCustomersList();
     } else {
@@ -363,12 +362,13 @@ export class CustomersListComponent implements OnInit {
     }
   }
   CustomersInboxMessage(customer?) {
+    let customers = [];
     if (customer) {
-      this.selectedcustomersformsg.push(customer);
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
     }
-    let customerlist = [];
-    customerlist = this.selectedcustomersformsg;
-    this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'customer-list')
+    this.provider_shared_functions.ConsumerInboxMessage(customers, 'customer-list')
       .then(
         () => { },
         () => { }
@@ -455,15 +455,18 @@ export class CustomersListComponent implements OnInit {
     event.stopPropagation();
   }
   showLabelPopup(customer?) {
+    let customers = [];
     if (customer) {
-      this.selectedcustomersformsg.push(customer);
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
     }
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        customer: this.selectedcustomersformsg,
+        customer: customers,
         type: 'label'
       }
     });
@@ -578,10 +581,13 @@ export class CustomersListComponent implements OnInit {
   }
   removeCustomerFromGroup(customer?) {
     const ids = [];
+    let customers = [];
     if (customer) {
-      this.selectedcustomersformsg.push(customer);
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
     }
-    for (let customer of this.selectedcustomersformsg) {
+    for (let customer of customers) {
       ids.push(customer.id);
     }
     const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -651,5 +657,20 @@ export class CustomersListComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  changeGroupStatus(group) {
+    let status;
+    if (group.status==='ENABLED') {
+      status = 'DISABLE';
+    } else {
+      status = 'ENABLE';
+    }
+    this.provider_services.updateCustomerGroupStatus(group.id, status).subscribe(
+      (data: any) => {
+        this.getCustomerGroup();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
 }

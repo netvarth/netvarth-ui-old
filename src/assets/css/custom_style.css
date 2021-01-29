@@ -27090,3 +27090,11 @@ width: 40px !important;
 .dark-green {
   color: green !important;
 }
+.customersList .pagination>li>span {
+  background: #1e4079 !important;
+  color: white !important;
+  border-radius: 5px !important;
+}
+.customersList .pagination>.disabled>span {
+  background-color: #ddd !important;
+}
