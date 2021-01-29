@@ -56,6 +56,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { MatBadgeModule } from '@angular/material/badge';
 import { CommunicationComponent } from '../shared/components/communication/communication.component';
 import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
+import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provide
     ShareButtonsModule,
     ShareIconsModule,
     ModalGalleryModule,
-    MatBadgeModule
+    MatBadgeModule,
+    GalleryModule
   ],
   declarations: [
     ConsumerComponent,
