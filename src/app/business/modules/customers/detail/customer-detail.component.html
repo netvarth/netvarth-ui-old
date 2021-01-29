@@ -62,8 +62,8 @@
                        
                 </h3>
                 <div class="card-toolbar">
-                    <div class="example-tools justify-content-center">
-                        Find Patient 
+                    <div class="example-tools justify-content-center pointer-cursor" (click)="findCustomer()">
+                        Find {{customer_label | capitalizeFirst}}
                         <div class="mr-4 flex-shrink-0 text-center" style="width: 40px;">
                             <i class="text-dark-50 flaticon2-search"></i>
                           </div>
@@ -71,52 +71,110 @@
                 </div>
             </div>
             <!--begin::Form-->
-			<form class="form" id="customer_creation">
+			<form *ngIf="!loading && !viewCustomer" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+            onSubmit(amForm.value)" (keyup)="resetApiErrors()"  class="form" id="customer_creation">
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-lg-6">
-                            <label>First Name</label>
-                            <input type="email" name="first_name" class="form-control" placeholder="Enter first name"/>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Last Name</label>
-                            <input type="email" class="form-control" placeholder="Enter last name"/>
-                            <span class="form-text text-muted">Please enter  last name </span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" *ngIf="haveMobile">
                             <label>Mobile</label>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text1"><i style="font-style: normal;font-size: small;">+91</i></span></div>
-                                <input type="text" class="form-control" placeholder="Mobile number"/>
+                                <input type="text" class="form-control" (keypress)="isNumeric($event)" id="mobile_number"
+                                placeholder="{{mobile_cap}} " formControlName="mobile_number"
+                                autocomplete="off" maxlength=10/>
                             </div>
-                            <span class="form-text text-muted">Please enter  mobile no</span>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'mobile_number')" [errorMsgs]="fed_service.getErrorMessage(amForm,'mobile_number',
+          {
+            'required' : 'Mobile number is required',
+            'minlength' : 'Enter a 10 digit mobile number',
+            'maxlength' : 'Enter a 10 digit mobile number',
+            'pattern' : 'Only numbers are allowed'
+          })">
+                                    </app-field-error-display>
                         </div>
-                        <div class="col-lg-6">
-                            <label>Patient Id</label>
+                        <div class="col-lg-6" *ngIf="customidFormat && customidFormat.customerSeriesEnum && customidFormat.customerSeriesEnum === 'MANUAL'">
+                            <label>{{customerPlaceholder | capitalizeFirst}}</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter id"/>
+                                <input type="text" class="form-control" id="customer_id"
+                                placeholder="{{customerPlaceholder | capitalizeFirst}}"
+                                formControlName="customer_id" autocomplete="off"
+                                (blur)="onFieldBlur('customer_id')"/>
                                 <div class="input-group-append"></div>
                             </div>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'customer_id')" [errorMsgs]="fed_service.getErrorMessage(amForm,'customer_id',
+    {
+      'required' : 'Please enter ' + customer_label + ' id'
+    })">
+                                    </app-field-error-display>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>First Name</label>
+                            <input type="email" name="first_name" class="form-control" id="first_name"
+                            placeholder="{{f_name_cap}}" formControlName="first_name" autocomplete="off"
+                            (blur)="onFieldBlur('first_name')"/>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'first_name',
+    {
+      'required' : 'Please enter first name',
+      'pattern' : 'Only letters are allowed'
+    })">
+                                    </app-field-error-display>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <label>Last Name</label>
+                            <input type="email" class="form-control" id="last_name"
+                            placeholder="{{l_name_cap}}" formControlName="last_name" autocomplete="off"
+                            (blur)="onFieldBlur('last_name')"/>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+    {
+      'required' : 'Please enter last name',
+      'pattern' : 'Only letters are allowed'
+    })">
+                                    </app-field-error-display>
+                        </div>
+                        
+                    </div>
+                    
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>Email</label>
                             <div class="input-group">
                                 <div class="input-group-prepend"></div>
-                                <input type="text" class="form-control" placeholder="Email"/>
+                                <input type="text" class="form-control" id="email_id"
+                                placeholder="Email(user@xyz.com)" formControlName="email_id"
+                                autocomplete="off"/>
                             </div>
+                            <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'email_id')"
+                                        errorMsg="Please enter valid email.">
+                                    </app-field-error-display>
                         </div>
                         <div class="col-lg-6">
                             <label>Date of birth</label>
                             <div class="input-group">
-                                <input class="form-control pad-19" type="date" value="2011-08-19" id="example-date-input"/>
+                                <input class="form-control pad-19" type="date" value="2011-08-19" id="example-date-input"
+                                formControlName="dob" [max]="tday" [min]="minday"/>
                             </div>
+                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'dob')"
+                                        errorMsg="Please select the date of birth.">
+                                    </app-field-error-display>
                         </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Adress</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <textarea type="text" class="form-control" id="address" placeholder="Address"
+                                formControlName="address"></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-6">
                             <label>Gender</label>
                             <div class="radio-inline">
@@ -137,13 +195,14 @@
                                 </label>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-lg-6">
-                            <button type="reset" class="btn btn-primary mr-2">Save</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <button (click)="onCancel()" type="reset" class="btn btn-secondary" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
+                            <button type="submit" [disabled]="!amForm.valid || disableButton" class="btn btn-primary mr-2">{{save_btn}}</button>
                         </div>
                         
                     </div>
