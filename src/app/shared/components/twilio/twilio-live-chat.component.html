@@ -2,21 +2,11 @@
     <div class="container">
         <div class="row mgn-up-5">
             <div class="panel panel-default no-padding">
-                <!-- <div class="panel-heading top-row no-padding">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <div class="row col-md-12 col-xs-12 col-sm-12 no-padding-small m0">                          
-                            <div class="lgo pull-left">
-                                <a routerLink="/"><img src="assets/images/jaldee-logo.png" alt="Jaldee Logo"></a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="panel-body no-padding">
                     <div class="videocontainer no-padding" >
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'hide': !twilioService.preview}">
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                                 <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer" class="previewContainer col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                    
                                 </div>
                                 <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                     <div class="mgn-up-50 mgn-bt-20 centeralign col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -26,7 +16,7 @@
                                         <button (click)="joinVideo()">Join now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                                     </div> -->
                                     <div class="centeralign join-vid-btn mgn-bt-20 col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                        <button (click)="joinVideo()">Join now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
+                                        <button  [disabled]="!providerReady" (click)="isProviderReady && joinRoom()">Join now</button> <button class="mgn-lt-5" (click)="disconnect()">Exit</button>
                                         <br><br><div class="video_blinking">
                                             {{status}}</div>
                                     </div>

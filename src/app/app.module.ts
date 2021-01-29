@@ -98,6 +98,9 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { TwilioService } from './shared/services/twilio-service';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { MeetService } from './shared/services/meet-service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -135,7 +138,8 @@ export function init_app(globalService: GlobalService) {
     JaldeeBlogComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
-    ItemDetailsSharedComponent
+    ItemDetailsSharedComponent,
+    MeetingRoomComponent
   ],
   entryComponents: [
     SignUpComponent,
@@ -214,6 +218,7 @@ export function init_app(globalService: GlobalService) {
     GlobalFunctions,
     GlobalService,
     SharedFunctions,
+    TwilioService,
     FormMessageDisplayService,
     ErrorMessagingService,
     SearchDetailServices,
@@ -227,6 +232,7 @@ export function init_app(globalService: GlobalService) {
     WordProcessor,
     SnackbarService,
     GroupStorageService,
+    MeetService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

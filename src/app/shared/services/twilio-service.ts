@@ -73,19 +73,19 @@ export class TwilioService {
         this.camDeviceCount = 0;
         twilio.createLocalTracks({
         }).then(
-        localTracks => {
-            this.previewTracks = localTracks;
-            localTracks.forEach(localTrack => {
-                if (localTrack.kind === 'video') {
-                    this.camDeviceCount++;
-                    console.log(this.camDeviceCount);
-                    if (this.camDeviceCount === 1) {
-                        this.previewTrack = localTrack;
-                        this.renderer.appendChild(this.previewContainer.nativeElement, localTrack.attach());
+            localTracks => {
+                this.previewTracks = localTracks;
+                localTracks.forEach(localTrack => {
+                    if (localTrack.kind === 'video') {
+                        this.camDeviceCount++;
+                        console.log(this.camDeviceCount);
+                        if (this.camDeviceCount === 1) {
+                            this.previewTrack = localTrack;
+                            this.renderer.appendChild(this.previewContainer.nativeElement, localTrack.attach());
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
         );
         // twilio.createLocalVideoTrack({
         // }).then(localTracks => {

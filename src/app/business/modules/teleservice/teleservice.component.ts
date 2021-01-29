@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router ,NavigationExtras} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
@@ -288,20 +288,23 @@ export class TeleServiceComponent implements OnInit {
                             // this.shared_functions.openWindow(path);
                             // } else {
                             if (this.callingModes === 'VideoCall') {
-                                const usertype = this.shared_functions.isBusinessOwner('returntyp')
-                                console.log(usertype)
-                                const startIndex = this.starting_url.lastIndexOf('/');
-                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
-                                const navigationExtras: NavigationExtras = {
-                                    queryParams: {
-                                      uu_id: this.uuid,
-                                      type: usertype
-                                    }
-                                  };
-                                  console.log(navigationExtras)
-                                this.router.navigate(['meeting', this.phoneNumber , videoId], navigationExtras);
+                                // const usertype = this.shared_functions.isBusinessOwner('returntyp')
+                                // console.log(usertype)
+                                // const startIndex = this.starting_url.lastIndexOf('/');
+                                // const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
+                                // const navigationExtras: NavigationExtras = {
+                                //     queryParams: {
+                                //       uu_id: this.uuid,
+                                //       type: usertype
+                                //     }
+                                //   };
+                                //   console.log(navigationExtras)
+                                alert(this.uuid);
+                                this.router.navigate(['meeting', 'provider' , this.uuid]);
+                            } else {
+                                this.getProviderWaitlstById();
                             }
-                            this.getProviderWaitlstById();
+                            
                         }
                     }
                 },
@@ -322,24 +325,26 @@ export class TeleServiceComponent implements OnInit {
                             // this.shared_functions.openWindow(path);
                             // } else
                             if (this.callingModes === 'VideoCall') {
-                                const usertype = this.shared_functions.isBusinessOwner('returntyp')
-                                console.log(usertype)
-                                const startIndex = this.starting_url.lastIndexOf('/');
-                                const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
-                                const navigationExtras: NavigationExtras = {
-                                    queryParams: {
-                                      uu_id: this.uuid,
-                                      type: usertype
-                                    }
-                                  };
-                                this.router.navigate(['meeting', this.phoneNumber, videoId], navigationExtras);
+                                // const usertype = this.shared_functions.isBusinessOwner('returntyp')
+                                // console.log(usertype)
+                                // const startIndex = this.starting_url.lastIndexOf('/');
+                                // const videoId = this.starting_url.substring((startIndex + 1), this.starting_url.length);
+                                // const navigationExtras: NavigationExtras = {
+                                //     queryParams: {
+                                //       uu_id: this.uuid,
+                                //       type: usertype
+                                //     }
+                                //   };
+                                this.router.navigate(['meeting', 'provider' , this.uuid]);
                                 // this.shared_services.getVideoIdForService(waitlist.uid, 'provider').subscribe(
                                 //     (videoId: any) => {
                                 //         this.router.navigate(['provider', 'video', videoId]);
                                 //     }
                                 // );
+                            } else {
+                                this.getProviderApptById();
                             }
-                            this.getProviderApptById();
+                            
                         }
                     }
                 });
@@ -376,17 +381,18 @@ export class TeleServiceComponent implements OnInit {
         });
     }
     relauchMeeting(startingUrl) {
-        const usertype = this.shared_functions.isBusinessOwner('returntyp')
-        console.log(usertype)
-        const startIndex = startingUrl.lastIndexOf('/');
-        const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-              uu_id: this.uuid,
-              type: usertype
-            }
-          };
-        this.router.navigate(['meeting', this.phoneNumber, videoId], navigationExtras);
+        // const usertype = this.shared_functions.isBusinessOwner('returntyp')
+        // console.log(usertype)
+        // const startIndex = startingUrl.lastIndexOf('/');
+        // const videoId = startingUrl.substring((startIndex + 1), startingUrl.length);
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: {
+        //       uu_id: this.uuid,
+        //       type: usertype
+        //     }
+        //   };
+        // this.router.navigate(['meeting', this.phoneNumber, videoId], navigationExtras);
+        this.router.navigate(['meeting', 'provider', this.uuid]);
     }
     // Sending rest API to consumer and provider about service starting
     chkinTeleserviceJoinLink() {

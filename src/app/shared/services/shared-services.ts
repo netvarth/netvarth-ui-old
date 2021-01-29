@@ -806,14 +806,7 @@ export class SharedServices {
   consumerApptTeleserviceWithId(postdata, uuid) {
     return this.servicemeta.httpPost('provider/appointment/' + uuid + '/createmeetingrequest', postdata);
   }
-  getVideoIdForService(uuid, usertype) {
-    const path = usertype + '/appointment/videoid/link/' + uuid;
-    return this.servicemeta.httpGet(path);
-  }
-  getJaldeeVideoAccessToken(videoId) {
-    const path = 'provider/appointment/video/link/' + videoId;
-    return this.servicemeta.httpGet(path);
-  }
+  
   getWaitlstMeetingDetails(mode, uuid) {
     const path = 'provider/waitlist/' + uuid + '/meetingDetails/' + mode;
     return this.servicemeta.httpGet(path);
@@ -929,17 +922,5 @@ export class SharedServices {
   getVideoList(countrycode,phonenumber) {
     const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
     return this.servicemeta.httpGet(url);
-  }
-  getVideoCall(uuid) {
-    const url = 'consumer/appointment/videocall/ready/' + uuid;
-    return this.servicemeta.httpPut(url);
-  }
-  getApptMeetingDetailsProvider(uuid) {
-    const path = 'provider/appointment/videocall/ready/' + uuid;
-    return this.servicemeta.httpPut(path);
-  }
-  getStatus(uuid) {
-    const path = 'provider/appointment/video/status/' + uuid;
-    return this.servicemeta.httpGet(path);
   }
 }

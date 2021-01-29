@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
-import { ActivatedRoute, Router ,NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConsumerJoinComponent } from '../../../../../src/app/ynw_consumer/components/consumer-join/join.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../services/group-storage.service';
@@ -112,12 +112,7 @@ export class JaldeeVideoComponent implements OnInit {
         });
   }
   startVideo() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uu_id: this.videoCall.uid
-      }
-    };
-    this.router.navigate(['meeting' , this.phoneNumber , this.confirmId ], navigationExtras);
+    this.router.navigate(['meeting' , this.phoneNumber , this.videoCall.uid ]);
   }
   showMeetingDetails(data){
     this.showMeetngDetails = false;
