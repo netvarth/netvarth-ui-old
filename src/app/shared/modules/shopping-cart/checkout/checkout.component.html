@@ -376,7 +376,7 @@
                       </div>
 
 
-                      <div>
+                      <div *ngIf="selectedImagelist.files.length > 0">
                           <button mat-flat-button (click)="confirm()" [disabled]="checkoutDisabled"class="chekout-btn">CHECKOUT &nbsp; → </button>
                       </div>
                     </div>
