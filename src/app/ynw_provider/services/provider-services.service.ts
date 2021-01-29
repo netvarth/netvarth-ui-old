@@ -1719,10 +1719,6 @@ export class ProviderServices {
       const path = 'provider/report/' + reportName + '/' + reportType;
       return this.servicemeta.httpDelete(path);
    }
-      donationMassCommunication(data) {
-      const url = 'provider/donation/consumerMassCommunication';
-      return this.servicemeta.httpPost(url, data);
-   }
 
    uploadItemImages(id, data) {
       const url = 'provider/items/' + id + '/image';

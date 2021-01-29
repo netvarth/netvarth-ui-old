@@ -71,6 +71,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService
   ) {
+    console.log(this.data);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
@@ -90,10 +91,13 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'orders';
       } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
         this.type = 'order';
-      } else {
+      } else if (this.uuid && this.uuid.indexOf('dtn') >= 0) {
+        this.type = 'donation';
+       } else {
         this.type = 'wl';
       }
     }
+    console.log(this.type);
     if (this.data.caption) {
       this.caption = this.data.caption;
     } else {
@@ -247,7 +251,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }
                 );
             } else if (this.source === 'donation-list') {
-              this.provider_services.donationMassCommunication(post_data).
+              this.shared_services.donationMassCommunication(post_data).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -352,6 +356,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         communicationMessage: post_data.communicationMessage,
         uuid: foruuid
       };
+      console.log(this.type);
       if (this.type === 'appt') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunicationAppt(postdata).
@@ -410,6 +415,19 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
         }
+      } else if (this.type === 'donation') {
+        this.shared_services.donationMassCommunication(post_data).
+          subscribe(() => {
+            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+            setTimeout(() => {
+              this.dialogRef.close('reloadlist');
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
+              this.disableButton = false;
+            }
+          );
       } else {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunication(postdata).
@@ -499,8 +517,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
-      }
-      else{
+      } else if (this.type === 'donation') {
+        this.shared_services.addConsumerDonationNote(this.user_id, this.uuid,
+          dataToSend)
+          .subscribe(
+            () => {
+              this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+          );
+      } else{
          this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
