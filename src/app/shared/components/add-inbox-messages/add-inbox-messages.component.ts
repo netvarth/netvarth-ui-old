@@ -71,7 +71,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService
   ) {
-    console.log(this.data);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
@@ -97,7 +96,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'wl';
       }
     }
-    console.log(this.type);
     if (this.data.caption) {
       this.caption = this.data.caption;
     } else {
@@ -317,7 +315,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
           const post_data = {
             communicationMessage: form_data.message
           };
-          console.log(this.source);
           switch (this.source) {
             case 'provider-waitlist': this.providerToConsumerWaitlistNote(post_data); break;
             case 'provider-waitlist-inbox': this.providerToConsumerWaitlistNote(post_data); break;
@@ -356,8 +353,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         communicationMessage: post_data.communicationMessage,
         uuid: foruuid
       };
-      console.log(this.type);
-      console.log(postdata);
       if (this.type === 'appt') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunicationAppt(postdata).
