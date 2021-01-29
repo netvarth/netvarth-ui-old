@@ -140,8 +140,7 @@ export class CheckinActionsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
         this.subscription = this.galleryService.getMessage().subscribe(input => {
-            console.log(input);
-            if (input && input.uuid) {
+             if (input && input.uuid) {
                this.shared_services.addProviderWaitlistAttachment(input.uuid ,input.value)
                     .subscribe(
                         () => {                      
@@ -156,11 +155,11 @@ export class CheckinActionsComponent implements OnInit {
             } 
         });
     }
-    // ngOnDestroy() {
-    //     if (this.subscription) {
-    //         this.subscription.unsubscribe();
-    //     }
-    // }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
     printCheckin() {
         this.dialogRef.close();
         this.qrCodegeneration(this.checkin);
@@ -759,8 +758,6 @@ export class CheckinActionsComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     sendimages() {
-        this.dialogRef.close();
-        console.log(this.checkin);
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
          width: '50%',
          panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -772,8 +769,7 @@ export class CheckinActionsComponent implements OnInit {
          }
        });
         this.galleryDialog.afterClosed().subscribe(result => {
-         if (result === 'reloadlist') {
-         }
+         this.dialogRef.close();
        })
     }
 }
