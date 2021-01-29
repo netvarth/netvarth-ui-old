@@ -116,7 +116,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
         this.subscription = this.galleryService.getMessage().subscribe(input => {
-            console.log(input);
             if (input && input.uuid) {
                this.shared_services.addProviderAppointmentAttachment(input.uuid ,input.value)
                     .subscribe(
@@ -132,11 +131,11 @@ export class AppointmentActionsComponent implements OnInit {
             } 
         });
     }
-    // ngOnDestroy() {
-    //     if (this.subscription) {
-    //         this.subscription.unsubscribe();
-    //     }
-    // }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
     setData() {
         this.holdselectedTime = this.appt.appmtTime;
         if (this.data.timetype === 3) {
@@ -745,8 +744,6 @@ export class AppointmentActionsComponent implements OnInit {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     sendimages() {
-        this.dialogRef.close();
-        console.log(this.appt);
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
          width: '50%',
          panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -758,8 +755,7 @@ export class AppointmentActionsComponent implements OnInit {
          }
        });
         this.galleryDialog.afterClosed().subscribe(result => {
-         if (result === 'reloadlist') {
-         }
+              this.dialogRef.close();
        })
     }
 }
