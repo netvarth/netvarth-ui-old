@@ -425,6 +425,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 this.disableButton = false;
               }
             );
+        } else {
+          this.shared_services.addProviderDonationNote(this.uuid, dataToSend)
+            .subscribe(
+              () => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
         }
       } else {
         if (this.selectedMessage.files.length === 0) {
