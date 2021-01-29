@@ -211,9 +211,9 @@
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All patients</div>
-          <div class="card grp_label mb-2" data-toggle="modal" data-target="#exampleModalCenter">Create Group</div>
+        <div class="card grp_label mb-2" data-toggle="modal" data-target="#exampleModalCenter">Create Group</div>
         <div class="card grp_label mb-2" *ngFor="let group of groups; let i = index"
-          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}">
+          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}" [class.disabled-group]="group.status=='DISABLED'">
           <div class="max-hgt-20">
             {{group.groupName}}
             <span class="pull-right">
@@ -252,8 +252,8 @@
               *ngIf="!showCustomers">Create Patient</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
               *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" *ngIf="selectedGroup == 'all'"
-              data-toggle="modal" data-target="#exampleModalCenter">Create Group</button>
+            <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" *ngIf="selectedGroup == 'all'"
+              data-toggle="modal" data-target="#exampleModalCenter">Create Group</button> -->
             <!-- Modal-->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -277,10 +277,6 @@
                 </div>
               </div>
             </div>
-
-
-
-
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="createCustomerGroup('edit')"
               *ngIf="selectedGroup !== 'all' && !showCustomers">Edit Group</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
@@ -298,7 +294,7 @@
           </div>
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter">
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
-              [(ngModel)]="searchValue" (keypress)="search($event)">
+              [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
             <!-- <mat-menu #filtermenu="matMenu"> -->
             <aside class="filterSidebar" *ngIf="filter_sidebar">
@@ -375,7 +371,7 @@
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
-                <thead>
+                <thead *ngIf="customers.length > 0">
                   <tr class="text-left text-uppercase">
                     <th style="min-width: 150px" class="pl-7"><span class="text-dark-75">
                         <input type="checkbox" (change)="selectAll()" [checked]="allCustomerSelected">
@@ -401,6 +397,10 @@
                         <div>
                           <a href="#" class="text-dark-75 text-hover-primary mb-1 ">{{customer.firstName}}
                             {{customer.lastName}}</a>
+                            <div>
+                            <span *ngFor="let label of customer.label | keyvalue"
+                            [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          </div>
                         </div>
                       </div>
                       <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div>
@@ -481,7 +481,7 @@
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right" *ngIf="!apiloading">
 
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
+                  (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
 
                 <!-- <div class="d-flex center py-2 mr-3">
                   <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i

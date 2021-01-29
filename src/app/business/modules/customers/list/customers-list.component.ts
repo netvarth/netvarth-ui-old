@@ -104,7 +104,6 @@ export class CustomersListComponent implements OnInit {
   visibility = false;
   groups: any = [];
   selectedGroup;
-  searchValue;
   showCustomers = false;
   groupCustomers;
   constructor(private provider_services: ProviderServices,
@@ -195,7 +194,11 @@ export class CustomersListComponent implements OnInit {
   clearFilter() {
     this.resetFilter();
     this.filterapplied = false;
-    this.getCustomersList(true);
+    if (this.selectedGroup == 'all') {
+      this.getCustomersList(true);
+    } else {
+      this.getCustomerListByGroup();
+    }
   }
   getCustomersListCount(filter) {
     return new Promise((resolve, reject) => {
@@ -560,9 +563,12 @@ export class CustomersListComponent implements OnInit {
     });
   }
   search(event) {
-    this.filter.first_name = this.searchValue;
     if (event.keyCode === 13) {
-      this.getCustomersList();
+      if (this.selectedGroup == 'all') {
+        this.getCustomersList();
+      } else {
+        this.getCustomerListByGroup();
+      }
     }
   }
   addCustomerToGroup() {
@@ -660,7 +666,7 @@ export class CustomersListComponent implements OnInit {
   }
   changeGroupStatus(group) {
     let status;
-    if (group.status==='ENABLED') {
+    if (group.status === 'ENABLED') {
       status = 'DISABLE';
     } else {
       status = 'ENABLE';

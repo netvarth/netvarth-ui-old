@@ -114,3 +114,6 @@
  .max-hgt-20 {
    max-height: 20px;
  }
+ .disabled-group {
+  background: #eee !important;
+ }

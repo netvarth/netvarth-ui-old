@@ -13105,6 +13105,10 @@ hr {
   margin-top: 5px;
   font-size: smaller;
   margin-left: 5px;
+  font-weight: normal;
+}
+.appliedLabel:first-child {
+  margin-left: 0px;
 }
 .addorderitem{
   margin: 0 auto;
@@ -26299,13 +26303,6 @@ hr {
   text-align: left;
   color: limegreen;
   font-weight: 700;
-}
-.appliedLabel {
-  background: #eee;
-  padding: 2px;
-  margin-top: 5px;
-  font-size: smaller;
-  margin-left: 5px;
 }
 .addorderitem{
   margin: 0 auto;
