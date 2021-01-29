@@ -17,7 +17,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 @Component({
     selector: 'app-customer-detail',
     templateUrl: './customer-detail.component.html',
-    styleUrls: ['../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
+    styleUrls: ['./customer-detail.component.css','../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 
 })
 export class CustomerDetailComponent implements OnInit {

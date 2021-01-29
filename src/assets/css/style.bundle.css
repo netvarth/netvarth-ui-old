@@ -3425,13 +3425,13 @@ input[type="button"].btn-block {
     .input-group-append .btn:focus {
       z-index: 3; }
   .input-group-prepend .btn + .btn,
-  .input-group-prepend .btn + .input-group-text,
-  .input-group-prepend .input-group-text + .input-group-text,
-  .input-group-prepend .input-group-text + .btn,
+  .input-group-prepend .btn + .input-group-text1,
+  .input-group-prepend .input-group-text1 + .input-group-text1,
+  .input-group-prepend .input-group-text1 + .btn,
   .input-group-append .btn + .btn,
-  .input-group-append .btn + .input-group-text,
-  .input-group-append .input-group-text + .input-group-text,
-  .input-group-append .input-group-text + .btn {
+  .input-group-append .btn + .input-group-text1,
+  .input-group-append .input-group-text1 + .input-group-text1,
+  .input-group-append .input-group-text1 + .btn {
     margin-left: -1px; }
 
 .input-group-prepend {
@@ -3440,7 +3440,7 @@ input[type="button"].btn-block {
 .input-group-append {
   margin-left: -1px; }
 
-.input-group-text {
+.input-group-text1 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3458,8 +3458,8 @@ input[type="button"].btn-block {
   background-color: #F3F6F9;
   border: 1px solid #E4E6EF;
   border-radius: 0.42rem; }
-  .input-group-text input[type="radio"],
-  .input-group-text input[type="checkbox"] {
+  .input-group-text1 input[type="radio"],
+  .input-group-text1 input[type="checkbox"] {
     margin-top: 0; }
 
 .input-group-lg > .form-control1:not(textarea),
@@ -3468,8 +3468,8 @@ input[type="button"].btn-block {
 
 .input-group-lg > .form-control1,
 .input-group-lg > .custom-select,
-.input-group-lg > .input-group-prepend > .input-group-text,
-.input-group-lg > .input-group-append > .input-group-text,
+.input-group-lg > .input-group-prepend > .input-group-text1,
+.input-group-lg > .input-group-append > .input-group-text1,
 .input-group-lg > .input-group-prepend > .btn,
 .input-group-lg > .input-group-append > .btn {
   padding: 0.825rem 1.42rem;
@@ -3483,8 +3483,8 @@ input[type="button"].btn-block {
 
 .input-group-sm > .form-control1,
 .input-group-sm > .custom-select,
-.input-group-sm > .input-group-prepend > .input-group-text,
-.input-group-sm > .input-group-append > .input-group-text,
+.input-group-sm > .input-group-prepend > .input-group-text1,
+.input-group-sm > .input-group-append > .input-group-text1,
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.55rem 0.75rem;
@@ -3497,20 +3497,20 @@ input[type="button"].btn-block {
   padding-right: 2rem; }
 
 .input-group > .input-group-prepend > .btn,
-.input-group > .input-group-prepend > .input-group-text,
+.input-group > .input-group-prepend > .input-group-text1,
 .input-group > .input-group-append:not(:last-child) > .btn,
-.input-group > .input-group-append:not(:last-child) > .input-group-text,
+.input-group > .input-group-append:not(:last-child) > .input-group-text1,
 .input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
-.input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+.input-group > .input-group-append:last-child > .input-group-text1:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
 
 .input-group > .input-group-append > .btn,
-.input-group > .input-group-append > .input-group-text,
+.input-group > .input-group-append > .input-group-text1,
 .input-group > .input-group-prepend:not(:first-child) > .btn,
-.input-group > .input-group-prepend:not(:first-child) > .input-group-text,
+.input-group > .input-group-prepend:not(:first-child) > .input-group-text1,
 .input-group > .input-group-prepend:first-child > .btn:not(:first-child),
-.input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+.input-group > .input-group-prepend:first-child > .input-group-text1:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0; }
 
@@ -44817,14 +44817,14 @@ code {
     border-radius: 0.42rem; }
   .input-group.input-group-solid .input-group-prepend,
   .input-group.input-group-solid .input-group-append,
-  .input-group.input-group-solid .input-group-text {
+  .input-group.input-group-solid .input-group-text1 {
     background-color: transparent;
     border: 0;
     padding-top: 0;
     padding-bottom: 0; }
     .input-group.input-group-solid .input-group-prepend .btn-secondary,
     .input-group.input-group-solid .input-group-append .btn-secondary,
-    .input-group.input-group-solid .input-group-text .btn-secondary {
+    .input-group.input-group-solid .input-group-text1 .btn-secondary {
       border: 0 !important; }
   .input-group.input-group-solid .input-group-prepend ~ .form-control1 {
     padding-left: 0 !important; }
@@ -53170,8 +53170,8 @@ code {
   .quick-search .quick-search-form .input-group-prepend,
   .quick-search .quick-search-form .input-group-append {
     background-color: transparent; }
-    .quick-search .quick-search-form .input-group-prepend .input-group-text,
-    .quick-search .quick-search-form .input-group-append .input-group-text {
+    .quick-search .quick-search-form .input-group-prepend .input-group-text1,
+    .quick-search .quick-search-form .input-group-append .input-group-text1 {
       background-color: transparent;
       border: 0; }
   .quick-search .quick-search-form .input-group-append {
@@ -53217,9 +53217,9 @@ code {
   padding: 1rem 1.5rem; }
   .quick-search.quick-search-dropdown .quick-search-form .input-group:before {
     right: 0; }
-  .quick-search.quick-search-dropdown .quick-search-form .input-group .input-group-prepend .input-group-text {
+  .quick-search.quick-search-dropdown .quick-search-form .input-group .input-group-prepend .input-group-text1 {
     padding-left: 0; }
-  .quick-search.quick-search-dropdown .quick-search-form .input-group .input-group-append .input-group-text {
+  .quick-search.quick-search-dropdown .quick-search-form .input-group .input-group-append .input-group-text1 {
     padding-right: 0; }
   .quick-search.quick-search-dropdown .quick-search-wrapper {
     margin: 1.5rem 0 0.5rem 0; }
@@ -53237,9 +53237,9 @@ code {
     font-weight: 500; }
   .quick-search.quick-search-offcanvas .quick-search-form .input-group:before {
     right: 0; }
-  .quick-search.quick-search-offcanvas .quick-search-form .input-group .input-group-prepend .input-group-text {
+  .quick-search.quick-search-offcanvas .quick-search-form .input-group .input-group-prepend .input-group-text1 {
     padding-left: 0; }
-  .quick-search.quick-search-offcanvas .quick-search-form .input-group .input-group-append .input-group-text {
+  .quick-search.quick-search-offcanvas .quick-search-form .input-group .input-group-append .input-group-text1 {
     padding-right: 0; }
 
 .quick-search.quick-search-offcanvas .quick-search-wrapper {
@@ -55733,7 +55733,7 @@ code {
 .input-daterange input {
   text-align: left; }
 
-.input-daterange .input-group-append .input-group-text {
+.input-daterange .input-group-append .input-group-text1 {
   border-right: 0; }
 
 .daterangepicker {
