@@ -25,6 +25,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html'
@@ -345,7 +346,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -442,6 +444,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     // this.breadcrumb_moreoptions = {

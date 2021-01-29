@@ -20,6 +20,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html'
@@ -358,7 +359,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private titleService: Title) {
+      this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
