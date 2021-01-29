@@ -429,6 +429,10 @@ export class SharedServices {
     const url = 'provider/waitlist/communicate/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+  addProviderDonationNote(uuid, body) {
+    const url = 'provider/donation/communicate/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
   addConsumerWaitlistNote(accountid, uuid, body) {
     const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
