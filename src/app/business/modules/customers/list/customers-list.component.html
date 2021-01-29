@@ -209,9 +209,9 @@
     <div class="col-lg-4">
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
-        <div class="card grp_label mb-2" (click)="customerGroupSelection('all')">All patients</div>
+        <div class="card grp_label mb-2" (click)="customerGroupSelection('all')" [ngClass]="{'highlight': selectedGroup == 'all'}">All patients</div>
         <div class="card grp_label mb-2" *ngFor="let group of groups; let i = index"
-          (click)="customerGroupSelection(group, i)" [ngClass]="{'highlight': selectedRowIndex == i}">
+          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}">
           {{group.groupName}}
           <!-- <div class="selected_customers">Ashly, Melvin, Sooraj, Anju, Layana</div> -->
         </div>
@@ -281,14 +281,14 @@
           <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter">
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
               [(ngModel)]="searchValue" (keypress)="search($event)">
-            <i class="fa fa-filter" [matMenuTriggerFor]="filter"></i>
-            <mat-menu #filter="matMenu">
-              <aside class="filterSidebar">
+            <i class="fa fa-filter" (click)="showFilterSidebar()"></i>
+            <!-- <mat-menu #filtermenu="matMenu"> -->
+              <aside class="filterSidebar" *ngIf="filter_sidebar">
                 <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
                   <div class="filterClosebtn">
                     <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                    <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                    <span *ngIf="filterapplied === true" class="clearFilter white" (click)="clearFilter()"
                       [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
                   </div>
                   <ul class="sidebar-menu">
@@ -315,7 +315,7 @@
                       <li class="filterli filterDatepicker">
                         <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
                           [matDatepicker]="picker" #Fdate (dateChange)="doSearch()" (blur)="doSearch()"
-                          class="filterTextbox" placeholder="Date of birth" readonly>
+                          class="filterTextbox" placeholder="Date of birth" readonly (click)="picker.open()">
                         <mat-datepicker-toggle matSuffix [for]="picker">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -345,7 +345,7 @@
                   </ul>
                 </section>
               </aside>
-            </mat-menu>
+            <!-- </mat-menu> -->
           </div>
         </div>
         <!--end::Header-->

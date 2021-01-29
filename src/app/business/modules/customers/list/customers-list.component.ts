@@ -107,7 +107,6 @@ export class CustomersListComponent implements OnInit {
   searchValue;
   showCustomers = false;
   groupCustomers;
-  selectedRowIndex: any;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -225,7 +224,12 @@ export class CustomersListComponent implements OnInit {
     return this.shared_functions.isNumeric(evt);
   }
   doSearch() {
-    this.getCustomersList();
+    console.log(this.selectedGroup);
+    if (this.selectedGroup == 'all') {
+      this.getCustomersList();
+    } else {
+      this.getCustomerListByGroup();
+    }
     if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
@@ -524,10 +528,7 @@ export class CustomersListComponent implements OnInit {
   seeVisible() {
     this.visibility = true;
   }
-  customerGroupSelection(group, index?) {
-    if (index) {
-    this.selectedRowIndex = index;
-    }
+  customerGroupSelection(group) {
     this.showCustomers = false;
     this.selectedGroup = group;
     if (this.selectedGroup === 'all') {
