@@ -14,7 +14,9 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-change-mobile',
-  templateUrl: './change-mobile.component.html'
+  templateUrl: './change-mobile.component.html',
+  styleUrls: ['./change-mobile.component.css','../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+
 })
 export class ChangeMobileComponent implements OnInit {
 
