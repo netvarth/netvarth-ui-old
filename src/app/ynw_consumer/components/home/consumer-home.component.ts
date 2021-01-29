@@ -242,9 +242,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       divider = divident / 3;
     } else if (this.screenWidth > 700 && this.screenWidth < 1000) {
       divider = divident / 3;
-    } else if (this.screenWidth > 420 && this.screenWidth < 700) {
+    } else if (this.screenWidth > 500 && this.screenWidth < 700) {
       divider = divident / 2;
-    } else if (this.screenWidth < 420) {
+    } else if (this.screenWidth < 500) {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);

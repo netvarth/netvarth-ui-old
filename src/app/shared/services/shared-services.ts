@@ -520,7 +520,7 @@ export class SharedServices {
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     } else if (type === 'order') {
-      path = 'consumer/order/rating';
+      path = 'consumer/orders/rating';
     }
     return this.servicemeta.httpGet(path, null, params);
   }
@@ -541,6 +541,8 @@ export class SharedServices {
       path = 'consumer/waitlist/rating';
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
+    } else if (type === 'order') {
+      path = 'consumer/orders/rating';
     }
     return this.servicemeta.httpPut(path, data, null, params);
   }
@@ -660,6 +662,10 @@ export class SharedServices {
     const url = 'provider/waitlist/consumerMassCommunicationWithId';
     return this.servicemeta.httpPost(url, data);
   }
+  donationMassCommunication(data) {
+    const url = 'provider/donation/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
   }
@@ -701,6 +707,10 @@ export class SharedServices {
   }
   addConsumerAppointmentNote(accountid, uuid, body) {
     const url = 'consumer/appointment/communicate/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerDonationNote(accountid, uuid, body) {
+    const url = 'consumer/donation/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerOrderNote(accountid, uuid, body) {
@@ -919,8 +929,20 @@ export class SharedServices {
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
-  getVideoList(countrycode,phonenumber) {
-    const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
-    return this.servicemeta.httpGet(url);
+  addProviderWaitlistAttachment(uuid, body) {
+    const url = 'provider/waitlist/' + uuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerWaitlistAttachment(accountid, uuid, body) {
+    const url = 'consumer/waitlist/' + uuid + '/attachment' + '?account=' + accountid;;
+    return this.servicemeta.httpPost(url, body);
+  }
+  addProviderAppointmentAttachment(uuid, body) {
+    const url = 'provider/appointment/' + uuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+  addConsumerAppointmentAttachment(accountid, uuid, body) {
+    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;;
+    return this.servicemeta.httpPost(url, body);
   }
 }

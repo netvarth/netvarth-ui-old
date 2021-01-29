@@ -148,3 +148,7 @@ header li a {
   .page-banner-image {
     background: #1e4079;
   }
+  #prov_home_n a.btn:hover {
+    background-color: #F2B51C !important;
+    color: #fff !important;
+  }

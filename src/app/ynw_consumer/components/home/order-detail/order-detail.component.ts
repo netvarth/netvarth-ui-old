@@ -11,6 +11,8 @@ import { ActionPopupComponent } from '../action-popup/action-popup.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ConsumerServices } from '../../../services/consumer-services.service';
+import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -18,6 +20,8 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
+  msgCount: number;
+  communication_history: any[];
   titlename = 'Order Details';
   ynwUuid: any;
   providerId: any;
@@ -26,212 +30,7 @@ export class OrderDetailComponent implements OnInit {
   cust_notes_cap: any;
   checkin_label: string;
   waitlist;
-  api_loading = true;
-  dummyData: any = [
-    {
-      'uid': 'd55a9fd3-56a8-45a2-9997-eb34965c3a3c_or',
-      'orderNumber': 'o-hmp-a',
-      'homeDelivery': true,
-      'storePickup': false,
-      'homeDeliveryAddress': 'madathiparambil house po kozhukully tcr',
-      'consumer': {
-        'id': 260,
-        'firstName': 'Aneesh',
-        'lastName': 'mg',
-        'gender': 'male',
-        'favourite': false,
-        'phone_verified': false,
-        'email_verified': false,
-        'jaldeeConsumer': 70,
-        'jaldeeId': '1'
-      },
-      'providerAccount': {
-        'branchId': 0,
-        'businessName': 'Lavanya Hospital',
-        'corpId': 0,
-        'id': 78976,
-        'licensePkgID': 0,
-        'minimumCompleteness': false,
-        'profileId': 0,
-        'uniqueId': 101002,
-        'userSubdomain': 0,
-        'location': {
-        'address': 'Thrissur, Kuruppam, Thekkinkadu Maidan, Thrissur, Kerala 680020, India',
-        'googleMapUrl': 'https://www.google.com/maps/place/10.5276416,76.2144349/@10.5276416,76.2144349,15z',
-        'id': 78303,
-        'lattitude': '10.5276416',
-        'longitude': '76.2144349',
-        'place': 'Thekkinkadu Maidan'
-        }
-      },
-      'jaldeeConsumer': {
-        'id': 70,
-        'favourite': false,
-        'SignedUp': false
-      },
-      'catalog': {
-        'id': 3,
-        'catalogName': 'Lunch',
-        'catalogSchedule': {
-          'recurringType': 'Weekly',
-          'repeatIntervals': [
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7'
-          ],
-          'startDate': '2020-11-26',
-          'terminator': {
-            'endDate': '2022-01-01',
-            'noOfOccurance': 0
-          },
-          'timeSlots': [
-            {
-              'sTime': '09:00 AM',
-              'eTime': '08:00 PM'
-            }
-          ]
-        },
-        'advanceAmount': 0,
-        'autoConfirm': false
-      },
-      'orderFor': {
-        'id': 260,
-        'firstName': 'Aneesh',
-        'lastName': 'mg',
-        'gender': 'male',
-        'favourite': false,
-        'phone_verified': false,
-        'email_verified': false,
-        'jaldeeConsumer': 0,
-        'jaldeeId': '1'
-      },
-      'orderItem': [
-        {
-          'id': 1,
-          'name': 'Biriyani',
-          'quantity': 2,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 200
-        },
-        {
-          'id': 2,
-          'name': 'Beef Biriyani',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 100
-        },
-        {
-          'id': 3,
-          'name': 'Chicken Biriyani',
-          'quantity': 5,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 500
-        },
-        {
-          'id': 4,
-          'name': 'Ice cream',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 100
-        },
-        {
-          'id': 5,
-          'name': 'Meals',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 600
-        },
-        {
-          'id': 6,
-          'name': 'Fried Rice',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 70
-        },
-        {
-          'id': 7,
-          'name': 'Beef Biriyani1',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 100
-        },
-        {
-          'id': 8,
-          'name': 'Gheer',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 100
-        },
-        {
-          'id': 9,
-          'name': 'Ketchup',
-          'quantity': 1,
-          'price': 100,
-          'status': 'FULFILLED',
-          'totalPrice': 10
-        }
-      ],
-      'orderStatus': 'Accepted',
-      'orderDate': '2020-12-01',
-      'orderTimeWindow': {
-        'recurringType': 'Weekly',
-        'repeatIntervals': [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7'
-        ],
-        'startDate': '2020-11-26',
-        'terminator': {
-          'endDate': '2022-01-01',
-          'noOfOccurance': 0
-        },
-        'timeSlots': [
-          {
-            'sTime': '09:00 AM',
-            'eTime': '08:00 PM'
-          }
-        ]
-      },
-      'lastStatusUpdatedDate': '2020-12-01',
-      'timeSlot': {
-        'sTime': '09:00 AM',
-        'eTime': '08:00 PM'
-      },
-      'isAsap': false,
-      'isFirstOrder': false,
-      'coupons': [],
-      'orderMode': 'ONLINE_ORDER',
-      'phoneNumber': '8129630960',
-      'email': 'aneesh.mg@jaldee.com',
-      'advanceAmount': 0,
-      'advanceAmountToPay': 2,
-      'amount': 0,
-      'totalAmount': 0,
-      'cartAmount': 300,
-      'accesScope': 1,
-      'account': 0,
-      'onlineRequest': false,
-      'kioskRequest': false,
-      'firstCheckIn': false,
-      'active': false
-    }
-  ];
+  api_loading = false;
   fav_providers;
   fav_providers_id_list: any[];
   qr_value: string;
@@ -267,7 +66,7 @@ buttons: [
 ]
 };
   retval: Promise<void>;
-  s3url: unknown;
+  s3url;
   terminologiesjson: ArrayBuffer;
   provider_id;
   constructor(
@@ -279,7 +78,7 @@ buttons: [
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     @Inject(DOCUMENT) public document,
-    // private consumer_services: ConsumerServices,
+    private consumer_services: ConsumerServices,
     private sharedServices: SharedServices
   ) {
     this.activated_route.queryParams.subscribe(
@@ -328,7 +127,7 @@ buttons: [
               i,
               { // modal
                   img: this.imagelist[i].s3path,
-                  description: ''
+                  description: this.imagelist[i].caption || ''
               });
               console.log(imgobj);
           this.image_list_popup.push(imgobj);
@@ -385,7 +184,36 @@ buttons: [
   }
 
   getCommunicationHistory() {
-   // throw new Error('Method not implemented.');
+    this.consumer_services.getConsumerCommunications(this.providerId)
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const history: any = data;
+          this.communication_history = [];
+          for (const his of history) {
+            if (his.waitlistId === this.ynwUuid) {
+              this.communication_history.push(his);
+            }
+          }
+          this.msgCount = this.communication_history.length;
+          this.sortMessages();
+          this.api_loading = true;
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  sortMessages() {
+    this.communication_history.sort(function (message1, message2) {
+      if (message1.timeStamp < message2.timeStamp) {
+        return 11;
+      } else if (message1.timeStamp > message2.timeStamp) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
   gotoPrev() {
     // this.locationobj.back();
@@ -497,9 +325,26 @@ buttons: [
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  
+
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
 
+  showCommunication() {
+    const dialogRef = this.dialog.open(CommunicationComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        message: this.communication_history,
+        type: 'consumer',
+        id: this.waitlist.uid,
+        orderDetails: this.waitlist
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
 }

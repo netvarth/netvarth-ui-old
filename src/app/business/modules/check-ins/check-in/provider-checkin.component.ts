@@ -1103,7 +1103,7 @@ provider_label = '';
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || this.callingModes.length < 10) {
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
                     this.is_wtsap_empty = true;
                 }
             }
@@ -1755,10 +1755,10 @@ provider_label = '';
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
-        if (this.consumerNote === '') {
-            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
-        }
-        dataToSend.append('message', this.consumerNote);
+        // if (this.consumerNote === '') {
+        //     this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
+        // }
+        // dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;
         if (this.selectedMessage) {
@@ -1770,8 +1770,9 @@ provider_label = '';
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
-            dataToSend)
+        // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+        //     dataToSend)
+        this.shared_services.addProviderWaitlistAttachment(uuid,dataToSend)
             .subscribe(
                 () => {
                 },

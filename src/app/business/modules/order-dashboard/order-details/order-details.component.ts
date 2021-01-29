@@ -10,6 +10,7 @@ import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/pr
 import { OrderActionsComponent } from '../order-actions/order-actions.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 
 @Component({
   selector: 'app-order-details',
@@ -17,6 +18,8 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
   styleUrls: ['./order-details.component.css']
 })
 export class OrderDetailsComponent implements OnInit {
+  msgCount = 0;
+  communication_history = [];
   uid;
   loading = false;
   orderDetails: any = [];
@@ -54,6 +57,7 @@ buttons: [
       this.uid = param.id;
       this.customerLabel = this.wordProcessor.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
+      this.getOrderCommunications();
     });
   }
 
@@ -86,7 +90,7 @@ buttons: [
             i,
             { // modal
                 img: this.imagelist[i].s3path,
-                description: ''
+                description: this.imagelist[i].caption || ''
             });
         this.image_list_popup.push(imgobj);
         }
@@ -150,7 +154,59 @@ buttons: [
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  
+  getOrderCommunications() {
+    this.providerservice.getProviderInbox()
+    .subscribe(
+      data => {
+        const history: any = data;
+        this.communication_history = [];
+        for (const his of history) {
+          if (his.waitlistId === this.uid || his.waitlistId === this.uid.replace('h_', '')) {
+            this.communication_history.push(his);
+          }
+
+        }
+        this.msgCount = this.communication_history.length;
+        this.sortMessages();
+        this.sharedFunctions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
+      },
+      () => {
+        //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+  );
+
+}
+
+
+sortMessages() {
+  this.communication_history.sort(function (message1, message2) {
+    if (message1.timeStamp < message2.timeStamp) {
+      return 1;
+    } else if (message1.timeStamp > message2.timeStamp) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+}
+showCommunication() {
+  const dialogRef = this.dialog.open(CommunicationComponent, {
+    width: '50%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: {
+      message: this.communication_history,
+      type: 'provider',
+      id: this.uid,
+      orderDetails: this.orderDetails
+    }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result === 'reloadlist') {
+    }
+  });
+}
+
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }

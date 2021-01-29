@@ -613,7 +613,7 @@ export class ItemDetailsComponent implements OnInit {
             panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
-                'message': 'Do you want to exit?'
+                'message': 'Do you want to leave this page ? Any changes made will not be saved.'
             }
         });
         dialogrefd.afterClosed().subscribe(result => {

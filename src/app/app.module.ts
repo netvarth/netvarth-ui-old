@@ -101,6 +101,7 @@ import { CommonDataStorageService } from './shared/services/common-datastorage.s
 import { TwilioService } from './shared/services/twilio-service';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
+import { CommunicationComponent } from './shared/components/communication/communication.component';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -139,7 +140,8 @@ export function init_app(globalService: GlobalService) {
     CheckoutSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent,
-    MeetingRoomComponent
+    MeetingRoomComponent,
+    CommunicationComponent
   ],
   entryComponents: [
     SignUpComponent,

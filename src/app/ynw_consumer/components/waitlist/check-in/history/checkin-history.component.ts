@@ -388,6 +388,24 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       }
     });
   }
+  rateOrderService(waitlist) {
+    this.ratedialogRef = this.dialog.open(ConsumerRateServicePopupComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        'detail': waitlist,
+        'isFrom': 'order'
+      }
+    });
+
+    this.ratedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        // this.getHistroy();
+      }
+    });
+  }
   viewApptBill(checkin, bill_data) {
     const navigationExtras: NavigationExtras = {
       queryParams: {

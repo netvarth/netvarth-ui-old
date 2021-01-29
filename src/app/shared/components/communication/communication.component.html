@@ -1,0 +1,45 @@
+<!-- <h1 mat-dialog-title>{{data.heading}}</h1> -->
+<h1 mat-dialog-title> Chat With {{ type==='provider'?orderDetails.orderFor.firstName: ownerName}} For ORDER[<small color="dodgerblue"> # :{{orderDetails.orderNumber }}
+    ON : {{ orderDetails.orderDate }}</small>]
+  <button mat-dialog-close class="modal_close" tabindex="-1">
+      <i class="fa fa-window-close" aria-hidden="true"></i>
+    </button>
+  </h1>
+<div mat-dialog-content style="border:1px solid whitesmoke " >
+  <div *ngFor="let msg of message">
+    <div>
+      <div [ngClass]="(msg.owner.id===0) ?'pull-right ownermsg':'pull-left receivermsg '">
+        <span class="fontStyle">{{splitMessageByColon(msg.msg)}}</span>
+      </div>
+      <div [ngClass]="(msg.owner.id===0) ?'pull-right time ':'pull-left time'">
+        <small  [ngClass]="(msg.owner.id===0) ?'pull-right text-muted ':'pull-left text-muted'">{{msg.timeStamp |date: newTimeDateFormat}}</small>
+      </div>
+    </div>
+
+  </div>
+<!--
+  <div class="col-md-12">
+    <footer>
+      <div class="margin">
+        <button class="btn btn-primary mb-5 mr-2"><i class="glyphicon glyphicon-upload"></i></button>
+      <textarea  style="color:black" placeholder="Your message"></textarea>
+      <button (click)="sendMessage();"class="btn btn-primary mb-5 ml-2"><i class="glyphicon glyphicon-share"></i></button>
+    </div>
+    </footer>
+  </div> -->
+  <div class="col-md-12">
+      <footer>
+
+
+        <button (click)="sendMessage();"class="btn btn-primary mt-2"> SendMessage <i class="glyphicon glyphicon-share"></i></button>
+
+      </footer>
+    </div>
+
+</div>
+
+<!--
+<div mat-dialog-actions class="paddingtop">
+  <button tabindex="-1" (click)="onClick(0)" class="cs-btn bt2">{{cancel_btn_cap}}</button>
+  <button tabindex="2" (click)="onClick(1)" class="cs-btn bt1 reddelete">{{ok_btn_cap}}</button>
+</div> -->

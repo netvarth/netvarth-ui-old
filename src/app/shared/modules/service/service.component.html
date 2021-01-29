@@ -2,7 +2,6 @@
   <div class="cl1" *ngIf="action=='show'">
     <span class="editbt" [class.serv-disabled-icn]="!is_virtual_enable && service.serviceType === 'virtualService'"
       (click)="(is_virtual_enable || service.serviceType !== 'virtualService') && editService()"
-      *ngIf="service_data.status=='ACTIVE'"
       [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
     <div class="ot-it">
       <h4>

@@ -75,7 +75,7 @@
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Bill</button>
-                                                        <button mat-menu-item *ngIf="his_wait.orderStatus == 'Shipped'"
+                                                        <button mat-menu-item 
                                                             [class.rated]="isRated(his_wait)"
                                                             (click)="rateOrderService(his_wait)">
                                                             Rate Order Service</button>

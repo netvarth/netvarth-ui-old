@@ -1514,6 +1514,14 @@ export class ProviderServices {
       const url = 'provider/communications/' + uuid;
       return this.servicemeta.httpGet(url);
    }
+   getProviderAppointmentAttachmentsByUuid(uuid) {
+      const url = 'provider/appointment/attachment/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   getProviderWaitlistAttachmentsByUuid(uuid) {
+      const url = 'provider/waitlist/attachment/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
    getAccountContactInfo() {
       const url = 'provider/contact';
       return this.servicemeta.httpGet(url);
@@ -1711,10 +1719,6 @@ export class ProviderServices {
       const path = 'provider/report/' + reportName + '/' + reportType;
       return this.servicemeta.httpDelete(path);
    }
-      donationMassCommunication(data) {
-      const url = 'provider/donation/consumerMassCommunication';
-      return this.servicemeta.httpPost(url, data);
-   }
 
    uploadItemImages(id, data) {
       const url = 'provider/items/' + id + '/image';
@@ -1822,10 +1826,10 @@ export class ProviderServices {
    setCatalogPrefilledDetails(data) {
       this.catalogPrefilledInput = data;
       console.log(this.catalogPrefilledInput);
-    }
-    getCatalogPrefiledDetails() {
+   }
+   getCatalogPrefiledDetails() {
       return this.catalogPrefilledInput;
-    }
+   }
    getDefaultCatalogStatuses() {
       const url = 'provider/catalog/statuses';
       return this.servicemeta.httpGet(url);
