@@ -151,3 +151,8 @@ header li a {
  h2.health-title{
    font-size: 2rem !important;
  }
+
+ #prov_home_n a.btn:hover {
+  background-color: #F2B51C !important;
+  color: #fff !important;
+}
