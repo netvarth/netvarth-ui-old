@@ -16,6 +16,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-providersignup',
@@ -160,7 +161,9 @@ export class ProvidersignupComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private titleService: Title) {
+      this.titleService.setTitle('Jaldee Business - Signup');
     this.activatedRoute.queryParams.subscribe(params => {
       this.claimDetails = params;
     });
