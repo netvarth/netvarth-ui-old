@@ -14,7 +14,7 @@ export class AboutComponent implements OnInit {
     private metaService: Meta) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Jaldee - About');
+    this.titleService.setTitle('Jaldee Business - About');
     this.metaService.addTags([
       { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }
     ]);

@@ -13,6 +13,7 @@ import { ForgotPasswordComponent } from '../../../../shared/components/forgot-pa
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SessionStorageService } from '../../../../shared/services/session-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-plogin',
@@ -81,8 +82,10 @@ export class ProviderLoginComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
     });

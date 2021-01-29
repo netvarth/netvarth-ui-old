@@ -15,7 +15,7 @@ export class PricingComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Jaldee - Pricing');
+    this.titleService.setTitle('Jaldee Business - Pricing');
     this.metaService.addTags([
       { name: 'description', content: 'All first time users get a FREE 30-day Jaldee Premium plan (worth Rs.1499)' }
     ]);
