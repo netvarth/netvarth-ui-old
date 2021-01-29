@@ -102,6 +102,12 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" (click)="sendimages()" *ngIf="!data.multiSelection">
+            <div class="action-box-sub">
+                <span class="message-icon"></span>
+                <div class="icon-text">Send Attachment</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
             <div class="action-box-sub">
                 <span class="mail-icon"></span>
