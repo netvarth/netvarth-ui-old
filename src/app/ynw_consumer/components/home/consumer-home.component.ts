@@ -26,6 +26,9 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { GalleryImportComponent } from '../../../shared/modules/gallery/import/gallery-import.component';
+import { GalleryService } from '../../../shared/modules/gallery/galery-service';
+
 
 @Component({
   selector: 'app-consumer-home',
@@ -203,6 +206,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   screenWidth: number;
   no_of_grids: number;
   bookingStatusClasses = projectConstantsLocal.BOOKING_STATUS_CLASS;
+  galleryDialog: any;
+  gallerysubscription: Subscription;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -213,6 +218,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
+    private galleryService: GalleryService,  
     public _sanitizer: DomSanitizer) {
     this.onResize();
     this.activated_route.queryParams.subscribe(qparams => {
@@ -337,6 +343,39 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+    this.gallerysubscription = this.galleryService.getMessage().subscribe(input => {
+      console.log(input);
+      if (input && input.accountId && input.uuid && input.type === 'appt') {
+        console.log(input);
+        this.shared_services.addConsumerAppointmentAttachment(input.accountId ,input.uuid ,input.value)
+              .subscribe(
+                  () => {                      
+                      this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                      this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                  },
+                  error => {
+                      this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                      this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                  }
+              );
+       }  else {
+          console.log(input);
+          if (input && input.accountId && input.uuid && input.type === 'checkin') {
+          this.shared_services.addConsumerWaitlistAttachment(input.accountId ,input.uuid ,input.value)
+                .subscribe(
+                    () => {                      
+                        this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                        this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                        this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                    }
+                );
+              }
+        } 
+  });
   }
   paymentsClicked() {
     this.router.navigate(['consumer', 'payments']);
@@ -410,6 +449,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    if(this.gallerysubscription){
+      this.gallerysubscription.unsubscribe();
     }
     if (this.notificationdialogRef) {
       this.notificationdialogRef.close();
@@ -1983,5 +2025,36 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       return '';
     }
+  }
+  sendAttachment(booking,type) {
+    console.log(booking);
+    console.log(type);
+    const pass_ob = {};
+    pass_ob['user_id'] = booking.providerAccount.id;
+    if (type === 'appt') {
+      pass_ob['type'] = type;
+      pass_ob['uuid'] = booking.uid;
+    } else {
+      pass_ob['type'] = type;
+      pass_ob['uuid'] = booking.ynwUuid;
+    }
+    this.addattachment(pass_ob);
+  }
+
+  addattachment(pass_ob) {
+    console.log(pass_ob);
+    this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+         source_id: 'consumerimages',
+         accountId:pass_ob.user_id,
+         uid:pass_ob.uuid,
+         type:pass_ob.type
+      }
+    });
+     this.galleryDialog.afterClosed().subscribe(result => {
+    });
   }
 }

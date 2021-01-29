@@ -38,6 +38,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('filed') fileInput: ElementRef;
     accountId: any;
     uuid: any;
+    type: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,
@@ -49,6 +50,9 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         if(this.data.uid){
            this.uuid= this.data.uid;            
         }
+        if(this.data.type){
+            this.type= this.data.type;            
+         }
     }
     ngOnChanges() { }
     ngOnInit() {
@@ -129,8 +133,9 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         for (const pic of this.item_pic.files) {
             if (this.source_id ==='attachment'){
                 submit_data.append('attachments', pic, pic['name']);
-            }
-            else{
+            } else if (this.source_id ==='consumerimages'){
+                submit_data.append('attachments', pic, pic['name']);
+            } else{
                 submit_data.append('files', pic, pic['name']);
             }
             const properties = {
@@ -157,16 +162,23 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
                 value: submit_data,
                 accountId:this.accountId,
                  uuid:this.uuid         
-                }
-                this.galleryService.sendMessage(input);
-            }       
-        else {
-            const input = {
-                ttype: 'image-upload',
-                value: submit_data,
-                sourceId: this.source_id
-            };
+                };
             this.galleryService.sendMessage(input);
+        } else if (this.source_id ==='consumerimages'){
+            const input = {
+               value: submit_data,
+               accountId:this.accountId,
+               uuid:this.uuid,
+               type: this.type      
+            };
+          this.galleryService.sendMessage(input);
+        } else {
+            const input = {
+               ttype: 'image-upload',
+               value: submit_data,
+               sourceId: this.source_id
+            };
+          this.galleryService.sendMessage(input);
         }
     }
     actionCompleted() {
