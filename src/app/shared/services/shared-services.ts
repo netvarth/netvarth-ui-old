@@ -663,9 +663,9 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, data);
   }
   donationMassCommunication(data) {
-  const url = 'provider/donation/consumerMassCommunication';
-  return this.servicemeta.httpPost(url, data);
-}
+    const url = 'provider/donation/consumerMassCommunication';
+    return this.servicemeta.httpPost(url, data);
+  }
   addProviderAppointment(postData) {
     return this.servicemeta.httpPost('provider/appointment', postData);
   }
@@ -941,7 +941,7 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerWaitlistAttachment(accountid, uuid, body) {
-    const url = 'consumer/waitlist/' + uuid + '/attachment' +'?account=' + accountid;;
+    const url = 'consumer/waitlist/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
   addProviderAppointmentAttachment(uuid, body) {
@@ -949,8 +949,7 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerAppointmentAttachment(accountid, uuid, body) {
-    const url = 'consumer/appointment/' + uuid + '/attachment' +'?account=' + accountid;;
+    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
-
 }

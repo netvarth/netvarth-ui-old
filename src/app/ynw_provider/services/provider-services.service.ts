@@ -1826,10 +1826,10 @@ export class ProviderServices {
    setCatalogPrefilledDetails(data) {
       this.catalogPrefilledInput = data;
       console.log(this.catalogPrefilledInput);
-    }
-    getCatalogPrefiledDetails() {
+   }
+   getCatalogPrefiledDetails() {
       return this.catalogPrefilledInput;
-    }
+   }
    getDefaultCatalogStatuses() {
       const url = 'provider/catalog/statuses';
       return this.servicemeta.httpGet(url);

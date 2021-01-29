@@ -85,15 +85,15 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (this.source !== 'customer-list') {
       if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'appt') {
         this.type = 'appt';
-      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order'){
+      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order') {
         this.type = 'order';
-      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders'){
+      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders') {
         this.type = 'orders';
       } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('dtn') >= 0) {
         this.type = 'donation';
-       } else {
+      } else {
         this.type = 'wl';
       }
     }
@@ -237,7 +237,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            }  else if (this.type === 'order') {
+            } else if (this.type === 'order') {
               this.shared_services.consumerOrderMassCommunicationAppt(post_data).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -357,6 +357,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         uuid: foruuid
       };
       console.log(this.type);
+      console.log(postdata);
       if (this.type === 'appt') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunicationAppt(postdata).
@@ -386,7 +387,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
         }
-      }  else if (this.type === 'order') {
+      } else if (this.type === 'order') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerOrderMassCommunicationAppt(postdata).
             subscribe(() => {
@@ -416,18 +417,20 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             );
         }
       } else if (this.type === 'donation') {
-        this.shared_services.donationMassCommunication(post_data).
-          subscribe(() => {
-            this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-            setTimeout(() => {
-              this.dialogRef.close('reloadlist');
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            error => {
-              this.wordProcessor.apiErrorAutoHide(this, error);
-              this.disableButton = false;
-            }
-          );
+        if (this.selectedMessage.files.length === 0) {
+          this.shared_services.donationMassCommunication(postdata).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+        }
       } else {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerMassCommunication(postdata).
@@ -489,7 +492,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
-      } else if (this.type === 'order'){
+      } else if (this.type === 'order') {
         this.shared_services.addConsumerOrderNote(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
@@ -503,7 +506,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
-      }  else if (this.type === 'orders'){
+      } else if (this.type === 'orders') {
         this.shared_services.addConsumerOrderNotecomm(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
@@ -531,8 +534,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               this.wordProcessor.apiErrorAutoHide(this, error);
             }
           );
-      } else{
-         this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
+      } else {
+        this.shared_services.addConsumerWaitlistNote(this.user_id, this.uuid,
           dataToSend)
           .subscribe(
             () => {
