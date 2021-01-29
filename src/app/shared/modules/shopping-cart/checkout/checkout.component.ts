@@ -29,6 +29,7 @@ import { Messages } from '../../../constants/project-messages';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  totaltax: number;
   provider_id: any;
   s3url;
   retval: Promise<void>;
@@ -488,7 +489,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     return true;
   }
-  getTaxCharges() {
+  getDeliveryCharges() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
@@ -496,9 +497,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return deliveryCharge.toFixed(2);
   }
   getOrderFinalAmountToPay() {
-    const amount = this.price + parseInt(this.getTaxCharges(), 0);
+    const amount = this.price + this.totaltax + parseInt(this.getDeliveryCharges(), 0);
     return amount.toFixed(2);
   }
+  getTotalItemTax(taxValue) {
+    this.totaltax = 0;
+    for (const itemObj of this.orderList) {
+      let taxprice = 0;
+      if (itemObj.item.taxable) {
+        if (itemObj.item.showPromotionalPrice) {
+          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+        } else {
+          taxprice = itemObj.item.price * (taxValue / 100);
+        }
+      } else {
+        taxprice = 0;
+      }
+      this.totaltax = this.totaltax + taxprice;
+    }
+    return this.totaltax.toFixed(2);
+  }
+
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     return qty;
