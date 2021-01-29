@@ -1694,8 +1694,8 @@
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
                                             <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid" class="amtPaid">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1774,10 +1774,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <span
-                                                    *ngIf="oder.bill && oder.bill.amountPaid"
-                                                    class="amtPaid">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                    <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1859,10 +1858,9 @@
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                            <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid"
-                                                class="amtPaid">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1938,10 +1936,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <span
-                                                    *ngIf="oder.bill && oder.bill.amountPaid"
-                                                    class="amtPaid">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                    <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"

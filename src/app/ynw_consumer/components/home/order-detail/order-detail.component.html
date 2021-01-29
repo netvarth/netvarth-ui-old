@@ -81,7 +81,7 @@
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-6 mgn-up-10 mgn-bt-10 l-ht-2 ">
-                                                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="msgCount" matBadgeOverlap=false>sms</mat-icon>
+                                                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=false>sms</mat-icon>
                                                 <div class="txt-custdet">Delivery Type</div>
                                                 <div *ngIf="waitlist.storePickup" class="txt-cust-name">Store Pick Up</div>
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
