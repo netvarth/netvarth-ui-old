@@ -332,7 +332,7 @@ buttons: [
 
   showCommunication() {
     const dialogRef = this.dialog.open(CommunicationComponent, {
-      width: '50%',
+      width: '45%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {

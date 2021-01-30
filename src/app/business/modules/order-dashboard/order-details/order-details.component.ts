@@ -191,7 +191,7 @@ sortMessages() {
 }
 showCommunication() {
   const dialogRef = this.dialog.open(CommunicationComponent, {
-    width: '50%',
+    width: '40%',
     panelClass: ['popup-class', 'commonpopupmainclass'],
     disableClose: true,
     data: {

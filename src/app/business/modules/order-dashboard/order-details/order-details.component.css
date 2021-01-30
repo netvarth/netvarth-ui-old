@@ -95,6 +95,10 @@
     margin-bottom: 10px !important;
     padding: 0 5px 0 5px !important;
   }
+  .msgIcon {
+    margin-left:65%;
+    color:blue;
+  }
   @media(max-width: 1200px) {
     .bus-item-O {
       width: 45%;
@@ -104,7 +108,7 @@
     .bus-item-O {
       width: 33.3%;
       float: left !important;
-  
+
     }
   }
   @media(max-width: 700px) {
