@@ -43,9 +43,9 @@
                                         <tbody>
                                             <tr *ngFor="let discount of discount_list">
                                                 <td data-title="Name" class="td1">{{discount.name}}</td>
-                                                <td data-title="Value" clas="td2">{{((discount.calculationType=='Percentage') ? 
+                                                <td data-title="Value" clas="td2"  class="rupee-font">{{((discount.calculationType=='Percentage') ? 
                                                 ((discount.discValue > 0) ? discount.discValue+'%' : '--'): 
-                                                    ((discount.discValue > 0) ?  '₹ '+(discount.discValue) : '--')
+                                                    ((discount.discValue > 0) ?  (discount.discValue | currency:'&#8377;' ) : '--')
                                                     
                                                 )}}</td>
                                                 <td data-title="Description" class="td1">{{discount.description}}</td>

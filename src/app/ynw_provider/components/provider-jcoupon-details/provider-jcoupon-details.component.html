@@ -35,11 +35,11 @@
                                     <div class="c-ot">
                                         <div class="item">
                                             <span class="ttle">{{disc_value}}</span>
-                                            <span> {{(jCoupon.discountType=='PERCENTAGE')?
+                                            <span class="rupee-font"> {{(jCoupon.discountType=='PERCENTAGE')?
                                                 jCoupon.discountValue+'%':
-                                                '₹ '+(jCoupon.discountValue)}} <span *ngIf="jCoupon.maxDiscountValue">
+                                                (jCoupon.discountValue | currency:'&#8377;')}} <span *ngIf="jCoupon.maxDiscountValue">
                                                     (upto
-                                                    {{'₹ '+(jCoupon.maxDiscountValue)}} Max)</span>
+                                                    {{(jCoupon.maxDiscountValue | currency:'&#8377;')}} Max)</span>
                                             </span>
                                         </div>
                                     </div>
@@ -135,7 +135,7 @@
                                                 <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
                                                     *ngIf="jCoupon.couponRules.minBillAmount">
                                                     <span class="ttle">Minimum Bill Amount</span>
-                                                    <span> {{'₹ '+(jCoupon.couponRules.minBillAmount)}}</span>
+                                                    <span class="rupee-font"> {{(jCoupon.couponRules.minBillAmount  | currency:'&#8377;')}}</span>
                                                 </div>
 
                                             </div>

@@ -518,7 +518,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return '₹' + ' ' + price;
+    return '₹' + ' ' + price.toFixed(2);;
   }
 
   imageValidation(file) {
