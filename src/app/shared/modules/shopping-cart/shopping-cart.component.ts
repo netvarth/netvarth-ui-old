@@ -22,7 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
-  totaltax: any;
+  totaltax = 0;
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;

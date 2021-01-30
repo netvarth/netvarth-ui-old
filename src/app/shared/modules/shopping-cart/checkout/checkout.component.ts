@@ -29,7 +29,7 @@ import { Messages } from '../../../constants/project-messages';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  totaltax: number;
+  totaltax = 0;
   provider_id: any;
   s3url;
   retval: Promise<void>;
