@@ -30,8 +30,10 @@
                                         Advance payment </div>
                                     <div class="col-md-12 col-xs-12 col-sm-12 pad-rt-0">
                                         <h6 class="card-title serv-time">
-                                            <span class="rupee-font">&#8377;</span>
-                                            {{prepayment}}
+                                            <!-- <span class="rupee-font">&#8377;</span>
+                                            {{prepayment}} -->
+                                            <span class="rupee-font">{{prepayment|
+                                                currency:'&#8377;'}}</span>
                                         </h6>
                                     </div>
 
