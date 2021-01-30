@@ -8769,9 +8769,9 @@ body { font-size: 1rem !important}
     font-weight: 500;
 }
 
-.comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(2):before {
+/* .comn-cls .w-dta .table-outer.q-itm table tbody tr td:nth-child(2):before {
     color: #222223;
-}
+} */
 
 .comn-cls .w-dta .table-outer.q-itm table tbody tr td.tdact {
     position: relative;
