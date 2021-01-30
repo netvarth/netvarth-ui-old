@@ -15,6 +15,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 })
 export class CommunicationComponent implements OnInit {
 
+  showImages: any = [];
   orderDetails: any;
   loading: boolean;
   user_id: any;
@@ -23,7 +24,9 @@ export class CommunicationComponent implements OnInit {
   message: any;
   uid: any;
   ownerName = 'provider';
+  selectedMsg = -1;
   newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor(public dialogRef: MatDialogRef<CommunicationComponent>,
     private shared_functions: SharedFunctions,
     private providerServices: ProviderServices,
@@ -65,11 +68,20 @@ export class CommunicationComponent implements OnInit {
       this.user_id = userDet.id;
       this.loading = false;
     }
-
   }
+  // showMsg(indx, message) {
+  //   this.selectedMsg = indx;
+  //   if (!message.read && this.isRecievedOrSent(message) === 'receive') {
+  //     const consumerId = message.owner.id;
+  //     const providerId = message.receiver.id;
+  //     this.readConsumerMessages(consumerId, message.messageId, providerId);
+  //   }
+  // }
+  // closeMsg() {
+  //   this.selectedMsg = -1;
+  // }
+
   sendMessage() {
-
-
     let order = [];
     if (this.orderDetails.length > 1) {
       order = this.orderDetails;
@@ -93,5 +105,15 @@ export class CommunicationComponent implements OnInit {
     }
     return newmessage;
 
+  }
+  showImagesection(index) {
+    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
   }
 }

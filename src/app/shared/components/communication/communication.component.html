@@ -1,22 +1,44 @@
 <!-- <h1 mat-dialog-title>{{data.heading}}</h1> -->
-<h1 mat-dialog-title> Chat With {{ type==='provider'?orderDetails.orderFor.firstName: ownerName}} For ORDER[<small color="dodgerblue"> # :{{orderDetails.orderNumber }}
-    ON : {{ orderDetails.orderDate }}</small>]
+<h1 mat-dialog-title> Chat With {{ type==='provider'?orderDetails.orderFor.firstName: ownerName}} For ORDER[<small style="color:blue;font-weight:bold;"> # :{{orderDetails.orderNumber }},
+    ON : {{ orderDetails.orderDate|date:dateFormat }}</small>]
   <button mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
 <div mat-dialog-content style="border:1px solid whitesmoke " >
-  <div *ngFor="let msg of message">
+
+  <div *ngFor="let msg of message let i = index">
     <div>
       <div [ngClass]="(msg.owner.id===0) ?'pull-right ownermsg':'pull-left receivermsg '">
         <span class="fontStyle">{{splitMessageByColon(msg.msg)}}</span>
+
       </div>
+
+      <!-- <div class="details" [class.show]="selectedMsg==i">
+        <div class="result">
+            <div class="result" [innerHTML]="message.msg | nl2br | capitalizeFirst">
+            </div>
+      <div class="result attach" *ngIf="msg.attachements && msg.attachements.length > 0"
+        (click)="showImagesection(i)">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+            {{msg.attachements.length}} Attachment(s) </a>
+    </div> -->
+
+    </div>
+    <div class="thumbnails mt10 mb10" *ngIf="msg.attachements && msg.attachements.length > 0">
+        <a  target="_blank" [href]="attachment.s3path"
+            *ngFor="let attachment of msg.attachements"><img
+                [src]="getThumbUrl(attachment)"
+                [ngClass]="(msg.owner.id===0) ?'pull-right  imgRight':'pull-left imgLeft '"/></a>
+    </div>
+
       <div [ngClass]="(msg.owner.id===0) ?'pull-right time ':'pull-left time'">
         <small  [ngClass]="(msg.owner.id===0) ?'pull-right text-muted ':'pull-left text-muted'">{{msg.timeStamp |date: newTimeDateFormat}}</small>
       </div>
+      <br>
     </div>
 
-  </div>
+
 <!--
   <div class="col-md-12">
     <footer>

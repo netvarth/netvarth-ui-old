@@ -45,3 +45,15 @@
   color: #6c757dd9 !important;
   font-size:75% !important;
 }
+.imgRight{
+  margin-right:10%;
+  margin-top:2%;
+  height:100px;
+  width:100px;
+}
+.imgLeft{
+  margin-left:10%;
+  margin-top:2%;
+  height:100px;
+  width:100px;
+}
