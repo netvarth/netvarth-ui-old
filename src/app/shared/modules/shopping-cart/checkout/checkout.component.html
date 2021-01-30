@@ -246,7 +246,7 @@
                                             <span class="item-name">{{item.item.displayName}}</span>
                                           </div>
                                           <div class="quantity item-qty">{{getItemQty(item)}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">&#8377;{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 

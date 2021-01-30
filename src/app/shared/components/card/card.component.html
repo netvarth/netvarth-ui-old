@@ -141,7 +141,7 @@
         </h4>
         <div class="col-md-12 no-padding">
             <div class="col-md-12 no-padding">
-                <span class="price rupee-font pull-left">&#8377;{{service.totalPrice}}</span>
+                <span class="price rupee-font pull-left">{{service.totalPrice | currency:'&#8377;'}}</span>
                 <i *ngIf="service.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor pull-right"
                     (click)="showConsumerNote(service)"></i>
             </div>
