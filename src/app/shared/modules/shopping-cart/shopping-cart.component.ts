@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
+  totaltax: any;
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
@@ -394,11 +395,28 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
     return this.price;
   }
+  getTotalItemTax(taxValue) {
+    this.totaltax = 0;
+    for (const itemObj of this.orderList) {
+      let taxprice = 0;
+      if (itemObj.item.taxable) {
+        if (itemObj.item.showPromotionalPrice) {
+          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+        } else {
+          taxprice = itemObj.item.price * (taxValue / 100);
+        }
+      } else {
+        taxprice = 0;
+
+      }
+      this.totaltax = this.totaltax + taxprice;
+
+    }
+    return this.totaltax.toFixed(2);
+
+  }
   removeItemFromCart(item) {
-
-
     this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
-
     this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
 
     if (this.orders.length === 0) {
@@ -432,7 +450,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
       }
     }
-    subtotal = subtotal + this.price + deliveryCharge;
+    subtotal = subtotal + this.price + deliveryCharge + this.totaltax;
     return subtotal.toFixed(2);
   }
   confirmOrder() {

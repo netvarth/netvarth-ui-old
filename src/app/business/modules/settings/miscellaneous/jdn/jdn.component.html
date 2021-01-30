@@ -54,7 +54,8 @@
                                     Offered </label>
                                 <div>{{discType}}% (upto ₹
                                     {{jdnmaxDiscounttext}})</div> -->
-                                    A discount of {{discType}}% (upto ₹{{jdnmaxDiscounttext}}) will be given to your {{cust_label}}s!
+                                    A discount of {{discType}}% (upto {{jdnmaxDiscounttext|
+                                        currency:'&#8377;'}}) will be given to your {{cust_label}}s!
                             </div>
                             <div *ngIf="rewrite ==='edit'|| status ==='Create'"
                                 class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">

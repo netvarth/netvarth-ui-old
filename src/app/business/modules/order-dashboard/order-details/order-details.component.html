@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
-                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="msgCount" matBadgeOverlap=false>sms</mat-icon>
+                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=false>sms</mat-icon>
                           <div class="" *ngIf="!small_device_display">
 
                    <i class="delivery-icon pull-right"
