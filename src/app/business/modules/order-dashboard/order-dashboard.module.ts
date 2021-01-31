@@ -14,6 +14,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
 import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
+import { OrderWizardComponent } from './order-wizard/order-wizard.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
     OrderActionsComponent,
     OrderEditComponent,
     OrderItemsComponent,
-    DisplaylabelpopupComponent
+    DisplaylabelpopupComponent,
+    OrderWizardComponent
   ],
   entryComponents: [
     OrderActionsComponent,

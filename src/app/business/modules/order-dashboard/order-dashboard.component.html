@@ -5,7 +5,7 @@
   <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
     <div class="disp-flex count-section">
       <div class="card boxshadow-style mgn-rt-10">
-        <div>Total orders</div>
+        <!-- <div>Total orders</div>
         <div class="order-count"> {{(todayOrdersCount + futureOrdersCount) ? todayOrdersCount + futureOrdersCount : 0}}
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12 no-padding mgn-up-20">
@@ -17,7 +17,36 @@
             <div> Future</div>
             <div class="order-count red"> {{futureOrdersCount}}</div>
           </div>
+        </div> -->
+        <div class="quik_link">
+          Quick Links
         </div>
+        <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'" >
+          <mat-grid-tile (click)="newOrder()">
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="flaticon2-plus icon-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+               <span> New order</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="fas fa-phone-alt fa-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+                <span>New Phone-In</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div class="flex-shrink-0 text-center" style="width: 40px;">
+              <i class="fas fa-user-plus fa-2x pitch_blu"></i>
+              </div>
+              <mat-grid-tile-footer>
+                <span>Add Customer</span>
+              </mat-grid-tile-footer>
+          </mat-grid-tile>
+        </mat-grid-list>
       </div>
     </div>
   </div>

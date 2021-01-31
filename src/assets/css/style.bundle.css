@@ -44683,9 +44683,9 @@ code {
   box-shadow: none !important; }
 
 .form-control1.form-control1-solid {
-  background-color: #F3F6F9;
-  border-color: #F3F6F9;
-  color: #3F4254;
+  background-color: #F3F6F9 !important;
+  border-color: #F3F6F9 !important;
+  color: #3F4254 !important;
   -webkit-transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
   transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
