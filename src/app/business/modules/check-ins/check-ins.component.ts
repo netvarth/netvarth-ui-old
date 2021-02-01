@@ -3150,10 +3150,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   gotoCustomerDetails(waitlist) {
     if (waitlist.waitlistStatus !== 'blocked') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: { action: 'view' }
-      };
-      this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id], navigationExtras);
+      this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
     }
   }
   stopprop(event) {

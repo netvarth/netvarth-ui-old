@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -14,7 +14,6 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { CustomerGroupComponent } from '../customer-group/customer-group.component';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-customers-list',
@@ -106,6 +105,10 @@ export class CustomersListComponent implements OnInit {
   selectedGroup;
   showCustomers = false;
   groupCustomers;
+  groupDescription = '';
+  groupName = '';
+  groupEdit = false;
+  @ViewChild('closebutton') closebutton;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -393,15 +396,12 @@ export class CustomersListComponent implements OnInit {
   }
   editCustomer(customer) {
     const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'edit' }
+      queryParams: { action: 'edit', id: customer.id }
     };
-    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
   viewCustomer(customer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    this.router.navigate(['/provider/customers/' + customer.id]);
   }
   searchCustomer() {
     const navigationExtras: NavigationExtras = {
@@ -548,20 +548,6 @@ export class CustomersListComponent implements OnInit {
       this.groups = data;
     });
   }
-  createCustomerGroup(type) {
-    const dialogRef = this.dialog.open(CustomerGroupComponent, {
-      width: '80%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        type: type,
-        details: this.selectedGroup
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.getCustomerGroup();
-    });
-  }
   search(event) {
     if (event.keyCode === 13) {
       if (this.selectedGroup == 'all') {
@@ -666,7 +652,7 @@ export class CustomersListComponent implements OnInit {
   }
   changeGroupStatus(group) {
     let status;
-    if (group.status === 'ENABLED') {
+    if (group.status === 'ENABLE') {
       status = 'DISABLE';
     } else {
       status = 'ENABLE';
@@ -678,5 +664,54 @@ export class CustomersListComponent implements OnInit {
       error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
+  }
+  editGroup() {
+    this.groupEdit = true;
+    this.groupName = this.selectedGroup.groupName;
+    this.groupDescription = this.selectedGroup.description;
+  }
+  customerGroupAction() {
+    if (this.groupName === '') {
+      this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
+    } else {
+      const postData = {
+        'groupName': this.groupName,
+        'description': this.groupDescription
+      };
+      if (!this.groupEdit) {
+        this.createGroup(postData);
+      } else {
+        postData['id'] = this.selectedGroup.id;
+        this.updateGroup(postData);
+      }
+    }
+  }
+  createGroup(data) {
+    this.provider_services.createCustomerGroup(data).subscribe(data => {
+      this.getCustomerGroup();
+      this.resetGroupFields();
+      this.closeGroupDialog();
+    },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  updateGroup(data) {
+    this.provider_services.updateCustomerGroup(data).subscribe(data => {
+      this.getCustomerGroup();
+      this.resetGroupFields();
+      this.closeGroupDialog();
+    },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  resetGroupFields() {
+    this.groupName = '';
+    this.groupDescription = '';
+    this.groupEdit = false;
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
   }
 }

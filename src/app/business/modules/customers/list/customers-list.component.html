@@ -201,9 +201,6 @@
   <div class="clearfix"></div>
 </section> -->
 
-
-
-
 <section class="customersList">
   <div class="row p-3">
     <div class="col-lg-4">
@@ -211,9 +208,11 @@
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All patients</div>
-        <div class="card grp_label mb-2" data-toggle="modal" data-target="#exampleModalCenter">Create Group</div>
+        <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
+          data-target="#exampleModalCenter">Create Group</button>
         <div class="card grp_label mb-2" *ngFor="let group of groups; let i = index"
-          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}" [class.disabled-group]="group.status=='DISABLED'">
+          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}"
+          [class.disabled-group]="group.status=='DISABLED'">
           <div class="max-hgt-20">
             {{group.groupName}}
             <span class="pull-right">
@@ -222,9 +221,9 @@
               </button>
               <mat-menu #menu="matMenu">
                 <button type="button" mat-menu-item (click)="changeGroupStatus(group)">
-                  <i *ngIf="group.status=='DISABLED'" class="icon-enable phone-in-icon"></i>
-                  <i *ngIf="group.status=='ENABLED'" class="icon-disable phone-in-icon"></i>
-                  {{(group.status==='ENABLED') ? 'Disable' : 'Enable'}}
+                  <i *ngIf="group.status=='DISABLE'" class="icon-enable phone-in-icon"></i>
+                  <i *ngIf="group.status=='ENABLE'" class="icon-disable phone-in-icon"></i>
+                  {{(group.status==='ENABLE') ? 'Disable' : 'Enable'}}
                 </button>
               </mat-menu>
             </span>
@@ -262,23 +261,27 @@
                   <div class="modal-body">
                     <div class="form-group">
                       <label for="exampleInputPassword1">Name <span class="text-danger">*</span></label>
-                      <input type="password" class="form-control1" id="exampleInputPassword1" placeholder="Name" />
+                      <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Name"
+                        [(ngModel)]="groupName" />
                     </div>
                     <div class="form-group mb-1">
-                      <label for="exampleTextarea">Description <span class="text-danger">*</span></label>
-                      <textarea class="form-control1" id="exampleTextarea" rows="4"></textarea>
+                      <label for="exampleTextarea">Description</label>
+                      <textarea class="form-control1" id="exampleTextarea" rows="4"
+                        [(ngModel)]="groupDescription"></textarea>
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
-                      data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                      #closebutton>Close</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" (click)="customerGroupAction()">Save
+                      changes</button>
                   </div>
                 </div>
               </div>
             </div>
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="createCustomerGroup('edit')"
-              *ngIf="selectedGroup !== 'all' && !showCustomers">Edit Group</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" data-toggle="modal"
+              data-target="#exampleModalCenter" *ngIf="selectedGroup !== 'all' && !showCustomers"
+              (click)="editGroup()">Edit Group</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
               *ngIf="selectedGroup !== 'all' && showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0">Add</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="removeCustomerFromGroup()"
@@ -397,9 +400,9 @@
                         <div>
                           <a href="#" class="text-dark-75 text-hover-primary mb-1 ">{{customer.firstName}}
                             {{customer.lastName}}</a>
-                            <div>
+                          <div>
                             <span *ngFor="let label of customer.label | keyvalue"
-                            [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                              [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
                           </div>
                         </div>
                       </div>
@@ -474,7 +477,7 @@
                     </td>
                   </tr>
                   <tr *ngIf="!apiloading && customers.length === 0">
-                    No customers found
+                    No {{customer_label}}s found
                   </tr>
                 </tbody>
               </table>
