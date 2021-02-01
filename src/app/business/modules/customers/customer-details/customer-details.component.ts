@@ -129,24 +129,24 @@ export class CustomerDetailComponent implements OnInit {
                 this.customerId = params.id;
                 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
                 if (this.customerId) {
-                        this.activated_route.queryParams.subscribe(
-                            (qParams) => {
-                                this.action = qParams.action;
-                                this.getCustomers(this.customerId).then(
-                                    (customer) => {
-                                        this.customer = customer;
-                                        this.customerName = this.customer[0].firstName;
-                                            this.viewCustomer = true;
-                                            this.loading = false;
-                                            if (this.customerId) {
-                                                this.getCustomerTodayVisit();
-                                                this.getCustomerFutureVisit();
-                                                this.getCustomerHistoryVisit();
-                                            }
+                    this.activated_route.queryParams.subscribe(
+                        (qParams) => {
+                            this.action = qParams.action;
+                            this.getCustomers(this.customerId).then(
+                                (customer) => {
+                                    this.customer = customer;
+                                    this.customerName = this.customer[0].firstName;
+                                    this.viewCustomer = true;
+                                    this.loading = false;
+                                    if (this.customerId) {
+                                        this.getCustomerTodayVisit();
+                                        this.getCustomerFutureVisit();
+                                        this.getCustomerHistoryVisit();
                                     }
-                                );
-                            }
-                        );
+                                }
+                            );
+                        }
+                    );
                 }
             }
         );
@@ -236,9 +236,7 @@ export class CustomerDetailComponent implements OnInit {
         event.stopPropagation();
     }
     medicalRecord(visitDetails) {
-        console.log(visitDetails);
         if (visitDetails.waitlist) {
-            console.log(visitDetails.waitlist);
             let mrId = 0;
             if (visitDetails.waitlist.mrId) {
                 mrId = visitDetails.waitlist.mrId;
@@ -261,9 +259,7 @@ export class CustomerDetailComponent implements OnInit {
         }
     }
     prescription(visitDetails) {
-        console.log(visitDetails);
         if (visitDetails.waitlist) {
-            console.log(visitDetails.waitlist);
             let mrId = 0;
             if (visitDetails.waitlist.mrId) {
                 mrId = visitDetails.waitlist.mrId;

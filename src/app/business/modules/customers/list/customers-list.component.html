@@ -210,12 +210,11 @@
           [ngClass]="{'highlight': selectedGroup == 'all'}">All patients</div>
         <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Group</button>
-        <div class="card grp_label mb-2" *ngFor="let group of groups; let i = index"
-          (click)="customerGroupSelection(group)" [ngClass]="{'highlight': selectedGroup == group}"
-          [class.disabled-group]="group.status=='DISABLED'">
+        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)"
+          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'">
           <div class="max-hgt-20">
             {{group.groupName}}
-            <span class="pull-right">
+            <span class="pull-right mgn-m-up-10">
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event);">
                 <mat-icon>more_vert</mat-icon>
               </button>
@@ -262,12 +261,12 @@
                     <div class="form-group">
                       <label for="exampleInputPassword1">Name <span class="text-danger">*</span></label>
                       <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Name"
-                        [(ngModel)]="groupName" />
+                        [(ngModel)]="groupName" (keypress)="resetError()" />
                     </div>
                     <div class="form-group mb-1">
                       <label for="exampleTextarea">Description</label>
-                      <textarea class="form-control1" id="exampleTextarea" rows="4"
-                        [(ngModel)]="groupDescription"></textarea>
+                      <textarea class="form-control1" id="exampleTextarea" rows="4" [(ngModel)]="groupDescription"
+                        (keypress)="resetError()"></textarea>
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -276,12 +275,18 @@
                     <button type="button" class="btn btn-primary font-weight-bold" (click)="customerGroupAction()">Save
                       changes</button>
                   </div>
+                  <div class="error-section" *ngIf="apiError !== ''">
+                    {{apiError}}
+                  </div>
                 </div>
               </div>
             </div>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" data-toggle="modal"
               data-target="#exampleModalCenter" *ngIf="selectedGroup !== 'all' && !showCustomers"
               (click)="editGroup()">Edit Group</button>
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
+              *ngIf="selectedGroup !== 'all' && showCustomers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
+              Cancel</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="addCustomerToGroup()"
               *ngIf="selectedGroup !== 'all' && showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0">Add</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="removeCustomerFromGroup()"
@@ -398,7 +403,7 @@
                           </span>
                         </div>
                         <div>
-                          <a href="#" class="text-dark-75 text-hover-primary mb-1 ">{{customer.firstName}}
+                          <a href="#" class="text-dark-75 text-hover-primary mb-1 cust-name">{{customer.firstName}}
                             {{customer.lastName}}</a>
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
@@ -428,7 +433,7 @@
                       <i class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
                     </td>
                     <td>
-                      <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Profile</button>
+                      <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
                       <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
                     </td>
                     <td class="pr-0 text-right">
@@ -481,11 +486,10 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right" *ngIf="!apiloading">
-
+              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right"
+                *ngIf="!apiloading && !showCustomers">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval"></app-pager>
-
                 <!-- <div class="d-flex center py-2 mr-3">
                   <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
                       class="ki ki-bold-double-arrow-back icon-xs"></i></a>

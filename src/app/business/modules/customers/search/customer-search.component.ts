@@ -243,7 +243,7 @@ export class CustomerSearchComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private _location: Location,
         public provider_services: ProviderServices,
-        private snackbarService:SnackbarService,
+        private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService) {
@@ -645,7 +645,6 @@ export class CustomerSearchComponent implements OnInit {
             this.searchClicked = false;
             return;
         }
-        console.log(form_data);
         this.loading = true;
         let mode = 'id';
         if (mod) {
@@ -698,7 +697,6 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
-                    console.log(data);
                     this.loading = false;
                     if (data.length === 0) {
                         // this.form_data = data;

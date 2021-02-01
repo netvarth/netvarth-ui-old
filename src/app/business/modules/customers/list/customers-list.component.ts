@@ -109,6 +109,7 @@ export class CustomersListComponent implements OnInit {
   groupName = '';
   groupEdit = false;
   @ViewChild('closebutton') closebutton;
+  apiError = '';
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -118,7 +119,7 @@ export class CustomersListComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
@@ -133,11 +134,19 @@ export class CustomersListComponent implements OnInit {
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
   ngOnInit() {
-    this.selectedGroup = 'all';
+    if (this.groupService.getitemFromGroupStorage('group')) {
+      this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
+    } else {
+      this.selectedGroup = 'all';
+    }
+      if (this.selectedGroup == 'all') {
+      this.getCustomersList(true);
+    } else {
+      this.getCustomerListByGroup();
+    }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.subdomain = user.subSector;
-    this.getCustomersList(true);
     this.getLabel();
     this.getCustomerGroup();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
@@ -174,7 +183,9 @@ export class CustomersListComponent implements OnInit {
       .then(
         result => {
           if (from_oninit) { this.customer_count = result; }
-          filter = this.setPaginationFilter(filter);
+          if (!this.showCustomers) {
+            filter = this.setPaginationFilter(filter);
+            }
           this.provider_services.getProviderCustomers(filter)
             .subscribe(
               data => {
@@ -537,6 +548,8 @@ export class CustomersListComponent implements OnInit {
   customerGroupSelection(group) {
     this.showCustomers = false;
     this.selectedGroup = group;
+    this.groupService.setitemToGroupStorage('group', this.selectedGroup);
+    this.resetFilter();
     if (this.selectedGroup === 'all') {
       this.getCustomersList();
     } else {
@@ -550,11 +563,7 @@ export class CustomersListComponent implements OnInit {
   }
   search(event) {
     if (event.keyCode === 13) {
-      if (this.selectedGroup == 'all') {
-        this.getCustomersList();
-      } else {
-        this.getCustomerListByGroup();
-      }
+      this.doSearch();
     }
   }
   addCustomerToGroup() {
@@ -612,9 +621,8 @@ export class CustomersListComponent implements OnInit {
     this.apiloading = true;
     this.resetList();
     this.customers = this.groupCustomers = [];
-    let api_filter = {
-      'groups-eq': this.selectedGroup.id
-    };
+    let api_filter = this.setFilterForApi();
+    api_filter['groups-eq'] = this.selectedGroup.id;
     this.getCustomersListCount(api_filter)
       .then(
         result => {
@@ -672,7 +680,7 @@ export class CustomersListComponent implements OnInit {
   }
   customerGroupAction() {
     if (this.groupName === '') {
-      this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
+      this.apiError = 'Please enter the name';
     } else {
       const postData = {
         'groupName': this.groupName,
@@ -691,9 +699,10 @@ export class CustomersListComponent implements OnInit {
       this.getCustomerGroup();
       this.resetGroupFields();
       this.closeGroupDialog();
+      this.resetError();
     },
       error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.apiError = error.error;
       });
   }
   updateGroup(data) {
@@ -701,9 +710,10 @@ export class CustomersListComponent implements OnInit {
       this.getCustomerGroup();
       this.resetGroupFields();
       this.closeGroupDialog();
+      this.resetError();
     },
       error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.apiError = error.error;
       });
   }
   resetGroupFields() {
@@ -713,5 +723,13 @@ export class CustomersListComponent implements OnInit {
   }
   closeGroupDialog() {
     this.closebutton.nativeElement.click();
+    this.resetError();
+  }
+  cancelAdd() {
+    this.showCustomers = false;
+    this.getCustomerListByGroup();
+  }
+  resetError() {
+    this.apiError = '';
   }
 }

@@ -117,3 +117,19 @@
  .disabled-group {
   background: #eee !important;
  }
+ .cancel_btn {
+  background: white !important;
+  color: black !important;
+  font-weight: bold;
+  border: 1px solid red;
+ }
+ .error-section {
+  background: red;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: .8rem;
+ }
+ .cust-name {
+   font-size: 0.9rem;
+ }
