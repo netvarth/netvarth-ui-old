@@ -506,6 +506,4 @@ getThumbUrl(attachment) {
     return attachment.s3path;
   }
 }
-
-
 }

@@ -113,7 +113,7 @@
                       <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
                         <p [innerHTML]="note.note | nl2br"></p>
                         <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
-                              (click)="showImagesection(i)">
+                            (click)="showImagesection(i)">
                             <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
                                 {{note.attachment.length}} Attachment(s) </a>
                         </div>
