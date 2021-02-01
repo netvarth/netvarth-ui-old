@@ -105,7 +105,7 @@
                     <span>Min amount: </span><span *ngIf="data.serdet.minValue" style="font-weight: bold">
                         {{data.serdet.minValue}}
                     </span>
-                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold">
+                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font">
                         {{data.serdet.minDonationAmount| currency:'&#8377;'}}
                     </span>
                 </div>
@@ -115,7 +115,7 @@
                     <span>Max amount : </span><span *ngIf="data.serdet.maxValue" style="font-weight: bold">
                         {{data.serdet.maxValue}}
                     </span>
-                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold">
+                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font">
                         {{data.serdet.maxDonationAmount| currency:'&#8377;'}}
                     </span>
                 </div>
