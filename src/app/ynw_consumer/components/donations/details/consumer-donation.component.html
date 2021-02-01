@@ -127,10 +127,8 @@
                                                 <div
                                                     class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
                                                     <p class="form-level-settings applybill">Minimum <span
-                                                            class="bold"><span
-                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.minDonationAmount}}</span>
-                                                        Maximum <span class="bold"><span
-                                                                class="rupee-font">{{rupee_symbol}}</span>{{sel_ser_det.maxDonationAmount}}</span>
+                                                            class="bold rupee-font">{{sel_ser_det.minDonationAmount| currency:'&#8377;'}}</span>
+                                                        Maximum <span class="bold rupee-font">{{sel_ser_det.maxDonationAmount| currency:'&#8377;'}}</span>
                                                     </p>
                                                 </div>
                                             </div>
