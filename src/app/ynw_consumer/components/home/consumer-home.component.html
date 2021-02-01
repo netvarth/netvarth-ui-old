@@ -131,11 +131,15 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item (click)="sendAttachment(booking,'appt')">
+                                                    <button mat-menu-item  (click)="sendAttachment(booking,'appt')">
                                                         <!-- <i class="fa chat-icon"></i>-->
                                                          <i class="material-icons">attach_file</i>
                                                         Send Attachment
                                                     </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>	
@@ -299,10 +303,14 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
+                                                    <button mat-menu-item   (click)="sendAttachment(booking,'checkin')">
                                                        <i class="material-icons">attach_file</i>
                                                         Send Attachment
                                                     </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
@@ -522,6 +530,10 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachment
                                                     </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
@@ -686,6 +698,10 @@
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                          Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -923,6 +939,10 @@
                                                        <i class="material-icons">attach_file</i>
                                                         Send Attachment
                                                     </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -1073,6 +1093,10 @@
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                       <i class="material-icons">attach_file</i>
                                                         Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -1304,6 +1328,10 @@
                                                       <i class="material-icons">attach_file</i>
                                                         Send Attachment
                                                     </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -1454,6 +1482,10 @@
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                      <i class="material-icons">attach_file</i>
                                                         Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -1982,6 +2014,10 @@
                         </div>
                         <!-- end revamp order -->
                     </div>
+
+                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+                        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+                        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
 
 
                 </div>

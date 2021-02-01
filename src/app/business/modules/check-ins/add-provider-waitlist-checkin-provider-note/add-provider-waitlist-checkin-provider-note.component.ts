@@ -28,7 +28,13 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
   source = 'add';
   provider_label = '';
   disableButton = false;
-
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  showCaptionBox: any = {};
+  activeImageCaption: any = [];
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistCheckInProviderNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,8 +66,9 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
   }
   onSubmit(form_data) {
     this.disableButton = true;
-    const post_data = form_data.message.trim() || '';
-    if (post_data === '') {
+    console.log(form_data);
+    // const post_data = form_data.message.trim() || '';
+    if (form_data.message === '') {
       this.api_error = 'Please enter your note';
       setTimeout(() => {
         this.api_error = null;
@@ -69,9 +76,23 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
       this.disableButton = false;
       return;
     }
+
+    const dataToSend: FormData = new FormData();
+    dataToSend.append('message',form_data.message.trim() || '');
+    const captions = {};
+    let i = 0;
+    if (this.selectedMessage) {
+      for (const pic of this.selectedMessage.files) {
+        dataToSend.append('attachments', pic, pic['name']);
+        captions[i] = 'caption';
+        i++;
+      }
+    }
+    const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    dataToSend.append('captions', blobPropdata);
     if (this.source === 'appt') {
       this.provider_services.addProviderAppointmentNotes(this.checkin_id,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
@@ -86,7 +107,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         );
     } else {
       this.provider_services.addProviderWaitlistNote(this.checkin_id,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
@@ -104,5 +125,37 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
     this.api_success = null;
+  }
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
+  deleteTempImage(index) {
+    this.selectedMessage.files.splice(index, 1);
+    if (this.showCaptionBox && this.showCaptionBox[index]) {
+      delete this.showCaptionBox[index];
+      delete this.activeImageCaption[index];
+    }
+  }
+  closeCaptionMenu(index) {
+    if (this.showCaptionBox && this.showCaptionBox[index]) {
+      delete this.activeImageCaption[index];
+      this.showCaptionBox[index] = false;
+    }
   }
 }
