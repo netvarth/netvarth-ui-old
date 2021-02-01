@@ -131,10 +131,22 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
+                                                    <button mat-menu-item  (click)="sendAttachment(booking,'appt')">
+                                                        <!-- <i class="fa chat-icon"></i>-->
+                                                         <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>	
+                                                    <!-- <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                 && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -186,7 +198,7 @@
                                                     class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div 
+                                                        <div
                                                         [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
                                                             <span>
                                                                 <span>
@@ -291,10 +303,21 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                    <button mat-menu-item   (click)="sendAttachment(booking,'checkin')">
+                                                       <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
+                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>
+                                                    <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
@@ -503,10 +526,21 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
+                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>
+                                                    <!-- <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                 && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -661,10 +695,21 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                         Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>
+                                                    <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
@@ -890,6 +935,14 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'appt')">
+                                                       <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -1037,10 +1090,21 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
+                                                      <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>
+                                                    <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
@@ -1260,6 +1324,14 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'appt')">
+                                                      <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -1407,10 +1479,21 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
+                                                    <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
+                                                     <i class="material-icons">attach_file</i>
+                                                        Send Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
+                                                        <i class="material-icons">attach_file</i>
+                                                        View Attachment
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
+                                                    </button>
+                                                    <!-- <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'checkin')">{{rate_visit}}</span>
-                                                    </button>
+                                                    </button> -->
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.waitlistStatus !== 'done'
                                                 && booking.waitlistStatus !== 'cancelled'"
                                                         (click)="getMeetingDetails(booking,'waitlist')">
@@ -1589,7 +1672,7 @@
 
                     <!-- Order Section -->
                     <!-- If there is no order -->
-                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == undefined) && !loading) && showOrder"
+                    <div *ngIf="((total_tdy_order.length == 0 && total_future_order == 0) && !loading) && showOrder"
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">No Active Orders</p>
                     </div>
@@ -1627,6 +1710,13 @@
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
                                                 </button>
+                                                <button mat-menu-item (click)="rateService(oder,'order')" >
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                                </button>
+                                                <!-- <button mat-menu-item >
+                                                    <span class="rate-service" [class.rated]="isRated(oder)"
+                                                        (click)="rateService(oder,'order')">{{rate_visit}}</span>
+                                                </button> -->
                                                 <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
@@ -1657,8 +1747,8 @@
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
                                             <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid" class="amtPaid">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1707,6 +1797,11 @@
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
                                                     </button>
+                                                    <button mat-menu-item (click)="rateService(oder,'order')" >
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                                        <!-- <span class="rate-service" [class.rated]="isRated(oder)"
+                                                            (click)="rateService(oder,'order')"><i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</span> -->
+                                                    </button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
@@ -1733,10 +1828,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <span
-                                                    *ngIf="oder.bill && oder.bill.amountPaid"
-                                                    class="amtPaid">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                    <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1818,10 +1912,9 @@
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
                                                 mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
                                                 &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                            <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid"
-                                                class="amtPaid">Paid
-                                                &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                <span
+                                                *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1837,7 +1930,7 @@
                             </mat-grid-list>
                         </div>
                         <!-- show more -->
-                        <div *ngIf="!more_futrOrdersShow && total_future_order.length > 3" (click)="showMoreFutOrders()"
+                        <div *ngIf="!more_futrOrdersShow && total_future_order &&total_future_order.length > 3" (click)="showMoreFutOrders()"
                             class="mgn-up-10 mgn-bt-10 pad-lt-10">
                             <span><a class="show_more">Show more...</a></span>
                         </div>
@@ -1897,10 +1990,9 @@
                                                     mat-flat-button class="btns"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
-                                                <span
-                                                    *ngIf="oder.bill && oder.bill.amountPaid"
-                                                    class="amtPaid">Paid
-                                                    &#8377;{{oder.bill.amountPaid}}</span> &nbsp;&nbsp;
+                                                    <span
+                                                    *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
+                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1922,6 +2014,10 @@
                         </div>
                         <!-- end revamp order -->
                     </div>
+
+                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+                        [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+                        (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
 
 
                 </div>

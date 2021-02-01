@@ -98,8 +98,8 @@
                                             *ngIf="!wtlst.parentUuid && wtlst.service?.minPrePaymentAmount && infoParams.type != 'waitlistreschedule'">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">&#8377;
-                                                </span>{{infoParams.prepayment}}
+                                            <td><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr

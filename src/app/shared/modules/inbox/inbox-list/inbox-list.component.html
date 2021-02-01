@@ -44,7 +44,7 @@
                 </div>
                 <div class="td td4" [class.inbox-unreadmsg]="!message.read && user_id != message.owner.id">
                     <!-- <div class="label">{{message_cap}}</div> -->
-                    <div class="result">
+                    <div class="result" *ngIf= "message && message.msg">
                         {{ (message.msg.length>30)? (wordProcessor.firstToUpper(message.msg) | slice:0:40)+'.....':wordProcessor.firstToUpper(message.msg) }}
                     </div>
                 </div>

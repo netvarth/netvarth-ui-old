@@ -154,6 +154,10 @@
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
+                    <div class="order-label" *ngIf="catalog_details.taxPercentage">
+                      <div class="flex1">Tax</div>
+                      <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
+                    </div>
                     <ng-container *ngIf="orders.length!==0">
                     <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                       <div class="flex1">Delivery Charge</div>

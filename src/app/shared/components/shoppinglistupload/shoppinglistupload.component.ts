@@ -13,7 +13,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 })
 
 export class ShoppinglistuploadComponent implements OnInit, OnChanges {
-    header_caption = 'You can upload shoppinglist image now';
+    header_caption = 'You can upload shopping list image now';
     select_image_cap = Messages.SELECT_IMAGE_CAP;
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;

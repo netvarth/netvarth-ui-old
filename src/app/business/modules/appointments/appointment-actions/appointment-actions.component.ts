@@ -18,6 +18,10 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { Subscription } from 'rxjs';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -79,6 +83,8 @@ export class AppointmentActionsComponent implements OnInit {
     availableDates: any = [];
     accountid;
     apiloading = false;
+    galleryDialog: any;
+    subscription: Subscription;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -86,6 +92,7 @@ export class AppointmentActionsComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
+    private galleryService: GalleryService,  
         private provider_shared_functions: ProviderSharedFuctions, public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -107,6 +114,27 @@ export class AppointmentActionsComponent implements OnInit {
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+
+        this.subscription = this.galleryService.getMessage().subscribe(input => {
+            if (input && input.uuid) {
+               this.shared_services.addProviderAppointmentAttachment(input.uuid ,input.value)
+                    .subscribe(
+                        () => {                      
+                            this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                        }
+                    );
+            } 
+        });
+    }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
     setData() {
         this.holdselectedTime = this.appt.appmtTime;
@@ -711,5 +739,20 @@ export class AppointmentActionsComponent implements OnInit {
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+    sendimages() {
+        this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+         width: '50%',
+         panelClass: ['popup-class', 'commonpopupmainclass'],
+         disableClose: true,
+         data: {
+            source_id: 'attachment',
+            // accountId:this.checkin.providerAccount.id,
+            uid:this.appt.uid
+         }
+       });
+        this.galleryDialog.afterClosed().subscribe(result => {
+              this.dialogRef.close();
+       })
     }
 }

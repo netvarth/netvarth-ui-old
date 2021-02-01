@@ -91,6 +91,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   multiSelection = false;
   timetype;
   spName: any;
+  showImages: any = [];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -573,6 +574,16 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     actiondialogRef.afterClosed().subscribe(data => {
       this.getProviderSettings();
     });
+  }
+  showImagesection(index) {
+    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
   }
 }
 

@@ -504,7 +504,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                itemPriceInfo: [true],
-                advancePaymentStatus: [false],
+                advancePaymentStatus: [],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
                 cancelationPolicy: [''],
@@ -532,6 +532,7 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm.get('startdatestore').setValue(new Date());
             this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
+            this.amForm.get('advancePaymentStatus').setValue('NONE');
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
             if (this.action === 'add' && this.isFromadd) {
                 this.updateprefillForm();
@@ -547,7 +548,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                itemPriceInfo: [true],
-                advancePaymentStatus: [false],
+                advancePaymentStatus: [],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
                 cancelationPolicy: [''],
@@ -785,12 +786,12 @@ export class CatalogdetailComponent implements OnInit {
                 this.Selallhomedelivery = false;
             }
         }
-        let status;
         if (this.catalog.paymentType === 'FIXED') {
-            status = true;
             this.payAdvance = 'FIXED';
+        } else if (this.catalog.paymentType === 'NONE') {
+            this.payAdvance = 'NONE';
         } else {
-            status = false;
+            this.payAdvance = 'FULLAMOUNT';
         }
 
         let orderpickUpstat;
@@ -857,7 +858,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
-            'advancePaymentStatus': status,
+            'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount || '',
             'cancelationPolicyStatus': true,
             'cancelationPolicy': this.catalog.cancellationPolicy,
@@ -1008,12 +1009,12 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             }
         }
 
-        let status;
         if (this.prefillData.paymentType === 'FIXED') {
-            status = true;
             this.payAdvance = 'FIXED';
+        } else if (this.prefillData.paymentType === 'NONE') {
+            this.payAdvance = 'NONE';
         } else {
-            status = false;
+            this.payAdvance = 'FULLAMOUNT';
         }
 
         let orderpickUpstat;
@@ -1089,7 +1090,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
            'itemPriceInfo': this.prefillData.showPrice,
-            'advancePaymentStatus': status,
+            'advancePaymentStatus': this.prefillData.paymentType,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
             'cancelationPolicy': this.prefillData.cancellationPolicy,
@@ -1134,7 +1135,15 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             return this.sharedfunctionObj.showitemimg('');
         }
     }
-
+    handlePaymentchange(val) {
+        if (val === 'fixed') {
+            this.payAdvance = 'FIXED';
+        } else if (val === 'none') {
+            this.payAdvance = 'NONE';
+        } else {
+            this.payAdvance = 'FULLAMOUNT';
+        }
+    }
     handleDaychecbox(dayindx) {
         const selindx = this.selday_arr.indexOf(dayindx);
         if (selindx === -1) {
@@ -1420,6 +1429,10 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         // enddatehome.setMinutes(this.dend_timehome.minute);
         // const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
         // const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
+        if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
+                this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+                return;
+        }
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
                 this.snackbarService.openSnackBar('Please enter advance amount', { 'panelClass': 'snackbarerror' });
@@ -1495,8 +1508,8 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                 'deliveryCharge': form_data.deliverycharge
             },
             'showPrice': form_data.itemPriceInfo,
-            'paymentType': this.payAdvance,
-            'advanceAmount': this.payAdvance === 'FIXED' ? form_data.advancePayment : '',
+            'paymentType': form_data.advancePaymentStatus,
+            'advanceAmount': form_data.advancePaymentStatus === 'FIXED' ? form_data.advancePayment : 0,
             'preInfo': {
                 'preInfoEnabled': this.preInfoEnabled,
                 'preInfoTitle': this.preInfoEnabled ? this.preInfoTitle.trim() : '',

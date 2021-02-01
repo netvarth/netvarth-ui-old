@@ -5,9 +5,9 @@
             Order
         </h5>
     </div>
-</section>
+  </section>
 
-<section>
+  <section>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding order" *ngIf="!loading">
         <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
             <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
@@ -31,7 +31,10 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
-                <div class="" *ngIf="!small_device_display"> <i class="delivery-icon pull-right"
+
+                          <div class="" *ngIf="!small_device_display">
+                               <mat-icon class="msgIcon pointer"(click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=true>sms</mat-icon>
+                 <i class="delivery-icon pull-right"
                         *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
                 </div>
@@ -40,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0">
+        <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
                 <div class="pull-left bold font11">
                     Order Items
@@ -118,7 +121,7 @@
                         <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
                                 *ngIf="image_list_popup[2].modal.img"
                                 [src]="image_list_popup[2].modal.img" /></div>
-                       
+
                         <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
                             *ngIf="(image_list_popup.length-3)==0">
                             <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
@@ -142,10 +145,11 @@
                 </div>
                 </li>
                 </ul> -->
-              
+
         </div>
     </div>
     </div>
-</section>
-<div class="clearfix"></div>
-<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+  </section>
+  <div class="clearfix"></div>
+  <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+

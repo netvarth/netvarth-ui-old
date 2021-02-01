@@ -2,7 +2,6 @@
   <div class="cl1" *ngIf="action=='show'">
     <span class="editbt" [class.serv-disabled-icn]="!is_virtual_enable && service.serviceType === 'virtualService'"
       (click)="(is_virtual_enable || service.serviceType !== 'virtualService') && editService()"
-      *ngIf="service_data.status=='ACTIVE'"
       [matTooltip]="(!is_virtual_enable && service.serviceType === 'virtualService') ? 'Please turn on Teleservice in settings' : ''"></span>
     <div class="ot-it">
       <h4>
@@ -73,11 +72,13 @@
       <div class="c-ot" *ngIf="is_donation">
         <div class="item" *ngIf="service_data.minDonationAmount">
           <span class="ttle">Min Amount</span>
-          <span><span class="rupee-font">{{rupee_symbol}}</span>{{service_data.minDonationAmount}}</span>
+          <span class="rupee-font">{{service_data.minDonationAmount |
+            currency:'&#8377;'}}</span>
         </div>
         <div class="item" *ngIf="service_data.maxDonationAmount">
           <span class="ttle">Max Amount</span>
-          <span><span class="rupee-font">{{rupee_symbol}}</span>{{service_data.maxDonationAmount}}</span>
+          <span class="rupee-font">{{service_data.maxDonationAmount |
+            currency:'&#8377;'}}</span>
         </div>
         <div class="item" *ngIf="service_data.multiples">
           <span class="ttle">Multiples</span>

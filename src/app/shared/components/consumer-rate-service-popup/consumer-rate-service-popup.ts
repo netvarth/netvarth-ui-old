@@ -58,13 +58,12 @@ private wordProcessor: WordProcessor
         'account-eq': this.waitlist.providerAccount.id,
         'uId-eq': this.uuid
       };
-    } else if(this.type === 'checkin'){
+    } else if (this.type === 'checkin') {
       params = {
         'account': this.waitlist.providerAccount.id,
         'uId-eq': this.uuid
       };
-    }
-      else {
+    } else {
         params = {
           'account-eq': this.waitlist.providerAccount.id,
           'uId-eq': this.uuid
@@ -98,12 +97,20 @@ private wordProcessor: WordProcessor
     const params = {
       account: this.waitlist.providerAccount.id
     };
-
-    const post_data = {
+    let post_data;
+    if (this.type === 'order') {
+      post_data = {
+        'uId': this.uuid,
+        'stars': this.rate_value,
+        'feedback': this.message
+      };
+    } else {
+    post_data = {
       'uuid': this.uuid,
       'stars': this.rate_value,
       'feedback': this.message
     };
+    }
 
     if (this.newrating) {
       this.addRateService(params, post_data);

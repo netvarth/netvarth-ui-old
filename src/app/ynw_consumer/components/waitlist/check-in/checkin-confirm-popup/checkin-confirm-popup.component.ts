@@ -186,11 +186,11 @@ export class CheckinConfirmPopupComponent implements OnInit {
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
-        this.consumerNote = this.post_Data.consumerNote;
-        if (this.consumerNote === '') {
-            this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
-        }
-        dataToSend.append('message', this.consumerNote);
+        // this.consumerNote = this.post_Data.consumerNote;
+        // if (this.consumerNote === '') {
+        //     this.consumerNote = 'Please find the attachment(s) from Consumer with this message';
+        // }
+        // dataToSend.append('message', this.consumerNote);
         const captions = {};
         let i = 0;
         if (this.selectedMessage) {
@@ -202,8 +202,10 @@ export class CheckinConfirmPopupComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
-            dataToSend)
+        console.log(dataToSend);
+        // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+        //     dataToSend)
+        this.shared_services.addConsumerWaitlistAttachment(this.account_id,uuid,dataToSend)    
             .subscribe(
                 () => {
                 },

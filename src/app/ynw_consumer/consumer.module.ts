@@ -53,6 +53,10 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { OrderComponent } from './components/order/order.component';
 import { OrderDetailComponent } from './components/home/order-detail/order-detail.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { MatBadgeModule } from '@angular/material/badge';
+import { CommunicationComponent } from '../shared/components/communication/communication.component';
+import { ProviderSharedFuctions } from '../ynw_provider/shared/functions/provider-shared-functions';
+import { GalleryModule } from '../shared/modules/gallery/gallery.module';
 
 
 @NgModule({
@@ -82,7 +86,9 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
     NgxQRCodeModule,
     ShareButtonsModule,
     ShareIconsModule,
-    ModalGalleryModule
+    ModalGalleryModule,
+    MatBadgeModule,
+    GalleryModule
   ],
   declarations: [
     ConsumerComponent,
@@ -102,8 +108,9 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
     OrderComponent,
     OrderDetailComponent,
 
+
   ],
-  exports: [ConfirmBoxComponent],
+  exports: [ConfirmBoxComponent, MatBadgeModule],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
@@ -114,12 +121,14 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
     AddMembersHolderComponent,
     AddManagePrivacyComponent,
     MeetingDetailsComponent,
-    ActionPopupComponent
+    ActionPopupComponent,
+    CommunicationComponent
   ],
   providers: [
     SharedServices,
     ConsumerServices,
     ConsumerDataStorageService,
+    ProviderSharedFuctions,
     WaitlistDetailResolver,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

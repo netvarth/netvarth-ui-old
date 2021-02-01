@@ -248,6 +248,10 @@
                                                         <button mat-menu-item   (click)="addordertMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
+                                                            <button mat-menu-item 
+                                                            [class.rated]="isRated(his_wait)"
+                                                            (click)="rateOrderService(his_wait)">
+                                                            Rate Order Service</button>
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>

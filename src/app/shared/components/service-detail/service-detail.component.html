@@ -69,15 +69,15 @@
             </div>
             <div class="outer3" *ngIf="data.serdet && data.serdet.totalAmount && data.serdet.totalAmount != 0">
                 <div class="duration">
-                    <span>Service Fee : </span><span style="font-weight: bold">&nbsp;
-                        <span class="rupee-font">&#8377; </span>{{data.serdet.totalAmount}}
+                    <span>Service Fee : </span><span style="font-weight: bold"  class="rupee-font">&nbsp;
+                       {{data.serdet.totalAmount | currency:'&#8377;'}}
                     </span>
                 </div>
             </div>
             <div class="outer4" *ngIf="data.serdet && data.serdet.isPrePayment">
                 <div class="prepayment">
-                    <span>Booking Fee : </span><span style="font-weight: bold">
-                        <span class="rupee-font">&#8377; </span>{{data.serdet.minPrePaymentAmount}}
+                    <span>Booking Fee : </span><span style="font-weight: bold" class="rupee-font">
+                        {{data.serdet.minPrePaymentAmount | currency:'&#8377;'}}
                     </span>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                     <span>Min amount: </span><span *ngIf="data.serdet.minValue" style="font-weight: bold">
                         {{data.serdet.minValue}}
                     </span>
-                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold">
+                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font">
                         {{data.serdet.minDonationAmount| currency:'&#8377;'}}
                     </span>
                 </div>
@@ -115,7 +115,7 @@
                     <span>Max amount : </span><span *ngIf="data.serdet.maxValue" style="font-weight: bold">
                         {{data.serdet.maxValue}}
                     </span>
-                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold">
+                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font">
                         {{data.serdet.maxDonationAmount| currency:'&#8377;'}}
                     </span>
                 </div>

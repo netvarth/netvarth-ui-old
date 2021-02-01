@@ -80,9 +80,8 @@
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount && type !== 'reschedule'">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">&#8377;
+                                            <td><span class="rupee-font">{{infoParams.prepayment  | currency:'&#8377;'}}
                                                 </span>
-                                                {{infoParams.prepayment}}
                                             </td>
                                         </tr>
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount && type == 'reschedule' && appointment.amountPaid > 0">

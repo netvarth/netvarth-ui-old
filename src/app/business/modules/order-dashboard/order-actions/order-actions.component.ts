@@ -10,7 +10,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.component';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
-  
+
 @Component({
   selector: 'app-order-actions',
   templateUrl: './order-actions.component.html',
@@ -138,7 +138,7 @@ export class OrderActionsComponent implements OnInit {
       //   }
       // }
       this.loading = false;
-    });  
+    });
     if (this.orderDetails.storePickup) {
       this.choose_type = 'store';
     }

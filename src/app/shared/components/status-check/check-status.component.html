@@ -173,8 +173,8 @@
                   <tr *ngIf="type!='order' && statusInfo.amountPaid > 0">
                     <td width="48%" align="right">Amount paid</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td><span class="rupee-font">&#8377;
-                      </span> {{statusInfo.amountPaid}}</td>
+                    <td><span class="rupee-font">{{statusInfo.amountPaid | currency:'&#8377;'}}
+                      </span> </td>
                   </tr>
                   <tr
                     *ngIf="type=='order' && ((statusInfo.bill && statusInfo.bill.amountPaid > 0) || statusInfo.advanceAmountPaid > 0)">

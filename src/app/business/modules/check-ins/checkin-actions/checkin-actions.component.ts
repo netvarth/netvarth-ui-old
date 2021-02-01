@@ -18,6 +18,10 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { GalleryImportComponent } from '../../../../shared/modules/gallery/import/gallery-import.component';
+import { GalleryService } from '../../../../shared/modules/gallery/galery-service';
+import { Subscription } from 'rxjs';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 
 @Component({
@@ -90,6 +94,8 @@ export class CheckinActionsComponent implements OnInit {
     subdomain;
     availableDates: any = [];
     apiloading = false;
+    galleryDialog: any;
+    subscription: Subscription;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -100,6 +106,7 @@ export class CheckinActionsComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
+        private galleryService: GalleryService,  
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -131,8 +138,28 @@ export class CheckinActionsComponent implements OnInit {
         this.domain = user.sector;
         this.subdomain = user.subSector;
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    }
 
+        this.subscription = this.galleryService.getMessage().subscribe(input => {
+             if (input && input.uuid) {
+               this.shared_services.addProviderWaitlistAttachment(input.uuid ,input.value)
+                    .subscribe(
+                        () => {                      
+                            this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                            this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                        }
+                    );
+            } 
+        });
+    }
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
     printCheckin() {
         this.dialogRef.close();
         this.qrCodegeneration(this.checkin);
@@ -726,5 +753,20 @@ export class CheckinActionsComponent implements OnInit {
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+    sendimages() {
+        this.galleryDialog = this.dialog.open(GalleryImportComponent, {
+         width: '50%',
+         panelClass: ['popup-class', 'commonpopupmainclass'],
+         disableClose: true,
+         data: {
+            source_id: 'attachment',
+            // accountId:this.checkin.providerAccount.id,
+            uid:this.checkin.ynwUuid
+         }
+       });
+        this.galleryDialog.afterClosed().subscribe(result => {
+         this.dialogRef.close();
+       })
     }
 }
