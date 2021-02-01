@@ -204,7 +204,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
           this.loc_name = this.loc_list[0];
         }
         if (this.action === 'add') {
-          this.selected_location = this.loc_list[0];
+          const location = this.loc_list.filter(loc => loc.baseLocation);
+          this.selected_location = location[0];
           this.selected_locationId = this.loc_list[0].id;
         }
         if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
