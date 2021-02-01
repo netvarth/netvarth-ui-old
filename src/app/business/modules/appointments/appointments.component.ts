@@ -2724,3 +2724,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.apptStatuses.toString();
   }
 }
+
