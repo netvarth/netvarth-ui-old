@@ -245,12 +245,12 @@
                                                 <div class="mgn-lft-10">
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        mat-flat-button class="btns"
+                                                        mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
-                                                        &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                       {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
-                                                        *ngIf="booking.amountPaid"class="amtPaid">Paid
-                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                        *ngIf="booking.amountPaid"class="amtPaid rupee-font">Paid
+                                                        {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -461,12 +461,12 @@
                                                 <div class="mgn-lft-10">
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
-                                                        mat-flat-button class="btns"
+                                                        mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
-                                                        &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                       {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
-                                                        *ngIf="booking.amountPaid" class="amtPaid">Paid
-                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                        *ngIf="booking.amountPaid" class="amtPaid  rupee-font">Paid
+                                                        {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -637,12 +637,12 @@
                                                 <div class="mgn-lft-10">
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                        mat-flat-button class="btns"
+                                                        mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
-                                                        &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                        {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
-                                                        *ngIf="booking.amountPaid"  class="amtPaid">Paid
-                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                        *ngIf="booking.amountPaid"  class="amtPaid  rupee-font">Paid
+                                                        {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -855,12 +855,12 @@
                                                 <div class="mgn-lft-10">
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
-                                                        mat-flat-button class="btns"
+                                                        mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
-                                                        &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                       {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
-                                                        *ngIf="booking.amountPaid" class="amtPaid">Paid
-                                                        &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                        *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
+                                                        {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                     <span *ngIf="booking.billViewStatus == 'Show'">
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -1026,12 +1026,12 @@
                                             <div class="mgn-lft-10">
                                                 <button
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
-                                                    &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                  {{booking.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
-                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
-                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                    *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
+                                                   {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1251,13 +1251,13 @@
                                             <div class="mgn-lft-10">
                                                 <button
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns  rupee-font"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
-                                                    &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                    {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
                                                     *ngIf="booking.amountPaid"
-                                                    class="amtPaid">Paid
-                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                    class="amtPaid rupee-font">Paid
+                                                    {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -1415,12 +1415,12 @@
                                             <div class="mgn-lft-10">
                                                 <button
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
-                                                    &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                  {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
-                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
-                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                    *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
+                                                   {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
@@ -1640,12 +1640,12 @@
                                             <div class="mgn-lft-10">
                                                 <button
                                                     *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
-                                                    &#8377;{{booking.amountDue}}</button>&nbsp;&nbsp;
+                                                    {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
-                                                    *ngIf="booking.amountPaid" class="amtPaid">Paid
-                                                    &#8377;{{booking.amountPaid}}</span> &nbsp;&nbsp;
+                                                    *ngIf="booking.amountPaid" class="amtPaid rupee-font">Paid
+                                                    {{booking.amountPaid | currency:'&#8377;'}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="booking.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="!(booking.amountDue>0) && booking.waitlistStatus != 'cancelled'"
@@ -1744,8 +1744,8 @@
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
-                                                mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
-                                                &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
+                                                mat-flat-button class="btns rupee-font" (click)="viewBill(oder,'order',$event)">Pay
+                                               {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                             <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                 &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
@@ -1825,9 +1825,9 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
                                                     *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
-                                                    &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
+                                                  {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                     &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
@@ -1910,8 +1910,8 @@
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
                                                 *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
-                                                mat-flat-button class="btns" (click)="viewBill(oder,'order',$event)">Pay
-                                                &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
+                                                mat-flat-button class="btns rupee-font" (click)="viewBill(oder,'order',$event)">Pay
+                                                {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                 &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
@@ -1987,9 +1987,9 @@
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
                                                     *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
-                                                    mat-flat-button class="btns"
+                                                    mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
-                                                    &#8377;{{oder.amountDue}}</button>&nbsp;&nbsp;
+                                                    {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                     &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
