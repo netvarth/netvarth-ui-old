@@ -227,6 +227,9 @@ export class SpecializationsComponent implements OnInit, OnDestroy {
       cancel() {
       this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
       }
+      redirecToBprofile() {
+        this.routerobj.navigate(['provider', 'settings', 'general', 'users', this.userId, 'settings', 'bprofile']);
+    }
     // handleSpecialization() {
     //     let holdselspec;
     //     if (this.bProfile && this.bProfile.specialization) {
