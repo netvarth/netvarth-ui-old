@@ -146,7 +146,7 @@
                 <mat-checkbox *ngFor="let services of donationServices" [checked]= "check_status"  (click)="setFilterData(
                   'service',services.id)" [value]="services.id" >
                 {{services.name}}</mat-checkbox> -->
-                <label class="filterHeaders">Services</label>
+                <label class="filterHeaders">Causes</label>
                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                   <mat-checkbox *ngFor="let service of donationServices" [checked]="services.indexOf(service.id) !== -1"
                     (change)="setFilterDataCheckbox('service', service.id, $event)">
