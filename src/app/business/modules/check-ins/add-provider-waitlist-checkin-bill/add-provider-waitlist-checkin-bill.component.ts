@@ -1402,7 +1402,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': msg
+          'message': msg,
+          'type': 'yes/no'
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
