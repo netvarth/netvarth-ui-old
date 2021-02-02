@@ -344,6 +344,7 @@ buttons: [
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.getCommunicationHistory();
       }
     });
   }

@@ -128,7 +128,7 @@
                   <!-- Group header cells-->
                   <ng-container matColumnDef="groupHeader">
                     <td colspan="999" mat-cell *matCellDef="let group">
-                      <strong>{{group.groupName}}</strong>
+                      <strong>{{(group.groupName=='undefined') ? ' ':group.groupName}}</strong>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="groupReducer">

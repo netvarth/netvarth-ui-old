@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 
 
 
@@ -15,6 +16,7 @@ import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/p
 })
 export class CommunicationComponent implements OnInit {
 
+  addnotedialogRef: any;
   showImages: any = [];
   orderDetails: any;
   loading: boolean;
@@ -31,6 +33,7 @@ export class CommunicationComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private providerServices: ProviderServices,
     private groupService: GroupStorageService,
+    private dialog: MatDialog,
     private provider_shared_functions: ProviderSharedFuctions,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -40,6 +43,7 @@ export class CommunicationComponent implements OnInit {
     console.log(JSON.stringify(this.message));
     this.type = this.data.type;
     this.orderDetails = this.data.orderDetails;
+    console.log(JSON.stringify(this.orderDetails));
     this.message.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {
         return -1;
@@ -82,20 +86,56 @@ export class CommunicationComponent implements OnInit {
   // }
 
   sendMessage() {
-    let order = [];
-    if (this.orderDetails.length > 1) {
-      order = this.orderDetails;
+    if (this.type === 'consumer') {
+   this.addWaitlistMessage(this.orderDetails, 'orders');
     } else {
-      order.push(this.orderDetails);
-    }
-    console.log(order);
-    this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
-      .then(
-        () => { },
-        () => { }
-      );
+      let order = [];
+      if (this.orderDetails.length > 1) {
+        order = this.orderDetails;
+      } else {
+        order.push(this.orderDetails);
+      }
+      console.log(order);
+      this.provider_shared_functions.addConsumerInboxMessage(order, this, 'order-provider')
+        .then(
+          () => { },
+          () => { }
+        );
       this.dialogRef.close();
+    }
   }
+  addWaitlistMessage(waitlist, type?) {
+    const pass_ob = {};
+    pass_ob['source'] = 'consumer-waitlist';
+    pass_ob['user_id'] = waitlist.providerAccount.id;
+    pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['typeOfMsg'] = 'single';
+    if (type === 'appt') {
+      pass_ob['appt'] = type;
+      pass_ob['uuid'] = waitlist.uid;
+    } else if (type === 'orders') {
+      pass_ob['orders'] = type;
+      pass_ob['uuid'] = waitlist.uid;
+    } else {
+      pass_ob['uuid'] = waitlist.ynwUuid;
+    }
+    this.addNote(pass_ob);
+  }
+  addNote(pass_ob) {
+    this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'popup-class'],
+      disableClose: true,
+      autoFocus: true,
+      data: pass_ob
+    });
+    this.addnotedialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+        this.dialogRef.close();
+      }
+    });
+  }
+
 
   splitMessageByColon(message) {
     let newmessage = message;

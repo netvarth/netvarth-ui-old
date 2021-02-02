@@ -7,6 +7,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-customer-selection',
@@ -28,6 +29,18 @@ export class CustomerSelectionComponent implements OnInit {
   reportType: any;
   customerList: any[];
   selection = new SelectionModel(true, []);
+  customerSelected = 'all';
+  allcustomer = true;
+
+
+
+
+
+  'list': [
+    { 'name': 'some name 1', ID: 'D1', 'checked': true },
+    { 'name': 'some name 2', ID: 'D2', 'checked': false }
+  ];
+
 
   displayedColumns = ['select', 'id', 'fname', 'lname', 'phone', 'status'];
   public patient_dataSource = new MatTableDataSource<any>([]);
@@ -36,15 +49,31 @@ export class CustomerSelectionComponent implements OnInit {
     private report_data_service: ReportDataService,
     private fb: FormBuilder,
     private provider_services: ProviderServices,
+    private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor) {
+    this.allcustomer = true;
     this.activated_route.queryParams.subscribe(qparams => {
-
-      this.reportType = qparams.report_type;
       this.patient_array = [];
-      if (qparams.data !== 0) {
-        this.findPatients(qparams.data);
+      if (qparams) {
+        this.reportType = qparams.report_type;
+
+        if (qparams.data !== 0 && qparams.data !== undefined) {
+          this.findPatients(qparams.data);
+          this.allcustomer = false;
+          this.customerSelected = 'specific';
 
 
+        } else {
+          this.allcustomer = true;
+          this.customerSelected = 'all';
+
+
+          this.customerSelected = 'all';
+
+
+        }
+      } else {
+        this.allcustomer = true;
       }
 
     });
@@ -59,31 +88,53 @@ export class CustomerSelectionComponent implements OnInit {
     const placeholder = 'Enter customer id seperated by comm;Ex 1,2,3';
     this.placeHolder_msg = placeholder.replace('customer', this.customer_label);
   }
-  passCustomersToReports() {
-    this.customer_selected = 'All';
-    if (this.patient_dataSource.data.length > 0) {
-      this.customer_selected = this.selection.selected;
-
+  handleChange(event) {
+    if (this.customerSelected === 'all') {
+      const customerData = {
+        'jaldee_customers': 'All',
+        'customers': 0
+      };
+      this.report_data_service.updateCustomers(customerData);
     }
 
-    let jaldee_customer_id = '';
-    let customer_id = '';
-    this.customer_selected.forEach(function (customer) {
-      console.log(customer);
-      customer_id = customer_id + customer.id + ',';
-      jaldee_customer_id = jaldee_customer_id + customer.jaldeeId + ',';
-    });
-    console.log(jaldee_customer_id);
+  }
+  passCustomersToReports() {
+    if (this.customerSelected === 'specific') {
+      this.customer_selected = 'All';
+      if (this.patient_dataSource.data.length > 0) {
+        this.customer_selected = this.selection.selected;
 
-    const jaldee_customers = jaldee_customer_id.replace(/,\s*$/, '');
-    const customers = customer_id.replace(/,\s*$/, '');
-    const customerData = {
-      'jaldee_customers': jaldee_customers,
-      'customers': customers
-    };
-    console.log(JSON.stringify(customerData));
-    this.report_data_service.updateCustomers(customerData);
-    this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+      }
+
+      let jaldee_customer_id = '';
+      let customer_id = '';
+      this.customer_selected.forEach(function (customer) {
+        console.log(customer);
+        customer_id = customer_id + customer.id + ',';
+        jaldee_customer_id = jaldee_customer_id + customer.jaldeeId + ',';
+      });
+      console.log(jaldee_customer_id);
+
+      const jaldee_customers = jaldee_customer_id.replace(/,\s*$/, '');
+      const customers = customer_id.replace(/,\s*$/, '');
+      const customerData = {
+        'jaldee_customers': jaldee_customers,
+        'customers': customers
+      };
+      if (this.customer_selected.length === 0) {
+        this.snackbarService.openSnackBar('Please select atleast one', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.report_data_service.updateCustomers(customerData);
+        this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+      }
+    } else {
+      const customerData = {
+        'jaldee_customers': 'All',
+        'customers': 0
+      };
+      this.report_data_service.updateCustomers(customerData);
+      this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+    }
   }
 
   createForm() {
