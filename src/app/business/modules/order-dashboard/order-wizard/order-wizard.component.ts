@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import '../../../../../assets/js/pages/custom/wizard/wizard-1.js';
+ import '../../../../../assets/js/pages/custom/wizard/wizard-1.js';
+ import '../../../../../assets/js/scripts.bundle.js';
 
 
 @Component({
@@ -11,4 +12,5 @@ export class OrderWizardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
+
 }
