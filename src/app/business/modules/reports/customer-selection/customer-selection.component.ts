@@ -98,6 +98,15 @@ export class CustomerSelectionComponent implements OnInit {
     }
 
   }
+  getPatientPhoneNo(patient) {
+    let phone = '';
+    if (patient.phoneNo === null || patient.phoneNo === 'undefined' || patient.phoneNo === '') {
+      phone = '';
+    } else {
+      phone = patient.countryCode + patient.phoneNo;
+    }
+    return phone;
+  }
   passCustomersToReports() {
     if (this.customerSelected === 'specific') {
       this.customer_selected = 'All';
