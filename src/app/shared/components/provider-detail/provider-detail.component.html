@@ -182,7 +182,8 @@
                                             <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                                 <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
                                                     <li class="vfield-row" *ngIf="vals.length">
-                                                        <span *ngFor="let field of vals; let i=index" class="morevalspan">
+                                                        <span *ngFor="let field of vals; let i=index"
+                                                            class="morevalspan">
                                                             {{field}}<span *ngIf="i <= (vals.length-2)">, </span>
                                                         </span>
                                                     </li>
@@ -325,7 +326,7 @@
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
-                    <h6 class="question-header">Book online now for your convenience.
+                    <h6 class="question-header">Book online now and save your time
                     </h6>
                 </div>
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0"
