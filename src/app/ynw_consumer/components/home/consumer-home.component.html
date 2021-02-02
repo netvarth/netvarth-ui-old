@@ -103,13 +103,13 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
+                                                <div><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div class="resch-box" *ngIf="booking.isRescheduled">
+                                                <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <!-- more options -->
@@ -241,6 +241,10 @@
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                     <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
+                                                        <span *ngIf="booking.isRescheduled">
+                                                            <i class="resche_ico_wtlist"
+                                                                [matTooltip]="'Rescheduled'"></i>
+                                                        </span>
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
@@ -498,13 +502,13 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
+                                                <div><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div class="resch-box" *ngIf="booking.isRescheduled">
+                                                <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <!-- more options -->
@@ -633,6 +637,9 @@
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                     <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
+                                                    <span *ngIf="booking.isRescheduled">
+                                                       <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
+                                                    </span>
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
@@ -908,13 +915,13 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
+                                                <div><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div class="resch-box" *ngIf="booking.isRescheduled">
+                                                <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <!-- more options -->
@@ -1022,6 +1029,10 @@
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                 <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
+                                                    <span *ngIf="booking.isRescheduled">
+                                                            <i class="resche_ico_wtlist"
+                                                                [matTooltip]="'Rescheduled'"></i>
+                                                        </span>
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
@@ -1297,13 +1308,13 @@
                                             <!-- Icon -->
                                             <div
                                                 class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding mgn-up-10">
-                                                <div *ngIf="!booking.isRescheduled"><i style="width: 4rem;"
+                                                <div><i style="width: 4rem;"
                                                         class="fa appt-icon" [matTooltip]="'Appointment'"></i>
                                                 </div>
-                                                <div class="resch-box" *ngIf="booking.isRescheduled">
+                                                <!-- <div class="resch-box" *ngIf="booking.isRescheduled">
                                                     <i style="width: 4rem;" class="consumer-reschedule-icon"
                                                         [matTooltip]="'Rescheduled'"></i>
-                                                </div>
+                                                </div> -->
                                             </div>
 
                                             <!-- more options -->
@@ -1411,6 +1422,10 @@
                                                     *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                 <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                     *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
+                                                    <span *ngIf="booking.isRescheduled">
+                                                            <i class="resche_ico_wtlist"
+                                                                [matTooltip]="'Rescheduled'"></i>
+                                                        </span>
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
