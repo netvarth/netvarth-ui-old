@@ -347,9 +347,9 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     if (this.showToken) {
-                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('DD-MM-YYYY'));
+                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('d MMM'));
                     } else {
-                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
+                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + moment(this.checkin_date).format('d MMM'));
                     }
                     this.dialogRef.close('reload');
                 },
