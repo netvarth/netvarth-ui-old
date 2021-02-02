@@ -16,6 +16,8 @@ table{
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  text-align: center;
+  vertical-align: middle;
 }
 @media print {
   .page {
