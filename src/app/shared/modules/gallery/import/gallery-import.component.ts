@@ -36,18 +36,30 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     source_id;
     subscription: Subscription;
     @ViewChild('filed') fileInput: ElementRef;
+    accountId: any;
+    uuid: any;
+    type: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,
         public galleryService: GalleryService
     ) {
-
+        if(this.data.accountId){
+           this.accountId= this.data.accountId;
+        }
+        if(this.data.uid){
+           this.uuid= this.data.uid;            
+        }
+        if(this.data.type){
+            this.type= this.data.type;            
+         }
     }
     ngOnChanges() { }
     ngOnInit() {
         if (this.data.source_id) {
             this.source_id = this.data.source_id;
-        } else {
+        }
+        else {
             this.dialogRef.close();
         }
         this.subscription = this.galleryService.getMessage().subscribe(
@@ -119,7 +131,13 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         const propertiesDetob = {};
         let i = 0;
         for (const pic of this.item_pic.files) {
-            submit_data.append('files', pic, pic['name']);
+            if (this.source_id ==='attachment'){
+                submit_data.append('attachments', pic, pic['name']);
+            } else if (this.source_id ==='consumerimages'){
+                submit_data.append('attachments', pic, pic['name']);
+            } else{
+                submit_data.append('files', pic, pic['name']);
+            }
             const properties = {
                 'caption': this.item_pic.caption[i] || ''
             };
@@ -132,12 +150,36 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
         // this.uploadApi(submit_data);
-        const input = {
-            ttype: 'image-upload',
-            value: submit_data,
-            sourceId: this.source_id
-        };
-        this.galleryService.sendMessage(input);
+        // const input = {
+        //     ttype: 'image-upload',
+        //     value: submit_data,
+        //     sourceId: this.source_id
+        // };
+        // this.galleryService.sendMessage(input);
+        if (this.source_id ==='attachment'){
+            const input = {
+                // ttype: 'image-upload',
+                value: submit_data,
+                accountId:this.accountId,
+                 uuid:this.uuid         
+                };
+            this.galleryService.sendMessage(input);
+        } else if (this.source_id ==='consumerimages'){
+            const input = {
+               value: submit_data,
+               accountId:this.accountId,
+               uuid:this.uuid,
+               type: this.type      
+            };
+          this.galleryService.sendMessage(input);
+        } else {
+            const input = {
+               ttype: 'image-upload',
+               value: submit_data,
+               sourceId: this.source_id
+            };
+          this.galleryService.sendMessage(input);
+        }
     }
     actionCompleted() {
         this.savedisabled = false;

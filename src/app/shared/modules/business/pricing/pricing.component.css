@@ -288,3 +288,7 @@ h6.display-5 {
 .pad-bt-25 {
   padding-bottom: 25px !important;
 }
+#prov_home_n a.btn:hover {
+  background-color: #F2B51C !important;
+  color: #fff !important;
+}

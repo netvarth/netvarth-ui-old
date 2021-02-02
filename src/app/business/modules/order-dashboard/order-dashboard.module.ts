@@ -4,6 +4,7 @@ import { OrderDashboardComponent } from './order-dashboard.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderDashboardRoutingModule } from './order-dashboard.routing.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 import { OrderActionsComponent } from './order-actions/order-actions.component';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { SharedModule } from '../../../shared/modules/common/shared.module';
@@ -23,6 +24,7 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
     OrderEditComponent,
     OrderItemsComponent,
     DisplaylabelpopupComponent
+
   ],
   entryComponents: [
     OrderActionsComponent,
@@ -34,6 +36,7 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
     SharedModule,
     OrderDashboardRoutingModule,
     MatTabsModule,
+    MatBadgeModule,
     LoadingSpinnerModule,
     CapitalizeFirstPipeModule,
     CardModule,
@@ -42,6 +45,7 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
   ],
   exports: [
     OrderDashboardComponent
+
   ]
 })
 export class OrderDashboardModule { }

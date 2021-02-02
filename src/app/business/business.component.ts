@@ -12,6 +12,7 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 import { GroupStorageService } from '../shared/services/group-storage.service';
 import { SnackbarService } from '../shared/services/snackbar.service';
 import { WordProcessor } from '../shared/services/word-processor.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-business',
@@ -39,7 +40,9 @@ export class BusinessComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor ) {
+    private wordProcessor: WordProcessor,
+    private titleService: Title ) {
+      this.titleService.setTitle('Jaldee Business');
     router.events.subscribe(
       (event: RouterEvent): void => {
         this._navigationInterceptor(event);

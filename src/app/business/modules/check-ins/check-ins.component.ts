@@ -25,6 +25,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { Title } from '@angular/platform-browser';
 declare let cordova: any;
 @Component({
   selector: 'app-checkins',
@@ -346,7 +347,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -443,6 +445,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     // this.breadcrumb_moreoptions = {
@@ -873,7 +876,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         selected_location = location;
       }
     }
-    return (selected_location !== null) ? selected_location : this.locations[0];
+    if (selected_location !== null) {
+      return selected_location;
+    } else {
+      const location = this.locations.filter(loc => loc.baseLocation);
+      return location[0];
+    }
   }
   getViews() {
     const _this = this;
@@ -2924,34 +2932,53 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   openAttachmentGallery(checkin) {
     this.image_list_popup_temp = [];
     this.image_list_popup = [];
-    this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
+    // this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
+    this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
+        console.log(communications);
         let count = 0;
+        // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
+        //   if (communications[comIndex].attachements) {
+        //     for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
+        //       const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
+        //       let imagePath = thumbPath;
+        //       const description = communications[comIndex].attachements[attachIndex].s3path;
+        //       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+        //       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+        //         console.log(comIndex);
+        //         imagePath = communications[comIndex].attachements[attachIndex].s3path;
+        //       }
+        //       const imgobj = new Image(
+        //         count,
+        //         { // modal
+        //           img: imagePath,
+        //           description: description
+        //         },
+        //       );
+        //       console.log(imgobj);
+        //       this.image_list_popup_temp.push(imgobj);
+        //       count++;
+        //     }
+        //   }
+        // }
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          if (communications[comIndex].attachements) {
-            for (let attachIndex = 0; attachIndex < communications[comIndex].attachements.length; attachIndex++) {
-              const thumbPath = communications[comIndex].attachements[attachIndex].thumbPath;
-              let imagePath = thumbPath;
-              const description = communications[comIndex].attachements[attachIndex].s3path;
-              const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-              if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-                console.log(comIndex);
-                imagePath = communications[comIndex].attachements[attachIndex].s3path;
-              }
-              const imgobj = new Image(
-                count,
-                { // modal
-                  img: imagePath,
-                  description: description
-                },
-              );
-              console.log(imgobj);
-              this.image_list_popup_temp.push(imgobj);
-              count++;
-            }
-          }
-        }
-        console.log(count);
+          const thumbPath = communications[comIndex].thumbPath;
+           let imagePath = thumbPath;
+           const description = communications[comIndex].s3path;
+           const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+           if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+             imagePath = communications[comIndex].s3path;
+           }
+           const imgobj = new Image(
+             count,
+             { // modal
+               img: imagePath,
+               description: description
+             },
+           );
+           this.image_list_popup_temp.push(imgobj);
+           count++;
+     }
         if (count > 0) {
           this.image_list_popup = this.image_list_popup_temp;
           setTimeout(() => {

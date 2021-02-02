@@ -22,6 +22,7 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { AppointmentActionsComponent } from './appointment-actions/appointment-actions.component';
 import { CustomerModule } from '../customer/customer.module';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
+import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
         NgxQRCodeModule,
         CustomerModule,
         MedicalrecordModule,
+        GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [

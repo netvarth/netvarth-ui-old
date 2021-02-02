@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LoginComponent } from '../../../../shared/components/login/login.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -90,8 +91,10 @@ export class PhomeComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Jaldee Business Home');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
       this.handleScroll(this.qParams.type);

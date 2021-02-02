@@ -31,6 +31,7 @@ import { CheckinActionsComponent } from './checkin-actions/checkin-actions.compo
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
 import { MatTabsModule } from '@angular/material/tabs';
+import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { MatTabsModule } from '@angular/material/tabs';
         NgxQRCodeModule,
         CustomerModule,
         MedicalrecordModule,
+        GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [
