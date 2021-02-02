@@ -179,8 +179,8 @@
                                             <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                                 <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
                                                     <li class="vfield-row" *ngIf="vals.length">
-                                                        <span *ngFor="let field of vals" class="morevalspan">
-                                                            {{field}}
+                                                        <span *ngFor="let field of vals; let i=index" class="morevalspan">
+                                                            {{field}}<span *ngIf="i <= (vals.length-2)">, </span>
                                                         </span>
                                                     </li>
                                                 </ul>
