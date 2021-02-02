@@ -197,6 +197,7 @@ export class NewReportComponent implements OnInit {
 
   }
   setReportData(res) {
+    console.log(JSON.stringify(res));
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
 
@@ -215,7 +216,7 @@ export class NewReportComponent implements OnInit {
           break;
         }
         case 'donation': {
-          this.donation_amount = res.amount;
+          this.donation_amount = res.donationAmount;
           this.donation_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
