@@ -389,7 +389,7 @@
                 </ng-container>
 
                 <!-- Order Catalog-->
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderstatus && catalog_loading">
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="orderstatus && catalog_loading && activeCatalog">
                     <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 no-padding">
                         <h5 class="mgn-bt-5 primary-color"><img
                                 (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
