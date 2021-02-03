@@ -23,7 +23,7 @@ export class EditStoreDetailsComponent implements OnInit {
     cancel_btn = Messages.CANCEL_BTN;
     button_title = 'Update';
     alternatePhone: any;
-    alternateEmail: any;
+    alternateEmail;
     whatsappNo: any;
     constructor(
         public activateroute: ActivatedRoute,
@@ -41,6 +41,9 @@ export class EditStoreDetailsComponent implements OnInit {
         });
     }
     ngOnInit() {
+        console.log(this.email);
+        console.log(this.alternateEmail);
+        console.log(this.data);
         if (this.data) {
             this.firstName = this.data.firstName;
             this.lastName = this.data.lastName;
@@ -67,8 +70,12 @@ export class EditStoreDetailsComponent implements OnInit {
             'secCountryCode': '+91',
             'whatsAppCountryCode': '+91',
         };
-        if (this.email === this.alternateEmail) {
+        console.log(this.email);
+        console.log(this.alternateEmail);
+        if ((this.email !== '' && this.email !== undefined) && (this.alternateEmail !== '' && this.alternateEmail !== undefined)) {
+            if (this.email === this.alternateEmail) {
             this.snackbarService.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
+            }
         } else if (this.phone === this.alternatePhone) {
             this.snackbarService.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
         } else {
