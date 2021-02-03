@@ -11,8 +11,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
 export class OrderWizardComponent implements OnInit {
+  step = 1;
   constructor() { }
 
   ngOnInit() {}
+
+  gotoNext() {
+    this.step = this.step + 1;
+  }
+  gotoPrev() {
+    this.step = this.step - 1;
+  }
 
  }
