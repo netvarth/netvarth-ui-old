@@ -284,6 +284,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+    let stat;
+    stat = this.lStorageService.getitemfromLocalStorage('orderStat');
+    if (stat === true) {
+      this.showOrder = true;
+    }
     this.breadcrumbs = [
       {
         title: 'My Jaldee'
@@ -2034,9 +2039,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   showOrders() {
     this.showOrder = true;
+    this.lStorageService.setitemonLocalStorage('orderStat', true);
   }
   showBookings() {
     this.showOrder = false;
+    this.lStorageService.setitemonLocalStorage('orderStat', false);
   }
   getBookingStatusClass(status) {
     const retdet = this.bookingStatusClasses.filter(
