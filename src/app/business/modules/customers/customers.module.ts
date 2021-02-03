@@ -12,7 +12,7 @@ import { JaldeeFilterModule } from '../../../shared/modules/filter/filter.module
 import { DateFormatPipeModule } from '../../../shared/pipes/date-format/date-format.module';
 import { FormMessageDisplayModule } from '../../../shared/modules/form-message-display/form-message-display.module';
 import { CustomerModule } from '../customer/customer.module';
-import { CustomerDetailComponent } from './detail/customer-detail.component';
+import { CustomerCreateComponent } from './customer-create/customer-create.component';
 import { CustomerSearchComponent } from './search/customer-search.component';
 import { OwlModule } from 'ngx-owl-carousel';
 import { CheckinAddMemberModule } from '../../../shared/modules/checkin-add-member/checkin-add-member.module';
@@ -21,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { CustomerActionsComponent } from './customer-actions/customer-actions.component';
 import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
+import { CustomerDetailComponent } from './customer-details/customer-details.component';
 
 
 @NgModule({
@@ -46,13 +47,14 @@ import { InboxModule } from '../../../shared/modules/inbox/inbox.module';
     declarations: [
         CustomersListComponent,
         CustomerDetailComponent,
+        CustomerCreateComponent,
         CustomerSearchComponent,
         CustomerActionsComponent
     ],
     entryComponents: [
         CustomerActionsComponent
     ],
-    exports: [CustomersListComponent,MedicalrecordModule]
+    exports: [CustomersListComponent, MedicalrecordModule]
 })
 
 export class CustomersModule { }

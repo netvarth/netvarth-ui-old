@@ -1860,4 +1860,33 @@ export class ProviderServices {
       const url = 'provider/orders/label/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
    }
+   // Customer Grouping
+   createCustomerGroup(data) {
+      const url = 'provider/customers/group';
+      return this.servicemeta.httpPost(url, data);
+   }
+   updateCustomerGroup(data) {
+      const url = 'provider/customers/group';
+      return this.servicemeta.httpPut(url, data);
+   }
+   getCustomerGroup() {
+      const url = 'provider/customers/group';
+      return this.servicemeta.httpGet(url);
+   }
+   getCustomerGroupById(id) {
+      const url = 'provider/customers/group/' + id;
+      return this.servicemeta.httpGet(url);
+   }
+   updateCustomerGroupStatus(id, status) {
+      const url = 'provider/customers/group/' + id + '/' + status;
+      return this.servicemeta.httpPut(url);
+   }
+   addCustomerToGroup(name, data) {
+      const url = 'provider/customers/group/' + name;
+      return this.servicemeta.httpPost(url, data);
+   }
+   removeCustomerFromGroup(name, data) {
+      const url = 'provider/customers/group/' + name;
+      return this.servicemeta.httpDelete(url, data);
+   }
 }

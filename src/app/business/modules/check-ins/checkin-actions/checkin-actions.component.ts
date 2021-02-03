@@ -712,10 +712,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     gotoCustomerDetails() {
         this.dialogRef.close();
-        const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'view' }
-        };
-        this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id], navigationExtras);
+        this.router.navigate(['/provider/customers/' + this.checkin.waitlistingFor[0].id]);
     }
     addCustomerDetails() {
         this.dialogRef.close();

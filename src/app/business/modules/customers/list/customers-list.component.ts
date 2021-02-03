@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -14,9 +14,11 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-customers-list',
-  templateUrl: './customers-list.component.html'
+  templateUrl: './customers-list.component.html',
+  styleUrls: ['./customers-list.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class CustomersListComponent implements OnInit {
@@ -98,6 +100,16 @@ export class CustomersListComponent implements OnInit {
   selectedLabels: any = [];
   labelFilterData = '';
   allLabels: any = [];
+  visibility = false;
+  groups: any = [];
+  selectedGroup;
+  showCustomers = false;
+  groupCustomers;
+  groupDescription = '';
+  groupName = '';
+  groupEdit = false;
+  @ViewChild('closebutton') closebutton;
+  apiError = '';
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -107,7 +119,7 @@ export class CustomersListComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
@@ -122,11 +134,21 @@ export class CustomersListComponent implements OnInit {
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
   ngOnInit() {
+    if (this.groupService.getitemFromGroupStorage('group')) {
+      this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
+    } else {
+      this.selectedGroup = 'all';
+    }
+      if (this.selectedGroup == 'all') {
+      this.getCustomersList(true);
+    } else {
+      this.getCustomerListByGroup();
+    }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.subdomain = user.subSector;
-    this.getCustomersList(true);
     this.getLabel();
+    this.getCustomerGroup();
     this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
@@ -155,12 +177,15 @@ export class CustomersListComponent implements OnInit {
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
     this.resetList();
+    this.customers = [];
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
       .then(
         result => {
           if (from_oninit) { this.customer_count = result; }
-          filter = this.setPaginationFilter(filter);
+          if (!this.showCustomers) {
+            filter = this.setPaginationFilter(filter);
+            }
           this.provider_services.getProviderCustomers(filter)
             .subscribe(
               data => {
@@ -183,7 +208,11 @@ export class CustomersListComponent implements OnInit {
   clearFilter() {
     this.resetFilter();
     this.filterapplied = false;
-    this.getCustomersList(true);
+    if (this.selectedGroup == 'all') {
+      this.getCustomersList(true);
+    } else {
+      this.getCustomerListByGroup();
+    }
   }
   getCustomersListCount(filter) {
     return new Promise((resolve, reject) => {
@@ -212,7 +241,11 @@ export class CustomersListComponent implements OnInit {
     return this.shared_functions.isNumeric(evt);
   }
   doSearch() {
-    this.getCustomersList();
+    if (this.selectedGroup == 'all') {
+      this.getCustomersList();
+    } else {
+      this.getCustomerListByGroup();
+    }
     if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
@@ -325,6 +358,11 @@ export class CustomersListComponent implements OnInit {
       if (!this.selectedcustomersformsg[0].phoneNo && !this.selectedcustomersformsg[0].email) {
         this.hide_msgicon = true;
       }
+    } else {
+      const customerList = this.selectedcustomersformsg.filter(customer => customer.phoneNo || customer.email);
+      if (customerList.length === 0) {
+        this.hide_msgicon = true;
+      }
     }
     for (let i = 0; i < this.customerSelected.length; i++) {
       if (this.customerSelected[i]) {
@@ -340,10 +378,14 @@ export class CustomersListComponent implements OnInit {
       this.allCustomerSelected = false;
     }
   }
-  CustomersInboxMessage() {
-    let customerlist = [];
-    customerlist = this.selectedcustomersformsg;
-    this.provider_shared_functions.ConsumerInboxMessage(customerlist, 'customer-list')
+  CustomersInboxMessage(customer?) {
+    let customers = [];
+    if (customer) {
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
+    }
+    this.provider_shared_functions.ConsumerInboxMessage(customers, 'customer-list')
       .then(
         () => { },
         () => { }
@@ -365,15 +407,12 @@ export class CustomersListComponent implements OnInit {
   }
   editCustomer(customer) {
     const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'edit' }
+      queryParams: { action: 'edit', id: customer.id }
     };
-    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
   viewCustomer(customer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + customer.id], navigationExtras);
+    this.router.navigate(['/provider/customers/' + customer.id]);
   }
   searchCustomer() {
     const navigationExtras: NavigationExtras = {
@@ -429,19 +468,29 @@ export class CustomersListComponent implements OnInit {
   stopprop(event) {
     event.stopPropagation();
   }
-  showLabelPopup() {
+  showLabelPopup(customer?) {
+    let customers = [];
+    if (customer) {
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
+    }
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        customer: this.selectedcustomersformsg,
+        customer: customers,
         type: 'label'
       }
     });
     notedialogRef.afterClosed().subscribe(result => {
       this.getLabel();
-      this.getCustomersList();
+      if (this.selectedGroup == 'all') {
+        this.getCustomersList();
+      } else {
+        this.getCustomerListByGroup();
+      }
     });
   }
   selectAll() {
@@ -493,5 +542,194 @@ export class CustomersListComponent implements OnInit {
       }
     }
   }
+  seeVisible() {
+    this.visibility = true;
+  }
+  customerGroupSelection(group) {
+    this.showCustomers = false;
+    this.selectedGroup = group;
+    this.groupService.setitemToGroupStorage('group', this.selectedGroup);
+    this.resetFilter();
+    if (this.selectedGroup === 'all') {
+      this.getCustomersList();
+    } else {
+      this.getCustomerListByGroup();
+    }
+  }
+  getCustomerGroup() {
+    this.provider_services.getCustomerGroup().subscribe((data: any) => {
+      this.groups = data;
+    });
+  }
+  search(event) {
+    if (event.keyCode === 13) {
+      this.doSearch();
+    }
+  }
+  addCustomerToGroup() {
+    const ids = [];
+    for (let customer of this.selectedcustomersformsg) {
+      ids.push(customer.id);
+    }
+    this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
+      (data: any) => {
+        this.showCustomers = false;
+        this.getCustomerListByGroup();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  removeCustomerFromGroup(customer?) {
+    const ids = [];
+    let customers = [];
+    if (customer) {
+      customers.push(customer);
+    } else {
+      customers = this.selectedcustomersformsg;
+    }
+    for (let customer of customers) {
+      ids.push(customer.id);
+    }
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Are you sure want to remove?',
+        'type': 'yes/no'
+      }
+    });
+    removeitemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.removeCustomerFromGroup(this.selectedGroup.groupName, ids).subscribe(
+          (data: any) => {
+            this.showCustomers = false;
+            this.getCustomerListByGroup();
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      }
+    });
+  }
+  showCustomerstoAdd() {
+    this.showCustomers = true;
+    this.getCustomersList();
+  }
+  getCustomerListByGroup() {
+    this.apiloading = true;
+    this.resetList();
+    this.customers = this.groupCustomers = [];
+    let api_filter = this.setFilterForApi();
+    api_filter['groups-eq'] = this.selectedGroup.id;
+    this.getCustomersListCount(api_filter)
+      .then(
+        result => {
+          this.customer_count = result;
+          api_filter = this.setPaginationFilter(api_filter);
+          this.provider_services.getProviderCustomers(api_filter)
+            .subscribe(
+              data => {
+                this.customers = this.groupCustomers = data;
+                this.apiloading = false;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apiloading = false;
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.apiloading = false;
+        }
+      );
+  }
+  showText(customer) {
+    if (this.selectedGroup !== 'all' && this.showCustomers) {
+      const fitlerArray = this.groupCustomers.filter(custom => custom.id === customer.id);
+      if (fitlerArray[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  changeGroupStatus(group) {
+    let status;
+    if (group.status === 'ENABLE') {
+      status = 'DISABLE';
+    } else {
+      status = 'ENABLE';
+    }
+    this.provider_services.updateCustomerGroupStatus(group.id, status).subscribe(
+      (data: any) => {
+        this.getCustomerGroup();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  editGroup() {
+    this.groupEdit = true;
+    this.groupName = this.selectedGroup.groupName;
+    this.groupDescription = this.selectedGroup.description;
+  }
+  customerGroupAction() {
+    if (this.groupName === '') {
+      this.apiError = 'Please enter the name';
+    } else {
+      const postData = {
+        'groupName': this.groupName,
+        'description': this.groupDescription
+      };
+      if (!this.groupEdit) {
+        this.createGroup(postData);
+      } else {
+        postData['id'] = this.selectedGroup.id;
+        this.updateGroup(postData);
+      }
+    }
+  }
+  createGroup(data) {
+    this.provider_services.createCustomerGroup(data).subscribe(data => {
+      this.getCustomerGroup();
+      this.resetGroupFields();
+      this.closeGroupDialog();
+      this.resetError();
+    },
+      error => {
+        this.apiError = error.error;
+      });
+  }
+  updateGroup(data) {
+    this.provider_services.updateCustomerGroup(data).subscribe(data => {
+      this.getCustomerGroup();
+      this.resetGroupFields();
+      this.closeGroupDialog();
+      this.resetError();
+    },
+      error => {
+        this.apiError = error.error;
+      });
+  }
+  resetGroupFields() {
+    this.groupName = '';
+    this.groupDescription = '';
+    this.groupEdit = false;
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+    this.resetError();
+  }
+  cancelAdd() {
+    this.showCustomers = false;
+    this.getCustomerListByGroup();
+  }
+  resetError() {
+    this.apiError = '';
+  }
 }
-

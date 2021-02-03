@@ -124,7 +124,7 @@ export class ServiceMeta {
 
     }
 
-    httpDelete(url_path, header?, params?) {
+    httpDelete(url_path, body?, header?, params?) {
         const options: any = {}; // Create a request option
 
         if (header) {
@@ -141,6 +141,9 @@ export class ServiceMeta {
             });
 
           options.params = httpParams;
+        }
+        if (body) {
+          options.body = body;
         }
         return this.http.delete(url_path, options);
 

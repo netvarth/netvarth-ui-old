@@ -15,7 +15,7 @@ import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.componen
 @Component({
   selector: 'app-order-dashboard',
   templateUrl: './order-dashboard.component.html',
-  styleUrls: ['./order-dashboard.component.scss']
+  styleUrls: ['./order-dashboard.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class OrderDashboardComponent implements OnInit {
   businessName;
@@ -651,5 +651,9 @@ export class OrderDashboardComponent implements OnInit {
       }
     }
     this.doSearch();
+  }
+
+  newOrder() {
+    this.router.navigate(['provider', 'orders', 'order-wizard']);
   }
 }

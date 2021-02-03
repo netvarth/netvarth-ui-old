@@ -174,10 +174,7 @@ export class OrderActionsComponent implements OnInit {
   }
   gotoCustomerDetails() {
     this.dialogRef.close();
-    const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'view' }
-    };
-    this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id], navigationExtras);
+    this.router.navigate(['/provider/customers/' + this.orderDetails.orderFor.id]);
   }
   changeOrderStatus(status) {
     this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {

@@ -1,0 +1,449 @@
+<section class=""
+    *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customerName}}
+
+        </h5>
+    </div>
+</section>
+
+<section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customer_label | capitalizeFirst}} details
+        </h5>
+    </div>
+</section>
+<section *ngIf="customerAction === 'inbox'">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="goBackfromAction()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Communication history
+        </h5>
+    </div>
+</section>
+<section *ngIf="showMoreHistory && customerAction === ''">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            History
+        </h5>
+    </div>
+</section>
+<section>
+    <div class="content loc-list p-checkin ynw-common-form-nm">
+        <div class="col-md-12 no-padding-small ">
+            <div class="row">
+                <div class="card p0" *ngIf="customerAction === ''">
+                    <div class="copy locd block-level" *ngIf="viewCustomer">
+                        <div class="col-sm-12 col-md-12 col-lg-12 no-padding-small">
+                            <div class="customer-detail-box" *ngIf="!showMoreHistory">
+                                <span class="customer-action-btn pointer-cursor"
+                                    (click)="showCustomerAction()">Actions</span>
+                                <div>{{customer_label | capitalizeFirst}} ID: <span
+                                        class="cust-detail">{{customer[0].jaldeeId}} </span>
+                                </div>
+                                <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].phoneNo">{{customer[0].countryCode}}
+                                    {{customer[0].phoneNo}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].email">{{customer[0].email}}</div>
+                                <div><span class="mgn-rt-30" *ngIf="customer[0].gender"> Gender:
+                                        <span class="cust-detail">
+                                            {{customer[0].gender | capitalizeFirst}}</span></span>
+                                    <span *ngIf="customer[0].dob">DOB: <span class="cust-detail">
+                                            {{customer[0].dob | date: newDateFormat}} </span></span>
+                                </div>
+                                <div *ngIf="customer[0].address">Address: <span
+                                        class="cust-detail">{{customer[0].address}}</span></div>
+                            </div>
+                            <div *ngIf="!showMoreHistory">
+                                <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
+                                    <span class="customer-action-btn pointer-cursor pull-right"
+                                        *ngIf="historyvisitDetails.length > 0" (click)="showHistory()">History</span>
+                                </div>
+                                <div class="mgn-bt-10 mgn-lt-10"
+                                    *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && !loading">
+                                    No recent activity
+                                </div>
+                                <div class="type-head" *ngIf="todayvisitDetails.length > 0 && !loading">Today</div>
+                                <div class="recentactivity" *ngIf="todayvisitDetails.length > 0 && !loading">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="pointer-cursor cellhover" *ngFor="let visit of todayvisitDetails"
+                                                (click)="gotoCustomerDetail(visit, 1)">
+                                                <ng-container *ngIf="visit.waitlist">
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                            [matTooltip]="'Check-in'"></i>
+                                                        <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
+                                                            [matTooltip]="'Token'"></i>
+                                                    </td>
+                                                    <td> {{visit.waitlist.date | date: newDateFormat}}
+                                                        <div *ngIf="visit.waitlist.token">Token#
+                                                            {{visit.waitlist.token}} </div>
+                                                    </td>
+                                                    <td>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.waitlist.service.name}}
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                            {{visit.waitlist.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                                mat-menu-item (click)="medicalRecord(visit)">
+                                                                <i class="medicalrecord-icon"></i>
+                                                                MedicalRecord
+                                                            </button>
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                                mat-menu-item (click)="prescription(visit)">
+                                                                <i class="mr-rx-icon"></i>
+                                                                Prescription
+                                                            </button>
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                                {{customer_label | capitalizeFirst}} note
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container *ngIf="visit.appointmnet">
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            class="fa appt-icon" [matTooltip]="'Appointment'"></i> </td>
+                                                    <td>{{visit.appointmnet.appmtDate | date: newDateFormat}}
+                                                        <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.appointmnet.service.name}}
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                    <td><span class="rupee-font"
+                                                            *ngIf="visit.appointmnet.amountPaid > 0">
+                                                            {{visit.appointmnet.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span></td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                                mat-menu-item (click)="medicalRecord(visit)">
+                                                                <i class="medicalrecord-icon"></i>
+                                                                MedicalRecord
+                                                            </button>
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                                mat-menu-item (click)="prescription(visit)">
+                                                                <i class="mr-rx-icon"></i>
+                                                                Prescription
+                                                            </button>
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                                {{customer_label | capitalizeFirst}} note
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="todayVisitDetailsArray.length > 5">
+                                        <a *ngIf="!showMoreToday" (click)="showMore('today')">Show more</a>
+                                        <a *ngIf="showMoreToday" (click)="showLess('today')">Show less</a>
+                                    </div>
+                                </div>
+                                <div class="type-head" *ngIf="futurevisitDetails.length > 0 && !loading">Future</div>
+                                <div class="recentactivity" *ngIf="futurevisitDetails.length > 0 && !loading">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="pointer-cursor cellhover"
+                                                *ngFor="let visit of futurevisitDetails"
+                                                (click)="gotoCustomerDetail(visit, 2)">
+                                                <ng-container *ngIf="visit.waitlist">
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                            [matTooltip]="'Check-in'"></i>
+                                                        <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
+                                                            [matTooltip]="'Token'"></i>
+                                                    </td>
+                                                    <td> {{visit.waitlist.date | date: newDateFormat}}
+                                                        <div *ngIf="visit.waitlist.token">Token#
+                                                            {{visit.waitlist.token}} </div>
+                                                    </td>
+                                                    <td>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.waitlist.service.name}}
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                            {{visit.waitlist.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                                {{(visit.waitlist.service.consumerNoteTitle) ?
+                                                                visit.waitlist.service.consumerNoteTitle :
+                                                                customernotes}}
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container *ngIf="visit.appointmnet">
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            class="fa appt-icon" [matTooltip]="'Appointment'"></i> </td>
+                                                    <td>{{visit.appointmnet.appmtDate | date: newDateFormat}}
+                                                        <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                            class="fa meet-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                            class="fa zoom-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                            class="fa phon-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'audioService'"
+                                                            class="fa wtsapaud-icon"></i>
+                                                        <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
+                                                            class="fa wtsapvid-icon"></i>
+                                                        {{visit.appointmnet.service.name}}
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                    <td><span class="rupee-font"
+                                                            *ngIf="visit.appointmnet.amountPaid > 0">
+                                                            {{visit.appointmnet.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span></td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                                {{(visit.appointmnet.service.consumerNoteTitle) ?
+                                                                visit.appointmnet.service.consumerNoteTitle :
+                                                                customernotes}}
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="futureVisitDetailsArray.length > 5">
+                                        <a *ngIf="!showMoreFuture" (click)="showMore('future')">Show more</a>
+                                        <a *ngIf="showMoreFuture" (click)="showLess('future')">Show less</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="recentactivity"
+                                *ngIf="historyvisitDetails.length > 0 && showMoreHistory && !loading">
+                                <table class="table">
+                                    <tbody>
+                                        <tr class="pointer-cursor cellhover" *ngFor="let visit of historyvisitDetails"
+                                            (click)="gotoCustomerDetail(visit, 3)">
+                                            <ng-container *ngIf="visit.waitlist">
+                                                <td class="consumer-dash consumer-appthistory"> <i
+                                                        *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                        [matTooltip]="'Check-in'"></i>
+                                                    <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
+                                                        [matTooltip]="'Token'"></i>
+                                                </td>
+                                                <td> {{visit.waitlist.date | date: newDateFormat}}
+                                                    <div *ngIf="visit.waitlist.token">Token#
+                                                        {{visit.waitlist.token}} </div>
+                                                </td>
+                                                <td>
+                                                    <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                        class="fa meet-icon"></i>
+                                                    <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                        class="fa zoom-icon"></i>
+                                                    <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                        class="fa phon-icon"></i>
+                                                    <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'audioService'"
+                                                        class="fa wtsapaud-icon"></i>
+                                                    <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
+                                                        class="fa wtsapvid-icon"></i>
+                                                    {{visit.waitlist.service.name}}
+                                                </td>
+                                                <td class="hidden-xs">
+                                                    {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                        {{visit.waitlist.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span> </td>
+                                                <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                        (click)="stopprop($event)">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #visitMenu="matMenu">
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            mat-menu-item (click)="medicalRecord(visit)">
+                                                            <i class="medicalrecord-icon"></i>
+                                                            MedicalRecord
+                                                        </button>
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            mat-menu-item (click)="prescription(visit)">
+                                                            <i class="mr-rx-icon"></i>
+                                                            Prescription
+                                                        </button>
+                                                        <button mat-menu-item (click)="showCommHistory(visit)">
+                                                            <i class="comm-history-icon"></i>
+                                                            Communication history
+                                                        </button>
+                                                        <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
+                                                            (click)="showConsumerNote(visit)">
+                                                            <i class="customernote-icon"></i>
+                                                            {{(visit.waitlist.service.consumerNoteTitle) ?
+                                                            visit.waitlist.service.consumerNoteTitle : customernotes}}
+                                                        </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container *ngIf="visit.appointmnet">
+                                                <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
+                                                        [matTooltip]="'Appointment'"></i> </td>
+                                                <td>{{visit.appointmnet.appmtDate | date: newDateFormat}}
+                                                    <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
+                                                </td>
+                                                <td>
+                                                    <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                                                        class="fa meet-icon"></i>
+                                                    <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                                                        class="fa zoom-icon"></i>
+                                                    <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'Phone'"
+                                                        class="fa phon-icon"></i>
+                                                    <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'audioService'"
+                                                        class="fa wtsapaud-icon"></i>
+                                                    <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
+                                                        class="fa wtsapvid-icon"></i>
+                                                    {{visit.appointmnet.service.name}}
+                                                </td>
+                                                <td class="hidden-xs">
+                                                    {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
+                                                <td><span class="rupee-font" *ngIf="visit.appointmnet.amountPaid > 0">
+                                                        {{visit.appointmnet.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span></td>
+                                                <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                        (click)="stopprop($event)">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #visitMenu="matMenu">
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            mat-menu-item (click)="medicalRecord(visit)">
+                                                            <i class="medicalrecord-icon"></i>
+                                                            MedicalRecord
+                                                        </button>
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            mat-menu-item (click)="prescription(visit)">
+                                                            <i class="mr-rx-icon"></i>
+                                                            Prescription
+                                                        </button>
+                                                        <button mat-menu-item (click)="showCommHistory(visit)">
+                                                            <i class="comm-history-icon"></i>
+                                                            Communication history
+                                                        </button>
+                                                        <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
+                                                            (click)="showConsumerNote(visit)">
+                                                            <i class="customernote-icon"></i>
+                                                            {{(visit.appointmnet.service.consumerNoteTitle) ?
+                                                            visit.appointmnet.service.consumerNoteTitle :
+                                                            customernotes}}
+                                                        </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card p0" *ngIf="customerAction === 'inbox' && !loading">
+                    <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+                        (reloadApi)="getCommunicationHistory()"></app-inbox-list>
+                </div>
+                <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>

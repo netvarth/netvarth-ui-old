@@ -698,10 +698,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     gotoCustomerDetails() {
         this.dialogRef.close();
-        const navigationExtras: NavigationExtras = {
-            queryParams: { action: 'view' }
-        };
-        this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id], navigationExtras);
+        this.router.navigate(['/provider/customers/' + this.appt.appmtFor[0].id]);
     }
     addCustomerDetails() {
         this.dialogRef.close();

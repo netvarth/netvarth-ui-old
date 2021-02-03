@@ -243,7 +243,7 @@ export class CustomerSearchComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private _location: Location,
         public provider_services: ProviderServices,
-        private snackbarService:SnackbarService,
+        private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService) {
@@ -593,10 +593,11 @@ export class CustomerSearchComponent implements OnInit {
     }
     createNew() {
         this.qParams['source'] = 'clist';
+        this.qParams['id'] = 'add';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/add'], navigationExtras);
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
 
     checkinClicked() {
@@ -644,7 +645,6 @@ export class CustomerSearchComponent implements OnInit {
             this.searchClicked = false;
             return;
         }
-        console.log(form_data);
         this.loading = true;
         let mode = 'id';
         if (mod) {
@@ -697,7 +697,6 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
-                    console.log(data);
                     this.loading = false;
                     if (data.length === 0) {
                         // this.form_data = data;
@@ -715,10 +714,11 @@ export class CustomerSearchComponent implements OnInit {
                             this.qParams['phone'] = form_data.search_input;
                         }
                         this.qParams['source'] = 'clist';
+                        this.qParams['id'] = 'add';
                         const navigationExtras: NavigationExtras = {
                             queryParams: this.qParams
                         };
-                        this.router.navigate(['/provider/customers/add'], navigationExtras);
+                        this.router.navigate(['/provider/customers/create'], navigationExtras);
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {

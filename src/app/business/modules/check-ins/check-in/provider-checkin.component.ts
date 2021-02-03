@@ -407,10 +407,11 @@ provider_label = '';
         }
         this.qParams['thirdParty'] = this.thirdParty;
         this.qParams['type'] = type;
+        this.qParams['id'] = 'add';
         const navigationExtras: NavigationExtras = {
             queryParams: this.qParams
         };
-        this.router.navigate(['/provider/customers/add'], navigationExtras);
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
     selectMode(type) {
         this.selectedMode = type;
