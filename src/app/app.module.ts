@@ -70,7 +70,6 @@ import { WordProcessor } from './shared/services/word-processor.service';
 import { AddAddressComponent } from './shared/modules/shopping-cart/checkout/add-address/add-address.component';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { AuthService } from './shared/services/auth-service';
-import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 
 export function init_app(globalService: GlobalService) {

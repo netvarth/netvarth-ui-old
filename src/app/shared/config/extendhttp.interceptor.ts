@@ -253,7 +253,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   }
   updateHeader(req, url) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
-    req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
+    // req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Hybrid-Version', version.mobile) });
     req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache')});
     req = req.clone({ headers: req.headers.append('Pragma', 'no-cache'), withCredentials: true });
