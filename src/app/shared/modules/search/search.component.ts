@@ -478,7 +478,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           holdkeyword = label.displayname.toLowerCase();
           if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
             const lbl = label.query.split('&');
-            if (label.type === 'special') {
+            if (label.type === 'special' && label.name !== 'notApplicable') {
               const labelspec = { autoname: label.displayname, name: label.name, subdomain: label.subSector, domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
               this.holdisplaySearchlist['special'].push(labelspec);
             } else {

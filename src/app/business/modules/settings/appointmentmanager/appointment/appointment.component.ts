@@ -631,10 +631,10 @@ export class AppointmentComponent implements OnInit {
             });
     }
     initDepartments(accountId) {
-        this.departmentlist = this.departments = [];
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
             _this.shared_services.getProviderDept(accountId).subscribe(data => {
+                _this.departmentlist = _this.departments = [];
                 _this.departmentlist = data;
                 _this.filterDepart = _this.departmentlist.filterByDept;
                 for (let i = 0; i < _this.departmentlist['departments'].length; i++) {

@@ -227,7 +227,7 @@
                                                     [(ngModel)]="selected_phone">
                                                 </ngx-intl-tel-input>
 
-                                                <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+                                                <div class="sts-msg error" *ngIf="phoneerror!=''">{{phoneerror}}</div>
                                             </div>
                                             <button (click)="addPhone()" class="btn bt3 btn-default coupon-apply-btn"
                                                 type="button">Ok</button>
