@@ -316,5 +316,6 @@
             aria-hidden="true"></i></button>
 </h1>
 <div class="bill-section" *ngIf="action === 'bill'">
-    To view this bill, click on the bill of <a (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>
+    A consolidated bill has been generated for this â€˜group bookingâ€™. To view the consolidated bill, click the bill of <a
+        (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>.
 </div>
