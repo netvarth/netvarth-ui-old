@@ -1,4 +1,3 @@
-
 .content {
   padding-top: 0px !important
 }
@@ -41,6 +40,10 @@ ul.details.contact {
   width: 50px;
   height: 100%;
   margin: auto;
+}
+
+.bus-page .font_user_size {
+  font-size: 1.1rem !important;
 }
 
 .info-bar {
@@ -87,11 +90,13 @@ ul.bus-actions li a.lnk {
   font-weight: 500 !important;
   font-size: 0.80rem !important;
 }
+
 ul.bus-actions-horiz li {
   display: inline-block;
-  margin:0 !important;
+  margin: 0 !important;
   margin-right: 5px !important;
 }
+
 .socialmedia li a i.fa {
   font-size: 20px !important;
 }
@@ -224,7 +229,7 @@ ul.bus-actions-horiz li {
     padding: 5px !important;
   }
   .content .card {
-    padding: 0px !important;
+    padding: 5px !important;
   }
   .img-responsive {
     width: 50% !important;
@@ -232,7 +237,7 @@ ul.bus-actions-horiz li {
     max-height: 150px !important;
   }
   .like-btn {
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
   }
   /* .bus-title-content {
     padding-top: 20px !important;
@@ -311,7 +316,7 @@ ul.bus-actions-horiz li {
 }
 
 .bus.card {
-  height: 220px !important;
+  height: 200px !important;
   width: 20% !important;
   float: left !important;
   align-items: center !important;
@@ -360,7 +365,7 @@ ul.bus-actions-horiz li {
   margin-left: 0 !important;
 }
 
-/*
+/* 
 .location-accord ul.badges li {
   margin-right: 10px !important;
   font-size: 1.5rem !important;
@@ -379,9 +384,6 @@ ul.details.badges li {
 }
 
 @media(max-width:768px) {
-  /* .location-accord ul.badges {
-    margin-top: 15px !important;
-  } */
   h6 {
     font-size: 1rem!important;
   }
@@ -673,16 +675,19 @@ ul.details.badges li {
     width: 50% !important;
   }
 }
+
 @media (min-width: 450px) and (max-width: 600px) {
   .bus-item {
     width: 33% !important;
   }
 }
+
 @media (min-width: 620px) and (max-width: 991px) {
   .bus-item {
     width: 25% !important;
   }
 }
+
 @media (min-width: 992px) and (max-width: 1200px) {
   .bus-item {
     width: 20% !important;
@@ -853,9 +858,11 @@ ul.details.badges li {
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
+
 .service-icon .zoom-icon {
   width: 35px !important;
 }
+
 .service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
   width: 36px !important;
 }
@@ -904,83 +911,99 @@ ul.details.badges li {
     padding-right: 0px !important;
   }
 }
+
 .loc-card {
   padding-top: 15px !important;
   background: floralwhite !important;
 }
+
 .loc-card a.lnk {
   font-size: 0.75rem !important;
 }
+
 .pad-bt-10 {
   padding-bottom: 10px !important;
 }
+
 .verify {
   width: 100%;
   float: right;
 }
-.verify span{
+
+.verify span {
   float: right;
 }
+
 @media (max-width: 993px) {
-  .verify span{
+  .verify span {
     float: none;
   }
 }
+
 .badge-smalldv {
   position: absolute !important;
   right: 0 !important;
 }
+
 .serv-head {
   background: rgba(0, 0, 0, 0.04);
   padding: 10px 0 3px 10px !important;
 }
 
 /* Social media icon colors */
+
 .bus-page .socialmedia li i.fb:before {
   color: #627aac;
 }
+
 .bus-page .socialmedia li i.tw:before {
   color: #5eb0fb;
 }
+
 .bus-page .socialmedia li i.lkd:before {
   color: #02a2c2;
 }
+
 .bus-page .socialmedia li i.ytb:before {
   color: #ef452f !important;
 }
+
 .bus-page .socialmedia li i.gpl:before {
   color: #ef452f;
 }
+
 .bus-page .socialmedia li i.pntr:before {
   color: #ef452f;
 }
 
-/* Cover Photo */
+/* cover foto */
+
 .bus-page .cvr-ht {
   height: 300px;
   background-repeat: no-repeat;
   background-size: 100% 300px;
 }
+
 @media(max-width: 575px) {
   .bus-page .cvr-ht {
-    height: 225px;
+    height: 250px;
     background-repeat: no-repeat;
-    background-size: 100% 225px;
+    background-size: 100% 250px;
   }
 }
+
 .bus-page .cvr-dp-mgn {
   margin-top: -80px;
 }
+
 @media (min-width: 992px) {
   .bus-page .cvr-dp-mgn {
     margin-top: -110px !important;
   }
 }
+
 .bus-page .cvr-dp-bdr {
   border: 5px solid #ffffff !important;
-}
-.bus-page .font_user_size {
-  font-size: 1.1rem !important;
 }
 
 .bus-item-N {
@@ -989,31 +1012,36 @@ ul.details.badges li {
   margin-bottom: 10px !important;
   /* margin-top: 10px !important; */
 }
+
 @media(max-width: 1200px) {
   .bus-item-N {
     width: 20%;
   }
 }
+
 @media(max-width: 991px) {
   .bus-item-N {
     width: 25%;
     float: left !important;
-
   }
 }
+
 @media(max-width: 767px) {
   .bus-item-N {
     width: 33.3%;
   }
 }
+
 @media(max-width: 550px) {
   .bus-item-N {
     width: 50%;
   }
 }
+
 .sp-head {
   color: #191d96 !important;
 }
+
 .pad-top-20 {
   padding-top: 20px !important;
 }
@@ -1021,16 +1049,19 @@ ul.details.badges li {
 .locations .bg-col {
   background-color: #191d96 !important;
 }
+
 .locations .bg-col h4 a {
   color: #fff !important;
 }
 
 .locations .loc-chg-action {
-  color:#fff !important;
+  color: #fff !important;
 }
+
 .locations .dropdown-menu a {
   font-size: 1rem !important;
 }
+
 .locations .dropdown-menu a.active {
   color: #191d96 !important;
   font-weight: bold !important;
@@ -1060,7 +1091,6 @@ ul.bus-actions li.more_less a.lnk {
   font-weight:bold;
   text-align: center;
   padding: 15px;
-  /* -webkit-backface-visibility: hidden; */
 }
 .card-img-top {
   flex-grow: 1;
@@ -1074,8 +1104,8 @@ img.ordericon.pickup {
   height: 35px;
 }
 img.ordericon.home {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
 }
 .line-clamp {
   display: -webkit-box !important;
@@ -1086,7 +1116,6 @@ img.ordericon.home {
   /* margin: 0 0 1em 0; */
   overflow: hidden !important;
 }
-
 .bus-item-O {
   width: 20%;
   float: left !important;
