@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import '../../../../../assets/js/commonscript.js';
-import '../../../../../assets/plugins/global/plugins.bundle.js';
-import '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js';
-import '../../../../../assets/js/scripts.bundle.js';
-import '../../../../../assets/js/pages/custom/wizard/wizard-1.js';
+// import '../../../../../assets/js/commonscript.js';
+// import '../../../../../assets/plugins/global/plugins.bundle.js';
+// import '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.js';
+// import '../../../../../assets/js/scripts.bundle.js';
+// import '../../../../../assets/js/pages/custom/wizard/wizard-1.js';
 
 @Component({
   selector: 'app-order-wizard',
