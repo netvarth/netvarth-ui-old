@@ -87,7 +87,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('odr') >= 0 || this.data.orders === 'orders') {
-        this.type = 'orders';
+        this.type = 'orders'; 
       } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('dtn') >= 0) {
