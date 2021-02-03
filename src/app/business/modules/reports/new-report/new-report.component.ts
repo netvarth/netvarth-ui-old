@@ -197,6 +197,7 @@ export class NewReportComponent implements OnInit {
 
   }
   setReportData(res) {
+    console.log(JSON.stringify(res));
     if (Object.keys(res).length !== 0) {
       switch (this.report_type) {
 
@@ -215,7 +216,7 @@ export class NewReportComponent implements OnInit {
           break;
         }
         case 'donation': {
-          this.donation_amount = res.amount;
+          this.donation_amount = res.donationAmount;
           this.donation_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
           if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
@@ -377,7 +378,7 @@ export class NewReportComponent implements OnInit {
     console.log(JSON.stringify(res));
     switch (this.report_type) {
       case 'payment': {
-        if (res === '' || res === undefined || res === 'All') {
+        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.payment_customer = 'All';
           // this.payment_customerId = 0;
         } else {
@@ -389,7 +390,7 @@ export class NewReportComponent implements OnInit {
         break;
       }
       case 'donation': {
-        if (res === '' || res === undefined || res === 'All') {
+        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.donation_customer = 'All';
           // this.donation_customerId = 0;
         } else {
@@ -401,7 +402,7 @@ export class NewReportComponent implements OnInit {
         break;
       }
       case 'appointment': {
-        if (res === '' || res === undefined || res === 'All') {
+        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.appointment_customer = 'All';
           // this.appointment_customerId = 0;
         } else {
@@ -415,7 +416,7 @@ export class NewReportComponent implements OnInit {
         break;
       }
       case 'token': {
-        if (res === '' || res === undefined || res === 'All') {
+        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.waitlist_customer = 'All';
         } else {
           this.waitlist_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';
@@ -427,7 +428,7 @@ export class NewReportComponent implements OnInit {
         break;
       }
       case 'order': {
-        if (res === '' || res === undefined || res === 'All') {
+        if (res.jaldee_customers === '' || res.jaldee_customers === undefined || res.jaldee_customers === 'All') {
           this.order_customer = 'All';
         } else {
           this.order_customer = res.jaldee_customers.split(',').length + ' ' + this.customer_label + 's selected';

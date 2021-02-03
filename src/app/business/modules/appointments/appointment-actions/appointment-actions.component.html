@@ -102,7 +102,7 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="sendimages()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor" (click)="sendimages()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
             <div class="action-box-sub">
                 <!-- <span class="message-icon"></span> -->
                 <span><i class="material-icons">attach_file</i></span>

@@ -130,49 +130,51 @@ export class LabelComponent implements OnInit {
     }
     onSubmit() {
         let label = '';
-        if (this.displayName) {
+        if (this.displayName && this.displayName.trim() !== '') {
             label = this.displayName.trim().replace(/ /g, '_');
-        }
-        this.valueSet = [];
-        this.valueSet.push(
-            { 'value': true, 'shortValue': true },
-            { 'value': false, 'shortValue': false });
-        if (this.actionparam === 'add') {
-            const post_data = {
-                'label': label,
-                'displayName': this.displayName,
-                'description': this.description,
-                'valueSet': this.valueSet,
-            };
-            this.provider_services.createLabel(post_data).subscribe(data => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_ADDED'));
-                this.editLabelbyId(data);
-                this.actionparam = 'view';
-                this.labelcaption = 'Label Details';
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }
-            );
-        }
-        if (this.actionparam === 'edit') {
-            const post_data = {
-                'id': this.labelData.id,
-                'label': label,
-                'displayName': this.displayName,
-                'description': this.description,
-                'valueSet': this.valueSet
-            };
-            this.provider_services.updateLabel(post_data).subscribe(data => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_UPDATED'));
-                this.editLabelbyId(data);
-                this.labelcaption = 'Label Details';
-                this.actionparam = 'view';
+            this.valueSet = [];
+            this.valueSet.push(
+                { 'value': true, 'shortValue': true },
+                { 'value': false, 'shortValue': false });
+            if (this.actionparam === 'add') {
+                const post_data = {
+                    'label': label,
+                    'displayName': this.displayName,
+                    'description': this.description,
+                    'valueSet': this.valueSet,
+                };
+                this.provider_services.createLabel(post_data).subscribe(data => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_ADDED'));
+                    this.editLabelbyId(data);
+                    this.actionparam = 'view';
+                    this.labelcaption = 'Label Details';
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                );
+            }
+            if (this.actionparam === 'edit') {
+                const post_data = {
+                    'id': this.labelData.id,
+                    'label': label,
+                    'displayName': this.displayName,
+                    'description': this.description,
+                    'valueSet': this.valueSet
+                };
+                this.provider_services.updateLabel(post_data).subscribe(data => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('LABEL_UPDATED'));
+                    this.editLabelbyId(data);
+                    this.labelcaption = 'Label Details';
+                    this.actionparam = 'view';
 
-            },
-                error => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                });
+                },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+            }
+        } else {
+            this.snackbarService.openSnackBar(this.label_name_cap + ' required', { 'panelClass': 'snackbarerror' });
         }
     }
     changeLabelStatus(label) {

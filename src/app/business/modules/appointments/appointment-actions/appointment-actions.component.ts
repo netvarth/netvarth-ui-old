@@ -304,7 +304,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-        this.dialogRef.close();
+     
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -315,6 +315,7 @@ export class AppointmentActionsComponent implements OnInit {
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
+            this.dialogRef.close();
             if (result === 'reloadlist') { }
         });
     }
@@ -757,7 +758,7 @@ export class AppointmentActionsComponent implements OnInit {
          }
        });
         this.galleryDialog.afterClosed().subscribe(result => {
-              this.dialogRef.close();
+            this.dialogRef.close('reload');
        })
     }
 }

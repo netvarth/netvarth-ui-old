@@ -37,7 +37,7 @@ declare let cordova: any;
 
 export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   @Output() action = new EventEmitter<any>();
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  dateFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
   listmyprofile_status: boolean;
   onlinepresence_status_str: string;
   subdomainVirtualFieldFilledStatus: any;

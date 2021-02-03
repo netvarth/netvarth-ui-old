@@ -194,7 +194,7 @@
 																				<input type="number" min="0"
 																					max="{{qty_limit}}" matInput
 																					#itemserviceqty aria-label="Number"
-																					(keypress)="isNumeric($event)"
+																					(keypress)="isNumber($event)"
 																					(keyup)="isvalid($event)" matInput
 																					value="1" size="3"
 																					[(ngModel)]="curSelItm.qty"

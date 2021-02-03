@@ -94,7 +94,7 @@
                         </ngx-mat-select-search>
                         <mat-option *ngFor=" let doctor of users_list" [value]="doctor"
                           (click)="setUsersIds(doctor.id)">
-                          {{doctor.firstName}} {{doctor.lastName}}
+                        {{(doctor.businessName) ? doctor.businessName : doctor.firstName + ' ' + doctor.lastName}} 
                         </mat-option>
                       </mat-select>
                     </mat-form-field>

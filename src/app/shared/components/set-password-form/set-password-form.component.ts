@@ -70,6 +70,11 @@ export class SetPasswordFormComponent implements OnInit {
     }, 500);
   }
   doOnPasswordSubmit(value) {
+    if (this.spForm.get('new_password').value === this.spForm.get('confirm_password').value) {
+      this.isValidConfirm_pw = true;
+    } else {
+      this.isValidConfirm_pw = false;
+    }
     if (this.isValidConfirm_pw) {
       this.disableButton = true;
       this.retonPasswordSubmit.emit(value);

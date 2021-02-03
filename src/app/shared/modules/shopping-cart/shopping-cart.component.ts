@@ -488,6 +488,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   goBack() {
     if (this.action === 'changeTime' || this.action === 'coupons') {
+      this.clearCouponErrors();
       this.action = '';
     } else {
       this.lStorageService.setitemonLocalStorage('order', this.orderList);

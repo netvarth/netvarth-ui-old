@@ -105,7 +105,7 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="sendimages()" *ngIf="!data.multiSelection">
+        <div class="action-box pointer-cursor" (click)="sendimages()"  *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span><i class="material-icons">attach_file</i></span>
                 <div class="icon-text">Send Attachment</div>
@@ -309,4 +309,13 @@
             </div>
         </div>
     </div>
+</div>
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'bill'">
+    Bill
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+</h1>
+<div class="bill-section" *ngIf="action === 'bill'">
+    A consolidated bill has been generated for this â€˜group bookingâ€™. To view the consolidated bill, click the bill of <a
+        (click)="getBill(checkin.parentUuid)">{{checkin.parentName}}</a>.
 </div>
