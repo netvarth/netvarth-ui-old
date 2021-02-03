@@ -541,9 +541,9 @@ export class AdjustqueueDelayComponent implements OnInit {
     filter = { 'queueState-eq': 'ENABLED' };
     if (this.selected_user) {
       if (this.selected_user.id !== 0) {
-        filter = { 'provider-eq': this.selected_user.id };
+        filter['provider-eq'] = this.selected_user.id;
       } else {
-        filter = { 'scope-eq': 'account' };
+        filter['scope-eq'] = 'account';
       }
     }
     this.provider_services.getProviderQueues(filter)
