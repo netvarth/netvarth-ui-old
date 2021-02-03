@@ -1196,6 +1196,7 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det && this.sel_ser_det.minPrePaymentAmount) {
             this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
+            this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
         }
     }
     ismoreMembersAllowedtopush() {

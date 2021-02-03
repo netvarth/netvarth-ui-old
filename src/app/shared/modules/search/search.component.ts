@@ -479,8 +479,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
           if (holdkeyword.includes(this.keyssearchcriteria) || this.keyssearchcriteria === this.selected_domain.toLowerCase()) {
             const lbl = label.query.split('&');
             if (label.type === 'special') {
-              const labelspec = { autoname: label.displayname, name: label.name, subdomain: label.subSector, domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
-              this.holdisplaySearchlist['special'].push(labelspec);
+              if (label.name !== 'notApplicable') {
+                const labelspec = { autoname: label.displayname, name: label.name, subdomain: label.subSector, domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: label.type };
+                this.holdisplaySearchlist['special'].push(labelspec);
+              }
             } else {
               const labelspec = { autoname: label.displayname, name: label.name, subdomain: label.subSector, domain: this.shared_functions.Lbase64Encode(lbl[0]), typ: 'label' };
               this.holdisplaySearchlist['label'].push(labelspec);
@@ -654,15 +656,15 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     const plen = 2;
     let jIndex = 0;
     this.jsonArrayList[0] = [];
-   for (let i = 0; i < jsonlist.length; i++) {
-     this.jsonArrayList[jIndex].push(jsonlist[i]);
+    for (let i = 0; i < jsonlist.length; i++) {
+      this.jsonArrayList[jIndex].push(jsonlist[i]);
       if ((i + 1) % plen === 0) {
-         jIndex++;
-         if (i !== (jsonlist.length - 1)) {
+        jIndex++;
+        if (i !== (jsonlist.length - 1)) {
           this.jsonArrayList[jIndex] = [];
-         }
+        }
       }
-   }
+    }
   }
 
   // To get searchlabels for 3rd search box

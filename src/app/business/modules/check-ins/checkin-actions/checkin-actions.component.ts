@@ -106,7 +106,7 @@ export class CheckinActionsComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
-        private galleryService: GalleryService,  
+        private galleryService: GalleryService,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -140,10 +140,10 @@ export class CheckinActionsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
         this.subscription = this.galleryService.getMessage().subscribe(input => {
-             if (input && input.uuid) {
-               this.shared_services.addProviderWaitlistAttachment(input.uuid ,input.value)
+            if (input && input.uuid) {
+                this.shared_services.addProviderWaitlistAttachment(input.uuid, input.value)
                     .subscribe(
-                        () => {                      
+                        () => {
                             this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
@@ -152,7 +152,7 @@ export class CheckinActionsComponent implements OnInit {
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
-            } 
+            }
         });
     }
     ngOnDestroy() {
@@ -428,10 +428,17 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
     }
     viewBillPage() {
-        this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
+        if (!this.checkin.parentUuid) {
+            this.getBill(this.checkin.ynwUuid);
+        } else {
+            this.action = 'bill';
+        }
+    }
+    getBill(uuid) {
+        this.provider_services.getWaitlistBill(uuid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', this.checkin.ynwUuid]);
+                    this.router.navigate(['provider', 'bill', uuid]);
                     this.dialogRef.close();
                 },
                 error => {
@@ -440,7 +447,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-        this.dialogRef.close();
+       
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -450,6 +457,7 @@ export class CheckinActionsComponent implements OnInit {
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
+            this.dialogRef.close();
             if (result === 'reloadlist') {
             }
         });
@@ -510,7 +518,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
             this.showCall = true;
         }
-        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
+        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
             this.showBill = true;
         }
         if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
@@ -741,14 +749,14 @@ export class CheckinActionsComponent implements OnInit {
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.isAvailable);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
@@ -756,17 +764,17 @@ export class CheckinActionsComponent implements OnInit {
     }
     sendimages() {
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
-         width: '50%',
-         panelClass: ['popup-class', 'commonpopupmainclass'],
-         disableClose: true,
-         data: {
-            source_id: 'attachment',
-            // accountId:this.checkin.providerAccount.id,
-            uid:this.checkin.ynwUuid
-         }
-       });
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                source_id: 'attachment',
+                // accountId:this.checkin.providerAccount.id,
+                uid: this.checkin.ynwUuid
+            }
+        });
         this.galleryDialog.afterClosed().subscribe(result => {
-         this.dialogRef.close();
-       })
+            this.dialogRef.close('reload');
+        })
     }
 }
