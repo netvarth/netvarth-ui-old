@@ -1,3 +1,29 @@
+.video-container, .local, .remote, .local-zeroPs {
+  background: #000 !important;
+}
+.videocontainer {
+  width: 100% !important;
+}
+.videocontainer .hide{
+  display: none;
+}
+.previewContainer {
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: 2px solid #000 !important;
+  border-radius: 20px;
+  background: #000;
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1);
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
 .remote {
   /* background: orange; */
   height: 95vh;
@@ -9,7 +35,6 @@
   display: none;
 }
 .local {
-  /* background: green; */
   width: 100px;
   height: 100px;
   position: absolute;
@@ -21,6 +46,14 @@
   height: 95vh;
   width:100%;
   text-align: center;
+}
+.rem-video {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.previewContainer video {
+  width:100% !important;
 }
 .round {
   border: 1px solid #ddd;
@@ -44,11 +77,10 @@
 .icons {
   width: 100%;
   position: absolute;
-  bottom: 70px;
+  bottom: 0px;
   text-align: center;
   font-size: 1.30rem;
 }
-
-.join-vid-btn button.disabled {
+.join-vid-btn button:disabled {
   background: #ddd !important;
 }

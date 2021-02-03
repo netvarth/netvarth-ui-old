@@ -238,7 +238,7 @@
                                                     <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
                                                 </div>
-                                                <div class="mgn-lft-10">
+                                                <div class="mgn-lft-10 mgl-auto">
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
                                                         mat-flat-button class="btns"
@@ -254,10 +254,13 @@
                                                         <button mat-flat-button class="btns"
                                                             *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
                                                             (click)="viewBill(booking,'appointment',$event)">Receipt</button>
+                                                    </span> 
+                                                    <span *ngIf="booking.service.serviceType === 'virtualService' && (booking.apptStatus === 'Started' || booking.apptStatus === 'Arrived' || booking.apptStatus === 'Confirmed')" >
+                                                        <button mat-flat-button class="btns"
+                                                            (click)="btnJoinVideoClicked(booking,$event)">Join</button>
                                                     </span>
                                                 </div>
                                             </mat-grid-tile-footer>
-
                                         </div>
                                     </ng-container>
                                     <!-- Checkins -->

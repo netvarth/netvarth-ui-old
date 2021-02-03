@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
+import { SnackbarService } from "../../../shared/services/snackbar.service";
 @Component({
     selector: 'app-meeting-room',
     templateUrl: './meeting-room.component.html',
@@ -24,6 +25,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2;
     status = '';
     meetObj;
+    loading = true;
     consumerReady = false;
     cronHandle: Subscription;
     @ViewChild('localVideo') localVideo: ElementRef;
@@ -34,7 +36,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         public rendererFactory: RendererFactory2,
         private _location: Location,
         private meetService: MeetService,
-        private titleService: Title
+        private titleService: Title,
+        private snackbarService: SnackbarService
     ) {
         this.titleService.setTitle('Jaldee Business - Video');
         this.renderer = rendererFactory.createRenderer(null, null);
@@ -99,7 +102,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
             //    this.result = data;
             //    console.log(this.result)            
                if(data){
-                   this.meetObj = data;
+                   _this.loading = false;
+                   _this.meetObj = data;
                    _this.consumerReady = true;
                    console.log(this.meetObj);
                    _this.status = 'Ready..'
@@ -107,10 +111,17 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                     _this.cronHandle.unsubscribe();  
                 }                               
                } else {
+                   _this.loading = false;
                     _this.consumerReady = false;
-                    this.meetObj = null;
+                    _this.meetObj = null;
                     _this.status = 'Waiting for the consumer...'
                }
+        },  error => {
+            _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            _this.cronHandle.unsubscribe();
+            setTimeout(() => {
+                _this._location.back();
+            }, 2000);
         });
     }
 
