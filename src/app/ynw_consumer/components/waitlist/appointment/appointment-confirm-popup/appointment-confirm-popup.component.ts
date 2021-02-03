@@ -143,7 +143,7 @@ export class AppointmentConfirmPopupComponent implements OnInit {
                         this.trackUuid = retData[key];
                     }
                 });
-                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUUID);
                 }
                 const navigationExtras: NavigationExtras = {

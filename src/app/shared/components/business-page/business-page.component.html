@@ -2,18 +2,6 @@
     <div class="container">
         <div class="row pad-bt-10">
             <div class="panel panel-default">
-                <!-- <div class="panel-heading top-row ">
-                    <a class="pull-left back-btn mgn-up-5" *ngIf="userId && pSource" (click)="goBack()"><i
-                            class="fa fa-arrow-left"></i></a>
-                    <a href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"
-                        class="pull-right mgn-lt-10 mgn-up-10"><i
-                            class="fa playstore-icon ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
-                            class="apptext">Get it on Google Play</span></a>
-                    <a href="https://apps.apple.com/in/app/jaldee-com/id1478246665" class="pull-right mgn-up-10"><i
-                            class="fa appstore-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><span
-                            class="apptext">Available on the
-                            App store</span></a>
-                </div> -->
                 <!-- Cover Foto -->
                 <div *ngIf="bgCover" class="cvr-ht" [ngStyle]="{ 'background-image': 'url(' + bgCover + ')'}">
                 </div>
@@ -41,16 +29,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 no-padding bus-title-content" *ngIf="businessjson">
+                    <div class="col-md-9 col-xs-12 col-sm-9 col-lg-9 mgn-bt-10 no-padding bus-title-content"
+                        *ngIf="businessjson">
                         <div class="col-md-8 col-xs-12 col-sm-12 col-lg-9 no-padding">
                             <div class="no-padding"
                                 [ngClass]="{'col-md-9 col-sm-9':(businessjson.verifyLevel == 'BASIC' ||
                             businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
                                 <h3 *ngIf="businessjson.businessName">{{businessjson.businessName | capitalizeFirst}}
                                 </h3>
-                                <h6 class="font_user_size" *ngIf="businessjson.businessUserName">
+                                <h3 class="font_user_size" *ngIf="businessjson.businessUserName">
                                     {{businessjson.businessUserName | capitalizeFirst}}
-                                </h6>
+                                </h3>
                                 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc"
                                     *ngIf="locationjson && locationjson.length == 1">
                                     <h6 *ngIf="!locationjson[0].isPlaceisSame"><a [href]="locationjson[0].googleMapUrl"
@@ -77,8 +66,8 @@
                                                     *ngIf="bNameEnd!='' && showmoreDesc"
                                                     [innerHTML]="bNameEnd | nl2br"></span>
                                                 <span class="more" *ngIf="!showmoreDesc && bNameEnd!=''"
-                                                    (click)="showDesc()">...more</span>
-                                                <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">less</span>
+                                                    (click)="showDesc()">...</span>
+                                                <!-- <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">less</span> -->
                                             </div>
                                         </ng-container>
                                     </div>
@@ -98,7 +87,7 @@
                                         </ng-container>
                                         <li class="more pointer-cursor"
                                             *ngIf="!showmoreSpec && specializationslist_more.length>0"
-                                            (click)="showSpec()">...more</li>
+                                            (click)="showSpec()">...</li>
                                         <!-- <li class="more" *ngIf="showmoreSpec && specializationslist_more.length>0"
                                             (click)="showSpec()">less</li> -->
                                     </ul>
@@ -124,7 +113,8 @@
                                 <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
-                            <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
+                            <ul class="bus-actions no-padding mgn-up-10 visible-md visible-lg"
+                                *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
                                     <a class='like-btn' (click)="handle_Fav('add')">
                                         {{add_to_fav_cap}}
@@ -143,11 +133,27 @@
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
                             </ul>
                         </div>
-                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                            <ul class="bus-actions bus-actions-horiz no-padding">
+                        <div class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm">
+                            <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
+                                <!-- <li *ngIf="!isInFav && !userId">
+                                    <a class='like-btn' (click)="handle_Fav('add')">
+                                        {{add_to_fav_cap}}
+                                    </a>
+                                </li> -->
+                                <li class="centeralign">
+                                    <a class="like-btn" (click)="communicateHandler()">
+                                        <span *ngIf="provider_bussiness_id">
+                                            {{send_msgs_cap}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="more_less centeralign" *ngIf="!showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
+                                <li class="more_less centeralign" *ngIf="showMore"><a
+                                        class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">Less Info</a></li>
 
                             </ul>
-                        </div> -->
+                        </div>
                     </div>
 
                     <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
@@ -174,8 +180,9 @@
                                             <div class="question-valuearr" *ngIf="vfield.type== 'object'">
                                                 <ul class="virtual-field-ul" *ngFor="let vals of vfield.value">
                                                     <li class="vfield-row" *ngIf="vals.length">
-                                                        <span *ngFor="let field of vals" class="morevalspan">
-                                                            {{field}}
+                                                        <span *ngFor="let field of vals; let i=index"
+                                                            class="morevalspan">
+                                                            {{field}}<span *ngIf="i <= (vals.length-2)">, </span>
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -301,7 +308,7 @@
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
-                    <h6 class="question-header">Book online now for your convenience.
+                    <h6 class="question-header">Book online now and save your time
                     </h6>
                 </div>
                 <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0"
@@ -415,15 +422,20 @@
 <div id="popup" #popupforApp class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close" (click)="closeModal()">&times;</span>
+            <h5 class="text-center">Jaldee App can do so much more
+                <span class="close" (click)="closeModal()">&times;</span>
+            </h5>
         </div>
         <div class="modal-body">
             <div class="section-app text-center">
-                <p>Download Jaldee App</p>
+                <h6 class="mgn-bt-20">Unlock the full Jaldee experience</h6>
                 <a class="button1" href="https://play.google.com/store/apps/details?id=com.jaldeeinc.jaldee"><img
                         src="assets/images/img-glplay.png"></a>
                 <a class="button2 mgn-lt-10" href="https://apps.apple.com/in/app/jaldee-com/id1478246665"><img
                         src="assets/images/img-aplstore.png"></a>
+                <h6 class="mgn-up-20">After installing app, search for <span
+                        *ngIf="businessjson.customId">"{{businessjson.customId}}"</span><span
+                        *ngIf="!businessjson.customId">"{{businessjson.accEncUid}}"</span></h6>
             </div>
         </div>
     </div>

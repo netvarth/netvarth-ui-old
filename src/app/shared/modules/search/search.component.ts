@@ -717,7 +717,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       autoName = kw.displayname;
       query = kw.query.split('\'');
       dom = kw.query;
-      subdom = query[3];
+      subdom = (kw.name !== 'teleService') ? query[3] : '';
       kw.typ = 'label';
     }
     if (kw.name !== '') {

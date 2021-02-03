@@ -65,15 +65,15 @@
                                                     <span *ngIf="sel_ser_det.price && type != 'waitlistreschedule'">
                                                         Service Fee
                                                         <span class="prepaymin-cls bold"><span
-                                                                class="rupee-font">&#8377;
-                                                            </span>{{serviceCost}}</span>
+                                                                class="rupee-font">{{serviceCost | currency:'&#8377;'}}
+                                                            </span></span>
                                                     </span>&nbsp;
                                                     <span
                                                         *ngIf="sel_ser_det.isPrePayment && type != 'waitlistreschedule'">
                                                         Booking Fee
                                                         <span class="prepaymin-cls bold"><span
-                                                                class="rupee-font">&#8377;
-                                                            </span>{{prepaymentAmount}}</span>
+                                                                class="rupee-font">{{prepaymentAmount | currency:'&#8377;'}}
+                                                            </span></span>
                                                     </span>
                                                 </div>
                                                 <!-- <div *ngIf="sel_ser_det.isPrePayment && type !== 'waitlistreschedule'"

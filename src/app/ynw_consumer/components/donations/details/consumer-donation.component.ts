@@ -447,7 +447,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.revealphonenumber = !this.revealphonenumber;
     }
     handleConsumerNote(vale) {
-        this.consumerNote = vale;
+        this.consumerNote = vale.trim();
     }
     handleServiceForWhom() {
         this.resetApi();

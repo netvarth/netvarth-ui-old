@@ -97,6 +97,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   actiondialogRef: any;
   apptMultiSelection = false;
   timetype;
+  showImages: any = [];
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -495,5 +496,14 @@ gotoActions(checkin?) {
     this.getProviderSettings();
   });
 }
-
+showImagesection(index) {
+  (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
+}
+getThumbUrl(attachment) {
+  if (attachment.s3path.indexOf('.pdf') !== -1) {
+    return attachment.thumbPath;
+  } else {
+    return attachment.s3path;
+  }
+}
 }

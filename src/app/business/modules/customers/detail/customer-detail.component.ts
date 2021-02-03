@@ -107,6 +107,11 @@ export class CustomerDetailComponent implements OnInit {
         PHONE_IN_APPOINTMENT: 'Phone in Appointment',
         ONLINE_APPOINTMENT: 'Online Appointment'
     };
+    tokenWaitlistModes = {
+        WALK_IN_CHECKIN: 'Walk in Token',
+        PHONE_CHECKIN: 'Phone in Token',
+        ONLINE_CHECKIN: 'Online Token'
+    };
     domain;
     communication_history: any = [];
     todayVisitDetailsArray: any = [];

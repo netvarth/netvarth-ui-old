@@ -109,6 +109,10 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     adon_used: any;
     disply_name: any;
     warningdialogRef: any;
+    queuedata: any = [];
+    showtoken = false;
+    tokenOrcheckinCount;
+    tokencount;
     constructor(
         private provider_services: ProviderServices,
         private shared_Functionsobj: SharedFunctions,
@@ -322,6 +326,17 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             this.provider_services.getUserProviderQueues(this.userId)
                 .subscribe(
                     (data) => {
+                        this.queuedata = data;
+                        console.log(this.queuedata);
+                        if (this.queuedata && this.queuedata.length > 0) {
+                            this.showtoken = this.queuedata[0].showToken;
+                            if (this.showtoken) {
+                                this.tokenOrcheckinCount = 'Tokens Count';
+                                this.tokencount = 'Tokens';
+                            } else {
+                                this.tokenOrcheckinCount = 'Checkins Count';
+                                this.tokencount = 'Checkins';
+                            }
                         let allQs: any = [];
                         this.todaysQs = [];
                         this.scheduledQs = [];
@@ -378,6 +393,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
                             }
                         }
                         this.provider_shared_functions.setActiveQueues(activeQs);
+                    }
                         resolve();
                     },
                     (error) => {

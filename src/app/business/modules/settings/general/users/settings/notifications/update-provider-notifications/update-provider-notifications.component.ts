@@ -51,6 +51,8 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   accountType;
+  notificationJson: any = {};
+  cancelNotificationJson: any = {};
   constructor(private sharedfunctionObj: SharedFunctions,
     public dialogRef: MatDialogRef<UpdateProviderNotificationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -92,54 +94,108 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         cancelList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTCANCEL');
       }
       if (addList && addList[0]) {
-        if (addList[0].email.length === 0 && addList[0].sms.length === 0 && addList[0].pushMsg.length === 0) {
-          this.SelchkinNotify = false;
-        }
+        // if (addList[0].email.length === 0 && addList[0].sms.length === 0 && addList[0].pushMsg.length === 0) {
+        //   this.SelchkinNotify = false;
+        // }
         if (addList[0].email && addList[0].email.length !== 0) {
           this.em_arr = addList[0].email;
-          this.SelchkinNotify = true;
+          // this.SelchkinNotify = true;
         }
         if (addList[0].sms && addList[0].sms.length !== 0) {
           this.ph_arr = addList[0].sms;
-          this.SelchkinNotify = true;
+          // this.SelchkinNotify = true;
         }
         if (addList[0].pushMsg && addList[0].pushMsg.length !== 0) {
           this.cheknPushph_arr = addList[0].pushMsg;
-          this.SelchkinNotify = true;
+          // this.SelchkinNotify = true;
         }
       }
       if (cancelList && cancelList[0]) {
-        if (cancelList[0].email.length === 0 && cancelList[0].sms.length === 0 && cancelList[0].pushMsg.length === 0) {
-          this.SelchkincnclNotify = false;
-        }
+        // if (cancelList[0].email.length === 0 && cancelList[0].sms.length === 0 && cancelList[0].pushMsg.length === 0) {
+        //   this.SelchkincnclNotify = false;
+        // }
         if (cancelList[0].email && cancelList[0].email.length !== 0) {
           this.em1_arr = cancelList[0].email;
-          this.SelchkincnclNotify = true;
+          // this.SelchkincnclNotify = true;
         }
         if (cancelList[0].sms && cancelList[0].sms.length !== 0) {
           this.ph1_arr = cancelList[0].sms;
-          this.SelchkincnclNotify = true;
+          // this.SelchkincnclNotify = true;
         }
         if (cancelList[0].pushMsg && cancelList[0].pushMsg.length !== 0) {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
-          this.SelchkincnclNotify = true;
+          // this.SelchkincnclNotify = true;
         }
+      }
+      if (addList[0].status === 'Enable') {
+        this.SelchkinNotify = true;
+      } else {
+        this.SelchkinNotify = false;
+      }
+      if (cancelList[0].status === 'Enable') {
+        this.SelchkincnclNotify = true;
+      } else {
+        this.SelchkincnclNotify = false;
       }
       this.api_loading = false;
     }
   }
   selectChekinNotify(event) {
     this.SelchkinNotify = event.checked;
-    if (!this.SelchkinNotify) {
-      this.chekinNotifications('newcheckin');
+    // if (!this.SelchkinNotify) {
+    //   this.chekinNotifications('newcheckin');
+    // }
+this.notificationJson = {};
+    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+      this.notificationJson.resourceType = 'CHECKIN';
+      this.notificationJson.eventType = 'WAITLISTADD';
+    } else if (this.data.type === 'Appointment') {
+      this.notificationJson.resourceType = 'APPOINTMENT';
+      this.notificationJson.eventType = 'APPOINTMENTADD';
+    } else if (this.data.type === 'Donation') {
+      this.notificationJson.resourceType = 'DONATION';
+      this.notificationJson.eventType = 'DONATIONSERVICE';
+    } else if (this.data.type === 'Account') {
+      this.notificationJson.resourceType = 'ACCOUNT';
+      this.notificationJson.eventType = 'LICENSE';
+    } else if (this.data.type === 'Order') {
+      this.notificationJson.resourceType = 'ORDER';
+      this.notificationJson.eventType = 'ORDERCONFIRM';
     }
+    this.notificationJson.providerId = this.data.userId;
+    this.setProviderNotificationStatus(event, this.notificationJson);
   }
   selectChekinCanclNotify(event) {
     this.SelchkincnclNotify = event.checked;
-    if (!this.SelchkincnclNotify) {
-      this.checkinCancelNotifications('cancelcheckin');
+    this.cancelNotificationJson = {};
+    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+      this.cancelNotificationJson.resourceType = 'CHECKIN';
+      this.cancelNotificationJson.eventType = 'WAITLISTCANCEL';
+    } else if (this.data.type === 'Appointment') {
+      this.cancelNotificationJson.resourceType = 'APPOINTMENT';
+      this.cancelNotificationJson.eventType = 'APPOINTMENTCANCEL';
+    } else if (this.data.type === 'Order') {
+      this.cancelNotificationJson.resourceType = 'ORDER';
+      this.cancelNotificationJson.eventType = 'ORDERCANCEL';
     }
+    this.cancelNotificationJson.providerId = this.data.userId;
+    this.setProviderNotificationStatus(event, this.cancelNotificationJson);
+    // if (!this.SelchkincnclNotify) {
+    //   this.checkinCancelNotifications('cancelcheckin');
+    // }
   }
+setProviderNotificationStatus(event, post_data) {
+  const status = (event.checked) ? 'Enable' : 'Disable';
+  this.provider_services.updateProviderNotificationStatus(status, post_data)
+        .subscribe(
+          () => {
+            this.snackbarService.openSnackBar('Notification ' + status + 'd successfully', { 'panelclass': 'snackbarerror' });
+            this.dialogRef.close();
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+}
 
   addChkinPh() {
     if (this.notifyphonenumber === '') {

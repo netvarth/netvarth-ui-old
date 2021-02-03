@@ -76,12 +76,13 @@
                                                         <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
                                                             <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
                                                         </div>
-
-
+                                                        <div class="mt-2">
+                                                        <mat-icon style="color:blue" (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=false>sms</mat-icon>
+                                                      </div>
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-10 mgn-up-10 mgn-bt-10 l-ht-2 ">
-                                                <mat-icon (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=false>sms</mat-icon>
+
                                                 <div class="txt-custdet">Delivery Type</div>
                                                 <div *ngIf="waitlist.storePickup" class="txt-cust-name">Store Pick Up</div>
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
@@ -152,7 +153,7 @@
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
-                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}
+                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
@@ -179,7 +180,7 @@
                                                             description
                                                         </i>
                                                     </div>
-                                                    <div class="price rupee-font itm-amt">&#8377;{{item.totalPrice}}
+                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>

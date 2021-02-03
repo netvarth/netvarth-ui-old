@@ -4,7 +4,7 @@
 </section> -->
 
 <section class=""
-*ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
+    *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,8 +35,7 @@
 <section *ngIf="showMoreHistory && customerAction === ''">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor" (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             History
         </h5>
     </div>
@@ -236,7 +235,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         class="cust-detail">{{customer[0].jaldeeId}} </span>
                                 </div>
                                 <div class="cust-detail">{{customer[0].firstName}} {{customer[0].lastName}}</div>
-                                <div class="cust-detail" *ngIf="customer[0].phoneNo">{{customer[0].countryCode}} {{customer[0].phoneNo}}</div>
+                                <div class="cust-detail" *ngIf="customer[0].phoneNo">{{customer[0].countryCode}}
+                                    {{customer[0].phoneNo}}</div>
                                 <div class="cust-detail" *ngIf="customer[0].email">{{customer[0].email}}</div>
                                 <div><span class="mgn-rt-30" *ngIf="customer[0].gender"> Gender:
                                         <span class="cust-detail">
@@ -249,10 +249,11 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                             </div>
                             <div *ngIf="!showMoreHistory">
                                 <div class="rece-act mgn-bt-20 mgn-lt-10">Recent activity
-                                    <span class="customer-action-btn pointer-cursor pull-right" *ngIf="historyvisitDetails.length > 0"
-                                    (click)="showHistory()">History</span>
+                                    <span class="customer-action-btn pointer-cursor pull-right"
+                                        *ngIf="historyvisitDetails.length > 0" (click)="showHistory()">History</span>
                                 </div>
-                                <div class="mgn-bt-10 mgn-lt-10" *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && !loading">
+                                <div class="mgn-bt-10 mgn-lt-10"
+                                    *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && !loading">
                                     No recent activity
                                 </div>
                                 <div class="type-head" *ngIf="todayvisitDetails.length > 0 && !loading">Today</div>
@@ -262,10 +263,12 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of todayvisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 1)">
                                                 <ng-container *ngIf="visit.waitlist">
-                                                    <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
-                                                            class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                            [matTooltip]="'Check-in'"></i>
                                                         <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
-                                                            [matTooltip]="'Token'"></i></td>
+                                                            [matTooltip]="'Token'"></i>
+                                                    </td>
                                                     <td> {{visit.waitlist.date | date: newDateFormat}}
                                                         <div *ngIf="visit.waitlist.token">Token#
                                                             {{visit.waitlist.token}} </div>
@@ -281,23 +284,33 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
                                                             class="fa wtsapvid-icon"></i>
-                                                        {{visit.waitlist.service.name}}</td>
+                                                        {{visit.waitlist.service.name}}
+                                                    </td>
                                                     <td class="hidden-xs">
-                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
-                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
-                                                        currency:'&#8377;' }} Paid</span> </td>
+                                                        <ng-container *ngIf="visit.waitlist.showToken">
+                                                            {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!visit.waitlist.showToken">
+                                                            {{waitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                    </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                            {{visit.waitlist.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
                                                     <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                             (click)="stopprop($event)">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
                                                                 MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
                                                                 Prescription
@@ -315,8 +328,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                     </td>
                                                 </ng-container>
                                                 <ng-container *ngIf="visit.appointmnet">
-                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
-                                                            [matTooltip]="'Appointment'"></i> </td>
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            class="fa appt-icon" [matTooltip]="'Appointment'"></i> </td>
                                                     <td>{{visit.appointmnet.appmtDate | date: newDateFormat}}
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
                                                     </td>
@@ -331,24 +344,28 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
                                                             class="fa wtsapvid-icon"></i>
-                                                        {{visit.appointmnet.service.name}}</td>
+                                                        {{visit.appointmnet.service.name}}
+                                                    </td>
                                                     <td class="hidden-xs">
                                                         {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
                                                     <td><span class="rupee-font"
-                                                            *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
-                                                        currency:'&#8377;' }} Paid</span></td>
+                                                            *ngIf="visit.appointmnet.amountPaid > 0">
+                                                            {{visit.appointmnet.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span></td>
                                                     <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                             (click)="stopprop($event)">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #visitMenu="matMenu">
-                                                            <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="medicalRecord(visit)">
                                                                 <i class="medicalrecord-icon"></i>
                                                                 MedicalRecord
                                                             </button>
-                                                            <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                            <button class="recent"
+                                                                *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                                 mat-menu-item (click)="prescription(visit)">
                                                                 <i class="mr-rx-icon"></i>
                                                                 Prescription
@@ -377,13 +394,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                 <div class="recentactivity" *ngIf="futurevisitDetails.length > 0 && !loading">
                                     <table class="table">
                                         <tbody>
-                                            <tr class="pointer-cursor cellhover" *ngFor="let visit of futurevisitDetails"
+                                            <tr class="pointer-cursor cellhover"
+                                                *ngFor="let visit of futurevisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 2)">
                                                 <ng-container *ngIf="visit.waitlist">
-                                                    <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
-                                                            class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                            [matTooltip]="'Check-in'"></i>
                                                         <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
-                                                            [matTooltip]="'Token'"></i></td>
+                                                            [matTooltip]="'Token'"></i>
+                                                    </td>
                                                     <td> {{visit.waitlist.date | date: newDateFormat}}
                                                         <div *ngIf="visit.waitlist.token">Token#
                                                             {{visit.waitlist.token}} </div>
@@ -399,11 +419,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
                                                             class="fa wtsapvid-icon"></i>
-                                                        {{visit.waitlist.service.name}}</td>
+                                                        {{visit.waitlist.service.name}}
+                                                    </td>
                                                     <td class="hidden-xs">
-                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
-                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
-                                                        currency:'&#8377;' }} Paid</span> </td>
+                                                        <ng-container *ngIf="visit.waitlist.showToken">
+                                                            {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!visit.waitlist.showToken">
+                                                            {{waitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                    </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                            {{visit.waitlist.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
                                                     <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                             (click)="stopprop($event)">
@@ -417,14 +445,16 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
                                                                 (click)="showConsumerNote(visit)">
                                                                 <i class="customernote-icon"></i>
-                                                                {{(visit.waitlist.service.consumerNoteTitle) ? visit.waitlist.service.consumerNoteTitle : customernotes}}
+                                                                {{(visit.waitlist.service.consumerNoteTitle) ?
+                                                                visit.waitlist.service.consumerNoteTitle :
+                                                                customernotes}}
                                                             </button>
                                                         </mat-menu>
                                                     </td>
                                                 </ng-container>
                                                 <ng-container *ngIf="visit.appointmnet">
-                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa appt-icon"
-                                                            [matTooltip]="'Appointment'"></i> </td>
+                                                    <td class="consumer-dash consumer-appthistory"> <i
+                                                            class="fa appt-icon" [matTooltip]="'Appointment'"></i> </td>
                                                     <td>{{visit.appointmnet.appmtDate | date: newDateFormat}}
                                                         <div> {{getSingleTime(visit.appointmnet.appmtTime)}}</div>
                                                     </td>
@@ -439,12 +469,14 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             class="fa wtsapaud-icon"></i>
                                                         <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
                                                             class="fa wtsapvid-icon"></i>
-                                                        {{visit.appointmnet.service.name}}</td>
+                                                        {{visit.appointmnet.service.name}}
+                                                    </td>
                                                     <td class="hidden-xs">
                                                         {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
                                                     <td><span class="rupee-font"
-                                                            *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
-                                                        currency:'&#8377;' }} Paid</span></td>
+                                                            *ngIf="visit.appointmnet.amountPaid > 0">
+                                                            {{visit.appointmnet.amountPaid |
+                                                            currency:'&#8377;' }} Paid</span></td>
                                                     <td>
                                                         <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                             (click)="stopprop($event)">
@@ -458,7 +490,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                             <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
                                                                 (click)="showConsumerNote(visit)">
                                                                 <i class="customernote-icon"></i>
-                                                                {{(visit.appointmnet.service.consumerNoteTitle) ? visit.appointmnet.service.consumerNoteTitle : customernotes}}
+                                                                {{(visit.appointmnet.service.consumerNoteTitle) ?
+                                                                visit.appointmnet.service.consumerNoteTitle :
+                                                                customernotes}}
                                                             </button>
                                                         </mat-menu>
                                                     </td>
@@ -472,16 +506,19 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                     </div>
                                 </div>
                             </div>
-                            <div class="recentactivity" *ngIf="historyvisitDetails.length > 0 && showMoreHistory && !loading">
+                            <div class="recentactivity"
+                                *ngIf="historyvisitDetails.length > 0 && showMoreHistory && !loading">
                                 <table class="table">
                                     <tbody>
                                         <tr class="pointer-cursor cellhover" *ngFor="let visit of historyvisitDetails"
                                             (click)="gotoCustomerDetail(visit, 3)">
                                             <ng-container *ngIf="visit.waitlist">
-                                                <td class="consumer-dash consumer-appthistory"> <i *ngIf="!visit.waitlist.showToken"
-                                                        class="fa chckn-icon" [matTooltip]="'Check-in'"></i>
+                                                <td class="consumer-dash consumer-appthistory"> <i
+                                                        *ngIf="!visit.waitlist.showToken" class="fa chckn-icon"
+                                                        [matTooltip]="'Check-in'"></i>
                                                     <i *ngIf="visit.waitlist.showToken" class="fa token-icon"
-                                                        [matTooltip]="'Token'"></i></td>
+                                                        [matTooltip]="'Token'"></i>
+                                                </td>
                                                 <td> {{visit.waitlist.date | date: newDateFormat}}
                                                     <div *ngIf="visit.waitlist.token">Token#
                                                         {{visit.waitlist.token}} </div>
@@ -497,23 +534,32 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         class="fa wtsapaud-icon"></i>
                                                     <i *ngIf="visit.waitlist.service.serviceType === 'virtualService' && visit.waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.waitlist.service.virtualServiceType === 'videoService'"
                                                         class="fa wtsapvid-icon"></i>
-                                                    {{visit.waitlist.service.name}}</td>
+                                                    {{visit.waitlist.service.name}}
+                                                </td>
                                                 <td class="hidden-xs">
-                                                    {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
-                                                <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0"> {{visit.waitlist.amountPaid |
-                                                    currency:'&#8377;' }} Paid</span> </td>
+                                                    <ng-container *ngIf="visit.waitlist.showToken">
+                                                        {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!visit.waitlist.showToken">
+                                                        {{waitlistModes[visit.waitlist.waitlistMode]}}</ng-container>
+                                                </td>
+                                                <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
+                                                        {{visit.waitlist.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span> </td>
                                                 <td>
                                                     <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                         (click)="stopprop($event)">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #visitMenu="matMenu">
-                                                        <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="medicalRecord(visit)">
                                                             <i class="medicalrecord-icon"></i>
                                                             MedicalRecord
                                                         </button>
-                                                        <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="prescription(visit)">
                                                             <i class="mr-rx-icon"></i>
                                                             Prescription
@@ -525,7 +571,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <button *ngIf="visit.waitlist.consumerNote" mat-menu-item
                                                             (click)="showConsumerNote(visit)">
                                                             <i class="customernote-icon"></i>
-                                                            {{(visit.waitlist.service.consumerNoteTitle) ? visit.waitlist.service.consumerNoteTitle : customernotes}}
+                                                            {{(visit.waitlist.service.consumerNoteTitle) ?
+                                                            visit.waitlist.service.consumerNoteTitle : customernotes}}
                                                         </button>
                                                     </mat-menu>
                                                 </td>
@@ -547,24 +594,27 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         class="fa wtsapaud-icon"></i>
                                                     <i *ngIf="visit.appointmnet.service.serviceType === 'virtualService' && visit.appointmnet.service.virtualCallingModes[0].callingMode === 'WhatsApp' && visit.appointmnet.service.virtualServiceType === 'videoService'"
                                                         class="fa wtsapvid-icon"></i>
-                                                    {{visit.appointmnet.service.name}}</td>
+                                                    {{visit.appointmnet.service.name}}
+                                                </td>
                                                 <td class="hidden-xs">
                                                     {{waitlistModes[visit.appointmnet.appointmentMode]}} </td>
-                                                <td><span class="rupee-font"
-                                                        *ngIf="visit.appointmnet.amountPaid > 0"> {{visit.appointmnet.amountPaid |
-                                                    currency:'&#8377;' }} Paid</span></td>
+                                                <td><span class="rupee-font" *ngIf="visit.appointmnet.amountPaid > 0">
+                                                        {{visit.appointmnet.amountPaid |
+                                                        currency:'&#8377;' }} Paid</span></td>
                                                 <td>
                                                     <button mat-icon-button [matMenuTriggerFor]="visitMenu"
                                                         (click)="stopprop($event)">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #visitMenu="matMenu">
-                                                        <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="medicalRecord(visit)">
                                                             <i class="medicalrecord-icon"></i>
                                                             MedicalRecord
                                                         </button>
-                                                        <button class="recent" *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+                                                        <button class="recent"
+                                                            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare')  && subdomain !=='laboratory' && subdomain !=='pharmacy'"
                                                             mat-menu-item (click)="prescription(visit)">
                                                             <i class="mr-rx-icon"></i>
                                                             Prescription
@@ -576,7 +626,9 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                                         <button *ngIf="visit.appointmnet.consumerNote" mat-menu-item
                                                             (click)="showConsumerNote(visit)">
                                                             <i class="customernote-icon"></i>
-                                                            {{(visit.appointmnet.service.consumerNoteTitle) ? visit.appointmnet.service.consumerNoteTitle : customernotes}}
+                                                            {{(visit.appointmnet.service.consumerNoteTitle) ?
+                                                            visit.appointmnet.service.consumerNoteTitle :
+                                                            customernotes}}
                                                         </button>
                                                     </mat-menu>
                                                 </td>
@@ -584,7 +636,7 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="clearfix"></div>

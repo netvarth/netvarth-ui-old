@@ -512,7 +512,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.is_data_chnge = 1;
     }
     updateManualMode() {
-        if (this.trnArndTime <= 0) {
+        if (this.trnArndTime <= 0 && this.trnArndTime == null) {
             this.snackbarService.openSnackBar(Messages.WAITLIST_TURNTIME_INVALID, { 'panelClass': 'snackbarerror' });
             return;
         }

@@ -29,7 +29,7 @@ import { Messages } from '../../../constants/project-messages';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  totaltax: number;
+  totaltax = 0;
   provider_id: any;
   s3url;
   retval: Promise<void>;
@@ -858,7 +858,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
+          if (this.catalog_details.paymentType !== 'NONE') {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);
@@ -906,7 +906,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
+          if (this.catalog_details.paymentType !== 'NONE') {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);

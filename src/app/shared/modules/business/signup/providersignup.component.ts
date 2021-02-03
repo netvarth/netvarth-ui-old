@@ -520,6 +520,7 @@ export class ProvidersignupComponent implements OnInit {
     this.api_loading = true;
     this.resetApiErrors();
     // if (this.otp) {
+    this.keyPressed();
     if (this.isValidConfirm_pw) {
       // this.onOtpSubmit().then(data => {
       this.saveReferralInfo().then(

@@ -953,6 +953,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
   }
+  isNumber(evt) {
+    return this.sharedfunctionObj.isNumber(evt);
+  }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
@@ -1399,7 +1402,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': msg
+          'message': msg,
+          'type': 'yes/no'
         }
       });
       dialogrefd.afterClosed().subscribe(result => {

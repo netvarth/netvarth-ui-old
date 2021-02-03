@@ -22,7 +22,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
 
-  totaltax: any;
+  totaltax = 0;
   catalog_loading = false;
   orderCount: number;
   disabledConfirmbtn = false;
@@ -440,7 +440,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge;
+    return deliveryCharge.toFixed(2);
   }
   getSubTotal() {
     let subtotal = 0;
@@ -488,6 +488,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   goBack() {
     if (this.action === 'changeTime' || this.action === 'coupons') {
+      this.clearCouponErrors();
       this.action = '';
     } else {
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
