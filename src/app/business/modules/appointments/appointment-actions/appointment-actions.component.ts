@@ -756,7 +756,7 @@ export class AppointmentActionsComponent implements OnInit {
          }
        });
         this.galleryDialog.afterClosed().subscribe(result => {
-              this.dialogRef.close();
+            this.dialogRef.close('reload');
        })
     }
 }
