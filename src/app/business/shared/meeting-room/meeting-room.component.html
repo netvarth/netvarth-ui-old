@@ -1,6 +1,6 @@
 <section class="full-height">
     <header class="main-header jaldee-header" *ngIf="twilioService.preview">
-        <div class="container-fluid no-padding-small">
+        <div class="container no-padding-small">
             <div class="row">
                 <a class="logo">
                     <img src="assets/images/jaldee-businesslogo.png" alt="Jaldee" />
@@ -9,8 +9,8 @@
         </div>
 
     </header>
-    <div class="container videocontainer no-padding">
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}" [ngClass]="{'hide': !twilioService.preview}">
+    <div class="videocontainer no-padding">
+        <div class="container previewDiv" [ngStyle]="{'height.px': (screenHeight-100)}" [ngClass]="{'hide': !twilioService.preview}">
             <div #previewContainer [ngClass]="{'videohgt': (twilioService.camDeviceCount == 0)}" id="previewContainer"
                 class="previewContainer col-md-7 col-lg-7 col-sm-7 col-xs-12">
             </div>
@@ -38,7 +38,7 @@
             <div class="remote" id="remote-video" #remoteVideo 
                 [ngClass]="{'remote': twilioService.participantsCount > 0, 'remove-hide': twilioService.participantsCount == 0}">
             </div>
-            <div id="local-video" #localVideo [ngStyle]="{'height.px': (screenHeight-60)}"
+            <div id="local-video" #localVideo
                 [ngClass]="{'local': twilioService.participantsCount > 0, 'local-zeroPs': twilioService.participantsCount == 0}">
             </div>
             <div class="icons">

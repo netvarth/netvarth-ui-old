@@ -1,6 +1,6 @@
 import { AfterViewInit, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
 import { Location } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
@@ -37,8 +37,10 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private _location: Location,
         private meetService: MeetService,
         private titleService: Title,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private router: Router
     ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.titleService.setTitle('Jaldee Business - Video');
         this.renderer = rendererFactory.createRenderer(null, null);
         console.log(this.renderer);
@@ -117,11 +119,12 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                     _this.status = 'Waiting for the consumer...'
                }
         },  error => {
+            _this.loading = false;
             _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
             _this.cronHandle.unsubscribe();
             setTimeout(() => {
                 _this._location.back();
-            }, 2000);
+            }, 3000);
         });
     }
 

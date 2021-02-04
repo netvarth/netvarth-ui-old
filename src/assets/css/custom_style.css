@@ -13822,7 +13822,22 @@ color: #fff !important;
     display: none !important;
   }
 }
-video {
+/* video {
   width:100% !important;
   height: 100% !important;
+} */
+#previewContainer video {
+  width: 100% !important;
+  max-width: fit-content !important;
+  max-height:400px !important;
+}
+.local-zeroPs video{
+  height: 99vh !important;
+} 
+.remote video {
+  height: 100% !important;
+}
+.local video {
+  width: 100px;
+  height: auto;
 }

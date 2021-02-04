@@ -1,9 +1,10 @@
 import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TwilioService } from '../../services/twilio-service';
 import { Location } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from '../../services/meet-service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
     selector: 'app-live-chat',
     templateUrl: './twilio-live-chat.component.html',
@@ -23,7 +24,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     screenHeight: number;
     videoId: any;
     cameraMode = 'user';
-    api_loading = true;
+    loading = true;
     providerReady = false;
     cronHandle: Subscription;
     private renderer: Renderer2;
@@ -38,8 +39,11 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         private meetService: MeetService,
-        public rendererFactory: RendererFactory2
+        public rendererFactory: RendererFactory2,
+        private snackbarService: SnackbarService,
+        private router: Router
     ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.renderer = rendererFactory.createRenderer(null, null);
         console.log(this.renderer);
         window.addEventListener('unload', () => {
@@ -73,17 +77,26 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(data => {
                if(data){
                    console.log(data);
-                   this.meetObj = data;
+                   _this.meetObj = data;
+                   _this.loading = false;
                    _this.providerReady = true;
-                    this.status = 'Ready..'
-                if (this.cronHandle) {
-                    this.cronHandle.unsubscribe();  
+                   _this.status = 'Ready..'
+                if (_this.cronHandle) {
+                    _this.cronHandle.unsubscribe();  
                 }                               
                } else {
+                    _this.loading = false;
                     _this.providerReady = false;
-                    this.meetObj = null;
-                    this.status = 'Waiting for the provider...'
+                    _this.meetObj = null;
+                    _this.status = 'Waiting for the provider...'
                }
+        }, error => {
+            _this.loading = false;
+            _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            _this.cronHandle.unsubscribe();
+            setTimeout(() => {
+                _this.location.back();
+            }, 3000);
         });
     }
     /**

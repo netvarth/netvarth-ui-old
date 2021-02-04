@@ -34,6 +34,7 @@
 }
 .remote {
   /* height: 99.7vh; */
+  height: 100%;
   width: 100%;
   text-align: center;
   background: #000 !important;
