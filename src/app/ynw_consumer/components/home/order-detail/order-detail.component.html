@@ -153,7 +153,7 @@
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
-                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
+                                                    <div class="price rupee-font itm-amt" *ngIf="waitlist.catalog.showPrice">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
@@ -180,7 +180,7 @@
                                                             description
                                                         </i>
                                                     </div>
-                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
+                                                    <div class="price rupee-font itm-amt" *ngIf="waitlist.catalog.showPrice">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>

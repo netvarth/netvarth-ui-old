@@ -11,6 +11,7 @@ import { OrderActionsComponent } from '../order-actions/order-actions.component'
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
+import { Messages } from '../../../../shared/constants/project-messages';
 
 @Component({
   selector: 'app-order-details',
@@ -27,11 +28,14 @@ export class OrderDetailsComponent implements OnInit {
   selectedType = 'list';
   customerLabel = '';
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
+  no_history_found = Messages.CHECK_DET_NO_HISTORY_FOUND_CAP;
+  newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   screenWidth;
   small_device_display = false;
   tooltipcls = projectConstants.TOOLTIP_CLS;
   image_list_popup: Image[];
   imagelist: any = [];
+  orderlist_history: any = [];
 customPlainGalleryRowConfig: PlainGalleryConfig = {
   strategy: PlainGalleryStrategy.CUSTOM,
   layout: new AdvancedLayout(-1, true)
@@ -57,6 +61,8 @@ buttons: [
       this.uid = param.id;
       this.customerLabel = this.wordProcessor.getTerminologyTerm('customer');
       this.getOrderDetails(this.uid);
+      console.log(this.uid);
+      this.getorderHistory(this.uid);
       this.getOrderCommunications();
     });
   }
@@ -177,7 +183,19 @@ buttons: [
 
 }
 
-
+getorderHistory(uuid) {
+  console.log(uuid);
+  this.providerservice.getProviderorderlistHistroy(uuid)
+    .subscribe(
+      data => {
+        console.log(data);
+        this.orderlist_history = data;
+      },
+      () => {
+        //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+      }
+    );
+}
 sortMessages() {
   this.communication_history.sort(function (message1, message2) {
     if (message1.timeStamp < message2.timeStamp) {

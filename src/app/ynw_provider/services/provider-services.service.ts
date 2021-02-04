@@ -1868,4 +1868,8 @@ export class ProviderServices {
       const url = 'provider/orders/label/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
    }
+   getProviderorderlistHistroy(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
 }
