@@ -13879,3 +13879,9 @@ color: #fff !important;
 .can-btn {
   padding: 10px 30px;
 }
+#hubspot-messages-iframe-container {
+  visibility: hidden;
+}
+.visible_chat {
+  visibility: visible !important;
+}
