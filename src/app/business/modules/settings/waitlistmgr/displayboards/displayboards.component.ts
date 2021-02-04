@@ -141,6 +141,19 @@ export class DisplayboardsComponent implements OnInit {
     }
 
     addDisplayboardGroup() {
+        if (this.adon_total === this.adon_used) {
+            this.warningdialogRef = this.dialog.open(ShowMessageComponent, {
+                width: '50%',
+                panelClass: ['commonpopupmainclass', 'popup-class'],
+                disableClose: true,
+                data: {
+                    warn: this.disply_name
+                }
+            });
+            this.warningdialogRef.afterClosed().subscribe(result => {
+
+            });
+        } else {
         this.action = 'addToGroup';
         this.qBoardscaption = 'Qboard group';
         this.qBoardsSelected = [];
@@ -169,6 +182,7 @@ export class DisplayboardsComponent implements OnInit {
         this.qBoardsSelected.forEach(sb => {
              this.qBoardsNotSelected = this.removeByAttr( this.qBoardsNotSelected, 'id', sb.sbId);
          });
+        }
     }
 
     listContainers() {
