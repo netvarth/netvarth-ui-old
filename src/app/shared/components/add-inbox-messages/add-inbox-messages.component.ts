@@ -382,7 +382,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
         }
-      } else if (this.type === 'order') {
+      } else if (this.type === 'orders') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerOrderMassCommunicationAppt(postdata).
             subscribe(() => {
