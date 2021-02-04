@@ -347,9 +347,9 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     if (this.showToken) {
-                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('d MMM'));
+                        this.snackbarService.openSnackBar('Token rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     } else {
-                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + moment(this.checkin_date).format('d MMM'));
+                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
                 },
@@ -447,7 +447,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-       
+
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
