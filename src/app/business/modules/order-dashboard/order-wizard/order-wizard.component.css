@@ -20,3 +20,6 @@
 .radio_outline {
     border: 1px solid !important;
 }
+.disp-flex {
+    display: flex;
+}

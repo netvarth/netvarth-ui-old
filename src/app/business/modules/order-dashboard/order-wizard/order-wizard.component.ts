@@ -12,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderWizardComponent implements OnInit {
   step = 1;
+  show_customer = false;
+  create_customer = true;
   constructor() { }
 
   ngOnInit() {}

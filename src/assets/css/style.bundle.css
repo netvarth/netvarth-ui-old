@@ -48173,7 +48173,7 @@ code {
     .label.label-inline.label-md {
       padding: 0.8rem 0.6rem; }
     .label.label-inline.label-lg {
-      padding: 0.9rem 0.75rem; }
+      padding: 0.9rem 0.75rem !important; }
     .label.label-inline.label-xl {
       padding: 1rem 0.85rem; }
   .label.label-pill {
