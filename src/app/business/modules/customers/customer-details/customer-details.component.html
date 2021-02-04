@@ -100,7 +100,13 @@
                                                         {{visit.waitlist.service.name}}
                                                     </td>
                                                     <td class="hidden-xs">
-                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                        <ng-container *ngIf="visit.waitlist.showToken">
+                                                            {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!visit.waitlist.showToken">
+                                                            {{waitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                    </td>
                                                     <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
                                                             {{visit.waitlist.amountPaid |
                                                             currency:'&#8377;' }} Paid</span> </td>
@@ -229,7 +235,13 @@
                                                         {{visit.waitlist.service.name}}
                                                     </td>
                                                     <td class="hidden-xs">
-                                                        {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                        <ng-container *ngIf="visit.waitlist.showToken">
+                                                            {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!visit.waitlist.showToken">
+                                                            {{waitlistModes[visit.waitlist.waitlistMode]}}
+                                                        </ng-container>
+                                                    </td>
                                                     <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
                                                             {{visit.waitlist.amountPaid |
                                                             currency:'&#8377;' }} Paid</span> </td>
@@ -338,7 +350,13 @@
                                                     {{visit.waitlist.service.name}}
                                                 </td>
                                                 <td class="hidden-xs">
-                                                    {{waitlistModes[visit.waitlist.waitlistMode]}} </td>
+                                                    <ng-container *ngIf="visit.waitlist.showToken">
+                                                        {{tokenWaitlistModes[visit.waitlist.waitlistMode]}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!visit.waitlist.showToken">
+                                                        {{waitlistModes[visit.waitlist.waitlistMode]}}
+                                                    </ng-container>
+                                                </td>
                                                 <td><span class="rupee-font" *ngIf="visit.waitlist.amountPaid > 0">
                                                         {{visit.waitlist.amountPaid |
                                                         currency:'&#8377;' }} Paid</span> </td>
