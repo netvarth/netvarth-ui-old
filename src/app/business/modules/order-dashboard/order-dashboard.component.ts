@@ -108,14 +108,20 @@ export class OrderDashboardComponent implements OnInit {
     switch (type) {
       case 1: {
         this.getProviderTodayOrders();
+        this.getProviderTodayOrdersCount();
+
         break;
       }
       case 2: {
         this.getProviderFutureOrders();
+        this.getProviderFutureOrdersCount();
+
         break;
       }
       case 3: {
         this.getProviderHistoryOrders();
+        this.getProviderHistoryOrdersCount();
+
         break;
       }
     }
@@ -171,13 +177,15 @@ export class OrderDashboardComponent implements OnInit {
     });
   }
   getProviderFutureOrdersCount() {
-    const filter = {};
+    let filter = {};
+     filter = this.setFilterForApi();
     this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
   }
   getProviderTodayOrdersCount() {
-    const filter = {};
+    let filter = {};
+    filter = this.setFilterForApi();
     this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
     });
@@ -185,14 +193,16 @@ export class OrderDashboardComponent implements OnInit {
   getProviderHistoryOrders() {
     this.loading = true;
     let filter = {};
-    filter = this.setFilterForApi();
+     filter = this.setFilterForApi();
+    console.log(filter);
     this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
       this.loading = false;
     });
   }
   getProviderHistoryOrdersCount() {
-    const filter = {};
+    let filter = {};
+    filter = this.setFilterForApi();
     this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
     });
