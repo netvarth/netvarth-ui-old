@@ -54,7 +54,7 @@ export const Messages = {
   'HOLIDAY_LISTEMPTY': 'No scheduled holidays',
 
   // notifications
-  'GENRL_NOTIFICATION_MSG': 'Inorder to send and receive notifications, the [provider] has to purchase atleast one of the',
+  'GENRL_NOTIFICATION_MSG': 'In order to send and receive notifications, the [provider] has to purchase atleast one of the',
   'FRM_LEVEL_CUST_NOTIFICATION_MSG': 'Send notifications to your [customer]s!',
   'FRM_LEVEL_PROVIDER_NOTIFICATION_MSG': 'Get notifications from [customer]!',
   'CUSTOMER_NAME': '[customer]',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
@@ -75,6 +75,7 @@ export class OrderDashboardComponent implements OnInit {
   selectedLabels: any = [];
   allLabelSelected: any = [];
   displayLabeldialogRef;
+  filterHeight;
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -82,8 +83,14 @@ export class OrderDashboardComponent implements OnInit {
     public dateformat: DateFormatPipe,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService) { }
-
+    private snackbarService: SnackbarService) {
+    this.onResize();
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenHeight = window.innerHeight;
+    this.filterHeight = screenHeight - 60;
+  }
   ngOnInit() {
     const businessdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
@@ -178,7 +185,7 @@ export class OrderDashboardComponent implements OnInit {
   }
   getProviderFutureOrdersCount() {
     let filter = {};
-     filter = this.setFilterForApi();
+    filter = this.setFilterForApi();
     this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
@@ -193,7 +200,7 @@ export class OrderDashboardComponent implements OnInit {
   getProviderHistoryOrders() {
     this.loading = true;
     let filter = {};
-     filter = this.setFilterForApi();
+    filter = this.setFilterForApi();
     console.log(filter);
     this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
@@ -451,19 +458,19 @@ export class OrderDashboardComponent implements OnInit {
   }
   getDisplayformatOflabel(labeldetails) {
     if (labeldetails.label) {
-    let labelString = ' ';
-    let len;
-    Object.keys(labeldetails.label).forEach(key => {
-      labelString = labelString + key + ' ';
-    });
-    if (labelString.length > 40) {
-      len = 0;
-    } else {
-      len = 1;
+      let labelString = ' ';
+      let len;
+      Object.keys(labeldetails.label).forEach(key => {
+        labelString = labelString + key + ' ';
+      });
+      if (labelString.length > 40) {
+        len = 0;
+      } else {
+        len = 1;
+      }
+      return len;
     }
-    return len;
   }
-}
 
 
   getDisplayformatTruncateLabel(labeldetails) {

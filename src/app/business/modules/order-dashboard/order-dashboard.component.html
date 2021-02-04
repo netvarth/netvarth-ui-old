@@ -83,7 +83,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" style="overflow:auto;height:850px;">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
@@ -256,7 +256,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter"  style="overflow:auto;height:850px;" >
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
@@ -413,7 +413,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter"  style="overflow:auto;height:850px;">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>

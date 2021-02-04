@@ -47,8 +47,8 @@
                                         <tr>
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">&#8377;
-                                                </span>{{donation.donationAmount}}
+                                            <td class="rupee-font">
+                                               {{donation.donationAmount | currency:'&#8377;'}}
                                             </td>
                                         </tr>
                                     </tbody>

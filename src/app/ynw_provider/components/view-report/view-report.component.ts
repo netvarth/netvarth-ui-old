@@ -8,6 +8,7 @@ import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-report',
@@ -39,25 +40,6 @@ export class ViewReportComponent implements OnInit {
   retval;
   viewreport;
   invoiceFromS3;
-  breadcrumbs_init = [
-    {
-      url: '/provider/settings',
-      title: 'Settings'
-    },
-    {
-      title: 'Billing/POS',
-      url: '/provider/settings/pos'
-  },
-    {
-      title: 'Coupons',
-      url: '/provider/settings/pos/coupon'
-    },
-    {
-      title: 'Report',
-      url: '/provider/settings/pos/coupons/report'
-    }
-  ];
-  breadcrumbs = this.breadcrumbs_init;
   invoice_id;
   isCheckin;
   constructor(private provider_servicesobj: ProviderServices,
@@ -65,17 +47,18 @@ export class ViewReportComponent implements OnInit {
     private router: ActivatedRoute,
     private shared_services: SharedServices,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService ) { }
+    private groupService: GroupStorageService,
+    public location: Location) { }
   ngOnInit() {
     this.router.params
       .subscribe(params => {
         this.invoice_id = params.id;
         this.getjaldeeReport();
       });
-      this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
+    this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   getJSONfromString(jsonString) {
-      return JSON.parse(jsonString);
+    return JSON.parse(jsonString);
   }
   getjaldeeReport() {
     this.provider_servicesobj.getJaldeeCouponReportsbyId(this.invoice_id).subscribe(
@@ -101,17 +84,12 @@ export class ViewReportComponent implements OnInit {
           );
       }
     );
-    const breadcrumbs = [];
-    this.breadcrumbs_init.map((e) => {
-      breadcrumbs.push(e);
-    });
-    breadcrumbs.push({
-      title: this.invoice_id
-    });
-    this.breadcrumbs = breadcrumbs;
   }
 
   formatDateDisplay(dateStr) {
     return this.sharedfunctionObj.formatDateDisplay(dateStr);
+  }
+  goBack() {
+    this.location.back();
   }
 }
