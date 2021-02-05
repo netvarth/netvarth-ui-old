@@ -495,6 +495,9 @@
 
   <div class="d-flex flex-column-fluid mt-4">
       <div class="container">
+        <div class="card p0" *ngIf="api_loading">
+          <app-common-innerloading-spinner></app-common-innerloading-spinner>
+        </div>
       <div class="card card-custom rounded-0 p-0">
           <div class="card-body p-0 rounded-0">
               <!--begin::Wizard-->
@@ -714,33 +717,84 @@
                                         </div>
                                         <!--end::Select-->
                                     </div>
+                                    <div class="col-xl-6" *ngIf="action === 'edit'">
+                                      <div class="cr1 no-padding">
+                                        <div class="" *ngIf="!image_list_popup || image_list_popup.length == 0">
+                                          <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                            <div class="addorderitem no-margin" (click)="imagefile.click()">
+                                              <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile type="file"
+                                                    accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add
+                                                  catalog
+                                                  image
+                                                </a></p>
+                                              <p class="addorderitemp2"> <img style="width: 65%;" src="assets/images/add.svg" /></p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                          <ul class="ph-gal">
+                                            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                              <li *ngIf="i<2" [class.gallery-li]="image_list_popup.length === 2">
+                                                <div class="galbx">
+                                                  <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                      <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                      <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
+                                                        <i class="icon-delete"></i>
+                                                        <span>{{delete_btn}}</span>
+                                                      </button>
+                                                    </mat-menu>
+                                                  </span>
+                                                  <div class="img-h" (click)="openImageModalRow(file)">
+                                                    <div class="overlay-y"></div><img [src]="file.modal.img" *ngIf="file.modal.img" />
+                                                  </div>
+                                                </div>
+                                              </li>
+                                            </ng-container>
+                                          </ul>
+                                          <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                            [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                                            (buttonAfterHook)="onButtonAfterHook()">
+                                          </ks-modal-gallery>
+                                        </div>
+                                      </div>
+                                    </div>
                                 </div>
                             </div>
                               <!--end::Wizard Step 1-->
 
                               <!--begin::Wizard Step 2-->
                               <div class="pb-5" *ngIf="step == 2">
-                                  <h4 class="mb-10 font-weight-bold text-dark">Add Items to your cart</h4>
+                                  <h4 class="mb-10 font-weight-bold text-dark">Items information</h4>
                                 
                                   <div class="row">
-                                      <div class="col-xl-4">
+                                      <div class="col-xl-6">
                                           <!--begin::Input-->
-                                          <div class="form-group">
-                                              <label>Add Items</label>
-                                              <input type="text"
-                                                  class="form-control1 form-control1-solid form-control1-lg" name="width"
-                                                  placeholder="Package Width" value="" />
+                                          <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
+                                            <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
+                                              <a class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              </div>
+                                              <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
+                                                <a class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u> Edit items</u></a>&nbsp;
+                                                <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              </div>
+                                            <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
                                           </div>
-                                          <!--end::Input-->
-                                      </div>
-                                      <div class="col-xl-4">
-                                          <!--begin::Input-->
-                                          <div class="form-group">
-                                              <label>Create Items</label>
-                                              <input type="text"
-                                                  class="form-control1 form-control1-solid form-control1-lg"
-                                                  name="height" placeholder="Package Height" value="" />
-                                             
+                                          <div *ngIf="item_count === 0">
+                                            <p class="font-italic">You haven't created any items  
+                                            <a class="link underline pointer-cursor" (click)="gotoItems()">create items </a></p>
+                                          </div>
+                    
+                                          <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
+                                            <h6>{{catalogItems.length}} items are in your catalog</h6>
+                                            <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
+                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
+                                            <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
                                           </div>
                                           <!--end::Input-->
                                       </div>
