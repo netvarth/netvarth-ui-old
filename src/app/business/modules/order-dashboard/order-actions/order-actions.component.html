@@ -12,8 +12,8 @@
         <p>Order Id: {{orderDetails.orderNumber}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <ng-container *ngIf="catalogStatuses.length > 0 && (this.orderDetails.orderStatus !== 'Cancelled')">
-            <ng-container *ngFor="let status of catalogStatuses">
+        <ng-container *ngIf="catalogfilterStats.length > 0 && (this.orderDetails.orderStatus !== 'Cancelled')">
+            <ng-container *ngFor="let status of catalogfilterStats">
                 <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)"
                     *ngIf="orderDetails.orderStatus !== status">
                     <div class="action-box-sub">
