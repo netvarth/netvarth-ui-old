@@ -2691,13 +2691,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place,
-      'logo': this.businessjson.logo.url
+      // 'logo': this.businessjson.logo.url
     };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        item: JSON.stringify(item)
+        item: JSON.stringify(item),
+        providerId: this.provider_bussiness_id,
 
       }
 
