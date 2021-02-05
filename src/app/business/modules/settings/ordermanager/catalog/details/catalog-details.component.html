@@ -536,14 +536,14 @@
                                 <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
                               <input matInput type="text" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="deliverycharge"
                                 placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
-                                maxlength="50">
+                                maxlength="10">
                             </mat-form-field>
                           </div>
                         <div class="form-group">
                           <mat-form-field>
                             <input matInput type="text" (keypress)="isNumber($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="deliverykms"
                               placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
-                              maxlength="50">
+                              maxlength="5">
                           </mat-form-field>
                         </div>
                        
