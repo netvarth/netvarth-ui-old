@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   playvideo = false;
   customOptions: any;
   carouselPackages: any;
-
+  evnt;
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
@@ -54,7 +54,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private titleService: Title,
     private metaService: Meta
-  ) { }
+  ) {
+    this.evnt = routerobj.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (routerobj.url === '\/') {
+        if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
+          routerobj.navigate(['consumer']);
+        }
+      }
+      }
+    });
+   }
 ngOnDestroy() {
   const a = document.getElementById("hubspot-messages-iframe-container");
   if (a) {

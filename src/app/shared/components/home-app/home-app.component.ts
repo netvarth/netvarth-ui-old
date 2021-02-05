@@ -10,6 +10,8 @@ import { projectConstants } from '../../../app.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { WordProcessor } from '../../services/word-processor.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
   selector: 'app-home-app',
@@ -33,6 +35,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   test_provider = null;
   heading = '';
   signup_here = '';
+  evnt;
   constructor(
     // public dialogRef: MatDialogRef<LoginComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,6 +45,8 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     public dialog: MatDialog,
+    public router: Router,
+    private groupService: GroupStorageService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -49,6 +54,31 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     }
     // this.test_provider = data.test_account;
     // this.is_provider = data.is_provider || 'true';
+    this.evnt = router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.shared_functions.isBusinessOwner()) {
+          this.shared_functions.getGlobalSettings()
+            .then(
+              (settings: any) => {
+                setTimeout(() => {
+                  if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                    if (settings.waitlist) {
+                      router.navigate(['provider', 'check-ins']);
+                    } else if (settings.appointment) {
+                      router.navigate(['provider', 'appointments']);
+                    } else if (settings.order) {
+                      router.navigate(['provider', 'orders']);
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  } else {
+                    router.navigate(['provider', 'settings']);
+                  }
+                }, 500);
+              });
+        }
+      }
+    });
   }
   ngOnInit() {
     // this.moreParams = this.data.moreparams;
