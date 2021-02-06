@@ -112,12 +112,15 @@
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 no-padding">
                             <div class="verify hidden-xs hidden-sm">
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"><img
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC'"
+                                                       [matTooltip]="'Jaldee verified-basic'"><img
                                         class="img_sizenew" src="./assets/images/BasicOrg.png" alt="Basic"></span>
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"><img
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'BASIC_PLUS'"
+                                                       [matTooltip]="'Jaldee verified-basic plus'"><img
                                         class="img_sizenew" src="./assets/images/BasicPlsOrg.png"
                                         alt="Basic Plus"></span>
-                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"><img
+                                <span class="pull-right" *ngIf="businessjson.verifyLevel == 'ADVANCED'"
+                                                       [matTooltip]="'Jaldee verified-advanced'"><img
                                         class="img_sizenew" src="./assets/images/PremiumOrg.png" alt="Advanced"></span>
                             </div>
                             <ul class="bus-actions no-padding mgn-up-10 visible-md visible-lg"
