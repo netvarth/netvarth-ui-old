@@ -224,7 +224,12 @@ showCommunication() {
     }
   });
 }
-
+getformatedTime(time) {
+  let timeDate;
+  timeDate = time.replace(/\s/, 'T');
+  console.log(timeDate);
+  return timeDate;
+}
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }

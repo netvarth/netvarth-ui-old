@@ -149,13 +149,13 @@
         </div>
     </div>
     </div>
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 mgn-up-10">
+    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 mgn-up-10" *ngIf="!loading" >
     <div class="card">
             <h5>Order History</h5>
             <div class="c-history-outer">
               <ul class="c-history">
                 <li class="{{history.orderStatus}}" *ngFor="let history of orderlist_history">
-                  <div class="time">{{ history.time | date: newTimeDateFormat }}</div>
+                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
                   <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
                 </li>
               </ul>
