@@ -207,3 +207,33 @@
     border: 1px solid red !important;
     color: red !important;
 }
+.fade {
+    opacity: 4 !important;
+}
+.uppy-DashboardTab-btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 90px;
+}
+.uppy-DashboardTab {
+    width: fit-content;
+}
+.button_center {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+.modal-header {
+    padding: 1rem 1.75rem  !important;
+}
+.modal-footer {
+    padding: 0.5rem !important;
+}
+.ln-ht-1 {
+    line-height: 1 !important;
+}
+.ip_hide {
+    display: none !important;
+}

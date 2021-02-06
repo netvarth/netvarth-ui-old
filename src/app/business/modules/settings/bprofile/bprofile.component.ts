@@ -26,11 +26,15 @@ import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/c
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageTransform } from './pro-pic-popup/interfaces/index';
+// import '../../../../../assets/plugins/custom/uppy/uppy.bundle.js';
+// import '../../../../../assets/js/pages/crud/file-upload/uppy.js';
 
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 
@@ -199,6 +203,10 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   clogo: ArrayBuffer;
   cvrimg_exists = false;
   cacheavoider_cover: string;
+  imageChangedEvent: any;
+  fileToReturn: any;
+  croppedImage: any;
+  canvasRotation = 0;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -395,6 +403,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   href;
   img_list: string;
   socialMediaFilled = false;
+  transform: ImageTransform = {};
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -1489,4 +1498,45 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       }
     });
   }
+
+  imageSelect(event: any): void {
+    this.imageChangedEvent = event;
+    console.log(this.imageChangedEvent);
+  }
+  clearModalData() {
+    this.imageChangedEvent = '';
+    console.log(this.imageChangedEvent);
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    console.log('hi');
+    this.fileToReturn = '';
+    this.croppedImage = event.base64; // preview
+    this.fileToReturn = this.base64ToFile(
+      event.base64,
+      this.imageChangedEvent.target.files[0].name,
+    );
+    return this.fileToReturn;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  base64ToFile(imgdata, filename) {
+    const arr = imgdata.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
 }
