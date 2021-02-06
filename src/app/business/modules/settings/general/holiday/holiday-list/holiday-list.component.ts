@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
@@ -10,6 +10,7 @@ import { ProviderServices } from '../../../../../../ynw_provider/services/provid
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { DateFormatPipe } from '../../../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-holiday-list',
@@ -62,6 +63,7 @@ export class HolidayListComponent implements OnInit, OnDestroy {
     private shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions,
     private groupService: GroupStorageService,
+    public dateformat: DateFormatPipe,
     private wordProcessor: WordProcessor) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('HOLIDAY_LISTEMPTY');
   }
@@ -115,7 +117,8 @@ export class HolidayListComponent implements OnInit, OnDestroy {
       return false;
     }
     const date = new Date(holiday.startDay);
-    const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    // const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    const date_format = this.dateformat.transformToMonthlyDate(date);
     this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
