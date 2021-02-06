@@ -14,6 +14,9 @@
 .ln-ht-2{
     line-height: 2 !important;
 }
+.ln-ht-1 {
+    line-height: 1 !important;
+}
 .radio {
     font-size: 0.8rem !important;
 }
@@ -22,4 +25,23 @@
 }
 .disp-flex {
     display: flex;
+}
+.disp-grid {
+    display: grid;
+}
+.font-addrss {
+    font-size: 0.7rem;
+    font-family: monospace;
+}
+.gutter-b {
+    height: 100px !important;
+}
+.fade {
+    opacity: 4 !important;
+}
+.modal-footer {
+    padding: 5px 10px 5px 5px !important;
+}
+.modal-body {
+    padding-bottom: 0 !important;
 }
