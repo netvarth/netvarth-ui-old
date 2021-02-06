@@ -858,7 +858,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE') {
+          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);
@@ -906,7 +906,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE') {
+          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);

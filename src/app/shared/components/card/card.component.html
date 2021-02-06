@@ -52,6 +52,7 @@
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+        <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div>
         <div class="card-item-head" *ngIf="service.itemImages">
             <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
                 (click)="stopProp($event)">
