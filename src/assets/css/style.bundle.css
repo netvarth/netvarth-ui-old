@@ -61582,7 +61582,7 @@ code {
 
 .label.label-success {
   color: #ffffff;
-  background-color: #1BC5BD;
+  background-color: #1BC5BD !important;
 }
 
 .label.label-outline-success {

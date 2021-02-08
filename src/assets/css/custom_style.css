@@ -4755,7 +4755,7 @@ i.notavail {
 }
 
 .bold {
-  font-weight: 700
+  font-weight: 700 !important;
 }
 
 .user-panel>.image>img {
