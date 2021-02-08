@@ -92,6 +92,7 @@
 
                           <!-- After Img selection cropper -->
                           <div>
+                            <mat-progress-bar *ngIf="loadSymbol" mode="indeterminate" class="mt-10"></mat-progress-bar>
                             <image-cropper [imageChangedEvent]="imageChangedEvent" [roundCropper]="true" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" [containWithinAspectRatio]="true"
                             [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
                             (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"

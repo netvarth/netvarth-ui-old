@@ -207,6 +207,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   fileToReturn: any;
   croppedImage: any;
   canvasRotation = 0;
+  loadSymbol = false;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -1500,6 +1501,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   imageSelect(event: any): void {
+    this.loadSymbol = true;
     this.imageChangedEvent = event;
     console.log(this.imageChangedEvent);
   }
@@ -1510,6 +1512,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   imageCropped(event: ImageCroppedEvent) {
     console.log('hi');
+    this.loadSymbol = false;
     this.fileToReturn = '';
     this.croppedImage = event.base64; // preview
     this.fileToReturn = this.base64ToFile(
