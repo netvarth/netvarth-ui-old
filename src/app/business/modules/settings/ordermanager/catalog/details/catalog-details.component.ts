@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -195,6 +195,18 @@ export class CatalogdetailComponent implements OnInit {
     storetimewindow_list: any = [];
     hometimewindow_list: any = [];
     addtimewindowdialogRef;
+    itemsforadd: any = [];
+    catalogItem: any = [];
+    selectedCount = 0;
+    selecteditemCount = 0;
+    catalogItemsSelected: any = [];
+    seletedCatalogItems1: any = {};
+    catalogSelectedItemsadd: any = [];
+    seletedCatalogItemsadd: any = {};
+    screenWidth: number;
+    no_of_grids: number;
+    itemaction = '';
+    addCatalogItems: any = [];
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -213,6 +225,7 @@ export class CatalogdetailComponent implements OnInit {
         this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         console.log(this.seletedCatalogItems);
+        this.onResize();
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.isFromadd = qParams.isFrom;
@@ -269,9 +282,51 @@ export class CatalogdetailComponent implements OnInit {
             }
         );
     }
+    @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1500) {
+      divider = divident / 4;
+    } else if (this.screenWidth > 1000 && this.screenWidth < 1500) {
+       divider = divident / 3;
+    } else if (this.screenWidth > 400 && this.screenWidth < 1000) {
+      divider = divident / 2;
+    }  else if (this.screenWidth < 400) {
+      divider = divident / 1;
+    }
+    this.no_of_grids = Math.round(divident / divider);
+  }
 
     ngOnInit() {
-        this.getItems();
+        this.getItems().then(
+            (data) => {
+              this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+              if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
+                this.getCatalog(this.catalog_id).then(
+                    (catalog) => {
+                        
+                    }
+                );
+              } else {
+               // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                  this.selectedCount = this.addCatalogItems.length;
+                 for (const itm of this.catalogItem) {
+                    for (const selitem of this.addCatalogItems) {
+                       if (itm.itemId === selitem.item.itemId) {
+                        itm.selected = true;
+                        itm.id = selitem.id;
+                        itm.minQuantity = selitem.minQuantity;
+                        itm.maxQuantity = selitem.maxQuantity;
+                       }
+                  }
+                }
+                 }
+              }
+            }
+          );
     }
     gotoNext() {
         this.step = this.step + 1;
@@ -282,15 +337,29 @@ export class CatalogdetailComponent implements OnInit {
     getItems() {
         const apiFilter = {};
     apiFilter['itemStatus-eq'] = 'ACTIVE';
+    return new Promise((resolve, reject) => {
         this.provider_services.getProviderfilterItems(apiFilter)
-          .subscribe(data => {
-            this.item_list = data;
-            this.item_count = this.item_list.length;
-          },
-            (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            });
+          .subscribe(
+            data => {
+                this.item_list = data;
+                this.item_count = this.item_list.length;
+                   this.catalogItem = data;
+                   console.log(this.catalogItem);
+          for (const itm of this.catalogItem) {
+            itm.minQuantity = '1';
+            itm.maxQuantity = '5';
+           }
+              resolve(data);
+            },
+            error => {
+              // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      });
       }
+
+      
+      
 
       gotoItems() {
         const navigatExtras: NavigationExtras = {
@@ -1317,7 +1386,8 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         }
 
     }
-    showAddItemSection() {
+    showAddItemSection(type) {
+        this.itemaction = type;
         if (this.showAddItem === false) {
             this.showAddItem = true;
         } else {
@@ -1929,4 +1999,103 @@ showTimewindow(type) {
                console.log(this.hometimewindow_list);
             }
     }
+
+    selectItem(index) {
+        console.log(this.catalogItem[index].selected);
+        if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
+          this.catalogItem[index].selected = true;
+          this.selectedCount++;
+        } else {
+          this.catalogItem[index].selected = false;
+          this.selectedCount--;
+        }
+        console.log(this.catalogItem[index].selected);
+      }
+      selectaddItem(index) {
+        console.log(this.itemsforadd[index].selected);
+        if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
+          this.itemsforadd[index].selected = true;
+          this.selecteditemCount++;
+        } else {
+          this.itemsforadd[index].selected = false;
+          this.selecteditemCount--;
+        }
+        console.log(this.itemsforadd[index].selected);
+      }
+
+      getItemImg(item) {
+        if (item.itemImages) {
+            const img = item.itemImages.filter(image => image.displayImage);
+            if (img[0]) {
+                return img[0].url;
+            } else {
+                return '../../../../assets/images/order/Items.svg';
+            }
+        } else {
+            return '../../../../assets/images/order/Items.svg';
+        }
+    }
+    selectedItems() {
+        this.catalogItemsSelected = [];
+        for (let ia = 0; ia < this.catalogItem.length; ia++) {
+          this.seletedCatalogItems1 = {};
+          let minqty = '';
+          let maxqty = '';
+          console.log('minquty_' + this.catalogItem[ia].itemId + '');
+          if (this.catalogItem[ia].selected === true) {
+            console.log(this.catalogItem[ia]);
+            minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+            maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+            if (minqty > maxqty) {
+              this.snackbarService.openSnackBar('' + this.catalogItem[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+              this.api_loading = false;
+              return;
+            }
+           this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
+           this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
+           this.seletedCatalogItems1.item = this.catalogItem[ia];
+           this.catalogItemsSelected.push(this.seletedCatalogItems1);
+          }
+        }
+            this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+        //     const navigationExtras: NavigationExtras = {
+        //       queryParams: { action: 'add',
+        //                       isFrom: true }
+        // };
+        //     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
+      }
+    selectedaddItems() {
+        this.api_loading = true;
+        this.catalogSelectedItemsadd = [];
+        for (let ia = 0; ia < this.itemsforadd.length; ia++) {
+          this.seletedCatalogItemsadd = {};
+          let minqty = '';
+          let maxqty = '';
+          console.log('minquty_' + this.itemsforadd[ia].itemId + '');
+          if (this.itemsforadd[ia].selected === true) {
+            console.log(this.itemsforadd[ia]);
+              minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
+              maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
+              if (minqty > maxqty) {
+                this.snackbarService.openSnackBar('' + this.itemsforadd[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                return;
+              }
+           this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
+           this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
+           this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
+           this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
+          }
+        }
+        if (this.catalogSelectedItemsadd.length > 0) {
+          this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
+        //   const navigationExtras: NavigationExtras = {
+        //     queryParams: { action: 'edit',
+        //                     isFrom: true }
+        //   };
+        //   this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+      //  this.addItems(this.catalogSelectedItemsadd);
+        }
+          }
+      
 }

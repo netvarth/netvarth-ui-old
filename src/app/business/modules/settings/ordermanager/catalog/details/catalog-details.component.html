@@ -775,11 +775,11 @@
                                           <!--begin::Input-->
                                           <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                                             <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
-                                              <a class="link underline pointer-cursor" (click)="showAddItemSection()"><u>Add items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u>Add items</u></a>&nbsp;
                                               <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
                                               </div>
                                               <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
-                                                <a class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u> Edit items</u></a>&nbsp;
+                                                <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u> Edit items</u></a>&nbsp;
                                                 <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
                                               </div>
                                             <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
@@ -802,16 +802,18 @@
                                   </div>
 
                                     <!--begin::Card-->
-                                    <div class="row" *ngIf ="showAddItem">
-                                      <div class="col-md-4 col-xxl-4 col-lg-4">
-                                    <div class="card card-custom card-shadowless">
+                                    <div class="row" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
+                                      
+                                      <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
+                                         
+                                    <div class="card card-custom card-shadowless" (click)="selectItem(i)" [class.itemselected]="item.selected">
                                         <div class="card-body p-0">
                                             <!--begin::Image-->
                                             <div class="overlay">
                                                 
                                                 <div
                                                     class="overlay-wrapper rounded bg-light text-center">
-                                                    <img src="../../../../../../../../../../assets/media/products/1.png"
+                                                    <img [src]="getItemImg(item)"
                                                         alt="" class="mw-100 w-200px" />
                                                 </div>
                                             </div>
@@ -821,100 +823,58 @@
                                             <div
                                                 class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
                                                 <a 
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">Item Name</a>
+                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
                                                 
-                                                <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ 370.00</div> 
-                                                <span class="font-size-lg">Min. Qty</span>   
-                                                <span class="font-size-lg">Max. Qty</span>   
+                                                <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
+                                                <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                <span class="font-size-lg">Max. Qty<input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
                                             </div>
                                             <!--end::Details-->
                                         </div>
                                     </div>
-                                  </div>
-                                  <div class="col-md-4 col-xxl-4 col-lg-4">
-                                    <div class="card card-custom card-shadowless">
-                                        <div class="card-body p-0">
-                                            <!--begin::Image-->
-                                            <div class="overlay">
-                                                <div
-                                                    class="overlay-wrapper rounded bg-light text-center">
-                                                    <img src="../../../../../../../../../../assets/media/products/1.png"
-                                                        alt="" class="mw-100 w-200px" />
-                                                </div>
-                                            </div>
-                                            <!--end::Image-->
+                                 
+                                  
+                                </div>
+                                
+                                  
+                                    </div>
 
-                                            <!--begin::Details-->
-                                            <div
-                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                                                <a href="#"
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">Smart
-                                                    Watches</a>
-                                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ 370.00</div> 
-                                                    <span class="font-size-lg">Min. Qty</span>   
-                                                    <span class="font-size-lg">Max. Qty</span>     
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                    </div>
+                                    <div class="row" *ngIf ="showAddItem && itemsforadd && itemsforadd.length > 0">
+                                      
+                                        <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of itemsforadd;let i=index;">
+                                           
+                                      <div class="card card-custom card-shadowless" (click)="selectaddItem(i)" [class.itemselected]="item.selected">
+                                          <div class="card-body p-0">
+                                              <!--begin::Image-->
+                                              <div class="overlay">
+                                                  
+                                                  <div
+                                                      class="overlay-wrapper rounded bg-light text-center">
+                                                      <img [src]="getItemImg(item)"
+                                                          alt="" class="mw-100 w-200px" />
+                                                  </div>
+                                              </div>
+                                              <!--end::Image-->
+  
+                                              <!--begin::Details-->
+                                              <div
+                                                  class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                                  <a 
+                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                  
+                                                  <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
+                                                  <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                  <span class="font-size-lg">Max. Qty<input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                              </div>
+                                              <!--end::Details-->
+                                          </div>
+                                      </div>
+                                   
+                                    
                                   </div>
-                                  <div class="col-md-4 col-xxl-4 col-lg-4">
-                                    <div class="card card-custom card-shadowless">
-                                        <div class="card-body p-0">
-                                            <!--begin::Image-->
-                                            <div class="overlay">
-                                                
-                                                <div
-                                                    class="overlay-wrapper rounded bg-light text-center">
-                                                    <img src="../../../../../../../../../../assets/media/products/1.png"
-                                                        alt="" class="mw-100 w-200px" />
-                                                </div>
-                                            </div>
-                                            <!--end::Image-->
-
-                                            <!--begin::Details-->
-                                            <div
-                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                                                <a href="#"
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">Smart
-                                                    Watches</a>
-                                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ 370.00</div> 
-                                                    <span class="font-size-lg">Min. Qty</span>   
-                                                    <span class="font-size-lg">Max. Qty</span>    
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-4 col-xxl-4 col-lg-4">
-                                    <div class="card card-custom card-shadowless">
-                                        <div class="card-body p-0">
-                                            <!--begin::Image-->
-                                            <div class="overlay">
-                                                
-                                                <div
-                                                    class="overlay-wrapper rounded bg-light text-center">
-                                                    <img src="../../../../../../../../../../assets/media/products/1.png"
-                                                        alt="" class="mw-100 w-200px" />
-                                                </div>
-                                            </div>
-                                            <!--end::Image-->
-
-                                            <!--begin::Details-->
-                                            <div
-                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                                                <a href="#"
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">Smart
-                                                    Watches</a>
-                                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ 370.00</div> 
-                                                    <span class="font-size-lg">Min. Qty</span>   
-                                                    <span class="font-size-lg">Max. Qty</span>      
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                    </div>
-                                  </div>
-                                    </div>
+                                  
+                                    
+                                      </div>
                                     <!--end::Card-->
                               </div>
                               <!--end::Wizard Step 2-->
