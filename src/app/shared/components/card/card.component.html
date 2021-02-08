@@ -78,7 +78,7 @@
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
             <h4 class="card-title font-weight-bold d-block">
-                <a class="d-block name module1 line-clamp1">{{service.displayName}}</a>
+                <a class="d-block name module1 line-clamp1">{{service.displayName  | capitalizeFirst | limitTo: [20, '...']}}</a>
                 <p class="module1 line-clamp1">{{service.shortDesc}}</p>
             </h4>
             <div class="col-md-12 no-padding">
