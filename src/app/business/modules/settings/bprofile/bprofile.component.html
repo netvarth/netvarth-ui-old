@@ -34,7 +34,8 @@
                       <span class="fa propic-cam-icon mgn-top-m3"></span>
                     </span>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="changeProPic('cover')">
+                      <button mat-menu-item data-toggle="modal"
+                      data-target="#exampleModalSizeLg" (click)="clearModalData('cover')">
                         <i class="fa fa-upload"></i>
                         Upload Photo
                         <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
@@ -93,7 +94,14 @@
                           <!-- After Img selection cropper -->
                           <div>
                             <mat-progress-bar *ngIf="loadSymbol" mode="indeterminate" class="mt-10"></mat-progress-bar>
-                            <image-cropper [imageChangedEvent]="imageChangedEvent" [roundCropper]="true" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" [containWithinAspectRatio]="true"
+                            <!-- cropper for pro pic -->
+                            <image-cropper *ngIf="!imgType" [imageChangedEvent]="imageChangedEvent" [roundCropper]="true" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" [containWithinAspectRatio]="true"
+                            [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
+                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                            (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+                            <!-- cropper for cover pic -->
+                            <image-cropper *ngIf="imgType" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="16/7" [containWithinAspectRatio]="true"
                             [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
                             (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
                             (loadImageFailed)="loadImageFailed()"></image-cropper>
@@ -102,8 +110,10 @@
                         <div class="modal-footer">
                           <button type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold"
                             data-dismiss="modal">Close</button>
-                          <button type="button" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
-                          <app-form-success-display [displayMsg]="true"  successMsg="'hel'">
+                          <button [class.btn_disable]="api_success" type="button" class="btn ln-ht-1 btn-primary font-weight-bold" (click)="saveImages()">{{spinner_load ? 'Uploading': 'save'}}
+                            <i *ngIf="spinner_load" class="fas fa-spinner fa-spin" style="font-family: 'FontAwesome';"></i>
+                          </button>
+                          <app-form-success-display class="wdth_full" [displayMsg]="true"  *ngIf="api_success" successMsg="{{api_success}}">
                           </app-form-success-display>
                         </div>
                       </div>
@@ -131,7 +141,8 @@
                       </div>
                       <div class="col-md-6 col-xs-6 col-sm-6 mgn-up-5">
                         <button (click)="scroll(basicInfoSection)" type="button"
-                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}</button>
+                          [className]="'wght-btn btn btn-' + weightageClass">{{bprofile_btn_text}}
+                        </button>
                       </div>
                     </div>
                   </div>

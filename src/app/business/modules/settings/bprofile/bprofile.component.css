@@ -229,7 +229,7 @@
     padding: 1rem 1.75rem  !important;
 }
 .modal-footer {
-    padding: 0.5rem !important;
+    padding: 0 !important;
 }
 .ln-ht-1 {
     line-height: 1 !important;
@@ -245,4 +245,12 @@
 }
 .mat-progress-bar-buffer {
     background-color: #f9e2a7 !important;
+}
+.wdth_full {
+    width: 100%  !important;
+}
+.btn_disable {
+    background: #8080806e !important;
+    border: none !important;
+    pointer-events: none !important;
 }

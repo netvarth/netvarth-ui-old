@@ -208,6 +208,9 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   croppedImage: any;
   canvasRotation = 0;
   loadSymbol = false;
+  api_success: string;
+  imgType = false;
+  spinner_load = false;
   @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
@@ -1505,9 +1508,13 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.imageChangedEvent = event;
     console.log(this.imageChangedEvent);
   }
-  clearModalData() {
+  clearModalData(source?) {
     this.imageChangedEvent = '';
     console.log(this.imageChangedEvent);
+    if (source) {
+      this.imgType = true;
+    }
+    console.log(this.imgType);
   }
 
   imageCropped(event: ImageCroppedEvent) {
@@ -1541,5 +1548,97 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
     return new File([u8arr], filename, { type: mime });
   }
+
+
+
+  // Save pro pic and cover pic
+  saveImages() {
+    this.spinner_load = true;
+    const file = this.fileToReturn;
+    this.success_error = null;
+    this.error_list = [];
+    this.error_msg = '';
+    if (file) {
+        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        if (this.success_error === true) {
+            const reader = new FileReader();
+            this.item_pic.files = file;
+            this.selitem_pic = file;
+            const fileobj = file;
+            reader.onload = (e) => {
+                this.item_pic.base64 = e.target['result'];
+            };
+            reader.readAsDataURL(fileobj);
+            if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+                // generating the data to be submitted to change the logo
+                const submit_data: FormData = new FormData();
+                submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                const propertiesDet = {
+                    'caption': 'Logo'
+                };
+                const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                submit_data.append('properties', blobPropdata);
+                if (this.imgType) {
+                    this.uploadCoverPic(submit_data);
+                    console.log('cover');
+                } else {
+                    // if (this.data.userId) {
+                    //     this.uploadUserLogo(submit_data);
+                    // } else {
+                    //     this.uploadLogo(submit_data);
+                    // }
+                    console.log('propic');
+                    this.uploadLogo(submit_data);
+                }
+            }
+        } else {
+            this.error_list.push(this.success_error);
+            if (this.error_list[0].type) {
+                this.error_msg = 'Selected image type not supported';
+            } else if (this.error_list[0].size) {
+                this.error_msg = 'Please upload images with size less than 15mb';
+            }
+            this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+        }
+    } else {
+        this.error_msg = 'Selected image type not supported';
+        this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+    }
+}
+
+uploadLogo(passdata) {
+    this.provider_services.uploadLogo(passdata)
+        .subscribe(
+            data => {
+                this.blogo = [];
+                this.blogo[0] = data;
+                const today = new Date();
+                const tday = today.toString().replace(/\s/g, '');
+                const blogo = this.blogo[0].url + '?' + tday;
+                this.sharedfunctionobj.setBusinessDetailsforHeaderDisp(this.bProfile['businessName']
+                    || '', this.bProfile['serviceSector']['displayName'] || '', this.bProfile['serviceSubSector']['displayName'] || '', blogo || '');
+                const pdata = { 'ttype': 'updateuserdetails' };
+                this.provider_datastorage.updateProfilePicWeightage(true);
+                this.sharedfunctionobj.sendMessage(pdata);
+                this.api_success = Messages.BPROFILE_LOGOUPLOADED;
+                this.spinner_load = false;
+            },
+            error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+        );
+}
+
+uploadCoverPic(passdata) {
+    this.provider_services.uploadCoverFoto(passdata).subscribe(
+        data => {
+            console.log(data);
+            if (data) {
+                this.api_success = Messages.BPROFILE_COVER_ADD;
+                this.spinner_load = false;
+                this.getCoverPhoto();
+            }
+        });
+}
 
 }
