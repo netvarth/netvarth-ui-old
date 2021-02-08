@@ -597,7 +597,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               if (data) {
                 this.getaddress();
               }
-              this.snackbarService.openSnackBar('Address Updated successfully');
+              this.snackbarService.openSnackBar('Address deleted successfully');
             },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
