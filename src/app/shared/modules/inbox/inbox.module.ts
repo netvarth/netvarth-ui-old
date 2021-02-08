@@ -12,6 +12,7 @@ import { InboxRoutingModule } from './inbox-routing.module';
 import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { HeaderModule } from '../header/header.module';
+import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -24,7 +25,8 @@ import { HeaderModule } from '../header/header.module';
         BreadCrumbModule,
         InboxRoutingModule,
         Nl2BrPipeModule,
-        HeaderModule
+        HeaderModule,
+        LoadingSpinnerModule
     ],
     entryComponents: [
       InboxListComponent
