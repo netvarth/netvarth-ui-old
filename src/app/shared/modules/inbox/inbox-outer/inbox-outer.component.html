@@ -60,8 +60,8 @@
                             <div class="mt-7 scroll scroll-pull user-body">
                               <!--begin:User-->
                               <!-- *ngFor="let user of groupedMsgs | keyvalue : orderClause; trackBy: trackByFn" -->
-                              <div *ngFor="let user of groupedMsgs | keyvalue" (click)="providerSelection(user)"
-                                class="d-flex align-items-center justify-content-between mb-5 pointer-cursor">
+                              <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder" (click)="providerSelection(user)"
+                                class="d-flex align-items-center justify-content-between pointer-cursor" [class-selected-user]="selectedProvider==user.key">
                                 <div class="d-flex align-items-center">
                                   <div class="symbol symbol-circle symbol-50 mr-3">
                                     <!-- <img alt="Pic"
@@ -206,8 +206,8 @@
                               </div>
                               <div>
                                 <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                  class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Send
-                                  <app-common-innerloading-spinner *ngIf="!sendMessageCompleted"></app-common-innerloading-spinner>
+                                  class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
+                                  <!-- <app-common-innerloading-spinner *ngIf="!sendMessageCompleted"></app-common-innerloading-spinner> -->
                                 </button>
                               </div>
                             </div>

@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
-import { Location } from '@angular/common';
+import { KeyValue, Location } from '@angular/common';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -110,6 +110,9 @@ export class InboxOuterComponent implements OnInit {
       }
     });
   }
+  valueOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+    return a.value[a.value.length-1]['timeStamp'] > b.value[b.value.length-1]['timeStamp'] ? -1 : b.value[b.value.length-1]['timeStamp'] > a.value[a.value.length-1]['timeStamp'] ? 1 : 0;
+  }
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
@@ -194,7 +197,7 @@ export class InboxOuterComponent implements OnInit {
   getUserName(user) {
     // const name = user.match(/\b(\w)/g);
     const name = user.split(' ');
-    console.log(user.split(' '));
+    // console.log(user.split(' '));
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
       nameShort = nameShort + name[name.length - 1].charAt(0);

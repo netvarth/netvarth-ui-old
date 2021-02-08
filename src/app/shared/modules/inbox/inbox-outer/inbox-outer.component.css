@@ -31,11 +31,14 @@
 }
 .msg-body {
     height: 303px;
-    overflow: auto !important;
+    overflow-y: auto !important;
 }
 .user-body {
     height: 452px;
-    overflow: auto !important;
+    overflow-y: auto !important;
+}
+.selected-user {
+    background: #eee;
 }
 /* .input-group.input-group-solid .form-control {
     background: #F3F6F9;
