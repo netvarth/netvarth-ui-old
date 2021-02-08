@@ -61,7 +61,7 @@
                               <!--begin:User-->
                               <!-- *ngFor="let user of groupedMsgs | keyvalue : orderClause; trackBy: trackByFn" -->
                               <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder" (click)="providerSelection(user)"
-                                class="d-flex align-items-center justify-content-between pointer-cursor" [class-selected-user]="selectedProvider==user.key">
+                                class="d-flex align-items-center justify-content-between pointer-cursor" [class.selected-user]="selectedProvider==user.key">
                                 <div class="d-flex align-items-center">
                                   <div class="symbol symbol-circle symbol-50 mr-3">
                                     <!-- <img alt="Pic"
