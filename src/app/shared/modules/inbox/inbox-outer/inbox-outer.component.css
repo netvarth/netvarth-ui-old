@@ -19,6 +19,7 @@
     padding: 15px 10px;
     width: 50px;
     text-align: center;
+    max-height: 50px;
 }
 .card-width {
     width: 350px;
@@ -28,6 +29,17 @@
         width: 300px;
     }
 }
+.msg-body {
+    height: 303px;
+    overflow: auto !important;
+}
+.user-body {
+    height: 452px;
+    overflow: auto !important;
+}
+/* .input-group.input-group-solid .form-control {
+    background: #F3F6F9;
+} */
 /* .input-group-text {
     background-color: transparent !important;
     border: 0 !important;

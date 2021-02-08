@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { InboxServices } from '../inbox.service';
 import { Location } from '@angular/common';
@@ -6,6 +6,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -24,6 +25,7 @@ export class InboxOuterComponent implements OnInit {
   userDet;
   obtainedMsgs = false;
   groupedMsgs: any = [];
+  groupedMsgsCopy: any = [];
   selectedUserMessages: any = [];
   loading = false;
   message = '';
@@ -34,9 +36,11 @@ export class InboxOuterComponent implements OnInit {
     base64: [],
     caption: []
   };
-  showChat = true;
+  showChat = false;
   screenWidth;
   small_device_display = false;
+  sendMessageCompleted = true;
+  @ViewChild('scrollMe') scrollFrame: ElementRef;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -44,6 +48,7 @@ export class InboxOuterComponent implements OnInit {
     public shared_services: SharedServices) { }
 
   ngOnInit() {
+    this.onResize();
     this.loading = true;
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getInboxMessages();
@@ -67,17 +72,17 @@ export class InboxOuterComponent implements OnInit {
       .subscribe(
         data => {
           this.messages = data;
-
-
           console.log(this.messages);
-          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
+          this.groupedMsgs = this.groupedMsgsCopy = this.shared_functions.groupBy(this.messages, 'accountName');
           console.log(this.groupedMsgs);
-
           console.log(this.selectedUserMessages);
           console.log(this.selectedProvider);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             console.log(this.selectedUserMessages);
+            setTimeout(() => {
+              this.scrollToElement();
+            }, 200);
           }
           this.sortMessages();
           console.log(this.groupedMsgs);
@@ -95,7 +100,6 @@ export class InboxOuterComponent implements OnInit {
     this.location.back();
   }
   sortMessages() {
-
     this.messages.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {
         return 11;
@@ -105,7 +109,6 @@ export class InboxOuterComponent implements OnInit {
         return 0;
       }
     });
-
   }
   formatDateDisplay(dateStr) {
     let retdate = '';
@@ -128,7 +131,7 @@ export class InboxOuterComponent implements OnInit {
     this.selectedProvider = msgs.key;
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
-    this.showChat = false;
+      this.showChat = true;
     }
     const unreadMsgs = msgs.value.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
     console.log(unreadMsgs);
@@ -137,6 +140,10 @@ export class InboxOuterComponent implements OnInit {
       const messageids = ids.toString();
       console.log(ids);
       this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
+    } else {
+      setTimeout(() => {
+        this.scrollToElement();
+      }, 200);
     }
   }
   getUnreadCount(messages) {
@@ -148,16 +155,9 @@ export class InboxOuterComponent implements OnInit {
       this.getInboxMessages();
     });
   }
-  //   orderClause = (a: KeyValue<number,[string]>, b: KeyValue<number,[string]>): number => {
-  //     console.log(a);
-  //   return a.value[a.value.length-1].length > b.value[b.value.length-1].length ? -1 : (a.value[a.value.length-1].length > b.value[b.value.length-1].length) ? 0 : 1  
-  // }
-  // trackByFn(index, item) {
-  //   console.log(item);
-  //   return item.value; 
-  // }
   sendMessage() {
     if (this.message) {
+      this.sendMessageCompleted = false;
       const post_data = {
         communicationMessage: this.message
       };
@@ -175,38 +175,52 @@ export class InboxOuterComponent implements OnInit {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      
+
       this.shared_services.addConsumertoProviderNote(this.selectedUserMessages[0].accountId,
         post_data)
         .subscribe(
           () => {
             this.message = '';
             this.getInboxMessages();
+            this.sendMessageCompleted = true;
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.sendMessageCompleted = true;
           }
         );
     }
   }
   getUserName(user) {
-    const name = user.match(/\b(\w)/g);
-    let nameShort = name[0];
+    // const name = user.match(/\b(\w)/g);
+    const name = user.split(' ');
+    console.log(user.split(' '));
+    let nameShort = name[0].charAt(0);
     if (name.length > 1) {
-      nameShort = nameShort + name[name.length-1];
+      nameShort = nameShort + name[name.length - 1].charAt(0);
     }
-    // console.log(nameShort);
     return nameShort;
   }
   searchByName() {
     console.log(this.providerName);
-    const arr = this.groupedMsgs.filter(value => value.key === this.providerName);
-    console.log(arr);
-    Object.keys(this.groupedMsgs).forEach(key => {
-      if (key.includes(this.providerName)) {
-        console.log(key);
+    this.groupedMsgs = this.groupedMsgsCopy;
+    if (this.providerName !== '') {
+      let arr = [];
+      Object.keys(this.groupedMsgs).forEach(key => {
+        if (key.search(this.providerName)) {
+          console.log(key);
+        } else {
+          if (arr.indexOf(key) === -1) {
+            arr.push(key);
+          }
+        }
+      });
+      console.log(arr);
+      for (let value of arr) {
+        delete this.groupedMsgs[value];
       }
-    });
+    }
+    console.log(this.groupedMsgs);
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -229,5 +243,10 @@ export class InboxOuterComponent implements OnInit {
   }
   showChatSection() {
     this.showChat = !this.showChat;
+  }
+  scrollToElement() {
+    try {
+      this.scrollFrame.nativeElement.scrollTop = this.scrollFrame.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 }
