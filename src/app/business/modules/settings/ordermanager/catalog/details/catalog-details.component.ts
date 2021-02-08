@@ -21,7 +21,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 @Component({
     selector: 'app-catalogdetail',
     templateUrl: './catalog-details.component.html',
-    styleUrls: ['../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
+    styleUrls: ['./catalog-details.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
 
 })
 export class CatalogdetailComponent implements OnInit {
@@ -127,6 +127,7 @@ export class CatalogdetailComponent implements OnInit {
     cancelationPolicyStatus = true;
     advancePayment;
     showpolicy = false;
+    showAddItem = false;
     start_time_cap = Messages.START_TIME_CAP;
     end_time_cap = Messages.END_TIME_CAP;
     dstart_time;
@@ -1313,6 +1314,14 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             this.showpolicy = true;
         } else {
             this.showpolicy = false;
+        }
+
+    }
+    showAddItemSection() {
+        if (this.showAddItem === false) {
+            this.showAddItem = true;
+        } else {
+            this.showAddItem = false;
         }
 
     }

@@ -1,0 +1,25 @@
+.overlay {
+    background: none !important;
+    opacity: 5 !important;
+    visibility: visible !important;
+}
+.add_qty {
+    bottom: 0;
+    position: absolute;
+    background: white;
+    padding: 10px;
+    right: 0 !important;
+    border: 1px solid #80808029;
+}
+.ln-ht-2{
+    line-height: 2 !important;
+}
+.radio {
+    font-size: 0.8rem !important;
+}
+.radio_outline {
+    border: 1px solid !important;
+}
+.disp-flex {
+    display: flex;
+}
