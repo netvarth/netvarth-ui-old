@@ -370,15 +370,11 @@ button.fxmenu {
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
-.booking-card.card.order.disabled {
+.booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-img {
     opacity: .4 !important;
     /* pointer-events: none !important; */
 }
-.outstock{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .disabled .btn-rt, .disabled.count-o, .disabled .btn-lt{
     pointer-events: none !important;
 }
@@ -432,4 +428,17 @@ button.fxmenu {
     top: 30px;
     transform: rotate(45deg);
   }
-  
+  .twoline-break {
+     display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    word-break: break-all;
+    hyphens: auto;
+}
+.outstock{
+    top: 15px;
+    position: absolute;
+    color: red;
+    padding-left: 15px;
+    background: white;
+}
