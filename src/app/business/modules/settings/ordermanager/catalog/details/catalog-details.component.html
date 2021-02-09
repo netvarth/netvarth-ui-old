@@ -826,8 +826,8 @@
                                                     class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
                                                 
                                                 <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
-                                                <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
-                                                <span class="font-size-lg">Max. Qty<input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                                <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
                                             </div>
                                             <!--end::Details-->
                                         </div>
@@ -952,140 +952,146 @@
                               <div class="pb-5" *ngIf="step == 4">
                                 <!--begin::Section-->
                                 <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Store pickup </label> &nbsp;
-                                        <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
-                                        </mat-slide-toggle>
-                                    </div>
-                                      <!--end::Input-->
-                                      <!--begin::Select-->
-                                      <div *ngIf="storepickupStat">
-                                        <div class="form-group">
-                                          <label>Store pickup availability</label>
-                                          <div  *ngFor="let wday of weekdays; index as i">
-                                            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
-                                              [checked]="check_existsinArraystorepickup(selday_arrstorepickup,i) >= 0">{{wday}}
-                                            </mat-checkbox>
-                                          </div>
-                                      </div>
-                                        <!--end::Select-->
-                                        <div class="row">
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                    <div class="input-group date">
-                                                      <label>Start Date</label>
-                                                          <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,0)"
-                                                          placeholder="Start Date" formControlName="startdatestore"/>
-                                                    </div>
-                                            </div>
-                                              <!--end::Input-->
-                                          </div>
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                <div class="input-group date">
-                                                  <label>End Date</label>
-                                                      <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,1)"
-                                                      placeholder="End Date" formControlName="enddatestore"/>
-                                                </div>
-                                              </div>
-                                              <!--end::Input-->
-                                          </div>
-                                      </div>
-                                <div class="row">
-                                  <div class="col-xl-6">
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Available time window(s)</label><br>
 
-                                        <label>Currently no timewindows are added</label> &nbsp;
-                                        <label class="link underline pointer-cursor" (click)="showTimewindow('store')">Add</label>
-                                    </div>
-                                      <!--end::Input-->
-                                  </div>
-                              </div>
-                                      </div>
-                                     
-
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Home delivery </label> &nbsp;
-                                        <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
-                                        </mat-slide-toggle>
-                                    </div>
-                                      <!--end::Input-->
-                                      <!--begin::Select-->
-                                      <div *ngIf="homedeliveryStat">
-                                        <div class="form-group">
-                                          <label>Home delivery availability</label>
-                                          <div *ngFor="let wday of weekdays; index as i">
-                                            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
-                                              [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}
-                                            </mat-checkbox>
-                                          </div>
-                                      </div>
-                                        <!--end::Select-->
-                                        <div class="row">
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                    <div class="input-group date">
-                                                      <label>Start Date</label>
-                                                          <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
-                                                          placeholder="Start Date" formControlName="startdatehome" />
-                                                    </div>
-                                            </div>
-                                              <!--end::Input-->
-                                          </div>
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                <div class="input-group date">
-                                                  <label>End Date</label>
-                                                      <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,1)"
-                                                      placeholder="End Date" formControlName="enddatehome"/>
-                                                </div>
-                                              </div>
-                                              <!--end::Input-->
-                                          </div>
-                                      </div>
-                                <div class="row">
-                                      <!--begin::Input-->
-                                      <div class="col-xl-6">
-  
-                                      <div class="form-group">
-                                        <label>Available time windows</label> &nbsp;
-                                        <span class="form-text text-muted">Currently no timewindows are added  Add</span>
-                                      <!--end::Input-->
-                                  </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
+                                <div class="card card-shadow card-custom card-shadowless">
+                                  <div class="card-body p-0">
                                     <div class="form-group">
-                                            <label>Delivery charge</label>
-                                            <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverycharge"
-                                            placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
-                                            maxlength="50"/>
+                                      <label>Store pickup </label> &nbsp;
+                                      <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                                      </mat-slide-toggle>
                                   </div>
+                                  <div *ngIf="storepickupStat">
+                                    <div class="form-group">
+                                      <label>Store pickup availability</label>
+                                      <div  *ngFor="let wday of weekdays; index as i">
+                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
+                                          [checked]="check_existsinArraystorepickup(selday_arrstorepickup,i) >= 0">{{wday}}
+                                        </mat-checkbox>
+                                      </div>
+                                  </div>
+                                    <!--end::Select-->
+                                    <div class="row">
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                                <div class="input-group date">
+                                                  <label>Start Date</label>
+                                                      <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,0)"
+                                                      placeholder="Start Date" formControlName="startdatestore"/>
+                                                </div>
+                                        </div>
+                                          <!--end::Input-->
+                                      </div>
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                            <div class="input-group date">
+                                              <label>End Date</label>
+                                                  <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,1)"
+                                                  placeholder="End Date" formControlName="enddatestore"/>
+                                            </div>
+                                          </div>
+                                          <!--end::Input-->
+                                      </div>
+                                  </div>
+                            <div class="row">
+                              <div class="col-xl-6">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                    <label>Available time window(s)</label><br>
+
+                                    <label>Currently no timewindows are added</label> &nbsp;
+                                    <label class="link underline pointer-cursor" (click)="showTimewindow('store')">Add</label>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                          </div>
+                                  </div>
+                                  </div>
+                                </div>
+                                     
+                                <div class="card card-shadow card-custom card-shadowless mgn-up-10">
+                                  <div class="card-body p-0">
+                                    <div class="form-group">
+                                      <label>Home delivery </label> &nbsp;
+                                      <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
+                                      </mat-slide-toggle>
+                                  </div>
+                                    <!--end::Input-->
+                                    <!--begin::Select-->
+                                    <div *ngIf="homedeliveryStat">
+                                      <div class="form-group">
+                                        <label>Home delivery availability</label>
+                                        <div *ngFor="let wday of weekdays; index as i">
+                                          <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
+                                            [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}
+                                          </mat-checkbox>
+                                        </div>
+                                    </div>
+                                      <!--end::Select-->
+                                      <div class="row">
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                                  <div class="input-group date">
+                                                    <label>Start Date</label>
+                                                        <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
+                                                        placeholder="Start Date" formControlName="startdatehome" />
+                                                  </div>
+                                          </div>
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                              <div class="input-group date">
+                                                <label>End Date</label>
+                                                    <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,1)"
+                                                    placeholder="End Date" formControlName="enddatehome"/>
+                                              </div>
+                                            </div>
+                                            <!--end::Input-->
+                                        </div>
+                                    </div>
+                              <div class="row">
+                                    <!--begin::Input-->
+                                    <div class="col-xl-6">
+
+                                    <div class="form-group">
+                                      <label>Available time windows</label> &nbsp;
+                                      <span class="form-text text-muted">Currently no timewindows are added  Add</span>
                                     <!--end::Input-->
                                 </div>
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Delivery range(km)</label>
-                                        <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
-                                        placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
-                                        maxlength="50"/>
-                                    </div>
-                                    <!--end::Input-->
                                 </div>
                             </div>
-                                 
+                            <div class="row">
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                          <label>Delivery charge</label>
+                                          <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverycharge"
+                                          placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
+                                          maxlength="50"/>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                      <label>Delivery range(km)</label>
+                                      <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
+                                      placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
+                                      maxlength="50"/>
+                                  </div>
+                                  <!--end::Input-->
+                              </div>
                           </div>
+                               
+                        </div>
+                                  </div>
+                                </div>
+                                      <!--begin::Input-->
+                                      
                                       
 
                             </div>
