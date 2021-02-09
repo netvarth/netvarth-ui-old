@@ -22,7 +22,7 @@
                 <!--begin::Entry-->
                 <div class="d-flex flex-column-fluid">
                   <!--begin::Container-->
-                  <div class=" container ">
+                  <div class=" container no-padding">
                     <!--begin::Chat-->
                     <div class="d-flex flex-row">
                       <!--begin::Aside-->
@@ -32,7 +32,7 @@
                           <!--begin::Body-->
                           <div class="card-body">
                             <!--begin:Search-->
-                            <div class="input-group input-group-solid">
+                            <div class="input-group input-group-solid pad-5">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">
                                   <span class="svg-icon svg-icon-lg">
@@ -57,11 +57,11 @@
                             </div>
                             <!--end:Search-->
                             <!--begin:Users-->
-                            <div class="mt-7 scroll scroll-pull user-body">
+                            <div class="mt-7 scroll scroll-pull over-scroll" [ngStyle]="{'height.px': userScrollHeight}">
                               <!--begin:User-->
                               <!-- *ngFor="let user of groupedMsgs | keyvalue : orderClause; trackBy: trackByFn" -->
                               <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder" (click)="providerSelection(user)"
-                                class="d-flex align-items-center justify-content-between pointer-cursor" [class.selected-user]="selectedProvider==user.key">
+                                class="d-flex align-items-center justify-content-between pointer-cursor pad-5" [class.selected-user]="selectedProvider==user.key">
                                 <div class="d-flex align-items-center">
                                   <div class="symbol symbol-circle symbol-50 mr-3">
                                     <!-- <img alt="Pic"
@@ -138,7 +138,7 @@
                           <!--begin::Body-->
                           <div class="card-body no-padding-small">
                             <!--begin::Scroll-->
-                            <div class="scroll scroll-pull msg-body" data-mobile-height="350" #scrollMe>
+                            <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.px': msgScrollHeight}">
                               <!--begin::Messages-->
                               <div class="messages" *ngFor="let msg of selectedUserMessages">
                                 <!--begin::Message In-->

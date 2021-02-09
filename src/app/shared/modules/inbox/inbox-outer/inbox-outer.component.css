@@ -33,12 +33,17 @@
     height: 303px;
     overflow-y: auto !important;
 }
-.user-body {
-    height: 452px;
+.over-scroll {
     overflow-y: auto !important;
 }
 .selected-user {
     background: #eee;
+}
+.card-body {
+    padding: 10px !important;
+}
+.pad-5 {
+    padding: 5px
 }
 /* .input-group.input-group-solid .form-control {
     background: #F3F6F9;

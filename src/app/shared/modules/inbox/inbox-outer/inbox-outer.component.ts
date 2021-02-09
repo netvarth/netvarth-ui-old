@@ -40,6 +40,8 @@ export class InboxOuterComponent implements OnInit {
   screenWidth;
   small_device_display = false;
   sendMessageCompleted = true;
+  userScrollHeight;
+  msgScrollHeight;
   @ViewChild('scrollMe') scrollFrame: ElementRef;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
@@ -65,6 +67,9 @@ export class InboxOuterComponent implements OnInit {
     } else {
       this.small_device_display = false;
     }
+    const screenHeight = window.innerHeight;
+    this.userScrollHeight = screenHeight - 280;
+    this.msgScrollHeight = screenHeight - 427;
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
