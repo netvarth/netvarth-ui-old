@@ -94,7 +94,7 @@
             <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
               <div class="col-lg-12">
                 <!--begin::Wizard Form-->
-                <form class="form">
+                <!-- <form class="form"> -->
                   <!--begin::Wizard Step 1-->
                   <div class="pb-5" *ngIf="step == 1">
                     <form class="form" [formGroup]="searchForm">
@@ -119,11 +119,11 @@
                         <!--begin::Body-->
                         <div class="card-body text-center pt-4">
                           <!--begin::User-->
-                          <div class="mt-7 pb-2">
+                          <!-- <div class="mt-7 pb-2">
                             <div class="symbol symbol-lg-75 symbol-circle symbol-light-primary">
                               <span class="font-size-h3 symbol-label font-weight-boldest"></span>
                             </div>
-                          </div>
+                          </div> -->
                           <!--end::User-->
 
                           <!--begin::Name-->
@@ -147,7 +147,7 @@
 
                   <!-- New customer creation -->
                   <div class="pb-5" *ngIf="create_customer">
-                    <form id="customer_creation" class="form">
+                    <form id="customer_creation" class="form" [formGroup]="createCustomer">
                       <div class="card-body p-0">
                         <div class="form-group row">
                           <div class="col-lg-6">
@@ -406,65 +406,7 @@
                                     </a>
                                   </td>
                                 </tr>
-                                <!-- <tr>
-                                  <td class="d-flex align-items-center font-weight-bolder">
 
-                                    <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                      <div class="symbol-label" style="background-image: url('assets/media/products/2.png')">
-                                      </div>
-                                    </div>
-
-                                    <a href="#" class="text-dark text-hover-primary">
-                                      Headphones</a>
-                                  </td>
-                                  <td class="text-center align-middle">
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2">
-                                      <i class="ki ki-minus icon-xs"></i>
-                                    </a>
-                                    <span class="mr-2 font-weight-bolder">1</span>
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon">
-                                      <i class="ki ki-plus icon-xs"></i>
-                                    </a>
-                                  </td>
-                                  <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                    $449.00
-                                  </td>
-                                  <td class="text-right align-middle">
-                                    <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
-                                      Remove
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="d-flex align-items-center font-weight-bolder">
-
-                                    <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                      <div class="symbol-label" style="background-image: url('assets/media/products/1.png')">
-                                      </div>
-                                    </div>
-
-                                    <a href="#" class="text-dark text-hover-primary">
-                                      Smartwatch</a>
-                                  </td>
-                                  <td class="text-center align-middle">
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2">
-                                      <i class="ki ki-minus icon-xs"></i>
-                                    </a>
-                                    <span class="mr-2 font-weight-bolder">1</span>
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon">
-                                      <i class="ki ki-plus icon-xs"></i>
-                                    </a>
-                                  </td>
-                                  <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                    $999.00
-                                  </td>
-                                  <td class="text-right align-middle">
-                                    <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
-                                      Remove
-                                    </a>
-                                  </td>
-                                </tr> -->
-                                <!--end::Cart Content-->
                               </tbody>
                             </table>
                           </div>
@@ -473,19 +415,7 @@
                             <div class="col-md-10 ln-ht-2"  *ngIf="home_delivery && store_pickup">
                               <div class="text-muted">DELIVERY TYPE</div>
                               <ng-container *ngIf="home_delivery && store_pickup">
-                              <!-- <div class="radio-inline" [(ngModel)]="choose_type" (change)="changeType($event)">
-                                <label class="radio">
-                                  <input type="radio" name="radios2" [value]="'store'" [checked]="storeChecked">
-                                  <span class="radio_outline"></span>
-                                  Store Pickup
-                                </label>
-                                <label class="radio">
-                                  <input type="radio" name="radios2"  [value]="'home'" [checked]="!storeChecked">>
-                                  <span class="radio_outline"></span>
-                                   Home Delivery
-                                </label>
-                              </div> -->
-                              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
+                              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
                                 <mat-radio-button [value]="'store'" [checked]="storeChecked">
                                   Store pick up
                                 </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -495,10 +425,10 @@
                               </mat-radio-group>
                             </ng-container>
                             <div *ngIf="store_pickup && !home_delivery">
-                              store pickup
+                              Store Pickup
                             </div>
                             <div *ngIf="home_delivery && !store_pickup">
-                              home delivery
+                              Home delivery
                             </div>
                               <div class="text-muted">DATE/TIME
                                 <div class="fl-right"><a (click)="changeTime()">Change</a></div>
@@ -514,19 +444,28 @@
                                   {{nextAvailableTime}}
                                 </span>
                               </div>
-                            </div>
 
                                                             <!-- Home Address -->
-                                                            <div>
+                                                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                                                            <div  *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
                                                               <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
                                                                   <div
                                                                       class="card card-custom gutter-b rounded-0 card-stretch p-2">
                                                                       <div
                                                                           class="card-body text-left pl-5 p-0 font-addrss">
-                                                                          <div>Sijisha Saji</div>
-                                                                          <div>Kalarikal House</div>
-                                                                          <div>P.O Ammadam</div>
-                                                                          <div>Thrissur - 869066</div>
+                                                                          <div class="adrs-data">
+                                                                            <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                                                            <div>{{address.address}}</div>
+                                                                            <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                                                            <div> +91 {{address.phoneNumber}}</div>
+                                                                            <div> {{address.email}}</div>
+                                                                          </div>
+                                                                          <button class="add-adrs-btn" mat-flat-button (click)="updateAddress(address,i)">
+                                                                            Edit
+                                                                          </button> &nbsp;
+                                                                          <button class="add-adrs-btn" mat-flat-button (click)="deleteAddress(address,i)">
+                                                                           Delete
+                                                                          </button>
                                                                       </div>
                                                                   </div>
                                                               </div>
@@ -535,50 +474,142 @@
                                                                       class="card card-custom gutter-b rounded-0 card-stretch p-2">
                                                                       <div
                                                                           class="card-body text-center p-0">
-                                                                          <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                                                          <button type="button" class="btn btn-success px-2 py-1" (click)=addAddress();>
                                                                               Add New </button>
                                                                       </div>
                                                                   </div>
                                                               </div>
                                                           </div>
+                                                          </ng-container>
 
                                                           <!-- Address Adding Modal box -->
                                                           <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
                                                               <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                  <form class="form"[formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
                                                                   <div class="modal-content">
                                                                       <div class="modal-body">
-                                                                          <form class="form">
-                                                                              <div class="">
-                                                                                  <div class="form-group row">
-                                                                                      <div class="col-lg-6">
-                                                                                          <input type="email" class="form-control" placeholder="Enter full name"/>
-                                                                                      </div>
-                                                                                      <div class="col-lg-6">
-                                                                                          <input type="email" class="form-control" placeholder="Enter contact number"/>
-                                                                                      </div>
-                                                                                  </div>
-                                                                                  <div class="form-group row">
-                                                                                      <div class="col-lg-6">
-                                                                                          <div class="input-group">
-                                                                                              <input type="text" class="form-control" placeholder="Enter your address"/>
-                                                                                          </div>
-                                                                                      </div>
-                                                                                      <div class="col-lg-6">
-                                                                                          <div class="input-group">
-                                                                                              <input type="text" class="form-control" placeholder="Enter your postcode"/>
-                                                                                          </div>
-                                                                                      </div>
-                                                                                  </div>
+
+                                                                            <div class="lbl col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small mgn-bt-10">
+
+
+                                                                              <div class="form-group" >
+                                                                                <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
+                                                                                  <span class="input-group-text" style="margin-top:auto;">+91</span>
+                                                                                  <mat-form-field>
+                                                                                          <input matInput type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                                                                                        </mat-form-field>
+                                                                                </div>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
+                                                                                                              {
+                                                                                                                'required' : 'Mobile number is required',
+                                                                                                                'minlength' : 'Enter a 10 digit mobile number',
+                                                                                                                'maxlength' : 'Enter a 10 digit mobile number',
+                                                                                                                'pattern' : 'Only numbers are allowed'
+                                                                                                              })">
+                                                                                </app-field-error-display>
                                                                               </div>
-                                                                          </form>
+
+                                                                              <div class="form-group">
+                                                                                  <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                                                                  </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
+                                                                                                            {
+                                                                                                              'required' : 'First name is required',
+                                                                                                              'pattern' : 'Only alphabets are allowed'
+                                                                                                            })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+                                                                              <div class="form-group">
+                                                                                  <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                                                                  </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
+                                                                                                          {
+                                                                                                            'required' : 'Last name is required',
+                                                                                                            'pattern' : 'Only alphabets are allowed'
+                                                                                                          })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+                                                                              <div class="form-group">
+                                                                                <mat-form-field>
+                                                                              <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                                                       </mat-form-field>
+                                                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
+                                                                                                      {
+                                                                                                        'required' : 'Email is required',
+                                                                                                        'pattern' : 'Please enter valid email'
+                                                                                                      })">
+                                                                              </app-field-error-display>
+                                                                            </div>
+
+
+
+                                                                            </div>
+                                                                            <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
+                                                                              <div class="form-group">
+                                                                                  <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="Address" formControlName="address">
+                                                                                  </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
+                                                                                {
+                                                                                  'required' : 'Please enter address'
+                                                                                })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+
+                                                                              <div class="form-group">
+                                                                                  <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="City" formControlName="city">
+                                                                                  </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+                                                                              {
+                                                                                'required' : 'Please enter city name',
+                                                                                'pattern' : 'Only alphabets are allowed'
+                                                                              })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+
+                                                                              <div class="form-group">
+                                                                                  <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                                                                  </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
+                                                                            {
+                                                                              'required' : 'Please enter Postal Code ',
+                                                                              'minlength' : 'Enter a 6 digit Postal Code',
+                                                                              'maxlength' : 'Enter a 6 digit Postal Code',
+                                                                              'pattern' : 'Only numbers are allowed'
+                                                                            })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+
+                                                                              <div class="form-group">
+                                                                              <mat-form-field>
+                                                                                <input matInput type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                                                              </mat-form-field>
+                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
+                                                                          {
+                                                                            'required' : 'Please enter landmark'
+                                                                          })">
+                                                                                </app-field-error-display>
+                                                                              </div>
+
+                                                                            </div>
+
+
                                                                       </div>
                                                                       <div class="modal-footer">
                                                                           <button type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                                                          <button type="button" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                                                          <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
                                                                       </div>
                                                                   </div>
+                                                                </form>
                                                               </div>
                                                           </div>
+
+                            </div>
+
                           </div>
                           <!-- end: Invoice footer-->
                           <!-- Total summary -->
@@ -605,7 +636,7 @@
                             <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                             <div class="d-flex justify-content-between mb-3">
-                              <span class="mr-15 font-weight-bold">Price (4 items)</span>
+                              <span class="mr-15 font-weight-bold">Price ({{orderItems.length}} items)</span>
                               <span class="text-right">{{getTotalItemPrice()}}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
@@ -643,7 +674,7 @@
                     </div>
                     <div>
 
-                      <button *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1">
+                      <button *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1" (click)="confirm()">
                         Place Order
                       </button>
                       <button  [disabled]="placeOrderDisabled"*ngIf="step == 1 || step == 2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
@@ -652,7 +683,7 @@
                     </div>
                   </div>
                   <!--end::Wizard Actions-->
-                </form>
+                <!-- </form> -->
                 <!--end::Wizard Form-->
               </div>
             </div>
