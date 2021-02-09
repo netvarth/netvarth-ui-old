@@ -330,9 +330,28 @@ export class CatalogdetailComponent implements OnInit {
     }
     gotoNext() {
         this.step = this.step + 1;
+         if(this.step === 3){
+            this.selectedItems();
+        }
     }
     gotoPrev() {
         this.step = this.step - 1;
+        if(this.step === 2){
+              this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+             if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                this.selectedCount = this.addCatalogItems.length;
+               for (const itm of this.catalogItem) {
+                  for (const selitem of this.addCatalogItems) {
+                     if (itm.itemId === selitem.item.itemId) {
+                      itm.selected = true;
+                      itm.id = selitem.id;
+                      itm.minQuantity = selitem.minQuantity;
+                      itm.maxQuantity = selitem.maxQuantity;
+                     }
+                }
+              }
+               }
+        }
       }
     getItems() {
         const apiFilter = {};

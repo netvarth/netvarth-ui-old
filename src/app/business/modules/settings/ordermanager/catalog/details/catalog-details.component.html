@@ -1104,7 +1104,7 @@
                                           Save
                                       </button>
                                       <button *ngIf="step == 1 || step == 2 || step == 3" type="button"
-                                          class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                                         [disabled]="step === 2 && selectedCount == 0" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
                                           (click)="gotoNext()">
                                           Next
                                       </button>
