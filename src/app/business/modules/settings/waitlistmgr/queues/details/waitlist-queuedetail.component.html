@@ -106,12 +106,14 @@
                                                 <span>{{queue_data.queueSchedule.terminator.endDate | date: newDateFormat}}</span>
                                             </div>
                                             <div class="item">
-                                                <span class="ttle">Online check-ins</span> <span
+                                                <span *ngIf="queue_data.showToken" class="ttle">Online Tokens</span>
+                                                <span *ngIf="!queue_data.showToken" class="ttle">Online check-ins</span> <span
                                                     *ngIf="queue_data.onlineCheckIn">On</span><span
                                                     *ngIf="!queue_data.onlineCheckIn">Off</span>
                                             </div>
                                             <div class="item" *ngIf="!queue_data.instantQueue">
-                                                <span class="ttle">Future check-ins</span> <span
+                                                <span *ngIf="queue_data.showToken" class="ttle">Future Tokens</span>
+                                                <span *ngIf="!queue_data.showToken" class="ttle">Future check-ins</span> <span
                                                     *ngIf="queue_data.futureWaitlist">On</span><span
                                                     *ngIf="!queue_data.futureWaitlist">Off</span>
                                             </div>

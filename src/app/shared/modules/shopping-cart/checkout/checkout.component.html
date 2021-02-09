@@ -274,12 +274,12 @@
                                   <div class="bill-labels">Item Total</div>
                                   <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div>
                                 </div>
-                                <div class="hr-line"></div>
+                                <!-- <div class="hr-line"></div> -->
                                 <div class="disp-flex width-100 amount-details" *ngIf="catalog_details.taxPercentage">
                                   <div class="bill-labels">Total Tax </div>
                                   <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
                                 </div>
-                                <div class="disp-flex width-100 amount-details">
+                                <div class="disp-flex width-100 amount-details" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                                   <div class="bill-labels">Delivery Charges </div>
                                   <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div>
                                 </div>

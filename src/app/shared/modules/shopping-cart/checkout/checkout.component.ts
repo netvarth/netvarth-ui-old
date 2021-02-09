@@ -597,7 +597,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               if (data) {
                 this.getaddress();
               }
-              this.snackbarService.openSnackBar('Address Updated successfully');
+              this.snackbarService.openSnackBar('Address deleted successfully');
             },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -859,7 +859,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE') {
+          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);
@@ -907,7 +907,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE') {
+          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);

@@ -97,6 +97,7 @@ export class CheckinActionsComponent implements OnInit {
     apiloading = false;
     galleryDialog: any;
     subscription: Subscription;
+    checkinsByLabel: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -112,7 +113,6 @@ export class CheckinActionsComponent implements OnInit {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
-        console.log(this.data);
         this.apiloading = true;
         this.setMinMaxDate();
         this.getLabel();
@@ -350,9 +350,9 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     if (this.showToken) {
-                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('d MMM'));
+                        this.snackbarService.openSnackBar('Token rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     } else {
-                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + moment(this.checkin_date).format('d MMM'));
+                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
                 },
@@ -450,7 +450,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-       
+
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -535,12 +535,31 @@ export class CheckinActionsComponent implements OnInit {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             if (!this.data.multiSelection) {
                 this.labelselection();
+            } else {
+                this.multipleLabelselection();
             }
             this.loading = false;
         });
     }
-    deleteLabel(label, checkinId) {
-        this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+    deleteLabel(label) {
+        // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        let ids = [];
+        if (this.data.multiSelection) {
+            ids = this.checkinsByLabel[label];
+        } else {
+            ids.push(this.checkin.ynwUuid);
+        }
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'uuid': ids
+        };
+        this.provider_services.deleteLabelFromMultipleCheckin(postData).subscribe(data => {
             this.dialogRef.close('reload');
         },
             error => {
@@ -672,7 +691,7 @@ export class CheckinActionsComponent implements OnInit {
             this.labelMap[label] = true;
             this.addLabel(label);
         } else {
-            this.deleteLabel(label, this.checkin.ynwUuid);
+            this.deleteLabel(label);
         }
     }
     labelselection() {
@@ -686,6 +705,29 @@ export class CheckinActionsComponent implements OnInit {
                     if (this.providerLabels[i].label === values[k]) {
                         this.providerLabels[i].selected = true;
                     }
+                }
+            }
+        }
+    }
+    multipleLabelselection() {
+        let values = [];
+        this.checkinsByLabel = [];
+        for (let i = 0; i < this.checkin.length; i++) {
+            if (this.checkin[i].label) {
+                Object.keys(this.checkin[i].label).forEach(key => {
+                    values.push(key);
+                    if (!this.checkinsByLabel[key]) {
+                        this.checkinsByLabel[key] = [];
+                    }
+                    this.checkinsByLabel[key].push(this.checkin[i].ynwUuid);
+                });
+            }
+        }
+        for (let i = 0; i < this.providerLabels.length; i++) {
+            for (let k = 0; k < values.length; k++) {
+                const filteredArr = values.filter(value => value === this.providerLabels[i].label);
+                if (filteredArr.length === this.checkin.length) {
+                    this.providerLabels[i].selected = true;
                 }
             }
         }

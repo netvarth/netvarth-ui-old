@@ -95,7 +95,7 @@ export class ConfirmPatmentLinkComponent implements OnInit {
   createForm() {
     this.amForm = this.fb.group({
       mobile_number: [this.mobilenumber, Validators.compose([Validators.maxLength(10),
-      Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      Validators.minLength(10)])],
       email_id: [this.emailId, Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
     });
   }

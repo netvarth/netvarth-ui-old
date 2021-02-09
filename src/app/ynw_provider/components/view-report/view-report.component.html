@@ -1,5 +1,10 @@
-<section>
-  <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{invoice_id}}
+    </h5>
+  </div>
 </section>
 <section>
   <div class="dashboard content loc-list">
@@ -23,9 +28,9 @@
                     <span class="ttle">{{coupon_use_cap}}</span>
                     <span *ngIf="!viewreport.listOfJaldeeCoupons">-</span>
                     <span *ngIf="viewreport.listOfJaldeeCoupons">
-                        <span *ngFor="let jcoupon of getJSONfromString(viewreport.listOfJaldeeCoupons) | keyvalue">
-                            {{jcoupon.key}}
-                        </span>
+                      <span *ngFor="let jcoupon of getJSONfromString(viewreport.listOfJaldeeCoupons) | keyvalue">
+                        {{jcoupon.key}}
+                      </span>
                     </span>
                   </div>
                   <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
@@ -63,7 +68,7 @@
                     <!-- <th>{{consumer_cap}} {{id_cap}}</th> -->
                     <th>Customer</th>
                     <th>{{service_cap}}</th>
-                    <th>{{bill_cap}} {{amt_cap}}</th> 
+                    <th>{{bill_cap}} {{amt_cap}}</th>
                     <th>Gateway Commission</th>
                     <th>Jaldee Commission</th>
                     <th>Settlement Amount</th>
@@ -89,10 +94,11 @@
               </table>
             </div>
           </div>
-          <div class="n-loc table" *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
+          <div class="n-loc table"
+            *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
             <div class="btm-pad-20" *ngFor="let couponList of invoiceFromS3.jaldeeCouponReimbursableExpense.couponList">
               <h6>Jaldee Coupon - {{couponList.couponCode}}</h6>
-              <div class="table-outer q-tbl" >
+              <div class="table-outer q-tbl">
                 <table class="table">
                   <thead>
                     <tr>
@@ -106,7 +112,7 @@
                       <th>Coupon Discount</th>
                     </tr>
                   </thead>
-                  <tbody >
+                  <tbody>
                     <tr *ngFor="let coupon of couponList.billDetails">
                       <td data-title="Date">{{coupon.date | date: newDateFormat}}</td>
                       <td data-title="Bill Id">{{coupon.billNo}}</td>

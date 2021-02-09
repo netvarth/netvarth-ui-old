@@ -107,7 +107,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     corpSettings: any;
     height: number;
     adon_list: any;
-
+    addon_metric: any = [];
     constructor(private provider_servicesobj: ProviderServices,
         private router: Router, private dialog: MatDialog,
         private route: ActivatedRoute,
@@ -147,6 +147,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.loading = false;
         // this.getAnnualDiscountPercentage();
         this.getbillCycle();
+        this.getUpgradableaddonPackages();
     }
     getLicenseCorpSettings() {
         this.provider_servicesobj.getLicenseCorpSettings().subscribe(
@@ -319,7 +320,12 @@ export class LicenseComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'license', 'invoicestatus']);
 
     }
-
+    getUpgradableaddonPackages() {
+        this.provider_servicesobj.getUpgradableAddonPackages()
+            .subscribe((data: any) => {
+                this.addon_metric = data;
+            });
+    }
     getSubscriptionDetail() {
         this.statusOfLicense = 0;
         this.provider_servicesobj.getLicenseSubscription()
@@ -395,13 +401,13 @@ export class LicenseComponent implements OnInit, OnDestroy {
         // if (this.corpSettings && this.corpSettings.isCentralised) {
         //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         // } else {
-            this.loadingTb = true;
-            if (this.invoices.length === 1) {
-                this.getInvoicePay(this.invoices[0], 1);
-            } else {
-                this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
-            }
-            this.loadingTb = false;
+        this.loadingTb = true;
+        if (this.invoices.length === 1) {
+            this.getInvoicePay(this.invoices[0], 1);
+        } else {
+            this.unpaid_invoice_show = (this.unpaid_invoice_show) ? 0 : 1;
+        }
+        this.loadingTb = false;
         // }
     }
     getInvoice(invoice) {
@@ -427,17 +433,17 @@ export class LicenseComponent implements OnInit, OnDestroy {
         // if (this.corpSettings && this.corpSettings.isCentralised) {
         //     this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
         // } else {
-            this.temp1 = JSON.parse(invoiceJson);
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    invoice: invoiceJson,
-                    payMent: payMentShow,
-                    source: 'license-home',
-                },
-                // skipLocationChange: true,
+        this.temp1 = JSON.parse(invoiceJson);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                invoice: invoiceJson,
+                payMent: payMentShow,
+                source: 'license-home',
+            },
+            // skipLocationChange: true,
 
-            };
-            this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
+        };
+        this.router.navigate(['provider', 'license', 'Statements'], navigationExtras);
         // }
     }
     openAnnualSection() {
