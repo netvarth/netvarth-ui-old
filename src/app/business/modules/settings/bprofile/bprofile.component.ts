@@ -207,6 +207,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   fileToReturn: any;
   croppedImage: any;
   canvasRotation = 0;
+  transform: ImageTransform = {};
+  scale = 1;
   loadSymbol = false;
   api_success: string;
   imgType = false;
@@ -407,7 +409,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   href;
   img_list: string;
   socialMediaFilled = false;
-  transform: ImageTransform = {};
 
   constructor(private provider_services: ProviderServices,
     private provider_datastorage: ProviderDataStorageService,
@@ -1579,7 +1580,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
                 const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
                 submit_data.append('properties', blobPropdata);
                 if (this.imgType) {
-                    this.uploadCoverPic(submit_data);
                     console.log('cover');
                 } else {
                     // if (this.data.userId) {
@@ -1629,16 +1629,36 @@ uploadLogo(passdata) {
         );
 }
 
-uploadCoverPic(passdata) {
-    this.provider_services.uploadCoverFoto(passdata).subscribe(
-        data => {
-            console.log(data);
-            if (data) {
-                this.api_success = Messages.BPROFILE_COVER_ADD;
-                this.spinner_load = false;
-                this.getCoverPhoto();
-            }
-        });
-}
+rotateLeft() {
+        this.canvasRotation--;
+        this.flipAfterRotate();
+    }
+    rotateRight() {
+        this.canvasRotation++;
+        this.flipAfterRotate();
+    }
+    zoomOut() {
+        this.scale -= .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    zoomIn() {
+        this.scale += .1;
+        this.transform = {
+            ...this.transform,
+            scale: this.scale
+        };
+    }
+    private flipAfterRotate() {
+      const flippedH = this.transform.flipH;
+      const flippedV = this.transform.flipV;
+      this.transform = {
+          ...this.transform,
+          flipH: flippedV,
+          flipV: flippedH
+      };
+  }
 
 }
