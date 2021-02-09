@@ -81,7 +81,7 @@
             <button type="submit" mat-button [disabled]="amForm.get('message').value.trim() === '' || !amForm.valid || disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
                 class="cs-btn bt1 mr10">{{send_btn_cap}}</button>
             <button type="button"
-                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox')"
+                *ngIf="typeOfMsg === 'single' && (source=='consumer-waitlist' || source=='provider-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common')"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">
