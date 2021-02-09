@@ -1196,8 +1196,8 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         if (this.sel_ser_det && this.sel_ser_det.minPrePaymentAmount) {
             this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
-            this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
         }
+        this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
     }
     ismoreMembersAllowedtopush() {
         if (this.maxsize > this.waitlist_for.length) {
@@ -2358,6 +2358,13 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             });
             checkinconfirmdialogRef.afterClosed().subscribe(result => {
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === 0) {
+                            list['id'] = this.customer_data.id;
+                        }
+                    }
+                }
                 if (result === 'reloadlist') {
                 }
             });
