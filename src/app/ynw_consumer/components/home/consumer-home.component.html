@@ -1740,7 +1740,7 @@
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
                                                 </button>
-                                                <button mat-menu-item (click)="rateService(oder,'order')" >
+                                                <button mat-menu-item  *ngIf="oder.orderStatus !='Cancelled'" (click)="rateService(oder,'order')" >
                                                         <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
                                                 </button>
                                                 <!-- <button mat-menu-item >
@@ -1778,7 +1778,7 @@
                                                {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                             <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
-                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
+                                                {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1827,7 +1827,7 @@
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
                                                     </button>
-                                                    <button mat-menu-item (click)="rateService(oder,'order')" >
+                                                    <button mat-menu-item  *ngIf="oder.orderStatus !='Cancelled'" (click)="rateService(oder,'order')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
                                                         <!-- <span class="rate-service" [class.rated]="isRated(oder)"
                                                             (click)="rateService(oder,'order')"><i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</span> -->
@@ -1860,7 +1860,7 @@
                                                   {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
-                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
+                                                    {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1913,6 +1913,9 @@
                                                 <button mat-menu-item (click)="showBookingDetails(oder)">
                                                     <i class="fa fa-sticky-note-o"></i>Order details
                                                 </button>
+                                                <button mat-menu-item  *ngIf="oder.orderStatus !='Cancelled'" (click)="rateService(oder,'order')" >
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                               </button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
@@ -1944,7 +1947,7 @@
                                                 {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                 <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0" class="amtPaid">Paid
-                                                &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
+                                                {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
@@ -1994,6 +1997,9 @@
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
                                                         <i class="fa fa-sticky-note-o"></i>Order details
                                                     </button>
+                                                    <button mat-menu-item  *ngIf="oder.orderStatus !='Cancelled'" (click)="rateService(oder,'order')" >
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order
+                                                   </button>
                                                     <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
@@ -2022,7 +2028,7 @@
                                                     {{oder.amountDue  | currency:'&#8377;'}}</button>&nbsp;&nbsp;
                                                     <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
-                                                    &#8377;{{oder.bill && oder.bill.amountPaid ? oder.bill.amountPaid : oder.advanceAmountPaid}}</span> &nbsp;&nbsp;
+                                                    {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"

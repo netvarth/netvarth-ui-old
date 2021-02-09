@@ -251,7 +251,7 @@
                                                             <button mat-menu-item 
                                                             [class.rated]="isRated(his_wait)"
                                                             (click)="rateOrderService(his_wait)">
-                                                            Rate Order Service</button>
+                                                            <i class="fa fa-star-o" aria-hidden="true"></i>Rate Your Order</button>
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>

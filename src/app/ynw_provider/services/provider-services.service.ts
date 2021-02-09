@@ -1852,6 +1852,10 @@ export class ProviderServices {
       const url = 'provider/appointment/labelBatch';
       return this.servicemeta.httpPost(url, data);
    }
+   deleteLabelFromMultipleAppt(data) {
+      const url = 'provider/appointment/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
    addLabeltoMultipleOrder(data) {
       const url = 'provider/orders/labelBatch';
       return this.servicemeta.httpPost(url, data);
@@ -1859,6 +1863,10 @@ export class ProviderServices {
    deleteLabelfromOrder(uuid, label) {
       const url = 'provider/orders/label/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
+   }
+      getProviderorderlistHistroy(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
    }
    // Customer Grouping
    createCustomerGroup(data) {

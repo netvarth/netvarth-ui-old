@@ -580,7 +580,7 @@
                                                   </span>
                                               </div>
                                               <span (click)="providerDetClicked(search_result)"
-                                                  class="checkin-btn">Book</span>
+                                                  class="checkin-btn srch_detail_btn book_{{search_result.fields.title}}">Book</span>
 
                                           </div>
                                       </div>
@@ -638,7 +638,7 @@
                                               </span>
                                           </div>
                                           <span (click)="providerDetClicked(search_result)"
-                                              class="checkin-btn">Book service</span>
+                                              class="checkin-btn srch_detail_btn bookserv_{{search_result.fields.title}}">Book service</span>
 
                                       </div>
                                   </div>
@@ -723,15 +723,15 @@
                                                   <span
                                                       class="time-data">{{search_result.fields['estimatedtime_det']['cdate'] | date: dateFormat}}</span>
                                               </div>
-                                              <span class="checkin-btn" (click)="providerDetClicked(search_result)"
+                                              <span class="checkin-btn srch_detail_btn wl_{{search_result.fields.title}}" (click)="providerDetClicked(search_result)"
                                                   *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && !search_result.fields['estimatedtime_det']['showToken']">{{getTerminologyTerm('waitlist',
                               search_result.fields)}}</span>
-                                              <span class="checkin-btn" (click)="providerDetClicked(search_result)"
+                                              <span class="checkin-btn srch_detail_btn wl_{{search_result.fields.title}}" (click)="providerDetClicked(search_result)"
                                                   *ngIf="((search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['isAvailableToday'] && search_result.fields['estimatedtime_det']['availableToday']) || (search_result.fields['estimatedtime_det']['cdate'] && search_result.fields.future_checkins==1)) && search_result.fields['estimatedtime_det']['showToken']">{{get_token_btn}}</span>
-                                              <span class="checkin-btn disabled"
+                                              <span class="checkin-btn disabled srch_detail_btn wl_{{search_result.fields.title}}"
                                                   *ngIf="!search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{getTerminologyTerm('waitlist',
                               search_result.fields)}}</span>
-                                              <span class="checkin-btn disabled"
+                                              <span class="checkin-btn disabled srch_detail_btn wl_{{search_result.fields.title}}"
                                                   *ngIf="search_result.fields['estimatedtime_det']['showToken'] && (!search_result.fields['estimatedtime_det']['onlineCheckIn'] || !search_result.fields['estimatedtime_det']['isAvailableToday'] || !search_result.fields['estimatedtime_det']['availableToday']) && (!search_result.fields['estimatedtime_det']['cdate'] || search_result.fields.future_checkins==0)">{{get_token_btn}}</span>
                                           </div>
                                       </div>
@@ -765,7 +765,7 @@
                                                   </span>
                                               </div>
                                               <span (click)="providerDetClicked(search_result)"
-                                                  class="checkin-btn">Appointment</span>
+                                                  class="checkin-btn srch_detail_btn appt_{{search_result.fields.title}}">Appointment</span>
                                           </div>
                                       </div>
                                       <!-- <div class="bottom-sect pdetail pad-up-10"
@@ -815,7 +815,7 @@
                                                       </span>
                                                   </div> -->
                                               <span (click)="providerDetClicked(search_result)"
-                                                  class="checkin-btn">Donate</span>
+                                                  class="checkin-btn srch_detail_btn don_{{search_result.fields.title}}">Donate</span>
                                           </div>
                                       </div>
                                       <div class="bottom-sect pdetail" *ngIf="showButton(search_result) === 'order'">
@@ -848,7 +848,7 @@
                                                   </span>
                                               </div> -->
                                               <span (click)="providerDetClicked(search_result)"
-                                                  class="checkin-btn">Order</span>
+                                                  class="checkin-btn srch_detail_btn order_{{search_result.fields.title}}">Order</span>
                                           </div>
                                       </div>
 

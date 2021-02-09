@@ -393,11 +393,17 @@
                                                                                                 class="col-md-6 col-xs-12 no-padding">
                                                                                                 <div
                                                                                                         class="col-md-12 no-padding">
-                                                                                                        <label
+                                                                                                        <label class = "ttle" *ngIf="queuedata[0].showToken">
+                                                                                                                Same day online tokens
+                                                                                                        </label>
+                                                                                                        <label class="ttle" *ngIf="!queuedata[0].showToken">Same day
+                                                                                                                online
+                                                                                                                check-ins</label>
+                                                                                                        <!-- <label
                                                                                                                 class="ttle">Same
                                                                                                                 day
                                                                                                                 Online
-                                                                                                                check-ins</label>
+                                                                                                                check-ins</label> -->
                                                                                                         <mat-slide-toggle
                                                                                                                 class="example-margin"
                                                                                                                 [checked]="queue.onlineCheckIn"
@@ -409,10 +415,16 @@
                                                                                                 </div>
                                                                                                 <div
                                                                                                         class="col-md-12 no-padding">
-                                                                                                        <label
+                                                                                                        <label class = "ttle" *ngIf="queuedata[0].showToken">
+                                                                                                                Future online tokens
+                                                                                                        </label>
+                                                                                                        <label class="ttle" *ngIf="!queuedata[0].showToken">Future
+                                                                                                                online
+                                                                                                                check-ins</label>
+                                                                                                        <!-- <label
                                                                                                                 class="ttle">Future
                                                                                                                 Online
-                                                                                                                check-ins</label>
+                                                                                                                check-ins</label> -->
                                                                                                         <mat-slide-toggle
                                                                                                                 style="padding-left: 22px;"
                                                                                                                 class="example-margin"

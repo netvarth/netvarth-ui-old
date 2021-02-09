@@ -85,14 +85,15 @@ export class AppointmentActionsComponent implements OnInit {
     apiloading = false;
     galleryDialog: any;
     subscription: Subscription;
+    checkinsByLabel: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
         private wordProcessor: WordProcessor,
-    private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService,
-    private groupService: GroupStorageService,
-    private galleryService: GalleryService,  
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
+        private galleryService: GalleryService,
         private provider_shared_functions: ProviderSharedFuctions, public shared_services: SharedServices,
         public dialogRef: MatDialogRef<AppointmentActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -117,9 +118,9 @@ export class AppointmentActionsComponent implements OnInit {
 
         this.subscription = this.galleryService.getMessage().subscribe(input => {
             if (input && input.uuid) {
-               this.shared_services.addProviderAppointmentAttachment(input.uuid ,input.value)
+                this.shared_services.addProviderAppointmentAttachment(input.uuid, input.value)
                     .subscribe(
-                        () => {                      
+                        () => {
                             this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
@@ -128,7 +129,7 @@ export class AppointmentActionsComponent implements OnInit {
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
-            } 
+            }
         });
     }
     ngOnDestroy() {
@@ -302,7 +303,7 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-     
+
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -390,11 +391,30 @@ export class AppointmentActionsComponent implements OnInit {
             this.loading = false;
             if (!this.data.multiSelection) {
                 this.labelselection();
+            } else {
+                this.multipleLabelselection();
             }
         });
     }
-    deleteLabel(label, checkinId) {
-        this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
+    deleteLabel(label) {
+        // this.provider_services.deleteLabelfromAppointment(checkinId, label).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        let ids = [];
+        if (this.data.multiSelection) {
+            ids = this.checkinsByLabel[label];
+        } else {
+            ids.push(this.appt.uid);
+        }
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'uuid': ids
+        };
+        this.provider_services.deleteLabelFromMultipleAppt(postData).subscribe(data => {
             this.dialogRef.close('reload');
         },
             error => {
@@ -650,7 +670,7 @@ export class AppointmentActionsComponent implements OnInit {
             this.labelMap[label] = true;
             this.addLabel(label);
         } else {
-            this.deleteLabel(label, this.appt.uid);
+            this.deleteLabel(label);
         }
     }
     labelselection() {
@@ -664,6 +684,29 @@ export class AppointmentActionsComponent implements OnInit {
                     if (this.providerLabels[i].label === values[k]) {
                         this.providerLabels[i].selected = true;
                     }
+                }
+            }
+        }
+    }
+    multipleLabelselection() {
+        let values = [];
+        this.checkinsByLabel = [];
+        for (let i = 0; i < this.appt.length; i++) {
+            if (this.appt[i].label) {
+                Object.keys(this.appt[i].label).forEach(key => {
+                    values.push(key);
+                    if (!this.checkinsByLabel[key]) {
+                        this.checkinsByLabel[key] = [];
+                    }
+                    this.checkinsByLabel[key].push(this.appt[i].uid);
+                });
+            }
+        }
+        for (let i = 0; i < this.providerLabels.length; i++) {
+            for (let k = 0; k < values.length; k++) {
+                const filteredArr = values.filter(value => value === this.providerLabels[i].label);
+                if (filteredArr.length === this.appt.length) {
+                    this.providerLabels[i].selected = true;
                 }
             }
         }
@@ -743,17 +786,17 @@ export class AppointmentActionsComponent implements OnInit {
     }
     sendimages() {
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
-         width: '50%',
-         panelClass: ['popup-class', 'commonpopupmainclass'],
-         disableClose: true,
-         data: {
-            source_id: 'attachment',
-            // accountId:this.checkin.providerAccount.id,
-            uid:this.appt.uid
-         }
-       });
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                source_id: 'attachment',
+                // accountId:this.checkin.providerAccount.id,
+                uid: this.appt.uid
+            }
+        });
         this.galleryDialog.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
-       })
+        })
     }
 }

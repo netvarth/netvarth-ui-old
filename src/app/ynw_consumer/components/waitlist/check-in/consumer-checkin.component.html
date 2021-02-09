@@ -410,7 +410,7 @@
                                         </div>
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
-                                                *ngIf="(s3CouponsList.length > 0)">
+                                                *ngIf="(s3CouponsList.length > 0) && type != 'waitlistreschedule'">
                                                 <a class="lnk pointer-cursor action"
                                                     *ngIf="selected_coupons.length === 0"
                                                     (click)="applyPromocode()">Apply

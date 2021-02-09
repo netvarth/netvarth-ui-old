@@ -8,9 +8,9 @@
   </section>
 
   <section>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding order" *ngIf="!loading">
-        <div class="orderdetails col-md-8 col-xs-12 col-sm-12 col-lg-9">
-            <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8 no-padding personal">
+    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
+        <div class="orderdetails col-md-9 col-xs-12 col-sm-12 col-lg-9">
+            <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
                 <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
                 <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
@@ -30,10 +30,10 @@
                     [innerHTML]="orderDetails.orderNote | nl2br">
                 </div>
             </div>
-            <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4 no-padding">
+            <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding">
 
                           <div class="" *ngIf="!small_device_display">
-                               <mat-icon class="msgIcon pointer"(click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=true>sms</mat-icon>
+                               <mat-icon class="msgIcon pointer"(click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
                  <i class="delivery-icon pull-right"
                         *ngIf="orderDetails.homeDelivery"></i>
                     <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
@@ -149,6 +149,20 @@
         </div>
     </div>
     </div>
+    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 mgn-up-10" *ngIf="!loading" >
+    <div class="card">
+            <h5>Order History</h5>
+            <div class="c-history-outer">
+              <ul class="c-history">
+                <li class="{{history.orderStatus}}" *ngFor="let history of orderlist_history">
+                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                  <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
+                </li>
+              </ul>
+              <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
+            </div>
+          </div>
+        </div>
   </section>
   <div class="clearfix"></div>
   <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>

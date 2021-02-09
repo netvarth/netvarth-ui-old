@@ -921,5 +921,20 @@ export const projectConstantsLocal = {
     Zoom: { displayName: 'Zoom', placeHolder: 'Update Zoom ID', title: 'Configure Zoom' },
     GoogleMeet: { displayName: 'Google Meet', placeHolder: 'Update Meet ID', title: 'Configure Google Meet' },
     Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' }
-  }
+  },
+  ORDER_STATUS_FILTER: [
+    { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true},
+    { displayName: 'Order Acknowledged', value: 'Order Acknowledged' , delivery: true , pickup: true },
+    { displayName: 'Order Confirmed', value: 'Order Confirmed', delivery: true , pickup: true },
+    { displayName: 'Preparing', value: 'Preparing', delivery: true , pickup: true },
+    { displayName: 'Packing', value: 'Packing', delivery: true , pickup: true },
+    { displayName: 'Payment Required', value: 'Payment Required', delivery: true , pickup: true },
+    { displayName: 'Ready For Pickup', value: 'Ready For Pickup', delivery: false , pickup: true },
+    { displayName: 'Ready For Shipment', value: 'Ready For Shipment', delivery: true , pickup: false },
+    { displayName: 'Ready For Delivery', value: 'Ready For Delivery', delivery: true , pickup: false },
+    { displayName: 'Completed', value: 'Completed' , delivery: true , pickup: true },
+    { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false },
+    { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false },
+    { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true }
+  ]
 };

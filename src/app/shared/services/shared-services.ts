@@ -510,7 +510,7 @@ export class SharedServices {
   }
   deleteWaitlist(id, params, type) {
     if (type === 'checkin') {
-      return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+      return this.servicemeta.httpDelete('consumer/waitlist/' + id + '?account=' + params['account']);
     } else if (type === 'appointment') {
       return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account']);
     } else if (type === 'order') {

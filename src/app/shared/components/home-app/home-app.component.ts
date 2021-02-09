@@ -7,10 +7,11 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../app.component';
-import { SignUpComponent } from '../signup/signup.component';
-import { projectConstantsLocal } from '../../constants/project-constants';
 import { WordProcessor } from '../../services/word-processor.service';
-
+import { NavigationEnd, Router } from '@angular/router';
+import { GroupStorageService } from '../../services/group-storage.service';
+import {version} from '../../../shared/constants/version';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-home-app',
   templateUrl: './home-app.component.html'
@@ -33,6 +34,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   test_provider = null;
   heading = '';
   signup_here = '';
+  evnt;
   constructor(
     // public dialogRef: MatDialogRef<LoginComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,14 +43,43 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
-    public dialog: MatDialog,
+    public dialog: MatDialog, public router: Router,
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
     @Inject(DOCUMENT) public document
   ) {
-    if (this.shared_functions.checkLogin()) {
-      this.shared_functions.logout();
-    }
+    // if (this.shared_functions.checkLogin()) {
+    //   this.shared_functions.logout();
+    // }
     // this.test_provider = data.test_account;
     // this.is_provider = data.is_provider || 'true';
+    this.evnt = router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (router.url === '\/') {
+        if (this.shared_functions.isBusinessOwner()) {
+          this.shared_functions.getGlobalSettings()
+            .then(
+              (settings: any) => {
+                setTimeout(() => {
+                  if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                    if (settings.waitlist) {
+                      router.navigate(['provider', 'check-ins']);
+                    } else if (settings.appointment) {
+                      router.navigate(['provider', 'appointments']);
+                    } else if (settings.order) {
+                      router.navigate(['provider', 'orders']);
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  } else {
+                    router.navigate(['provider', 'settings']);
+                  }
+                }, 500);
+              });
+            }
+        }
+      }
+    });
   }
   ngOnInit() {
     // this.moreParams = this.data.moreparams;
@@ -74,10 +105,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
   createForm() {
     this.loginForm = this.fb.group({
       phonenumber: ['', Validators.compose(
-        [Validators.required,
-        Validators.maxLength(10),
-        Validators.minLength(10),
-        Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+        [Validators.required])],
       password: ['', Validators.compose([Validators.required])]
 
     });
@@ -122,21 +150,31 @@ export class HomeAppComponent implements OnInit, OnDestroy {
       'password': data.password,
       'mUniqueId': null
     };
+    const cVersion = version.desktop;
     this.api_loading = true;
     // if (this.data.type === 'provider') {
-    this.shared_functions.providerLogin(post_data)
-      .then(
-        () => {
-          // this.dialogRef.close();
-          setTimeout(() => {
-            // this.dialogRef.close();
-          }, projectConstants.TIMEOUT_DELAY_SMALL);
-        },
-        error => {
-          ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
-          this.api_loading = false;
-        }
-      );
+    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    this.shared_functions.doLogout().then(
+      ()=> {
+        this.shared_functions.businessLogin(post_data)
+        .then(
+          () => {
+            this.lStorageService.setitemonLocalStorage('version', cVersion);
+            this.router.navigate(['/provider']);
+           // this.dialogRef.close();
+          //  const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+          //  this.shared_functions.setitemonLocalStorage('jld', encrypted.toString());
+           setTimeout(() => {
+             // this.dialogRef.close();
+           }, projectConstants.TIMEOUT_DELAY_SMALL);
+          },
+          error => {
+            ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+            this.api_loading = false;
+          }
+        );
+      }
+    )
   }
   doForgotPassword() {
     this.resetApiErrors();
@@ -154,14 +192,15 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     //   }
   }
   doSignup() {
-    const dialogReflog = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: { is_provider: 'true' }
-    });
-    dialogReflog.afterClosed().subscribe(() => {
-    });
+    // const dialogReflog = this.dialog.open(SignUpComponent, {
+    //   width: '50%',
+    //   panelClass: ['signupmainclass', 'popup-class'],
+    //   disableClose: true,
+    //   data: { is_provider: 'true' }
+    // });
+    // dialogReflog.afterClosed().subscribe(() => {
+    // });
+    this.router.navigate(['business/signup']);
   }
   handlekeyup(ev) {
     if (ev.keyCode !== 13) {

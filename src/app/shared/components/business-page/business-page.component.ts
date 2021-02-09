@@ -56,7 +56,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   contact_details_cap = Messages.CONTACT_DETAILS_CAP;
   add_to_fav_cap = Messages.ADD_TO_FAV;
   rem_from_fav_cap = Messages.REM_FROM_FAV_CAP;
-  send_msgs_cap = Messages.SEND_MSGS_CAP;
+  send_msgs_cap = Messages.SEND_MSG_CAP;
   you_have_cap = Messages.YOU_HAVE_CAP;
   at_this_loc_cap = Messages.AT_THIS_LOC_CAP;
   get_directions_cap = Messages.GET_DIRECTIONS_CAP;
@@ -267,6 +267,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   sel_checkindate;
   deliveryCharge = 0;
   nextAvailableTime;
+  customId: any;
+  accEncUid: any;
   customAccId: string;
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -517,6 +519,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         switch (section) {
           case 'businessProfile': {
             this.onlinePresence = res['onlinePresence'];
+            this.customId = res['customId'];
+            this.accEncUid = res['accEncUid'];
             if (!this.userId) {
               this.api_loading = false;
               this.pageFound = true;
@@ -1981,12 +1985,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
         bname: busname,
+        sector: this.businessjson.serviceSector.domain,
         serdet: serv,
         serv_type: 'donation'
       };
     } else {
       servData = {
         bname: busname,
+        sector: this.businessjson.serviceSector.domain,
         serdet: serv
       };
     }
@@ -2690,13 +2696,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const businessObject = {
       'bname': this.businessjson.businessName,
       'blocation': this.locationjson[0].place,
-      'logo': this.businessjson.logo.url
+      // 'logo': this.businessjson.logo.url
     };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        item: JSON.stringify(item)
+        item: JSON.stringify(item),
+        providerId: this.provider_bussiness_id
 
       }
 

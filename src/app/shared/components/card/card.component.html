@@ -52,6 +52,7 @@
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+        <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div>
         <div class="card-item-head" *ngIf="service.itemImages">
             <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
                 (click)="stopProp($event)">
@@ -77,14 +78,14 @@
                     <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
             </mat-menu>
             <h4 class="card-title font-weight-bold d-block">
-                <a class="d-block name module1 line-clamp1">{{service.displayName}}</a>
-                <p class="module1 line-clamp1">{{service.shortDesc}}</p>
+                <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
+                <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
 
             </div> -->
-                <div class="col-md-12 no-padding">
+                <div class="col-md-12  mgn-up-10 no-padding">
                     <a class="price rupee-font pull-left" *ngIf="item.showpric"><span
                             *ngIf="service.showPromotionalPrice"
                             class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice:

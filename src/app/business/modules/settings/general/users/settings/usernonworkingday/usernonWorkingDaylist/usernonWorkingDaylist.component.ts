@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { projectConstants } from '../../../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../../../../shared/components/confirm-box/confirm-box.component';
@@ -9,6 +9,8 @@ import { Messages } from '../../../../../../../../shared/constants/project-messa
 import { ProviderServices } from '../../../../../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
+import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
+import { DateFormatPipe } from '../../../../../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
   selector: 'app-usernonworkingdaylist',
@@ -28,6 +30,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
   query_executed = false;
   emptyMsg = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   breadcrumb_moreoptions: any = [];
   frm_non_wrkg_cap = Messages.FRM_LEVEL_NON_WORKING_MSG;
   isCheckin;
@@ -63,6 +66,7 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     public sharedfunctionObj: SharedFunctions,
     private groupService: GroupStorageService,
+    public dateformat: DateFormatPipe,
         private wordProcessor: WordProcessor
   ) {
     this.activated_route.params.subscribe(params => {
@@ -149,7 +153,8 @@ export class UsernonWorkingDaylistComponent implements OnInit, OnDestroy {
       return false;
     }
     const date = new Date(holiday.startDay);
-    const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    // const date_format = moment(date).format(projectConstants.DISPLAY_DATE_FORMAT);
+    const date_format = this.dateformat.transformToMonthlyDate(date);
     this.remholdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],

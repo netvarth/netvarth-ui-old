@@ -527,7 +527,7 @@ export class SharedFunctions {
     const image_max_size = 15000000;
     const error = [];
     let is_error = false;
-    if (file.type && file_types.indexOf(file.type) === -1) {
+    if (!file.type || (file.type && file_types.indexOf(file.type) === -1)) {
       error['type'] = true;
       is_error = true;
     }
