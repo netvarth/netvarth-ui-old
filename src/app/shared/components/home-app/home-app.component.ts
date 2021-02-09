@@ -48,13 +48,14 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     @Inject(DOCUMENT) public document
   ) {
-    if (this.shared_functions.checkLogin()) {
-      this.shared_functions.logout();
-    }
+    // if (this.shared_functions.checkLogin()) {
+    //   this.shared_functions.logout();
+    // }
     // this.test_provider = data.test_account;
     // this.is_provider = data.is_provider || 'true';
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+        if (router.url === '\/') {
         if (this.shared_functions.isBusinessOwner()) {
           this.shared_functions.getGlobalSettings()
             .then(
@@ -75,6 +76,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
                   }
                 }, 500);
               });
+            }
         }
       }
     });
