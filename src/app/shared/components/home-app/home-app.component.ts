@@ -11,7 +11,6 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { GroupStorageService } from '../../services/group-storage.service';
 import {version} from '../../../shared/constants/version';
-import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-home-app',
