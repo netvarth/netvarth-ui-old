@@ -13792,7 +13792,66 @@ color: #fff !important;
 .dark-green {
   color: green !important;
 }
+.customersList .pagination>li>span {
+  background: #1e4079 !important;
+  color: white !important;
+  border-radius: 5px !important;
+}
+.customersList .pagination>.disabled>span {
+  background-color: #ddd !important;
+}
 
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+  width: 10vw !important;
+}
+
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+  height: 10vw !important;
+}
+
+@media only screen and (max-width: 1200px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 12.5vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 12.5vw !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 15vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 15vw !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 17.5vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 17.5vw !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+    width: 20vw !important;
+  }
+  
+  .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li .galbx {
+    height: 20vw !important;
+  }
+}
+
+.item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
+  margin-top: 10px;
+}
 .video_blinking {
   animation: videocallBlinking 1s infinite;
   font-size: 1rem;

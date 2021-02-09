@@ -1,0 +1,60 @@
+.d-flex .card {
+    padding: 0px !important;
+}
+.font-size-sm {
+    font-size: 0.7rem !important;
+}
+.font-size-lg {
+    font-size: .95rem !important;
+}
+.font-size-outer {
+    font-size: 1.1rem !important;
+}
+.user-name {
+    border-radius: 50%;
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #1e4079;
+    max-width: 100px;
+    padding: 15px 10px;
+    width: 50px;
+    text-align: center;
+    max-height: 50px;
+}
+.card-width {
+    width: 350px;
+}
+@media(max-width: 340px) {
+    .card-width {
+        width: 300px;
+    }
+}
+.msg-body {
+    height: 303px;
+    overflow-y: auto !important;
+}
+.over-scroll {
+    overflow-y: auto !important;
+}
+.selected-user {
+    background: #eee;
+}
+.card-body {
+    padding: 10px !important;
+}
+.pad-5 {
+    padding: 5px
+}
+/* .input-group.input-group-solid .form-control {
+    background: #F3F6F9;
+} */
+/* .input-group-text {
+    background-color: transparent !important;
+    border: 0 !important;
+    -ms-flex-align: center;
+    padding: 0.65rem 1rem;
+}
+.input-group-prepend input {
+    background-color: transparent;
+    border: 0;
+} */

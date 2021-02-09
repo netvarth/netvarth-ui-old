@@ -8,7 +8,7 @@
     </h5>
   </div>
 </section>
-<section>
+<!-- <section>
   <div class="content loc-list">
     <div class="col-md-12 no-padding-small">
       <div class="row">
@@ -20,9 +20,7 @@
             <div class="lbl col-sm-12 col-md-8 col-lg-7 mgn-bt-50">
               <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
                 (keyup)="resetApiErrors()" *ngIf="!showInfo" class="ynw-common-form-nm order-catalog">
-                <!-- <div class="createcatalogupper"> -->
-
-
+               
                 <mat-accordion class="mgn-up-5">
                   <mat-expansion-panel [expanded]="step == 1">
                     <mat-expansion-panel-header>
@@ -66,11 +64,10 @@
                     <div class="form-group">
                       <mat-form-field>
                         <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
-                          <!-- <ngx-mat-select-search [formControl]="statMultiFilterCtrl" placeholderLabel="Search departments"
-                      noEntriesFoundLabel="no matching department found"></ngx-mat-select-search> -->
-                          <mat-option *ngFor=" let stat of status" [value]="stat.value"
-                            [disabled]="stat.value === 'Order Received'||stat.value === 'Cancelled' || stat.value === 'Order Confirmed'">
-                            {{stat.value}}
+                         
+                          <mat-option *ngFor=" let stat of status" [value]="stat"
+                            [disabled]="stat === 'Order Received'||stat === 'Cancelled' || stat === 'Order Confirmed'">
+                            {{stat}}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
@@ -100,20 +97,11 @@
                         <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
                       </mat-radio-group>
                     </div>
-                    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding mgn-bt-20">
-                      Show personalized information about this catalog
-                      <span class="cs-btn bt3" (click)="showInfoSection()" *ngIf="!preInfoEnabled && !postInfoEnabled">
-                        Click here</span>
-                      <div class="prepost-check" *ngIf="preInfoEnabled || postInfoEnabled">
-                        <i class="fa fa-check"></i>
-                        <a (click)="showInfoSection()"> Instructions Added</a>
-                      </div>
-                    </div> -->
+                    
                     <div class="clearfix"></div>
                     <div class="lbr col-sm-12 col-md-12 col-lg-12 no-padding bg-white"  *ngIf="action === 'edit'">
                       <div class="cr1 no-padding">
                         <div class="" *ngIf="!image_list_popup || image_list_popup.length == 0">
-                          <!-- <p>{{havent_added_cap}} {{photo_cap}} </p> -->
                           <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
                             <div class="addorderitem no-margin" (click)="imagefile.click()">
                               <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile type="file"
@@ -162,69 +150,7 @@
                   </mat-expansion-panel>
                 </mat-accordion>
                 
-                <!-- <mat-accordion class="mgn-up-5">
-                  <mat-expansion-panel [expanded]="step == 2">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title class="block-level">
-                        Working hours <i *ngIf="workinghours" class="fa fa-check-circle  catalog-grn fl-right"
-                        aria-hidden="true"></i>
-                        <i *ngIf="!workinghours" class="fa fa-exclamation-circle catalog-red fl-right"
-                        aria-hidden="true"></i>
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                   
-                    <p>Select your date and time</p>
-                    <section class="schedule-section leftselectAll start-endtime-wrap">
-                      <div *ngFor="let wday of weekdays; index as i">
-                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecbox(i)"
-                          [checked]="check_existsinArray(selday_arr,i) >= 0">{{wday}}</mat-checkbox>
-                      </div>
-                    </section>
-                    <div class="form-group row">
-                      <div class="col-md-3 col-sm-4 col-xs-4 no-padding-small">
-                        <mat-form-field>
-                          <input matInput [matDatepicker]="picker" (dateChange)="compareDate($event.value,0)"
-                            placeholder="Start Date" formControlName="startdate" readonly>
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-3 col-sm-4 col-xs-5">
-                        <mat-form-field>
-                          <input matInput [matDatepicker]="picker1" (dateChange)="compareDate($event.value,1)"
-                            placeholder="End Date" formControlName="enddate" readonly>
-                          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                          <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="form-group schedulesub_outer">
-                      <div class="startendtime" style="display: flex">
-                        <div class="starttimediv mgn-rt-20">
-                          <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
-                          <ngb-timepicker formControlName="qstarttime" meridian="true" #sch_start_time
-                            (ngModelChange)="changetime('start',$event)"></ngb-timepicker>
-                          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qstarttime')"
-                            errorMsg="Please enter the start time">
-                          </app-field-error-display>
-                        </div>
-                        <div class="endtimediv">
-                          <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
-                          <ngb-timepicker formControlName="qendtime" meridian="true" #sch_end_time
-                            (ngModelChange)="changetime('end',$event)"></ngb-timepicker>
-                          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtime')"
-                            errorMsg="Please enter the end time">
-                          </app-field-error-display>
-                        </div>
-                      </div>
-                    </div>
-                   
-                    <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding">
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(1,amForm.value)">Back</button>&nbsp;
-                      <button type="button" class="cs-btn bt1" mat-button (click)="showStep(3,amForm.value)">Next</button>
-                    </div>
-                  </mat-expansion-panel>
-                </mat-accordion> -->
+               
                 <mat-accordion class="mgn-up-5" *ngIf="showadditems">
                   <mat-expansion-panel [expanded]="step == 2">
                     <mat-expansion-panel-header>
@@ -235,7 +161,6 @@
                         aria-hidden="true"></i>
                       </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <!-- </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                       <div *ngIf="item_count > 0 && catalogItems.length == 0 ">
                           <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
@@ -288,11 +213,6 @@
                           </label>
                         </div>
                         
-                          <!-- <label>Advance payment &nbsp;</label>
-                            <mat-checkbox formControlName="advancePaymentStatus"
-                              (change)="handleadvancePayment($event)">
-                            </mat-checkbox> -->
-
                             <div class="form-group" >
                               <label class="col-form-label" for="advancepaymentstat">Advance payment</label>
                               <mat-radio-group formControlName="advancePaymentStatus">
@@ -355,13 +275,7 @@
                         </mat-slide-toggle>
                       </div>
                       <div *ngIf="storepickupStat">
-                        <!-- <div class="schselectall">
-                          <i class="fa fa-square-o" *ngIf="!Selallstorepickup" (click)="handleselectallstorepickup()">
-                            {{select_All}}</i>
-                          <i class="fa fa-check-square-o" *ngIf="Selallstorepickup"
-                            (click)="handleselectnonestorepickup()">
-                            {{select_All}}</i>
-                        </div> -->
+                        
                         <p>Store pickup availability</p>
                         <section class="schedule-section leftselectAll start-endtime-wrap">
                           <div *ngFor="let wday of weekdays; index as i">
@@ -402,33 +316,7 @@
                          </ul>
                         </div>
                         </div>
-                        <!-- <div class="form-group schedulesub_outer">
-                          <div class="startendtime" style="display: flex">
-                            <div class="starttimediv mgn-rt-20">
-                              <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
-                              <ngb-timepicker formControlName="qstarttimestore" meridian="true" #sch_start_timestore
-                                (ngModelChange)="changestoretime('start',$event)"></ngb-timepicker>
-                              <app-field-error-display
-                                [displayError]="fed_service.isFieldValid(amForm,'qstarttimestore')"
-                                errorMsg="Please enter the start time">
-                              </app-field-error-display>
-                            </div>
-                            <div class="endtimediv">
-                              <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
-                              <ngb-timepicker formControlName="qendtimestore" meridian="true" #sch_end_timestore
-                                (ngModelChange)="changestoretime('end',$event)"></ngb-timepicker>
-                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtimestore')"
-                                errorMsg="Please enter the end time">
-                              </app-field-error-display>
-                            </div>
-                          </div>
-                        </div> -->
-                        <!-- <div class="form-group">
-                          <label>Pick up Otp verification </label>
-                          <mat-slide-toggle formControlName="storeotpverify">
-                          </mat-slide-toggle>
-
-                        </div> -->
+                       
                       </div>
 
                     </div>
@@ -456,13 +344,7 @@
                         </mat-slide-toggle>
                       </div>
                       <div *ngIf="homedeliveryStat">
-                        <!-- <div class="schselectall">
-                          <i class="fa fa-square-o" *ngIf="!Selallhomedelivery" (click)="handleselectallhomedelivery()">
-                            {{select_All}}</i>
-                          <i class="fa fa-check-square-o" *ngIf="Selallhomedelivery"
-                            (click)="handleselectnonehomedelivery()">
-                            {{select_All}}</i>
-                        </div> -->
+                       
                         <p>Home delivery availability</p>
                         <section class="schedule-section leftselectAll start-endtime-wrap">
                           <div *ngFor="let wday of weekdays; index as i">
@@ -504,32 +386,6 @@
                          </div>
                         </div>
 
-                        <!-- <div class="form-group schedulesub_outer">
-                          <div class="startendtime" style="display: flex">
-                            <div class="starttimediv mgn-rt-20">
-                              <label class="labelstyle" for="changeHourStep">{{start_time_cap}}</label>
-                              <ngb-timepicker formControlName="qstarttimehome" meridian="true" #sch_start_timehome
-                                (ngModelChange)="changehometime('start',$event)"></ngb-timepicker>
-                              <app-field-error-display
-                                [displayError]="fed_service.isFieldValid(amForm,'qstarttimehome')"
-                                errorMsg="Please enter the start time">
-                              </app-field-error-display>
-                            </div>
-                            <div class="endtimediv">
-                              <label class="labelstyle" for="changeHourStep">{{end_time_cap}}</label>
-                              <ngb-timepicker formControlName="qendtimehome" meridian="true" #sch_end_timehome
-                                (ngModelChange)="changehometime('end',$event)"></ngb-timepicker>
-                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'qendtimehome')"
-                                errorMsg="Please enter the end time">
-                              </app-field-error-display>
-                            </div>
-                          </div>
-                        </div> -->
-                        <!-- <div class="form-group">
-                          <label>Home Delivery Otp verification </label>
-                          <mat-slide-toggle formControlName="homeotpverify">
-                          </mat-slide-toggle>
-                        </div> -->
 
                         <div class="form-group">
                             <mat-form-field>
@@ -625,47 +481,7 @@
               </app-form-success-display>
             </div>
             <div class="lbr col-sm-12 col-md-4 col-lg-5" *ngIf="!showInfo">
-              <!-- <div class="cr1">
-                <div class="no-dta" *ngIf="!image_list_popup || image_list_popup.length == 0">
-                  <div class="col-sm-12 col-md-12 col-lg-12">
-                    <div class="addorderitem" (click)="imagefile.click()">
-                      <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile type="file"
-                            accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add catalog
-                          image
-                        </a></p>
-                      <p class="addorderitemp2"> <img style="width: 65%;" src="assets/images/add.svg" /></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
-                  <ul class="ph-gal">
-                    <ng-container *ngFor="let file of image_list_popup;let i = index">
-                      <li *ngIf="i<2" [class.gallery-li]="image_list_popup.length === 2">
-                        <div class="galbx">
-                          <span class="mbt">
-                            <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                              <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                              <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
-                                <i class="icon-delete"></i>
-                                <span>{{delete_btn}}</span>
-                              </button>
-                            </mat-menu>
-                          </span>
-                          <div class="img-h" (click)="openImageModalRow(file)">
-                            <div class="overlay-y"></div><img [src]="file.modal.img" *ngIf="file.modal.img" />
-                          </div>
-                        </div>
-                      </li>
-                    </ng-container>
-                  </ul>
-                  <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-                    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()">
-                  </ks-modal-gallery>
-                </div>
-              </div> -->
+             
             </div>
           </div>
         </div>
@@ -673,4 +489,645 @@
     </div>
   </div>
   <div class="clearfix"></div>
+</section> -->
+
+<section>
+
+  <div class="d-flex flex-column-fluid mt-4">
+      <div class="container">
+        <div class="card p0" *ngIf="api_loading">
+          <app-common-innerloading-spinner></app-common-innerloading-spinner>
+        </div>
+      <div class="card card-custom rounded-0 p-0">
+          <div class="card-body p-0 rounded-0">
+              <!--begin::Wizard-->
+              <div class="wizard wizard-1">
+                  <!--begin::Wizard Nav-->
+                  <div class="wizard-nav border-bottom">
+                      <div class="wizard-steps p-8 p-lg-10">
+                          <!--begin::Wizard Step 1 Nav-->
+                          <div class="wizard-step">
+                              <div class="wizard-label">
+                                  <i class="wizard-icon text-dark-50 flaticon-users-1"></i>
+                                  <h3 class="wizard-title">1. Catalog Information</h3>
+                              </div>
+                              <span class="svg-icon svg-icon-xl wizard-arrow">
+                                  <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
+                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <polygon points="0 0 24 0 24 24 0 24" />
+                                          <rect fill="#000000" opacity="0.3"
+                                              transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                              x="11" y="5" width="2" height="14" rx="1" />
+                                          <path
+                                              d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                      </g>
+                                  </svg>
+                                  <!--end::Svg Icon-->
+                              </span>
+                          </div>
+                          <!--end::Wizard Step 1 Nav-->
+
+                          <!--begin::Wizard Step 2 Nav-->
+                          <div class="wizard-step">
+                              <div class="wizard-label">
+                                  <i class="wizard-icon flaticon-list"></i>
+                                  <h3 class="wizard-title">2. Items Information</h3>
+                              </div>
+                              <span class="svg-icon svg-icon-xl wizard-arrow">
+                                  <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
+                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <polygon points="0 0 24 0 24 24 0 24" />
+                                          <rect fill="#000000" opacity="0.3"
+                                              transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                              x="11" y="5" width="2" height="14" rx="1" />
+                                          <path
+                                              d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                      </g>
+                                  </svg>
+                                  <!--end::Svg Icon-->
+                              </span>
+                          </div>
+
+                          <div class="wizard-step">
+                            <div class="wizard-label">
+                                <i class="wizard-icon flaticon-list"></i>
+                                <h3 class="wizard-title">3. Payment Information</h3>
+                            </div>
+                            <span class="svg-icon svg-icon-xl wizard-arrow">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <rect fill="#000000" opacity="0.3"
+                                            transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                            x="11" y="5" width="2" height="14" rx="1" />
+                                        <path
+                                            d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                            fill="#000000" fill-rule="nonzero"
+                                            transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                    </g>
+                                </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </div>
+                          <!--end::Wizard Step 2 Nav-->
+                          <!--begin::Wizard Step 3 Nav-->
+                          <div class="wizard-step">
+                              <div class="wizard-label">
+                                  <i class="wizard-icon flaticon-truck"></i>
+                                  <h3 class="wizard-title">4. Delivery Details</h3>
+                              </div>
+                              <span class="svg-icon svg-icon-xl wizard-arrow last">
+                                  <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
+                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                          <polygon points="0 0 24 0 24 24 0 24" />
+                                          <rect fill="#000000" opacity="0.3"
+                                              transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                              x="11" y="5" width="2" height="14" rx="1" />
+                                          <path
+                                              d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                      </g>
+                                  </svg>
+                                  <!--end::Svg Icon-->
+                              </span>
+                          </div>
+                          <!--end::Wizard Step 3 Nav-->
+                      </div>
+                  </div>
+                  <!--end::Wizard Nav-->
+
+                  <!--begin::Wizard Body-->
+                  <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
+                      <div class="col-xl-12 col-xxl-7">
+                          <!--begin::Wizard Form-->
+                          <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                          (keyup)="resetApiErrors()" *ngIf="!showInfo" class="form">
+                              <!--begin::Wizard Step 1-->
+                              <div class="pb-5" *ngIf="step == 1">
+                                <h3 class="mb-10 font-weight-bold text-dark">Catalog Information</h3>
+                                <div class="row">
+                                  <div class="col-xl-6">
+                                      <!--begin::Input-->
+                                      <div class="form-group">
+                                              <label>Catalog name *</label>
+                                              <input type="text" class="form-control1 form-control-solid form-control-lg" id="catalogName" placeholder="Catalog Name*"
+                                              formControlName="catalogName" maxlength="50"/>
+                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'catalogName')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogName',
+        {
+        'required' : 'Please enter the catalog name',
+        'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+        })">
+                      </app-field-error-display>
+                                    </div>
+                                      <!--end::Input-->
+                                  </div>
+                                  <div class="col-xl-6">
+                                      <!--begin::Input-->
+                                      <div class="form-group">
+                                          <label>Catalog description</label>
+                                          <textarea type="text" class="form-control1 form-control-solid form-control-lg"id="catalogDesc"
+                                          placeholder="Enter catalog description" formControlName="catalogDesc"
+                                          (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                          maxlength="500"></textarea>
+                                          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'catalogDesc')"
+                                          [errorMsgs]="fed_service.getErrorMessage(amForm,'catalogDesc',
+                          {
+                          'required' : 'Please enter detailed description.',
+                          'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+                          })">
+                                        </app-field-error-display>
+                                        <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                          characters remaining</span>
+                                      </div>
+                                      <!--end::Input-->
+                                  </div>
+                              </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+					                                    <div class="input-group date">
+                                                <label>Start Date</label>
+				  	                                        <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)"
+                                                    placeholder="Start Date" formControlName="startdate"/>
+					                                    </div>
+                                      </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+                                          <div class="input-group date">
+                                            <label>End Date</label>
+                                                <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)"
+                                                placeholder="End Date" formControlName="enddate"/>
+                                          </div>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <!--begin::Input-->
+                                        <div class="form-group">
+                                          <label>Catalog Status</label>
+                                          <select placeholder="Catalog status" formControlName="orderStatuses"  class="form-control1 form-control-solid form-control-lg">
+                                              <option *ngFor=" let stat of status" [value]="stat"
+                                              [disabled]="stat === 'Order Received'||stat === 'Cancelled' || stat === 'Order Confirmed'">
+                                              {{stat}}
+                                            </option>
+                                          </select>
+                                      </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <!--begin::Select-->
+                                        <div class="form-group">
+                                          <label>Order Type</label><br>
+                                          <mat-radio-group formControlName="orderType" (change)="handleshoppingChange($event)">
+                                            <mat-radio-button value="SHOPPINGCART">Shopping cart</mat-radio-button>&nbsp;&nbsp;
+                                            <mat-radio-button value="SHOPPINGLIST">Shopping list</mat-radio-button>
+                                          </mat-radio-group>
+                                          <!-- <div class="radio-inline">
+                                            <label class="radio radio-solid">
+                                              <input type="radio" name="example_2" checked="checked" value="2"/>
+                                              <span></span>
+                                              Shopping cart
+                                            </label>
+                                            <label class="radio radio-solid">
+                                              <input type="radio" name="example_2" value="2"/>
+                                              <span></span>
+                                              Shopping list
+                                            </label>
+                                          </div> -->
+                                        </div>
+                                        <!--end::Select-->
+                                    </div>
+                                    <div class="col-xl-6" *ngIf="action === 'edit'">
+                                      <div class="cr1 no-padding">
+                                        <div class="" *ngIf="!image_list_popup || image_list_popup.length == 0">
+                                          <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                                            <div class="addorderitem no-margin" (click)="imagefile.click()">
+                                              <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile type="file"
+                                                    accept="/*;capture=camera" style="display:none;" (change)="imageSelect($event)">Add
+                                                  catalog
+                                                  image
+                                                </a></p>
+                                              <p class="addorderitemp2"> <img style="width: 65%;" src="assets/images/add.svg" /></p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                          <ul class="ph-gal">
+                                            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                              <li *ngIf="i<2" [class.gallery-li]="image_list_popup.length === 2">
+                                                <div class="galbx">
+                                                  <span class="mbt">
+                                                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                      <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                      <button type="button" mat-menu-item (click)="deleteTempImage(file, i)">
+                                                        <i class="icon-delete"></i>
+                                                        <span>{{delete_btn}}</span>
+                                                      </button>
+                                                    </mat-menu>
+                                                  </span>
+                                                  <div class="img-h" (click)="openImageModalRow(file)">
+                                                    <div class="overlay-y"></div><img [src]="file.modal.img" *ngIf="file.modal.img" />
+                                                  </div>
+                                                </div>
+                                              </li>
+                                            </ng-container>
+                                          </ul>
+                                          <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                            [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                                            (buttonAfterHook)="onButtonAfterHook()">
+                                          </ks-modal-gallery>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                              <!--end::Wizard Step 1-->
+
+                              <!--begin::Wizard Step 2-->
+                              <div class="pb-5" *ngIf="step == 2">
+                                  <h4 class="mb-10 font-weight-bold text-dark">Items information</h4>
+                                
+                                  <div class="row">
+                                      <div class="col-xl-6">
+                                          <!--begin::Input-->
+                                          <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
+                                            <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
+                                              <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u>Add items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              </div>
+                                              <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
+                                                <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u> Edit items</u></a>&nbsp;
+                                                <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              </div>
+                                            <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
+                                          </div>
+                                          <div *ngIf="item_count === 0">
+                                            <p class="font-italic">You haven't created any items  
+                                            <a class="link underline pointer-cursor" (click)="gotoItems()">create items </a></p>
+                                          </div>
+                    
+                                          <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
+                                            <h6>{{catalogItems.length}} items are in your catalog</h6>
+                                            <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
+                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
+                                            <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                          </div>
+                                          <!--end::Input-->
+                                      </div>
+                                      
+                                  </div>
+
+                                    <!--begin::Card-->
+                                    <div class="row" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
+                                      
+                                      <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
+                                         
+                                    <div class="card card-custom card-shadowless" (click)="selectItem(i)" [class.itemselected]="item.selected">
+                                        <div class="card-body p-0">
+                                            <!--begin::Image-->
+                                            <div class="overlay">
+                                                
+                                                <div
+                                                    class="overlay-wrapper rounded bg-light text-center">
+                                                    <img [src]="getItemImg(item)"
+                                                        alt="" class="mw-100 w-200px" />
+                                                </div>
+                                            </div>
+                                            <!--end::Image-->
+
+                                            <!--begin::Details-->
+                                            <div
+                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                                <a 
+                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                
+                                                <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
+                                                <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                            </div>
+                                            <!--end::Details-->
+                                        </div>
+                                    </div>
+                                 
+                                  
+                                </div>
+                                
+                                  
+                                    </div>
+
+                                    <div class="row" *ngIf ="showAddItem && itemsforadd && itemsforadd.length > 0">
+                                      
+                                        <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of itemsforadd;let i=index;">
+                                           
+                                      <div class="card card-custom card-shadowless" (click)="selectaddItem(i)" [class.itemselected]="item.selected">
+                                          <div class="card-body p-0">
+                                              <!--begin::Image-->
+                                              <div class="overlay">
+                                                  
+                                                  <div
+                                                      class="overlay-wrapper rounded bg-light text-center">
+                                                      <img [src]="getItemImg(item)"
+                                                          alt="" class="mw-100 w-200px" />
+                                                  </div>
+                                              </div>
+                                              <!--end::Image-->
+  
+                                              <!--begin::Details-->
+                                              <div
+                                                  class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                                  <a 
+                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                  
+                                                  <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
+                                                  <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                  <span class="font-size-lg">Max. Qty<input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                              </div>
+                                              <!--end::Details-->
+                                          </div>
+                                      </div>
+                                   
+                                    
+                                  </div>
+                                  
+                                    
+                                      </div>
+                                    <!--end::Card-->
+                              </div>
+                              <!--end::Wizard Step 2-->
+
+                              <!--begin::Wizard Step 3-->
+                              <div class="pb-5" *ngIf="step == 3">
+                                  <!--begin::Section-->
+                                  <h4 class="mb-10 font-weight-bold text-dark">Payment Information</h4>
+                                  <div class="row">
+                                    <div class="col-xl-4">
+                                      <div class="form-group">
+                                        <label>Show item prices </label> &nbsp;
+                                        <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                                        </mat-slide-toggle>
+                                    </div>
+                                    </div>
+                                        <!--begin::Input-->
+                                  </div>
+                                        <!--end::Input-->
+                                    <div class="row">
+                                    <div class="col-xl-6">
+                                        <!--begin::Select-->
+                                        <div class="form-group">
+                                          <label>Order Type</label><br>
+                                          <mat-radio-group formControlName="advancePaymentStatus">
+                                            <mat-radio-button (click)="handlePaymentchange('none')" value="NONE">None
+                                            </mat-radio-button>&nbsp;&nbsp;
+                                            <mat-radio-button (click)="handlePaymentchange('fixed')" value="FIXED">
+                                                Fixed amount</mat-radio-button>&nbsp;&nbsp;
+                                            <mat-radio-button (click)="handlePaymentchange('full')" value="FULLAMOUNT">Full amount
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        </div>
+                                        <!--end::Select-->
+                                    </div>
+                                    <div class="col-xl-4">
+                                      <div *ngIf="payAdvance === 'FIXED'">
+                                        <div class="form-group">
+                                          <label>Advance amount</label>
+                                              <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="advancePayment"
+                                              placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off"/>
+                                      </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-xl-6">
+                                      <!--begin::Input-->
+                                      <div class="form-group">
+                                        <label>Cancellation Policy</label> &nbsp;
+                                        <mat-slide-toggle formControlName="cancelationPolicyStatus" [disabled]="true">
+                                        </mat-slide-toggle><br>
+                                        <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add cancellation policy</label>
+
+                                    </div>
+                                      <!--end::Input-->
+                                  </div>
+                                  <div class="col-xl-6" *ngIf="showpolicy">
+                                      <!--begin::Select-->
+                                      <div class="form-group">
+                                        <label>Enter cancelation policy</label>
+                                          <textarea type="text" class="form-control1 form-control-solid form-control-lg" id="cancelationPolicy"
+                                          placeholder="Enter cancelation policy " formControlName="cancelationPolicy">
+                                          </textarea>
+                                      </div>
+                                      <!--end::Select-->
+                                  </div>
+                              </div>
+                                 
+                                  <!--end::Section-->
+
+                              </div>
+                              <!--end::Wizard Step 3-->
+
+                              <div class="pb-5" *ngIf="step == 4">
+                                <!--begin::Section-->
+                                <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
+
+                                <div class="card card-shadow card-custom card-shadowless">
+                                  <div class="card-body p-0">
+                                    <div class="form-group">
+                                      <label>Store pickup </label> &nbsp;
+                                      <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                                      </mat-slide-toggle>
+                                  </div>
+                                  <div *ngIf="storepickupStat">
+                                    <div class="form-group">
+                                      <label>Store pickup availability</label>
+                                      <div  *ngFor="let wday of weekdays; index as i">
+                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
+                                          [checked]="check_existsinArraystorepickup(selday_arrstorepickup,i) >= 0">{{wday}}
+                                        </mat-checkbox>
+                                      </div>
+                                  </div>
+                                    <!--end::Select-->
+                                    <div class="row">
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                                <div class="input-group date">
+                                                  <label>Start Date</label>
+                                                      <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,0)"
+                                                      placeholder="Start Date" formControlName="startdatestore"/>
+                                                </div>
+                                        </div>
+                                          <!--end::Input-->
+                                      </div>
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                            <div class="input-group date">
+                                              <label>End Date</label>
+                                                  <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,1)"
+                                                  placeholder="End Date" formControlName="enddatestore"/>
+                                            </div>
+                                          </div>
+                                          <!--end::Input-->
+                                      </div>
+                                  </div>
+                            <div class="row">
+                              <div class="col-xl-6">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                    <label>Available time window(s)</label><br>
+
+                                    <label>Currently no timewindows are added</label> &nbsp;
+                                    <label class="link underline pointer-cursor" (click)="showTimewindow('store')">Add</label>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                          </div>
+                                  </div>
+                                  </div>
+                                </div>
+                                     
+                                <div class="card card-shadow card-custom card-shadowless mgn-up-10">
+                                  <div class="card-body p-0">
+                                    <div class="form-group">
+                                      <label>Home delivery </label> &nbsp;
+                                      <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
+                                      </mat-slide-toggle>
+                                  </div>
+                                    <!--end::Input-->
+                                    <!--begin::Select-->
+                                    <div *ngIf="homedeliveryStat">
+                                      <div class="form-group">
+                                        <label>Home delivery availability</label>
+                                        <div *ngFor="let wday of weekdays; index as i">
+                                          <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
+                                            [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}
+                                          </mat-checkbox>
+                                        </div>
+                                    </div>
+                                      <!--end::Select-->
+                                      <div class="row">
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                                  <div class="input-group date">
+                                                    <label>Start Date</label>
+                                                        <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
+                                                        placeholder="Start Date" formControlName="startdatehome" />
+                                                  </div>
+                                          </div>
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                              <div class="input-group date">
+                                                <label>End Date</label>
+                                                    <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,1)"
+                                                    placeholder="End Date" formControlName="enddatehome"/>
+                                              </div>
+                                            </div>
+                                            <!--end::Input-->
+                                        </div>
+                                    </div>
+                              <div class="row">
+                                    <!--begin::Input-->
+                                    <div class="col-xl-6">
+
+                                    <div class="form-group">
+                                      <label>Available time windows</label> &nbsp;
+                                      <span class="form-text text-muted">Currently no timewindows are added  Add</span>
+                                    <!--end::Input-->
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                          <label>Delivery charge</label>
+                                          <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverycharge"
+                                          placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
+                                          maxlength="50"/>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                      <label>Delivery range(km)</label>
+                                      <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
+                                      placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
+                                      maxlength="50"/>
+                                  </div>
+                                  <!--end::Input-->
+                              </div>
+                          </div>
+                               
+                        </div>
+                                  </div>
+                                </div>
+                                      <!--begin::Input-->
+                                      
+                                      
+
+                            </div>
+                              <!--begin::Wizard Actions-->
+                              <div class="d-flex justify-content-between border-top mt-2 py-5">
+                                  <div class="mr-2" *ngIf="step == 2 || step == 3 || step == 4">
+                                      <button type="button"
+                                          class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1"
+                                          (click)="gotoPrev()">
+                                          Previous
+                                      </button>
+                                  </div>
+                                  <div>
+                                      <button *ngIf="step == 4" type="button"
+                                          class="btn btn-success font-weight-bold text-uppercase px-9 py-1">
+                                          Save
+                                      </button>
+                                      <button *ngIf="step == 1 || step == 2 || step == 3" type="button"
+                                         [disabled]="step === 2 && selectedCount == 0" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                                          (click)="gotoNext()">
+                                          Next
+                                      </button>
+                                  </div>
+                              </div>
+                              <!--end::Wizard Actions-->
+                          </form>
+                          <!--end::Wizard Form-->
+                      </div>
+                  </div>
+                  <!--end::Wizard Body-->
+              </div>
+              <!--end::Wizard-->
+          </div>
+          <!--end::Wizard-->
+      </div>
+  </div>
+  </div>
+
 </section>

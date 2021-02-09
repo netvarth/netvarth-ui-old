@@ -203,7 +203,10 @@
 
 <section class="customersList">
   <div class="row p-3">
-    <div class="col-lg-4">
+    <div class="card" *ngIf="groupLoaded">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0">
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')"
@@ -232,7 +235,7 @@
       </div>
       <!--end::Mixed Widget 14-->
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="!groupLoaded">
       <!--begin::Advance Table Widget 4-->
       <div class="card card-custom card-stretch gutter-b no-padding">
         <!--begin::Header-->
@@ -250,8 +253,9 @@
               *ngIf="!showCustomers">Create Patient</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
               *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
-            <!-- <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" *ngIf="selectedGroup == 'all'"
-              data-toggle="modal" data-target="#exampleModalCenter">Create Group</button> -->
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10"
+              *ngIf="selectedGroup == 'all' && groups.length == 0" data-toggle="modal"
+              data-target="#exampleModalCenter">Create Group</button>
             <!-- Modal-->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -386,7 +390,7 @@
                         Name</span></th>
                     <th class="hide_th" style="min-width: 100px">Id</th>
                     <th class="hide_th" style="min-width: 100px">Phone</th>
-                    <th class="hide_th" style="min-width: 10px"></th>
+                    <th class="hide_th" style="min-width: 10px">DOB</th>
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 50px"></th>
                     <th style="min-width: 10px"></th>

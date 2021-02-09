@@ -5,6 +5,7 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 export class SharedServices {
 
+
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
@@ -918,6 +919,9 @@ export class SharedServices {
   CreateConsumerOrder(accountid, postData) {
     return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, postData);
   }
+  CreateWalkinOrder(accountid, postData) {
+    return this.servicemeta.httpPost('provider/orders/', postData);
+  }
   CreateConsumerOrderlist(accountid, dataappend) {
     return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
   }
@@ -950,15 +954,15 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerAppointmentAttachment(accountid, uuid, body) {
-    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;;
+    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
   getConsumerAppointmentAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/appointment/attachment/' + uuid+'?account=' + accountid;
+    const url = 'consumer/appointment/attachment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
- }
- getConsumerWaitlistAttachmentsByUuid(uuid , accountid) {
-  const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
-  return this.servicemeta.httpGet(url);
-}
+  }
+  getConsumerWaitlistAttachmentsByUuid(uuid, accountid) {
+    const url = 'consumer/waitlist/attachment/' + uuid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
 }

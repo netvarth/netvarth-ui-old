@@ -1723,7 +1723,14 @@ export class ProviderServices {
       const path = 'provider/report/' + reportName + '/' + reportType;
       return this.servicemeta.httpDelete(path);
    }
-
+getDeliveryAddress(customerId) {
+    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress';
+    return this.servicemeta.httpGet(url);
+  }
+  updateDeliveryaddress(customerId, data) {
+    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
+    return this.servicemeta.httpPut(url, data);
+  }
    uploadItemImages(id, data) {
       const url = 'provider/items/' + id + '/image';
       return this.servicemeta.httpPost(url, data);

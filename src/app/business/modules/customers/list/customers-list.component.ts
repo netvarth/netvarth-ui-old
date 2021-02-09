@@ -110,6 +110,7 @@ export class CustomersListComponent implements OnInit {
   groupEdit = false;
   @ViewChild('closebutton') closebutton;
   apiError = '';
+  groupLoaded = false;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -139,7 +140,7 @@ export class CustomersListComponent implements OnInit {
     } else {
       this.selectedGroup = 'all';
     }
-      if (this.selectedGroup == 'all') {
+    if (this.selectedGroup == 'all') {
       this.getCustomersList(true);
     } else {
       this.getCustomerListByGroup();
@@ -185,7 +186,7 @@ export class CustomersListComponent implements OnInit {
           if (from_oninit) { this.customer_count = result; }
           if (!this.showCustomers) {
             filter = this.setPaginationFilter(filter);
-            }
+          }
           this.provider_services.getProviderCustomers(filter)
             .subscribe(
               data => {
@@ -557,8 +558,10 @@ export class CustomersListComponent implements OnInit {
     }
   }
   getCustomerGroup() {
+    this.groupLoaded = true;
     this.provider_services.getCustomerGroup().subscribe((data: any) => {
       this.groups = data;
+      this.groupLoaded = false;
     });
   }
   search(event) {
