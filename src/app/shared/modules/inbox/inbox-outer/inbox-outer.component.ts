@@ -7,6 +7,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
+import { AdvancedLayout, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -43,6 +44,13 @@ export class InboxOuterComponent implements OnInit {
   userScrollHeight;
   msgScrollHeight;
   @ViewChild('scrollMe') scrollFrame: ElementRef;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  image_list_popup: Image[];
+  image_list_popup_temp: Image[];
+  imageAllowed = ['JPEG', 'JPG', 'PNG'];
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -115,8 +123,8 @@ export class InboxOuterComponent implements OnInit {
       }
     });
   }
-  valueOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
-    return a.value[a.value.length-1]['timeStamp'] > b.value[b.value.length-1]['timeStamp'] ? -1 : b.value[b.value.length-1]['timeStamp'] > a.value[a.value.length-1]['timeStamp'] ? 1 : 0;
+  valueOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+    return a.value[a.value.length - 1]['timeStamp'] > b.value[b.value.length - 1]['timeStamp'] ? -1 : b.value[b.value.length - 1]['timeStamp'] > a.value[a.value.length - 1]['timeStamp'] ? 1 : 0;
   }
   formatDateDisplay(dateStr) {
     let retdate = '';
@@ -169,27 +177,30 @@ export class InboxOuterComponent implements OnInit {
       const post_data = {
         communicationMessage: this.message
       };
-
       const dataToSend: FormData = new FormData();
-      dataToSend.append('communicationMessage', this.message);
+      dataToSend.append('message', post_data.communicationMessage);
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
         for (const pic of this.selectedMessage.files) {
-          dataToSend.append('attachementStream', pic, pic['name']);
+          dataToSend.append('attachments', pic, pic['name']);
           captions[i] = 'caption';
           i++;
         }
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-
       this.shared_services.addConsumertoProviderNote(this.selectedUserMessages[0].accountId,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.message = '';
             this.getInboxMessages();
+    this.selectedMessage = {
+      files: [],
+      base64: [],
+      caption: []
+    };
             this.sendMessageCompleted = true;
           },
           error => {
@@ -256,5 +267,53 @@ export class InboxOuterComponent implements OnInit {
     try {
       this.scrollFrame.nativeElement.scrollTop = this.scrollFrame.nativeElement.scrollHeight;
     } catch (err) { }
+  }
+  getThumbUrl(attachment) {
+    if (attachment.s3path.indexOf('.pdf') !== -1) {
+      return attachment.thumbPath;
+    } else {
+      return attachment.s3path;
+    }
+  }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  openImage(attachements, index) {
+    this.image_list_popup_temp = this.image_list_popup = [];
+    console.log(attachements);
+    let count = 0;
+    for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
+      const thumbPath = attachements[comIndex].thumbPath;
+      let imagePath = thumbPath;
+      const description = attachements[comIndex].s3path;
+      console.log(description);
+      const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
+      console.log(thumbPathExt);
+      if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
+        imagePath = attachements[comIndex].s3path;
+      }
+      console.log(imagePath);
+      const imgobj = new Image(
+        count,
+        { // modal
+          img: imagePath,
+          description: description
+        },
+      );
+      console.log(imgobj);
+      this.image_list_popup_temp.push(imgobj);
+      count++;
+    }
+    if (count > 0) {
+      this.image_list_popup = this.image_list_popup_temp;
+      console.log(this.image_list_popup);
+      setTimeout(() => {
+        this.openImageModalRow(this.image_list_popup[index]);
+      }, 200);
+    }
   }
 }

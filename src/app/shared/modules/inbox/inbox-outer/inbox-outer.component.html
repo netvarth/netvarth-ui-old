@@ -59,7 +59,6 @@
                             <!--begin:Users-->
                             <div class="mt-7 scroll scroll-pull over-scroll" [ngStyle]="{'height.px': userScrollHeight}">
                               <!--begin:User-->
-                              <!-- *ngFor="let user of groupedMsgs | keyvalue : orderClause; trackBy: trackByFn" -->
                               <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder" (click)="providerSelection(user)"
                                 class="d-flex align-items-center justify-content-between pointer-cursor pad-5" [class.selected-user]="selectedProvider==user.key">
                                 <div class="d-flex align-items-center">
@@ -160,6 +159,12 @@
                                   <div
                                     class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">
                                     {{msg.msg}}
+                                    <div class="thumbnails mt10 mb10" *ngIf="msg.attachements;let i=index">
+                                      <a class="mg-10" (click)="openImage(msg.attachements, i)" [href]="attachment.s3path"
+                                          *ngFor="let attachment of msg.attachements"><img [src]="getThumbUrl(attachment)"
+                                              style="width:100px; height:100px" /></a>
+                                  </div>
+
                                   </div>
                                 </div>
                                 <!--end::Message In-->
@@ -180,6 +185,11 @@
                                   <div
                                     class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">
                                     {{msg.msg}}
+                                    <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                      <a class="mg-10" (click)="openImage(msg.attachements, i)" [href]="attachment.s3path"
+                                          *ngFor="let attachment of msg.attachements"><img [src]="getThumbUrl(attachment)"
+                                              style="width:100px; height:100px" /></a>
+                                  </div>
                                   </div>
                                 </div>
                                 <!--end::Message Out-->
@@ -200,9 +210,9 @@
                                     class="flaticon2-photograph icon-lg"></i></a>
                                 <a class="btn btn-clean btn-icon btn-md"><i
                                     class="flaticon2-photo-camera  icon-lg"></i></a> -->
-                                <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                                     (change)="filesSelected($event)">
-                                    <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">attach_file</i></a> -->
+                                    <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">attach_file</i></a>
                               </div>
                               <div>
                                 <button type="button" (click)="sendMessageCompleted && sendMessage()"
