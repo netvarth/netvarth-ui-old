@@ -267,6 +267,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   sel_checkindate;
   deliveryCharge = 0;
   nextAvailableTime;
+  customAccId: string;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -369,9 +370,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
-      if (qparams.userId) {
-        this.userId = qparams.userId;
-      }
+      // if (qparams.userId) {
+      //   this.userId = qparams.userId;
+      // }
       if (qparams.src) {
         this.pSource = qparams.src;
       }
@@ -401,27 +402,31 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.activaterouterobj.paramMap
       .subscribe(params => {
+        this.customAccId = params.get('id');
+        if(params.get('userUniqueId')) {
+          this.userId = params.get('userUniqueId');
+        }
         // this.provider_id = params.get('id');
-        const customId = params.get('id').replace(/\s/g, '');
+        // const customId = params.get('id').replace(/\s/g, '');
+        // const customId = params.get('id');
+        // const inputValues = customId.split('___');
 
-        const inputValues = customId.split('___');
-
-        if (inputValues.length > 1) {
-          this.provider_id = inputValues[0];
-          this.userId = inputValues[1];
-          this.gets3curl();
-        } else {
-          this.shared_services.getBusinessUniqueId(customId).subscribe(
+        // if (inputValues.length > 1) {
+          // this.provider_id = inputValues[0];
+          // this.userId = inputValues[1];
+          // this.gets3curl();
+        //} else {
+          this.shared_services.getBusinessUniqueId(this.customAccId).subscribe(
             id => {
               this.provider_id = id;
               this.gets3curl();
             },
             error => {
-              this.provider_id = customId;
+              this.provider_id = this.customAccId;
               this.gets3curl();
             }
           );
-        }
+        // }
       });
   }
   ngAfterViewInit() {
@@ -2254,13 +2259,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    const account = this.provider_id + '___' + userId;
+    // const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         src: 'bp'
       }
     };
-    this.routerobj.navigate([account], navigationExtras);
+    this.routerobj.navigate([this.customAccId, this.userId], navigationExtras);
     // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
   }
 
