@@ -27147,3 +27147,17 @@ width: 40px !important;
 .item-details-component .content.loc-list .card .copy.locd .lbr .cr1 .ph-gal-bx .ph-gal li {
   margin-top: 10px;
 }
+
+.item-details-component .section-title {
+  padding: 0 15px;
+  margin: 25px 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.item-details-component .section-title .h-rule {
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+  margin-left: 15px;
+}
