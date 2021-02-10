@@ -94,26 +94,28 @@ export class ProviderLoginComponent implements OnInit {
     });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (this.shared_functions.isBusinessOwner()) {
-          this.shared_functions.getGlobalSettings()
-            .then(
-              (settings: any) => {
-                setTimeout(() => {
-                  if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (settings.waitlist) {
-                      router.navigate(['provider', 'check-ins']);
-                    } else if (settings.appointment) {
-                      router.navigate(['provider', 'appointments']);
-                    } else if (settings.order) {
-                      router.navigate(['provider', 'orders']);
+        if (router.url === '/business/login') {
+          if (this.shared_functions.isBusinessOwner()) {
+            this.shared_functions.getGlobalSettings()
+              .then(
+                (settings: any) => {
+                  setTimeout(() => {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                      if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      } else if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
+                      } else if (settings.order) {
+                        router.navigate(['provider', 'orders']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
                     } else {
                       router.navigate(['provider', 'settings']);
                     }
-                  } else {
-                    router.navigate(['provider', 'settings']);
-                  }
-                }, 500);
-              });
+                  }, 500);
+                });
+          }
         }
       }
     });

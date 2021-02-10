@@ -57,6 +57,7 @@ export class EditStoreDetailsComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log('submit');
         const data = {
             'firstName': this.firstName,
             'lastName': this.lastName,
@@ -70,12 +71,10 @@ export class EditStoreDetailsComponent implements OnInit {
             'secCountryCode': '+91',
             'whatsAppCountryCode': '+91',
         };
-        console.log(this.email);
-        console.log(this.alternateEmail);
-        if ((this.email !== '' && this.email !== undefined) && (this.alternateEmail !== '' && this.alternateEmail !== undefined)) {
-            if (this.email === this.alternateEmail) {
+        if ((this.email !== '' && this.email !== undefined) && (this.alternateEmail !== '' && this.alternateEmail !== undefined) && (this.email === this.alternateEmail)) {
+            //if (this.email === this.alternateEmail) {
             this.snackbarService.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
-            }
+           // }
         } else if (this.phone === this.alternatePhone) {
             this.snackbarService.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
         } else {
@@ -84,6 +83,7 @@ export class EditStoreDetailsComponent implements OnInit {
 
     }
     editInfo(data) {
+        console.log(data);
         this.resetApiErrors();
         this.api_loading = true;
         this.provider_services.editContactInfo(data)

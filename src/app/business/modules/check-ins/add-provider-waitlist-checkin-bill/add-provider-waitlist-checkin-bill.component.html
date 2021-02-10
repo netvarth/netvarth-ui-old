@@ -73,8 +73,8 @@
 														</span>
 														<span *ngIf="source === 'order'"
 															[class.red]="bill_data.billStatus === 'Cancel'">
-															<span class="title">Order Id </span>
-															<span class="dynamic">{{checkin.orderNumber}}</span>
+															<!-- <span class="title">Order Id </span>
+															<span class="dynamic">{{checkin.orderNumber}}</span> -->
 															<div *ngIf="bill_data.billStatus === 'Cancel'">Cancelled
 															</div>
 														</span>
@@ -632,7 +632,7 @@
 																					</span>
 																				</ng-container>
 																			</div>
-																		</div>
+																		</div> 
 																		<div
 																			class="col-md-12 col-sm-12 col-lg-12 notes">
 																			<button class="cs-btn bt1"

@@ -1007,7 +1007,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     if (this.time_type !== 3) {
-      this.getHistoryAppointmentsCount()
+      const api_filter = {};
+      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+      this.getHistoryAppointmentsCount(api_filter)
         .then(
           (result) => {
             this.history_waitlist_count = result;

@@ -1,0 +1,122 @@
+<section class="container no-padding cons-donate no-padding-small item-details-consumer">
+  <div class="content p0 loc-list p-checkin ynw-common-form-nm">
+    <div class="panel panel-default">
+      <div class="panel-heading top-row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+          <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+        </div>
+      </div>
+      <div class="panel-body no-padding">
+        <div class="c-outer m0">
+          <div class="c-body">
+            <div class="title-gb m0 border-btm">
+              <h5 class="mgn-up-10">
+                <a class="back-btn mgn-lt-5" (click)="goBack()">
+                  <i class="fa fa-arrow-left"></i>
+                </a>
+                <span class=" mgn-lt-10 amount">Continue shopping</span>
+                <!-- <span class="pull-right mgn-rt-10" *ngIf="getItemQty()>0"><i class="fa fa-shopping-cart"
+                    (click)="checkout()"><sup class="blue"> {{updateCartCount()}}</sup></i></span> -->
+              </h5>
+            </div>
+            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <div class="container" *ngIf="!loading">
+              <div class="row">
+                <div class="col-md-6 col-sm-7 pad-25 no-padding-small mgn-bt-10" *ngIf="imagesRect.length> 0">
+                  <!-- <ks-carousel [id]="1" [images]="imagesRect"
+                  [carouselConfig]="{maxHeight: '400px',minHeight: '400px', showArrows: false, objectFit: 'scale-down', keyboardEnable: false, modalGalleryEnable: false, legacyIE11Mode: false}"
+                  [previewConfig]="{visible: true, breakpoints: {xSmall: 50, small: 60, medium: 70, large: 80, xLarge: 100}}"
+                  [dotsConfig]="{visible: false}" [playConfig]="{autoPlay:false}">
+                </ks-carousel>  -->
+
+                  <owl-carousel [options]="{items: 1, dots: true, navigation: false}" [items]="itemImages"
+                    [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                    <div class="item" *ngFor="let image of itemImages;let i = index">
+                      <div class="thumbnail-image">
+                        <img [src]="image.url" />
+                      </div>
+                    </div>
+                  </owl-carousel>
+                </div>
+                <div class="col-md-6 col-sm-5 no-padding">
+                  <!-- <div class="col-md-12 no-padding">
+                    <div class="col-md-6 no-padding mgn-up-10">
+                      <p class="mgn-rt-10 m0"><img class="ordericon home"
+                          src="../../../../assets/images/Delivery.svg" />&nbsp;Home delivery accepted</p>
+                      <p class="m0">Within in the store working Hours</p>
+                    </div>
+                    <div class="col-md-6 no-padding">
+                      <p class="m0"><img class="ordericon pickup"
+                          src="../../../../assets/images/Store pick up.svg" />&nbsp;Store Pickup available</p>
+                      <p class="m0">Within in the store working Hours</p>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12 mgn-up-20">
+                    <h2 class="m0">{{currentItem.displayName}}</h2>
+                    <p class="title-style" *ngIf="isPromotionalpriceFixed && showitemprice">
+                      <span class="rupee-font"
+                        style=" font-size: x-large; text-decoration: line-through;">&#8377;{{currentItem.price}}</span>&nbsp;
+                      <span class="rupee-font"
+                        style="font-size: xx-large">&#8377;{{currentItem.promotionalPrice}}</span>
+                    </p>
+                    <p class="title-style" *ngIf="isPromotionalpricePertage && showitemprice">
+                      &nbsp;
+                      <span class="rupee-font"
+                        style=" font-size: x-large; text-decoration: line-through;">&#8377;{{currentItem.price}}</span>&nbsp;
+                      <span class="rupee-font" style="font-size: x-large">
+                        <sup>{{currentItem.promotionalPrcnt}}% OFF </sup></span>&nbsp;
+                      <span class="rupee-font"
+                        style="font-size: xx-large">&#8377;{{currentItem.promotionalPrice}}</span>
+                    </p>
+                    <p class="title-style" *ngIf="isPrice && showitemprice">
+                      <span class="rupee-font" style="font-size: xx-large">&#8377;{{currentItem.price}}</span> &nbsp;
+                    </p>
+                    <p class="title-style" *ngIf="!currentItem.isStockAvailable">
+                      <span  style="font-size: x-large;color: red"><sup>*</sup>Out of stock</span> &nbsp;
+                    </p>
+                  </div>
+                  <div class="col-md-12  mr-area">
+                    <p class="m0 question-header">Description</p>
+                    <p>{{currentItem.shortDesc}}</p>
+                    <p *ngIf = "currentItem.itemDesc" class="m0 question-header">Detail Description</p>
+                    <p>{{currentItem.itemDesc}}</p>
+                    <!-- <textarea name="paragraph_text" maxlength="500" cols="10" rows="2"></textarea> -->
+                  </div>
+                  <div class="col-md-12">
+                    <p class="question-header m0">Quantity:</p>
+                    <!-- <button class="m2" (click)="decrement()">-</button>
+                    <span>{{getItemQty()}}</span>
+                    <button class="m2" (click)="increment()">+</button> &nbsp; -->
+                    <!-- <button class="pay">
+                      <h6 style="padding-top: 10px;">ADD TO CART</h6>
+                    </button> -->
+                  </div>
+                  <div class="col-md-12 pad-lt-25 mgn-bt-50">
+                    <div class="btn-lt pull-left">
+                      <button [ngClass]="{'disabled1': currentItemObject.minqty === getItemQty()|| !currentItem.isStockAvailable}" (click)="decrement()">-</button>
+                    </div>
+                    <div class="count-o pull-left">
+                      {{getItemQty()}}
+                    </div>
+                    <div class="btn-rt pull-left">
+                      <button [ngClass]="{'disabled1': currentItemObject.maxqty === getItemQty()|| !currentItem.isStockAvailable}" (click)="increment()">+</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12  mr-area">
+                    <p class="m0 question-header">Minimum Qty</p>
+                    <p>{{currentItemObject.minqty}}</p>
+                  </div>
+                  <div class="col-md-12  mr-area">
+                    <p class="m0 question-header">Maximum Qty</p>
+                    <p>{{currentItemObject.maxqty}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>

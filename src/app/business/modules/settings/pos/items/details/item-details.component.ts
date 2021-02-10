@@ -232,6 +232,7 @@ export class ItemDetailsComponent implements OnInit {
         }
     }
     ngOnInit() {
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.getTaxpercentage();
     }
     getItem(itemId) {
