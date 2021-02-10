@@ -86,12 +86,15 @@
                                                                                             [matTooltip]="'Taxable'"
                                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                                     </div>
-                                                                                    <div class="quantity">{{qnty_cap}}
+                                                                                    <div class="quantity" *ngIf="bill_data.billStatus !== 'Cancel'">
+                                                                                        {{qnty_cap}}
                                                                                         {{service.quantity}}</div>
-                                                                                    <div class="price rupee-font">
+                                                                                    <div class="price rupee-font"  *ngIf="bill_data.billStatus !== 'Cancel'">
                                                                                         {{(service.quantity *
                                                                                         service.price) |
                                                                                         currency:'&#8377; '}}</div>
+                                                                                    <div class="price" style="color: red;font-size: smaller;"  *ngIf="bill_data.billStatus === 'Cancel'">
+                                                                                        Cancelled</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two">
                                                                                     <div class="discount-row two-col"
