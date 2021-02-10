@@ -20,13 +20,15 @@
                                 <table class="book-details-sub chkntoknappt-details">
                                     <tbody>
                                         <tr *ngIf="!appointment.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.provider.businessName}},
