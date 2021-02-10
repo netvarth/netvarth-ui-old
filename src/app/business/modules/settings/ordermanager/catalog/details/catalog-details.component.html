@@ -776,17 +776,17 @@
                                           <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                                             <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
                                               <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u>Add items</u></a>&nbsp;
-                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                               </div>
                                               <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
                                                 <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u> Edit items</u></a>&nbsp;
-                                                <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                                <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                               </div>
                                             <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
                                           </div>
                                           <div *ngIf="item_count === 0">
                                             <p class="font-italic">You haven't created any items  
-                                            <a class="link underline pointer-cursor" (click)="gotoItems()">create items </a></p>
+                                            <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg">create items </a></p>
                                           </div>
                     
                                           <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
@@ -794,7 +794,7 @@
                                             <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
                                             <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
                                             <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
-                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                           </div>
                                           <!--end::Input-->
                                       </div>
@@ -876,6 +876,40 @@
                                     
                                       </div>
                                     <!--end::Card-->
+
+                                    <!--Modal begin-->
+                                    <div class="modal fade" id="exampleModalSizeLg" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <i aria-hidden="true" class="ki ki-close"></i>
+                                                  </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                  <p>
+                                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                                                      remaining essentially unchanged.
+                                                  </p>
+                                                  <p>
+                                                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                                      when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                                                      remaining essentially unchanged.
+                                                  </p>
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                                  <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                    <!--Modal end-->
+
+
+
                               </div>
                               <!--end::Wizard Step 2-->
 
@@ -1034,7 +1068,7 @@
                                             <!--begin::Input-->
                                             <div class="form-group">
                                                   <div class="input-group date">
-                                                    <label>Start Date</label>
+                                                    <label>Start Date </label>
                                                         <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
                                                         placeholder="Start Date" formControlName="startdatehome" />
                                                   </div>
