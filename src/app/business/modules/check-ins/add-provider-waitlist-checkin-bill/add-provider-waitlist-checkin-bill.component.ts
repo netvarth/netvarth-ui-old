@@ -1479,9 +1479,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '</td>';
     bill_html += '	</tr>';
     bill_html += '	<tr>';
-    if (this.source === 'order') {
-      bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Order Id ' + this.checkin.orderNumber + '</td>';
-    }
+    // if (this.source === 'order') {
+    //   bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Order Id ' + this.checkin.orderNumber + '</td>';
+    // }
     bill_html += '	</tr>';
     bill_html += '</table>';
     bill_html += '	</td></tr>';

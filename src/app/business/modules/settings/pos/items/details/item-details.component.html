@@ -19,7 +19,7 @@
                            
                         <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white">
                             <div class="cr1">
-                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
+                                <div class="no-dta" *ngIf="!haveMainImg && selectedMessageMain.files.length == 0">
                                     <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20">
                                         <div class="addorderitem" (click)="imagefile.click()">
                                             <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
