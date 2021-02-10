@@ -29,7 +29,7 @@ export interface ItemServiceGroup {
 @Component({
   selector: 'app-provider-waitlist-checkin-bill',
   templateUrl: './add-provider-waitlist-checkin-bill.component.html',
-  styleUrls: ['../../../../../assets/css/style.bundle.css', './add-provider-waitlist-checkin-bill.component.css']
+  styleUrls: ['../../../../../assets/css/style.bundle.css', './add-provider-waitlist-checkin-bill.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class AddProviderWaitlistCheckInBillComponent implements OnInit {

@@ -28,7 +28,7 @@
 						<path d="M55.8744 12.1044C55.8744 18.2841 61.0788 23.2926 67.5001 23.2926C73.9196 23.2926 79.124 18.2841 79.124 12.1044C79.124 5.92653 73.9196 0.917969 67.5001 0.917969C61.0788 0.917969 55.8744 5.92653 55.8744 12.1044Z" fill="#AD84FF"></path>
 						</g>
 						</svg><!--end::Svg Icon--></span></div>
-					<div class="row justify-content-center py-8 px-8 py-md-10 px-md-0 bg-primary">
+					<div class="row justify-content-center py-8 px-8 py-md-3 px-md-0 bg-primary">
 						<div class="col-md-11">
 							<div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
 								<h1 class="display-4 text-white font-weight-boldest mb-11">INVOICE</h1>
@@ -67,6 +67,23 @@
 					<!-- begin: Invoice body-->
 					<div class="row justify-content-center py-8 px-8 py-md-2 px-md-0">
 						<div class="col-md-11">
+							<div class="btn-group ml-2">
+								<button type="button" class="btn btn-sm btn-light-primary font-weight-bold">Small split button</button>
+								<button type="button" class="btn btn-sm btn-light-primary font-weight-bold dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-target="#tmenu">
+									<span class="sr-only">Toggle Dropdown</span>
+								</button>
+								<div class="dropdown-menu" id="tmenu">
+									<a class="dropdown-item" href="#">Action</a>
+									<a class="dropdown-item" href="#">Another action</a>
+									<a class="dropdown-item" href="#">Something else here</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#">Separated link</a>
+								</div>
+							</div>
+
+							<a href="#" class="btn btn-sm btn-success font-weight-bold py-2 px-3 px-xxl-5 my-1 add_item">Add Service/Item</a>
+						</div>
+						<div class="col-md-11">
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -81,7 +98,70 @@
 										<tr class="font-weight-boldest font-size-lg">
 											<td class="pl-0 pt-7">Creative Design</td>
 											<td class="text-right pt-7">80</td>
-											<td class="text-right pt-7">$40.00</td>
+											<td class="text-right pt-7">$40.00
+
+												<div class="dropdown dropdown-inline">
+													<a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="ki ki-bold-more-hor"></i>
+													</a>
+													<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+									<ul class="navi navi-hover py-5">
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-drop"></i></span>
+												<span class="navi-text">New Group</span>
+											</a>
+										</li>
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-list-3"></i></span>
+												<span class="navi-text">Contacts</span>
+											</a>
+										</li>
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-rocket-1"></i></span>
+												<span class="navi-text">Groups</span>
+												<span class="navi-link-badge">
+													<span class="label label-light-primary label-inline font-weight-bold">new</span>
+												</span>
+											</a>
+										</li>
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+												<span class="navi-text">Calls</span>
+											</a>
+										</li>
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-gear"></i></span>
+												<span class="navi-text">Settings</span>
+											</a>
+										</li>
+									
+										<li class="navi-separator my-3"></li>
+									
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-magnifier-tool"></i></span>
+												<span class="navi-text">Help</span>
+											</a>
+										</li>
+										<li class="navi-item">
+											<a href="#" class="navi-link">
+												<span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+												<span class="navi-text">Privacy</span>
+												<span class="navi-link-badge">
+													<span class="label label-light-danger label-rounded font-weight-bold">5</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+									<!--end::Navigation-->
+													</div>
+												</div>
+											</td>
 										</tr>
 										<tr class="font-weight-boldest border-bottom-0 font-size-lg">
 											<td class="border-top-0 pl-0 py-4">Front-End Development</td>
@@ -97,25 +177,11 @@
 
 					<!-- begin: Invoice footer-->
 					<div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
-						<div class="col-md-10">
+						<div class="col-md-10"> 
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
-								<div class="d-flex flex-column mb-10 mb-md-0" style="visibility: hidden;">
-									<div class="font-weight-bolder font-size-lg mb-3">BANK TRANSFER</div>
-
-									<div class="d-flex justify-content-between mb-3">
-										<span class="mr-15 font-weight-bold">Account Name:</span>
-										<span class="text-right">Barclays UK</span>
-									</div>
-
-									<div class="d-flex justify-content-between mb-3">
-										<span class="mr-15 font-weight-bold">Account Number:</span>
-										<span class="text-right">1234567890934</span>
-									</div>
-
-									<div class="d-flex justify-content-between">
-										<span class="mr-15 font-weight-bold">Code:</span>
-										<span class="text-right">BARC0032UK</span>
-									</div>
+								<div class="d-flex flex-column mb-10 mb-md-0">
+									<div class="d-flex justify-content-between"><button  type="button" onclick="window.print();" class="btn btn-light-primary font-weight-bold">Download Invoice</button> &nbsp;&nbsp;&nbsp;<button  type="button" onclick="window.print();" class="btn btn-primary font-weight-bold">Print Invoice</button></div>
+									
 								</div>
 								<div class="d-flex flex-column text-md-right">
 									<span class="font-size-lg font-weight-bolder mb-1">TOTAL AMOUNT</span>
@@ -128,18 +194,6 @@
 					</div>
 					<!-- end: Invoice footer-->
 
-					<!-- begin: Invoice action-->
-					<div class="row justify-content-center py-8 px-8 py-md-5 px-md-0">
-						<div class="col-md-9">
-							<div class="d-flex justify-content-between">
-								<button type="button" class="btn btn-light-primary font-weight-bold"
-									onclick="window.print();">Download Invoice</button>
-								<button type="button" class="btn btn-primary font-weight-bold"
-									onclick="window.print();">Print Invoice</button>
-							</div>
-						</div>
-					</div>
-					<!-- end: Invoice action-->
 
 					<!-- end: Invoice-->
 				</div>
