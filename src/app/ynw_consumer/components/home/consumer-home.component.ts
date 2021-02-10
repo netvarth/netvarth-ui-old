@@ -288,6 +288,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     stat = this.lStorageService.getitemfromLocalStorage('orderStat');
     if (stat === true) {
       this.showOrder = true;
+    } else {
+      this.showOrder = false;
     }
     this.breadcrumbs = [
       {

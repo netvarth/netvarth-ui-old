@@ -7142,3 +7142,13 @@ margin-top: 7px;
   font-family: monospace;
 }
 
+.darkblue {
+  color: #334b99 !important;
+  font-size: 0.9rem;
+font-weight: 600;
+}
+.darkred {
+  color: red!important;
+  font-size: 0.9rem;
+font-weight: 600;
+}

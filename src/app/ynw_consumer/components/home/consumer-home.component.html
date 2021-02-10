@@ -1772,7 +1772,7 @@
 
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus | capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
@@ -1854,7 +1854,7 @@
 
                                             </div>
                                             <div
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus | capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>
@@ -1941,7 +1941,7 @@
 
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus | capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
@@ -2022,7 +2022,7 @@
 
                                             </div>
                                             <div
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "[ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus | capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>

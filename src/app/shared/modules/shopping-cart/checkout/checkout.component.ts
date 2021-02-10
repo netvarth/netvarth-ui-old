@@ -531,7 +531,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.shared_services.getConsumeraddress()
       .subscribe(
         data => {
+          console.log(data);
           if (data !== null) {
+            console.log(this.added_address);
             this.added_address = data;
             if (this.added_address.length > 0 && this.added_address !== null) {
               this.highlight(0, this.added_address[0]);
@@ -590,11 +592,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
-        this.added_address.splice(index, 1);
         this.shared_services.updateConsumeraddress(this.added_address)
           .subscribe(
             data => {
               if (data) {
+              //  this.added_address.splice(index, 1);
                 this.getaddress();
               }
               this.snackbarService.openSnackBar('Address deleted successfully');
@@ -603,7 +605,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
           );
-        // this.getaddress();
       }
     });
   }

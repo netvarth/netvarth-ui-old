@@ -70,9 +70,12 @@
                                                 <div class="txt-cust-name">{{waitlist.orderFor.firstName}}&nbsp;{{waitlist.orderFor.lastName}}</div>
                                                 <div class="txt-addrs">
                                                     <i class="fa fa-phone"></i>{{waitlist.countryCode}} {{waitlist.phoneNumber}}</div>
-                                                    <div class="txt-addrs content_wrap">
+                                                    <div class="txt-addrs content_wrap"> 
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
+                                                        <div class="bold font11 mgn-bt-10"> {{waitlist.orderDate | date: display_dateFormat}},
+                                                            {{waitlist.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{waitlist.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                         <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
                                                             <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
                                                         </div>
