@@ -17,7 +17,7 @@ import { OrderItemsComponent } from './order-items/order-items.component';
 import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
 import { OrderWizardComponent } from './order-wizard/order-wizard.component';
 import { AddressComponent } from './order-wizard/address/address.component';
-import { MatDialogModule } from '@angular/material/dialog';
+// import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [

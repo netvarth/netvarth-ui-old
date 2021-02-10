@@ -26,7 +26,6 @@ export class InboxOuterComponent implements OnInit {
   userDet;
   obtainedMsgs = false;
   groupedMsgs: any = [];
-  groupedMsgsCopy: any = [];
   selectedUserMessages: any = [];
   loading = false;
   message = '';
@@ -84,9 +83,9 @@ export class InboxOuterComponent implements OnInit {
     } else {
       this.small_device_display = false;
     }
-    const screenHeight = window.innerHeight;
-    this.userScrollHeight = screenHeight - 240;
-    this.msgScrollHeight = screenHeight - 387;
+    // const screenHeight = window.innerHeight;
+    // this.userScrollHeight = screenHeight - 240;
+    // this.msgScrollHeight = screenHeight - 387;
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -94,20 +93,14 @@ export class InboxOuterComponent implements OnInit {
       .subscribe(
         data => {
           this.messages = data;
-          console.log(this.messages);
-          this.groupedMsgs = this.groupedMsgsCopy = this.shared_functions.groupBy(this.messages, 'accountName');
-          console.log(this.groupedMsgs);
-          console.log(this.selectedUserMessages);
-          console.log(this.selectedProvider);
+          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            console.log(this.selectedUserMessages);
             setTimeout(() => {
               this.scrollToElement();
             }, 200);
           }
           this.sortMessages();
-          console.log(this.groupedMsgs);
           this.obtainedMsgs = true;
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
           // this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
@@ -153,18 +146,15 @@ export class InboxOuterComponent implements OnInit {
   }
   providerSelection(msgs) {
     this.clearImg();
-    console.log(msgs);
     this.selectedProvider = msgs.key;
     this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
     const unreadMsgs = msgs.value.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
-    console.log(unreadMsgs);
     if (unreadMsgs.length > 0) {
       const ids = unreadMsgs.map(msg => msg.messageId);
       const messageids = ids.toString();
-      console.log(ids);
       this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
     } else {
       setTimeout(() => {
@@ -226,7 +216,6 @@ export class InboxOuterComponent implements OnInit {
   getUserName(user) {
     // const name = user.match(/\b(\w)/g);
     const name = user.split(' ');
-    // console.log(user.split(' '));
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
@@ -235,7 +224,7 @@ export class InboxOuterComponent implements OnInit {
   }
   searchByName() {
     console.log(this.providerName);
-    this.groupedMsgs = this.groupedMsgsCopy;
+    // this.groupedMsgs = this.groupedMsgsCopy;
     if (this.providerName !== '') {
       let arr = [];
       Object.keys(this.groupedMsgs).forEach(key => {
@@ -299,7 +288,6 @@ export class InboxOuterComponent implements OnInit {
   }
   openImage(attachements, index) {
     this.image_list_popup_temp = this.image_list_popup = [];
-    console.log(attachements);
     let count = 0;
     for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
       const thumbPath = attachements[comIndex].thumbPath;
@@ -321,9 +309,7 @@ export class InboxOuterComponent implements OnInit {
     }
     if (count > 0) {
       this.image_list_popup = this.image_list_popup_temp;
-      console.log(this.image_list_popup);
       setTimeout(() => {
-        console.log(index);
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);
     }
