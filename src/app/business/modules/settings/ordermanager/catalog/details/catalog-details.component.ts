@@ -618,7 +618,22 @@ export class CatalogdetailComponent implements OnInit {
                // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                // homeotpverify: [false],
                 deliverykms: [''],
-                deliverycharge: ['']
+                deliverycharge: [''],
+                //Add item form controls
+                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                showOnLandingpage: [true],
+                stockAvailable: [true],
+                taxable: [false],
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPriceType: [],
+                promotionallabel: [],
+                customlabel: []
             });
             this.amForm.get('orderType').setValue('SHOPPINGCART');
            const dt = new Date();
