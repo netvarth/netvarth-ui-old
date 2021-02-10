@@ -32,11 +32,11 @@
                           <!--begin::Body-->
                           <div class="card-body">
                             <!--begin:Search-->
-                            <div class="input-group input-group-solid pad-5">
+                            <!-- <div class="input-group input-group-solid pad-5">
                               <div class="input-group-prepend">
                                 <span class="input-group-text">
                                   <span class="svg-icon svg-icon-lg">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg--><svg
+                                    <svg
                                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                       width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -49,18 +49,20 @@
                                           fill="#000000" fill-rule="nonzero" />
                                       </g>
                                     </svg>
-                                    <!--end::Svg Icon-->
                                   </span> </span>
                               </div>
                               <input type="text" class="form-control py-4 h-auto" placeholder="Provider"
                                 [(ngModel)]="providerName" (keypress)="searchByName()" />
-                            </div>
+                            </div> -->
                             <!--end:Search-->
                             <!--begin:Users-->
-                            <div class="mt-7 scroll scroll-pull over-scroll" [ngStyle]="{'height.px': userScrollHeight}">
+                            <div class="mt-7 scroll scroll-pull over-scroll"
+                              [ngStyle]="{'height.px': userScrollHeight}">
                               <!--begin:User-->
-                              <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder" (click)="providerSelection(user)"
-                                class="d-flex align-items-center justify-content-between pointer-cursor pad-5" [class.selected-user]="selectedProvider==user.key">
+                              <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder"
+                                (click)="providerSelection(user)"
+                                class="d-flex align-items-center justify-content-between pointer-cursor pad-5"
+                                [class.selected-user]="selectedProvider==user.key">
                                 <div class="d-flex align-items-center">
                                   <div class="symbol symbol-circle symbol-50 mr-3">
                                     <!-- <img alt="Pic"
@@ -104,7 +106,7 @@
                             <div class="text-center flex-grow-1">
                               <div class="text-left flex-grow-1">
                                 <!--begin::Aside Mobile Toggle-->
-                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md d-lg-none"
+                                <button type="button" class="btn btn-clean btn-sm btn-icon btn-icon-md d-md-none"
                                   id="kt_app_chat_toggle" (click)="showChatSection()">
                                   <span class="svg-icon svg-icon-lg">
                                     <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Adress-book2.svg--><svg
@@ -137,7 +139,8 @@
                           <!--begin::Body-->
                           <div class="card-body no-padding-small">
                             <!--begin::Scroll-->
-                            <div class="scroll scroll-pull over-scroll" #scrollMe [ngStyle]="{'height.px': msgScrollHeight}">
+                            <div class="scroll scroll-pull over-scroll" #scrollMe
+                              [ngStyle]="{'height.px': msgScrollHeight}">
                               <!--begin::Messages-->
                               <div class="messages" *ngFor="let msg of selectedUserMessages">
                                 <!--begin::Message In-->
@@ -157,13 +160,13 @@
                                     </div>
                                   </div>
                                   <div
-                                    class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left max-w-400px">
+                                    class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
                                     {{msg.msg}}
-                                    <div class="thumbnails mt10 mb10" *ngIf="msg.attachements;let i=index">
-                                      <a class="mg-10" (click)="openImage(msg.attachements, i)" [href]="attachment.s3path"
-                                          *ngFor="let attachment of msg.attachements"><img [src]="getThumbUrl(attachment)"
-                                              style="width:100px; height:100px" /></a>
-                                  </div>
+                                    <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                      <a class="mg-10" (click)="openImage(msg.attachements, i)"
+                                        *ngFor="let attachment of msg.attachements;let i=index"><img
+                                          [src]="getThumbUrl(attachment)" /></a>
+                                    </div>
 
                                   </div>
                                 </div>
@@ -183,13 +186,13 @@
                                                             </div> -->
                                   </div>
                                   <div
-                                    class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right max-w-400px">
+                                    class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
                                     {{msg.msg}}
                                     <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
-                                      <a class="mg-10" (click)="openImage(msg.attachements, i)" [href]="attachment.s3path"
-                                          *ngFor="let attachment of msg.attachements"><img [src]="getThumbUrl(attachment)"
-                                              style="width:100px; height:100px" /></a>
-                                  </div>
+                                      <a class="mg-10" (click)="openImage(msg.attachements, i)"
+                                        *ngFor="let attachment of msg.attachements;let i=index"><img
+                                          [src]="getThumbUrl(attachment)" /></a>
+                                    </div>
                                   </div>
                                 </div>
                                 <!--end::Message Out-->
@@ -202,24 +205,35 @@
                           <!--begin::Footer-->
                           <div class="card-footer align-items-center">
                             <!--begin::Compose-->
-                            <textarea class="form-control border-0 p-0" rows="2" placeholder="Type a message"
-                              [(ngModel)]="message"></textarea>
                             <div class="d-flex align-items-center justify-content-between mt-5">
+                              <textarea class="form-control border-0 p-0" placeholder="Type a message"
+                                [(ngModel)]="message"></textarea>
                               <div class="mr-3">
-                                <!-- <a class="btn btn-clean btn-icon btn-md mr-1"><i
-                                    class="flaticon2-photograph icon-lg"></i></a>
-                                <a class="btn btn-clean btn-icon btn-md"><i
-                                    class="flaticon2-photo-camera  icon-lg"></i></a> -->
                                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                                    (change)="filesSelected($event)">
-                                    <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">attach_file</i></a>
+                                  (change)="filesSelected($event)">
+                                <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
+                                    class="material-icons">attach_file</i></a>
                               </div>
                               <div>
-                                <button type="button" (click)="sendMessageCompleted && sendMessage()"
+                                <button type="button" (click)="sendMessageCompleted && sendMessage()" *ngIf="!small_device_display"
                                   class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
-                                  <!-- <app-common-innerloading-spinner *ngIf="!sendMessageCompleted"></app-common-innerloading-spinner> -->
                                 </button>
+                                <i *ngIf="small_device_display" class="fa fa-paper-plane" aria-hidden="true"></i>
                               </div>
+                            </div>
+                            <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                              <ul class="galul">
+                                <li *ngFor="let file of selectedMessage.files;let i = index ">
+                                  <div class="galimg_outer">
+                                    <div class="gal_img">
+                                      <img [src]="selectedMessage.base64[i]" *ngIf="selectedMessage.base64[i]">
+                                    </div>
+                                    <div class="gal_action" (click)="deleteTempImage(i)">
+                                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
                             </div>
                             <!--begin::Compose-->
                           </div>
@@ -243,3 +257,6 @@
     <!-- </div> -->
   </div>
 </section>
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+  [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+  (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

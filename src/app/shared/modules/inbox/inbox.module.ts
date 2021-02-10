@@ -13,6 +13,7 @@ import { InboxOuterComponent } from './inbox-outer/inbox-outer.component';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { HeaderModule } from '../header/header.module';
 import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-spinner/loading-spinner.module';
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 @NgModule({
     imports: [
         CapitalizeFirstPipeModule,
@@ -26,7 +27,8 @@ import { LoadingSpinnerModule } from '../../../ynw_provider/components/loading-s
         InboxRoutingModule,
         Nl2BrPipeModule,
         HeaderModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     entryComponents: [
       InboxListComponent

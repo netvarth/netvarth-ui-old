@@ -7,7 +7,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
-import { AdvancedLayout, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
+import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -48,6 +48,19 @@ export class InboxOuterComponent implements OnInit {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
@@ -67,17 +80,13 @@ export class InboxOuterComponent implements OnInit {
   onResize() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 767) {
-    } else {
-      this.small_device_display = false;
-    }
-    if (this.screenWidth <= 1040) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
     const screenHeight = window.innerHeight;
-    this.userScrollHeight = screenHeight - 280;
-    this.msgScrollHeight = screenHeight - 427;
+    this.userScrollHeight = screenHeight - 240;
+    this.msgScrollHeight = screenHeight - 387;
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -143,6 +152,7 @@ export class InboxOuterComponent implements OnInit {
     return retdate;
   }
   providerSelection(msgs) {
+    this.clearImg();
     console.log(msgs);
     this.selectedProvider = msgs.key;
     this.selectedUserMessages = msgs.value;
@@ -196,11 +206,7 @@ export class InboxOuterComponent implements OnInit {
           () => {
             this.message = '';
             this.getInboxMessages();
-    this.selectedMessage = {
-      files: [],
-      base64: [],
-      caption: []
-    };
+            this.clearImg();
             this.sendMessageCompleted = true;
           },
           error => {
@@ -209,6 +215,13 @@ export class InboxOuterComponent implements OnInit {
           }
         );
     }
+  }
+  clearImg() {
+    this.selectedMessage = {
+      files: [],
+      base64: [],
+      caption: []
+    };
   }
   getUserName(user) {
     // const name = user.match(/\b(\w)/g);
@@ -275,6 +288,8 @@ export class InboxOuterComponent implements OnInit {
       return attachment.s3path;
     }
   }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -290,13 +305,10 @@ export class InboxOuterComponent implements OnInit {
       const thumbPath = attachements[comIndex].thumbPath;
       let imagePath = thumbPath;
       const description = attachements[comIndex].s3path;
-      console.log(description);
       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-      console.log(thumbPathExt);
       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
         imagePath = attachements[comIndex].s3path;
       }
-      console.log(imagePath);
       const imgobj = new Image(
         count,
         { // modal
@@ -304,7 +316,6 @@ export class InboxOuterComponent implements OnInit {
           description: description
         },
       );
-      console.log(imgobj);
       this.image_list_popup_temp.push(imgobj);
       count++;
     }
@@ -312,8 +323,14 @@ export class InboxOuterComponent implements OnInit {
       this.image_list_popup = this.image_list_popup_temp;
       console.log(this.image_list_popup);
       setTimeout(() => {
+        console.log(index);
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);
     }
+  }
+  deleteTempImage(i) {
+    this.selectedMessage.files.splice(i, 1);
+    this.selectedMessage.base64.splice(i, 1);
+    this.selectedMessage.caption.splice(i, 1);
   }
 }
