@@ -768,7 +768,14 @@
 
                               <!--begin::Wizard Step 2-->
                               <div class="pb-5" *ngIf="step == 2">
-                                  <h4 class="mb-10 font-weight-bold text-dark">Items information</h4>
+                                <div class="disp-flex">
+                                  <h4 class="mb-10 font-weight-bolder text-dark">Items information</h4>
+
+                                  <div class="col-lg-6">
+                                    <button type="reset" class="btn btn-success mr-2">Create New Item</button>
+                                  </div>
+                                </div>
+                                 
                                 
                                   <div class="row" style="background: #ecf0f5;">
                                     
@@ -807,7 +814,7 @@
                                           <!--begin::Input-->
                                           <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                                             <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
-                                              <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u>Add items</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor"><u>Add items2</u></a>&nbsp;
                                               <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                               </div>
                                               <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
@@ -824,7 +831,7 @@
                                           <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
                                             <h6>{{catalogItems.length}} items are in your catalog</h6>
                                             <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
-                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
+                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items1</u></a>&nbsp;
                                             <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
                                               <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                           </div>
@@ -855,7 +862,7 @@
                                             <div
                                                 class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                                                 <a 
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}*</a>
                                                 
                                                 <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
                                             <!-- min -->
@@ -903,7 +910,7 @@
                                               <div
                                                   class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
                                                   <a 
-                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}?</a>
                                                   
                                                   <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
                                                   <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   

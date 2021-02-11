@@ -26,6 +26,16 @@
 .content {
     padding-top: 0px !important
   }
+.col-lg-6 .btn {
+  font-size: 0.8rem;
+  line-height: 1;
+  border-radius: 0 !important;
+}  
+.col-lg-6 .btn.btn-success {
+  
+  background-color: #4caf50 !important;
+  border-color: #4caf50 !important;
+}
   
  
   
