@@ -1,294 +1,215 @@
-<!-- <p>order-edit works!</p>
- -->
 
- <section class="container no-padding cons-donate no-padding-small shop-cart">
-    <div class="content  p0 loc-list p-checkin ynw-common-form-nm">
+<section class="">
+    <div class="card title-gb rounded-0">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{uid}}</i>
+      </h5>
+    </div>
+  </section>
+  <section>
+
+  <div class="d-flex flex-column-fluid mt-4">
+    <div class="container">
+      <div class="card card-custom rounded-0 p-0">
+        <div class="card-body p-0 rounded-0">
+    <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+    <div class="content  p0 loc-list p-checkin ynw-common-form-nm" *ngIf="!loading">
       <div class="col-md-12 no-padding-small">
-        <div class="panel panel-default">
-          <!-- <div class="panel-heading top-row ">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-              <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
-            </div>
-          </div> -->
-          <div class="panel-body no-padding">
-            <div class="bg-grey">
-              <div class="card title-gb m0">
-                <h5 class="mgn-up-10">
-                  <a class="back-btn" (click)="goBack()">
-                    <i class="fa fa-arrow-left"></i>
-                  </a>
-                  <span class=" mgn-lt-10 amount">Order</span>
-                </h5>
-              </div>
-              <!-- revamped section -->
-              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="action==''">
-                <div class="col-sm-7 col-md-7 col-lg-7 col-xs-12 pad-10">
-                  <div class="card col-xs-12">
-                    <div *ngIf="orderCount === 0">Your cart is empty</div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2 no-padding-small"
-                      *ngFor="let item of orders;  let i = index">
-                      <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding disp-flex">
-                        <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img"
-                          *ngIf="item.item.itemImages"
-                          [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
-                        <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
-                          <div class="itm-nme"> {{item.item.displayName}}</div>
-                          <div  class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
-                          </div>
-                          <div>
-                             <span class="add_nte" (click)="addNotes(item,i)">
-                                 {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                             </span> &nbsp; 
-                             <span class="add_nte" (click)="deleteNotes(item,i)">
-                                <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                             </span>
-                          </div>                    
-  
-                        </div>
-                        
-                      </div>
-  
-                      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-4 disp-flex fl-right mgn-up-20">
-                        <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
-                          class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
-                        </div>
-                        <div *ngIf="getItemQty(item) >= 2"
-                          (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
-                        </div>
-                        <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
-                        </div>
-                        <div [class.disableall]="getItemQty(item) === item.maxqty" (click)="increment(item)"
-                          class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer">+
-                        </div>
-                      </div>
-                      <!-- <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 disp-flex fl-right" (click)="addNotes(item,i);">
-                        <a> <i class="fa fa-sticky-note-o" aria-hidden="true">
-                          Add Notes</i></a>
-                      </div> -->
-                    </div>
-                    <button class="confm_btn" (click)="addItems()">Add More Items</button>
+              <div class="flex-row-fluid">
+                <div>
+                  <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                    <h3 class="card-title align-items-start flex-column">
+                      <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
+                      </span>
+                    </h3>
                   </div>
-                </div>
-  
-                <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
-                  <div [class.opacty]="showSide" class="card col-xs-12">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey">
-                      <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
-                        Delivery Type
-                      </div>
-                      <div class="order-label mgn-bt-10">
-                        <div *ngIf="home_delivery && store_pickup">
-                          <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
-                            <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                              Store pick up
-                            </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <mat-radio-button [value]="'home'" [checked]="!storeChecked">
-                              Home delivery
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-                        <div *ngIf="store_pickup && !home_delivery">
-                          store pickup
-                        </div>
-                        <div *ngIf="home_delivery && !store_pickup">
-                          home delivery
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey">
-                      <div class="oder-sumary-txt">
-                        Date/Time
-                        <div class="fl-right"><a (click)="changeTime()">Change</a></div>
-                      </div>
-                      <div class="order-label mgn-bt-10">
-                        <span *ngIf="!isFuturedate">Today, </span>
-                        <span *ngIf="!isFuturedate">
-                          {{nextAvailableTime}}
-                        </span>
-                        <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                        </span>
-                        <span *ngIf="isFuturedate">
-                          {{nextAvailableTime}}
-                        </span>
-                      </div>
-                    </div>
 
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey" *ngIf="!storeChecked">
-                        <div class="oder-sumary-txt"  *ngIf="orderDetails.homeDeliveryAddress" >
-                             Address
-                        </div>
-                        <!-- <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(selectedAddress)">Change</a></div> -->
-                        <div *ngIf="orderDetails.homeDeliveryAddress"> 
-                            <span class="address" [innerHTML]="orderDetails.homeDeliveryAddress | nl2br"></span>
-                        </div>
-                      <div class="oder-sumary-txt" *ngIf="!orderDetails.homeDeliveryAddress"  (click)="addAddress()">
-                        Add Address
-                      </div>                     
-                      <div *ngIf="storeaddress"> 
-                          <span class="address" [innerHTML]="this.storeaddress | nl2br"></span>
-                          <div  class="oder-sumary-txt" class="fl-right"><a (click)="EditAddress(storeaddress)">Change</a></div>
+                  <div class="card-body p-0">
 
-                      </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline">
-                      <div class="oder-sumary-txt">Order Summary</div>
-                      <!-- <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
-                        *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
-                      <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                        Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
-                    </div> -->
-                      <div class="order-label">
-                        <div class="flex1">Item Total</div>
-                        <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
-                      </div>
-                      <ng-container *ngIf="orders.length!==0">
-                      <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
-                        <div class="flex1">Delivery Charge</div>
-                        <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
-                      </div>
-                    </ng-container>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline">
-                      <div class="flex1">SUB TOTAL</div>
-                      <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
-                    </div>
-                    <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true" class="confm_btn">Update Order</button>
-                  </div>
-                </div>
-              </div>
-  
-  
-              <!-- Change date -->
-              <div class="panel-body no-padding">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                  <div class="card p0">
-                    <div class="copy locd">
-  
-  
-                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                        *ngIf="action=='timeChange'">
-                        <!-- <p>shiva Reddy</p> -->
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                            Choose
-                            Date</div>
-                          <div class="pull-left brd-round brd-light mgn-up-20">
-                            <!-- <div class="icon-minus pull-left" [class.disable]="disableMinus()" -->
-                            <div class="icon-minus pull-left" (click)="calculateDate(-1)">
-                            </div>
-  
-                            <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                            <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
-                          </div>
-                          <div class="pickerouter caldiv pull-left mgn-up-20">
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                            <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
-                              [min]="minDate" [max]="maxDate" [value]="ddate"
-                              (dateChange)="handleFutureDateChange($event)">
-  
-                          </div>
-  
-                        </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
-                            Timings</div>
-                          <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                            <div class="pull-left brd-round brd-light mgn-up-20" *ngIf="isfutureAvailableTime">
-                              <p>{{futureAvailableTime}}</p>
-                            </div>
-                            <div *ngIf="!isfutureAvailableTime">
-                              <p>No timings are available</p>
-                            </div>
-                            <!-- <mat-chip-list>
-                              <mat-chip>
-                                09:00 AM - 10:00 PM
-  
-                              </mat-chip>
-                            </mat-chip-list> -->
-  
-                          </div>
-  
-                        </div>
-                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                          <button (click)="goBackCart(futureAvailableTime)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
-                            type="button">Ok</button>
-                            <!-- <button (click)="resetDateTime();" class="btn bt3 btn-default coupon-apply-btn"
-                            type="button">Cancel</button> -->
-                        </div>
-                      </div>
-                      <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
-                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Apply promocode</div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" *ngIf="showCouponWB">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                              <i class="icon-bell"></i>{{applied_inbilltime}}
-                            </div>
-                            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
-                              <div class="input-group">
-                                <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
-                                  placeholder="Enter coupon code" type="text" class="form-control"
-                                  [(ngModel)]="selected_coupon">
-                                <span class="input-group-btn">
-                                  <button class="btn bt3 btn-default coupon-apply-btn"
-                                    (click)="applyCoupons(selected_coupon)" type="button">Add</button>
-                                </span>
-                              </div>
-                            </div>
-  
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;"
-                              *ngIf="api_cp_error !== null">
-                              {{api_cp_error}}</div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-  
-                            </div>
-                          </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                            *ngIf="couponsList && couponsList.length>0">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                              *ngFor="let coupon of couponsList let i=index">
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                  {{coupon.couponCode}} </div>
-                                <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                  <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                                      class="pointer-cursor lnk read-more-checkin">Read
-                                      T & C </a></span>
-                                  <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                        (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                                        [matTooltip]="'Remove Coupon'"></i></a></span>
+                    <div class="table-responsive">
+                      <table class="table">
+
+                        <thead>
+                          <tr>
+                            <th>Product</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-right">Price</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                          <tr *ngFor="let item of orders">
+                            <td class="d-flex align-items-center font-weight-bolder">
+
+                              <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light"   >
+                                <div class="symbol-label" [style.background-image]="'url('+getItemImg(item)+')'">
                                 </div>
                               </div>
-                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                *ngIf="coupon.showme">
-                                {{coupon.instructions}}
+
+                              <a class="text-dark text-hover-primary">{{ item.item.displayName }}
+                              </a>
+                            </td>
+                            <td class="text-center align-middle">
+                              <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2"  (click)="decrement(item);">
+                                <i class="ki ki-minus icon-xs"></i>
+                              </a>
+                              <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
+                              <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                <i class="ki ki-plus icon-xs"></i>
+                              </a>
+                            </td>
+                            <td class="text-right align-middle font-weight-bolder font-size-h5">
+                             {{ getItemPrice(item) }}
+                            </td>
+                            <td class="text-right align-middle"(click)="removeItemFromCart(item)" >
+                              <a class="btn btn-danger font-weight-bolder font-size-sm">
+                                Remove
+                              </a>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
+                      <div class="col-md-10 ln-ht-2"  *ngIf="home_delivery && store_pickup">
+                        <div class="text-muted">DELIVERY TYPE</div>
+                        <ng-container *ngIf="home_delivery && store_pickup">
+                        <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
+                          <mat-radio-button [value]="'store'" [checked]="storeChecked">
+                            Store pick up
+                          </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <mat-radio-button [value]="'home'" [checked]="!storeChecked">
+                            Home delivery
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </ng-container>
+                      <div *ngIf="store_pickup && !home_delivery">
+                        Store Pickup
+                      </div>
+                      <div *ngIf="home_delivery && !store_pickup">
+                        Home delivery
+                      </div>
+                        <div class="text-muted">DATE/TIME
+                          <div class="fl-right"><a (click)="changeTime()">Change</a></div>
+                        </div>
+                        <div>
+                          <span *ngIf="!isFuturedate">Today ,</span>
+                          <span *ngIf="!isFuturedate">
+                            {{nextAvailableTime}}
+                          </span>
+                          <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
+                          </span>
+                          <span *ngIf="isFuturedate">
+                            {{nextAvailableTime}}
+                          </span>
+                        </div>
+
+
+                                                      <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                                                      <div  *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
+                                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
+                                                            <div
+                                                                class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                                                <div
+                                                                    class="card-body text-left pl-5 p-0 font-addrss">
+                                                                    <div class="adrs-data">
+                                                                      <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                                                      <div>{{address.address}}</div>
+                                                                      <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                                                      <div> +91 {{address.phoneNumber}}</div>
+                                                                      <div> {{address.email}}</div>
+                                                                    </div>
+                                                                    <button class="add-adrs-btn" mat-flat-button (click)="updateAddress(address,i)">
+                                                                      Edit
+                                                                    </button> &nbsp;
+                                                                    <button class="add-adrs-btn" mat-flat-button (click)="deleteAddress(address,i)">
+                                                                     Delete
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
+                                                            <div
+                                                                class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                                                <div
+                                                                    class="card-body text-center p-0">
+                                                                    <button type="button" class="btn btn-success px-2 py-1" (click)=addAddress();>
+                                                                        Add New </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </ng-container>
+
+
+
+                      </div>
+
+                    </div>
+
+                    <div>
+                      <form>
+                        <div class="form-group row mt-5">
+                          <div class="col-md-3 d-flex align-items-center">
+                            <label class="font-weight-bolder">Apply Promo code
+                            </label>
+                          </div>
+                          <div class="col-md-7">
+                            <div class="input-group w-100">
+                              <input type="text" class="form-control" placeholder="Voucher Code">
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary line-height-sm" type="button">Apply</button>
                               </div>
                             </div>
                           </div>
                         </div>
-  
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer" *ngIf="coupon_status">
-                          <div class="form-group">
-                            <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
-                              applied
-                              successfully</span>
-                            <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
-                              valid</span>
-                          </div>
-                        </div>
+                      </form>
+                    </div>
+
+                    <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
+                      <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                      <div class="d-flex justify-content-between mb-3">
+                        <span class="mr-15 font-weight-bold">Price </span>
+                        <span class="text-right">{{getTotalItemPrice()}}</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
+                        <span class="mr-15 font-weight-bold">Tax</span>
+                        <span class="text-right">{{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-3">
+                        <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                        <span class="text-right">{{getDeliveryCharge()}}</span>
+                      </div>
+
+                      <div class="d-flex justify-content-between">
+                        <span class="mr-15 font-weight-bold">Total Price</span>
+                        <span class="text-right">{{getSubTotal()}}</span>
                       </div>
                     </div>
+
+
+
+
+
                   </div>
                 </div>
+
               </div>
-  
-  
-            </div>
-          </div>
-        </div>
+
+
       </div>
       <div class="clearfix"></div>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
   </section>
-  
+
+

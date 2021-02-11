@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -17,12 +17,14 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddressComponent } from './address/address.component';
 
 
+
 @Component({
   selector: 'app-order-wizard',
   templateUrl: './order-wizard.component.html',
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
 export class OrderWizardComponent implements OnInit {
+  prefillnewCustomerwithfield = '';
   canceldialogRef: any;
   addressDialogRef: any;
   selectedRowIndex = -1;
@@ -74,7 +76,7 @@ export class OrderWizardComponent implements OnInit {
   choose_type: string;
   disabledConfirmbtn: boolean;
   orders: any;
-  order_count: number;
+  order_count = 0;
   price: number;
   itemCount: any;
   orderItems: any[];
@@ -95,10 +97,13 @@ export class OrderWizardComponent implements OnInit {
   create_customer = false;
   storeAvailableDates: any = [];
   homeAvailableDates: any = [];
+  disabledNextbtn = true;
+  @ViewChild('closeModal') private closeModal: ElementRef;
+
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
-    private dialog:MatDialog,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<AddressComponent>,
     public sharedFunctionobj: SharedFunctions,
     private shared_services: SharedServices,
@@ -106,7 +111,38 @@ export class OrderWizardComponent implements OnInit {
     public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    private provider_services: ProviderServices) { }
+    private activated_route: ActivatedRoute,
+    private provider_services: ProviderServices) {
+
+    this.activated_route.queryParams.subscribe(qparams => {
+
+
+      if (qparams.ph || qparams.id) {
+        const filter = {};
+        if (qparams.ph) {
+          filter['phoneNo-eq'] = qparams.ph;
+        }
+        if (qparams.id) {
+          filter['id-eq'] = qparams.id;
+        }
+        this.provider_services.getProviderCustomers(filter).subscribe(
+          (data: any) => {
+            if (data.length > 1) {
+              const customer = data.filter(member => !member.parent);
+              this.customer_data = customer[0];
+              this.show_customer = true;
+            } else {
+              this.customer_data = data[0];
+              this.show_customer = true;
+            }
+            this.jaldeeId = this.customer_data.jaldeeId;
+            this.disabledNextbtn = false;
+
+          }
+        );
+      }
+    });
+  }
 
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
@@ -119,39 +155,6 @@ export class OrderWizardComponent implements OnInit {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]
     });
-    if (!this.haveMobile) {
-      this.createCustomer = this.fb.group({
-        first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-        last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-        email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-        dob: [''],
-        gender: [''],
-        address: ['']
-      });
-      this.loading = false;
-    } else {
-      this.createCustomer = this.fb.group({
-        mobile_number: ['', Validators.compose([Validators.maxLength(10),
-        Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
-        customer_id: [''],
-        first_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-        last_name: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-        email_id: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-        dob: [''],
-        gender: [''],
-        address: ['']
-      });
-      if (this.action === 'edit') {
-        // this.updateForm();
-      }
-      this.loading = false;
-    }
-    // if (this.phoneNo) {
-    //     this.createCustomer.get('mobile_number').setValue(this.phoneNo);
-    // }
-    // if (this.email) {
-    //     this.createCustomer.get('email_id').setValue(this.email);
-    // }
     this.amForm = this.fb.group({
       phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       firstName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
@@ -160,14 +163,18 @@ export class OrderWizardComponent implements OnInit {
 
       address: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
-      postalCode: ['', Validators.compose([Validators.required,Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
       landMark: ['', Validators.compose([Validators.required])],
       countryCode: ['+91'],
     });
+    if (this.formMode === 'edit') {
+      this.updateForm();
+    }
   }
 
 
   searchCustomer(form_data) {
+    this.qParams = {};
     let mode = 'id';
     this.form_data = null;
     let post_data = {};
@@ -175,6 +182,7 @@ export class OrderWizardComponent implements OnInit {
     const isEmail = emailPattern.test(form_data.search_input);
     if (isEmail) {
       mode = 'email';
+      this.prefillnewCustomerwithfield = 'email';
     } else {
       const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const isNumber = phonepattern.test(form_data.search_input);
@@ -182,8 +190,10 @@ export class OrderWizardComponent implements OnInit {
       const isCount10 = phonecntpattern.test(form_data.search_input);
       if (isNumber && isCount10) {
         mode = 'phone';
+        this.prefillnewCustomerwithfield = 'phone';
       } else {
         mode = 'id';
+        this.prefillnewCustomerwithfield = 'id';
       }
     }
 
@@ -192,11 +202,13 @@ export class OrderWizardComponent implements OnInit {
         post_data = {
           'phoneNo-eq': form_data.search_input
         };
+        this.qParams['phone'] = form_data.search_input;
         break;
       case 'email':
         post_data = {
           'email-eq': form_data.search_input
         };
+        this.qParams['email'] = form_data.search_input;
         break;
       case 'id':
         post_data = {
@@ -213,14 +225,16 @@ export class OrderWizardComponent implements OnInit {
             this.show_customer = false;
             this.create_customer = true;
 
-            this.createNew('create');
+            this.createNew();
           } else {
             if (data.length > 1) {
               const customer = data.filter(member => !member.parent);
               this.customer_data = customer[0];
+
             } else {
               this.customer_data = data[0];
             }
+            this.disabledNextbtn = false;
             this.jaldeeId = this.customer_data.jaldeeId;
             console.log(this.jaldeeId);
             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -237,17 +251,6 @@ export class OrderWizardComponent implements OnInit {
             this.create_customer = false;
             this.getDeliveryAddress();
             this.formMode = data.type;
-           // this.source = data.source;
-            // if (this.formMode === 'edit') {
-            //   this.edit_address = data.update_address;
-            //   this.address_title = 'Edit Address';
-            // }
-            // if (data.address !== null) {
-            //   this.exist_add = data.address;
-            // }
-
-            // this.edit_address = data.update_address;
-            // this.index = data.edit_index;
 
           }
 
@@ -257,27 +260,11 @@ export class OrderWizardComponent implements OnInit {
         }
       );
   }
-  createNew(type?) {
-    if (!type) {
-      this.qParams = {};
-    }
-    if (type === 'new') {
-      this.qParams['noMobile'] = false;
-    }
-    // this.qParams['checkinType'] = this.checkinType;
-    // if (this.source === 'waitlist-block') {
-    //     this.qParams['source'] = this.source;
-    //     this.qParams['uid'] = this.uid;
-    //     this.qParams['showtoken'] = this.showtoken;
-    //     if (this.virtualServicemode && this.virtualServicenumber) {
-    //         this.qParams['virtualServicemode'] = this.virtualServicemode;
-    //         this.qParams['virtualServicenumber'] = this.virtualServicenumber;
-    //     }
-    // } else {
-    //     this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
-    // }
-    // this.qParams['thirdParty'] = this.thirdParty;
-    this.qParams['type'] = type;
+  createNew() {
+    this.qParams['checkinType'] = 'WALK_IN_ORDER';
+    this.qParams['source'] = 'order';
+    this.qParams['thirdParty'] = '';
+    this.qParams['type'] = 'create';
     this.qParams['id'] = 'add';
     const navigationExtras: NavigationExtras = {
       queryParams: this.qParams
@@ -286,7 +273,7 @@ export class OrderWizardComponent implements OnInit {
   }
   getDeliveryAddress() {
     this.provider_services.getDeliveryAddress(this.customer_data.id)
-      .subscribe( data => {
+      .subscribe(data => {
         if (data !== null) {
           this.added_address = data;
           if (this.added_address.length > 0 && this.added_address !== null) {
@@ -295,10 +282,10 @@ export class OrderWizardComponent implements OnInit {
 
         }
       },
-      error => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      }
-    );
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   highlight(index, address) {
     this.selectedRowIndex = index;
@@ -398,32 +385,44 @@ export class OrderWizardComponent implements OnInit {
     });
 
 
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
+  }
+  goBackToCheckout(selectesTimeslot, queue) {
+    this.action = '';
+    console.log(queue);
+    const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
+    console.log(selectqueue);
+    this.nextAvailableTime = selectqueue;
 
+  }
+  updateForm() {
+    // this.amForm.setValue({
+    //   'phoneNumber': this.edit_address.phoneNumber || null,
+    //   'firstName': this.edit_address.firstName || null,
+    //   'lastName': this.edit_address.lastName || null,
+    //   'email': this.edit_address.email || null,
+    //   'address': this.edit_address.address || null,
+    //   'city': this.edit_address.city || null,
+    //   'postalCode': this.edit_address.postalCode || null,
+    //   'landMark': this.edit_address.landMark || null,
+    //   'countryCode': '+91',
+    // });
+  }
+  handleQueueSelection(queue, index) {
+    console.log(index);
+    this.queue = queue;
   }
   onSubmit(form_data) {
 
-console.log(JSON.stringify(form_data));
+    console.log(JSON.stringify(form_data));
     this.disableSave = true;
-    // if (this.formMode === 'edit') {
-    //   this.exist_add.splice(this.index, 1);
-    // }
-    this.exist_add.push(form_data);
-
-    this.provider_services.updateDeliveryaddress(this.customer_data.id,this.exist_add)
+    this.added_address.push(form_data);
+    console.log('addres' + JSON.stringify(this.added_address));
+    this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address)
       .subscribe(
         data => {
           this.disableSave = false;
-          // if (this.formMode === 'edit') {
-          //   this.snackbarService.openSnackBar('Address Updated successfully');
-          // } else {
-          //   this.snackbarService.openSnackBar('Address Added successfully');
-          // }
-
-          this.dialogRef.close();
+          this.closeModal.nativeElement.click();
+          this.getDeliveryAddress();
         },
         error => {
           this.disableSave = false;
@@ -494,6 +493,7 @@ console.log(JSON.stringify(form_data));
   }
 
   getItemImg(item) {
+    console.log(JSON.stringify(item));
     if (item.itemImages) {
       const img = item.itemImages.filter(image => image.displayImage);
       if (img[0]) {
@@ -742,7 +742,10 @@ console.log(JSON.stringify(form_data));
       this.isFuturedate = true;
     }
   }
+  getItemImage(item) {
+    return item.itemImages[0].url;
 
+  }
   confirm() {
     this.placeOrderDisabled = true;
     console.log(this.nextAvailableTime);
