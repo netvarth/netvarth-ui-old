@@ -86,14 +86,14 @@
                                                                                             [matTooltip]="'Taxable'"
                                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                                     </div>
-                                                                                    <div class="quantity" *ngIf="bill_data.billStatus !== 'Cancel'">
+                                                                                    <div class="quantity" *ngIf="checkin.apptStatus !== 'Cancelled'">
                                                                                         {{qnty_cap}}
                                                                                         {{service.quantity}}</div>
-                                                                                    <div class="price rupee-font"  *ngIf="bill_data.billStatus !== 'Cancel'">
+                                                                                    <div class="price rupee-font"  *ngIf="checkin.apptStatus !== 'Cancelled'">
                                                                                         {{(service.quantity *
                                                                                         service.price) |
                                                                                         currency:'&#8377; '}}</div>
-                                                                                    <div class="price" style="color: red;font-size: smaller;"  *ngIf="bill_data.billStatus === 'Cancel'">
+                                                                                    <div class="price" style="color: red;font-size: smaller;"  *ngIf="checkin.apptStatus === 'Cancelled'">
                                                                                         Cancelled</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two">
