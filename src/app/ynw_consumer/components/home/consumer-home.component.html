@@ -1700,7 +1700,7 @@
                             TODAY
                         </div>
                         <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
                                         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
@@ -1750,6 +1750,9 @@
                                                     {{oder.orderFor.firstName}}
                                                     {{oder.orderFor.lastName}}
                                                 </div> -->
+                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
@@ -1785,7 +1788,7 @@
                         </div>
                         <ng-container *ngIf="more_tdyOrdersShow">
                             <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                     <mat-grid-tile *ngFor="let oder of todayOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
@@ -1831,6 +1834,9 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
+                                                        <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -1873,7 +1879,7 @@
                         </div>
                         <div *ngIf="total_future_order && (total_future_order.length != 0)"
                             class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
                                         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
@@ -1914,6 +1920,9 @@
                                                 <span class="sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                 <!-- <div class="userName">
                                                     <i class="fa fa-user for"></i>
                                                     {{oder.orderFor.firstName}}
@@ -1955,7 +1964,7 @@
                         <ng-container *ngIf="more_futrOrdersShow">
                             <div *ngIf="total_future_order && total_future_order.length != 0"
                                 class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                     <mat-grid-tile *ngFor="let oder of futureOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
@@ -1999,6 +2008,9 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
+                                                        <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>

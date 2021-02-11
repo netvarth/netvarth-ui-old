@@ -207,6 +207,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   screenWidth: number;
   no_of_grids: number;
   bookingStatusClasses = projectConstantsLocal.BOOKING_STATUS_CLASS;
+  display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   galleryDialog: any;
   gallerysubscription: Subscription;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
