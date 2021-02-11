@@ -770,7 +770,39 @@
                               <div class="pb-5" *ngIf="step == 2">
                                   <h4 class="mb-10 font-weight-bold text-dark">Items information</h4>
                                 
-                                  <div class="row">
+                                  <div class="row" style="background: #ecf0f5;">
+                                    
+                                    <!-- <div class="wdth-full">
+                                      <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="d-flex align-items-center font-weight-bolder">
+                                                        <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                                            <div class="symbol-label" style="background-image: url('assets/media/products/11.png')"></div>
+                                                        </div>
+                                                        <a href="#" class="text-dark text-hover-primary">Street Sneakers</a>
+                                                    </td>
+                                                    <td class="text-center align-middle">
+                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon mr-2"><i class="ki ki-minus icon-xs"></i></a>
+                                                        <span class="mr-2 font-weight-bolder">1</span>
+                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon"><i class="ki ki-plus icon-xs"></i></a>
+                                                    </td>
+                                                    <td class="text-right align-middle">
+                                                        <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
+                                                            Remove
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                    
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div> -->
+
+                                   
+
                                       <div class="col-xl-6">
                                           <!--begin::Input-->
                                           <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
@@ -802,9 +834,9 @@
                                   </div>
 
                                     <!--begin::Card-->
-                                    <div class="row" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
+                                    <div  class="row bg-grey" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
                                       
-                                      <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
+                                      <div class="col-md-4 mt-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
                                          
                                     <div class="card card-custom card-shadowless" (click)="selectItem(i)" [class.itemselected]="item.selected">
                                         <div class="card-body p-0">
@@ -814,20 +846,31 @@
                                                 <div
                                                     class="overlay-wrapper rounded bg-light text-center">
                                                     <img [src]="getItemImg(item)"
-                                                        alt="" class="mw-100 w-200px" />
+                                                        alt="" class="mw-100 w-150px" />
                                                 </div>
                                             </div>
                                             <!--end::Image-->
 
                                             <!--begin::Details-->
                                             <div
-                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                                class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                                                 <a 
                                                     class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
                                                 
                                                 <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
-                                                <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
-                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                            <!-- min -->
+                                                <div class="input-group">
+                                                  <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Min Qty</i></span></div>
+                                                  <input class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" >
+                                                </div>
+                                                <!-- Max -->
+                                                <div class="input-group mt-2">
+                                                  <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Max Qty</i></span></div>
+                                                  <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}">
+                                                </div>
+
+                                                <!-- <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>    -->
                                             </div>
                                             <!--end::Details-->
                                         </div>
