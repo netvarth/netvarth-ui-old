@@ -370,7 +370,7 @@ button.fxmenu {
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
-.booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-img {
+.booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;
     /* pointer-events: none !important; */
 }
