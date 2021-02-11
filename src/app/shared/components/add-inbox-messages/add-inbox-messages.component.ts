@@ -562,8 +562,24 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
+      const post_data = {
+        communicationMessage: this.message
+      };
+      const dataToSend: FormData = new FormData();
+      dataToSend.append('message', post_data.communicationMessage);
+      const captions = {};
+      let i = 0;
+      if (this.selectedMessage) {
+        for (const pic of this.selectedMessage.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
       this.shared_services.addProvidertoConsumerNote(this.user_id,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
