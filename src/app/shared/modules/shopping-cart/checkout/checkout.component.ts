@@ -592,6 +592,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.canceldialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result) {
+        this.added_address.splice(index, 1);
         this.shared_services.updateConsumeraddress(this.added_address)
           .subscribe(
             data => {
