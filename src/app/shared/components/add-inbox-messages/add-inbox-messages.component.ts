@@ -562,9 +562,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
-      const post_data = {
-        communicationMessage: this.message
-      };
       const dataToSend: FormData = new FormData();
       dataToSend.append('message', post_data.communicationMessage);
       const captions = {};
