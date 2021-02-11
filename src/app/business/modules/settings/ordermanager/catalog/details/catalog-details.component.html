@@ -932,8 +932,8 @@
                                       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                                           <div class="modal-content">
                                               <div class="modal-header">
-                                                  <h5 class="modal-title" id="exampleModalLabel">Create Item</h5>
-                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <h5 class="modal-title pull-left" id="exampleModalLabel">Create Item</h5>
+                                                  <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
                                                       <i aria-hidden="true" class="ki ki-close"></i>
                                                   </button>
                                               </div>
@@ -1345,10 +1345,9 @@
                                                           </div>
                                                       </div>
                                                       <div class="col-sm-12"><hr></div>
-                                                      <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
                                                           style="display: inline-flex;">
-                                                          <!-- <button (click)="onCancel()" type="button"
-                                                              class="cs-btn bt2">{{cancel_btn_cap}}</button> -->
+                                                         
                                                           <button type="button" *ngIf="action=='add'"
                                                               (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1" mat-button
                                                               [disabled]="!amForm.valid || disableButton">save & add another</button>
@@ -1356,14 +1355,14 @@
                                                           <button type="submit" class="cs-btn bt1" mat-button
                                                               [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
                       
-                                                      </div>
+                                                      </div> -->
                                                   <app-field-error-display class="itemerror" [displayError]="true" *ngIf="api_error"
                                                       errorMsg="{{api_error}}">
                                                   </app-field-error-display>
                                                   <app-form-success-display [displayMsg]="true" *ngIf="api_success"
                                                       successMsg="{{api_success}}">
                                                   </app-form-success-display>
-                                                  <div class="content comn-cls">
+                                                  <!-- <div class="content comn-cls">
                                                       <div class="col-md-12 no-padding-small">
                                                           <div class="w-dta">
                                                               <div class="row">
@@ -1419,16 +1418,16 @@
                                                               </div>
                                                           </div>
                                                       </div>
-                                                  </div>
+                                                  </div> -->
                                               </div>
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                                  <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+                                                  <button type="button" class="cs-btn bt1" (click)="createItem(amForm.value)" mat-button>{{save_btn_cap}}</button>
                                               </div>
                                           </div>
                                       </div>
-                                  </div>
+                                  </div> 
                                     <!--Modal end-->
 
 

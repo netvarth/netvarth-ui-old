@@ -145,6 +145,19 @@ export class CatalogdetailComponent implements OnInit {
         base64: [],
         caption: []
     };
+    selectedMessageMain = {
+        files: [],
+        base64: [],
+        caption: []
+    };
+    showCustomlabel = false;
+    haveMainImg = false;
+    mainImage = false;
+    isnotefocused = false;
+    notechar_count = 0;
+    valueCaption = 'Enter the discounted price you offer';
+    curtype = 'FIXED';
+
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
@@ -2131,5 +2144,142 @@ showTimewindow(type) {
       //  this.addItems(this.catalogSelectedItemsadd);
         }
           }
-      
+          createItem(form_data, isfrom?) {
+            if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
+                // this.api_error = 'Please enter valid promotional value';
+                this.snackbarService.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+            if (!this.showPromotionalPrice) {
+                form_data.promotionalPrice = '';
+            }
+            if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
+                // this.api_error = 'Please enter custom label';
+                this.snackbarService.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+            const iprice = parseFloat(form_data.price);
+            if (!iprice || iprice === 0) {
+                // this.api_error = 'Please enter valid price';
+                this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+            if (iprice < 0) {
+                //this.api_error = 'Price should not be a negative value';
+                this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+                return;
+            }
+            if (form_data.promotionalPrice) {
+                const proprice = parseFloat(form_data.price);
+                if (proprice < 0) {
+                    //  this.api_error = 'Price should not be a negative value';
+                    this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+                    return;
+                }
+            }
+            //  this.saveImagesForPostinstructions();
+            if (this.action === 'add') {
+                const post_itemdata = {
+                    'itemCode': form_data.itemCode,
+                    'itemName': form_data.itemName,
+                    'displayName': form_data.displayName,
+                    'shortDesc': form_data.shortDec,
+                    'itemDesc': form_data.displayDesc,
+                    'note': form_data.note,
+                    'taxable': form_data.taxable,
+                    'price': form_data.price,
+                    'showPromotionalPrice': this.showPromotionalPrice,
+                    'isShowOnLandingpage': form_data.showOnLandingpage,
+                    'isStockAvailable': form_data.stockAvailable,
+                    'promotionalPriceType': form_data.promotionalPriceType,
+                    'promotionLabelType': form_data.promotionallabel,
+                    'promotionLabel': form_data.customlabel || '',
+                    'promotionalPrice': form_data.promotionalPrice || 0,
+                    'promotionalPrcnt': form_data.promotionalPrice || 0
+                };
+                if (!this.showPromotionalPrice) {
+                    post_itemdata['promotionalPriceType'] = 'NONE';
+                    post_itemdata['promotionLabelType'] = 'NONE';
+                }
+                // if (form_data.promotionalPriceType === 'FIXED') {
+                //     post_itemdata['promotionalPrice'] = form_data.promotionalPrice || 0;
+                // }
+                // if (form_data.promotionalPriceType === 'PCT') {
+                //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
+                // }
+                this.addItem(post_itemdata);
+            }
+        }
+        addItem(post_data) {
+            console.log(post_data)
+            this.disableButton = true;
+            this.resetApiErrors();
+            this.api_loading = true;
+            this.provider_services.addItem(post_data)
+                .subscribe(
+                    (data) => {
+                        if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                            this.saveImages(data);
+                        }
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
+                        this.api_loading = false;
+                            this.disableButton = false;
+                            this.showPromotionalPrice = false;
+                            this.showCustomlabel = false;
+                            // this.amForm.reset();
+                            this.haveMainImg = false;
+                            this.mainImage = false;
+                        if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                            // const route = 'list';
+                            this.saveImages(data);
+                        } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
+                           
+                        }
+                    },
+                    error => {
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        this.api_loading = false;
+                        this.disableButton = false;
+                    }
+                );
+        }
+        setnoteFocus() {
+            this.isnotefocused = true;
+            this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
+        }
+        lostnoteFocus() {
+            this.isnotefocused = false;
+        }
+            
+        handleTypechange(typ) {
+            if (typ === 'FIXED') {
+                this.valueCaption = 'Enter the discounted price you offer';
+                this.curtype = typ;
+            } else {
+                this.curtype = typ;
+                this.valueCaption = 'Enter the discounted price you offer';
+            }
+           
+        }
+
+        handleLabelchange(type) {
+            if (type === 'Other') {
+                this.showCustomlabel = true;
+            } else {
+                this.showCustomlabel = false;
+            }
+        }
+        handleTaxablechange() {
+            this.resetApiErrors();
+            if (this.taxpercentage <= 0) {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+                setTimeout(() => {
+                    this.api_error = null;
+                }, projectConstants.TIMEOUT_DELAY_LARGE);
+                this.amForm.get('taxable').setValue(false);
+            } else {
+                this.api_error = null;
+            }
+        }
+
 }
