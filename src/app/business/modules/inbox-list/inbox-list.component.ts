@@ -1,14 +1,10 @@
 
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
-import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
-import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
@@ -22,42 +18,16 @@ import { KeyValue } from '@angular/common';
   styleUrls: ['./inbox-list.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class InboxListComponent implements OnInit, OnDestroy {
-  provider_consumer_cap = Messages.PROVIDER_CONSUMER_CAP;
-  service_cap = Messages.SERVICE_CAP;
-  message_cap = Messages.MESSAGE_CAP;
-  date_time_cap = Messages.DATE_TIME_CAP;
-  reply_cap = Messages.REPLY_CAP;
-  close_cap = Messages.CLOSE_BTN;
-  delete_msg_cap = Messages.DELETE_MSG_CAP;
-  no_msg_exists_cap = Messages.NO_MSG_EXISTS_CAP;
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
-  selectedMsg = -1;
   user_id;
-  shownomsgdiv = false;
-  terminologies = null;
-  usertype = null;
   loading = false;
   cronHandle: Subscription;
-  refreshTime = projectConstants.INBOX_REFRESH_TIME;
-  msgdialogRef;
-  fileTooltip = Messages.FILE_TOOLTIP;
-  tooltipcls = '';
-  showImages: any = [];
   messages: any = [];
   users: any = [];
-  domain: any;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs = [
-    {
-      title: 'Inbox'
-    }
-  ];
   inboxCntFetched;
   inboxUnreadCnt;
   groupedMsgs: any = [];
   selectedUserMessages: any = [];
   message = '';
-  providerName = '';
   selectedCustomer = '';
   selectedMessage = {
     files: [],
@@ -100,33 +70,23 @@ export class InboxListComponent implements OnInit, OnDestroy {
   cacheavoider;
   constructor(
     private inbox_services: InboxServices,
-    private dialog: MatDialog,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public shared_service: SharedServices,
-    private routerobj: Router,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService) { }
-
   ngOnInit() {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
-    this.domain = this.userDet.sector;
-    this.breadcrumb_moreoptions = {
-      'show_learnmore': true, 'scrollKey': 'inbox',
-      'actions': [
-        { 'title': 'Help', 'type': 'learnmore' }]
-    };
     if (this.userDet.accountType === 'BRANCH') {
       this.getUsers();
     } else {
       this.getInboxMessages();
     }
-    this.terminologies = this.wordProcessor.getTerminologies();
     this.inbox_services.getBussinessProfile()
       .subscribe(
         (data: any) => {
@@ -151,11 +111,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     if (this.cronHandle) {
       this.cronHandle.unsubscribe();
     }
-    if (this.msgdialogRef) {
-      this.msgdialogRef.close();
-    }
   }
-
   readConsumerMessages(consumerId, messageId, providerId) {
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
@@ -180,49 +136,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         () => {
         });
   }
-
-
-  replyMessage(message) {
-    const pass_ob = {};
-    let source = 'provider-';
-    if (message.waitlistId) {
-      source = source + 'waitlist-inbox';
-      pass_ob['uuid'] = 'h_' + message.waitlistId;
-    } else {
-      source = source + 'common';
-    }
-    pass_ob['source'] = source;
-    pass_ob['user_id'] = message.owner.id;
-    pass_ob['type'] = 'reply';
-    pass_ob['terminologies'] = this.terminologies;
-    pass_ob['name'] = message.owner.name;
-    pass_ob['typeOfMsg'] = 'single';
-    this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      autoFocus: true,
-      data: pass_ob,
-    });
-
-    this.msgdialogRef.afterClosed().subscribe(result => {
-      if (result === 'reloadlist') {
-        this.selectedMsg = -1;
-        this.getInboxMessages();
-      }
-    });
-  }
-  showMsg(indx, message) {
-    this.selectedMsg = indx;
-    if (!message.read && this.isRecievedOrSent(message) === 'receive') {
-      const consumerId = message.owner.id;
-      const providerId = message.receiver.id;
-      this.readConsumerMessages(consumerId, message.messageId, providerId);
-    }
-  }
-  closeMsg() {
-    this.selectedMsg = -1;
-  }
   formatDateDisplay(dateStr) {
     let retdate = '';
     const pubDate = new Date(dateStr);
@@ -238,9 +151,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     return retdate;
   }
-  showImagesection(index) {
-    (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
-  }
   getThumbUrl(attachment) {
     if (attachment.s3path.indexOf('.pdf') !== -1) {
       return attachment.thumbPath;
@@ -248,7 +158,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       return attachment.s3path;
     }
   }
-
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     this.inbox_services.getInbox(usertype)
@@ -256,13 +165,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
         data => {
           this.messages = data;
           console.log(this.messages);
-          // this.inboxList = this.generateCustomInbox(this.messages);
           this.setMessages();
           this.loading = false;
         },
         () => {
           this.loading = false;
-
         }
       );
   }
@@ -272,10 +179,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.messages)
     this.inboxList = this.generateCustomInbox(this.messages);
     console.log(this.inboxList);
-
     console.log(this.selectedUser.userType);
-
-
     if (this.userDet.accountType === 'BRANCH') {
       const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
       Object.keys(group).forEach(key => {
@@ -284,8 +188,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       });
       console.log(group);
       this.groupedMsgsbyUser = group;
-
-
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
@@ -294,7 +196,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
         console.log(this.groupedMsgs);
       } else {
-
         let arr = [];
         Object.keys(group).forEach(key => {
           let provider = key;
@@ -307,14 +208,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.groupedMsgs = arr;
         console.log(this.groupedMsgs);
       }
-
-
     } else {
       this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
       console.log(this.groupedMsgs)
     }
-
-
     console.log(this.selectedCustomer);
     console.log(this.selectedUserMessages);
     if (this.selectedCustomer !== '') {
@@ -333,7 +230,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     let providerId;
     let providerName;
     for (const message of messages) {
-      // if ((message.receiver.id === this.selectedUser.id) || (this.selectedUser.userType !== 'PROVIDER' && message.receiver.id === 0)) {
       if (this.searchUserById(message.receiver.id).length > 0 || message.receiver.id === 0) {
         accountId = message.owner.id;
         senderName = message.owner.name;
@@ -403,7 +299,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     }
   }
-
   getUsers() {
     const filter = {};
     filter['userType-eq'] = 'PROVIDER';
@@ -416,14 +311,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  performActions(action) {
-    if (action === 'learnmore') {
-      this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
-    }
-  }
-  redirecToHelp() {
-    this.routerobj.navigate(['/provider/' + this.domain + '/inbox']);
-  }
   clearImg() {
     this.selectedMessage = {
       files: [],
@@ -432,7 +319,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     };
   }
   getUser(user, type?) {
-    // const name = user.match(/\b(\w)/g);
     if (!type) {
       user = user.split('=');
       user = user[0];
@@ -489,8 +375,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     return image ? images.indexOf(image) : -1;
   }
   openImage(attachements, index) {
-    console.log(attachements);
-    console.log(index);
     this.image_list_popup_temp = this.image_list_popup = [];
     let count = 0;
     for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
@@ -513,7 +397,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     if (count > 0) {
       this.image_list_popup = this.image_list_popup_temp;
-      console.log(this.image_list_popup);
       setTimeout(() => {
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);
