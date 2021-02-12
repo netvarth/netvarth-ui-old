@@ -446,13 +446,9 @@ export class OrderDashboardComponent implements OnInit {
     });
   }
   getDisplayname(label) {
-    console.log(label);
-    console.log(this.allLabels);
     for (let i = 0; i < this.allLabels.length; i++) {
       if (this.allLabels[i].label === label) {
         return this.allLabels[i].displayName;
-      } else {
-        return label;
       }
     }
   }
@@ -472,11 +468,11 @@ export class OrderDashboardComponent implements OnInit {
     }
   }
 
-
+  
   getDisplayformatTruncateLabel(labeldetails) {
     let labelString = ' ';
     Object.keys(labeldetails.label).forEach(key => {
-      labelString = labelString + key + ' ';
+      labelString = labelString + this.getDisplayname(key) + ' ';
     });
     if (labelString.length > 40) {
       labelString = labelString.substr(0, 40);
