@@ -97,6 +97,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   businesDetails: any = [];
   msgDisplay = 'all';
   groupedMsgsbyUser: any = [];
+  cacheavoider;
   constructor(
     private inbox_services: InboxServices,
     private dialog: MatDialog,
@@ -109,6 +110,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
+    const cnow = new Date();
+    const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
+    this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.domain = this.userDet.sector;
@@ -251,6 +255,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         data => {
           this.messages = data;
           console.log(this.messages);
+          // this.inboxList = this.generateCustomInbox(this.messages);
           this.setMessages();
           this.loading = false;
         },
@@ -266,19 +271,47 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.messages)
     this.inboxList = this.generateCustomInbox(this.messages);
     console.log(this.inboxList);
+
+    console.log(this.selectedUser.userType);
+
+
     if (this.userDet.accountType === 'BRANCH') {
-    const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
-    Object.keys(group).forEach(key => {
-      const group2 = this.shared_functions.groupBy(group[key], 'accountName');
-      group[key] = group2;
-    });
-    console.log(group);
-    this.groupedMsgsbyUser = group;
-    this.setMsgbyType();
-  } else {
-this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName'); 
-console.log(this.groupedMsgs);
-  }
+      const group = this.shared_functions.groupBy(this.inboxList, 'providerName');
+      Object.keys(group).forEach(key => {
+        const group2 = this.shared_functions.groupBy(group[key], 'accountName');
+        group[key] = group2;
+      });
+      console.log(group);
+      this.groupedMsgsbyUser = group;
+
+
+      if (this.selectedUser.userType === 'PROVIDER') {
+        if (this.selectedUser.businessName) {
+          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
+        } else {
+          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastsName];
+        }
+        console.log(this.groupedMsgs);
+      } else {
+
+        let arr = [];
+        Object.keys(group).forEach(key => {
+          let provider = key;
+          const newObj = group[key];
+          Object.keys(newObj).forEach(key => {
+            arr[key + '=' + provider] = newObj[key];
+          });
+        });
+        console.log(arr);
+        this.groupedMsgs = arr;
+        console.log(this.groupedMsgs);
+      }
+
+
+    } else {
+      this.groupedMsgs = this.shared_functions.groupBy(this.inboxList, 'accountName');
+      console.log(this.groupedMsgs)
+    }
 
 
     console.log(this.selectedCustomer);
@@ -291,30 +324,6 @@ console.log(this.groupedMsgs);
     }
     console.log(this.selectedUserMessages);
   }
-setMsgbyType() {
-  console.log(this.selectedUser.userType);
-  if (this.selectedUser.userType === 'PROVIDER') {
-    if (this.selectedUser.businessName) {
-      this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
-    } else {
-      this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastsName];
-    }
-    console.log(this.groupedMsgs);
-  } else {
-
-    let arr = [];
-    Object.keys(this.groupedMsgsbyUser).forEach(key => {
-      let provider = key;
-      const newObj = this.groupedMsgsbyUser[key];
-      Object.keys(newObj).forEach(key => {
-        arr[key + '=' + provider] = newObj[key];
-      });
-    });
-    console.log(arr);
-    this.groupedMsgs = arr;
-    console.log(this.groupedMsgs);
-  }
-}
   generateCustomInbox(messages: any) {
     let inboxList = [];
     let senderName;
@@ -397,7 +406,7 @@ setMsgbyType() {
   getUsers() {
     const filter = {};
     filter['userType-eq'] = 'PROVIDER';
-    this.provider_services.getUsers().subscribe(
+    this.provider_services.getUsers(filter).subscribe(
       (data: any) => {
         this.users = data;
         // this.users = this.users.filter(user => user.searchEnabled);
@@ -580,12 +589,30 @@ setMsgbyType() {
     console.log(this.selectedUser);
     this.selectedCustomer = '';
     this.selectedUserMessages = [];
-    this.setMsgbyType();
+    this.setMessages();
   }
   changemsgDisplayType(type) {
     this.msgDisplay = type;
+    this.selectedUser = this.userDet;
+    this.selectedCustomer = '';
+    this.selectedUserMessages = [];
     if (type === 'all') {
-      this.setMsgbyType();
+      this.setMessages();
     }
+  }
+  getBusinessProfileLogo(user) {
+    this.provider_services.getUserBussinessProfile(user.id)
+      .subscribe(
+        (logodata: any) => {
+          const blogo = logodata.logo;
+          if (blogo[0]) {
+            return (blogo[0].url) ? blogo[0].url + '?' + this.cacheavoider : '';
+          } else {
+            return false;
+          }
+        });
+  }
+  goBack() {
+    this.selectedUser = this.userDet;
   }
 }
