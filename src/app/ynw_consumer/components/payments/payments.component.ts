@@ -3,6 +3,10 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
+
+
 
 @Component({
     selector: 'app-consumer-payments',
@@ -18,8 +22,10 @@ export class ConsumerPaymentsComponent implements OnInit {
     status_cap = Messages.PAY_STATUS;
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
+    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
+        public dateformat: DateFormatPipe,
         private shared_services: SharedServices) {
 
     }
@@ -40,11 +46,12 @@ export class ConsumerPaymentsComponent implements OnInit {
         if (dt) {
             dtsarr = dt.split(' ');
             const dtarr = dtsarr[0].split('-');
+            console.log(dtarr)
             let retval = '';
             if (mod === 'all') {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
             } else if (mod === 'date') {
-                retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
+                retval = this.dateformat.transformToMonthlyDate(dtarr[0] + '/' + dtarr[1] + '/' + dtarr[2]); 
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
