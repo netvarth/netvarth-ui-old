@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -157,6 +157,7 @@ export class CatalogdetailComponent implements OnInit {
     notechar_count = 0;
     valueCaption = 'Enter the discounted price you offer';
     curtype = 'FIXED';
+    @ViewChild('closebutton') closebutton;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -2229,6 +2230,8 @@ showTimewindow(type) {
                             // this.amForm.reset();
                             this.haveMainImg = false;
                             this.mainImage = false;
+                            this.closeGroupDialog();
+
                         if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
                             // const route = 'list';
                             this.saveImages(data);
@@ -2281,5 +2284,9 @@ showTimewindow(type) {
                 this.api_error = null;
             }
         }
+        closeGroupDialog() {
+            this.closebutton.nativeElement.click();
+            this.resetApiErrors();
+          }
 
 }

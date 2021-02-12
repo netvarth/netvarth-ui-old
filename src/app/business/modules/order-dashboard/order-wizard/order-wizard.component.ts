@@ -15,6 +15,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddressComponent } from './address/address.component';
+import { Messages } from '../../../../shared/constants/project-messages';
+
 
 
 
@@ -24,6 +26,10 @@ import { AddressComponent } from './address/address.component';
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
 export class OrderWizardComponent implements OnInit {
+  coupon_status: any;
+  s3url: {};
+  retval: Promise<void>;
+  api_loading1: boolean;
   prefillnewCustomerwithfield = '';
   canceldialogRef: any;
   addressDialogRef: any;
@@ -38,7 +44,6 @@ export class OrderWizardComponent implements OnInit {
   orderNote: any;
   storeContact: any;
   emailId: string;
-  selected_coupons: any;
   orderlistNote: any;
   customer_email: any;
   customer_phoneNumber: any;
@@ -98,6 +103,16 @@ export class OrderWizardComponent implements OnInit {
   storeAvailableDates: any = [];
   homeAvailableDates: any = [];
   disabledNextbtn = true;
+  applied_inbilltime = Messages.APPLIED_INBILLTIME;
+  couponvalid = true;
+  api_cp_error = null;
+  s3CouponsList: any = [];
+  selected_coupons: any = [];
+  couponsList: any = [];
+  selected_coupon;
+  tooltipcls = '';
+  showCouponWB: boolean;
+  showCoupon = false;
   @ViewChild('closeModal') private closeModal: ElementRef;
 
   constructor(private fb: FormBuilder,
@@ -148,8 +163,59 @@ export class OrderWizardComponent implements OnInit {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.createForm();
     this.getCatalog();
+    this.gets3curl();
 
 
+  }
+  gets3curl() {
+    this.api_loading1 = true;
+    this.retval = this.sharedFunctionobj.getS3Url()
+      .then(
+        res => {
+          this.s3url = res;
+          this.getbusinessprofiledetails_json('coupon', true);
+          this.api_loading1 = false;
+        },
+        () => {
+          this.api_loading1 = false;
+        }
+      );
+  }
+  toggleterms(i) {
+    if (this.couponsList[i].showme) {
+      this.couponsList[i].showme = false;
+    } else {
+      this.couponsList[i].showme = true;
+    }
+  }
+  removeJCoupon(i) {
+    this.selected_coupons.splice(i, 1);
+    this.couponsList.splice(i, 1);
+  }
+  removeCoupons() {
+    this.selected_coupons = [];
+    this.couponsList = [];
+    this.coupon_status = null;
+  }
+  toggleCoupon() {
+    this.showCoupon = !this.showCoupon;
+  }
+  getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList = res;
+        console.log(this.s3CouponsList);
+        if (this.s3CouponsList.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
   }
   createForm() {
     this.searchForm = this.fb.group({
@@ -908,34 +974,53 @@ export class OrderWizardComponent implements OnInit {
       this.getDeliveryAddress();
     });
   }
-  deleteAddress(address, index) {
-    // this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     'message': 'Do you want to Delete this address?',
-    //   }
-    // });
-    // this.canceldialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    //   if (result) {
-    //     this.added_address.splice(index, 1);
-    //     this.shared_services.updateConsumeraddress(this.added_address)
-    //       .subscribe(
-    //         data => {
-    //           if (data) {
-    //             this.getDeliveryAddress();
-    //           }
-    //           this.snackbarService.openSnackBar('Address Updated successfully');
-    //         },
-    //         error => {
-    //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //         }
-    //       );
-    //     // this.getaddress();
-    //   }
-    // });
+  checkCouponExists(couponCode) {
+    let found = false;
+    for (let index = 0; index < this.selected_coupons.length; index++) {
+      if (couponCode === this.selected_coupons[index]) {
+        found = true;
+        break;
+      }
+    }
+    return found;
+  }
+  applyCoupons(jCoupon) {
+    this.api_cp_error = null;
+    this.couponvalid = true;
+    const couponInfo = {
+      'couponCode': '',
+      'instructions': ''
+    };
+    if (jCoupon) {
+      const jaldeeCoupn = jCoupon.trim();
+      if (this.checkCouponExists(jaldeeCoupn)) {
+        this.api_cp_error = 'Coupon already applied';
+        this.couponvalid = false;
+        return false;
+      }
+      this.couponvalid = false;
+      let found = false;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
+        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
+        }
+      }
+      if (found) {
+        this.couponvalid = true;
+        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
+        this.showCoupon = false;
+      } else {
+        this.api_cp_error = 'Coupon invalid';
+      }
+    } else {
+      this.api_cp_error = 'Enter a Coupon';
+    }
   }
   //   onSubmit(form_data) {
   //     this.disableButton = true;

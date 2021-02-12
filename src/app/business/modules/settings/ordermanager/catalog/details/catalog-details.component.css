@@ -475,3 +475,10 @@
   color: #00000091;
   font-style: normal !important;
 }
+.error-section {
+  background: red;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: .8rem;
+ }

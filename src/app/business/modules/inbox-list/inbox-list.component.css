@@ -1,0 +1,88 @@
+.d-flex .card {
+    padding: 0px !important;
+}
+.font-size-sm {
+    font-size: 0.7rem !important;
+}
+.font-size-lg {
+    font-size: .95rem !important;
+}
+.font-size-outer {
+    font-size: 1.1rem !important;
+}
+.user-name {
+    border-radius: 50%;
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #1e4079;
+    max-width: 100px;
+    padding: 15px 10px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    max-height: 50px;
+}
+.card-width {
+    width: 350px;
+}
+@media(max-width: 340px) {
+    .card-width {
+        width: 300px;
+    }
+}
+.msg-body {
+    height: 303px;
+    overflow-y: auto !important;
+}
+.over-scroll {
+    overflow-y: auto !important;
+}
+.selected-user {
+    background: #eee;
+}
+.card-body {
+    padding: 10px !important;
+}
+.pad-5 {
+    padding: 5px
+}
+.msg-width {
+    max-width: 80%;
+}
+.thumbnails img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+}
+.img-section img {
+    width: 80px;
+    height: 80px;
+    cursor: auto;
+}
+.gal_action {
+    position: absolute;
+    top: -5px;
+    right: -3px;
+    background: rgba(0,0,0,.5);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.galimg_outer {
+    position: relative;
+    padding: 5px;
+}
+.mat-flat-button {
+    background: #1e4079;
+    color: white;
+    border-radius: 5px;
+}
+.user-section {
+    display: flex;
+    overflow-x: auto;
+}
+.user-section .user-name {
+    background: #ddd !important;
+}
