@@ -74,10 +74,37 @@
     position: relative;
     padding: 5px;
 }
+.galul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.galul li {
+    float: left;
+}
 .mat-flat-button {
     background: #1e4079;
     color: white;
     border-radius: 5px;
+}
+.top-buttons {
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0px 5px 0 rgb(0 0 0 / 16%), 0 0px 0px 0 rgb(0 0 0 / 12%);
+}
+.top-buttons .mat-flat-button {
+    color: #1e4079;
+    background-color: #f9e2a7;
+    border-color: transparent;
+    padding: 5px 10px;
+    width: 48%;
+    border-radius: 5px;
+}
+.selected-btn {
+    font-weight: bold;
+    background-color: #fdcb70 !important;
+    /* border: 1px solid #ffba09; */
+    /* box-shadow: 0 0px 10px 0 rgb(0 0 0 / 16%), 0 0px 5px 0 rgb(0 0 0 / 12%); */
 }
 .user-section {
     display: flex;
