@@ -233,6 +233,9 @@ export class OrderActionsComponent implements OnInit {
   showLabels() {
     this.action = 'label';
 }
+showStatus() {
+  this.action = 'status';
+}
 goBack() {
   this.action = '';
 }
