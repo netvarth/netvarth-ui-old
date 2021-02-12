@@ -40,8 +40,6 @@ export class InboxOuterComponent implements OnInit {
   screenWidth;
   small_device_display = false;
   sendMessageCompleted = true;
-  userScrollHeight;
-  msgScrollHeight;
   @ViewChild('scrollMe') scrollFrame: ElementRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -68,7 +66,6 @@ export class InboxOuterComponent implements OnInit {
     private groupService: GroupStorageService,
     private location: Location, private snackbarService: SnackbarService,
     public shared_services: SharedServices) { }
-
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -83,9 +80,6 @@ export class InboxOuterComponent implements OnInit {
     } else {
       this.small_device_display = false;
     }
-    // const screenHeight = window.innerHeight;
-    // this.userScrollHeight = screenHeight - 240;
-    // this.msgScrollHeight = screenHeight - 387;
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -94,10 +88,6 @@ export class InboxOuterComponent implements OnInit {
         data => {
           this.messages = data;
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
-          // let groupKeys = Object.keys(this.groupedMsgs);
-          // console.log(groupKeys);
-          // this.selectedProvider = groupKeys[0];
-          // console.log(this.selectedProvider);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
@@ -107,7 +97,6 @@ export class InboxOuterComponent implements OnInit {
           this.sortMessages();
           this.obtainedMsgs = true;
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
-          // this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
           this.loading = false;
         },
         () => {
@@ -140,7 +129,6 @@ export class InboxOuterComponent implements OnInit {
     const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
     const today = new Date();
     const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
-
     if (obtdate.getTime() === todaydate.getTime()) {
       retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
     } else {
@@ -218,34 +206,12 @@ export class InboxOuterComponent implements OnInit {
     };
   }
   getUserName(user) {
-    // const name = user.match(/\b(\w)/g);
     const name = user.split(' ');
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
     return nameShort;
-  }
-  searchByName() {
-    console.log(this.providerName);
-    // this.groupedMsgs = this.groupedMsgsCopy;
-    if (this.providerName !== '') {
-      let arr = [];
-      Object.keys(this.groupedMsgs).forEach(key => {
-        if (key.search(this.providerName)) {
-          console.log(key);
-        } else {
-          if (arr.indexOf(key) === -1) {
-            arr.push(key);
-          }
-        }
-      });
-      console.log(arr);
-      for (let value of arr) {
-        delete this.groupedMsgs[value];
-      }
-    }
-    console.log(this.groupedMsgs);
   }
   filesSelected(event) {
     const input = event.target.files;
