@@ -11,6 +11,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { KeyValue } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -38,8 +39,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   screenWidth;
   small_device_display = false;
   sendMessageCompleted = true;
-  userScrollHeight;
-  msgScrollHeight;
+  domain;
   @ViewChild('scrollMe') scrollFrame: ElementRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -75,12 +75,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
     public shared_service: SharedServices,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService) { }
+    private snackbarService: SnackbarService,
+    private router: Router) { }
   ngOnInit() {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
     this.userDet = this.selectedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.domain = this.userDet.sector;
     this.businesDetails = this.groupService.getitemFromGroupStorage('ynwbp');
     if (this.userDet.accountType === 'BRANCH') {
       this.getUsers();
@@ -284,20 +286,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  isRecievedOrSent(msg) {
-    if (msg.receiver.id === 0) {
-      return 'receive';
-    } else if (msg.owner.id === 0) {
-      return 'sent';
-    } else {
-      const receiverArray = this.users.filter(user => user.id === msg.receiver.id);
-      const senterArray = this.users.filter(user => user.id === msg.owner.id);
-      if (receiverArray.length > 0) {
-        return 'receive';
-      } else if (senterArray.length > 0) {
-        return 'sent';
-      }
-    }
+  redirecToHelp() {
+    this.router.navigate(['/provider/' + this.domain + '/inbox']);
   }
   getUsers() {
     const filter = {};
