@@ -110,13 +110,17 @@
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
     </div>
     <div class="card-item-content">
-        <h4 class="card-title font-weight-bold module line-clamp">
+        <h4 class="user-name card-title font-weight-bold module line-clamp">
             <a *ngIf="user.businessName">{{user.businessName}}</a>
             <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
                 capitalizeFirst}}</a>
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst}}</a>
         </h4>
+        <h6 class="qualification">BDS</h6>
+        <label class="specialization">DENTIST</label>
+        <p class="availability">Next Available Time<br/>Feb 15, 02:00 PM</p>
+        <button type="button" class="btn btn-outline-warning">Book Now</button>
     </div>
 </div>
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
