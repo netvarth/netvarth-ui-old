@@ -139,7 +139,7 @@
                                         <!--begin::Body-->
                                         <div class="card-body">
                                             <!--begin:Users-->
-                                            <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 75}">
+                                            <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 60}">
                                                 <!--begin:User-->
 
                                                 <ng-container
@@ -239,7 +239,7 @@
                                         <div class="card-body no-padding-small">
                                             <!--begin::Scroll-->
                                             <div class="scroll scroll-pull over-scroll" #scrollMe
-                                                [ngStyle]="{'height.vh': 50}">
+                                                [ngStyle]="{'height.vh': 40}">
                                                 <!--begin::Messages-->
                                                 <div class="messages" *ngFor="let msg of selectedUserMessages">
                                                     <!--begin::Message In-->
@@ -254,7 +254,7 @@
                                                         <div
                                                             class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
                                                             {{msg.msg}}
-                                                            <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                                            <div class="thumbnails mt10 mb10" *ngIf="msg.attachements && msg.attachements.length > 0">
                                                                 <a class="mg-10"
                                                                     (click)="openImage(msg.attachements, i)"
                                                                     *ngFor="let attachment of msg.attachements;let i=index"><img
@@ -276,7 +276,7 @@
                                                         <div
                                                             class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
                                                             {{msg.msg}}
-                                                            <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
+                                                            <div class="thumbnails mt10 mb10" *ngIf="msg.attachements && msg.attachements.length > 0">
                                                                 <a class="mg-10"
                                                                     (click)="openImage(msg.attachements, i)"
                                                                     *ngFor="let attachment of msg.attachements;let i=index"><img

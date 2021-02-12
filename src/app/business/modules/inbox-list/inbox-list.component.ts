@@ -123,6 +123,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     };
     if (this.userDet.accountType === 'BRANCH') {
       this.getUsers();
+    } else {
+      this.getInboxMessages();
     }
     this.terminologies = this.wordProcessor.getTerminologies();
     this.inbox_services.getBussinessProfile()
@@ -134,7 +136,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
         }
       );
     this.loading = true;
-    this.getInboxMessages();
     this.onResize();
   }
   @HostListener('window:resize', ['$event'])
@@ -364,7 +365,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         providerName: providerName,
         waitlistId: message.waitlistId,
         messagestatus: messageStatus,
-        attachements: message.attachements,
+        attachements: (message.attachements) ? message.attachements : [],
         messageId: message.messageId,
         read: message.read
       };
@@ -409,7 +410,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.provider_services.getUsers(filter).subscribe(
       (data: any) => {
         this.users = data;
-        // this.users = this.users.filter(user => user.searchEnabled);
+        this.getInboxMessages();
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -488,6 +489,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
     return image ? images.indexOf(image) : -1;
   }
   openImage(attachements, index) {
+    console.log(attachements);
+    console.log(index);
     this.image_list_popup_temp = this.image_list_popup = [];
     let count = 0;
     for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
@@ -510,6 +513,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     if (count > 0) {
       this.image_list_popup = this.image_list_popup_temp;
+      console.log(this.image_list_popup);
       setTimeout(() => {
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);

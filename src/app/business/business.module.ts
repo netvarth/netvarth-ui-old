@@ -49,9 +49,9 @@ import { ConfirmPatmentLinkComponent } from '../ynw_provider/shared/component/co
 import { JoyrideModule } from 'ngx-joyride';
 import { ProviderStartTourComponent } from '../ynw_provider/components/provider-start-tour/provider-start-tour.component';
 import { UpdateEmailComponent } from './modules/update-email/update-email.component';
-import { InboxListComponent } from './modules/inbox-list/inbox-list.component';
 import { HelpPopUpComponent } from './home/header/help-pop-up/help-pop-up.component';
 import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistupload/shoppinglistupload.component';
+import { InboxListModule } from './modules/inbox-list/inbox-list.module';
 
 @NgModule({
     declarations: [
@@ -78,7 +78,6 @@ import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistup
         ShowMessageComponent,
         ProviderStartTourComponent,
         UpdateEmailComponent,
-        InboxListComponent,
         HelpPopUpComponent,
         ShoppinglistuploadComponent
     ],
@@ -98,7 +97,8 @@ import { ShoppinglistuploadComponent } from '../shared/components/shoppinglistup
         AddProviderSchedulesModule,
         DynamicFormModule,
         CustomerModule,
-        JoyrideModule.forChild()
+        JoyrideModule.forChild(),
+        InboxListModule
     ],
     entryComponents: [
         AddProviderWaitlistCheckInBillComponent,

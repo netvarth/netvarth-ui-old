@@ -92,7 +92,7 @@
     margin-bottom: 10px;
     box-shadow: 0 0px 5px 0 rgb(0 0 0 / 16%), 0 0px 0px 0 rgb(0 0 0 / 12%);
 }
-.top-buttons .mat-flat-button {
+.top-buttons button {
     color: #1e4079;
     background-color: #f9e2a7;
     border-color: transparent;
