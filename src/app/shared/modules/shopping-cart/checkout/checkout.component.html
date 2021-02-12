@@ -376,7 +376,8 @@
                       <div class="order-label" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
                         *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                       <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
-                        Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}}
+                           Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>
+                        <!-- Promocode applied , it will effect in the bill</a>&nbsp;&nbsp;{{selected_coupons.toString()}} -->
                     </div>
 
 
