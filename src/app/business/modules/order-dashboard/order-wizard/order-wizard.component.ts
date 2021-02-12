@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -12,6 +12,11 @@ import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddressComponent } from './address/address.component';
+
+
 
 @Component({
   selector: 'app-order-wizard',
@@ -19,6 +24,16 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
 export class OrderWizardComponent implements OnInit {
+  prefillnewCustomerwithfield = '';
+  canceldialogRef: any;
+  addressDialogRef: any;
+  selectedRowIndex = -1;
+  formMode: string;
+  exist_add: any = [];
+  disableSave: boolean;
+  haveMobile: any;
+  loading: boolean;
+  trackUuid: any;
   orderSummary: any[];
   orderNote: any;
   storeContact: any;
@@ -30,7 +45,7 @@ export class OrderWizardComponent implements OnInit {
   customer_countrycode: any;
   selectedAddress: any;
   orderType: string;
-  added_address: any;
+  added_address: any = [];
   delivery_type: string;
   placeOrderDisabled: boolean;
   today: any;
@@ -61,7 +76,7 @@ export class OrderWizardComponent implements OnInit {
   choose_type: string;
   disabledConfirmbtn: boolean;
   orders: any;
-  order_count: number;
+  order_count = 0;
   price: number;
   itemCount: any;
   orderItems: any[];
@@ -74,34 +89,92 @@ export class OrderWizardComponent implements OnInit {
   jaldeeId: any;
   customer_data: any;
   searchForm: FormGroup;
+  createCustomer: FormGroup;
+  amForm: FormGroup;
   form_data: any;
   step = 1;
   show_customer = false;
   create_customer = false;
   storeAvailableDates: any = [];
   homeAvailableDates: any = [];
+  disabledNextbtn = true;
+  @ViewChild('closeModal') private closeModal: ElementRef;
+
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
+    private dialog: MatDialog,
+    public dialogRef: MatDialogRef<AddressComponent>,
     public sharedFunctionobj: SharedFunctions,
     private shared_services: SharedServices,
     private groupService: GroupStorageService,
+    public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    private provider_services: ProviderServices) { }
+    private activated_route: ActivatedRoute,
+    private provider_services: ProviderServices) {
+
+    this.activated_route.queryParams.subscribe(qparams => {
+
+
+      if (qparams.ph || qparams.id) {
+        const filter = {};
+        if (qparams.ph) {
+          filter['phoneNo-eq'] = qparams.ph;
+        }
+        if (qparams.id) {
+          filter['id-eq'] = qparams.id;
+        }
+        this.provider_services.getProviderCustomers(filter).subscribe(
+          (data: any) => {
+            if (data.length > 1) {
+              const customer = data.filter(member => !member.parent);
+              this.customer_data = customer[0];
+              this.show_customer = true;
+            } else {
+              this.customer_data = data[0];
+              this.show_customer = true;
+            }
+            this.jaldeeId = this.customer_data.jaldeeId;
+            this.disabledNextbtn = false;
+
+          }
+        );
+      }
+    });
+  }
 
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.createForm();
     this.getCatalog();
 
+
   }
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])]
     });
+    this.amForm = this.fb.group({
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      firstName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      lastName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
+
+      address: ['', Validators.compose([Validators.required])],
+      city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+      postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
+      landMark: ['', Validators.compose([Validators.required])],
+      countryCode: ['+91'],
+    });
+    if (this.formMode === 'edit') {
+      this.updateForm();
+    }
   }
+
+
   searchCustomer(form_data) {
+    this.qParams = {};
     let mode = 'id';
     this.form_data = null;
     let post_data = {};
@@ -109,6 +182,7 @@ export class OrderWizardComponent implements OnInit {
     const isEmail = emailPattern.test(form_data.search_input);
     if (isEmail) {
       mode = 'email';
+      this.prefillnewCustomerwithfield = 'email';
     } else {
       const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
       const isNumber = phonepattern.test(form_data.search_input);
@@ -116,8 +190,10 @@ export class OrderWizardComponent implements OnInit {
       const isCount10 = phonecntpattern.test(form_data.search_input);
       if (isNumber && isCount10) {
         mode = 'phone';
+        this.prefillnewCustomerwithfield = 'phone';
       } else {
         mode = 'id';
+        this.prefillnewCustomerwithfield = 'id';
       }
     }
 
@@ -126,11 +202,13 @@ export class OrderWizardComponent implements OnInit {
         post_data = {
           'phoneNo-eq': form_data.search_input
         };
+        this.qParams['phone'] = form_data.search_input;
         break;
       case 'email':
         post_data = {
           'email-eq': form_data.search_input
         };
+        this.qParams['email'] = form_data.search_input;
         break;
       case 'id':
         post_data = {
@@ -147,14 +225,16 @@ export class OrderWizardComponent implements OnInit {
             this.show_customer = false;
             this.create_customer = true;
 
-            this.createNew('create');
+            this.createNew();
           } else {
             if (data.length > 1) {
               const customer = data.filter(member => !member.parent);
               this.customer_data = customer[0];
+
             } else {
               this.customer_data = data[0];
             }
+            this.disabledNextbtn = false;
             this.jaldeeId = this.customer_data.jaldeeId;
             console.log(this.jaldeeId);
             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -162,8 +242,16 @@ export class OrderWizardComponent implements OnInit {
             } else {
               this.countryCode = '+91';
             }
+            if (this.customer_data.email && this.customer_data.email !== 'null') {
+              this.customer_email = this.customer_data.email;
+            } else {
+              this.customer_email = '';
+            }
             this.show_customer = true;
             this.create_customer = false;
+            this.getDeliveryAddress();
+            this.formMode = data.type;
+
           }
 
         },
@@ -172,32 +260,39 @@ export class OrderWizardComponent implements OnInit {
         }
       );
   }
-  createNew(type?) {
-    if (!type) {
-      this.qParams = {};
-    }
-    if (type === 'new') {
-      this.qParams['noMobile'] = false;
-    }
-    // this.qParams['checkinType'] = this.checkinType;
-    // if (this.source === 'waitlist-block') {
-    //     this.qParams['source'] = this.source;
-    //     this.qParams['uid'] = this.uid;
-    //     this.qParams['showtoken'] = this.showtoken;
-    //     if (this.virtualServicemode && this.virtualServicenumber) {
-    //         this.qParams['virtualServicemode'] = this.virtualServicemode;
-    //         this.qParams['virtualServicenumber'] = this.virtualServicenumber;
-    //     }
-    // } else {
-    //     this.qParams['source'] = (this.showtoken) ? 'token' : 'checkin';
-    // }
-    // this.qParams['thirdParty'] = this.thirdParty;
-    this.qParams['type'] = type;
+  createNew() {
+    this.qParams['checkinType'] = 'WALK_IN_ORDER';
+    this.qParams['source'] = 'order';
+    this.qParams['thirdParty'] = '';
+    this.qParams['type'] = 'create';
     this.qParams['id'] = 'add';
     const navigationExtras: NavigationExtras = {
       queryParams: this.qParams
     };
     this.router.navigate(['/provider/customers/create'], navigationExtras);
+  }
+  getDeliveryAddress() {
+    this.provider_services.getDeliveryAddress(this.customer_data.id)
+      .subscribe(data => {
+        if (data !== null) {
+          this.added_address = data;
+          if (this.added_address.length > 0 && this.added_address !== null) {
+            this.highlight(0, this.added_address[0]);
+          }
+
+        }
+      },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  highlight(index, address) {
+    this.selectedRowIndex = index;
+    this.customer_phoneNumber = address.phoneNumber;
+    this.customer_email = address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
+    console.log(this.selectedAddress);
   }
   getCatalog() {
     this.getCatalogDetails().then(data => {
@@ -210,7 +305,7 @@ export class OrderWizardComponent implements OnInit {
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-       this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
+        this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
         console.log(this.orderItems);
       }
@@ -290,11 +385,50 @@ export class OrderWizardComponent implements OnInit {
     });
 
 
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
+  }
+  goBackToCheckout(selectesTimeslot, queue) {
+    this.action = '';
+    console.log(queue);
+    const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
+    console.log(selectqueue);
+    this.nextAvailableTime = selectqueue;
 
+  }
+  updateForm() {
+    // this.amForm.setValue({
+    //   'phoneNumber': this.edit_address.phoneNumber || null,
+    //   'firstName': this.edit_address.firstName || null,
+    //   'lastName': this.edit_address.lastName || null,
+    //   'email': this.edit_address.email || null,
+    //   'address': this.edit_address.address || null,
+    //   'city': this.edit_address.city || null,
+    //   'postalCode': this.edit_address.postalCode || null,
+    //   'landMark': this.edit_address.landMark || null,
+    //   'countryCode': '+91',
+    // });
+  }
+  handleQueueSelection(queue, index) {
+    console.log(index);
+    this.queue = queue;
+  }
+  onSubmit(form_data) {
+
+    console.log(JSON.stringify(form_data));
+    this.disableSave = true;
+    this.added_address.push(form_data);
+    console.log('addres' + JSON.stringify(this.added_address));
+    this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address)
+      .subscribe(
+        data => {
+          this.disableSave = false;
+          this.closeModal.nativeElement.click();
+          this.getDeliveryAddress();
+        },
+        error => {
+          this.disableSave = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
   }
   gotoNext() {
     this.step = this.step + 1;
@@ -310,9 +444,11 @@ export class OrderWizardComponent implements OnInit {
     this.removeFromCart(item);
   }
   addToCart(Item) {
+    console.log(JSON.stringify(Item));
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
+    this.orders = [...new Map(this.orderList.map(orderItem => [orderItem.item['itemId'], orderItem])).values()];
 
   }
   getItemQty(item) {
@@ -357,268 +493,274 @@ export class OrderWizardComponent implements OnInit {
   }
 
   getItemImg(item) {
+    console.log(JSON.stringify(item));
     if (item.itemImages) {
-        const img = item.itemImages.filter(image => image.displayImage);
-        if (img[0]) {
-            return img[0].url;
-        } else {
-            return '../../../../assets/images/order/Items.svg';
-        }
-    } else {
+      const img = item.itemImages.filter(image => image.displayImage);
+      if (img[0]) {
+        return img[0].url;
+      } else {
         return '../../../../assets/images/order/Items.svg';
+      }
+    } else {
+      return '../../../../assets/images/order/Items.svg';
     }
-}
-removeItemFromCart(item) {
-
-
-  this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
-
-  this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
-
-  if (this.orders.length === 0) {
-    this.disabledConfirmbtn = true;
   }
+  removeItemFromCart(item) {
 
-}
-getTotalItemPrice() {
-  this.price = 0;
-  for (const itemObj of this.orderList) {
-    let item_price = itemObj.item.price;
-    if (itemObj.item.showPromotionalPrice) {
-      item_price = itemObj.item.promotionalPrice;
+
+    this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
+
+    this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
+    console.log(JSON.stringify(this.orders));
+
+    if (this.orders.length === 0) {
+      this.disabledConfirmbtn = true;
     }
-    this.price = this.price + item_price;
+
   }
-  return this.price.toFixed(2);
-}
-getDeliveryCharge() {
-  let deliveryCharge = 0;
-  if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
-    deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+  getTotalItemPrice() {
+    this.price = 0;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
+    }
+    return this.price.toFixed(2);
   }
-  return deliveryCharge.toFixed(2);
-}
-getSubTotal() {
-  let subtotal = 0;
-  let deliveryCharge = 0;
-  if (this.orders.length !== 0) {
+  getDeliveryCharge() {
+    let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
+    return deliveryCharge.toFixed(2);
   }
-  subtotal = subtotal + this.price + deliveryCharge + this.totaltax;
-  return subtotal.toFixed(2);
-}
-getTotalItemTax(taxValue) {
-  this.totaltax = 0;
-  for (const itemObj of this.orderList) {
-    let taxprice = 0;
-    if (itemObj.item.taxable) {
-      if (itemObj.item.showPromotionalPrice) {
-        taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+  getSubTotal() {
+    let subtotal = 0;
+    let deliveryCharge = 0;
+    if (this.orders.length !== 0) {
+      if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
+        deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+      }
+    }
+    subtotal = subtotal + this.price + deliveryCharge + this.totaltax;
+    return subtotal.toFixed(2);
+  }
+  getTotalItemTax(taxValue) {
+    this.totaltax = 0;
+    for (const itemObj of this.orderList) {
+      let taxprice = 0;
+      if (itemObj.item.taxable) {
+        if (itemObj.item.showPromotionalPrice) {
+          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+        } else {
+          taxprice = itemObj.item.price * (taxValue / 100);
+        }
       } else {
-        taxprice = itemObj.item.price * (taxValue / 100);
+        taxprice = 0;
+
       }
-    } else {
-      taxprice = 0;
+      this.totaltax = this.totaltax + taxprice;
 
     }
-    this.totaltax = this.totaltax + taxprice;
+    return this.totaltax.toFixed(2);
+
 
   }
-  return this.totaltax.toFixed(2);
+  getOrderAvailableDatesForPickup() {
+    const _this = this;
 
-
-}
-getOrderAvailableDatesForPickup() {
-  const _this = this;
-
-  _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.accountId)
-    .subscribe((data: any) => {
-      const availables = data.filter(obj => obj.isAvailable);
-      const availDates = availables.map(function (a) { return a.date; });
-      _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
-        return index === self.indexOf(elem);
+    _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.accountId)
+      .subscribe((data: any) => {
+        const availables = data.filter(obj => obj.isAvailable);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
+        });
       });
-    });
-}
-getOrderAvailableDatesForHome() {
-  const _this = this;
+  }
+  getOrderAvailableDatesForHome() {
+    const _this = this;
 
-  _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.accountId)
-    .subscribe((data: any) => {
-      const availables = data.filter(obj => obj.isAvailable);
-      const availDates = availables.map(function (a) { return a.date; });
-      _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
-        return index === self.indexOf(elem);
+    _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.accountId)
+      .subscribe((data: any) => {
+        const availables = data.filter(obj => obj.isAvailable);
+        const availDates = availables.map(function (a) { return a.date; });
+        _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
+          return index === self.indexOf(elem);
+        });
       });
-    });
-}
-
-dateClass(date: Date): MatCalendarCellCssClasses {
-  if (this.choose_type === 'store') {
-    return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
-  } else {
-    return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
-}
-getAvailabilityByDate(date) {
-  this.sel_checkindate = date;
-  const cday = new Date(this.sel_checkindate);
-  const currentday = (cday.getDay() + 1);
-  if (this.choose_type === 'store') {
-    const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
 
-    if (storeIntervals.includes(currentday)) {
-      this.isfutureAvailableTime = true;
-      this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-      // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
-      console.log(this.nextAvailableTimeQueue);
-      this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-      this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+  dateClass(date: Date): MatCalendarCellCssClasses {
+    if (this.choose_type === 'store') {
+      return (this.storeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     } else {
-      this.isfutureAvailableTime = false;
-    }
-
-  } else {
-    const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
-    if (homeIntervals.includes(currentday)) {
-      this.isfutureAvailableTime = true;
-      this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-      // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
-      console.log(this.nextAvailableTimeQueue);
-      this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-      this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
-    } else {
-      this.isfutureAvailableTime = false;
+      return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-}
-changeTime() {
-  this.action = 'timeChange';
-  this.getAvailabilityByDate(this.sel_checkindate);
-}
-calculateDate(days) {
-  // this.resetApi();
-  const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
-  const newdate = new Date(date);
-  newdate.setDate(newdate.getDate() + days);
-  const dd = newdate.getDate();
-  const mm = newdate.getMonth() + 1;
-  const y = newdate.getFullYear();
-  const ndate1 = y + '-' + mm + '-' + dd;
-  const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-  // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
-  const strtDt1 = this.todaydate + ' 00:00:00';
-  const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
-  const nDt = new Date(ndate);
-  if (nDt.getTime() >= strtDt.getTime()) {
-    this.sel_checkindate = ndate;
-    this.getAvailabilityByDate(this.sel_checkindate);
-    // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-  }
+  getAvailabilityByDate(date) {
+    this.sel_checkindate = date;
+    const cday = new Date(this.sel_checkindate);
+    const currentday = (cday.getDay() + 1);
+    if (this.choose_type === 'store') {
+      const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
 
-  const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
-  const date1 = new Date(dt1);
-  const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-  const date2 = new Date(dt2);
-  // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-  if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-    this.isFuturedate = true;
-  } else {
-    this.isFuturedate = false;
-  }
-  const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
-  const ddd = new Date(day);
-  this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
-}
-disableMinus() {
-  const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
-  const seldate = new Date(seldate2);
-  const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
-  const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
-  const strtDt = new Date(strtDt2);
-  const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
-  if (startdate >= selecttdate) {
-    return true;
-  } else {
-    return false;
-  }
-}
-handleFutureDateChange(e) {
-  const tdate = e.targetElement.value;
-  const newdate = tdate.split('/').reverse().join('-');
-  const futrDte = new Date(newdate);
-  const obtmonth = (futrDte.getMonth() + 1);
-  let cmonth = '' + obtmonth;
-  if (obtmonth < 10) {
-    cmonth = '0' + obtmonth;
-  }
-  const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
-  this.sel_checkindate = seldate;
-  const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
-  const date2 = new Date(dt2);
-  const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
-  const datee2 = new Date(dte2);
-  if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
-    this.isFuturedate = true;
-  } else {
-    this.isFuturedate = false;
-  }
-  this.handleFuturetoggle();
-  this.getAvailabilityByDate(this.sel_checkindate);
-}
-handleFuturetoggle() {
-  this.showfuturediv = !this.showfuturediv;
-}
-changeType(event) {
-  this.choose_type = event.value;
-  console.log(this.choose_type);
-  if (event.value === 'store') {
-    this.store_pickup = true;
-    this.choose_type = 'store';
-    this.storeChecked = true;
-    this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-    this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
-    this.getAvailabilityByDate(this.sel_checkindate);
-  } else {
-    this.home_delivery = true;
-    this.choose_type = 'home';
-    this.storeChecked = false;
-    this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-    this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
-    this.getAvailabilityByDate(this.sel_checkindate);
-  }
-
-  if (this.todaydate === this.sel_checkindate) {
-    this.isFuturedate = false;
-  } else {
-    this.isFuturedate = true;
-  }
-}
-
-confirm() {
-  this.placeOrderDisabled = true;
-  console.log(this.nextAvailableTime);
-  const timeslot = this.nextAvailableTime.split(' - ');
-  if (this.delivery_type === 'home') {
-    if (this.added_address === null || this.added_address.length === 0) {
-      this.placeOrderDisabled = false;
-      this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
-      return;
-    } else {
-      if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-        this.emailId = this.customer_email;
+      if (storeIntervals.includes(currentday)) {
+        this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
+        this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
+      } else {
+        this.isfutureAvailableTime = false;
       }
-      if (this.orderType === 'SHOPPINGLIST') {
+
+    } else {
+      const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
+      if (homeIntervals.includes(currentday)) {
+        this.isfutureAvailableTime = true;
+        this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
+        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
+        console.log(this.nextAvailableTimeQueue);
+        this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
+        this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
+      } else {
+        this.isfutureAvailableTime = false;
+      }
+    }
+  }
+  changeTime() {
+    this.action = 'timeChange';
+    this.getAvailabilityByDate(this.sel_checkindate);
+  }
+  calculateDate(days) {
+    // this.resetApi();
+    const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
+    const newdate = new Date(date);
+    newdate.setDate(newdate.getDate() + days);
+    const dd = newdate.getDate();
+    const mm = newdate.getMonth() + 1;
+    const y = newdate.getFullYear();
+    const ndate1 = y + '-' + mm + '-' + dd;
+    const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
+    // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
+    const strtDt1 = this.todaydate + ' 00:00:00';
+    const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+    const nDt = new Date(ndate);
+    if (nDt.getTime() >= strtDt.getTime()) {
+      this.sel_checkindate = ndate;
+      this.getAvailabilityByDate(this.sel_checkindate);
+      // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    }
+
+    const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
+    const date1 = new Date(dt1);
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+    if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
+    }
+    const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
+    const ddd = new Date(day);
+    this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+  }
+  disableMinus() {
+    const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
+    const seldate = new Date(seldate2);
+    const selecttdate = new Date(seldate.getFullYear() + '-' + this.sharedFunctionobj.addZero(seldate.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(seldate.getDate()));
+    const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
+    const strtDt = new Date(strtDt2);
+    const startdate = new Date(strtDt.getFullYear() + '-' + this.sharedFunctionobj.addZero(strtDt.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(strtDt.getDate()));
+    if (startdate >= selecttdate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  handleFutureDateChange(e) {
+    const tdate = e.targetElement.value;
+    const newdate = tdate.split('/').reverse().join('-');
+    const futrDte = new Date(newdate);
+    const obtmonth = (futrDte.getMonth() + 1);
+    let cmonth = '' + obtmonth;
+    if (obtmonth < 10) {
+      cmonth = '0' + obtmonth;
+    }
+    const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+    this.sel_checkindate = seldate;
+    const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+    const datee2 = new Date(dte2);
+    if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+      this.isFuturedate = true;
+    } else {
+      this.isFuturedate = false;
+    }
+    this.handleFuturetoggle();
+    this.getAvailabilityByDate(this.sel_checkindate);
+  }
+  handleFuturetoggle() {
+    this.showfuturediv = !this.showfuturediv;
+  }
+  changeType(event) {
+    this.choose_type = event.value;
+    console.log(this.choose_type);
+    if (event.value === 'store') {
+      this.store_pickup = true;
+      this.choose_type = 'store';
+      this.storeChecked = true;
+      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
+    } else {
+      this.home_delivery = true;
+      this.choose_type = 'home';
+      this.storeChecked = false;
+      this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+      this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      this.getAvailabilityByDate(this.sel_checkindate);
+    }
+
+    if (this.todaydate === this.sel_checkindate) {
+      this.isFuturedate = false;
+    } else {
+      this.isFuturedate = true;
+    }
+  }
+  getItemImage(item) {
+    return item.itemImages[0].url;
+
+  }
+  confirm() {
+    this.placeOrderDisabled = true;
+    console.log(this.nextAvailableTime);
+    const timeslot = this.nextAvailableTime.split(' - ');
+    if (this.choose_type === 'home') {
+      console.log(this.added_address);
+      if (this.added_address === null || this.added_address.length === 0) {
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+        return;
+      } else {
+        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+          this.emailId = this.customer_data.email;
+        }
+
         const post_Data = {
           'homeDelivery': true,
           'homeDeliveryAddress': this.selectedAddress,
@@ -626,32 +768,11 @@ confirm() {
             'id': this.catalog_details.id
           },
           'orderFor': {
-            'id': 0
+            'id': this.customer_data.id
           },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
-          },
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'phoneNumber': this.customer_phoneNumber,
-          'email': this.customer_email,
-          'orderNote': this.orderlistNote,
-          'coupons': this.selected_coupons
-        };
-        console.log(post_Data);
-     //   this.confirmOrder(post_Data);
-      } else {
-        const post_Data = {
-          'homeDelivery': true,
-          'homeDeliveryAddress': this.selectedAddress,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': 0
+          'consumer': {
+            'id': this.customer_data.id
+
           },
           'timeSlot': {
             'sTime': timeslot[0],
@@ -661,60 +782,41 @@ confirm() {
           },
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'phoneNumber': this.customer_phoneNumber,
-          'email': this.customer_email,
+          'countryCode': this.customer_data.countrycode,
+          'phoneNumber': this.customer_data.phoneNumber,
+          'email': this.customer_data.email,
+          'orderMode': 'WALKIN_ORDER',
           'orderNote': this.orderNote,
           'coupons': this.selected_coupons
         };
         console.log(post_Data);
-      //  this.confirmOrder(post_Data);
+        this.confirmOrder(post_Data);
+
       }
     }
-  }
-  if (this.delivery_type === 'store') {
-    if (!this.storeContact.value.phone || !this.storeContact.value.email) {
-      this.placeOrderDisabled = false;
-      this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
-      return;
-    } else {
-      const contactNumber = this.storeContact.value.phone;
-      const contact_email = this.storeContact.value.email;
+    if (this.choose_type === 'store') {
+      // if (!this.storeContact.value.phone || !this.storeContact.value.email) {
+      //   this.placeOrderDisabled = false;
+      //   this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
+      //   return;
+      // } else {
+      const contactNumber = this.customer_data.phoneNumber;
+      const contact_email = this.customer_data.email;
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-        this.emailId = contact_email;
-      }
-      if (this.orderType === 'SHOPPINGLIST') {
+        this.emailId = this.customer_data.email;
+        //   }
+
         const post_Data = {
           'storePickup': true,
           'catalog': {
             'id': this.catalog_details.id
           },
           'orderFor': {
-            'id': 0
+            'id': this.customer_data.id
           },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
-          },
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'phoneNumber': contactNumber,
-          'email': contact_email,
-          'orderNote': this.orderlistNote,
-           'coupons': this.selected_coupons
-        };
-        console.log(post_Data);
-       // this.confirmOrder(post_Data);
-      } else {
-        const post_Data = {
-          'storePickup': true,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': 0
+          'consumer': {
+            'id': this.customer_data.id
+
           },
           'timeSlot': {
             'sTime': timeslot[0],
@@ -725,147 +827,248 @@ confirm() {
           'orderItem': this.getOrderItems(),
           'orderDate': this.sel_checkindate,
           'countryCode': this.customer_countrycode,
+          'orderMode': 'WALKIN_ORDER',
           'phoneNumber': contactNumber,
           'email': contact_email,
-          'orderNote': this.orderNote,
-          'coupons': this.selected_coupons
+          // 'orderNote': this.orderNote,
+          // 'coupons': this.selected_coupons
         };
         console.log(post_Data);
-       // this.confirmOrder(post_Data);
+        this.confirmOrder(post_Data);
+        //  }
       }
     }
+
   }
+  getOrderItems() {
 
-}
-getOrderItems() {
+    this.orderSummary = [];
+    this.orders.forEach(item => {
+      let consumerNote = '';
+      const itemId = item.item.itemId;
+      const qty = this.getItemQty(item);
+      if (item.consumerNote) {
+        consumerNote = item.consumerNote;
+      }
 
-  this.orderSummary = [];
-  this.orders.forEach(item => {
-    let consumerNote = '';
-    const itemId = item.item.itemId;
-    const qty = this.getItemQty(item);
-    if (item.consumerNote) {
-      consumerNote = item.consumerNote;
-    }
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+    });
+    return this.orderSummary;
+  }
+  confirmOrder(post_Data) {
+    console.log(post_Data);
+    const dataToSend: FormData = new FormData();
+    const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
+    dataToSend.append('order', blobpost_Data);
+    this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
+      .subscribe(data => {
+        console.log(JSON.stringify(data));
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar('Your Order placed successfully');
+        this.orderList = [];
+      },
+        error => {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
 
-    this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
-  });
-  return this.orderSummary;
-}
-// confirmOrder(post_Data) {
-//   console.log(post_Data);
-//   console.log(this.selectedImagelist.files);
-//   const dataToSend: FormData = new FormData();
-//   if (this.orderType === 'SHOPPINGLIST') {
-//     const captions = {};
-//     let i = 0;
-//     if (this.selectedImagelist) {
-//       console.log(dataToSend);
-//       for (const pic of this.selectedImagelist.files) {
-//         dataToSend.append('attachments', pic, pic['name']);
-//         captions[i] = this.selectedImagelist.caption[i] || '';
-//         i++;
-//       }
-//     }
-//     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
-//     dataToSend.append('captions', blobPropdata);
-//     const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
-//     dataToSend.append('order', blobpost_Data);
-//     this.shared_services.CreateConsumerOrderlist(this.account_id, dataToSend)
-//       .subscribe(data => {
-//         const retData = data;
-//         this.checkoutDisabled = false;
-//         let prepayAmount;
-//         const uuidList = [];
-//         Object.keys(retData).forEach(key => {
-//           if (key === '_prepaymentAmount') {
-//             prepayAmount = retData['_prepaymentAmount'];
-//           } else {
-//             this.trackUuid = retData[key];
-//             uuidList.push(retData[key]);
-//           }
-//         });
+      );
+  }
+  addAddress() {
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Add',
+        address: this.added_address,
+        customer: this.customer_data
 
-//         const navigationExtras: NavigationExtras = {
-//           queryParams: {
-//             account_id: this.account_id,
-//             type_check: 'order_prepayment',
-//             prepayment: prepayAmount,
-//             uuid: this.trackUuid
-//           }
-//         };
-//         if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
-//           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
-//             .subscribe(res => {
-//               console.log(res);
-//               this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
-//             });
-//         } else {
-//           this.orderList = [];
-//           this.lStorageService.removeitemfromLocalStorage('order_sp');
-//           this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-//           this.lStorageService.removeitemfromLocalStorage('order_spId');
-//           this.lStorageService.removeitemfromLocalStorage('order');
-//           this.snackbarService.openSnackBar('Your Order placed successfully');
-//           this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-//         }
-//       },
-//         error => {
-//           this.checkoutDisabled = false;
-//           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-//         }
+      }
+    });
+    this.addressDialogRef.afterClosed().subscribe(result => {
+      this.getDeliveryAddress();
+    });
+  }
+  updateAddress(address, index) {
+    this.addressDialogRef = this.dialog.open(AddressComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        type: 'edit',
+        address: this.added_address,
+        update_address: address,
+        edit_index: index,
+        source: 'consumer',
 
-//       );
-//   } else {
-//     const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
-//     dataToSend.append('order', blobpost_Data);
-//     this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
-//       .subscribe(data => {
-//         const retData = data;
-//         this.checkoutDisabled = false;
-//         let prepayAmount;
-//         const uuidList = [];
-//         Object.keys(retData).forEach(key => {
-//           if (key === '_prepaymentAmount') {
-//             prepayAmount = retData['_prepaymentAmount'];
-//           } else {
-//             this.trackUuid = retData[key];
-//             uuidList.push(retData[key]);
-//           }
-//         });
-
-//         const navigationExtras: NavigationExtras = {
-//           queryParams: {
-//             account_id: this.account_id,
-//             type_check: 'order_prepayment',
-//             prepayment: prepayAmount,
-//             uuid: this.trackUuid
-//           }
-//         };
-//         if (this.catalog_details.advanceAmount && this.catalog_details.advanceAmount > 0.0) {
-//           this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
-//             .subscribe(res => {
-//               console.log(res);
-//               this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
-//             });
-//         } else {
-//           this.orderList = [];
-//           this.lStorageService.removeitemfromLocalStorage('order_sp');
-//           this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-//           this.lStorageService.removeitemfromLocalStorage('order_spId');
-//           this.lStorageService.removeitemfromLocalStorage('order');
-//           this.snackbarService.openSnackBar('Your Order placed successfully');
-//           this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-//         }
-//       },
-//         error => {
-//           this.checkoutDisabled = false;
-//           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-//         }
-
-//       );
-//   }
-// }
+      }
+    });
+    this.addressDialogRef.afterClosed().subscribe(result => {
+      this.getDeliveryAddress();
+    });
+  }
+  deleteAddress(address, index) {
+    // this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     'message': 'Do you want to Delete this address?',
+    //   }
+    // });
+    // this.canceldialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
+    //   if (result) {
+    //     this.added_address.splice(index, 1);
+    //     this.shared_services.updateConsumeraddress(this.added_address)
+    //       .subscribe(
+    //         data => {
+    //           if (data) {
+    //             this.getDeliveryAddress();
+    //           }
+    //           this.snackbarService.openSnackBar('Address Updated successfully');
+    //         },
+    //         error => {
+    //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //         }
+    //       );
+    //     // this.getaddress();
+    //   }
+    // });
+  }
+  //   onSubmit(form_data) {
+  //     this.disableButton = true;
+  //     let datebirth;
+  //     if (form_data.dob) {
+  //         datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
+  //     }
+  //     if (this.action === 'add') {
+  //         const post_data = {
+  //             //   'userProfile': {
+  //             'firstName': form_data.first_name,
+  //             'lastName': form_data.last_name,
+  //             'dob': datebirth,
+  //             'gender': form_data.gender,
+  //             'phoneNo': form_data.mobile_number,
+  //             'address': form_data.address,
+  //             //   }
+  //         };
+  //         if (form_data.mobile_number) {
+  //             post_data['countryCode'] = '+91';
+  //         }
+  //         if (form_data.email_id && form_data.email_id !== '') {
+  //             post_data['email'] = form_data.email_id;
+  //         }
+  //         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+  //             if (form_data.customer_id) {
+  //                 post_data['jaldeeId'] = form_data.customer_id;
+  //             } else {
+  //                 post_data['jaldeeId'] = this.jld;
+  //             }
+  //         }
+  //         this.provider_services.createProviderCustomer(post_data)
+  //             .subscribe(
+  //                 data => {
+  //                     this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+  //                     this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
+  //                     const qParams = {};
+  //                     qParams['pid'] = data;
+  //                     if (this.source === 'checkin' || this.source === 'token') {
+  //                         const navigationExtras: NavigationExtras = {
+  //                             queryParams: {
+  //                                 ph: form_data.mobile_number,
+  //                                 checkin_type: this.checkin_type,
+  //                                 haveMobile: this.haveMobile,
+  //                                 id: data,
+  //                                 thirdParty: this.thirdParty
+  //                             }
+  //                         };
+  //                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+  //                     } else if (this.source === 'appointment') {
+  //                         const navigationExtras: NavigationExtras = {
+  //                             queryParams: {
+  //                                 ph: form_data.mobile_number,
+  //                                 checkinType: this.checkin_type,
+  //                                 haveMobile: this.haveMobile,
+  //                                 id: data,
+  //                                 timeslot: this.timeslot,
+  //                                 scheduleId: this.comingSchduleId,
+  //                                 date: this.date,
+  //                                 thirdParty: this.thirdParty,
+  //                                 serviceId: this.serviceIdParam,
+  //                                 userId: this.userId,
+  //                                 deptId: this.deptId,
+  //                                 type: this.type
+  //                             }
+  //                         };
+  //                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+  //                     } else if (this.source === 'appt-block') {
+  //                         this.confirmApptBlock(data);
+  //                     } else if (this.source === 'waitlist-block') {
+  //                         this.confirmWaitlistBlock(data);
+  //                     } else {
+  //                         this.router.navigate(['provider', 'customers']);
+  //                     }
+  //                 },
+  //                 error => {
+  //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                     this.disableButton = false;
+  //                 });
+  //     } else if (this.action === 'edit') {
+  //         const post_data = {
+  //             //   'userProfile': {
+  //             'id': this.customerId,
+  //             'firstName': form_data.first_name,
+  //             'lastName': form_data.last_name,
+  //             'dob': datebirth,
+  //             'gender': form_data.gender,
+  //             'phoneNo': form_data.mobile_number,
+  //             'email': form_data.email_id,
+  //             'address': form_data.address,
+  //             //   }
+  //         }; if (form_data.mobile_number) {
+  //             post_data['countryCode'] = '+91';
+  //         }
+  //         // if (form_data.email_id && form_data.email_id !== '') {
+  //         //     post_data['email'] = form_data.email_id;
+  //         // }
+  //         if (form_data.customer_id) {
+  //             post_data['jaldeeId'] = form_data.customer_id;
+  //         }
+  //         this.provider_services.updateProviderCustomer(post_data)
+  //             .subscribe(
+  //                 data => {
+  //                     this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+  //                     this.snackbarService.openSnackBar('Updated Successfully');
+  //                     const qParams = {};
+  //                     qParams['pid'] = data;
+  //                     if (this.source === 'checkin' || this.source === 'token') {
+  //                         const navigationExtras: NavigationExtras = {
+  //                             queryParams: {
+  //                                 ph: form_data.mobile_number,
+  //                                 checkin_type: this.checkin_type
+  //                             }
+  //                         };
+  //                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+  //                     } else if (this.source === 'appointment') {
+  //                         const navigationExtras: NavigationExtras = {
+  //                             queryParams: {
+  //                                 ph: form_data.mobile_number,
+  //                                 checkin_type: this.checkin_type
+  //                             }
+  //                         };
+  //                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+  //                     } else {
+  //                         this.router.navigate(['provider', 'customers']);
+  //                     }
+  //                 },
+  //                 error => {
+  //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //                     this.disableButton = false;
+  //                 });
+  //     }
+  // }
 
 }
 

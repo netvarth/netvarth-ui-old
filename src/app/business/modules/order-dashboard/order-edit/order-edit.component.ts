@@ -16,6 +16,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
 import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/checkout/add-address/add-address.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 
 @Component({
@@ -23,7 +24,12 @@ import { AddAddressComponent } from '../../../../shared/modules/shopping-cart/ch
   templateUrl: './order-edit.component.html',
   styleUrls: ['./order-edit.component.css']
 })
-export class OrderEditComponent implements OnInit, OnDestroy  {
+export class OrderEditComponent implements OnInit, OnDestroy {
+  selectedRowIndex: any;
+  customer_email: any;
+  customer_phoneNumber: any;
+  added_address: any = [];
+  customerId: any;
   orderCount: number;
   disabledConfirmbtn = false;
   isfutureAvailableTime: boolean;
@@ -59,6 +65,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   todaydate;
   ddate;
   hold_sel_checkindate;
+  totaltax = 0;
   // choose_type = 'store';
   choose_type;
   advance_amount: any;
@@ -81,6 +88,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   showCouponWB: boolean;
   provider_id: any;
   s3url;
+  loading = true;
   api_loading1 = true;
   retval;
   tooltipcls = '';
@@ -89,7 +97,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   storeContact: any;
   canceldialogRef: any;
   sel_checdate: any;
-  orderItems: any[];
+  catalogItems: any[];
   itemCount: any;
   uid: any;
   orderDetails: any = [];
@@ -102,19 +110,17 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-        public providerservice: ProviderServices,
+    public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
+    private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService) {
-    this.route.queryParams.subscribe(
+    this.route.params.subscribe(
       params => {
         console.log(params);
-        this.sel_checdate = params.order_date;
-        this.account_id = params.account_id;
-        this.provider_id = params.unique_id;
-        this.choose_type = params.choosetype;
-        this.uid = params.uid;
-        this.getOrderDetails(this.uid);
+        this.account_id = this.groupService.getitemFromGroupStorage('accountId');
+        this.uid = params.id;
+        // this.getOrderDetails(this.uid);
       });
 
   }
@@ -126,28 +132,68 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
   }
 
   ngOnDestroy() {
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+
   }
+  // fetch orderdetails using order id
   getOrderDetails(uid) {
-      this.providerservice.getProviderOrderById(uid).subscribe(data => {
+    this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
-      console.log(this.orderDetails);
+      if (this.orderDetails && this.orderDetails.orderItem) {
+        console.log(this.orderDetails.orderItem);
+        for (const item of this.orderDetails.orderItem) {
+          const itemqty: number = item.quantity;
+          const itemId = item.id;
+          const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
+          console.log('itemObj' + JSON.stringify(orderItem.item));
+          const itemObject = orderItem.item;
+          for (let i = 0; i <= itemqty; i++) {
+            this.orderList.push({ 'item': itemObject });
+          }
+
+        }
+      }
+      console.log(JSON.stringify(this.orderList));
+      if (this.orderDetails.storePickup) {
+        this.choose_type = 'store';
+        this.home_delivery = false;
+        this.store_pickup = true;
+      }
+      if (this.orderDetails.homeDelivery) {
+        this.choose_type = 'home';
+        this.home_delivery = true;
+        this.store_pickup = false;
+      }
+      if (this.orderDetails.orderFor) {
+        this.customerId = this.orderDetails.orderFor.id;
+      }
+      this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
+      console.log(JSON.stringify(this.orders));
+      this.orderCount = this.orders.length;
+      if (this.orderDetails.orderMode === 'ONLINE_ORDER') {
+        this.getDeliveryAddress();
+      }
+      this.sel_checkindate = this.orderDetails.orderDate;
+      this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      this.loading = false;
     });
   }
+
+
+
+  // Fetch catalog of this account using accountId
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       console.log(this.catalog_details);
-      this.orderItems = [];
-      const orderItems = [];
+      this.catalogItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
         const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
         const showpric = this.catalog_details.showPrice;
-        orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item , 'showpric': showpric});
+        this.catalogItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(orderItems);
+        console.log(this.catalogItems);
       }
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
@@ -172,15 +218,12 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
           }
         }
         this.advance_amount = this.catalog_details.advanceAmount;
+        this.getOrderAvailableDatesForPickup();
+        this.getOrderAvailableDatesForHome();
+        this.getOrderDetails(this.uid);
+
       }
-      this.getOrderAvailableDatesForPickup();
-      this.getOrderAvailableDatesForHome();
-      this.fillDateFromLocalStorage();
-      this.orderList = JSON.parse(localStorage.getItem('order'));
-      console.log(this.orderList);
-      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      this.orderCount = this.orders.length;
-      this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
+
       this.showfuturediv = false;
       this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -213,28 +256,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
 
     });
   }
-  fillDateFromLocalStorage() {
-    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
-    console.log(this, this.chosenDateDetails);
-    if (this.chosenDateDetails !== null) {
-      this.delivery_type = this.chosenDateDetails.delivery_type;
-      this.choose_type = this.delivery_type;
-      if (this.delivery_type === 'store') {
-        this.store_pickup = true;
-        this.choose_type = 'store';
-        this.storeChecked = true;
-      } else if (this.delivery_type === 'home') {
-        this.home_delivery = true;
-        this.choose_type = 'home';
-        this.storeChecked = false;
-      }
-      this.sel_checkindate = this.chosenDateDetails.order_date;
-      this.nextAvailableTime = this.chosenDateDetails.nextAvailableTime;
-    } else {
-      this.storeChecked = true;
-    }
 
-  }
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -249,11 +271,6 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
         );
     });
 
-
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
 
   }
   getItemQty(item) {
@@ -295,6 +312,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     }
     return found;
   }
+
   clearCouponErrors() {
     this.couponvalid = true;
     this.api_cp_error = null;
@@ -437,6 +455,27 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     }
     return this.price.toFixed(2);
   }
+  getTotalItemTax(taxValue) {
+    this.totaltax = 0;
+    for (const itemObj of this.orderList) {
+      let taxprice = 0;
+      if (itemObj.item.taxable) {
+        if (itemObj.item.showPromotionalPrice) {
+          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+        } else {
+          taxprice = itemObj.item.price * (taxValue / 100);
+        }
+      } else {
+        taxprice = 0;
+
+      }
+      this.totaltax = this.totaltax + taxprice;
+
+    }
+    return this.totaltax.toFixed(2);
+
+
+  }
   getDeliveryCharge() {
     let deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
@@ -454,6 +493,105 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     }
     subtotal = subtotal + this.price + deliveryCharge;
     return subtotal.toFixed(2);
+  }
+  getDeliveryAddress() {
+    this.providerservice.getDeliveryAddress(this.customerId)
+      .subscribe(data => {
+        if (data !== null) {
+          this.added_address = data;
+          if (this.added_address.length > 0 && this.added_address !== null) {
+            this.highlight(0, this.added_address[0]);
+          }
+
+        }
+      },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  highlight(index, address) {
+    this.selectedRowIndex = index;
+    this.customer_phoneNumber = address.phoneNumber;
+    this.customer_email = address.email;
+    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
+    console.log(this.selectedAddress);
+  }
+  addAddress() {
+    // this.addressDialogRef = this.dialog.open(AddressComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'Add',
+    //     address: this.added_address,
+    //     customer: this.customer_data
+
+    //   }
+    // });
+    // this.addressDialogRef.afterClosed().subscribe(result => {
+    //   this.getDeliveryAddress();
+    // });
+  }
+  updateAddress(address, index) {
+    // this.addressDialogRef = this.dialog.open(AddressComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'edit',
+    //     address: this.added_address,
+    //     update_address: address,
+    //     edit_index: index,
+    //     source: 'consumer',
+
+    //   }
+    // });
+    // this.addressDialogRef.afterClosed().subscribe(result => {
+    //   this.getDeliveryAddress();
+    // });
+  }
+  deleteAddress(address, index) {
+    // this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+    //   width: '50%',
+    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     'message': 'Do you want to Delete this address?',
+    //   }
+    // });
+    // this.canceldialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
+    //   if (result) {
+    //     this.added_address.splice(index, 1);
+    //     this.shared_services.updateConsumeraddress(this.added_address)
+    //       .subscribe(
+    //         data => {
+    //           if (data) {
+    //             this.getDeliveryAddress();
+    //           }
+    //           this.snackbarService.openSnackBar('Address Updated successfully');
+    //         },
+    //         error => {
+    //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //         }
+    //       );
+    //     // this.getaddress();
+    //   }
+    // });
+  }
+  getItemImg(item) {
+    if (item.item.itemImages) {
+      const img = item.item.itemImages.filter(image => image.displayImage);
+      console.log(img);
+      if (img[0]) {
+        return img[0].url;
+      } else {
+        return '../../../../../assets/images/order/Items.svg';
+      }
+    } else {
+      return '../../../../assets/images/order/Items.svg';
+    }
   }
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {
@@ -488,14 +626,10 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     if (this.action === 'changeTime') {
       this.action = '';
     } else {
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.location.back();
     }
   }
-  goBackCart(selectedTimeslot) {
-    this.nextAvailableTime = selectedTimeslot;
-    this.action = '';
-  }
+
   changeTime() {
     this.action = 'timeChange';
     this.getAvailabilityByDate(this.sel_checkindate);
@@ -586,15 +720,25 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       this.store_pickup = true;
       this.choose_type = 'store';
       this.storeChecked = true;
-      this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
-      this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      if (this.orderDetails.storePickup) {
+        this.sel_checkindate = this.orderDetails.orderDate;
+        this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      } else {
+        this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+      }
       this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
       this.storeChecked = false;
-      this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
-      this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      if (this.orderDetails.homeDelivery) {
+        this.sel_checkindate = this.orderDetails.orderDate;
+        this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
+      } else {
+        this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
+        this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+      }
       this.getAvailabilityByDate(this.sel_checkindate);
     }
 
@@ -701,32 +845,32 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-         'message': 'Do you want to Delete this Note?',
-     }
-     });
-  this.canceldialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      console.log(this.orderList);
-      this.orderList.map((Item, i) => {
-        if (Item.item.itemId === item.item.itemId) {
-          console.log(Item.consumerNote);
-          Item['consumerNote'] = Item.consumerNote.splice;
-        }
-      });
-      // this.orders.map((Item, i) => {
-      //   if (Item.item.itemId === item.item.itemId) {
-      //     Item['consumerNote'] = Item.consumerNote.splice;
-      //   }
-      // });
-      console.log(this.orderList);
+        'message': 'Do you want to Delete this Note?',
+      }
+    });
+    this.canceldialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(this.orderList);
+        this.orderList.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            console.log(Item.consumerNote);
+            Item['consumerNote'] = Item.consumerNote.splice;
+          }
+        });
+        // this.orders.map((Item, i) => {
+        //   if (Item.item.itemId === item.item.itemId) {
+        //     Item['consumerNote'] = Item.consumerNote.splice;
+        //   }
+        // });
+        console.log(this.orderList);
 
-    }
-  });
+      }
+    });
   }
   sidebar() {
     this.showSide = !this.showSide;
   }
- 
+
   // resetDateTime() {
   //   this.action = '';
   //   this.fetchCatalog();
@@ -736,43 +880,43 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
     this.showSide = false;
   }
   addItems() {
-  const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
+    const additemsdialogRef = this.dialog.open(OrderItemsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
 
-    }
-  });
-  additemsdialogRef.afterClosed().subscribe(data => {
+      }
+    });
+    additemsdialogRef.afterClosed().subscribe(data => {
 
-  });
-}
+    });
+  }
 
-addAddress() {
-  this.addressDialogRef = this.dialog.open(AddAddressComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
-    disableClose: true,
-    data: {
-      source: 'provider',
-      type: 'Add'
+  // addAddress() {
+  //   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       source: 'provider',
+  //       type: 'Add'
 
-    }
-  });
-  this.addressDialogRef.afterClosed().subscribe(result => {
-    console.log(result);
-    this.storeaddress = result;
-    this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
-    console.log(this.selectedAddress);
-  });
-}
+  //     }
+  //   });
+  //   this.addressDialogRef.afterClosed().subscribe(result => {
+  //     console.log(result);
+  //     this.storeaddress = result;
+  //     this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
+  //     console.log(this.selectedAddress);
+  //   });
+  // }
 
 
-EditAddress(selectedAddress) {
-  console.log(selectedAddress);
+  EditAddress(selectedAddress) {
+    console.log(selectedAddress);
 
-   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+    this.addressDialogRef = this.dialog.open(AddAddressComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -786,7 +930,7 @@ EditAddress(selectedAddress) {
       // this.getaddress();
       console.log(result);
       this.storeaddress = result;
-      this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark +  ',' + result.city + ',' + result.countryCode +  ' ' + result.phoneNumber + '</br>' + result.email;
+      this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
       console.log(this.selectedAddress);
     });
   }

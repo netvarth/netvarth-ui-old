@@ -768,33 +768,72 @@
 
                               <!--begin::Wizard Step 2-->
                               <div class="pb-5" *ngIf="step == 2">
-                                  <h4 class="mb-10 font-weight-bold text-dark">Items information</h4>
+                                <div class="disp-flex">
+                                  <h4 class="mb-10 font-weight-bolder text-dark">Items information</h4>
+
+                                  <div class="col-lg-6">
+                                    <button type="reset" class="btn btn-success mr-2">Create New Item</button>
+                                  </div>
+                                </div>
+                                 
                                 
-                                  <div class="row">
+                                  <div class="row" style="background: #ecf0f5;">
+                                    
+                                    <!-- <div class="wdth-full">
+                                      <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="d-flex align-items-center font-weight-bolder">
+                                                        <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                                            <div class="symbol-label" style="background-image: url('assets/media/products/11.png')"></div>
+                                                        </div>
+                                                        <a href="#" class="text-dark text-hover-primary">Street Sneakers</a>
+                                                    </td>
+                                                    <td class="text-center align-middle">
+                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon mr-2"><i class="ki ki-minus icon-xs"></i></a>
+                                                        <span class="mr-2 font-weight-bolder">1</span>
+                                                        <a href="javascript:;" class="btn btn-xs btn-light-success btn-icon"><i class="ki ki-plus icon-xs"></i></a>
+                                                    </td>
+                                                    <td class="text-right align-middle">
+                                                        <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
+                                                            Remove
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                    
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div> -->
+
+                                   
+
                                       <div class="col-xl-6">
                                           <!--begin::Input-->
                                           <div *ngIf="item_count > 0 && catalogItems.length == 0 " class="form-group">
                                             <div *ngIf="!seletedCatalogItems"><h6>Add items to your cart</h6>
-                                              <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u>Add items</u></a>&nbsp;
-                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              <a class="link underline pointer-cursor"><u>Add items2</u></a>&nbsp;
+                                              <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                               </div>
                                               <div  *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0"><h6>{{seletedCatalogItems.length}} items are selected</h6>
                                                 <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u> Edit items</u></a>&nbsp;
-                                                <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                                <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                               </div>
                                             <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
                                           </div>
                                           <div *ngIf="item_count === 0">
                                             <p class="font-italic">You haven't created any items  
-                                            <a class="link underline pointer-cursor" (click)="gotoItems()">create items </a></p>
+                                            <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg">create items </a></p>
                                           </div>
                     
                                           <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
                                             <h6>{{catalogItems.length}} items are in your catalog</h6>
                                             <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">{{seletedCatalogItems.length}} more items are selected</p>
-                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items</u></a>&nbsp;
+                                            <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor" (click)="addItemstoCart('add',amForm.value)"><u>Add items1</u></a>&nbsp;
                                             <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit items</u></a>&nbsp;
-                                              <a class="link underline pointer-cursor" (click)="gotoItems()"><u>Create items</u></a>
+                                              <a class="link underline pointer-cursor" data-toggle="modal" data-target="#exampleModalSizeLg"><u>Create items</u></a>
                                           </div>
                                           <!--end::Input-->
                                       </div>
@@ -802,9 +841,9 @@
                                   </div>
 
                                     <!--begin::Card-->
-                                    <div class="row" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
+                                    <div  class="row bg-grey" *ngIf ="showAddItem && catalogItem && catalogItem.length > 0 && itemsforadd && itemsforadd.length == 0">
                                       
-                                      <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
+                                      <div class="col-md-4 mt-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
                                          
                                     <div class="card card-custom card-shadowless" (click)="selectItem(i)" [class.itemselected]="item.selected">
                                         <div class="card-body p-0">
@@ -814,20 +853,31 @@
                                                 <div
                                                     class="overlay-wrapper rounded bg-light text-center">
                                                     <img [src]="getItemImg(item)"
-                                                        alt="" class="mw-100 w-200px" />
+                                                        alt="" class="mw-100 w-150px" />
                                                 </div>
                                             </div>
                                             <!--end::Image-->
 
                                             <!--begin::Details-->
                                             <div
-                                                class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                                class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                                                 <a 
-                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                    class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}*</a>
                                                 
                                                 <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
-                                                <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
-                                                <span class="font-size-lg">Max. Qty<input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>   
+                                            <!-- min -->
+                                                <div class="input-group">
+                                                  <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Min Qty</i></span></div>
+                                                  <input class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" >
+                                                </div>
+                                                <!-- Max -->
+                                                <div class="input-group mt-2">
+                                                  <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Max Qty</i></span></div>
+                                                  <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}">
+                                                </div>
+
+                                                <!-- <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
+                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>    -->
                                             </div>
                                             <!--end::Details-->
                                         </div>
@@ -860,7 +910,7 @@
                                               <div
                                                   class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
                                                   <a 
-                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}</a>
+                                                      class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}?</a>
                                                   
                                                   <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div> 
                                                   <span class="font-size-lg">Min. Qty <input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
@@ -876,6 +926,512 @@
                                     
                                       </div>
                                     <!--end::Card-->
+
+                                    <!--Modal begin-->
+                                    <div class="modal modal-opacity fade" id="exampleModalSizeLg" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h5 class="modal-title pull-left" id="exampleModalLabel">Create Item</h5>
+                                                  <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                                                      <i aria-hidden="true" class="ki ki-close"></i>
+                                                  </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="lbl col-sm-12 col-md-12 col-lg-12">
+                                                  
+                                                      <!-- <div class="col-sm-12"><hr></div> -->
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <input matInput type="text" class="form-control" id="itemName"
+                                                                  placeholder="Item Name *" formControlName="itemName" autocomplete="off"
+                                                                  maxlength="50">
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">
+                                                                  Item name 
+                                                                  <span style="color:red">*</span>
+                                                              </label>
+                                                              <input type="text" class="form-control1" id="itemName"
+                                                                  placeholder="Enter item name" formControlName="itemName" 
+                                                                  autocomplete="off" maxlength="50">
+                                                          </div>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'itemName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemName',
+                                                      {
+                                                        'required' : 'Please enter the item name',
+                                                        'maxlength' : 'Item name can contain only ' + maxChars + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <input matInput type="text" class="form-control" id="displayName"
+                                                                  placeholder="Display Name *" formControlName="displayName"
+                                                                  autocomplete="off" maxlength="50">
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">
+                                                                  Display Name 
+                                                                  <span style="color:red">*</span>
+                                                              </label>
+                                                              <input type="text" class="form-control1" id="displayName"
+                                                                  placeholder="Enter display name" formControlName="displayName" 
+                                                                  autocomplete="off" maxlength="50">
+                                                          </div>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'displayName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayName',
+                                                      {
+                                                        'required' : 'Enter the name that your customers want to see',
+                                                        'maxlength' : 'Display name can contain only ' + maxChars + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <input matInput type="text" class="form-control" id="itemCode"
+                                                                  placeholder="Item Code" formControlName="itemCode" autocomplete="off">
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">
+                                                                  Item Code
+                                                              </label>
+                                                              <input type="text" class="form-control1" id="itemCode"
+                                                                  placeholder="Enter item code" formControlName="itemCode" 
+                                                                  autocomplete="off">
+                                                          </div>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'itemCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemCode',
+                                                      {
+                                                        'required' : 'Enter a code for item',
+                                                        'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <input matInput type="text" class="form-control" id="shortDec"
+                                                                  placeholder="Short Description *" formControlName="shortDec"
+                                                                  autocomplete="off">
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">
+                                                                  Short Description 
+                                                                  <span style="color:red">*</span>
+                                                              </label>
+                                                              <input type="text" class="form-control1" id="shortDec"
+                                                                  placeholder="Enter a short description" formControlName="shortDec" 
+                                                                  autocomplete="off">
+                                                          </div>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'shortDec')" [errorMsgs]="fed_service.getErrorMessage(amForm,'shortDec',
+                                                      {
+                                                        'required' : 'Please enter short description',
+                                                        'maxlength' : 'Short description can contain only ' + maxChars + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <textarea matInput class="form-control" id="displayDesc"
+                                                                  placeholder="{{detailed_dec_cap}} " formControlName="displayDesc"
+                                                                  (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                                                                  maxlength="500"></textarea>
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">Detailed Description</label>
+                                                              <textarea class="form-control1" id="displayDesc" placeholder="Enter a detailed description" 
+                                                                  formControlName="displayDesc" (keyup)="setCharCount()" (focus)="setDescFocus()" 
+                                                                  (blur)="lostDescFocus()" maxlength="500">
+                                                              </textarea>
+                                                          </div>
+                                                          <app-field-error-display
+                                                              [displayError]="fed_service.isFieldValid(amForm,'displayDesc')" [errorMsgs]="fed_service.getErrorMessage(amForm,'displayDesc',
+                                                      {
+                                                        'required' : 'Please enter detailed description.',
+                                                        'maxlength' : 'Detailed description can contain only ' + maxCharslong + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                          <span class="max-char-length" *ngIf="isfocused">You have {{char_count}}
+                                                              characters remaining</span>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                              <textarea matInput class="form-control" id="note" placeholder="Note "
+                                                                  formControlName="note" (keyup)="setnoteCharCount()" (focus)="setnoteFocus()"
+                                                                  (blur)="lostnoteFocus()" maxlength="500"></textarea>
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">Notes</label>
+                                                              <textarea class="form-control1" id="note" placeholder="Enter any notes" 
+                                                                  formControlName="note"  maxlength="500">
+                                                              </textarea>
+                                                          </div>
+                                                          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'note')"
+                                                              [errorMsgs]="fed_service.getErrorMessage(amForm,'note',
+                                                      {
+                                                        'required' : 'Please enter note.',
+                                                        'maxlength' : 'Note can contain only ' + maxCharslong + ' characters'
+                                                      })">
+                                                          </app-field-error-display>
+                                                          <span class="max-char-length" *ngIf="isnotefocused">You have {{notechar_count}}
+                                                              characters remaining</span>
+                                                      </div>
+                      
+                                                      <div class="form-group col-sm-6">
+                                                          <!-- <mat-form-field>
+                                                                  <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
+                                                             <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                                                  (keyup)="isvalid($event)" class="form-control number-ip-sm"
+                                                                  formControlName="price" id="price"
+                                                                  placeholder="{{price_cap}}*" autocomplete="off">
+                                                          </mat-form-field> -->
+                                                          <div class="">
+                                                              <label class="form-control-label">
+                                                                  {{price_cap}} 
+                                                                  <span>(<i class="fa fa-inr"></i>)&nbsp;</span>
+                                                                  <span style="color:red">*</span>
+                                                              </label>
+                                                              <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                                                  (keyup)="isvalid($event)" class="form-control1 number-ip-sm" 
+                                                                  formControlName="price" id="price" autocomplete="off">
+                                                          </div>
+                                                          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'price')"
+                                                              errorMsg="" [errorMsgs]="fed_service.getErrorMessage(amForm,'price',
+                                                      {
+                                                        'required' : 'Please enter the price.',
+                                                        'pattern' : 'Please enter valid price',
+                                                        'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                                      })">
+                                                          </app-field-error-display>
+                                                      </div>
+                                                      <div class="col-sm-12"><hr></div>
+                                                      
+                                                      <div class="form-group col-sm-12">
+                                                          <mat-checkbox [(ngModel)]="showPromotionalPrice"
+                                                              [ngModelOptions]="{standalone: true}">
+                                                              Show promotional price
+                                                          </mat-checkbox>
+                                                      </div>
+                                                      <div class="col-sm-6">
+                                                          <div class="form-group" *ngIf="showPromotionalPrice">
+                                                              <label class="col-form-label" for="PromotionalPricetype">Promotional
+                                                                  price type</label>
+                                                              <mat-radio-group formControlName="promotionalPriceType">
+                                                                  <mat-radio-button (click)="handleTypechange('FIXED')" value="FIXED">Fixed
+                                                                  </mat-radio-button>&nbsp;&nbsp;
+                                                                  <mat-radio-button (click)="handleTypechange('PCT')" value="PCT">Percentage
+                                                                  </mat-radio-button>
+                                                              </mat-radio-group>
+                                                          </div>
+                                                          <div class="form-group" *ngIf="showPromotionalPrice">
+                                                              <!-- <mat-form-field>
+                                                                  <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'><i class="fa fa-inr"></i>  &nbsp;</span>
+                                                                  <span matPrefix *ngIf="curtype == 'PCT'" class='rupee'> % &nbsp;</span>
+                                                                  <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                                                      (keyup)="isvalid($event)" class="form-control number-ip-sm"
+                                                                      formControlName="promotionalPrice" id="promotionalPrice"
+                                                                      [placeholder]="valueCaption" autocomplete="off">
+                                                              </mat-form-field> -->
+                                                              <div class="">
+                                                                  <label class="form-control-label">
+                                                                      Discounted Price 
+                                                                      <span *ngIf="curtype == 'FIXED'" class='rupee'>(<i class="fa fa-inr"></i>)</span>
+                                                                      <span *ngIf="curtype == 'PCT'" class='rupee'>(%)</span>
+                                                                  </label>
+                                                                  <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                                                      (keyup)="isvalid($event)" class="form-control1 number-ip-sm"
+                                                                      formControlName="promotionalPrice" id="promotionalPrice"
+                                                                      autocomplete="off">
+                                                              </div>
+                                                              <app-field-error-display
+                                                                  [displayError]="fed_service.isFieldValid(amForm,'promotionalPrice')" errorMsg=""
+                                                                  [errorMsgs]="fed_service.getErrorMessage(amForm,'promotionalPrice',
+                                                          {
+                                                        
+                                                            'pattern' : 'Please enter valid price',
+                                                            'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                                          })">
+                                                              </app-field-error-display>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-sm-6">
+                                                          <div class="form-group" *ngIf="showPromotionalPrice">
+                                                              <label class="col-form-label" for="PromotionalPricelabel">Promotional Label</label>
+                                                              <mat-radio-group formControlName="promotionallabel">
+                                                                  <mat-radio-button (click)="handleLabelchange('Sale')" value="ONSALE">Sale
+                                                                  </mat-radio-button>&nbsp;&nbsp;
+                                                                  <mat-radio-button (click)="handleLabelchange('Clearence')" value="CLEARANCE">
+                                                                      Clearence</mat-radio-button>&nbsp;&nbsp;
+                                                                  <mat-radio-button (click)="handleLabelchange('Other')" value="CUSTOM">Other
+                                                                  </mat-radio-button>
+                                                              </mat-radio-group>
+                                                          </div>
+                                                          <div class="form-group" *ngIf="showPromotionalPrice && showCustomlabel">
+                                                              <!-- <mat-form-field>
+                                                                  <input matInput type="text" class="form-control" id="customlabel"
+                                                                      placeholder="Custom Label " formControlName="customlabel"
+                                                                      autocomplete="off">
+                                                              </mat-form-field> -->
+                                                              <div class="">
+                                                                  <label class="form-control-label">
+                                                                      Custom Label
+                                                                  </label>
+                                                                  <input type="text" class="form-control1" id="customlabel"
+                                                                      placeholder="Enter the custom label" formControlName="customlabel"
+                                                                      autocomplete="off">
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-sm-12"><hr></div>
+                                                      <div class="form-group col-sm-6">
+                                                          <div class="d-flex">
+                                                              <label class="col-form-label no-margin pr-2" for="taxable">{{taxable_cap}} </label>
+                                                              <mat-slide-toggle class="pl-2" formControlName="taxable" (change)="handleTaxablechange()"
+                                                                  [checked]="holdtaxable">
+                                                              </mat-slide-toggle>
+                                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'taxable')"
+                                                                  errorMsg="Please select taxable">
+                                                              </app-field-error-display>
+                                                          </div>    
+                                                      </div>
+                                                      <div class="form-group col-sm-6 ">
+                                                          <div class="d-flex">
+                                                              <label class="col-form-label no-margin pr-2" for="showOnLandingpage">Online visibility for consumers</label>
+                                                              <mat-slide-toggle class="pl-2" formControlName="showOnLandingpage">
+                                                              </mat-slide-toggle>
+                                                          </div>
+                                                          <p class="form-level-settings">Applicable only for Jaldee order manager</p>
+                                                      </div>
+                                                      <div class="form-group col-sm-6">
+                                                          <div class="d-flex">
+                                                              <label class="col-form-label no-margin pr-2" for="stockAvailable">Stock Available</label>                                
+                                                              <mat-slide-toggle class="pl-2" formControlName="stockAvailable">
+                                                              </mat-slide-toggle>
+                                                          </div>
+                                                          <p class="form-level-settings">Applicable only for Jaldee order manager</p>
+                                                      </div>
+                                                      <div class="col-sm-12"><hr></div>
+                                                      <div class="lbr col-sm-12 bg-white">
+                                                          <div class="col-md-6">
+                                                              <label class="form-control-label">Display Image</label>
+                                                              <div class="cr1">
+                                                                  <div class="no-dta pl-0" *ngIf="!haveMainImg && !mainImage">
+                                                                      <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20 pl-0">
+                                                                          <div class="addorderitem mx-0" (click)="imagefile.click()">
+                                                                              <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
+                                                                                          type="file" accept="/*;capture=camera" style="display:none;"
+                                                                                          (change)="imageSelect($event, 'main')">Add item
+                                                                                      image
+                                                                                  </a></p>
+                                                                              <p class="addorderitemp2"> <img style="width: 65%;"
+                                                                                      src="assets/images/add.svg" /></p>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="ph-gal-bx main-img"
+                                                                      *ngIf="mainimage_list_popup && mainimage_list_popup.length > 0">
+                                                                      <ul class="ph-gal justify-content-start mb-0">
+                                                                          <ng-container *ngFor="let file of mainimage_list_popup;let i = index">
+                                                                              <li>
+                                                                                  <div class="galbx">
+                                                                                      <span class="mbt">
+                                                                                          <button type="button" mat-icon-button
+                                                                                              [matMenuTriggerFor]="menu">
+                                                                                              <mat-icon>more_vert</mat-icon>
+                                                                                          </button>
+                                                                                          <mat-menu #menu="matMenu">
+                                                                                              <button type="button" mat-menu-item
+                                                                                                  (click)="deleteTempImage(file, i, 'main')">
+                                                                                                  <i class="icon-delete"></i>
+                                                                                                  <span>{{delete_btn}}</span>
+                                                                                              </button>
+                                                                                          </mat-menu>
+                                                                                      </span>
+                                                                                      <div class="img-h" (click)="openmainImageModalRow(file)">
+                                                                                          <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                                                              *ngIf="file.modal.img" />
+                                                                                      </div>
+                                                                                  </div>
+                                                                              </li>
+                                                                          </ng-container>
+                                                                      </ul>
+                                                                      <ks-modal-gallery [id]="1" [modalImages]="mainimage_list_popup"
+                                                                      [plainGalleryConfig]="customPlainMainGalleryRowConfig"
+                                                                      [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                                      (buttonBeforeHook)="onButtonBeforeHook()"
+                                                                      (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-md-6">
+                                                              <label class="form-control-label">Item Gallery</label>
+                                                              <div class="cr1">
+                                                                  <div class="ph-gal-bx col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngIf="image_list_popup && image_list_popup.length > 0">
+                                                                      <ul class="ph-gal justify-content-start">
+                                                                          <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                                                              <li *ngIf="i<2">
+                                                                                  <div class="galbx">
+                                                                                      <span class="mbt">
+                                                                                          <button type="button" mat-icon-button
+                                                                                              [matMenuTriggerFor]="menu">
+                                                                                              <mat-icon>more_vert</mat-icon>
+                                                                                          </button>
+                                                                                          <mat-menu #menu="matMenu">
+                                                                                              <button type="button" mat-menu-item
+                                                                                                  (click)="deleteTempImage(file, i)">
+                                                                                                  <i class="icon-delete"></i>
+                                                                                                  <span>{{delete_btn}}</span>
+                                                                                              </button>
+                                                                                          </mat-menu>
+                                                                                      </span>
+                                                                                      <div class="img-h" (click)="openImageModalRow(file)">
+                                                                                          <div class="overlay-y"></div><img [src]="file.modal.img"
+                                                                                              *ngIf="file.modal.img" />
+                                                                                      </div>
+                                                                                  </div>
+                                                                              </li>
+                                                                          </ng-container>
+                                                                          <li *ngIf="image_list_popup.length>2">
+                                                                              <div class="galbx">
+                                                                                  <span class="mre" (click)="openImageModalRow(image_list_popup[2])"
+                                                                                      *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                                                  <div class="img-h" *ngIf="(image_list_popup.length-3)>0"><img
+                                                                                          *ngIf="image_list_popup[2].modal.img"
+                                                                                          [src]="image_list_popup[2].modal.img" /></div>
+                                                                                  <span class="mbt" *ngIf="(image_list_popup.length-3)==0">
+                                                                                      <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                                                          <mat-icon>more_vert</mat-icon>
+                                                                                      </button>
+                                                                                      <mat-menu #menu="matMenu">
+                                                                                          <button type="button" mat-menu-item
+                                                                                              (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                                                              <i class="icon-delete"></i>
+                                                                                              <span>{{delete_btn}}</span>
+                                                                                          </button>
+                                                                                      </mat-menu>
+                                                                                  </span>
+                                                                                  <div class="img-h" (click)="openImageModalRow(image_list_popup[2])"
+                                                                                      *ngIf="(image_list_popup.length-3)==0">
+                                                                                      <div class="overlay-y"></div><img
+                                                                                          *ngIf="image_list_popup[2].modal.img"
+                                                                                          [src]="image_list_popup[2].modal.img" />
+                                                                                  </div>
+                                                                              </div>
+                                                                          </li>
+                                                                      </ul>
+                                                                      <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                                                          [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                                          [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                                          (buttonBeforeHook)="onButtonBeforeHook()"
+                                                                          (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                                                  </div>
+                      
+                                                                  <div class="no-dta pl-0">
+                                                                      <div class="col-sm-12 col-md-12 col-lg-12 pl-0">
+                                                                          <input multiple #imagefile type="file" accept="/*;capture=camera"
+                                                                              style="display:none;" (change)="imageSelect($event)">
+                                                                          <span *ngIf="!image_list_popup || (image_list_popup && image_list_popup.length === 0)"
+                                                                              class="cs-btn bt3" (click)="imagefile.click()">
+                                                                              Add Gallery Images
+                                                                          </span>
+                                                                          <a *ngIf="image_list_popup && image_list_popup.length > 0" class="pull-right"
+                                                                              (click)="imagefile.click()">
+                                                                              Add more
+                                                                          </a>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-sm-12"><hr></div>
+                                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 actiondiv mgn-up-20 mgn-bt-20 no-padding"
+                                                          style="display: inline-flex;">
+                                                         
+                                                          <button type="button" *ngIf="action=='add'"
+                                                              (click)="onSubmit(amForm.value,'saveadd')" class="cs-btn bt1" mat-button
+                                                              [disabled]="!amForm.valid || disableButton">save & add another</button>
+                                                          &nbsp;
+                                                          <button type="submit" class="cs-btn bt1" mat-button
+                                                              [disabled]="!amForm.valid || disableButton">{{save_btn_cap}}</button>
+                      
+                                                      </div> -->
+                                                  <app-field-error-display class="itemerror" [displayError]="true" *ngIf="api_error"
+                                                      errorMsg="{{api_error}}">
+                                                  </app-field-error-display>
+                                                  <app-form-success-display [displayMsg]="true" *ngIf="api_success"
+                                                      successMsg="{{api_success}}">
+                                                  </app-form-success-display>
+                                                  <!-- <div class="content comn-cls">
+                                                      <div class="col-md-12 no-padding-small">
+                                                          <div class="w-dta">
+                                                              <div class="row">
+                                                                  <div class="card"
+                                                                      style="margin-bottom: unset !important; box-shadow: none !important;">
+                                                                      <div class="copy">
+                                                                          <div class="itm-d">
+                                                                              <div class="itm-r item-detail" *ngIf="item && action==='view'">
+                                                                                  <span class="editbt" (click)="editViewedItem(item)"
+                                                                                      *ngIf="item.status=='ACTIVE'">
+                      
+                                                                                  </span>
+                                                                                  <h3>{{item_detail_cap}}</h3>
+                                                                                  <div class="dtls">
+                                                                                      <span class="label">{{item_name_cap}}</span>
+                                                                                      <span class="ttle">
+                                                                                          {{item.displayName}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div class="dtls" *ngIf="item.itemName">
+                                                                                      <span class="label">{{short_desc_cap}}</span>
+                                                                                      <span class="ttle">
+                                                                                          {{item.itemName}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div class="dtls" *ngIf="item.displayDesc">
+                                                                                      <span class="label">{{detail_desc_cap}}</span>
+                                                                                      <span class="ttle">
+                                                                                          {{item.displayDesc}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div class="dtls">
+                                                                                      <span class="label">{{price_cap}}</span>
+                                                                                      <span class="ttle rupee-font">
+                                                                                          {{item.price}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div class="dtls">
+                                                                                      <span class="label">{{taxable_cap}}</span>
+                                                                                      <span class="ttle">
+                                                                                          {{(item.taxable===true)?'Yes':'No'}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                                  <div class="dtls">
+                                                                                      <span class="label">{{status_cap}}</span>
+                                                                                      <span class="ttle">{{item.status}}
+                                                                                      </span>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div> -->
+                                              </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                                  <button type="button" class="cs-btn bt1" (click)="createItem(amForm.value)" mat-button>{{save_btn_cap}}</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div> 
+                                    <!--Modal end-->
+
+
+
                               </div>
                               <!--end::Wizard Step 2-->
 
@@ -952,140 +1508,146 @@
                               <div class="pb-5" *ngIf="step == 4">
                                 <!--begin::Section-->
                                 <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Store pickup </label> &nbsp;
-                                        <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
-                                        </mat-slide-toggle>
-                                    </div>
-                                      <!--end::Input-->
-                                      <!--begin::Select-->
-                                      <div *ngIf="storepickupStat">
-                                        <div class="form-group">
-                                          <label>Store pickup availability</label>
-                                          <div  *ngFor="let wday of weekdays; index as i">
-                                            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
-                                              [checked]="check_existsinArraystorepickup(selday_arrstorepickup,i) >= 0">{{wday}}
-                                            </mat-checkbox>
-                                          </div>
-                                      </div>
-                                        <!--end::Select-->
-                                        <div class="row">
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                    <div class="input-group date">
-                                                      <label>Start Date</label>
-                                                          <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,0)"
-                                                          placeholder="Start Date" formControlName="startdatestore"/>
-                                                    </div>
-                                            </div>
-                                              <!--end::Input-->
-                                          </div>
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                <div class="input-group date">
-                                                  <label>End Date</label>
-                                                      <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,1)"
-                                                      placeholder="End Date" formControlName="enddatestore"/>
-                                                </div>
-                                              </div>
-                                              <!--end::Input-->
-                                          </div>
-                                      </div>
-                                <div class="row">
-                                  <div class="col-xl-6">
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Available time window(s)</label><br>
 
-                                        <label>Currently no timewindows are added</label> &nbsp;
-                                        <label class="link underline pointer-cursor" (click)="showTimewindow('store')">Add</label>
-                                    </div>
-                                      <!--end::Input-->
-                                  </div>
-                              </div>
-                                      </div>
-                                     
-
-                                      <!--begin::Input-->
-                                      <div class="form-group">
-                                        <label>Home delivery </label> &nbsp;
-                                        <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
-                                        </mat-slide-toggle>
-                                    </div>
-                                      <!--end::Input-->
-                                      <!--begin::Select-->
-                                      <div *ngIf="homedeliveryStat">
-                                        <div class="form-group">
-                                          <label>Home delivery availability</label>
-                                          <div *ngFor="let wday of weekdays; index as i">
-                                            <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
-                                              [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}
-                                            </mat-checkbox>
-                                          </div>
-                                      </div>
-                                        <!--end::Select-->
-                                        <div class="row">
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                    <div class="input-group date">
-                                                      <label>Start Date</label>
-                                                          <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
-                                                          placeholder="Start Date" formControlName="startdatehome" />
-                                                    </div>
-                                            </div>
-                                              <!--end::Input-->
-                                          </div>
-                                          <div class="col-xl-4">
-                                              <!--begin::Input-->
-                                              <div class="form-group">
-                                                <div class="input-group date">
-                                                  <label>End Date</label>
-                                                      <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,1)"
-                                                      placeholder="End Date" formControlName="enddatehome"/>
-                                                </div>
-                                              </div>
-                                              <!--end::Input-->
-                                          </div>
-                                      </div>
-                                <div class="row">
-                                      <!--begin::Input-->
-                                      <div class="col-xl-6">
-  
-                                      <div class="form-group">
-                                        <label>Available time windows</label> &nbsp;
-                                        <span class="form-text text-muted">Currently no timewindows are added  Add</span>
-                                      <!--end::Input-->
-                                  </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
+                                <div class="card card-shadow card-custom card-shadowless">
+                                  <div class="card-body p-0">
                                     <div class="form-group">
-                                            <label>Delivery charge</label>
-                                            <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverycharge"
-                                            placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
-                                            maxlength="50"/>
+                                      <label>Store pickup </label> &nbsp;
+                                      <mat-slide-toggle formControlName="storepickup" (change)="handlestorepickup($event)">
+                                      </mat-slide-toggle>
                                   </div>
+                                  <div *ngIf="storepickupStat">
+                                    <div class="form-group">
+                                      <label>Store pickup availability</label>
+                                      <div  *ngFor="let wday of weekdays; index as i">
+                                        <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxstorepickup(i)"
+                                          [checked]="check_existsinArraystorepickup(selday_arrstorepickup,i) >= 0">{{wday}}
+                                        </mat-checkbox>
+                                      </div>
+                                  </div>
+                                    <!--end::Select-->
+                                    <div class="row">
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                                <div class="input-group date">
+                                                  <label>Start Date</label>
+                                                      <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,0)"
+                                                      placeholder="Start Date" formControlName="startdatestore"/>
+                                                </div>
+                                        </div>
+                                          <!--end::Input-->
+                                      </div>
+                                      <div class="col-xl-4">
+                                          <!--begin::Input-->
+                                          <div class="form-group">
+                                            <div class="input-group date">
+                                              <label>End Date</label>
+                                                  <input class="form-control1" type="date" (dateChange)="compareDatestore($event.value,1)"
+                                                  placeholder="End Date" formControlName="enddatestore"/>
+                                            </div>
+                                          </div>
+                                          <!--end::Input-->
+                                      </div>
+                                  </div>
+                            <div class="row">
+                              <div class="col-xl-6">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                    <label>Available time window(s)</label><br>
+
+                                    <label>Currently no timewindows are added</label> &nbsp;
+                                    <label class="link underline pointer-cursor" (click)="showTimewindow('store')">Add</label>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                          </div>
+                                  </div>
+                                  </div>
+                                </div>
+                                     
+                                <div class="card card-shadow card-custom card-shadowless mgn-up-10">
+                                  <div class="card-body p-0">
+                                    <div class="form-group">
+                                      <label>Home delivery </label> &nbsp;
+                                      <mat-slide-toggle formControlName="homedelivery" (change)="handlehomedelivery($event)">
+                                      </mat-slide-toggle>
+                                  </div>
+                                    <!--end::Input-->
+                                    <!--begin::Select-->
+                                    <div *ngIf="homedeliveryStat">
+                                      <div class="form-group">
+                                        <label>Home delivery availability</label>
+                                        <div *ngFor="let wday of weekdays; index as i">
+                                          <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychecboxhomedelivery(i)"
+                                            [checked]="check_existsinArrayhomedelivery(selday_arrhomedelivery,i) >= 0">{{wday}}
+                                          </mat-checkbox>
+                                        </div>
+                                    </div>
+                                      <!--end::Select-->
+                                      <div class="row">
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                                  <div class="input-group date">
+                                                    <label>Start Date </label>
+                                                        <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,0)"
+                                                        placeholder="Start Date" formControlName="startdatehome" />
+                                                  </div>
+                                          </div>
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                              <div class="input-group date">
+                                                <label>End Date</label>
+                                                    <input class="form-control1" type="date" (dateChange)="compareDatehome($event.value,1)"
+                                                    placeholder="End Date" formControlName="enddatehome"/>
+                                              </div>
+                                            </div>
+                                            <!--end::Input-->
+                                        </div>
+                                    </div>
+                              <div class="row">
+                                    <!--begin::Input-->
+                                    <div class="col-xl-6">
+
+                                    <div class="form-group">
+                                      <label>Available time windows</label> &nbsp;
+                                      <span class="form-text text-muted">Currently no timewindows are added  Add</span>
                                     <!--end::Input-->
                                 </div>
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label>Delivery range(km)</label>
-                                        <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
-                                        placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
-                                        maxlength="50"/>
-                                    </div>
-                                    <!--end::Input-->
                                 </div>
                             </div>
-                                 
+                            <div class="row">
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                          <label>Delivery charge</label>
+                                          <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="deliverycharge"
+                                          placeholder="Delivery charge" formControlName="deliverycharge" autocomplete="off"
+                                          maxlength="50"/>
+                                </div>
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-xl-4">
+                                  <!--begin::Input-->
+                                  <div class="form-group">
+                                      <label>Delivery range(km)</label>
+                                      <input type="text" class="form-control1 form-control-solid form-control-lg" (keypress)="isNumber($event)" (keyup)="isvalid($event)" id="deliverykms"
+                                      placeholder="Delivery range(Kms)" formControlName="deliverykms" autocomplete="off"
+                                      maxlength="50"/>
+                                  </div>
+                                  <!--end::Input-->
+                              </div>
                           </div>
+                               
+                        </div>
+                                  </div>
+                                </div>
+                                      <!--begin::Input-->
+                                      
                                       
 
                             </div>

@@ -39,3 +39,19 @@
     line-height: 1.75;
     font-size: .775rem;
 }
+/* .bg-primary {
+    background-color: #617ba3 !important;
+} */
+.d-flex .justify-content-between .btn {
+    line-height: 0.8rem !important;
+}
+.add_item {
+    float: right;
+    line-height: 0.9 !important;
+    border-radius: 0 !important;
+}
+.btn .btn-success {
+    color: #ffffff;
+    background-color: #4caf50 !important;
+    border-color: #4caf50 !important;
+}

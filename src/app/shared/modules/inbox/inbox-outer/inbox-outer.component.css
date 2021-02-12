@@ -45,6 +45,45 @@
 .pad-5 {
     padding: 5px
 }
+.msg-width {
+    max-width: 80%;
+}
+.thumbnails img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+}
+.img-section img {
+    width: 80px;
+    height: 80px;
+    cursor: auto;
+}
+.gal_action {
+    position: absolute;
+    top: -5px;
+    right: -3px;
+    background: rgba(0,0,0,.5);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.galimg_outer {
+    position: relative;
+    padding: 5px;
+}
+.galul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.galul li {
+    float: left;
+}
+/* .fa-paper-plane {
+    color: #1e4079;
+} */
 /* .input-group.input-group-solid .form-control {
     background: #F3F6F9;
 } */

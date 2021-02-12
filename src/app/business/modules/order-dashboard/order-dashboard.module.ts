@@ -16,6 +16,8 @@ import { OrderEditComponent } from './order-edit/order-edit.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
 import { DisplaylabelpopupComponent } from './displaylabel/displaylabel.component';
 import { OrderWizardComponent } from './order-wizard/order-wizard.component';
+import { AddressComponent } from './order-wizard/address/address.component';
+// import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -25,13 +27,15 @@ import { OrderWizardComponent } from './order-wizard/order-wizard.component';
     OrderEditComponent,
     OrderItemsComponent,
     DisplaylabelpopupComponent,
-    OrderWizardComponent
+    OrderWizardComponent,
+    AddressComponent
 
   ],
   entryComponents: [
     OrderActionsComponent,
     OrderItemsComponent,
-    DisplaylabelpopupComponent
+    DisplaylabelpopupComponent,
+    AddressComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,12 @@ import { OrderWizardComponent } from './order-wizard/order-wizard.component';
     CapitalizeFirstPipeModule,
     CardModule,
     Nl2BrPipeModule,
-    ModalGalleryModule
+    ModalGalleryModule,
+
+
+
+
+
   ],
   exports: [
     OrderDashboardComponent

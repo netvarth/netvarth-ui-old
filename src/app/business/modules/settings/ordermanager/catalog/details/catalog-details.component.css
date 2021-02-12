@@ -26,6 +26,16 @@
 .content {
     padding-top: 0px !important
   }
+.col-lg-6 .btn {
+  font-size: 0.8rem;
+  line-height: 1;
+  border-radius: 0 !important;
+}  
+.col-lg-6 .btn.btn-success {
+  
+  background-color: #4caf50 !important;
+  border-color: #4caf50 !important;
+}
   
  
   
@@ -398,5 +408,70 @@
   text-align: center;
   padding: 15px;
 }  
-  
-  
+.card-shadow{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15) !important;
+}
+.modal-opacity {
+  opacity: 1 !important;
+}
+.wdth-full {
+  width: 100% !important;
+}
+.height-full {
+  height: 100% !important;
+}
+.bg_pic {
+  height: 80px;
+  background-repeat: round;
+  margin-top: -20px;
+}
+.item_disp_font {
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+}  
+.min_qty_outer {
+  display: flex;
+  padding: 10px;
+  font-size: 0.8rem !important;
+}
+.min_qty {
+  flex: 1;
+  text-align: left;
+}
+.btn.btn-icon.btn-xs {
+  height: 18px !important;
+  width: 18px !important;
+}
+.cardofItem {
+  cursor: pointer;
+}
+.bg-grey {
+  background: #ecf0f5;
+}
+.item_info .input-grp-txt1 {
+  border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3F4254;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #F3F6F9;
+    border: 1px solid #E4E6EF;
+    border-radius: 0.42rem;
+}
+.item_info .input-group-prepend {
+  margin-right: -3px !important;
+}
+.item_info .input-group i {
+  line-height: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #00000091;
+  font-style: normal !important;
+}

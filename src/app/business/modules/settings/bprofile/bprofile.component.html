@@ -34,8 +34,7 @@
                       <span class="fa propic-cam-icon mgn-top-m3"></span>
                     </span>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item data-toggle="modal"
-                      data-target="#exampleModalSizeLg" (click)="clearModalData('cover')">
+                      <button mat-menu-item  (click)="changeProPic('cover')">
                         <i class="fa fa-upload"></i>
                         Upload Photo
                         <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed>
@@ -99,12 +98,13 @@
                             [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
                             (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
                             (loadImageFailed)="loadImageFailed()"></image-cropper>
+                            <div class="crop-img-div" *ngIf="imageChangedEvent && imageChangedEvent.target.files">
+                              <i class="fa fa-undo custId-cursor" aria-hidden="true" (click)="rotateLeft()">&nbsp;Left</i>
+                              <i class="fa fa-repeat custId-cursor pad-left-20" aria-hidden="true" (click)="rotateRight()">&nbsp;Right</i>
+                              <i class="fa fa-search-plus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomIn()">&nbsp;Zoom+</i>
+                              <i class="fa fa-search-minus custId-cursor pad-left-20" aria-hidden="true" (click)="zoomOut()">&nbsp;Zoom-</i>
+                            </div>
 
-                            <!-- cropper for cover pic -->
-                            <image-cropper *ngIf="imgType" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="16/7" [containWithinAspectRatio]="true"
-                            [resizeToWidth]="500"  [onlyScaleDown]="true" [imageQuality]="99" [canvasRotation]="canvasRotation" [transform]="transform" format="png"
-                            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-                            (loadImageFailed)="loadImageFailed()"></image-cropper>
                           </div>
                         </div>
                         <div class="modal-footer">
