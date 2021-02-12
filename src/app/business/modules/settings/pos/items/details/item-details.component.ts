@@ -53,7 +53,7 @@ export class ItemDetailsComponent implements OnInit {
     img_exists = false;
     maxChars = projectConstantsLocal.VALIDATOR_MAX50;
     maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
-    maxNumbers = projectConstantsLocal.VALIDATOR_MAX6;
+    maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
     max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
     api_loading = true;
     disableButton = false;

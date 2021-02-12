@@ -239,7 +239,7 @@
                                 <div class="form-group">
                                     <mat-form-field>
                                             <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
-                                       <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                       <input matInput type="text" min="0"  (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
                                             formControlName="price" id="price"
                                             placeholder="{{price_cap}}*" autocomplete="off">
