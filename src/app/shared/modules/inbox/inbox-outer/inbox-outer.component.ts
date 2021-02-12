@@ -94,6 +94,8 @@ export class InboxOuterComponent implements OnInit {
         data => {
           this.messages = data;
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
+          let [first] = Object.keys(this.groupedMsgs);
+          console.log(first);
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
