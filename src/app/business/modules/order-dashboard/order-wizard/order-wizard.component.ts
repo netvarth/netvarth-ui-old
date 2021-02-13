@@ -497,7 +497,17 @@ export class OrderWizardComponent implements OnInit {
       );
   }
   gotoNext() {
-    this.step = this.step + 1;
+    if (this.step === 2) {
+      if (this.orders.length === 0) {
+        this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
+        return false;
+      }else {
+        this.step = this.step + 1;
+      }
+    }else {
+      this.step = this.step + 1;
+    }
+
   }
   gotoPrev() {
     this.step = this.step - 1;
@@ -596,11 +606,11 @@ export class OrderWizardComponent implements OnInit {
     return this.price.toFixed(2);
   }
   getDeliveryCharge() {
-    let deliveryCharge = 0;
+    this.deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
-      deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+     this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge.toFixed(2);
+    return this.deliveryCharge.toFixed(2);
   }
   getSubTotal() {
     let subtotal = 0;
@@ -932,6 +942,7 @@ export class OrderWizardComponent implements OnInit {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Your Order placed successfully');
         this.orderList = [];
+        this.router.navigate(['provider', 'orders']);
       },
         error => {
           this.placeOrderDisabled = false;

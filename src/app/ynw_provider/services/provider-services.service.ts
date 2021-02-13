@@ -1897,5 +1897,14 @@ export class ProviderServices {
     const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
     return this.servicemeta.httpPut(url, data);
   }
+  updateOrder(data) {
+    const url = 'provider/orders';
+    return this.servicemeta.httpPut(url, data);
+  }
+  updateOrderItems(uid, data) {
+    const url ='provider/orders/item/' + uid;
+    return this.servicemeta.httpPut(url, data);
+
+  }
 
 }
