@@ -521,8 +521,14 @@ export class SharedFunctions {
     return '₹' + ' ' + price.toFixed(2);;
   }
 
-  imageValidation(file) {
-    const file_types = projectConstants.IMAGE_FORMATS;
+  imageValidation(file ,source?) {
+   let file_types;
+    if(source ==='attachment' || source ==='consumerimages' ){
+        file_types = projectConstants.FILETYPES_UPLOAD;
+    } else{
+        file_types = projectConstants.IMAGE_FORMATS;
+    }
+    //const file_types = projectConstants.IMAGE_FORMATS;
     // const image_max_size = projectConstants.IMAGE_MAX_SIZE;
     const image_max_size = 15000000;
     const error = [];
