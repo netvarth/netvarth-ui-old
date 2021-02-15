@@ -460,7 +460,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
       if (this.selectedUser.userType === 'PROVIDER') {
         filter['provider'] = this.selectedUser.id;
       }
-      console.log(filter);
       this.shared_service.addProvidertoConsumerNote(this.selectedUserMessages[0].accountId,
         dataToSend, filter)
         .subscribe(
