@@ -308,6 +308,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   getOrderDetails(uid) {
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
+
       this.customerId = this.orderDetails.orderFor.id;
       if (this.orderDetails && this.orderDetails.orderItem) {
         console.log(this.orderDetails.orderItem);
@@ -323,26 +324,27 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
         }
       }
+
       console.log(JSON.stringify(this.orderList));
       if (this.orderDetails.storePickup) {
         this.choose_type = 'store';
-        this.home_delivery = false;
         this.store_pickup = true;
       }
       if (this.orderDetails.homeDelivery) {
         this.choose_type = 'home';
         this.home_delivery = true;
-        this.store_pickup = false;
+        this.selectedRowIndex = 'i';
+
       }
       if (this.orderDetails.orderFor) {
         this.customerId = this.orderDetails.orderFor.id;
+        this.getDeliveryAddress();
       }
       this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
       console.log(JSON.stringify(this.orders));
       this.orderCount = this.orders.length;
-      if (this.orderDetails.orderMode === 'ONLINE_ORDER') {
-        this.getDeliveryAddress();
-      }
+
+
       this.sel_checkindate = this.orderDetails.orderDate;
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
       this.loading = false;
@@ -685,6 +687,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           this.added_address = data;
           if (this.added_address.length > 0 && this.added_address !== null) {
             this.highlight(0, this.added_address[0]);
+            if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
+              this.orderAddress();
+            }
           }
 
         }
@@ -695,11 +700,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       );
   }
   highlight(index, address) {
+    console.log('user_address');
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
     this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
-    console.log(this.selectedAddress);
+
+  }
+  orderAddress() {
+    this.selectedRowIndex = 'i';
+    this.selectedAddress = this.orderDetails.homeDeliveryAddress;
+    console.log('orderAddress');
   }
   addAddress() {
     // this.addressDialogRef = this.dialog.open(AddressComponent, {
