@@ -3,6 +3,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 
 @Component({
     selector: 'app-consumer-payment-details',
@@ -17,6 +18,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         private shared_services: SharedServices,
         public locationobj: Location,
         private router: Router,
+        public dateformat: DateFormatPipe,
         private activated_route: ActivatedRoute) {
 
         this.activated_route.params.subscribe(
@@ -62,7 +64,8 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
             if (mod === 'all') {
                 retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0] + ' ' + dtsarr[1] + ' ' + dtsarr[2];
             } else if (mod === 'date') {
-                retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
+                retval = this.dateformat.transformToMonthlyDate(dtarr[0] + '/' + dtarr[1] + '/' + dtarr[2]); 
+                // retval = dtarr[2] + '/' + dtarr[1] + '/' + dtarr[0];
             } else if (mod === 'time') {
                 retval = dtsarr[1] + ' ' + dtsarr[2];
                 const slots = retval.split('-');
