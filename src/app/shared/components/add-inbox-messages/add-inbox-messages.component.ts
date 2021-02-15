@@ -57,6 +57,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   corpSettings: any;
   addondialogRef: any;
   is_noSMS = false;
+  userId;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -74,6 +75,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.typeOfMsg = this.data.typeOfMsg;
     this.user_id = this.data.user_id || null;
+    this.userId = this.data.userId || null;
     this.uuid = this.data.uuid || null;
     this.email_id = this.data.email;
     this.phone = this.data.phone;
@@ -87,7 +89,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('odr') >= 0 || this.data.orders === 'orders') {
-        this.type = 'orders'; 
+        this.type = 'orders';
       } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('dtn') >= 0) {
@@ -605,8 +607,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      this.shared_services.addConsumertoProviderNote(this.user_id,
-        dataToSend)
+      const filter = {};
+      filter['account'] = this.user_id;
+      if (this.userId) {
+        filter['provider'] = this.userId;
+      }
+      this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
             this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;
