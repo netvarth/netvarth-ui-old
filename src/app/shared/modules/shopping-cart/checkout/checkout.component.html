@@ -275,7 +275,7 @@
                                 <div class="disp-flex width-100 amount-details">
                                   <div class="bill-labels">Item Total</div>
                                   <!-- <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div> -->
-                                  <div class="price rupee-font"> {{cartDetails.netTotal | currency:'&#8377;'}}</div>
+                                  <div class="price rupee-font"> {{cartDetails.itemTotal | currency:'&#8377;'}}</div>
                                 </div>
                                 
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.taxAmount">
