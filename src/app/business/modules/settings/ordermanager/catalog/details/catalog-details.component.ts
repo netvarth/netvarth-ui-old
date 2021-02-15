@@ -266,6 +266,8 @@ export class CatalogdetailComponent implements OnInit {
                             (qParams) => {
                                 this.action = qParams.action;
                                 this.cataId = this.catalog_id;
+                                this.getItems().then(
+                                    (data) => {
                                 this.getCatalog(this.catalog_id).then(
                                     (catalog) => {
                                         this.catalog = catalog;
@@ -273,7 +275,7 @@ export class CatalogdetailComponent implements OnInit {
                                         if (this.catalog.catalogItem) {
                                             this.catalogItems = this.catalog.catalogItem;
                                             console.log(this.catalogItems);
-                                           // this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItems);
+                                            this.setItemFromCataDetails();
                                         }
                                         if (this.action === 'edit') {
                                             this.createForm();
@@ -291,6 +293,7 @@ export class CatalogdetailComponent implements OnInit {
                                         // }
                                     }
                                 );
+                                    });
                             }
                         );
                     }
@@ -317,33 +320,35 @@ export class CatalogdetailComponent implements OnInit {
   }
 
     ngOnInit() {
-        this.getItems().then(
-            (data) => {
-              this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-              if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
-                this.getCatalog(this.catalog_id).then(
-                    (catalog) => {
-                        
+        if (this.action === 'add') {
+            this.getItems().then(
+                (data) => {
+                  this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                  if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
+                    this.getCatalog(this.catalog_id).then(
+                        (catalog) => {
+                            
+                        }
+                    );
+                  } else {
+                   // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                    if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                      this.selectedCount = this.addCatalogItems.length;
+                     for (const itm of this.catalogItem) {
+                        for (const selitem of this.addCatalogItems) {
+                           if (itm.itemId === selitem.item.itemId) {
+                            itm.selected = true;
+                            itm.id = selitem.id;
+                            itm.minQuantity = selitem.minQuantity;
+                            itm.maxQuantity = selitem.maxQuantity;
+                           }
+                      }
                     }
-                );
-              } else {
-               // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-                if (this.addCatalogItems && this.addCatalogItems.length > 0) {
-                  this.selectedCount = this.addCatalogItems.length;
-                 for (const itm of this.catalogItem) {
-                    for (const selitem of this.addCatalogItems) {
-                       if (itm.itemId === selitem.item.itemId) {
-                        itm.selected = true;
-                        itm.id = selitem.id;
-                        itm.minQuantity = selitem.minQuantity;
-                        itm.maxQuantity = selitem.maxQuantity;
-                       }
+                     }
                   }
                 }
-                 }
-              }
-            }
-          );
+              );
+        }
     }
     gotoNext() {
         this.step = this.step + 1;
@@ -371,7 +376,7 @@ export class CatalogdetailComponent implements OnInit {
         }
       }
     getItems() {
-        const apiFilter = {};
+    const apiFilter = {};
     apiFilter['itemStatus-eq'] = 'ACTIVE';
     return new Promise((resolve, reject) => {
         this.provider_services.getProviderfilterItems(apiFilter)
@@ -712,11 +717,13 @@ export class CatalogdetailComponent implements OnInit {
                 customlabel: []
             });
         }
-        if (this.action === 'edit' && !this.isFromadd) {
+        setTimeout(() => {if (this.action === 'edit' && !this.isFromadd) {
             this.updateForm();
         } else if (this.action === 'edit' && this.isFromadd) {
             this.updateprefillForm();
         }
+        }, 200);
+
     }
     setDescFocus() {
         this.isfocused = true;
@@ -2407,5 +2414,89 @@ showTimewindow(type) {
             this.closebutton.nativeElement.click();
             this.resetApiErrors();
           }
+
+
+
+          // New functions
+    setItemFromCataDetails() {
+        console.log('set');
+        console.log(this.catalog.catalogItem);
+        console.log(this.catalogItem);
+        for (let i = 0; i < this.catalog.catalogItem.length; i++) {
+            console.log(this.catalog.catalogItem[i].item.itemId);
+            const itemArr = this.catalogItem.filter(item => item.itemId === this.catalog.catalogitem[i].item.itemId);
+            console.log(itemArr);
+            if (itemArr.length > 0) {
+                const index = this.catalogItem.indexOf(itemArr[0]);
+                this.selectItem(index);
+            }
+        }
+        this.seletedCatalogItems = [];
+    }
+
+    // editCatalogItem(item) {
+    //     console.log(item);
+    //     this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         id: item.itemId,
+    //         maxquantity: item.maxQuantity,
+    //         minquantity: item.minQuantity
+    //       }
+    //     });
+    //     this.editcataItemdialogRef.afterClosed().subscribe(result => {
+    //       if (result) {
+    //        console.log(result);
+    //        this.api_loading = true;
+    //        this.updateItems(result, item.id);
+    //       }
+    //     });
+    // }
+
+    // updateItems(updatelist, id) {
+    //     console.log(updatelist);
+    //     const passlist: any = {};
+    //       passlist.id = id;
+    //       passlist.maxQuantity = updatelist.maxquantity;
+    //       passlist.minQuantity = updatelist.minquantity;
+    //       console.log(passlist);
+    //      this.provider_services.updateCatalogItem(passlist).subscribe(
+    //       (data) => {
+    //         this.getCatalog();
+    //         this.api_loading = false;
+    //       }, error => {
+    //         this.api_loading = false;
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //         }
+    //      );
+    // }
+
+    // deleteCatalogItem(itm) {
+    //     this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+    //       width: '50%',
+    //       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //       disableClose: true,
+    //       data: {
+    //         'message': 'Do you really want to remove this item from catalog?'
+    //       }
+    //     });
+    //     this.removeitemdialogRef.afterClosed().subscribe(result => {
+    //       if (result) {
+    //         this.api_loading = true;
+    //         this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+    //           (data) => {
+    //             this.getCatalog();
+    //             this.api_loading = false;
+    //           }, error => {
+    //             this.api_loading = false;
+    //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //             }
+    //             );
+    //       }
+    //     });
+    // }
+
 
 }
