@@ -309,6 +309,13 @@
                                   <input matInput type="text" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" class="form-control number-ip-sm" id="advancePayment"
                                     placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off">
                                 </mat-form-field>
+                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'advancePayment')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'advancePayment',
+        {
+        
+          'maxlength' : 'Advance amount exceeds the limit'
+        })">
+                      </app-field-error-display>
     
                               </div>
                           </div>
