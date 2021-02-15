@@ -964,4 +964,8 @@ export class SharedServices {
   const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
   return this.servicemeta.httpGet(url);
 }
+getCartdetails(accountid, data) {
+  const url = 'consumer/orders/amount' + '?account=' + accountid;
+  return this.servicemeta.httpPut(url, data);
+}
 }

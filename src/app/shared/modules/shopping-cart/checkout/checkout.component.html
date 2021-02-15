@@ -233,8 +233,10 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="list-content" style="text-align: left;"
-                                *ngFor="let item of orders; let i = index">
+                              <!-- <div class="list-content" style="text-align: left;"
+                                *ngFor="let item of orders; let i = index"> -->
+                                <div class="list-content" style="text-align: left;"
+                                *ngFor="let item of cartDetails.orderItems; let i = index">
 
                                 <div class="copy one">
                                   <div class="col-a col-b cd-b">
@@ -243,10 +245,10 @@
                                         <div class="c-row one width-100">
                                           <div class="name cart-flex">
                                             <i class="fa fa-stop-circle"></i>
-                                            <span class="item-name">{{item.item.displayName}}</span>
+                                            <span class="item-name">{{item.name}}</span>
                                           </div>
-                                          <div class="quantity item-qty">{{getItemQty(item)}}</div>
-                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.item.showPromotionalPrice?item.item.promotionalPrice: item.item.price | currency:'&#8377;'}}</div>
+                                          <div class="quantity item-qty">{{item.quantity}}</div>
+                                          <div *ngIf="catalog_details.showPrice" class="price rupee-font">{{item.showPromotionalPrice?item.promotionalPrice: item.price | currency:'&#8377;'}}</div>
                                         </div>
                                       </div>
 
@@ -272,21 +274,41 @@
                               <div class="">
                                 <div class="disp-flex width-100 amount-details">
                                   <div class="bill-labels">Item Total</div>
-                                  <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div>
+                                  <!-- <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div> -->
+                                  <div class="price rupee-font"> {{cartDetails.netTotal | currency:'&#8377;'}}</div>
                                 </div>
-                                <!-- <div class="hr-line"></div> -->
-                                <div class="disp-flex width-100 amount-details" *ngIf="catalog_details.taxPercentage">
+                                
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.taxAmount">
                                   <div class="bill-labels">Total Tax </div>
-                                  <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.taxAmount | currency:'&#8377;'}}</div>
                                 </div>
-                                <div class="disp-flex width-100 amount-details" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jaldeeCouponDiscount">
+                                  <div class="bill-labels">Coupon Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.jaldeeCouponDiscount | currency:'&#8377;'}}</div>
+                                </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jdnDiscount">
+                                  <div class="bill-labels">Jdn Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.jdnDiscount | currency:'&#8377;'}}</div>
+                                </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.totalDiscount">
+                                  <div class="bill-labels">Total Discount </div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.totalDiscount | currency:'&#8377;'}}</div>
+                                </div>
+                                <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.deliveryCharge">
                                   <div class="bill-labels">Delivery Charges </div>
-                                  <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.deliveryCharge | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="hr-line-pitch-blk mgn-up-20"></div>
+                                <span *ngIf="cartDetails.advanceAmount" style="font-size: small;color: red;"><i class="fa fa-info-circle" aria-hidden="true"></i>An advance of {{cartDetails.advanceAmount | currency:'&#8377;'}} required</span>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-20">
                                   <div class="bill-labels">TO PAY</div>
-                                  <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div>
+                                  <!-- <div class="price rupee-font">&#8377;{{getOrderFinalAmountToPay()}}</div> -->
+                                  <div class="price rupee-font">{{cartDetails.netTotal | currency:'&#8377;'}}</div>
                                 </div>
                               </div>
                             </div>

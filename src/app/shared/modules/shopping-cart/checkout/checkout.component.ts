@@ -153,6 +153,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   couponsList: any = [];
   selected_coupon;
   showCouponWB: boolean;
+  cartDetails: any = [];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -187,6 +188,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     } if (this.chosenDateDetails.couponsList) {
       this.couponsList = this.chosenDateDetails.couponsList;
+      console.log(this.couponsList);
     }
 
     if (this.choose_type === 'store') {
@@ -225,7 +227,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     if (this.orderList) {
+      console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
+      console.log(this.orders);
+      this.getcartDetails();
     }
     // this.catlogArry();
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -336,6 +341,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
 
   }
+  getcartDetails() {
+    console.log('details');
+ const passdata =   {
+      'catalog': {
+        'id': this.catalog_Id
+      },
+      'orderItem': this.getOrderItems(),
+      'orderDate': this.sel_checkindate,
+      'coupons': this.selected_coupons
+  };
+    this.shared_services.getCartdetails(this.account_id, passdata)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.cartDetails = data;
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
   gets3curl() {
     this.api_loading1 = true;
     this.retval = this.sharedFunctionobj.getS3Url()
@@ -370,10 +396,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
-  getItemPrice(item) {
-    const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-    return item.price * qty;
-  }
+  // getItemPrice(item) {
+  //   const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
+  //   return item.price * qty;
+  // }
   applyPromocode() {
     this.action = 'coupons';
   }
@@ -496,27 +522,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     return deliveryCharge.toFixed(2);
   }
-  getOrderFinalAmountToPay() {
-    const amount = this.price + this.totaltax + parseInt(this.getDeliveryCharges(), 0);
-    return amount.toFixed(2);
-  }
-  getTotalItemTax(taxValue) {
-    this.totaltax = 0;
-    for (const itemObj of this.orderList) {
-      let taxprice = 0;
-      if (itemObj.item.taxable) {
-        if (itemObj.item.showPromotionalPrice) {
-          taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
-        } else {
-          taxprice = itemObj.item.price * (taxValue / 100);
-        }
-      } else {
-        taxprice = 0;
-      }
-      this.totaltax = this.totaltax + taxprice;
-    }
-    return this.totaltax.toFixed(2);
-  }
+  // getOrderFinalAmountToPay() {
+  //   const amount = this.price + this.totaltax + parseInt(this.getDeliveryCharges(), 0);
+  //   return amount.toFixed(2);
+  // }
+  // getTotalItemTax(taxValue) {
+  //   this.totaltax = 0;
+  //   for (const itemObj of this.orderList) {
+  //     let taxprice = 0;
+  //     if (itemObj.item.taxable) {
+  //       if (itemObj.item.showPromotionalPrice) {
+  //         taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
+  //       } else {
+  //         taxprice = itemObj.item.price * (taxValue / 100);
+  //       }
+  //     } else {
+  //       taxprice = 0;
+  //     }
+  //     this.totaltax = this.totaltax + taxprice;
+  //   }
+  //   return this.totaltax.toFixed(2);
+  // }
 
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
@@ -629,18 +655,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTotalItemPrice() {
-    this.price = 0;
+  // getTotalItemPrice() {
+  //   this.price = 0;
 
-    for (const itemObj of this.orderList) {
-      let item_price = itemObj.item.price;
-      if (itemObj.item.showPromotionalPrice) {
-        item_price = itemObj.item.promotionalPrice;
-      }
-      this.price = this.price + item_price;
-    }
-    return this.price.toFixed(2);
-  }
+  //   for (const itemObj of this.orderList) {
+  //     let item_price = itemObj.item.price;
+  //     if (itemObj.item.showPromotionalPrice) {
+  //       item_price = itemObj.item.promotionalPrice;
+  //     }
+  //     this.price = this.price + item_price;
+  //   }
+  //   return this.price.toFixed(2);
+  // }
 
   confirm() {
     this.checkoutDisabled = true;
@@ -965,8 +991,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+        this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
     });
     return this.orderSummary;
   }
