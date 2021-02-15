@@ -69,7 +69,9 @@
     margin-top: 80px;
     width: 100%;
     text-align: center;
-    line-height: 1.7;
+    word-break: break-all;
+    line-height: 1.2;
+    /* line-height: 1.7; */
 }
 .order-det .itm-nme {
     font-size: 0.9rem;
