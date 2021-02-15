@@ -361,7 +361,7 @@
 
                       <div class="card-body p-0">
                         <!--begin::Shopping Cart-->
-                        <div class="table-responsive">
+                        <div *ngIf="orders.length != 0" class="table-responsive">
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>

@@ -69,6 +69,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   groupedMsgsbyUser: any = [];
   cacheavoider;
   provider_label = '';
+  userWithMsgCount = 0;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -195,6 +196,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
         group[key] = group2;
       });
       console.log(group);
+      console.log(Object.keys(group));
+      this.userWithMsgCount = Object.keys(group).length;
+      console.log(this.userWithMsgCount);
       this.groupedMsgsbyUser = group;
       if (this.selectedUser.userType === 'PROVIDER') {
         if (this.selectedUser.businessName) {
@@ -212,7 +216,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
             arr[key + '=' + provider] = newObj[key];
           });
         });
-        console.log(arr);
         this.groupedMsgs = arr;
         console.log(this.groupedMsgs);
       }
@@ -439,11 +442,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   sendMessage() {
     if (this.message) {
       this.sendMessageCompleted = false;
-      const post_data = {
-        communicationMessage: this.message
-      };
       const dataToSend: FormData = new FormData();
-      dataToSend.append('message', post_data.communicationMessage);
+      dataToSend.append('message', this.message);
       const captions = {};
       let i = 0;
       if (this.selectedMessage) {
@@ -455,8 +455,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
+      const filter = {};
+      console.log(this.selectedUser);
+      if (this.selectedUser.userType === 'PROVIDER') {
+        filter['provider'] = this.selectedUser.id;
+      }
+      console.log(filter);
       this.shared_service.addProvidertoConsumerNote(this.selectedUserMessages[0].accountId,
-        dataToSend)
+        dataToSend, filter)
         .subscribe(
           () => {
             this.message = '';
@@ -505,7 +511,12 @@ export class InboxListComponent implements OnInit, OnDestroy {
   goBack() {
     this.selectedUser = this.userDet;
   }
-  getUserImg() {
-    return '../../../assets/images/avatar5.png';
+  getUserImg(user) {
+    if (user.profilePicture) {
+      const proImage = JSON.parse(user.profilePicture);
+      return proImage.url;
+    } else {
+      return '../../../assets/images/avatar5.png';
+    }
   }
 }
