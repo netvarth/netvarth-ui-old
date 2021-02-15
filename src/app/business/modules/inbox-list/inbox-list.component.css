@@ -117,7 +117,8 @@
 .user-goback {
     margin: 10px;
 }
-.user-goback span {
-    color: #B5B5C3;
+.user-goback span,
+.user-goback i {
+    color: black;
     font-weight: bold;
 }
