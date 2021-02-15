@@ -231,8 +231,8 @@ export class CatalogdetailComponent implements OnInit {
         private fb: FormBuilder,
         private activated_route: ActivatedRoute,
         private wordProcessor: WordProcessor,
-    private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
         public fed_service: FormMessageDisplayService) {
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -268,31 +268,31 @@ export class CatalogdetailComponent implements OnInit {
                                 this.cataId = this.catalog_id;
                                 this.getItems().then(
                                     (data) => {
-                                this.getCatalog(this.catalog_id).then(
-                                    (catalog) => {
-                                        this.catalog = catalog;
-                                        this.catalogcaption = this.catalog.catalogName;
-                                        if (this.catalog.catalogItem) {
-                                            this.catalogItems = this.catalog.catalogItem;
-                                            console.log(this.catalogItems);
-                                            this.setItemFromCataDetails();
-                                        }
-                                        if (this.action === 'edit') {
-                                            this.createForm();
-                                            this.api_loading = false;
-                                        } else if (this.action === 'view') {
-                                            this.catalogcaption = 'Catalog Details';
-                                            this.api_loading = false;
-                                        }
-                                        // if (!this.seletedCatalogItems) {
-                                        //     if (this.catalog.catalogItem) {
-                                        //         this.seletedCatalogItems = this.catalog.catalogItem;
-                                        //         console.log(this.seletedCatalogItems);
-                                        //         this.lStorageService.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
-                                        //     }
-                                        // }
-                                    }
-                                );
+                                        this.getCatalog(this.catalog_id).then(
+                                            (catalog) => {
+                                                this.catalog = catalog;
+                                                this.catalogcaption = this.catalog.catalogName;
+                                                if (this.catalog.catalogItem) {
+                                                    this.catalogItems = this.catalog.catalogItem;
+                                                    console.log(this.catalogItems);
+                                                    this.setItemFromCataDetails();
+                                                }
+                                                if (this.action === 'edit') {
+                                                    this.createForm();
+                                                    this.api_loading = false;
+                                                } else if (this.action === 'view') {
+                                                    this.catalogcaption = 'Catalog Details';
+                                                    this.api_loading = false;
+                                                }
+                                                // if (!this.seletedCatalogItems) {
+                                                //     if (this.catalog.catalogItem) {
+                                                //         this.seletedCatalogItems = this.catalog.catalogItem;
+                                                //         console.log(this.seletedCatalogItems);
+                                                //         this.lStorageService.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
+                                                //     }
+                                                // }
+                                            }
+                                        );
                                     });
                             }
                         );
@@ -303,113 +303,113 @@ export class CatalogdetailComponent implements OnInit {
         );
     }
     @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.screenWidth = window.innerWidth;
-    let divider;
-    const divident = this.screenWidth / 37.8;
-    if (this.screenWidth > 1500) {
-      divider = divident / 4;
-    } else if (this.screenWidth > 1000 && this.screenWidth < 1500) {
-       divider = divident / 3;
-    } else if (this.screenWidth > 400 && this.screenWidth < 1000) {
-      divider = divident / 2;
-    }  else if (this.screenWidth < 400) {
-      divider = divident / 1;
+    onResize() {
+        this.screenWidth = window.innerWidth;
+        let divider;
+        const divident = this.screenWidth / 37.8;
+        if (this.screenWidth > 1500) {
+            divider = divident / 4;
+        } else if (this.screenWidth > 1000 && this.screenWidth < 1500) {
+            divider = divident / 3;
+        } else if (this.screenWidth > 400 && this.screenWidth < 1000) {
+            divider = divident / 2;
+        } else if (this.screenWidth < 400) {
+            divider = divident / 1;
+        }
+        this.no_of_grids = Math.round(divident / divider);
     }
-    this.no_of_grids = Math.round(divident / divider);
-  }
 
     ngOnInit() {
         if (this.action === 'add') {
             this.getItems().then(
                 (data) => {
-                  this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-                  if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
-                    this.getCatalog(this.catalog_id).then(
-                        (catalog) => {
-                            
+                    this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                    if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
+                        this.getCatalog(this.catalog_id).then(
+                            (catalog) => {
+
+                            }
+                        );
+                    } else {
+                        // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+                        if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+                            this.selectedCount = this.addCatalogItems.length;
+                            for (const itm of this.catalogItem) {
+                                for (const selitem of this.addCatalogItems) {
+                                    if (itm.itemId === selitem.item.itemId) {
+                                        itm.selected = true;
+                                        itm.id = selitem.id;
+                                        itm.minQuantity = selitem.minQuantity;
+                                        itm.maxQuantity = selitem.maxQuantity;
+                                    }
+                                }
+                            }
                         }
-                    );
-                  } else {
-                   // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-                    if (this.addCatalogItems && this.addCatalogItems.length > 0) {
-                      this.selectedCount = this.addCatalogItems.length;
-                     for (const itm of this.catalogItem) {
-                        for (const selitem of this.addCatalogItems) {
-                           if (itm.itemId === selitem.item.itemId) {
-                            itm.selected = true;
-                            itm.id = selitem.id;
-                            itm.minQuantity = selitem.minQuantity;
-                            itm.maxQuantity = selitem.maxQuantity;
-                           }
-                      }
                     }
-                     }
-                  }
                 }
-              );
+            );
         }
     }
     gotoNext() {
         this.step = this.step + 1;
-         if(this.step === 3){
+        if (this.step === 3) {
             this.selectedItems();
         }
     }
     gotoPrev() {
         this.step = this.step - 1;
-        if(this.step === 2){
-              this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-             if (this.addCatalogItems && this.addCatalogItems.length > 0) {
+        if (this.step === 2) {
+            this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+            if (this.addCatalogItems && this.addCatalogItems.length > 0) {
                 this.selectedCount = this.addCatalogItems.length;
-               for (const itm of this.catalogItem) {
-                  for (const selitem of this.addCatalogItems) {
-                     if (itm.itemId === selitem.item.itemId) {
-                      itm.selected = true;
-                      itm.id = selitem.id;
-                      itm.minQuantity = selitem.minQuantity;
-                      itm.maxQuantity = selitem.maxQuantity;
-                     }
+                for (const itm of this.catalogItem) {
+                    for (const selitem of this.addCatalogItems) {
+                        if (itm.itemId === selitem.item.itemId) {
+                            itm.selected = true;
+                            itm.id = selitem.id;
+                            itm.minQuantity = selitem.minQuantity;
+                            itm.maxQuantity = selitem.maxQuantity;
+                        }
+                    }
                 }
-              }
-               }
-        }
-      }
-    getItems() {
-    const apiFilter = {};
-    apiFilter['itemStatus-eq'] = 'ACTIVE';
-    return new Promise((resolve, reject) => {
-        this.provider_services.getProviderfilterItems(apiFilter)
-          .subscribe(
-            data => {
-                this.item_list = data;
-                this.item_count = this.item_list.length;
-                   this.catalogItem = data;
-                   console.log(this.catalogItem);
-          for (const itm of this.catalogItem) {
-            itm.minQuantity = '1';
-            itm.maxQuantity = '5';
-           }
-              resolve(data);
-            },
-            error => {
-              // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
-          );
-      });
-      }
+        }
+    }
+    getItems() {
+        const apiFilter = {};
+        apiFilter['itemStatus-eq'] = 'ACTIVE';
+        return new Promise((resolve, reject) => {
+            this.provider_services.getProviderfilterItems(apiFilter)
+                .subscribe(
+                    data => {
+                        this.item_list = data;
+                        this.item_count = this.item_list.length;
+                        this.catalogItem = data;
+                        console.log(this.catalogItem);
+                        for (const itm of this.catalogItem) {
+                            itm.minQuantity = '1';
+                            itm.maxQuantity = '5';
+                        }
+                        resolve(data);
+                    },
+                    error => {
+                        // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                );
+        });
+    }
 
-      
-      
 
-      gotoItems() {
+
+
+    gotoItems() {
         const navigatExtras: NavigationExtras = {
             queryParams: {
-              type: 'ordermanager'
+                type: 'ordermanager'
             }
-          };
+        };
         this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
-      }
+    }
 
     setCatalogPrefillfields(form_data) {
         // const daystr: any = [];
@@ -534,7 +534,7 @@ export class CatalogdetailComponent implements OnInit {
                     //     }
                     // ]
                 }
-               // 'pickUpOtpVerification': form_data.storeotpverify,
+                // 'pickUpOtpVerification': form_data.storeotpverify,
             },
             'homeDelivery': {
                 'homeDelivery': form_data.homedelivery,
@@ -552,7 +552,7 @@ export class CatalogdetailComponent implements OnInit {
                     //     }
                     // ]
                 },
-              //  'deliveryOtpVerification': form_data.homeotpverify,
+                //  'deliveryOtpVerification': form_data.homeotpverify,
                 'deliveryRadius': form_data.deliverykms || '',
                 'deliveryCharge': form_data.deliverycharge || ''
             },
@@ -618,11 +618,11 @@ export class CatalogdetailComponent implements OnInit {
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 startdate: [''],
                 enddate: [''],
-               // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-              //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
+                // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
+                //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
-               itemPriceInfo: [true],
+                itemPriceInfo: [true],
                 advancePaymentStatus: [],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
@@ -630,15 +630,15 @@ export class CatalogdetailComponent implements OnInit {
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
-               // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-              //  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-              //  storeotpverify: [false],
+                // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
+                //  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
+                //  storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
-               // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-               // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-               // homeotpverify: [false],
+                // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
+                // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
+                // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: [''],
                 //Add item form controls
@@ -658,11 +658,11 @@ export class CatalogdetailComponent implements OnInit {
                 customlabel: []
             });
             this.amForm.get('orderType').setValue('SHOPPINGCART');
-           const dt = new Date();
-           dt.setFullYear(dt.getFullYear() + 2);
+            const dt = new Date();
+            dt.setFullYear(dt.getFullYear() + 2);
             this.amForm.get('startdate').setValue(new Date());
-         this.amForm.get('enddate').setValue(dt);
-                    console.log(dt);
+            this.amForm.get('enddate').setValue(dt);
+            console.log(dt);
             this.amForm.get('startdatestore').setValue(new Date());
             this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
@@ -678,10 +678,10 @@ export class CatalogdetailComponent implements OnInit {
                 startdate: [''],
                 enddate: [''],
                 //qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-               // qendtime: [this.dend_time, Validators.compose([Validators.required])],
+                // qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
-               itemPriceInfo: [true],
+                itemPriceInfo: [true],
                 advancePaymentStatus: [],
                 advancePayment: [''],
                 cancelationPolicyStatus: [true],
@@ -689,15 +689,15 @@ export class CatalogdetailComponent implements OnInit {
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
-               // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-               // qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-               // storeotpverify: [false],
+                // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
+                // qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
+                // storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
-               // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-               // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-               // homeotpverify: [false],
+                // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
+                // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
+                // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: [''],
                 //add item
@@ -717,11 +717,12 @@ export class CatalogdetailComponent implements OnInit {
                 customlabel: []
             });
         }
-        setTimeout(() => {if (this.action === 'edit' && !this.isFromadd) {
-            this.updateForm();
-        } else if (this.action === 'edit' && this.isFromadd) {
-            this.updateprefillForm();
-        }
+        setTimeout(() => {
+            if (this.action === 'edit' && !this.isFromadd) {
+                this.updateForm();
+            } else if (this.action === 'edit' && this.isFromadd) {
+                this.updateprefillForm();
+            }
         }, 200);
 
     }
@@ -860,8 +861,8 @@ export class CatalogdetailComponent implements OnInit {
         // }
 
 
-       // let sttimestore;
-        
+        // let sttimestore;
+
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
             this.storetimewindow_list = this.catalog.pickUp.pickUpSchedule.timeSlots;
             // sttimestore = {
@@ -871,7 +872,7 @@ export class CatalogdetailComponent implements OnInit {
             //         ['h:mm A']).format('mm'), 10)
             // };
         }
-       // console.log(sttimestore);
+        // console.log(sttimestore);
         // let edtimestore;
         // if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
         //     edtimestore = {
@@ -948,56 +949,56 @@ export class CatalogdetailComponent implements OnInit {
         let orderpickUpstat;
         let orderpickUpstartdate;
         let orderpickUpenddate;
-       // let orderpickUpotp;
+        // let orderpickUpotp;
         if (this.catalog.pickUp) {
             orderpickUpstat = this.catalog.pickUp.orderPickUp;
             orderpickUpstartdate = this.catalog.pickUp.pickUpSchedule.startDate || '';
             orderpickUpenddate = this.catalog.pickUp.pickUpSchedule.terminator.endDate || '';
-        //    orderpickUpotp = this.catalog.pickUp.pickUpOtpVerification || false;
+            //    orderpickUpotp = this.catalog.pickUp.pickUpOtpVerification || false;
         } else {
             orderpickUpstat = false;
             orderpickUpstartdate = new Date();
             orderpickUpenddate = '';
-         //   orderpickUpotp = false;
+            //   orderpickUpotp = false;
         }
 
         let homeDeliverystat;
         let homeDeliverystartdate;
         let homeDeliveryenddate;
-       // let homeDeliveryotp;
+        // let homeDeliveryotp;
         let homeDeliveryradius;
         let homeDeliverycharge;
         if (this.catalog.homeDelivery) {
             homeDeliverystat = this.catalog.homeDelivery.homeDelivery;
             homeDeliverystartdate = this.catalog.homeDelivery.deliverySchedule.startDate || '';
             homeDeliveryenddate = this.catalog.homeDelivery.deliverySchedule.terminator.endDate || '';
-          //  homeDeliveryotp = this.catalog.homeDelivery.deliveryOtpVerification || false;
+            //  homeDeliveryotp = this.catalog.homeDelivery.deliveryOtpVerification || false;
             homeDeliveryradius = this.catalog.homeDelivery.deliveryRadius || '';
             homeDeliverycharge = this.catalog.homeDelivery.deliveryCharge || '';
         } else {
             homeDeliverystat = false;
             homeDeliverystartdate = new Date();
             homeDeliveryenddate = '';
-         //   homeDeliveryotp = false;
+            //   homeDeliveryotp = false;
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
-if (this.catalog.catalogName && this.catalog.catalogSchedule.startDate && this.catalog.catalogSchedule.terminator.endDate) {
-    this.basic = true;
-}
-// if (this.catalog.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
-//     this.workinghours = true;
-// }
-if (this.catalog.cancellationPolicy) {
-    this.paymentinformation = true;
-}
+        if (this.catalog.catalogName && this.catalog.catalogSchedule.startDate && this.catalog.catalogSchedule.terminator.endDate) {
+            this.basic = true;
+        }
+        // if (this.catalog.catalogSchedule.startDate && sttime && edtime && this.selday_arr.length > 0) {
+        //     this.workinghours = true;
+        // }
+        if (this.catalog.cancellationPolicy) {
+            this.paymentinformation = true;
+        }
 
-if (orderpickUpstartdate && this.storetimewindow_list.length > 0 && this.selday_arrstorepickup.length > 0) {
-    this.storepickupinfo = true;
-}
-if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
-    this.homedeliveryinfo = true;
-}
+        if (orderpickUpstartdate && this.storetimewindow_list.length > 0 && this.selday_arrstorepickup.length > 0) {
+            this.storepickupinfo = true;
+        }
+        if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
+            this.homedeliveryinfo = true;
+        }
 
         this.amForm.setValue({
             'catalogName': this.catalog.catalogName,
@@ -1016,15 +1017,15 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
-          //  'qstarttimestore': sttimestore || this.dstart_timestore,
-          //  'qendtimestore': edtimestore || this.dend_timestore,
-           // 'storeotpverify': orderpickUpotp,
+            //  'qstarttimestore': sttimestore || this.dstart_timestore,
+            //  'qendtimestore': edtimestore || this.dend_timestore,
+            // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
-           // 'qstarttimehome': sttimehome || this.dstart_timehome,
+            // 'qstarttimehome': sttimehome || this.dstart_timehome,
             //'qendtimehome': edtimehome || this.dend_timehome,
-           // 'homeotpverify': homeDeliveryotp,
+            // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
@@ -1122,7 +1123,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             }
         }
 
-       // let sttimehome;
+        // let sttimehome;
         if (this.prefillData.homeDelivery && this.prefillData.homeDelivery.deliverySchedule) {
             this.hometimewindow_list = this.prefillData.homeDelivery.deliverySchedule.timeSlots;
             // sttimehome = {
@@ -1171,37 +1172,37 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         let orderpickUpstat;
         let orderpickUpstartdate;
         let orderpickUpenddate;
-      //  let orderpickUpotp;
+        //  let orderpickUpotp;
         if (this.prefillData.pickUp) {
             orderpickUpstat = this.prefillData.pickUp.orderPickUp;
             orderpickUpstartdate = this.prefillData.pickUp.pickUpSchedule.startDate || '';
             orderpickUpenddate = this.prefillData.pickUp.pickUpSchedule.terminator.endDate || '';
-          //  orderpickUpotp = this.prefillData.pickUp.pickUpOtpVerification || false;
+            //  orderpickUpotp = this.prefillData.pickUp.pickUpOtpVerification || false;
         } else {
             orderpickUpstat = false;
             orderpickUpstartdate = '';
             orderpickUpenddate = '';
-          //  orderpickUpotp = false;
+            //  orderpickUpotp = false;
         }
 
         let homeDeliverystat;
         let homeDeliverystartdate;
         let homeDeliveryenddate;
-       // let homeDeliveryotp;
+        // let homeDeliveryotp;
         let homeDeliveryradius;
         let homeDeliverycharge;
         if (this.prefillData.homeDelivery) {
             homeDeliverystat = this.prefillData.homeDelivery.homeDelivery;
             homeDeliverystartdate = this.prefillData.homeDelivery.deliverySchedule.startDate || '';
             homeDeliveryenddate = this.prefillData.homeDelivery.deliverySchedule.terminator.endDate || '';
-         //   homeDeliveryotp = this.prefillData.homeDelivery.deliveryOtpVerification || false;
+            //   homeDeliveryotp = this.prefillData.homeDelivery.deliveryOtpVerification || false;
             homeDeliveryradius = this.prefillData.homeDelivery.deliveryRadius || '';
             homeDeliverycharge = this.prefillData.homeDelivery.deliveryCharge || '';
         } else {
             homeDeliverystat = false;
             homeDeliverystartdate = '';
             homeDeliveryenddate = '';
-          //  homeDeliveryotp = false;
+            //  homeDeliveryotp = false;
             homeDeliveryradius = '';
             homeDeliverycharge = '';
         }
@@ -1223,11 +1224,11 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         if (this.prefillData.cancellationPolicy) {
             this.paymentinformation = true;
         }
-        
+
         if (orderpickUpstartdate && this.storetimewindow_list.length > 0 && this.selday_arrstorepickup.length > 0) {
             this.storepickupinfo = true;
         }
-        if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
+        if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
         console.log(this.prefillData.catalogSchedule.terminator.endDate);
@@ -1236,11 +1237,11 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             'catalogDesc': this.prefillData.catalogDesc || '',
             'startdate': this.prefillData.catalogSchedule.startDate || '',
             'enddate': this.prefillData.catalogSchedule.terminator.endDate || '',
-          //  'qstarttime': sttime,
-          //  'qendtime': edtime,
+            //  'qstarttime': sttime,
+            //  'qendtime': edtime,
             'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
-           'itemPriceInfo': this.prefillData.showPrice,
+            'itemPriceInfo': this.prefillData.showPrice,
             'advancePaymentStatus': this.prefillData.paymentType,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1248,15 +1249,15 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
-           // 'qstarttimestore': sttimestore || this.dstart_timestore,
+            // 'qstarttimestore': sttimestore || this.dstart_timestore,
             //'qendtimestore': edtimestore || this.dend_timestore,
-           // 'storeotpverify': orderpickUpotp,
+            // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
             //'qstarttimehome': sttimehome || this.dstart_timehome,
             //'qendtimehome': edtimehome || this.dend_timehome,
-           // 'homeotpverify': homeDeliveryotp,
+            // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
@@ -1469,7 +1470,7 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
 
     }
     onSubmit(form_data) {
-       
+
         // const daystr: any = [];
         // for (const cday of this.selday_arr) {
         //     daystr.push(cday);
@@ -1590,8 +1591,8 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         // const starttime_formathome = moment(curdatehome).format('hh:mm A') || null;
         // const endtime_formathome = moment(enddatehome).format('hh:mm A') || null;
         if (form_data.orderType === 'SHOPPINGLIST' && form_data.advancePaymentStatus === 'FULLAMOUNT') {
-                this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
-                return;
+            this.snackbarService.openSnackBar('Shopping list not supported fullamount advance payment', { 'panelClass': 'snackbarerror' });
+            return;
         }
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment === '') {
@@ -1693,38 +1694,38 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             console.log(postdata);
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
-           // postdata['catalogItem'] = this.catalogItems;
-           postdata['catalogItem'] = this.seletedCatalogItems;
-           console.log(postdata);
-           this.editCatalog(postdata);
+            // postdata['catalogItem'] = this.catalogItems;
+            postdata['catalogItem'] = this.seletedCatalogItems;
+            console.log(postdata);
+            this.editCatalog(postdata);
         }
     }
     addCatalog(post_data) {
         this.disableButton = true;
         this.resetApiErrors();
         console.log('add');
-       this.api_loading = true;
+        this.api_loading = true;
         this.provider_services.addCatalog(post_data)
             .subscribe(
                 (data) => {
-                   // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_CREATED'));
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_CREATED'));
                     this.lStorageService.removeitemfromLocalStorage('selecteditems');
                     this.api_loading = false;
-                            this.addcatalogimagedialogRef = this.dialog.open(AddcatalogimageComponent, {
-                                width: '50%',
-                                panelClass: ['popup-class', 'commonpopupmainclass'],
-                                disableClose: true,
-                                data: {
-                                    source_id: data
-                                }
-                            });
-                            this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
-                                if (result === 1) {
-                                 console.log(result);
-                                 this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
-                                }
-                              });
-               },
+                    this.addcatalogimagedialogRef = this.dialog.open(AddcatalogimageComponent, {
+                        width: '50%',
+                        panelClass: ['popup-class', 'commonpopupmainclass'],
+                        disableClose: true,
+                        data: {
+                            source_id: data
+                        }
+                    });
+                    this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
+                        if (result === 1) {
+                            console.log(result);
+                            this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
+                        }
+                    });
+                },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     this.api_loading = false;
@@ -1784,9 +1785,9 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                 // this.loc_name = this.loc_list[0];
                 // }
                 //if (this.action === 'add') {
-                    this.selected_location = this.loc_list[0];
-                    this.selected_locationId = this.loc_list[0].id;
-               // }
+                this.selected_location = this.loc_list[0];
+                this.selected_locationId = this.loc_list[0].id;
+                // }
                 // if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
                 // this.selected_locationId = this.params.locationId;
                 // } else 
@@ -2098,19 +2099,19 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
     showStep(step, form_data) {
         console.log(step);
         console.log(form_data);
-    // if (step === 2) {
-        if (form_data.catalogName ) {
-        this.basic = true;
+        // if (step === 2) {
+        if (form_data.catalogName) {
+            this.basic = true;
         } else {
             this.basic = false;
-         }
-    // } else if (step === 3) {
+        }
+        // } else if (step === 3) {
         if (this.selday_arr.length > 0 && form_data.startdate && form_data.qstarttime && form_data.qendtime) {
-        this.workinghours = true;
-         } else {
+            this.workinghours = true;
+        } else {
             this.workinghours = false;
-         }
-    // } else if (step === 5) {
+        }
+        // } else if (step === 5) {
         if (this.payAdvance === 'FIXED') {
             if (form_data.advancePayment) {
                 this.paymentinformation = true;
@@ -2120,84 +2121,84 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         } else {
             this.paymentinformation = true;
         }
-    // } else if (step === 6) {
+        // } else if (step === 6) {
         if (this.selday_arrstorepickup.length > 0 && form_data.startdatestore && this.storetimewindow_list.length > 0) {
             this.storepickupinfo = true;
-             } else {
-                this.storepickupinfo = false;
-             }
+        } else {
+            this.storepickupinfo = false;
+        }
 
-    // } else if (step === 7) {
+        // } else if (step === 7) {
         if (this.selday_arrhomedelivery.length > 0 && form_data.startdatehome && this.hometimewindow_list.length > 0) {
             this.homedeliveryinfo = true;
-             } else {
-                this.homedeliveryinfo = false;
-             }
-  //  }
+        } else {
+            this.homedeliveryinfo = false;
+        }
+        //  }
         this.step = step;
-}
-showTimewindow(type) {
-    let list = [];
-    if (type === 'store') {
-        list = this.storetimewindow_list;
-    } else {
-        list = this.hometimewindow_list;
     }
+    showTimewindow(type) {
+        let list = [];
+        if (type === 'store') {
+            list = this.storetimewindow_list;
+        } else {
+            list = this.hometimewindow_list;
+        }
         this.addtimewindowdialogRef = this.dialog.open(TimewindowPopupComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-            windowlist: list
-        }
-    });
-    this.addtimewindowdialogRef.afterClosed().subscribe(result => {
-        if (result) {
-         console.log(result);
-         if (type === 'store') {
-         this.storetimewindow_list.push(result);
-         console.log(this.storetimewindow_list);
-         } else {
-            this.hometimewindow_list.push(result);
-            console.log(this.hometimewindow_list);
-         }
-        }
-      });
-}
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                windowlist: list
+            }
+        });
+        this.addtimewindowdialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+                if (type === 'store') {
+                    this.storetimewindow_list.push(result);
+                    console.log(this.storetimewindow_list);
+                } else {
+                    this.hometimewindow_list.push(result);
+                    console.log(this.hometimewindow_list);
+                }
+            }
+        });
+    }
     deletetimeslot(type, index) {
         if (type === 'store') {
             this.storetimewindow_list.splice(index, 1);
             console.log(this.storetimewindow_list);
-            } else {
-               this.hometimewindow_list.splice(index, 1);
-               console.log(this.hometimewindow_list);
-            }
+        } else {
+            this.hometimewindow_list.splice(index, 1);
+            console.log(this.hometimewindow_list);
+        }
     }
 
     selectItem(index) {
         console.log(this.catalogItem[index].selected);
         if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
-          this.catalogItem[index].selected = true;
-          this.selectedCount++;
+            this.catalogItem[index].selected = true;
+            this.selectedCount++;
         } else {
-          this.catalogItem[index].selected = false;
-          this.selectedCount--;
+            this.catalogItem[index].selected = false;
+            this.selectedCount--;
         }
         console.log(this.catalogItem[index].selected);
-      }
-      selectaddItem(index) {
+    }
+    selectaddItem(index) {
         console.log(this.itemsforadd[index].selected);
         if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
-          this.itemsforadd[index].selected = true;
-          this.selecteditemCount++;
+            this.itemsforadd[index].selected = true;
+            this.selecteditemCount++;
         } else {
-          this.itemsforadd[index].selected = false;
-          this.selecteditemCount--;
+            this.itemsforadd[index].selected = false;
+            this.selecteditemCount--;
         }
         console.log(this.itemsforadd[index].selected);
-      }
+    }
 
-      getItemImg(item) {
+    getItemImg(item) {
         if (item.itemImages) {
             const img = item.itemImages.filter(image => image.displayImage);
             if (img[0]) {
@@ -2212,226 +2213,221 @@ showTimewindow(type) {
     selectedItems() {
         this.catalogItemsSelected = [];
         for (let ia = 0; ia < this.catalogItem.length; ia++) {
-          this.seletedCatalogItems1 = {};
-          let minqty = '';
-          let maxqty = '';
-          console.log('minquty_' + this.catalogItem[ia].itemId + '');
-          if (this.catalogItem[ia].selected === true) {
-            console.log(this.catalogItem[ia]);
-            minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
-            maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
-            if (minqty > maxqty) {
-              this.snackbarService.openSnackBar('' + this.catalogItem[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
-              this.api_loading = false;
-              return;
+            this.seletedCatalogItems1 = {};
+            let minqty = '';
+            let maxqty = '';
+            console.log('minquty_' + this.catalogItem[ia].itemId + '');
+            if (this.catalogItem[ia].selected === true) {
+                console.log(this.catalogItem[ia]);
+                minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
+                maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
+                if (minqty > maxqty) {
+                    this.snackbarService.openSnackBar('' + this.catalogItem[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                    return;
+                }
+                this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
+                this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
+                this.seletedCatalogItems1.item = this.catalogItem[ia];
+                this.catalogItemsSelected.push(this.seletedCatalogItems1);
             }
-           this.seletedCatalogItems1.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value || '1';
-           this.seletedCatalogItems1.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value || '5';
-           this.seletedCatalogItems1.item = this.catalogItem[ia];
-           this.catalogItemsSelected.push(this.seletedCatalogItems1);
-          }
         }
-            this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
+        this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         //     const navigationExtras: NavigationExtras = {
         //       queryParams: { action: 'add',
         //                       isFrom: true }
         // };
         //     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
-      }
+    }
     selectedaddItems() {
         this.api_loading = true;
         this.catalogSelectedItemsadd = [];
         for (let ia = 0; ia < this.itemsforadd.length; ia++) {
-          this.seletedCatalogItemsadd = {};
-          let minqty = '';
-          let maxqty = '';
-          console.log('minquty_' + this.itemsforadd[ia].itemId + '');
-          if (this.itemsforadd[ia].selected === true) {
-            console.log(this.itemsforadd[ia]);
-              minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
-              maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
-              if (minqty > maxqty) {
-                this.snackbarService.openSnackBar('' + this.itemsforadd[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
-                this.api_loading = false;
-                return;
-              }
-           this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
-           this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
-           this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
-           this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
-          }
+            this.seletedCatalogItemsadd = {};
+            let minqty = '';
+            let maxqty = '';
+            console.log('minquty_' + this.itemsforadd[ia].itemId + '');
+            if (this.itemsforadd[ia].selected === true) {
+                console.log(this.itemsforadd[ia]);
+                minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
+                maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
+                if (minqty > maxqty) {
+                    this.snackbarService.openSnackBar('' + this.itemsforadd[ia].displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                    return;
+                }
+                this.seletedCatalogItemsadd.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value || '1';
+                this.seletedCatalogItemsadd.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value || '5';
+                this.seletedCatalogItemsadd.item = this.itemsforadd[ia];
+                this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
+            }
         }
         if (this.catalogSelectedItemsadd.length > 0) {
-          this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
-        //   const navigationExtras: NavigationExtras = {
-        //     queryParams: { action: 'edit',
-        //                     isFrom: true }
-        //   };
-        //   this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
-      //  this.addItems(this.catalogSelectedItemsadd);
+            this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
+            //   const navigationExtras: NavigationExtras = {
+            //     queryParams: { action: 'edit',
+            //                     isFrom: true }
+            //   };
+            //   this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
+            //  this.addItems(this.catalogSelectedItemsadd);
         }
-          }
-          createItem(form_data, isfrom?) {
-            if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
-                // this.api_error = 'Please enter valid promotional value';
-                this.snackbarService.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-            if (!this.showPromotionalPrice) {
-                form_data.promotionalPrice = '';
-            }
-            if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
-                // this.api_error = 'Please enter custom label';
-                this.snackbarService.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-            const iprice = parseFloat(form_data.price);
-            if (!iprice || iprice === 0) {
-                // this.api_error = 'Please enter valid price';
-                this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
-                return;
-            }
-            if (iprice < 0) {
-                //this.api_error = 'Price should not be a negative value';
+    }
+    createItem(form_data, isfrom?) {
+        if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
+            // this.api_error = 'Please enter valid promotional value';
+            this.snackbarService.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (!this.showPromotionalPrice) {
+            form_data.promotionalPrice = '';
+        }
+        if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
+            // this.api_error = 'Please enter custom label';
+            this.snackbarService.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        const iprice = parseFloat(form_data.price);
+        if (!iprice || iprice === 0) {
+            // this.api_error = 'Please enter valid price';
+            this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (iprice < 0) {
+            //this.api_error = 'Price should not be a negative value';
+            this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
+            return;
+        }
+        if (form_data.promotionalPrice) {
+            const proprice = parseFloat(form_data.price);
+            if (proprice < 0) {
+                //  this.api_error = 'Price should not be a negative value';
                 this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
                 return;
             }
-            if (form_data.promotionalPrice) {
-                const proprice = parseFloat(form_data.price);
-                if (proprice < 0) {
-                    //  this.api_error = 'Price should not be a negative value';
-                    this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
-                    return;
-                }
-            }
-            //  this.saveImagesForPostinstructions();
-            if (this.action === 'add') {
-                const post_itemdata = {
-                    'itemCode': form_data.itemCode,
-                    'itemName': form_data.itemName,
-                    'displayName': form_data.displayName,
-                    'shortDesc': form_data.shortDec,
-                    'itemDesc': form_data.displayDesc,
-                    'note': form_data.note,
-                    'taxable': form_data.taxable,
-                    'price': form_data.price,
-                    'showPromotionalPrice': this.showPromotionalPrice,
-                    'isShowOnLandingpage': form_data.showOnLandingpage,
-                    'isStockAvailable': form_data.stockAvailable,
-                    'promotionalPriceType': form_data.promotionalPriceType,
-                    'promotionLabelType': form_data.promotionallabel,
-                    'promotionLabel': form_data.customlabel || '',
-                    'promotionalPrice': form_data.promotionalPrice || 0,
-                    'promotionalPrcnt': form_data.promotionalPrice || 0
-                };
-                if (!this.showPromotionalPrice) {
-                    post_itemdata['promotionalPriceType'] = 'NONE';
-                    post_itemdata['promotionLabelType'] = 'NONE';
-                }
-                // if (form_data.promotionalPriceType === 'FIXED') {
-                //     post_itemdata['promotionalPrice'] = form_data.promotionalPrice || 0;
-                // }
-                // if (form_data.promotionalPriceType === 'PCT') {
-                //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
-                // }
-                this.addItem(post_itemdata);
-            }
         }
-        addItem(post_data) {
-            console.log(post_data)
-            this.disableButton = true;
-            this.resetApiErrors();
-            this.api_loading = true;
-            this.provider_services.addItem(post_data)
-                .subscribe(
-                    (data) => {
-                        if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
-                            this.saveImages(data);
-                        }
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
-                        this.api_loading = false;
-                            this.disableButton = false;
-                            this.showPromotionalPrice = false;
-                            this.showCustomlabel = false;
-                            // this.amForm.reset();
-                            this.haveMainImg = false;
-                            this.mainImage = false;
-                            this.closeGroupDialog();
-
-                        if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
-                            // const route = 'list';
-                            this.saveImages(data);
-                        } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
-                           
-                        }
-                    },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.api_loading = false;
-                        this.disableButton = false;
+        //  this.saveImagesForPostinstructions();
+        if (this.action === 'add') {
+            const post_itemdata = {
+                'itemCode': form_data.itemCode,
+                'itemName': form_data.itemName,
+                'displayName': form_data.displayName,
+                'shortDesc': form_data.shortDec,
+                'itemDesc': form_data.displayDesc,
+                'note': form_data.note,
+                'taxable': form_data.taxable,
+                'price': form_data.price,
+                'showPromotionalPrice': this.showPromotionalPrice,
+                'isShowOnLandingpage': form_data.showOnLandingpage,
+                'isStockAvailable': form_data.stockAvailable,
+                'promotionalPriceType': form_data.promotionalPriceType,
+                'promotionLabelType': form_data.promotionallabel,
+                'promotionLabel': form_data.customlabel || '',
+                'promotionalPrice': form_data.promotionalPrice || 0,
+                'promotionalPrcnt': form_data.promotionalPrice || 0
+            };
+            if (!this.showPromotionalPrice) {
+                post_itemdata['promotionalPriceType'] = 'NONE';
+                post_itemdata['promotionLabelType'] = 'NONE';
+            }
+            // if (form_data.promotionalPriceType === 'FIXED') {
+            //     post_itemdata['promotionalPrice'] = form_data.promotionalPrice || 0;
+            // }
+            // if (form_data.promotionalPriceType === 'PCT') {
+            //     post_itemdata['promotionalPrcnt'] = form_data.promotionalPrice || 0;
+            // }
+            this.addItem(post_itemdata);
+        }
+    }
+    addItem(post_data) {
+        console.log(post_data)
+        this.disableButton = true;
+        this.resetApiErrors();
+        this.api_loading = true;
+        this.provider_services.addItem(post_data)
+            .subscribe(
+                (data) => {
+                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                        this.saveImages(data);
                     }
-                );
-        }
-        setnoteFocus() {
-            this.isnotefocused = true;
-            this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
-        }
-        lostnoteFocus() {
-            this.isnotefocused = false;
-        }
-            
-        handleTypechange(typ) {
-            if (typ === 'FIXED') {
-                this.valueCaption = 'Enter the discounted price you offer';
-                this.curtype = typ;
-            } else {
-                this.curtype = typ;
-                this.valueCaption = 'Enter the discounted price you offer';
-            }
-           
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ITEM_CREATED'));
+                    this.api_loading = false;
+                    this.disableButton = false;
+                    this.showPromotionalPrice = false;
+                    this.showCustomlabel = false;
+                    // this.amForm.reset();
+                    this.haveMainImg = false;
+                    this.mainImage = false;
+                    this.closeGroupDialog();
+
+                    if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
+                        // const route = 'list';
+                        this.saveImages(data);
+                    } else if (this.selectedMessage.files.length == 0 || this.selectedMessageMain.files.length == 0) {
+
+                    }
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                    this.disableButton = false;
+                }
+            );
+    }
+    setnoteFocus() {
+        this.isnotefocused = true;
+        this.notechar_count = this.max_char_count - this.amForm.get('note').value.length;
+    }
+    lostnoteFocus() {
+        this.isnotefocused = false;
+    }
+
+    handleTypechange(typ) {
+        if (typ === 'FIXED') {
+            this.valueCaption = 'Enter the discounted price you offer';
+            this.curtype = typ;
+        } else {
+            this.curtype = typ;
+            this.valueCaption = 'Enter the discounted price you offer';
         }
 
-        handleLabelchange(type) {
-            if (type === 'Other') {
-                this.showCustomlabel = true;
-            } else {
-                this.showCustomlabel = false;
-            }
+    }
+
+    handleLabelchange(type) {
+        if (type === 'Other') {
+            this.showCustomlabel = true;
+        } else {
+            this.showCustomlabel = false;
         }
-        handleTaxablechange() {
-            this.resetApiErrors();
-            if (this.taxpercentage <= 0) {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
-                setTimeout(() => {
-                    this.api_error = null;
-                }, projectConstants.TIMEOUT_DELAY_LARGE);
-                this.amForm.get('taxable').setValue(false);
-            } else {
+    }
+    handleTaxablechange() {
+        this.resetApiErrors();
+        if (this.taxpercentage <= 0) {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SERVICE_TAX_ZERO_ERROR'), { 'panelClass': 'snackbarerror' });
+            setTimeout(() => {
                 this.api_error = null;
-            }
+            }, projectConstants.TIMEOUT_DELAY_LARGE);
+            this.amForm.get('taxable').setValue(false);
+        } else {
+            this.api_error = null;
         }
-        closeGroupDialog() {
-            this.closebutton.nativeElement.click();
-            this.resetApiErrors();
-          }
+    }
+    closeGroupDialog() {
+        this.closebutton.nativeElement.click();
+        this.resetApiErrors();
+    }
 
 
 
-          // New functions
+    // New functions
     setItemFromCataDetails() {
-        console.log('set');
-        console.log(this.catalog.catalogItem);
-        console.log(this.catalogItem);
-        for (let i = 0; i < this.catalog.catalogItem.length; i++) {
-            console.log(this.catalog.catalogItem[i].item.itemId);
-            const itemArr = this.catalogItem.filter(item => item.itemId === this.catalog.catalogitem[i].item.itemId);
+        for (let j = 0; j < this.catalogItem.length; j++) {
+            const itemArr = this.catalog.catalogItem.filter(item => item.item.itemId === this.catalogItem[j].itemId);
             console.log(itemArr);
             if (itemArr.length > 0) {
-                const index = this.catalogItem.indexOf(itemArr[0]);
-                this.selectItem(index);
+                console.log(j);
+                this.selectItem(j);
             }
         }
-        this.seletedCatalogItems = [];
     }
 
     // editCatalogItem(item) {
