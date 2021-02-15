@@ -160,7 +160,8 @@ export class CatalogdetailComponent implements OnInit {
     @ViewChild('closebutton') closebutton;
     mainimage_list_popup: Image[];
     itmId;
-
+    imageList: any = [];
+    item_id;
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
@@ -2042,6 +2043,50 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
         }
     }
 
+    deleteTempItemImage(img, index, type?) {
+        if (this.action === 'edit') {
+            this.removeimgdialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                    'message': 'Do you really want to remove the item image?'
+                }
+            });
+            this.removeimgdialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
+                    this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
+                        .subscribe((data) => {
+                            if (type) {
+                                this.mainimage_list_popup = [];
+                                this.selectedMessageMain.files.splice(index, 1);
+                                this.selectedMessageMain.base64.splice(index, 1);
+                                this.haveMainImg = false;
+                            } else {
+                                this.image_list_popup.splice(index, 1);
+                                this.selectedMessage.files.splice(index, 1);
+                                this.selectedMessage.base64.splice(index, 1);
+                            }
+                        },
+                            error => {
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            });
+                }
+            });
+        } else {
+            this.mainImage = false;
+            if (type) {
+                this.mainimage_list_popup = [];
+                this.selectedMessageMain.files.splice(index, 1);
+                this.selectedMessageMain.base64.splice(index, 1);
+            } else {
+                this.image_list_popup.splice(index, 1);
+                this.selectedMessage.files.splice(index, 1);
+                this.selectedMessage.base64.splice(index, 1);
+            }
+        }
+    }
 
     showStep(step, form_data) {
         console.log(step);
