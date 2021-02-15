@@ -53,6 +53,9 @@
     height: 100px;
     margin-bottom: 5px;
 }
+.thumbnails a {
+    margin: 5px;
+}
 .img-section img {
     width: 80px;
     height: 80px;

@@ -10,7 +10,7 @@
         <div class="c-outer m0 p0">
           <div class="c-body">
             <div class="card title-gb">
-              <h5 class="mgn-up-10 bold">Inbox <a class="pull-right back-btn" (click)="goBack()"><i
+              <h5 class="mgn-up-10 bold">Inbox <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                     class="fa fa-arrow-left"></i></a></h5>
             </div>
             <div class="card p0">
@@ -38,7 +38,7 @@
                                 <div class="d-flex align-items-center">
                                   <div class="symbol symbol-circle symbol-50 mr-3">
                                     <div class="user-name">
-                                      {{getUserName(user.key) | uppercase}}
+                                      {{getUserName(user.key)}}
                                     </div>
                                   </div>
                                   <div class="d-flex flex-column">
@@ -98,9 +98,14 @@
                                     class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
                                     {{msg.msg}}
                                     <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
-                                      <a class="mg-10" (click)="openImage(msg.attachements, i)"
-                                        *ngFor="let attachment of msg.attachements;let i=index"><img
-                                          [src]="getThumbUrl(attachment)" /></a>
+                                      <ng-container *ngFor="let attachment of msg.attachements;let i=index">
+                                        <a (click)="openImage(msg.attachements, i)"
+                                          *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                            [src]="getThumbUrl(attachment)" /></a>
+                                        <a [href]="attachment.s3path"
+                                          *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                            [src]="getThumbUrl(attachment)" /></a>
+                                      </ng-container>
                                     </div>
 
                                   </div>
@@ -117,9 +122,14 @@
                                     class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
                                     {{msg.msg}}
                                     <div class="thumbnails mt10 mb10" *ngIf="msg.attachements">
-                                      <a class="mg-10" (click)="openImage(msg.attachements, i)"
-                                        *ngFor="let attachment of msg.attachements;let i=index"><img
-                                          [src]="getThumbUrl(attachment)" /></a>
+                                      <ng-container *ngFor="let attachment of msg.attachements;let i=index">
+                                        <a (click)="openImage(msg.attachements, i)"
+                                          *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                            [src]="getThumbUrl(attachment)" /></a>
+                                        <a [href]="attachment.s3path"
+                                          *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                            [src]="getThumbUrl(attachment)" /></a>
+                                      </ng-container>
                                     </div>
                                   </div>
                                 </div>
@@ -157,7 +167,8 @@
                                 <li *ngFor="let file of selectedMessage.files;let i = index ">
                                   <div class="galimg_outer">
                                     <div class="gal_img">
-                                      <img [src]="selectedMessage.base64[i]" *ngIf="selectedMessage.base64[i]">
+                                      <img [src]="getImage(selectedMessage.base64[i], file)"
+                                        *ngIf="selectedMessage.base64[i]">
                                     </div>
                                     <div class="gal_action" (click)="deleteTempImage(i)">
                                       <i class="fa fa-times-circle" aria-hidden="true"></i>

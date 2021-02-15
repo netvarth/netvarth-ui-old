@@ -68,6 +68,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgDisplay = 'all';
   groupedMsgsbyUser: any = [];
   cacheavoider;
+  provider_label = '';
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -78,6 +79,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private router: Router) { }
   ngOnInit() {
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
     this.cacheavoider = dd;
@@ -118,6 +120,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
       this.getInboxMessages();
+    }, error => {
+      setTimeout(() => {
+        this.scrollToElement();
+      }, 100);
     });
   }
   getInboxUnreadCnt() {
@@ -220,9 +226,16 @@ export class InboxListComponent implements OnInit, OnDestroy {
       this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       setTimeout(() => {
         this.scrollToElement();
-      }, 200);
+      }, 100);
     }
     console.log(this.selectedUserMessages);
+  }
+  getImage(url, file) {
+    if (file.type == 'application/pdf') {
+      return '../../../assets/images/pdf.png';
+    } else {
+      return url;
+    }
   }
   generateCustomInbox(messages: any) {
     let inboxList = [];
@@ -416,7 +429,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       setTimeout(() => {
         this.scrollToElement();
-      }, 200);
+      }, 100);
     }
   }
   getUnreadCount(messages) {
@@ -491,5 +504,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   goBack() {
     this.selectedUser = this.userDet;
+  }
+  getUserImg() {
+    return '../../../assets/images/avatar5.png';
   }
 }

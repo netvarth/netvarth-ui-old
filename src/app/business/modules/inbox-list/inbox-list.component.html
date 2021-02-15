@@ -28,10 +28,15 @@
                                                 (click)="changemsgDisplayType('all')"
                                                 [class.selected-btn]="msgDisplay=='all'">All</button>
                                             <button mat-flat-button [class.selected-btn]="msgDisplay=='user'"
-                                                (click)="changemsgDisplayType('user')">Users</button>
+                                                (click)="changemsgDisplayType('user')">{{provider_label |
+                                                capitalizeFirst}}s</button>
                                         </div>
-                                        <div class="mgn-lt-10" *ngIf="selectedUser.userType === 'PROVIDER'">
-                                            <i (click)="goBack()" class="fa fa-arrow-left pointer-cursor"></i>
+                                        <div class="user-goback" *ngIf="selectedUser.userType === 'PROVIDER'">
+                                            <i (click)="goBack()" class="fa fa-arrow-left pointer-cursor mgn-rt-10"></i>
+                                            <span>
+                                                {{(selectedUser.businessName) ? selectedUser.businessName :
+                                                selectedUser.firstName + ' ' + selectedUser.lastsName}}
+                                            </span>
                                         </div>
                                         <!--begin::Body-->
                                         <div class="card-body">
@@ -77,15 +82,8 @@
                                                             [class.selected-user]="selectedUser==user">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="symbol symbol-circle symbol-50 mr-3">
-                                                                    <div class="user-name">
-                                                                        {{getUser((user.businessName) ?
-                                                                        user.businessName : user.firstName +
-                                                                        ' ' +
-                                                                        user.lastName, 'user')}}
-                                                                    </div>
-                                                                    <!-- <div class="user-name" *ngIf="getBusinessProfileLogo(user)">
-                                                                <img [src]="getBusinessProfileLogo(user)" alt="" class="crop-img-fit">
-                                                            </div> -->
+                                                                    <img [src]="getUserImg()" alt=""
+                                                                        class="user-name no-padding">
                                                                 </div>
                                                                 <div class="d-flex flex-column">
                                                                     <a
@@ -107,6 +105,13 @@
                                     <!--end::Card-->
                                 </div>
                                 <!--end::Aside-->
+
+
+                                <!-- <div class="flex-row-fluid ml-lg-8">
+                                    <img src="../../../../assets/images/hero-1.png">
+                                </div> -->
+
+
                                 <!--begin::Content-->
                                 <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                                     *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
@@ -147,10 +152,15 @@
                                                             {{msg.msg}}
                                                             <div class="thumbnails mt10 mb10"
                                                                 *ngIf="msg.attachements && msg.attachements.length > 0">
-                                                                <a class="mg-10"
-                                                                    (click)="openImage(msg.attachements, i)"
-                                                                    *ngFor="let attachment of msg.attachements;let i=index"><img
-                                                                        [src]="getThumbUrl(attachment)" /></a>
+                                                                <ng-container
+                                                                    *ngFor="let attachment of msg.attachements;let i=index">
+                                                                    <a (click)="openImage(msg.attachements, i)"
+                                                                        *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                            [src]="getThumbUrl(attachment)" /></a>
+                                                                    <a [href]="attachment.s3path"
+                                                                        *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                            [src]="getThumbUrl(attachment)" /></a>
+                                                                </ng-container>
                                                             </div>
 
                                                         </div>
@@ -170,10 +180,15 @@
                                                             {{msg.msg}}
                                                             <div class="thumbnails mt10 mb10"
                                                                 *ngIf="msg.attachements && msg.attachements.length > 0">
-                                                                <a class="mg-10"
-                                                                    (click)="openImage(msg.attachements, i)"
-                                                                    *ngFor="let attachment of msg.attachements;let i=index"><img
-                                                                        [src]="getThumbUrl(attachment)" /></a>
+                                                                <ng-container
+                                                                    *ngFor="let attachment of msg.attachements;let i=index">
+                                                                    <a (click)="openImage(msg.attachements, i)"
+                                                                        *ngIf="attachment.s3path.indexOf('.pdf') === -1"><img
+                                                                            [src]="getThumbUrl(attachment)" /></a>
+                                                                    <a [href]="attachment.s3path"
+                                                                        *ngIf="attachment.s3path.indexOf('.pdf') !== -1"><img
+                                                                            [src]="getThumbUrl(attachment)" /></a>
+                                                                </ng-container>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -214,7 +229,7 @@
                                                     <li *ngFor="let file of selectedMessage.files;let i = index ">
                                                         <div class="galimg_outer">
                                                             <div class="gal_img">
-                                                                <img [src]="selectedMessage.base64[i]"
+                                                                <img [src]="getImage(selectedMessage.base64[i], file)"
                                                                     *ngIf="selectedMessage.base64[i]">
                                                             </div>
                                                             <div class="gal_action" (click)="deleteTempImage(i)">

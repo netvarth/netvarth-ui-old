@@ -92,7 +92,7 @@ export class InboxOuterComponent implements OnInit {
             this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
               this.scrollToElement();
-            }, 200);
+            }, 100);
           }
           this.sortMessages();
           this.obtainedMsgs = true;
@@ -151,7 +151,7 @@ export class InboxOuterComponent implements OnInit {
     } else {
       setTimeout(() => {
         this.scrollToElement();
-      }, 200);
+      }, 100);
     }
   }
   getUnreadCount(messages) {
@@ -161,6 +161,10 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
+    }, error => {
+      setTimeout(() => {
+        this.scrollToElement();
+      }, 100);
     });
   }
   sendMessage() {
@@ -211,7 +215,7 @@ export class InboxOuterComponent implements OnInit {
     if (name.length > 1) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
-    return nameShort;
+    return nameShort.toUpperCase();
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -230,6 +234,14 @@ export class InboxOuterComponent implements OnInit {
           reader.readAsDataURL(file);
         }
       }
+    }
+    console.log(this.selectedMessage);
+  }
+  getImage(url, file) {
+    if (file.type == 'application/pdf') {
+      return '../../../../assets/images/pdf.png';
+    } else {
+      return url;
     }
   }
   showChatSection() {

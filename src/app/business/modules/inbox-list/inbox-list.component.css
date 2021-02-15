@@ -54,6 +54,9 @@
     height: 100px;
     margin-bottom: 5px;
 }
+.thumbnails a {
+    margin: 5px;
+}
 .img-section img {
     width: 80px;
     height: 80px;
@@ -94,7 +97,7 @@
 }
 .top-buttons button {
     color: #1e4079;
-    background-color: #f9e2a7;
+    background-color: transparent;
     border-color: transparent;
     padding: 5px 10px;
     width: 48%;
@@ -103,8 +106,6 @@
 .selected-btn {
     font-weight: bold;
     background-color: #fdcb70 !important;
-    /* border: 1px solid #ffba09; */
-    /* box-shadow: 0 0px 10px 0 rgb(0 0 0 / 16%), 0 0px 5px 0 rgb(0 0 0 / 12%); */
 }
 .user-section {
     display: flex;
@@ -112,4 +113,11 @@
 }
 .user-section .user-name {
     background: #ddd !important;
+}
+.user-goback {
+    margin: 10px;
+}
+.user-goback span {
+    color: #B5B5C3;
+    font-weight: bold;
 }
