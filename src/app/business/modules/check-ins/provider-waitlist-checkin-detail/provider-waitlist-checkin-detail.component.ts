@@ -585,5 +585,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       return attachment.s3path;
     }
   }
+  getformatedTime(time) {
+    let timeDate;
+    timeDate = time.replace(/\s/, 'T');
+    console.log(timeDate);
+    return timeDate;
+  }
 }
 

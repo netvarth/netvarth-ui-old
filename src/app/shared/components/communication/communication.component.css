@@ -1,7 +1,7 @@
 .ownermsg
  {
-   height:40px;
-   width:400px;
+   height:75%;
+   width:75%;
    border-radius: 5px;
    background-color: #3c8dbc;
    color:white;
@@ -10,8 +10,8 @@
  }
  .receivermsg
  {
-   height:40px;
-   width:400px;
+   height:75%;
+   width:75%;
    border-radius: 5px;
    background-color: lightblue;
    color:black;
@@ -26,15 +26,24 @@
     font-weight:bold;
  }
  div .time {
-   width:400px;
+   width:75%;
    margin-bottom:2%;
  }
- footer {
-  text-align: center;
+ /* .footer {
+
   padding: 3px;
   background-color: lightgrey;
   color: white;
-  height:50px;
+  height:25%;
+  position: -webkit-sticky;
+  position: sticky;
+} */
+.footer {
+  height: 50px;
+  margin-top: -50px;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
 }
 .main{
   border:1px solid black;
@@ -49,12 +58,20 @@
 .imgRight{
   margin-right:10%;
   margin-top:2%;
-  height:100px;
-  width:100px;
+  height:25%;
+  width:25%;
 }
 .imgLeft{
   margin-left:10%;
   margin-top:2%;
-  height:100px;
-  width:100px;
+  height:25%;
+  width:25%;
+}
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: grey;
+  padding: 50px;
+  font-size: 20px;
 }

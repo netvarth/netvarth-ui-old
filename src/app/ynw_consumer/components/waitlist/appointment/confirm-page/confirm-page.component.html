@@ -11,7 +11,8 @@
                     <div class="copy locd" *ngIf="!apiloading">
                         <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding">
                             <div class="info-img">
-                                <img src="assets/images/bg-01.png"></div>
+                                <img src="assets/images/bg-01.png">
+                            </div>
                             <div class="details">
                                 <div class="book-head" *ngIf="type !== 'reschedule'"> Booking Confirmed </div>
                                 <div class="book-head" *ngIf="type === 'reschedule'"> Appointment rescheduled </div>
@@ -19,13 +20,15 @@
                                 <table class="book-details-sub chkntoknappt-details">
                                     <tbody>
                                         <tr *ngIf="!appointment.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="appointment.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{appointment.provider.businessName}},
@@ -64,7 +67,8 @@
                                                     <i class="fa wtsapvid-icon"
                                                         *ngIf="appointment.service.virtualCallingModes && appointment.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appointment.service.virtualServiceType ==='videoService'"></i>
                                                 </span>
-                                                {{appointment.service?.name}}</td>
+                                                {{appointment.service?.name}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Appointment Time </td>
@@ -80,16 +84,17 @@
                                         <tr *ngIf="appointment.service?.minPrePaymentAmount && type !== 'reschedule'">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">{{infoParams.prepayment  | currency:'&#8377;'}}
+                                            <td><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
                                                 </span>
                                             </td>
                                         </tr>
-                                        <tr *ngIf="appointment.service?.minPrePaymentAmount && type == 'reschedule' && appointment.amountPaid > 0">
+                                        <tr
+                                            *ngIf="appointment.service?.minPrePaymentAmount && type == 'reschedule' && appointment.amountPaid > 0">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">&#8377;
+                                            <td><span class="rupee-font">
+                                                    {{appointment.amountPaid | currency:'&#8377;'}}
                                                 </span>
-                                                {{appointment.amountPaid}}
                                             </td>
                                         </tr>
                                         <tr *ngIf="appointment.batchId">
@@ -100,12 +105,13 @@
                                     </tbody>
                                 </table>
                                 <div class="book-status chkntoknappt-details"> Current status </div>
-                                <div  style="text-align: center;" class="green" *ngIf="appointment.apptStatus">
-                                Appointment {{appointment.apptStatus}}
+                                <div style="text-align: center;" class="green" *ngIf="appointment.apptStatus">
+                                    Appointment {{appointment.apptStatus}}
                                 </div>
                                 <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="_blank">
-                                        {{path}}status/{{appointment.appointmentEncId}}</a></div>
+                                        {{path}}status/{{appointment.appointmentEncId}}</a>
+                                </div>
                                 <!-- <div class="txt-align-center mgn-up-10"
                             *ngIf="appointment.consumer && appointment.consumer.userProfile.emailVerified"> A booking
                             confirmation has been sent to your email
@@ -123,7 +129,8 @@
                                 </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor" (click)="okClick()">
-                                        <strong>OK</strong></span></div>
+                                        <strong>OK</strong></span>
+                                </div>
                             </div>
                         </div>
                         <div class="powered-by">
@@ -131,7 +138,8 @@
                                 <div class="one">powered by</div>
                                 <div class="two">
                                     <img _ngcontent-jvc-c15="" alt="Jaldee" src="assets/images/home/logo-icon.png"
-                                        style="width: 15px;">&nbsp;Jaldee</div>
+                                        style="width: 15px;">&nbsp;Jaldee
+                                </div>
                             </div>
                         </div>
                     </div>

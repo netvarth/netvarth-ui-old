@@ -41,7 +41,7 @@
                 </span>
               </div>
               <div class="mgn-up-10 stats-item">
-                <span class="itemHead">Booking No</span>
+                <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.checkinEncId}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistPhoneNumber">
@@ -167,7 +167,7 @@
             <div class="c-history-outer">
               <ul class="c-history">
                 <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
-                  <div class="time">{{ history.time | date: newTimeDateFormat }}</div>
+                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
                   <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>

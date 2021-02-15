@@ -130,6 +130,11 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.cheknPushph_arr = addList[0].pushMsg;
           // this.SelchkinNotify = true;
         }
+        if (addList[0].status === 'Enable') {
+          this.SelchkinNotify = true;
+        } else {
+          this.SelchkinNotify = false;
+        }
       }
       if (cancelList && cancelList[0]) {
         // if (cancelList[0].email.length === 0 && cancelList[0].sms.length === 0 && cancelList[0].pushMsg.length === 0) {
@@ -147,16 +152,11 @@ export class UpdateProviderNotificationsComponent implements OnInit {
           this.cheknCancelPushph_arr = cancelList[0].pushMsg;
           // this.SelchkincnclNotify = true;
         }
-      }
-      if (addList[0].status === 'Enable') {
-        this.SelchkinNotify = true;
-      } else {
-        this.SelchkinNotify = false;
-      }
-      if (cancelList[0].status === 'Enable') {
-        this.SelchkincnclNotify = true;
-      } else {
-        this.SelchkincnclNotify = false;
+        if (cancelList[0].status === 'Enable') {
+          this.SelchkincnclNotify = true;
+        } else {
+          this.SelchkincnclNotify = false;
+        }
       }
       this.api_loading = false;
     }

@@ -20659,11 +20659,11 @@ input.jdn_ip {
   /* min-height: 100%; */
 }
 
-@media (max-width:767px) {
+/* @media (max-width:767px) {
   .filterSidebar {
     margin-top: 100px;
   }
-}
+} */
 
 .filterTextinput {
   padding-top: 15px;
@@ -26304,6 +26304,13 @@ hr {
   color: limegreen;
   font-weight: 700;
 }
+.appliedLabel {
+  background: #eee;
+  padding: 2px;
+  margin-top: 5px;
+  font-size: smaller;
+  margin-left: 5px;
+}
 .addorderitem{
   margin: 0 auto;
   width: 200px;
@@ -27086,6 +27093,15 @@ width: 40px !important;
 }
 .dark-green {
   color: green !important;
+}
+.can-btn {
+  padding: 10px 30px;
+}
+#hubspot-messages-iframe-container {
+  visibility: hidden;
+}
+.visible_chat {
+  visibility: visible !important;
 }
 .customersList .pagination>li>span {
   background: #1e4079 !important;

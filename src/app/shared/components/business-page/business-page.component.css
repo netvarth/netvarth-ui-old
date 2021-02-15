@@ -1293,3 +1293,10 @@ img.ordericon.home {
   height: 22px;
   margin-bottom: -5px;
 }
+#popup .modal-header {
+  padding: 15px 5px 15px 0px !important; 
+}
+#popup .close {
+  opacity: 1 !important;
+  font-size: 1.75rem !important;
+}

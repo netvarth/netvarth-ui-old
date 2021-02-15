@@ -96,13 +96,13 @@
             <div class="box" *ngIf="report.reportContent.data.length > 0">
 
               <div class="box-body table-container table-responsive mat-elevation-z8">
-
+                <ng-container class="col-md-6">
             <mat-list>
                     <mat-list-item>Choose a column</mat-list-item>
-                    <ng-container class="col-md-6">
+
                     <mat-list-item >
 
-                      <mat-select placeholder="Group by"
+                      <mat-select placeholder="Group by"  matTooltip="Please select any one of the column name you like to group by"
                         [(ngModel)]="groupingColumn" name="item"
                         (ngModelChange)="buildDataSource()">
                         <mat-option [value]="null">None</mat-option>
@@ -111,9 +111,10 @@
                         </mat-option>
                       </mat-select>
                     </mat-list-item>
-                  </ng-container>
+
 
                   </mat-list>
+                </ng-container>
                 <table mat-table [dataSource]="report_dataSource" matSort>
 
                   <ng-container *ngFor="let column of table_header" matColumnDef="{{column.order}}">
@@ -128,7 +129,7 @@
                   <!-- Group header cells-->
                   <ng-container matColumnDef="groupHeader">
                     <td colspan="999" mat-cell *matCellDef="let group">
-                      <strong>{{group.groupName}}</strong>
+                      <strong>{{(group.groupName=='undefined') ? ' ':group.groupName}}</strong>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="groupReducer">

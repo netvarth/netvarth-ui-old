@@ -83,7 +83,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
@@ -196,7 +196,7 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-                
+
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
@@ -256,7 +256,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
@@ -369,7 +369,7 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-                
+
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span
@@ -413,7 +413,7 @@
               </a>
               <div>
                 <aside class="filterSidebar" *ngIf="showFilterSection">
-                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter">
+                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter" [ngStyle]="{'height.px': filterHeight}">
                     <div class="filterClosebtn" [class.pd-btm-30]="!filterapplied">
                       <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
                         (click)="hideFilterSidebar()" [matTooltip]="'Close filter window'"></i>
@@ -541,7 +541,7 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-                
+
                 <div class="mgn-up-15 mgn-bt-10">
                   <span class="bold" *ngIf="order.totalItemQuantity"><i class="shoppingcart-icon"></i> {{order.totalItemQuantity}}</span>
                   <span

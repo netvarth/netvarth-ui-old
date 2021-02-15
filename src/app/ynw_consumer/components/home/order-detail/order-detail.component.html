@@ -70,18 +70,22 @@
                                                 <div class="txt-cust-name">{{waitlist.orderFor.firstName}}&nbsp;{{waitlist.orderFor.lastName}}</div>
                                                 <div class="txt-addrs">
                                                     <i class="fa fa-phone"></i>{{waitlist.countryCode}} {{waitlist.phoneNumber}}</div>
-                                                    <div class="txt-addrs content_wrap">
+                                                    <div class="txt-addrs content_wrap"> 
                                                         <i class="fa fa-envelope"></i>
                                                         {{waitlist.email}}</div>
+                                                        <div class="bold font11 mgn-bt-10"> {{waitlist.orderDate | date: display_dateFormat}},
+                                                            {{waitlist.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{waitlist.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                         <div *ngIf="waitlist.orderNote" class="txt-addrs col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-12 mgn-bt-10" style="float: initial;">
                                                             <div class="odr_msg_outer">{{waitlist.orderNote}}</div>
                                                         </div>
-
-
+                                                        <div class="mt-2">
+                                                        <mat-icon style="color:blue" (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=false>sms</mat-icon>
+                                                      </div>
                                             </div>
                                             <div
                                                 class="col-sm-5 col-md-5 col-lg-5  col-xl-5 col-xs-10 mgn-up-10 mgn-bt-10 l-ht-2 ">
-                                                <mat-icon style="color:blue" (click)="showCommunication()" *ngIf="communication_history.length >0" matBadge={{msgCount}} matBadgeOverlap=true>sms</mat-icon>
+
                                                 <div class="txt-custdet">Delivery Type</div>
                                                 <div *ngIf="waitlist.storePickup" class="txt-cust-name">Store Pick Up</div>
                                                 <div *ngIf="waitlist.homeDelivery" class="txt-cust-name">Home Delivery</div>
@@ -152,7 +156,7 @@
                                                 </mat-grid-tile-header>
                                                 <div class="item-contnt">
                                                     <div class="itm-nme">{{item.name}}</div>
-                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
+                                                    <div class="price rupee-font itm-amt" *ngIf="waitlist.catalog.showPrice">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>
@@ -179,7 +183,7 @@
                                                             description
                                                         </i>
                                                     </div>
-                                                    <div class="price rupee-font itm-amt">{{item.totalPrice | currency:'&#8377;'}}
+                                                    <div class="price rupee-font itm-amt" *ngIf="waitlist.catalog.showPrice">{{item.totalPrice | currency:'&#8377;'}}
                                                     </div>
                                                     <div class="itm-qty">Qty - {{item.quantity}}</div>
                                                 </div>

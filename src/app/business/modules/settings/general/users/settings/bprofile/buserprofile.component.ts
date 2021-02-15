@@ -33,7 +33,7 @@ import { WordProcessor } from '../../../../../../../shared/services/word-process
 })
 
 export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecked {
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
+  dateFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
   jaldeeonline_on_cap: string;
   jaldeeonline_off_cap: string;
   onlinepresence_status_str: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LoginComponent } from '../../../../shared/components/login/login.component';
@@ -14,6 +14,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { SessionStorageService } from '../../../../shared/services/session-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-plogin',
@@ -37,7 +38,7 @@ export class ProviderLoginComponent implements OnInit {
   signup_here = '';
   countryCodes = projectConstantsLocal.COUNTRY_CODES;
   selectedCountryCode;
-  
+
   // images = {
   //   special_offers: 'assets/images/special offer-01-01.png',
   //   jaldee_online: 'assets/images/home/jaldee_online.svg',
@@ -68,9 +69,10 @@ export class ProviderLoginComponent implements OnInit {
   // };
   phOrem_error = '';
   qParams;
-  
+
   @ViewChild('mobPrefix') mobPrefix: ElementRef;
   carouselTwo;
+  evnt;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -84,11 +86,39 @@ export class ProviderLoginComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,
     private snackbarService: SnackbarService,
-    private titleService: Title
+    private titleService: Title,
+    private groupService: GroupStorageService
   ) {
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
+    });
+    this.evnt = router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (router.url === '/business/login') {
+          if (this.shared_functions.isBusinessOwner()) {
+            this.shared_functions.getGlobalSettings()
+              .then(
+                (settings: any) => {
+                  setTimeout(() => {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                      if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      } else if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
+                      } else if (settings.order) {
+                        router.navigate(['provider', 'orders']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  }, 500);
+                });
+          }
+        }
+      }
     });
   }
 
@@ -120,7 +150,7 @@ export class ProviderLoginComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     if (this.countryCodes.length !== 0) {
-      this.selectedCountryCode =this.countryCodes[0].value;
+      this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.api_loading = false;
   }
@@ -153,7 +183,7 @@ export class ProviderLoginComponent implements OnInit {
     });
 
   }
-  
+
   onSubmit(data) {
     const pN = data.emailId.trim();
     const pW = data.password.trim();
@@ -236,12 +266,12 @@ export class ProviderLoginComponent implements OnInit {
   }
   handlekeyup(ev) {
     console.log(ev.target.value);
-      if (/^\d+$/.test(ev.target.value)) {
-        console.log('Contain numbers only');
-        this.mobPrefix.nativeElement.style.display = 'flex';
-        this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
+    if (/^\d+$/.test(ev.target.value)) {
+      console.log('Contain numbers only');
+      this.mobPrefix.nativeElement.style.display = 'flex';
+      this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
     } else {
-        this.mobPrefix.nativeElement.style.display = 'none';
+      this.mobPrefix.nativeElement.style.display = 'none';
     }
     if (ev.keyCode !== 13) {
       this.resetApiErrors();
@@ -263,4 +293,3 @@ export class ProviderLoginComponent implements OnInit {
     this.routerobj.navigate(['business/login']);
   }
 }
-

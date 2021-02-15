@@ -25,13 +25,15 @@
                                 <table class="book-details-sub  chkntoknappt-details">
                                     <tbody>
                                         <tr *ngIf="!wtlst.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{wtlst.providerAccount?.businessName}}</td>
                                         </tr>
                                         <tr *ngIf="wtlst.provider">
-                                            <td width="48%" align="right">Name of the
+                                            <td width="48%" align="right">
+                                                <!-- Name of the -->
                                                 {{provider_label | capitalizeFirst}}</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{wtlst.provider.businessName}},
@@ -106,8 +108,8 @@
                                             *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><span class="rupee-font">&#8377;
-                                                </span>{{wtlst.amountPaid}}
+                                            <td><span class="rupee-font">
+                                                    {{wtlst.amountPaid | currency:'&#8377;'}}</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -116,7 +118,8 @@
                                 <table class="status-table">
                                     <tbody>
                                         <tr *ngIf="wtlst.personsAhead>=0">
-                                            <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;People waiting in line
+                                            <td width="48%" align="right"><i class="fa fa-user"></i>&nbsp;People waiting
+                                                in line
                                             </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td>{{wtlst.personsAhead}}</td>

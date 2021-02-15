@@ -58,7 +58,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   contact_details_cap = Messages.CONTACT_DETAILS_CAP;
   add_to_fav_cap = Messages.ADD_TO_FAV;
   rem_from_fav_cap = Messages.REM_FROM_FAV_CAP;
-  send_msgs_cap = Messages.SEND_MSGS_CAP;
+  send_msgs_cap = Messages.SEND_MSG_CAP;
   you_have_cap = Messages.YOU_HAVE_CAP;
   at_this_loc_cap = Messages.AT_THIS_LOC_CAP;
   get_directions_cap = Messages.GET_DIRECTIONS_CAP;
@@ -1576,12 +1576,14 @@ public wordProcessor: WordProcessor
     if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
         bname: busname,
+        sector: this.businessjson.serviceSector.domain,
         serdet: serv,
         serv_type: 'donation'
       };
     } else {
       servData = {
         bname: busname,
+        sector: this.businessjson.serviceSector.domain,
         serdet: serv
       };
     }

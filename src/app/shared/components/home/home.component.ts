@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   playvideo = false;
   customOptions: any;
   carouselPackages: any;
-
+  evnt;
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
@@ -54,8 +54,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private lStorageService: LocalStorageService,
     private titleService: Title,
     private metaService: Meta
-  ) { }
+  ) {
+    this.evnt = routerobj.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (routerobj.url === '\/') {
+        if (this.shared_functions.isBusinessOwner('returntyp') === 'consumer') {
+          routerobj.navigate(['consumer']);
+        }
+      }
+      }
+    });
+   }
 ngOnDestroy() {
+  const a = document.getElementById("hubspot-messages-iframe-container");
+  if (a) {
+  a.classList.remove('visible_chat');
+  }
   // alert('destroy');
   // let a = document.getElementById('hubspot-messages-iframe-container');
   //   a.setAttribute('style', 'visibility:hidden !important');
@@ -66,6 +80,16 @@ ngAfterViewInit() {
   // a.setAttribute('style', 'visibility:visible !important');
 }
   ngOnInit() {
+
+    const a = document.getElementById("hubspot-messages-iframe-container");
+    if (a) {
+      a.classList.add('visible_chat');
+    }
+  
+
+
+
+
     this.titleService.setTitle('Jaldee - Avoid Waiting in Line');
     this.metaService.addTags([
       { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }

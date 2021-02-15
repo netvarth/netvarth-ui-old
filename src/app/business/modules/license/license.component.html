@@ -139,9 +139,9 @@
                                 <div class="mgn-up-20">
                                     <div class="card card_addon">
                                         <span class="txt_adon">Add-ons&nbsp;&nbsp;<i
-                                                *ngIf="adon_list && adon_list.length === 0" (click)="gotoAddOns()"
+                                                *ngIf="adon_list && adon_list.length === 0 && addon_metric.length > 0" (click)="gotoAddOns()"
                                                 class="fa fa-plus-circle fa-lg custId-cursor" aria-hidden="true"></i>
-                                            <span *ngIf="adon_list && adon_list.length > 0"
+                                            <span *ngIf="adon_list && adon_list.length > 0 && addon_metric.length > 0"
                                                 class="addbt clr_pitch_blu btn_ad_more" (click)="gotoAddOns()"></span>
                                         </span>
                                         <div class="adon_lst" *ngIf="adon_list && adon_list.length > 0">

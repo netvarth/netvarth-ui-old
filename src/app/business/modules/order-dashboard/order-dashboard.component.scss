@@ -70,6 +70,9 @@
 .icon-filter-one, .fa-refresh {
     color: black;
 }
+.checkfilter{
+  overflow: auto;
+}
 @media (max-width: 550px) {
     .checkfilter {
         height: 550px !important;

@@ -82,10 +82,10 @@ export class RazorpayService {
           this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
         } else if (checkin_type === 'appt_historybill') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
+          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: { 'is_orderShow': 'false'}} ));
         } else if (checkin_type === 'checkin_historybill') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'], navigationExtras));
+          this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'history'],{ queryParams: { 'is_orderShow': 'false'}} ));
         } else if (checkin_type === 'donations') {
           this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
           this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], { queryParams: { 'uuid': uuid} }));

@@ -5,7 +5,6 @@ import { ServiceMeta } from './service-meta';
 @Injectable()
 export class SharedServices {
 
-
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
@@ -511,7 +510,7 @@ export class SharedServices {
   }
   deleteWaitlist(id, params, type) {
     if (type === 'checkin') {
-      return this.servicemeta.httpDelete('consumer/waitlist/' + id, null, params);
+      return this.servicemeta.httpDelete('consumer/waitlist/' + id + '?account=' + params['account']);
     } else if (type === 'appointment') {
       return this.servicemeta.httpPut('consumer/appointment/cancel/' + id + '?account=' + params['account']);
     } else if (type === 'order') {
@@ -968,4 +967,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/attachment/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+getCartdetails(accountid, data) {
+  const url = 'consumer/orders/amount' + '?account=' + accountid;
+  return this.servicemeta.httpPut(url, data);
+}
 }

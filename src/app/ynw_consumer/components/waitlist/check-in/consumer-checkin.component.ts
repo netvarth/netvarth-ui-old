@@ -1197,6 +1197,7 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.sel_ser_det && this.sel_ser_det.minPrePaymentAmount) {
             this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
         }
+        this.serviceCost = this.waitlist_for.length * this.sel_ser_det.price;
     }
     ismoreMembersAllowedtopush() {
         if (this.maxsize > this.waitlist_for.length) {
@@ -1604,9 +1605,9 @@ export class ConsumerCheckinComponent implements OnInit {
         if (input) {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
+                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                    this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1614,9 +1615,9 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.selectedMessage.base64.push(e.target['result']);
                     };
                     reader.readAsDataURL(file);
+                    this.action = 'attachment';
                 }
             }
-            this.action = 'attachment';
         }
     }
 
@@ -2357,6 +2358,13 @@ export class ConsumerCheckinComponent implements OnInit {
                 }
             });
             checkinconfirmdialogRef.afterClosed().subscribe(result => {
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === 0) {
+                            list['id'] = this.customer_data.id;
+                        }
+                    }
+                }
                 if (result === 'reloadlist') {
                 }
             });

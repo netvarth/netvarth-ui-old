@@ -730,7 +730,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         selected_location = location;
       }
     }
-    return (selected_location !== null) ? selected_location : this.locations[0];
+    if (selected_location !== null) {
+      return selected_location;
+    } else {
+      const location = this.locations.filter(loc => loc.baseLocation);
+      return location[0];
+    }
   }
   selectLocationFromCookies(cookie_location_id) {
     this.locationSelected(this.selectLocationFromCookie(cookie_location_id)).then(
@@ -1001,7 +1006,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     if (this.time_type !== 3) {
-      this.getHistoryAppointmentsCount()
+      const api_filter = {};
+      api_filter['apptStatus-eq'] = this.setWaitlistStatusFilterForHistory();
+      this.getHistoryAppointmentsCount(api_filter)
         .then(
           (result) => {
             this.history_waitlist_count = result;
@@ -2716,3 +2723,4 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.apptStatuses.toString();
   }
 }
+

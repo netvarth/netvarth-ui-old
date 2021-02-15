@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular/core';;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { ForgotPasswordComponent } from '../../../../shared/components/forgot-pa
 import { SessionStorageService } from '../../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-phome',
@@ -78,6 +79,7 @@ export class PhomeComponent implements OnInit {
   
   @ViewChild('mobPrefix') mobPrefix: ElementRef;
   carouselTwo;
+  evnt;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -92,12 +94,41 @@ export class PhomeComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    private titleService: Title
+    private titleService: Title,
+    private groupService: GroupStorageService
   ) {
     this.titleService.setTitle('Jaldee Business Home');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
       this.handleScroll(this.qParams.type);
+    });
+
+    this.evnt = router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.shared_functions.isBusinessOwner()) {
+          this.shared_functions.getGlobalSettings()
+            .then(
+              (settings: any) => {
+                if (router.url === '\/business') {
+                  setTimeout(() => {
+                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                      if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      } else if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
+                      } else if (settings.order) {
+                        router.navigate(['provider', 'orders']);
+                      } else {
+                        router.navigate(['provider', 'settings']);
+                      }
+                    } else {
+                      router.navigate(['provider', 'settings']);
+                    }
+                  }, 500);
+                }
+              });
+        }
+      }
     });
   }
   @HostListener('window:scroll', [])

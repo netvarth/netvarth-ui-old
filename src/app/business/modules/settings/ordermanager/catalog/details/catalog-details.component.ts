@@ -58,7 +58,7 @@ export class CatalogdetailComponent implements OnInit {
     img_exists = false;
     maxChars = projectConstantsLocal.VALIDATOR_MAX50;
     maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
-    maxNumbers = projectConstantsLocal.VALIDATOR_MAX6;
+    maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
     max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
     api_loading = true;
     disableButton = false;
@@ -184,20 +184,21 @@ export class CatalogdetailComponent implements OnInit {
         ]
     };
     showadditems = true;
-    status: any = ['Order Received',
-        'Order Acknowledged',
-        'Order Confirmed',
-        'Preparing',
-        'Packing',
-        'Payment Required',
-        'Ready For Pickup',
-        'Ready For Shipment',
-        'Ready For Delivery',
-        'Completed',
-        'In Transit',
-        'Shipped',
-        'Cancelled'
-    ];
+    status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
+    // status: any = ['Order Received',
+    //     'Order Acknowledged',
+    //     'Order Confirmed',
+    //     'Preparing',
+    //     'Packing',
+    //     'Payment Required',
+    //     'Ready For Pickup',
+    //     'Ready For Shipment',
+    //     'Ready For Delivery',
+    //     'Completed',
+    //     'In Transit',
+    //     'Shipped',
+    //     'Cancelled'
+    // ];
     selectedStatus;
     uploadcatalogImages: any = [];
     payAdvance = 'NONE';
@@ -628,7 +629,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderStatuses: [''],
                itemPriceInfo: [true],
                 advancePaymentStatus: [],
-                advancePayment: [''],
+                advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
                 cancelationPolicy: [''],
                 storepickup: [false],
@@ -687,7 +688,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderStatuses: [''],
                itemPriceInfo: [true],
                 advancePaymentStatus: [],
-                advancePayment: [''],
+                advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
                 cancelationPolicy: [''],
                 storepickup: [false],

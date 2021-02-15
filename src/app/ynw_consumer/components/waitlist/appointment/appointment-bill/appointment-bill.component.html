@@ -86,12 +86,15 @@
                                                                                             [matTooltip]="'Taxable'"
                                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                                     </div>
-                                                                                    <div class="quantity">{{qnty_cap}}
+                                                                                    <div class="quantity" *ngIf="checkin.apptStatus !== 'Cancelled'">
+                                                                                        {{qnty_cap}}
                                                                                         {{service.quantity}}</div>
-                                                                                    <div class="price rupee-font">
+                                                                                    <div class="price rupee-font"  *ngIf="checkin.apptStatus !== 'Cancelled'">
                                                                                         {{(service.quantity *
                                                                                         service.price) |
                                                                                         currency:'&#8377; '}}</div>
+                                                                                    <div class="price" style="color: red;font-size: smaller;"  *ngIf="checkin.apptStatus === 'Cancelled'">
+                                                                                        Cancelled</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two">
                                                                                     <div class="discount-row two-col"
@@ -375,8 +378,8 @@
                                                                     <button class="cs-btn bt1"
                                                                         (click)="payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
-                                                                    <button class="cs-btn bt1" *ngIf="paytmEnabled"
-                                                                        (click)="paytmPayment()">Paytm</button>
+                                                                    <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled"
+                                                                        (click)="paytmPayment()">Paytm</button> -->
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>

@@ -86,8 +86,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.type = 'appt';
       } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.order === 'order') {
         this.type = 'order';
-      } else if (this.uuid && this.uuid.indexOf('order') >= 0 || this.data.orders === 'orders') {
-        this.type = 'orders';
+      } else if (this.uuid && this.uuid.indexOf('odr') >= 0 || this.data.orders === 'orders') {
+        this.type = 'orders'; 
       } else if (this.uuid && this.uuid.indexOf('appt') >= 0 || this.data.appt === 'order-provider') {
         this.type = 'order';
       } else if (this.uuid && this.uuid.indexOf('dtn') >= 0) {
@@ -382,7 +382,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
         }
-      } else if (this.type === 'order') {
+      } else if (this.type === 'orders') {
         if (this.selectedMessage.files.length === 0) {
           this.shared_services.consumerOrderMassCommunicationAppt(postdata).
             subscribe(() => {
@@ -562,8 +562,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
+      const dataToSend: FormData = new FormData();
+      dataToSend.append('message', post_data.communicationMessage);
+      const captions = {};
+      let i = 0;
+      if (this.selectedMessage) {
+        for (const pic of this.selectedMessage.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
       this.shared_services.addProvidertoConsumerNote(this.user_id,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
@@ -579,28 +592,21 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
-      // const files = this.selectedMessage.files;
-      // const propertiesDetob = {};
-      // for (let pic of this.selectedMessage.files) {
-      //     const properties = {
-      //         'caption': this.selectedMessage.caption[pic] || '',
-      //     };
-      //     propertiesDetob[pic] = properties;
-      //     pic++;
-      // }
-      // const propertiesDet = {
-      //     'propertiesMap': propertiesDetob
-      // };
-      // const preInstructionGallery = {
-      //   // 'imagesWithMetData': files,
-      //     'files': files,
-      //     'information': propertiesDet
-      // };
-      // console.log(post_data);
-      // post_data['attachementStream'] = preInstructionGallery;
-      // console.log(post_data);
+      const dataToSend: FormData = new FormData();
+      dataToSend.append('message', post_data.communicationMessage);
+      const captions = {};
+      let i = 0;
+      if (this.selectedMessage) {
+        for (const pic of this.selectedMessage.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = 'caption';
+          i++;
+        }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
       this.shared_services.addConsumertoProviderNote(this.user_id,
-        post_data)
+        dataToSend)
         .subscribe(
           () => {
             this.api_success = Messages.CONSUMERTOPROVIDER_NOTE_ADD;

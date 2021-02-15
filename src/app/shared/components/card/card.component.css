@@ -379,14 +379,77 @@ button.fxmenu {
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
-.booking-card.card.order.disabled {
+.booking-card.card.order.disabled .card-item-content , .booking-card.card.order.disabled .card-item-head {
     opacity: .4 !important;
     /* pointer-events: none !important; */
 }
+
+.disabled .btn-rt, .disabled.count-o, .disabled .btn-lt{
+    pointer-events: none !important;
+}
+.ribbon {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+  }
+  .ribbon::before,
+  .ribbon::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    display: block;
+    border: 5px solid #2980b9;
+  }
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 200px;
+    padding: 5px 0;
+    background-color: darkred;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    color: #fff;
+    font-size: small;
+    text-shadow: 0 1px 1px rgba(0,0,0,.2);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  /* top right*/
+.ribbon-top-right {
+    top: -10px;
+    right: -10px;
+  }
+  .ribbon-top-right::before,
+  .ribbon-top-right::after {
+    border-top-color: transparent;
+    border-right-color: transparent;
+  }
+  .ribbon-top-right::before {
+    top: 0;
+    left: 0;
+  }
+  .ribbon-top-right::after {
+    bottom: 0;
+    right: 0;
+  }
+  .ribbon-top-right span {
+    /* left: -25px; */
+    top: 30px;
+    transform: rotate(45deg);
+  }
+  .twoline-break {
+     display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    word-break: break-all;
+    hyphens: auto;
+}
 .outstock{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 15px;
+    position: absolute;
+    color: red;
+    padding-left: 15px;
+    background: white;
 }
 .disabled .btn-rt, .disabled.count-o, .disabled .btn-lt{
     pointer-events: none !important;

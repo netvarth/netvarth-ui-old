@@ -27,6 +27,7 @@ export class OrderActionsComponent implements OnInit {
   loading = false;
   catalog_list: any = [];
   catalogStatuses: any = [];
+  catalogfilterStats: any = [];
   activeCatalog: any;
   catalog_Id: any;
   orderStatusClasses = projectConstantsLocal.ORDER_STATUS_CLASS;
@@ -34,6 +35,7 @@ export class OrderActionsComponent implements OnInit {
   action = '';
   providerLabels: any = [];
   labelMap;
+  status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -118,6 +120,29 @@ export class OrderActionsComponent implements OnInit {
         const catalog = this.catalog_list.filter(cata => cata.id === this.orderDetails.catalog.id);
         if (catalog[0]) {
           this.catalogStatuses = catalog[0].orderStatuses;
+          console.log(this.catalogStatuses);
+          console.log(this.status);
+            if (this.orderDetails.homeDelivery) {
+              for (let i = 0; i < this.status.length; i++) {
+                for (let j = 0; j < this.catalogStatuses.length; j++) {
+                  if (this.catalogStatuses[j] === this.status[i].value && this.status[i].delivery) {
+                    this.catalogfilterStats.push(this.catalogStatuses[j]);
+                  }
+                }
+              }
+              console.log(this.catalogfilterStats);
+            } else if (this.orderDetails.storePickup) {
+              for (let i = 0; i < this.status.length; i++) {
+                for (let j = 0; j < this.catalogStatuses.length; j++) {
+                  if (this.catalogStatuses[j] === this.status[i].value && this.status[i].pickup) {
+                    this.catalogfilterStats.push(this.catalogStatuses[j]);
+                  }
+                }
+              }
+              console.log(this.catalogfilterStats);
+            }
+
+          
         }
         this.loading = false;
       });
@@ -131,6 +156,9 @@ export class OrderActionsComponent implements OnInit {
 
   showLabels() {
     this.action = 'label';
+}
+showStatus() {
+  this.action = 'status';
 }
 goBack() {
   this.action = '';

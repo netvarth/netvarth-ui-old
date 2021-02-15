@@ -1906,5 +1906,16 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
 
   }
-
+   deleteLabelFromMultipleCheckin(data) {
+      const url = 'provider/waitlist/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   deleteLabelFromMultipleAppt(data) {
+      const url = 'provider/appointment/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   getProviderorderlistHistroy(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
 }

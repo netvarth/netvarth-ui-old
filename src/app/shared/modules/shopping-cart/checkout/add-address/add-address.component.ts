@@ -91,7 +91,8 @@ export class AddAddressComponent implements OnInit {
     this.dialogRef.close();
   }
   onSubmit(form_data) {
-    if(this.source = 'provider') {
+    console.log(this.source);
+    if (this.source === 'provider') {
       console.log(form_data);
       this.dialogRef.close(form_data);
     }
@@ -100,17 +101,17 @@ export class AddAddressComponent implements OnInit {
       this.exist_add.splice(this.index, 1);
     }
     this.exist_add.push(form_data);
-
+    console.log(this.exist_add);
     this.shared_services.updateConsumeraddress(this.exist_add)
       .subscribe(
         data => {
+          console.log(data);
           this.disableSave = false;
           if (this.formMode === 'edit') {
             this.snackbarService.openSnackBar('Address Updated successfully');
           } else {
             this.snackbarService.openSnackBar('Address Added successfully');
           }
-
           this.dialogRef.close();
         },
         error => {

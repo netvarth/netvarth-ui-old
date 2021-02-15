@@ -18,7 +18,7 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -161,7 +161,7 @@ export class ConsumerDonationComponent implements OnInit {
     payEmail1;
     emailerror = null;
     email1error = null;
-    phoneerror = null;
+    phoneerror = '';
     edit = true;
     selected_phone;
     consumerPhoneNo;
@@ -207,13 +207,13 @@ export class ConsumerDonationComponent implements OnInit {
     donorerror = null;
     donor = '';
     phoneNumber;
-    separateDialCode = true;
-    SearchCountryField = SearchCountryField;
-    TooltipLabel = TooltipLabel;
-    selectedCountry = CountryISO.India;
-    PhoneNumberFormat = PhoneNumberFormat;
-    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
-    phoneError: string;    
+    separateDialCode = true;
+    SearchCountryField = SearchCountryField;
+    TooltipLabel = TooltipLabel;
+    selectedCountry = CountryISO.India;
+    PhoneNumberFormat = PhoneNumberFormat;
+    preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+    phoneError: string;
     dialCode;
     uid;
     constructor(public fed_service: FormMessageDisplayService,
@@ -224,9 +224,9 @@ export class ConsumerDonationComponent implements OnInit {
         public route: ActivatedRoute,
         public provider_services: ProviderServices,
         private wordProcessor: WordProcessor,
-    private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService,
-    private groupService: GroupStorageService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
         public datastorage: CommonDataStorageService,
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
@@ -361,27 +361,24 @@ export class ConsumerDonationComponent implements OnInit {
         }
     }
     addPhone() {
-        const pN = this.selected_phone.e164Number;
-        this.dialCode = this.selected_phone.dialCode;
-        if(pN.startsWith(this.dialCode)) {
-            this.selected_phone = pN.split(this.dialCode)[1];
+        this.phoneError = '';
+        if (this.selected_phone) {
+            const pN = this.selected_phone.e164Number;
+            this.dialCode = this.selected_phone.dialCode;
+            if (pN.startsWith(this.dialCode)) {
+                this.selected_phone = pN.split(this.dialCode)[1];
+            }
         }
-         console.log(this.selected_phone)
         this.resetApiErrors();
         this.resetApi();
         const curphone = this.selected_phone;
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
-        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-        const result1 = pattern1.test(curphone);
-        if (this.selected_phone === '') {
+        if (this.selected_phone === null) {
             this.phoneerror = 'Please enter the mobile number';
             return;
         } else if (!result) {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
-            return;
-        } else if (!result1) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
             return;
         } else {
             this.consumerPhoneNo = this.selected_phone;
@@ -410,7 +407,7 @@ export class ConsumerDonationComponent implements OnInit {
     resetApiErrors() {
         this.emailerror = null;
         this.email1error = null;
-        this.phoneerror = null;
+        this.phoneerror = '';
     }
     setServiceDetails(curservid) {
         let serv;
@@ -447,7 +444,7 @@ export class ConsumerDonationComponent implements OnInit {
         this.revealphonenumber = !this.revealphonenumber;
     }
     handleConsumerNote(vale) {
-        this.consumerNote = vale;
+        this.consumerNote = vale.trim();
     }
     handleServiceForWhom() {
         this.resetApi();
@@ -502,7 +499,7 @@ export class ConsumerDonationComponent implements OnInit {
             'donor': {
                 'firstName': this.donorName
             },
-            'countryCode': this.dialCode,
+            'countryCode': this.dialCode,
             'donorPhoneNumber': this.userPhone,
             'note': this.consumerNote,
             'donorEmail': this.userEmail
@@ -513,7 +510,6 @@ export class ConsumerDonationComponent implements OnInit {
         //     post_Data['donorEmail'] = this.payEmail;
         // }
         if (this.api_error === null && this.donationAmount) {
-            console.log(post_Data);
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
             this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
@@ -873,8 +869,7 @@ export class ConsumerDonationComponent implements OnInit {
                     if (this.userData.userProfile !== undefined) {
                         this.userEmail = this.userData.userProfile.email || '';
                         this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.dialCode = this.userData.userProfile.countryCode || '';
-                        console.log(this.dialCode)
+                        this.dialCode = this.userData.userProfile.countryCode || '';
                         this.consumerPhoneNo = this.userPhone;
                     }
                     if (this.userEmail) {

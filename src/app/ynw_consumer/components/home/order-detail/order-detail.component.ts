@@ -39,6 +39,7 @@ export class OrderDetailComponent implements OnInit {
   actiondialogRef: any;
   elementType = 'url';
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
+  display_dateFormat = projectConstants.DATE_FORMAT_WITH_MONTH;
   screenWidth: number;
   no_of_grids: any;
   showView = 'grid';
@@ -344,6 +345,7 @@ buttons: [
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
+        this.getCommunicationHistory();
       }
     });
   }

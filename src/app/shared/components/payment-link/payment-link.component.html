@@ -398,7 +398,25 @@
                                                                                                 currency:'&#8377;
                                                                                                 '}}</div>
                                                                                         </div>
+                                                                                       
+                                                                                    
                                                                                     </div>
+                                                                                    <div class="amountSaved"
+                                                                                    *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
+                                                                                    <div class="price rupee-font"> You
+                                                                                        will save
+                                                                                        {{bill_data.totalAmountSaved |
+                                                                                        currency:'&#8377;'}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="amountSaved"
+                                                                                    *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
+                                                                                    <div class="price rupee-font"> You
+                                                                                        have saved
+                                                                                        {{bill_data.totalAmountSaved |
+                                                                                        currency:'&#8377;'}}
+                                                                                    </div>
+                                                                                </div>
                                                                                     </div>
                                                                                 </div>
 

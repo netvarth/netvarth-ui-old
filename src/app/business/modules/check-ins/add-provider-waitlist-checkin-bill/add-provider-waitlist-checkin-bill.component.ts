@@ -953,6 +953,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   isNumeric(evt) {
     return this.sharedfunctionObj.isNumeric(evt);
   }
+  isNumber(evt) {
+    return this.sharedfunctionObj.isNumber(evt);
+  }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
   }
@@ -1399,7 +1402,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': msg
+          'message': msg,
+          'type': 'yes/no'
         }
       });
       dialogrefd.afterClosed().subscribe(result => {
@@ -1475,9 +1479,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     bill_html += '</td>';
     bill_html += '	</tr>';
     bill_html += '	<tr>';
-    if (this.source === 'order') {
-      bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Order Id ' + this.checkin.orderNumber + '</td>';
-    }
+    // if (this.source === 'order') {
+    //   bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">Order Id ' + this.checkin.orderNumber + '</td>';
+    // }
     bill_html += '	</tr>';
     bill_html += '</table>';
     bill_html += '	</td></tr>';

@@ -29,8 +29,10 @@
         <div class="card-content">
             <p class="card-text" *ngIf="item.type=='donation'">
                 <span class="rupee-font bold">{{service.minDonationAmount| currency:'&#8377;'}}</span>
-                To
-                <span class="rupee-font bold">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
+                <ng-container *ngIf="service.minDonationAmount != service.maxDonationAmount"> To </ng-container>
+                <span class="rupee-font bold"
+                    *ngIf="service.minDonationAmount != service.maxDonationAmount">{{service.maxDonationAmount|
+                    currency:'&#8377;'}}</span>
             </p>
             <p class="card-text" *ngIf="personsAheadText">{{personsAheadText}}</p>
             <p class="card-text" *ngIf="timings">{{timingCaption}}
@@ -46,61 +48,63 @@
     </div>
 </div>
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
-<div class="card booking-card pointer-cursor order"
-    [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
-    *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
-    (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
-    <div class="card-item-head" *ngIf="service.itemImages">
-        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
-            (click)="stopProp($event)">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #appMenu="matMenu">
-            <button mat-menu-item *ngFor="let action of item.actions"
-                (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
-                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
-        </mat-menu>
-        <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
-    </div>
-    <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
-        Out of stock</div>
-    <div class="card-item-content">
-        <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!service.itemImages && item.actions"
-            (click)="stopProp($event)">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #appMenu="matMenu">
-            <button mat-menu-item *ngFor="let action of item.actions"
-                (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
-                <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
-        </mat-menu>
-        <h4 class="card-title font-weight-bold d-block">
-            <a class="d-block name module1 line-clamp1">{{service.displayName}}</a>
-            <p class="module1 line-clamp1">{{service.shortDesc}}</p>
-        </h4>
-        <div class="col-md-12 no-padding">
-            <!-- <div class="col-md-5 no-padding">
+    <div class="card booking-card pointer-cursor order"
+        [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
+        *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
+        (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+        <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div>
+        <div class="card-item-head" *ngIf="service.itemImages">
+            <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
+                (click)="stopProp($event)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item *ngFor="let action of item.actions"
+                    (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                    <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
+            </mat-menu>
+            <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
+        </div>
+        <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
+            Out of stock</div>
+        <div class="card-item-content">
+            <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu"
+                *ngIf="!service.itemImages && item.actions" (click)="stopProp($event)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item *ngFor="let action of item.actions"
+                    (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                    <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
+            </mat-menu>
+            <h4 class="card-title font-weight-bold d-block">
+                <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
+                <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
+            </h4>
+            <div class="col-md-12 no-padding">
+                <!-- <div class="col-md-5 no-padding">
 
             </div> -->
-            <div class="col-md-12 no-padding">
-                <a class="price rupee-font pull-left" *ngIf="item.showpric"><span *ngIf="service.showPromotionalPrice"
-                        class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice:
-                        service.price}}</span> </a>
-                <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right"
-                    *ngIf="item.type=='item'">
-                    <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
+                <div class="col-md-12  mgn-up-10 no-padding">
+                    <a class="price rupee-font pull-left" *ngIf="item.showpric"><span
+                            *ngIf="service.showPromotionalPrice"
+                            class="mgn-lt-5 strikeMe">&#8377;{{service.price}}</span><span>&#8377;{{service.showPromotionalPrice?service.promotionalPrice:
+                            service.price}}</span> </a>
+                    <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt pull-right"
+                        *ngIf="item.type=='item'">
+                        <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">+</button>
+                    </div>
+                    <div class="count-o pull-right" *ngIf="item.type=='item'">
+                        {{getItemQty(item)}}
+                    </div>
+                    <div class="btn-lt pull-right" *ngIf="item.type=='item'">
+                        <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
+                    </div>
                 </div>
-                <div class="count-o pull-right" *ngIf="item.type=='item'">
-                    {{getItemQty(item)}}
-                </div>
-                <div class="btn-lt pull-right" *ngIf="item.type=='item'">
-                    <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">-</button>
-                </div>
+
             </div>
-            
         </div>
     </div>
-</div>
     <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
         Out of stock</div> -->
 </div>

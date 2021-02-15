@@ -96,6 +96,7 @@ export class CheckinActionsComponent implements OnInit {
     apiloading = false;
     galleryDialog: any;
     subscription: Subscription;
+    checkinsByLabel: any = [];
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -106,12 +107,11 @@ export class CheckinActionsComponent implements OnInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
-        private galleryService: GalleryService,  
+        private galleryService: GalleryService,
         public dialogRef: MatDialogRef<CheckinActionsComponent>) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
-        console.log(this.data);
         this.apiloading = true;
         this.setMinMaxDate();
         this.getLabel();
@@ -140,10 +140,10 @@ export class CheckinActionsComponent implements OnInit {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
         this.subscription = this.galleryService.getMessage().subscribe(input => {
-             if (input && input.uuid) {
-               this.shared_services.addProviderWaitlistAttachment(input.uuid ,input.value)
+            if (input && input.uuid) {
+                this.shared_services.addProviderWaitlistAttachment(input.uuid, input.value)
                     .subscribe(
-                        () => {                      
+                        () => {
                             this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                         },
@@ -152,7 +152,7 @@ export class CheckinActionsComponent implements OnInit {
                             this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
                         }
                     );
-            } 
+            }
         });
     }
     ngOnDestroy() {
@@ -347,9 +347,9 @@ export class CheckinActionsComponent implements OnInit {
             .subscribe(
                 () => {
                     if (this.showToken) {
-                        this.snackbarService.openSnackBar('Token rescheduled to ' + moment(this.checkin_date).format('DD-MM-YYYY'));
+                        this.snackbarService.openSnackBar('Token rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     } else {
-                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.checkin_date, this.sel_queue_timecaption);
+                        this.snackbarService.openSnackBar('Check-in rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     }
                     this.dialogRef.close('reload');
                 },
@@ -428,10 +428,17 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
     }
     viewBillPage() {
-        this.provider_services.getWaitlistBill(this.checkin.ynwUuid)
+        if (!this.checkin.parentUuid) {
+            this.getBill(this.checkin.ynwUuid);
+        } else {
+            this.action = 'bill';
+        }
+    }
+    getBill(uuid) {
+        this.provider_services.getWaitlistBill(uuid)
             .subscribe(
                 data => {
-                    this.router.navigate(['provider', 'bill', this.checkin.ynwUuid]);
+                    this.router.navigate(['provider', 'bill', uuid]);
                     this.dialogRef.close();
                 },
                 error => {
@@ -440,7 +447,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-        this.dialogRef.close();
+
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -450,6 +457,7 @@ export class CheckinActionsComponent implements OnInit {
             }
         });
         addnotedialogRef.afterClosed().subscribe(result => {
+            this.dialogRef.close();
             if (result === 'reloadlist') {
             }
         });
@@ -510,7 +518,7 @@ export class CheckinActionsComponent implements OnInit {
         if (this.board_count > 0 && this.data.timetype === 1 && !this.checkin.virtualService && (this.checkin.waitlistStatus === 'checkedIn' || this.checkin.waitlistStatus === 'arrived')) {
             this.showCall = true;
         }
-        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && !this.checkin.parentUuid && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
+        if (this.pos && this.checkin.waitlistStatus !== 'blocked' && (this.checkin.waitlistStatus !== 'cancelled' || (this.checkin.waitlistStatus === 'cancelled' && this.checkin.paymentStatus !== 'NotPaid'))) {
             this.showBill = true;
         }
         if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
@@ -524,12 +532,31 @@ export class CheckinActionsComponent implements OnInit {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             if (!this.data.multiSelection) {
                 this.labelselection();
+            } else {
+                this.multipleLabelselection();
             }
             this.loading = false;
         });
     }
-    deleteLabel(label, checkinId) {
-        this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+    deleteLabel(label) {
+        // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
+        //     this.dialogRef.close('reload');
+        // },
+        //     error => {
+        //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //     });
+        let ids = [];
+        if (this.data.multiSelection) {
+            ids = this.checkinsByLabel[label];
+        } else {
+            ids.push(this.checkin.ynwUuid);
+        }
+        const postData = {
+            'labelName': label,
+            'labelValue': 'true',
+            'uuid': ids
+        };
+        this.provider_services.deleteLabelFromMultipleCheckin(postData).subscribe(data => {
             this.dialogRef.close('reload');
         },
             error => {
@@ -661,7 +688,7 @@ export class CheckinActionsComponent implements OnInit {
             this.labelMap[label] = true;
             this.addLabel(label);
         } else {
-            this.deleteLabel(label, this.checkin.ynwUuid);
+            this.deleteLabel(label);
         }
     }
     labelselection() {
@@ -675,6 +702,29 @@ export class CheckinActionsComponent implements OnInit {
                     if (this.providerLabels[i].label === values[k]) {
                         this.providerLabels[i].selected = true;
                     }
+                }
+            }
+        }
+    }
+    multipleLabelselection() {
+        let values = [];
+        this.checkinsByLabel = [];
+        for (let i = 0; i < this.checkin.length; i++) {
+            if (this.checkin[i].label) {
+                Object.keys(this.checkin[i].label).forEach(key => {
+                    values.push(key);
+                    if (!this.checkinsByLabel[key]) {
+                        this.checkinsByLabel[key] = [];
+                    }
+                    this.checkinsByLabel[key].push(this.checkin[i].ynwUuid);
+                });
+            }
+        }
+        for (let i = 0; i < this.providerLabels.length; i++) {
+            for (let k = 0; k < values.length; k++) {
+                const filteredArr = values.filter(value => value === this.providerLabels[i].label);
+                if (filteredArr.length === this.checkin.length) {
+                    this.providerLabels[i].selected = true;
                 }
             }
         }
@@ -741,14 +791,14 @@ export class CheckinActionsComponent implements OnInit {
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.isAvailable);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
@@ -756,17 +806,17 @@ export class CheckinActionsComponent implements OnInit {
     }
     sendimages() {
         this.galleryDialog = this.dialog.open(GalleryImportComponent, {
-         width: '50%',
-         panelClass: ['popup-class', 'commonpopupmainclass'],
-         disableClose: true,
-         data: {
-            source_id: 'attachment',
-            // accountId:this.checkin.providerAccount.id,
-            uid:this.checkin.ynwUuid
-         }
-       });
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                source_id: 'attachment',
+                // accountId:this.checkin.providerAccount.id,
+                uid: this.checkin.ynwUuid
+            }
+        });
         this.galleryDialog.afterClosed().subscribe(result => {
-         this.dialogRef.close();
-       })
+            this.dialogRef.close('reload');
+        })
     }
 }

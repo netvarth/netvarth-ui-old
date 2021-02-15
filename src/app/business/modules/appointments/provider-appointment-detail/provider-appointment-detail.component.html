@@ -38,7 +38,7 @@
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</span>
               </div>
               <div class="mgn-up-10 stats-item">
-                <span class="itemHead">Booking No</span>
+                <span class="itemHead">Booking id</span>
                 <span class="itemVal">{{waitlist_data.appointmentEncId}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.phoneNumber">
@@ -110,8 +110,19 @@
                 <mat-tab-group animationDuration="10ms" class="index-head">
                   <mat-tab label="Private Notes" *ngIf="waitlist_data.apptStatus!=='blocked'">
                     <span *ngIf="waitlist_notes.length > 0">
-                      <div class="pnotes" *ngFor="let note of waitlist_notes">
+                      <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
                         <p [innerHTML]="note.note | nl2br"></p>
+                        <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
+                            (click)="showImagesection(i)">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+                                {{note.attachment.length}} Attachment(s) </a>
+                        </div>
+                        <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
+                          <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                              *ngFor="let attachment of note.attachment"><img
+                                  [src]="getThumbUrl(attachment)"
+                                  style="width:100px; height:100px" /></a>
+                        </div>
                         <p>{{note.timeStamp | date: newTimeDateFormat}}</p>
                       </div>
                     </span>

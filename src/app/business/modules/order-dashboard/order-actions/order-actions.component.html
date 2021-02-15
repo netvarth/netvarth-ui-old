@@ -12,8 +12,8 @@
         <p>Order Id: {{orderDetails.orderNumber}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
-        <ng-container *ngIf="catalogStatuses.length > 0 && (this.orderDetails.orderStatus !== 'Cancelled')">
-            <ng-container *ngFor="let status of catalogStatuses">
+        <!-- <ng-container *ngIf="catalogfilterStats.length > 0 && (this.orderDetails.orderStatus !== 'Cancelled')">
+            <ng-container *ngFor="let status of catalogfilterStats">
                 <div class="action-box pointer-cursor" (click)="changeOrderStatus(status)"
                     *ngIf="orderDetails.orderStatus !== status">
                     <div class="action-box-sub">
@@ -22,7 +22,14 @@
                     </div>
                 </div>
             </ng-container>
-        </ng-container>
+        </ng-container> -->
+        <div class="action-box pointer-cursor" *ngIf="catalogfilterStats.length > 0 && (this.orderDetails.orderStatus !== 'Cancelled')" (click)="showStatus()">
+            <div class="action-box-sub">
+                <span class="changestatus-icon"></span>
+                <div class="icon-text">Change status to</div>
+            </div>
+        </div>
+
         <div class="action-box pointer-cursor" (click)="gotoDetails()"
             *ngIf="!mulipleSelection && data.source !== 'details'">
             <div class="action-box-sub">
@@ -101,5 +108,26 @@
         <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
         <a class="" (click)="gotoLabel()">Manage labels</a>
     </div>
+</div>
+
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'status'">
+    Change status to
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+</h1>
+<div *ngIf="action === 'status'">
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-30 no-padding queue-outer" *ngIf="loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
+        *ngIf="catalogfilterStats.length > 0 && !loading">
+        <div class="mgn-bt-5" *ngFor="let status of catalogfilterStats;let i = index">
+            <mat-radio-button *ngIf="orderDetails.orderStatus !== status" (change)="changeOrderStatus(status)">
+                {{status}}</mat-radio-button>
+        </div>
+    </div>
+   
+    <div class="clearfix"></div>
+   
 </div>
 
