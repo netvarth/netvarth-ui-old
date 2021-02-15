@@ -417,13 +417,13 @@ export class SharedServices {
     const url = typ + '/communications/unreadCount';
     return this.servicemeta.httpGet(url);
   }
-  addConsumertoProviderNote(uuid, message) {
-    const url = 'consumer/communications?account=' + uuid;
-    return this.servicemeta.httpPost(url, message);
+  addConsumertoProviderNote(message, filter) {
+    const url = 'consumer/communications';
+    return this.servicemeta.httpPost(url, message, null, filter);
   }
-  addProvidertoConsumerNote(uuid, message) {
-    const url = 'provider/communications/' + uuid;
-    return this.servicemeta.httpPost(url, message);
+  addProvidertoConsumerNote(consumerId, message, filter?) {
+    const url = 'provider/communications/' + consumerId;
+    return this.servicemeta.httpPost(url, message, null, filter);
   }
   addProviderWaitlistNote(uuid, body) {
     const url = 'provider/waitlist/communicate/' + uuid;

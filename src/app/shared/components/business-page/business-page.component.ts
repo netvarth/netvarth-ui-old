@@ -1530,6 +1530,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       data: {
         caption: 'Enquiry',
         user_id: provid,
+        userId: this.userId,
         source: 'consumer-common',
         type: 'send',
         terminologies: this.terminologiesjson,
