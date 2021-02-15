@@ -166,6 +166,10 @@ export class CatalogdetailComponent implements OnInit {
         strategy: PlainGalleryStrategy.CUSTOM,
         layout: new AdvancedLayout(-1, true)
     };
+    customPlainMainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+    };
     customButtonsFontAwesomeConfig: ButtonsConfig = {
         visible: true,
         strategy: ButtonsStrategy.CUSTOM,
@@ -2048,6 +2052,11 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
                 }
             }
         }
+    }
+
+    openmainImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.mainimage_list_popup);
+        this.customPlainMainGalleryRowConfig = Object.assign({}, this.customPlainMainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     }
 
     deleteTempItemImage(img, index, type?) {
