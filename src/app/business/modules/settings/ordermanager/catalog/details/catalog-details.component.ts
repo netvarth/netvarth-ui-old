@@ -158,6 +158,8 @@ export class CatalogdetailComponent implements OnInit {
     valueCaption = 'Enter the discounted price you offer';
     curtype = 'FIXED';
     @ViewChild('closebutton') closebutton;
+    mainimage_list_popup: Image[];
+    itmId;
 
     customPlainGalleryRowConfig: PlainGalleryConfig = {
         strategy: PlainGalleryStrategy.CUSTOM,
@@ -1984,6 +1986,63 @@ if (homeDeliverystartdate  && this.hometimewindow_list.length > 0 && this.selday
             }
         });
     }
+
+    itemimageSelect(event, type?) {
+        this.api_loading = true;
+        const input = event.target.files;
+        if (input) {
+            for (const file of input) {
+                if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+                    this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                } else {
+                    if (type) {
+                        this.selectedMessageMain.files.push(file);
+                    } else {
+                        this.selectedMessage.files.push(file);
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (type) {
+                            this.selectedMessageMain.base64.push(e.target['result']);
+                            this.mainimage_list_popup = [];
+                            for (let i = 0; i < this.selectedMessageMain.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessageMain.base64[i],
+                                        description: ''
+                                    });
+                                this.mainimage_list_popup.push(imgobj);
+                            }
+                        } else {
+                            this.selectedMessage.base64.push(e.target['result']);
+                            this.image_list_popup = [];
+                            for (let i = 0; i < this.selectedMessage.files.length; i++) {
+                                const imgobj = new Image(i,
+                                    {
+                                        img: this.selectedMessage.base64[i],
+                                        description: ''
+                                    });
+                                this.image_list_popup.push(imgobj);
+                            }
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            if (this.itmId && (this.selectedMessageMain.files.length > 0 || this.selectedMessage.files.length > 0)) {
+                this.saveImages(this.itmId);
+            } else {
+                this.api_loading = false;
+                if (type) {
+                    this.mainImage = true;
+                }
+            }
+        }
+    }
+
+
     showStep(step, form_data) {
         console.log(step);
         console.log(form_data);
