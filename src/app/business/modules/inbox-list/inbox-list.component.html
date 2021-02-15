@@ -23,7 +23,7 @@
                                     <!--begin::Card-->
                                     <div class="card card-custom">
                                         <div class="top-buttons"
-                                            *ngIf="userDet && userDet.accountType === 'BRANCH' && users.length > 0">
+                                            *ngIf="userDet && userDet.accountType === 'BRANCH' && users.length > 0 && userWithMsgCount > 1">
                                             <button mat-flat-button class="mgn-rt-10"
                                                 (click)="changemsgDisplayType('all')"
                                                 [class.selected-btn]="msgDisplay=='all'">All</button>
@@ -65,7 +65,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex flex-column align-items-end">
-                                                            <span
+                                                            <span *ngIf="userWithMsgCount > 1"
                                                                 class="text-muted font-weight-bold font-size-sm">{{getUserName(user.key,
                                                                 'provider')}}</span>
                                                             <span class="label label-sm label-success"
@@ -82,7 +82,7 @@
                                                             [class.selected-user]="selectedUser==user">
                                                             <div class="d-flex align-items-center">
                                                                 <div class="symbol symbol-circle symbol-50 mr-3">
-                                                                    <img [src]="getUserImg()" alt=""
+                                                                    <img [src]="getUserImg(user)" alt=""
                                                                         class="user-name no-padding">
                                                                 </div>
                                                                 <div class="d-flex flex-column">

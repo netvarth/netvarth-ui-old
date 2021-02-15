@@ -235,7 +235,6 @@ export class InboxOuterComponent implements OnInit {
         }
       }
     }
-    console.log(this.selectedMessage);
   }
   getImage(url, file) {
     if (file.type == 'application/pdf') {
