@@ -17,6 +17,7 @@ import { TimewindowPopupComponent } from '../timewindowpopup/timewindowpopup.com
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -25,6 +26,8 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 
 })
 export class CatalogdetailComponent implements OnInit {
+    toppings = new FormControl();
+    toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
     catalog_id;
     rupee_symbol = 'â‚¹';
     item_hi_cap = Messages.ITEM_HI_CAP;

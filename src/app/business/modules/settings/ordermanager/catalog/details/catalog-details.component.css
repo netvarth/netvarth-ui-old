@@ -495,4 +495,13 @@
   background-repeat: round;
 }
 
+.ynw-common-form-nm .mat-form-field-appearance-fill .mat-form-field-flex {
+  /* background-color: rgba(0, 0, 0, 0.04); */
+  background: white !important;
+}
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white !important;
+  background: white  !important;
+}
+
 
