@@ -850,7 +850,7 @@
                                     <!--begin::Card-->
                                     <div  class="row bg-grey" >
                                       
-                                      <div class="col-md-4 mt-4 col-xxl-4 col-lg-4" *ngFor="let item of catalogItem;let i=index;">
+                                      <div class="col-md-4 mt-4 col-xxl-4 col-lg-4 mb-3" *ngFor="let item of catalogItem;let i=index;">
                                          
                                     <div class="card card-custom card-shadowless" (click)="selectItem(i)" [class.itemselected]="item.selected">
                                         <div class="card-body p-0">
@@ -858,9 +858,9 @@
                                             <div class="overlay">
                                                 
                                                 <div
-                                                    class="overlay-wrapper rounded bg-light text-center">
-                                                    <img [src]="getItemImg(item)"
-                                                        alt="" class="mw-100 w-150px" />
+                                                    class="overlay-wrapper rounded bg-light text-center bg_item_img" [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
+                                                    <!-- <img [src]="getItemImg(item)"
+                                                        alt="" class="mw-100 w-150px" /> -->
                                                 </div>
                                             </div>
                                             <!--end::Image-->
@@ -898,7 +898,7 @@
 
                                     <div class="row" *ngIf ="showAddItem && itemsforadd && itemsforadd.length > 0">
                                       
-                                        <div class="col-md-4 col-xxl-4 col-lg-4" *ngFor="let item of itemsforadd;let i=index;">
+                                        <div class="col-md-4 col-xxl-4 col-lg-4 mb-3" *ngFor="let item of itemsforadd;let i=index;">
                                            
                                       <div class="card card-custom card-shadowless" (click)="selectaddItem(i)" [class.itemselected]="item.selected">
                                           <div class="card-body p-0">
@@ -906,9 +906,9 @@
                                               <div class="overlay">
                                                   
                                                   <div
-                                                      class="overlay-wrapper rounded bg-light text-center">
-                                                      <img [src]="getItemImg(item)"
-                                                          alt="" class="mw-100 w-200px" />
+                                                      class="overlay-wrapper rounded bg-light text-center bg_item_img" [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
+                                                      <!-- <img [src]="getItemImg(item)"
+                                                          alt="" class="mw-100 w-200px" /> -->
                                                   </div>
                                               </div>
                                               <!--end::Image-->

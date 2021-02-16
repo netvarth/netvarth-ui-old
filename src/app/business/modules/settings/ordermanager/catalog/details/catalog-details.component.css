@@ -334,7 +334,7 @@
     margin-bottom: 20px !important;
   }
   .itemselected{
-      background-color: gainsboro !important;
+      background-color: #f9e2a7 !important;
       border: solid 1px deepskyblue;
       border-radius: 10px;
   }
@@ -482,3 +482,13 @@
   text-align: center;
   font-size: .8rem;
  }
+.more_btn {
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    margin-right: 10px;
+}
+.bg_item_img {
+  height: 150px;
+  background-repeat: round;
+}
