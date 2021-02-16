@@ -489,6 +489,7 @@
     z-index: 1000;
     right: 0;
     margin-right: 10px;
+    margin-top: -6px;
 }
 .bg_item_img {
   height: 150px;

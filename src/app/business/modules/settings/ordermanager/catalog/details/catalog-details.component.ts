@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../../../../shared/services/local-sto
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import {FormControl} from '@angular/forms';
+import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -232,6 +233,8 @@ export class CatalogdetailComponent implements OnInit {
     no_of_grids: number;
     itemaction = '';
     addCatalogItems: any = [];
+    editcataItemdialogRef: any;
+    removeitemdialogRef: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -600,7 +603,7 @@ export class CatalogdetailComponent implements OnInit {
         };
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add', 'items'], navigationExtras);
     }
-    getCatalog(cataId) {
+    getCatalog(cataId?) {
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderCatalogs(cataId)
@@ -2194,7 +2197,7 @@ export class CatalogdetailComponent implements OnInit {
             this.catalogItem[index].selected = true;
             this.selectedCount++;
         } else {
-            this.catalogItem[index].selected = false;
+            this.catalogItem[index].selected = true;
             this.selectedCount--;
         }
         console.log(this.catalogItem[index].selected);
@@ -2443,69 +2446,69 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
 
-    // editCatalogItem(item) {
-    //     console.log(item);
-    //     this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         id: item.itemId,
-    //         maxquantity: item.maxQuantity,
-    //         minquantity: item.minQuantity
-    //       }
-    //     });
-    //     this.editcataItemdialogRef.afterClosed().subscribe(result => {
-    //       if (result) {
-    //        console.log(result);
-    //        this.api_loading = true;
-    //        this.updateItems(result, item.id);
-    //       }
-    //     });
-    // }
+    editCatalogItem(item) {
+        console.log(item);
+        this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            id: item.itemId,
+            maxquantity: item.maxQuantity,
+            minquantity: item.minQuantity
+          }
+        });
+        this.editcataItemdialogRef.afterClosed().subscribe(result => {
+          if (result) {
+           console.log(result);
+           this.api_loading = true;
+           this.updateItems(result, item.id);
+          }
+        });
+    }
 
-    // updateItems(updatelist, id) {
-    //     console.log(updatelist);
-    //     const passlist: any = {};
-    //       passlist.id = id;
-    //       passlist.maxQuantity = updatelist.maxquantity;
-    //       passlist.minQuantity = updatelist.minquantity;
-    //       console.log(passlist);
-    //      this.provider_services.updateCatalogItem(passlist).subscribe(
-    //       (data) => {
-    //         this.getCatalog();
-    //         this.api_loading = false;
-    //       }, error => {
-    //         this.api_loading = false;
-    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //         }
-    //      );
-    // }
+    updateItems(updatelist, id) {
+        console.log(updatelist);
+        const passlist: any = {};
+          passlist.id = id;
+          passlist.maxQuantity = updatelist.maxquantity;
+          passlist.minQuantity = updatelist.minquantity;
+          console.log(passlist);
+         this.provider_services.updateCatalogItem(passlist).subscribe(
+          (data) => {
+            this.getCatalog();
+            this.api_loading = false;
+          }, error => {
+            this.api_loading = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+         );
+    }
 
-    // deleteCatalogItem(itm) {
-    //     this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         'message': 'Do you really want to remove this item from catalog?'
-    //       }
-    //     });
-    //     this.removeitemdialogRef.afterClosed().subscribe(result => {
-    //       if (result) {
-    //         this.api_loading = true;
-    //         this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
-    //           (data) => {
-    //             this.getCatalog();
-    //             this.api_loading = false;
-    //           }, error => {
-    //             this.api_loading = false;
-    //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //             }
-    //             );
-    //       }
-    //     });
-    // }
+    deleteCatalogItem(itm) {
+        this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you really want to remove this item from catalog?'
+          }
+        });
+        this.removeitemdialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.api_loading = true;
+            this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+              (data) => {
+                this.getCatalog();
+                this.api_loading = false;
+              }, error => {
+                this.api_loading = false;
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+                );
+          }
+        });
+    }
 
 
 }

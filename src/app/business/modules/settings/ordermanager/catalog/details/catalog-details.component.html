@@ -776,15 +776,16 @@
                     <div class="disp-flex">
                       <h4 class="mb-10 font-weight-bolder text-dark">Items information</h4>
 
-                                  <div class="col-lg-6">
-                                    <button type="reset" class="btn btn-success mr-2" data-toggle="modal" data-target="#exampleModalSizeLg">Create New Item</button>
-                                  </div>
-                                </div>
-                                 
-                                
-                                  <div class="row" style="background: #ecf0f5;">
-                                    
-                                    <!-- <div class="wdth-full">
+                      <div class="col-lg-6">
+                        <button type="reset" class="btn btn-success mr-2" data-toggle="modal"
+                          data-target="#exampleModalSizeLg">Create New Item</button>
+                      </div>
+                    </div>
+
+
+                    <div class="row" style="background: #ecf0f5;">
+
+                      <!-- <div class="wdth-full">
                                       <div class="table-responsive">
                                         <table class="table">
                                             <tbody>
@@ -802,7 +803,7 @@
                                                     </td>
                                                     <td class="text-right align-middle">
                                                         <a href="#" class="btn btn-danger font-weight-bolder font-size-sm">
-                                                            Remove
+                                                             Remove
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -840,7 +841,7 @@
                           </p>
                         </div>
 
-                        <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
+                        <!-- <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
                           <h6>{{catalogItems.length}} items are in your catalog</h6>
                           <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
                             {{seletedCatalogItems.length}} more items are selected</p>
@@ -850,7 +851,8 @@
                               items</u></a>&nbsp;
                           <a class="link underline pointer-cursor" data-toggle="modal"
                             data-target="#exampleModalSizeLg"><u>Create items</u></a>
-                        </div>
+                        </div> -->
+
                         <!--end::Input-->
                       </div>
 
@@ -860,7 +862,15 @@
                     <div class="row bg-grey">
 
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItem;let i=index;">
-
+                        <button class="pull-right more_btn" mat-icon-button [matMenuTriggerFor]="appMenu">
+                          <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #appMenu="matMenu">
+                          <button mat-menu-item (click)="editCatalogItem(item)">
+                            <i class="icon-edit"></i>Edit</button>
+                          <button mat-menu-item (click)="deleteCatalogItem(item)">
+                            <i class="icon-delete"></i>Delete</button>
+                        </mat-menu>
                         <div class="card card-custom card-shadowless" (click)="selectItem(i)"
                           [class.itemselected]="item.selected">
                           <div class="card-body p-0">
@@ -884,17 +894,17 @@
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
                               <!-- min -->
                               <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Min
+                                <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
                                 <input class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
-                                  id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}">
+                                  id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}" readonly>
                               </div>
                               <!-- Max -->
                               <div class="input-group mt-2">
-                                <div class="input-group-prepend"><span class="input-grp-txt1"><i class="">Max
+                                <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
                                 <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
-                                  (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}">
+                                  (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}" readonly>
                               </div>
 
                               <!-- <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
