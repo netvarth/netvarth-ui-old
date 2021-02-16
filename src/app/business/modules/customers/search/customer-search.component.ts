@@ -684,7 +684,6 @@ export class CustomerSearchComponent implements OnInit {
                 };
                 break;
             case 'id':
-                filter['email'] = form_data.search_input;
                 post_data = {
                     'jaldeeId-eq': form_data.search_input
                 };
