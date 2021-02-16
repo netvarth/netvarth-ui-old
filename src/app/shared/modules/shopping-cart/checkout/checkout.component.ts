@@ -343,12 +343,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   getcartDetails() {
     console.log('details');
+    let delivery = false;
+    if (this.delivery_type === 'home') {
+      delivery = true;
+    } else {
+      delivery = false;
+    }
  const passdata =   {
       'catalog': {
         'id': this.catalog_Id
       },
       'orderItem': this.getOrderItems(),
-      'orderDate': this.sel_checkindate,
+      'homeDelivery': delivery,
       'coupons': this.selected_coupons
   };
     this.shared_services.getCartdetails(this.account_id, passdata)
@@ -1023,6 +1029,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
     }
+    this.getcartDetails();
     if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
     } else {

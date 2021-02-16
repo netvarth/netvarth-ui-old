@@ -234,7 +234,6 @@ export class CustomerSearchComponent implements OnInit {
     display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
 
 
-
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -311,9 +310,9 @@ export class CustomerSearchComponent implements OnInit {
                     );
                 }
             }
-            if (qparams.source) {
-                this.qParams['source'] = qparams.source;
-            }
+            // if (qparams.source) {
+            //     this.qParams['source'] = qparams.source;
+            // }
             this.phoneNo = qparams.phoneNo;
             // if (qparams.appt) {
 
@@ -592,10 +591,12 @@ export class CustomerSearchComponent implements OnInit {
         this._location.back();
     }
     createNew() {
-        this.qParams['source'] = 'clist';
-        this.qParams['id'] = 'add';
+        const filter = {
+            'source': 'clist'
+            'id': 'add'
+        }
         const navigationExtras: NavigationExtras = {
-            queryParams: this.qParams
+            queryParams: filter
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
@@ -639,6 +640,8 @@ export class CustomerSearchComponent implements OnInit {
     }
 
     searchCustomer(form_data, mod?) {
+        const filter = {};
+        filter['source'] = this.source;
         this.emptyFielderror = false;
         if (form_data.search_input === '' || null) {
             this.emptyFielderror = true;
@@ -678,10 +681,10 @@ export class CustomerSearchComponent implements OnInit {
                 post_data = {
                     'phoneNo-eq': form_data.search_input
                 };
-                this.qParams['phone'] = form_data.search_input;
+                filter['phone'] = form_data.search_input;
                 break;
             case 'email':
-                this.qParams['email'] = form_data.search_input;
+                filter['email'] = form_data.search_input;
                 post_data = {
                     'email-eq': form_data.search_input
                 };
@@ -711,12 +714,12 @@ export class CustomerSearchComponent implements OnInit {
                         // }
 
                         if (mode === 'phone') {
-                            this.qParams['phone'] = form_data.search_input;
+                            filter['phone'] = form_data.search_input;
                         }
-                        this.qParams['source'] = 'clist';
-                        this.qParams['id'] = 'add';
+                        filter['source'] = 'clist';
+                        filter['id'] = 'add';
                         const navigationExtras: NavigationExtras = {
-                            queryParams: this.qParams
+                            queryParams: filter
                         };
                         this.router.navigate(['/provider/customers/create'], navigationExtras);
                         this.create_new = true;

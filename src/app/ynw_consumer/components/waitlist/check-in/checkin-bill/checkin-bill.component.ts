@@ -503,6 +503,10 @@ export class ConsumerCheckinBillComponent implements OnInit {
         if (this.bill_data.gstNumber) {
             bill_html += 'GSTIN ' + this.bill_data.gstNumber;
         }
+        bill_html += '	<tr>';
+        if (this.checkin.provider) {
+        bill_html += '<td style="color:#000000; font-size:10pt; font-family:"Ubuntu, Arial,sans-serif;">' + this.provider_label +':'+  this.checkin.provider.businessName+ '</td>';
+       }
         bill_html += '</td>';
         bill_html += '	</tr>';
         bill_html += '</table>';

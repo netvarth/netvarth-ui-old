@@ -164,7 +164,7 @@
                                             <th class="action-head"></th>
                                         </tr>
                                         <tr *ngFor="let email of emailarr; let i = index">
-                                            <td>{{email.label | capitalizeFirst}}</td>
+                                            <td class="pad-rt-5">{{email.label | capitalizeFirst}}</td>
                                             <td>{{email.instance}}</td>
                                             <td>
                                                 <mat-slide-toggle [checked]="getEmailorPhoneStatus(email)"
