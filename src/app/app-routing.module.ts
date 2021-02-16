@@ -49,14 +49,14 @@ const routes: Routes = [
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
-    { path: ':id/:userEncId', component: BusinessPageComponent},
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
     { path: 'pay/:id', component: PaymentLinkComponent },
     { path: 'order/checkout', component: CheckoutSharedComponent },
     { path: 'order/shoppingcart', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
     { path: 'order/shoppingcart/checkout', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
-    { path: 'order/item-details', component: ItemDetailsSharedComponent}
+    { path: 'order/item-details', component: ItemDetailsSharedComponent},
+    { path: ':id/:userEncId', component: BusinessPageComponent}
     // { path: '**', redirectTo: 'not-found' }
 ];
 
