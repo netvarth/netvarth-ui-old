@@ -45,7 +45,6 @@
                                                 <!--begin:User-->
                                                 <ng-container
                                                     *ngIf="msgDisplay=='all' || selectedUser.userType === 'PROVIDER'">
-
                                                     <div *ngFor="let user of groupedMsgs | keyvalue: valueOrder"
                                                         (click)="customerSelection(user)"
                                                         class="d-flex align-items-center justify-content-between pointer-cursor pad-5"
@@ -93,6 +92,10 @@
                                                                         user.lastName}}</a>
                                                                 </div>
                                                             </div>
+                                                            <div class="d-flex flex-column align-items-end">
+                                                                <span class="label label-sm label-success"
+                                                                    *ngIf="getUserUnreadCount(user) > 0">{{getUserUnreadCount(user)}}</span>
+                                                            </div>
                                                         </div>
                                                     </ng-container>
                                                 </ng-container>
@@ -105,13 +108,6 @@
                                     <!--end::Card-->
                                 </div>
                                 <!--end::Aside-->
-
-
-                                <!-- <div class="flex-row-fluid ml-lg-8">
-                                    <img src="../../../../assets/images/hero-1.png">
-                                </div> -->
-
-
                                 <!--begin::Content-->
                                 <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                                     *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
@@ -131,6 +127,17 @@
                                             </div>
                                         </div>
                                         <!--end::Header-->
+
+
+                                        <div class="top-buttons" *ngIf="getEnquiry().length > 0">
+                                        <button mat-flat-button class="mgn-rt-10"
+                                            (click)="changeMsgType('all')"
+                                            [class.selected-btn]="type=='all'">All</button>
+                                        <button mat-flat-button [class.selected-btn]="type=='enquiry'"
+                                            (click)="changeMsgType('enquiry')">Enquiry</button>
+                                    </div>
+
+
                                         <!--begin::Body-->
                                         <div class="card-body no-padding-small">
                                             <!--begin::Scroll-->
@@ -149,7 +156,7 @@
                                                         </div>
                                                         <div
                                                             class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
-                                                            {{msg.msg}}
+                                                            <div [innerHTML]="msg.msg | nl2br"></div>
                                                             <div class="thumbnails mt10 mb10"
                                                                 *ngIf="msg.attachements && msg.attachements.length > 0">
                                                                 <ng-container
@@ -162,7 +169,6 @@
                                                                             [src]="getThumbUrl(attachment)" /></a>
                                                                 </ng-container>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                     <!--end::Message In-->
@@ -177,7 +183,7 @@
                                                         </div>
                                                         <div
                                                             class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
-                                                            {{msg.msg}}
+                                                            <div [innerHTML]="msg.msg | nl2br"></div>
                                                             <div class="thumbnails mt10 mb10"
                                                                 *ngIf="msg.attachements && msg.attachements.length > 0">
                                                                 <ng-container
@@ -203,9 +209,10 @@
                                         <div class="card-footer align-items-center">
                                             <!--begin::Compose-->
                                             <div class="d-flex align-items-center justify-content-between mt-5">
-                                                <textarea class="form-control border-0 p-0" placeholder="Type a message"
-                                                    [(ngModel)]="message"></textarea>
-                                                <div class="mr-3">
+                                                <textarea cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"
+                                class="form-control border-0 p-0" placeholder="Type a message"
+                                [(ngModel)]="message"></textarea>
+                                                <div class="">
                                                     <input #logofile type="file" accept="/*;capture=camera"
                                                         style="display:none;" multiple (change)="filesSelected($event)">
                                                     <a class="btn btn-clean btn-icon btn-md"

@@ -28,6 +28,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   inboxUnreadCnt;
   groupedMsgs: any = [];
   selectedUserMessages: any = [];
+  tempSelectedUserMessages: any = [];
   message = '';
   selectedCustomer = '';
   selectedMessage = {
@@ -70,6 +71,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   cacheavoider;
   provider_label = '';
   userWithMsgCount = 0;
+  type = 'all';
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -226,7 +228,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     console.log(this.selectedCustomer);
     console.log(this.selectedUserMessages);
     if (this.selectedCustomer !== '') {
-      this.selectedUserMessages = this.groupedMsgs[this.selectedCustomer];
+      this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedCustomer];
       setTimeout(() => {
         this.scrollToElement();
       }, 100);
@@ -414,10 +416,11 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedMessage.caption.splice(i, 1);
   }
   customerSelection(msgs) {
+    this.type = 'all';
     console.log(msgs);
     this.clearImg();
     this.selectedCustomer = msgs.key;
-    this.selectedUserMessages = msgs.value;
+    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
@@ -438,6 +441,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
     return unreadMsgs.length;
+  }
+  getUserUnreadCount(user) {
+    const userMsgs = this.groupedMsgsbyUser[(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName];
+    let count = 0;
+    Object.keys(userMsgs).forEach(key => {
+      const unreadMsgs = userMsgs[key].filter(msg => !msg.read && msg.messagestatus === 'in');
+      count = count + unreadMsgs.length;
+    });
+    return count;
   }
   sendMessage() {
     if (this.message) {
@@ -483,14 +495,14 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.selectedUser = user;
     console.log(this.selectedUser);
     this.selectedCustomer = '';
-    this.selectedUserMessages = [];
+    this.selectedUserMessages = this.tempSelectedUserMessages = [];
     this.setMessages();
   }
   changemsgDisplayType(type) {
     this.msgDisplay = type;
     this.selectedUser = this.userDet;
     this.selectedCustomer = '';
-    this.selectedUserMessages = [];
+    this.selectedUserMessages = this.tempSelectedUserMessages = [];
     if (type === 'all') {
       this.setMessages();
     }
@@ -517,5 +529,22 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       return '../../../assets/images/avatar5.png';
     }
+  }
+  changeMsgType(type) {
+    this.type = type;
+    console.log(this.tempSelectedUserMessages);
+    if (this.type === 'all') {
+      this.selectedUserMessages = this.tempSelectedUserMessages;
+    } else {
+      this.selectedUserMessages = this.getEnquiry();
+    }
+    console.log(this.selectedUserMessages);
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
+  }
+  getEnquiry() {
+    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
+    return msgs;
   }
 }

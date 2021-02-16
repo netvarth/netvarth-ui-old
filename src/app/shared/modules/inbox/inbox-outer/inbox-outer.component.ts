@@ -61,6 +61,8 @@ export class InboxOuterComponent implements OnInit {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  type = 'all';
+  tempSelectedUserMessages: any = [];
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -89,7 +91,7 @@ export class InboxOuterComponent implements OnInit {
           this.messages = data;
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
-            this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
               this.scrollToElement();
             }, 100);
@@ -139,7 +141,7 @@ export class InboxOuterComponent implements OnInit {
   providerSelection(msgs) {
     this.clearImg();
     this.selectedProvider = msgs.key;
-    this.selectedUserMessages = msgs.value;
+    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
@@ -186,7 +188,7 @@ export class InboxOuterComponent implements OnInit {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      const filter = {'account' : this.selectedUserMessages[0].accountId };
+      const filter = { 'account': this.selectedUserMessages[0].accountId };
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
@@ -299,5 +301,22 @@ export class InboxOuterComponent implements OnInit {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
+  }
+  changeMsgType(type) {
+    this.type = type;
+    console.log(this.tempSelectedUserMessages);
+    if (this.type === 'all') {
+      this.selectedUserMessages = this.tempSelectedUserMessages;
+    } else {
+      this.selectedUserMessages = this.getEnquiry();
+    }
+    console.log(this.selectedUserMessages);
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
+  }
+  getEnquiry() {
+    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
+    return msgs;
   }
 }

@@ -84,19 +84,6 @@
 .galul li {
     float: left;
 }
-/* .fa-paper-plane {
-    color: #1e4079;
-} */
-/* .input-group.input-group-solid .form-control {
-    background: #F3F6F9;
-} */
-/* .input-group-text {
-    background-color: transparent !important;
-    border: 0 !important;
-    -ms-flex-align: center;
-    padding: 0.65rem 1rem;
+textarea {
+    resize: none !important;
 }
-.input-group-prepend input {
-    background-color: transparent;
-    border: 0;
-} */
