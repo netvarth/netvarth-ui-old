@@ -592,7 +592,7 @@ export class CustomerSearchComponent implements OnInit {
     }
     createNew() {
         const filter = {
-            'source': 'clist'
+            'source': 'clist',
             'id': 'add'
         }
         const navigationExtras: NavigationExtras = {
