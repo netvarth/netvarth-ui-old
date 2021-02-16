@@ -456,7 +456,8 @@
                         </div>
                         <!-- end: Invoice footer-->
                         <!-- Total summary -->
-                        <div>
+                           <!-- Coupon start -->
+                        <!-- <div>
 
                               <div class="form-group row mt-5">
 
@@ -507,27 +508,28 @@
                             </div>
 
 
-                        </div>
-
+                        </div> -->
+                         <!-- Coupon end -->
+ <!-- Total summary -->
                         <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
-                            <span class="mr-15 font-weight-bold">Price (items)</span>
-                            <span class="text-right">{{getTotalItemPrice()}}</span>
+                            <span class="mr-15 font-weight-bold">Price ( orders.length.items)</span>
+                            <span class="text-right"> &#8377;{{getTotalItemPrice()}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">{{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                            <span class="text-right">&#8377; {{getTotalItemTax(catalog_details.taxPercentage)}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">{{getDeliveryCharge()}}</span>
+                            <span class="text-right">&#8377;{{getDeliveryCharge()}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">{{getSubTotal()}}</span>
+                            <span class="text-right">&#8377; {{getSubTotal()}}</span>
                           </div>
                         </div>
 

@@ -114,6 +114,8 @@ export class OrderWizardComponent implements OnInit {
   showCouponWB: boolean;
   showCoupon = false;
   @ViewChild('closeModal') private closeModal: ElementRef;
+  @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+
 
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
@@ -452,12 +454,13 @@ export class OrderWizardComponent implements OnInit {
 
 
   }
-  goBackToCheckout(selectesTimeslot, queue) {
-    this.action = '';
+  goBackToSummary(selectesTimeslot, queue) {
+
     console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
+    this.datepickerModal.nativeElement.click();
 
   }
   updateForm() {
@@ -501,10 +504,10 @@ export class OrderWizardComponent implements OnInit {
       if (this.orders.length === 0) {
         this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
         return false;
-      }else {
+      } else {
         this.step = this.step + 1;
       }
-    }else {
+    } else {
       this.step = this.step + 1;
     }
 
@@ -608,7 +611,7 @@ export class OrderWizardComponent implements OnInit {
   getDeliveryCharge() {
     this.deliveryCharge = 0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
-     this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
+      this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
     return this.deliveryCharge.toFixed(2);
   }

@@ -143,7 +143,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.gets3curl();
     this.fetchCatalog();
     this.amForm = this.fb.group({
       phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
@@ -499,82 +498,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     return found;
   }
 
-  clearCouponErrors() {
-    this.couponvalid = true;
-    this.api_cp_error = null;
-  }
-  gets3curl() {
-    this.api_loading1 = true;
-    this.retval = this.sharedFunctionobj.getS3Url()
-      .then(
-        res => {
-          this.s3url = res;
-          this.getbusinessprofiledetails_json('coupon', true);
-          this.api_loading1 = false;
-        },
-        () => {
-          this.api_loading1 = false;
-        }
-      );
-  }
-  toggleterms(i) {
-    if (this.couponsList[i].showme) {
-      this.couponsList[i].showme = false;
-    } else {
-      this.couponsList[i].showme = true;
-    }
-  }
 
-  applyCoupons(jCoupon) {
-    this.api_cp_error = null;
-    this.couponvalid = true;
-    const couponInfo = {
-      'couponCode': '',
-      'instructions': ''
-    };
-    if (jCoupon) {
-      const jaldeeCoupn = jCoupon.trim();
-      if (this.checkCouponExists(jaldeeCoupn)) {
-        this.api_cp_error = 'Coupon already applied';
-        this.couponvalid = false;
-        return false;
-      }
-      this.couponvalid = false;
-      let found = false;
-      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
-          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
-          this.couponsList.push(couponInfo);
-          found = true;
-          this.selected_coupon = '';
-          break;
-        }
-      }
-      if (found) {
-        this.couponvalid = true;
-        this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
-        this.action = '';
-      } else {
-        this.api_cp_error = 'Coupon invalid';
-      }
-    } else {
-      this.api_cp_error = 'Enter a Coupon';
-    }
-  }
-  removeJCoupon(i) {
-    this.selected_coupons.splice(i, 1);
-    this.couponsList.splice(i, 1);
-  }
-  removeCoupons() {
-    this.selected_coupons = [];
-    this.couponsList = [];
-    this.coupon_status = null;
-  }
-  applyPromocode() {
-    this.action = 'coupons';
-  }
+
   getbusinessprofiledetails_json(section, modDateReq: boolean) {
     let UTCstring = null;
     if (modDateReq) {
@@ -710,71 +635,15 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   orderAddress() {
     this.selectedRowIndex = 'i';
     this.selectedAddress = this.orderDetails.homeDeliveryAddress;
-    console.log('orderAddress');
+
   }
   addAddress() {
-    // this.addressDialogRef = this.dialog.open(AddressComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     type: 'Add',
-    //     address: this.added_address,
-    //     customer: this.customer_data
 
-    //   }
-    // });
-    // this.addressDialogRef.afterClosed().subscribe(result => {
-    //   this.getDeliveryAddress();
-    // });
   }
   updateAddress(address, index) {
-    // this.addressDialogRef = this.dialog.open(AddressComponent, {
-    //   width: '50%',
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     type: 'edit',
-    //     address: this.added_address,
-    //     update_address: address,
-    //     edit_index: index,
-    //     source: 'consumer',
 
-    //   }
-    // });
-    // this.addressDialogRef.afterClosed().subscribe(result => {
-    //   this.getDeliveryAddress();
-    // });
   }
-  deleteAddress(address, index) {
-    // this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
-    //   width: '50%',
-    //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-    //   disableClose: true,
-    //   data: {
-    //     'message': 'Do you want to Delete this address?',
-    //   }
-    // });
-    // this.canceldialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    //   if (result) {
-    //     this.added_address.splice(index, 1);
-    //     this.shared_services.updateConsumeraddress(this.added_address)
-    //       .subscribe(
-    //         data => {
-    //           if (data) {
-    //             this.getDeliveryAddress();
-    //           }
-    //           this.snackbarService.openSnackBar('Address Updated successfully');
-    //         },
-    //         error => {
-    //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //         }
-    //       );
-    //     // this.getaddress();
-    //   }
-    // });
-  }
+
   getItemImg(item) {
     if (item.itemImages) {
       const img = item.itemImages.filter(image => image.displayImage);
