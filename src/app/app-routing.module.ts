@@ -49,6 +49,7 @@ const routes: Routes = [
     { path: ':id', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
+    { path: ':id/:userEncId', component: BusinessPageComponent},
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
       { path: 'consumer-join', component: ConsumerJoinComponent},
     { path: 'pay/:id', component: PaymentLinkComponent },

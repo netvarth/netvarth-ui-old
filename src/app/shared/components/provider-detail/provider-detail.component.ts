@@ -24,6 +24,7 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 
 @Component({
   selector: 'app-provider-detail',
@@ -268,6 +269,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   advance_amount: any;
   orderType = '';
   dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
+  accountEncId: string;
+  userEncId: string;
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -279,49 +282,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     public router: Router,
     private locationobj: Location,
     private groupService: GroupStorageService,
-private lStorageService: LocalStorageService,
-private snackbarService: SnackbarService,
-public wordProcessor: WordProcessor
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
+    public wordProcessor: WordProcessor,
+    private domainConfigService: DomainConfigGenerator
   ) {
-    this.getDomainList();
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
-  }
-
-  getDomainList() {
-    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
-    let run_api = true;
-    if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
-      const bdate = bconfig.cdate;
-      // const bdata = bconfig.bdata;
-      const saveddate = new Date(bdate);
-      if (bconfig.bdata) {
-        const diff = this.sharedFunctionobj.getdaysdifffromDates('now', saveddate);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-          run_api = false;
-          this.domainList = bconfig;
-          // this.domainlist_data = ddata.bdata;
-          // this.domain_obtained = true;
-        }
-      }
-    }
-    if (run_api) { // case if data is not there in data
-      this.shared_services.bussinessDomains()
-        .subscribe(
-          res => {
-            this.domainList = res;
-            // this.domain_obtained = true;
-            const today = new Date();
-            const postdata = {
-              cdate: today,
-              bdata: this.domainList
-            };
-            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
-          }
-        );
-    }
   }
   ngOnInit() {
     this.api_loading = true;
@@ -399,30 +368,66 @@ public wordProcessor: WordProcessor
         }
       }
     });
+    this.domainConfigService.getDomainList();
     this.activaterouterobj.paramMap
       .subscribe(params => {
-        // this.provider_id = params.get('id');
-        const customId = params.get('id').replace(/\s/g, '');
 
-        const inputValues = customId.split('___');
+        this.accountEncId = params.get('id');
 
-        if (inputValues.length > 1) {
-          this.provider_id = inputValues[0];
-          this.userId = inputValues[1];
-          this.gets3curl();
+        if (params.get('userEncId')) {
+          this.userEncId = params.get('userEncId');
+          this.userId = this.userEncId;
         } else {
-          this.shared_services.getBusinessUniqueId(customId).subscribe(
-            id => {
-              this.provider_id = id;
-              this.gets3curl();
-            },
-            error => {
-              this.provider_id = customId;
-              this.gets3curl();
-            }
-          );
+          this.userId = null;
         }
+
+        this.domainConfigService.getDomainList().then(
+          (domainConfig) => {
+            this.domainList = domainConfig;
+            this.getAccountIdFromEncId(this.accountEncId).then(
+              (id: string) => {
+                this.provider_id = id;
+                this.gets3curl();
+              }
+            )
+          }
+        )
+        // this.provider_id = params.get('id');
+        // const customId = params.get('id').replace(/\s/g, '');
+
+        // const inputValues = customId.split('___');
+
+        // if (inputValues.length > 1) {
+        //   this.provider_id = inputValues[0];
+        //   this.userId = inputValues[1];
+        //   this.gets3curl();
+        // } else {
+        //   this.shared_services.getBusinessUniqueId(customId).subscribe(
+        //     id => {
+        //       this.provider_id = id;
+        //       this.gets3curl();
+        //     },
+        //     error => {
+        //       this.provider_id = customId;
+        //       this.gets3curl();
+        //     }
+        //   );
+        // }
       });
+  }
+  getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          console.error(error);
+          resolve(encId);
+        }
+      );
+    });
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -1730,13 +1735,14 @@ public wordProcessor: WordProcessor
     }
   }
   providerDetClicked(userId) {
-    const account = this.provider_id + '___' + userId;
+    // const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         src: 'bp'
       }
     };
-    this.routerobj.navigate([account], navigationExtras);
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+    // this.routerobj.navigate([account], navigationExtras);
     // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
   }
 
@@ -2001,7 +2007,7 @@ public wordProcessor: WordProcessor
         (catalogs: any) => {
           console.log(catalogs);
           this.catalog_loading = true;
-           this.activeCatalog = catalogs[0];
+          this.activeCatalog = catalogs[0];
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
@@ -2043,9 +2049,9 @@ public wordProcessor: WordProcessor
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
             const showpric = this.activeCatalog.showPrice;
             if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-            orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
-            this.itemCount++;
-          }
+              orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+              this.itemCount++;
+            }
           }
           this.orderItems = orderItems;
         }
@@ -2265,7 +2271,7 @@ public wordProcessor: WordProcessor
         'blocation': this.locationjson[0].place,
         'logo': blogoUrl
       };
-     // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
       const navigationExtras: NavigationExtras = {
         queryParams: {
