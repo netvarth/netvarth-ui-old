@@ -487,7 +487,8 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return all_itemsSet;
   }
   goBack() {
-    if (this.action === 'changeTime' || this.action === 'coupons') {
+    console.log(this.action);
+    if (this.action === 'timeChange' || this.action === 'coupons') {
       this.clearCouponErrors();
       this.action = '';
     } else {
