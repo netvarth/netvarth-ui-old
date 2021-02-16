@@ -464,7 +464,7 @@
                                                     </div> -->
                                                     <div class="checkin-btn-bp pointer-cursor"
                                                         *ngIf="type !== 'waitlistreschedule'"
-                                                        [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === ''"
+                                                        [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || waitlist_for.length == 0"
                                                         (click)="handleCheckinClicked()">
                                                         <span *ngIf="!sel_ser_det.isPrePayment">Confirm
                                                             {{showCheckinButtonCaption()}}</span>

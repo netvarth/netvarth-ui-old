@@ -2339,12 +2339,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAttachmentGallery(appt) {
-    this.image_list_popup_temp = [];
-    this.image_list_popup = []; 
     // this.provider_services.getProviderAttachments(appt.uid).subscribe(
     this.provider_services.getProviderAppointmentAttachmentsByUuid(appt.uid).subscribe(
       (communications: any) => {
         console.log(communications);
+        this.image_list_popup_temp = [];
+        this.image_list_popup = []; 
         let count = 0;
         // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
         //   if (communications[comIndex].attachements) {

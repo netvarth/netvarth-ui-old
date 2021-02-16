@@ -2928,12 +2928,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAttachmentGallery(checkin) {
-    this.image_list_popup_temp = [];
-    this.image_list_popup = [];
     // this.provider_services.getProviderAttachments(checkin.ynwUuid).subscribe(
     this.provider_services.getProviderWaitlistAttachmentsByUuid(checkin.ynwUuid).subscribe(
       (communications: any) => {
         console.log(communications);
+        this.image_list_popup_temp = [];
+        this.image_list_popup = [];
         let count = 0;
         // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
         //   if (communications[comIndex].attachements) {
