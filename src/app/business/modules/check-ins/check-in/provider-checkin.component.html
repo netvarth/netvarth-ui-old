@@ -128,13 +128,13 @@
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                       <li>
                         {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                        <div *ngIf="jaldeeId">
+                          {{customer_label | capitalizeFirst}} id: {{getJaldeeId()}}</div>
                         <!-- <span class="cs-btn bt8 changemember"
                                                     (click)="handleServiceForWhom()"
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                       </li>
                     </ng-container>
-                    <li *ngIf="jaldeeId">
-                      {{customer_label | capitalizeFirst}} id: {{jaldeeId}}</li>
                   </ul>
                   <div *ngIf="thirdParty !== ''">
                     {{customer_label | capitalizeFirst}} from

@@ -223,8 +223,8 @@ export class ProviderCheckinComponent implements OnInit {
     virtualServicenumber;
     emptyFielderror = false;
     countryCode;
-checkin_label;
-provider_label = '';
+    checkin_label;
+    provider_label = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -486,12 +486,12 @@ provider_label = '';
                                 this.customer_data = data[0];
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
-                            if(this.customer_data.countryCode && this.customer_data.countryCode !== '+null'){
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
                             } else {
                                 this.countryCode = '+91';
                             }
-                           
+
                             if (this.source === 'waitlist-block') {
                                 this.showBlockHint = true;
                                 if (this.showtoken) {
@@ -1071,14 +1071,14 @@ provider_label = '';
         if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else if(!this.thirdParty) {
+            } else if (!this.thirdParty) {
                 const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode+''+this.callingModes;
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
                 console.log(this.callingModes)
             } else {
                 console.log("third party")
                 const thirdparty_countrycode = '91';
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode+''+this.callingModes;
+                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
             }
         }
         // }
@@ -1772,7 +1772,7 @@ provider_label = '';
         dataToSend.append('captions', blobPropdata);
         // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
         //     dataToSend)
-        this.shared_services.addProviderWaitlistAttachment(uuid,dataToSend)
+        this.shared_services.addProviderWaitlistAttachment(uuid, dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1913,17 +1913,25 @@ provider_label = '';
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
-            .subscribe((data: any) => {
-                const availables = data.filter(obj => obj.isAvailable);
-                const availDates = availables.map(function (a) { return a.date; });
-                _this.availableDates = availDates.filter(function (elem, index, self) {
-                    return index === self.indexOf(elem);
+            _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
                 });
-            });
         }
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+    getJaldeeId(member) {
+        const memberArr = this.familymembers.filter(memb => memb.id === member.id);
+        if (memberArr[0]) {
+            return memberArr[0].jaldeeId;
+        } else {
+            return this.customer_data.jaldeeId;
+        }
     }
 }
