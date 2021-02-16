@@ -50,3 +50,8 @@
     box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
     border: 2px dashed #0707eca1 !important;
   }
+ ::ng-deep .cdk-overlay-container, .cdk-overlay-pane{
+    z-index: 2000 !important;
+  }
+
+
