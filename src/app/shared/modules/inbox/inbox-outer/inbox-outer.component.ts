@@ -140,6 +140,7 @@ export class InboxOuterComponent implements OnInit {
   }
   providerSelection(msgs) {
     this.clearImg();
+    this.message = '';
     this.selectedProvider = msgs.key;
     this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
     if (this.small_device_display) {
@@ -304,6 +305,7 @@ export class InboxOuterComponent implements OnInit {
   }
   changeMsgType(type) {
     this.type = type;
+    this.message = '';
     console.log(this.tempSelectedUserMessages);
     if (this.type === 'all') {
       this.selectedUserMessages = this.tempSelectedUserMessages;

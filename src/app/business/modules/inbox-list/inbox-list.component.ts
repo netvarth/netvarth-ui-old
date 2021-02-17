@@ -117,7 +117,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
     }
     const screenHeight = window.innerHeight;
     this.userHeight = screenHeight - 250;
-    this.msgHeight = screenHeight - 400;
+    this.msgHeight = screenHeight - 375;
   }
   ngOnDestroy() {
     if (this.cronHandle) {
@@ -422,6 +422,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   customerSelection(msgs) {
     this.type = 'all';
+    this.message = '';
     console.log(msgs);
     this.clearImg();
     this.selectedCustomer = msgs.key;
