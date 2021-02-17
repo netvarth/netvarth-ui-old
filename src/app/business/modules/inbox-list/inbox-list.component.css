@@ -125,3 +125,6 @@
 textarea {
     resize: none !important;
 }
+.flex-row {
+    width: 100%;
+}

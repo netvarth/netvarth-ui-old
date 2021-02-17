@@ -18,8 +18,6 @@
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                 <!--begin::Entry-->
                 <div class="d-flex flex-column-fluid">
-                  <!--begin::Container-->
-                  <div class=" container no-padding">
                     <!--begin::Chat-->
                     <div class="d-flex flex-row">
                       <!--begin::Aside-->
@@ -81,13 +79,13 @@
                           </div>
                           <!--end::Header-->
 
-                          <div class="top-buttons" *ngIf="getEnquiry().length > 0">
+                          <!-- <div class="top-buttons" *ngIf="getEnquiry().length > 0">
                             <button mat-flat-button class="mgn-rt-10"
                                 (click)="changeMsgType('all')"
                                 [class.selected-btn]="type=='all'">All</button>
                             <button mat-flat-button [class.selected-btn]="type=='enquiry'"
                                 (click)="changeMsgType('enquiry')">Enquiry</button>
-                        </div>
+                        </div> -->
 
 
                           <!--begin::Body-->
@@ -197,8 +195,6 @@
                       <!--end::Content-->
                     </div>
                     <!--end::Chat-->
-                  </div>
-                  <!--end::Container-->
                 </div>
                 <!--end::Entry-->
               </div>

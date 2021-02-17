@@ -72,6 +72,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   provider_label = '';
   userWithMsgCount = 0;
   type = 'all';
+  userHeight;
+  msgHeight;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -113,6 +115,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     } else {
       this.small_device_display = false;
     }
+    const screenHeight = window.innerHeight;
+    this.userHeight = screenHeight - 250;
+    this.msgHeight = screenHeight - 400;
   }
   ngOnDestroy() {
     if (this.cronHandle) {

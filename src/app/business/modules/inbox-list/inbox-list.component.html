@@ -14,8 +14,6 @@
                 <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
-                        <!--begin::Container-->
-                        <div class=" container no-padding">
                             <!--begin::Chat-->
                             <div class="d-flex flex-row">
                                 <!--begin::Aside-->
@@ -41,7 +39,7 @@
                                         <!--begin::Body-->
                                         <div class="card-body">
                                             <!--begin:Users-->
-                                            <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.vh': 60}">
+                                            <div class="scroll scroll-pull over-scroll" [ngStyle]="{'height.px': userHeight}">
                                                 <!--begin:User-->
                                                 <ng-container
                                                     *ngIf="msgDisplay=='all' || selectedUser.userType === 'PROVIDER'">
@@ -129,20 +127,20 @@
                                         <!--end::Header-->
 
 
-                                        <div class="top-buttons" *ngIf="getEnquiry().length > 0">
+                                        <!-- <div class="top-buttons" *ngIf="getEnquiry().length > 0">
                                         <button mat-flat-button class="mgn-rt-10"
                                             (click)="changeMsgType('all')"
                                             [class.selected-btn]="type=='all'">All</button>
                                         <button mat-flat-button [class.selected-btn]="type=='enquiry'"
                                             (click)="changeMsgType('enquiry')">Enquiry</button>
-                                    </div>
+                                    </div> -->
 
 
                                         <!--begin::Body-->
                                         <div class="card-body no-padding-small">
                                             <!--begin::Scroll-->
                                             <div class="scroll scroll-pull over-scroll" #scrollMe
-                                                [ngStyle]="{'height.vh': 45}">
+                                                [ngStyle]="{'height.px': msgHeight}">
                                                 <!--begin::Messages-->
                                                 <div class="messages" *ngFor="let msg of selectedUserMessages">
                                                     <!--begin::Message In-->
@@ -255,8 +253,6 @@
                                 <!--end::Content-->
                             </div>
                             <!--end::Chat-->
-                        </div>
-                        <!--end::Container-->
                     </div>
                     <!--end::Entry-->
                 </div>
