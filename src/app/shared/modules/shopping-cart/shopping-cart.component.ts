@@ -101,7 +101,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(
       params => {
         this.account_id = params.account_id;
-        this.provider_id = params.unique_id;
+        console.log(this.account_id);
+        if (params.unique_id) {
+          this.provider_id = params.unique_id;
+        }
       });
 
   }
