@@ -59,7 +59,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   nextAvailableTime: string;
   customer_email: any;
   customer_phoneNumber: any;
-  selectedAddress: string;
+  selectedAddress: any;
   orderSummary: any[];
   taxAmount: any;
   orderAmount: any;
@@ -349,14 +349,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       delivery = false;
     }
- const passdata =   {
+    const passdata = {
       'catalog': {
         'id': this.catalog_Id
       },
       'orderItem': this.getOrderItems(),
       'homeDelivery': delivery,
       'coupons': this.selected_coupons
-  };
+    };
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
@@ -629,7 +629,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           .subscribe(
             data => {
               if (data) {
-              //  this.added_address.splice(index, 1);
+                //  this.added_address.splice(index, 1);
                 this.getaddress();
               }
               this.snackbarService.openSnackBar('Address deleted successfully');
@@ -687,10 +687,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
           this.emailId = this.customer_email;
         }
+        const delivery_address = {
+          'firstName': this.selectedAddress.firstName,
+          'lastName': this.selectedAddress.lastName,
+          'phoneNumber': this.selectedAddress.phoneNumber,
+          'countryCode': '+91',
+          'email': this.selectedAddress.email,
+          'address': this.selectedAddress.address,
+          'city': this.selectedAddress.city,
+          'postalCode': this.selectedAddress.postalCode,
+          'landMark': this.selectedAddress.landMark
+
+
+        };
         if (this.orderType === 'SHOPPINGLIST') {
           const post_Data = {
             'homeDelivery': true,
-            'homeDeliveryAddress': this.selectedAddress,
+            'homeDeliveryAddress': delivery_address,
             'catalog': {
               'id': this.catalog_details.id
             },
@@ -714,7 +727,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         } else {
           const post_Data = {
             'homeDelivery': true,
-            'homeDeliveryAddress': this.selectedAddress,
+            'homeDeliveryAddress': delivery_address,
             'catalog': {
               'id': this.catalog_details.id
             },
@@ -770,7 +783,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             'phoneNumber': contactNumber,
             'email': contact_email,
             'orderNote': this.orderlistNote,
-             'coupons': this.selected_coupons
+            'coupons': this.selected_coupons
           };
           this.confirmOrder(post_Data);
         } else {
@@ -869,7 +882,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
-      this.shared_services.CreateConsumerOrderlist(this.account_id, dataToSend)
+      this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
           this.checkoutDisabled = false;
@@ -997,7 +1010,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (item.consumerNote) {
         consumerNote = item.consumerNote;
       }
-        this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
+      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote });
     });
     return this.orderSummary;
   }
@@ -1005,7 +1018,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
+    this.selectedAddress = address;
     console.log(this.selectedAddress);
   }
   // handleFuturetoggle() {
