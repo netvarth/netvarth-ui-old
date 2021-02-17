@@ -865,7 +865,7 @@
                     <div class="row bg-grey">
 
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItem;let i=index;">
-                        <button class="pull-right more_btn" mat-icon-button [matMenuTriggerFor]="appMenu">
+                        <button *ngIf="item.id" class="pull-right more_btn" mat-icon-button [matMenuTriggerFor]="appMenu">
                           <mat-icon>more_horiz</mat-icon>
                         </button>
                         <mat-menu #appMenu="matMenu">
@@ -896,14 +896,14 @@
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
                               <!-- min -->
-                              <div class="input-group">
+                              <div [class.hide_qty]="!item.id" class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
                                 <input class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
                                   id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}" readonly>
                               </div>
                               <!-- Max -->
-                              <div class="input-group mt-2">
+                              <div [class.hide_qty]="!item.id" class="input-group mt-2">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
                                 <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"

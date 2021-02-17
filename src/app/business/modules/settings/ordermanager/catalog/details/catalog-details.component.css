@@ -504,5 +504,8 @@
   background-color: white !important;
   background: white  !important;
 }
+.hide_qty {
+  visibility: hidden !important;
+}
 
 

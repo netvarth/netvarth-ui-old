@@ -252,7 +252,6 @@ export class CatalogdetailComponent implements OnInit {
         this.dstart_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-        console.log(this.seletedCatalogItems);
         this.onResize();
         this.activated_route.queryParams.subscribe(
             (qParams) => {
@@ -260,7 +259,6 @@ export class CatalogdetailComponent implements OnInit {
                 if (this.isFromadd) {
                     this.prefillData = this.lStorageService.getitemfromLocalStorage('prefilldata');
                     //  this.prefillData = this.provider_services.getCatalogPrefiledDetails();
-                    console.log(this.prefillData);
                 }
             });
         this.activated_route.params.subscribe(
@@ -285,7 +283,6 @@ export class CatalogdetailComponent implements OnInit {
                                                 this.catalogcaption = this.catalog.catalogName;
                                                 if (this.catalog.catalogItem) {
                                                     this.catalogItems = this.catalog.catalogItem;
-                                                    console.log(this.catalogItems);
                                                     this.setItemFromCataDetails();
                                                 }
                                                 if (this.action === 'edit') {
@@ -396,10 +393,9 @@ export class CatalogdetailComponent implements OnInit {
                         this.item_list = data;
                         this.item_count = this.item_list.length;
                         this.catalogItem = data;
-                        console.log(this.catalogItem);
                         for (const itm of this.catalogItem) {
-                            itm.minQuantity = '1';
-                            itm.maxQuantity = '5';
+                            itm.minQuantity = 1;
+                            itm.maxQuantity = 5;
                         }
                         resolve(data);
                     },
@@ -428,15 +424,12 @@ export class CatalogdetailComponent implements OnInit {
         //     daystr.push(cday);
         // }
         let endDate;
-        console.log(form_data.startdate);
         const startDate = this.convertDate(form_data.startdate);
-        console.log(startDate);
         if (form_data.enddate) {
             endDate = this.convertDate(form_data.enddate);
         } else {
             endDate = '';
         }
-        console.log(endDate);
         // const curdate = new Date();
         // curdate.setHours(this.dstart_time.hour);
         // curdate.setMinutes(this.dstart_time.minute);
@@ -452,7 +445,6 @@ export class CatalogdetailComponent implements OnInit {
         for (const cday of this.selday_arrstorepickup) {
             storedaystr.push(cday);
         }
-        console.log(this.selday_arrstorepickup.length);
         let storeendDate;
         const storestartDate = this.convertDate(form_data.startdatestore);
         if (form_data.enddatestore) {
@@ -501,15 +493,12 @@ export class CatalogdetailComponent implements OnInit {
         if (this.selectedMessage.files.length > 0) {
             seltedimg = this.selectedMessage.files;
         }
-        console.log(seltedimg);
         if (this.image_list_popup) {
             seltedimgpopup = this.image_list_popup;
         }
-        console.log(seltedimgpopup);
         if (this.selectedMessage.base64.length > 0) {
             seltedimgbase = this.selectedMessage.base64;
         }
-        console.log(seltedimgbase);
 
         const postdata = {
             'catalogName': form_data.catalogName || '',
@@ -586,14 +575,11 @@ export class CatalogdetailComponent implements OnInit {
             'imagepop': seltedimgpopup || [],
             'imagebase64': seltedimgbase || []
         };
-        console.log(postdata);
         this.lStorageService.setitemonLocalStorage('prefilldata', postdata);
         //  this.provider_services.setCatalogPrefilledDetails(postdata);
     }
 
     addItemstoCart(type, data) {
-        console.log(data);
-        console.log(type);
         this.setCatalogPrefillfields(data);
         const navigationExtras: NavigationExtras = {
             queryParams: {
@@ -673,7 +659,6 @@ export class CatalogdetailComponent implements OnInit {
             dt.setFullYear(dt.getFullYear() + 2);
             this.amForm.get('startdate').setValue(new Date());
             this.amForm.get('enddate').setValue(dt);
-            console.log(dt);
             this.amForm.get('startdatestore').setValue(new Date());
             this.amForm.get('startdatehome').setValue(new Date());
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
@@ -753,7 +738,6 @@ export class CatalogdetailComponent implements OnInit {
         } else {
             this.payAdvance = 'NONE';
         }
-        console.log(this.payAdvance);
 
     }
     handlestorepickup(event) {
@@ -776,7 +760,6 @@ export class CatalogdetailComponent implements OnInit {
         } else {
             this.showadditems = true;
         }
-        console.log(event);
     }
     compareDate(dateValue, startOrend) {
         const UserDate = dateValue;
@@ -844,7 +827,6 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     updateForm() {
-        console.log(this.catalog);
         // const sttime = {
         //     hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
         //         ['h:mm A']).format('HH'), 10),
@@ -1242,7 +1224,6 @@ export class CatalogdetailComponent implements OnInit {
         if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
-        console.log(this.prefillData.catalogSchedule.terminator.endDate);
         this.amForm.setValue({
             'catalogName': this.prefillData.catalogName,
             'catalogDesc': this.prefillData.catalogDesc || '',
@@ -1518,12 +1499,10 @@ export class CatalogdetailComponent implements OnInit {
         // const endtime_format = moment(enddate).format('hh:mm A') || null;
 
         //store pickup
-        console.log(this.selday_arrstorepickup);
         const storedaystr: any = [];
         for (const cday of this.selday_arrstorepickup) {
             storedaystr.push(cday);
         }
-        console.log(this.selday_arrstorepickup.length);
         if (this.storepickupStat && this.selday_arrstorepickup.length === 0) {
             const error = 'Please select the storepickup days';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1611,7 +1590,6 @@ export class CatalogdetailComponent implements OnInit {
                 return;
             }
         }
-        console.log(this.seletedCatalogItems);
         const postdata = {
             'catalogName': form_data.catalogName,
             'catalogDesc': form_data.catalogDesc,
@@ -1702,19 +1680,16 @@ export class CatalogdetailComponent implements OnInit {
         };
         if (this.action === 'add') {
             postdata['catalogItem'] = this.seletedCatalogItems;
-            console.log(postdata);
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
             // postdata['catalogItem'] = this.catalogItems;
             postdata['catalogItem'] = this.seletedCatalogItems;
-            console.log(postdata);
             this.editCatalog(postdata);
         }
     }
     addCatalog(post_data) {
         this.disableButton = true;
         this.resetApiErrors();
-        console.log('add');
         this.api_loading = true;
         this.provider_services.addCatalog(post_data)
             .subscribe(
@@ -1732,7 +1707,6 @@ export class CatalogdetailComponent implements OnInit {
                     });
                     this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
                         if (result === 1) {
-                            console.log(result);
                             this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
                         }
                     });
@@ -1770,7 +1744,6 @@ export class CatalogdetailComponent implements OnInit {
         let cdate;
         if (date) {
             cdate = new Date(date);
-            console.log(cdate);
         } else {
             cdate = new Date();
         }
@@ -1876,7 +1849,6 @@ export class CatalogdetailComponent implements OnInit {
         const propertiesDetob = {};
         let i = 0;
         for (const pic of this.selectedMessage.files) {
-            console.log(pic);
             submit_data.append('files', pic, pic['name']);
             const properties = {
                 'caption': this.selectedMessage.caption[i] || ''
@@ -1924,8 +1896,6 @@ export class CatalogdetailComponent implements OnInit {
 
 
     openImageModalRow(image: Image) {
-        console.log(image);
-        console.log(this.image_list_popup[0]);
         const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
         this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
     }
@@ -1937,7 +1907,6 @@ export class CatalogdetailComponent implements OnInit {
     onButtonAfterHook() { }
 
     imageSelect(event) {
-        console.log('sel');
         this.api_loading = true;
         const input = event.target.files;
         if (input) {
@@ -1948,7 +1917,6 @@ export class CatalogdetailComponent implements OnInit {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.selectedMessage.files.push(file);
-                    console.log(this.selectedMessage.files);
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         this.selectedMessage.base64.push(e.target['result']);
@@ -1983,12 +1951,8 @@ export class CatalogdetailComponent implements OnInit {
         });
         this.removeimgdialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
-                console.log(img);
                 if (this.action === 'edit') {
-                    console.log(this.uploadcatalogImages);
                     const imgDetails = this.uploadcatalogImages.filter(image => image.url === img.modal.img);
-                    console.log(imgDetails);
                     this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
                         .subscribe((data) => {
                             this.selectedMessage.files.splice(index, 1);
@@ -2113,8 +2077,6 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     showStep(step, form_data) {
-        console.log(step);
-        console.log(form_data);
         // if (step === 2) {
         if (form_data.catalogName) {
             this.basic = true;
@@ -2170,13 +2132,10 @@ export class CatalogdetailComponent implements OnInit {
         });
         this.addtimewindowdialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
                 if (type === 'store') {
                     this.storetimewindow_list.push(result);
-                    console.log(this.storetimewindow_list);
                 } else {
                     this.hometimewindow_list.push(result);
-                    console.log(this.hometimewindow_list);
                 }
             }
         });
@@ -2184,15 +2143,12 @@ export class CatalogdetailComponent implements OnInit {
     deletetimeslot(type, index) {
         if (type === 'store') {
             this.storetimewindow_list.splice(index, 1);
-            console.log(this.storetimewindow_list);
         } else {
             this.hometimewindow_list.splice(index, 1);
-            console.log(this.hometimewindow_list);
         }
     }
 
     selectItem(index) {
-        console.log(this.catalogItem[index].selected);
         if (this.catalogItem[index].selected === undefined || this.catalogItem[index].selected === false) {
             this.catalogItem[index].selected = true;
             this.selectedCount++;
@@ -2200,10 +2156,8 @@ export class CatalogdetailComponent implements OnInit {
             this.catalogItem[index].selected = true;
             this.selectedCount--;
         }
-        console.log(this.catalogItem[index].selected);
     }
     selectaddItem(index) {
-        console.log(this.itemsforadd[index].selected);
         if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
             this.itemsforadd[index].selected = true;
             this.selecteditemCount++;
@@ -2211,7 +2165,6 @@ export class CatalogdetailComponent implements OnInit {
             this.itemsforadd[index].selected = false;
             this.selecteditemCount--;
         }
-        console.log(this.itemsforadd[index].selected);
     }
 
     getItemImg(item) {
@@ -2232,9 +2185,7 @@ export class CatalogdetailComponent implements OnInit {
             this.seletedCatalogItems1 = {};
             let minqty = '';
             let maxqty = '';
-            console.log('minquty_' + this.catalogItem[ia].itemId + '');
             if (this.catalogItem[ia].selected === true) {
-                console.log(this.catalogItem[ia]);
                 minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.catalogItem[ia].itemId + '')).value;
                 maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.catalogItem[ia].itemId + '')).value;
                 if (minqty > maxqty) {
@@ -2262,9 +2213,7 @@ export class CatalogdetailComponent implements OnInit {
             this.seletedCatalogItemsadd = {};
             let minqty = '';
             let maxqty = '';
-            console.log('minquty_' + this.itemsforadd[ia].itemId + '');
             if (this.itemsforadd[ia].selected === true) {
-                console.log(this.itemsforadd[ia]);
                 minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
                 maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;
                 if (minqty > maxqty) {
@@ -2355,7 +2304,6 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
     addItem(post_data) {
-        console.log(post_data)
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
@@ -2438,9 +2386,10 @@ export class CatalogdetailComponent implements OnInit {
     setItemFromCataDetails() {
         for (let j = 0; j < this.catalogItem.length; j++) {
             const itemArr = this.catalog.catalogItem.filter(item => item.item.itemId === this.catalogItem[j].itemId);
-            console.log(itemArr);
             if (itemArr.length > 0) {
-                console.log(j);
+                this.catalogItem[j].minQuantity = itemArr[0].minQuantity;
+                this.catalogItem[j].maxQuantity = itemArr[0].maxQuantity;
+                this.catalogItem[j].id = itemArr[0].id;
                 this.selectItem(j);
             }
         }
@@ -2460,7 +2409,6 @@ export class CatalogdetailComponent implements OnInit {
         });
         this.editcataItemdialogRef.afterClosed().subscribe(result => {
           if (result) {
-           console.log(result);
            this.api_loading = true;
            this.updateItems(result, item.id);
           }
@@ -2468,15 +2416,15 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     updateItems(updatelist, id) {
-        console.log(updatelist);
         const passlist: any = {};
           passlist.id = id;
           passlist.maxQuantity = updatelist.maxquantity;
           passlist.minQuantity = updatelist.minquantity;
-          console.log(passlist);
          this.provider_services.updateCatalogItem(passlist).subscribe(
           (data) => {
-            this.getCatalog();
+            // this.getCatalog();
+           // this.getItems();
+            this.getUpdatedItems();
             this.api_loading = false;
           }, error => {
             this.api_loading = false;
@@ -2495,6 +2443,7 @@ export class CatalogdetailComponent implements OnInit {
           }
         });
         this.removeitemdialogRef.afterClosed().subscribe(result => {
+            console.log(result);
           if (result) {
             this.api_loading = true;
             this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
@@ -2508,6 +2457,22 @@ export class CatalogdetailComponent implements OnInit {
                 );
           }
         });
+    }
+
+    getUpdatedItems() {
+        this.getItems().then(
+            (data) => {
+                this.getCatalog(this.catalog_id).then(
+                    (catalog) => {
+                        this.catalog = catalog;
+                        this.catalogcaption = this.catalog.catalogName;
+                        if (this.catalog.catalogItem) {
+                            this.catalogItems = this.catalog.catalogItem;
+                            this.setItemFromCataDetails();
+                        }
+                    }
+                );
+            });
     }
 
 
