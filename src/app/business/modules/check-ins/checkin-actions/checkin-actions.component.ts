@@ -50,7 +50,7 @@ export class CheckinActionsComponent implements OnInit {
     showTeleserviceStart = false;
     action = '';
     providerLabels: any = [];
-    labelMap;
+    labelMap = {};
     showCall;
     board_count;
     pos = false;
@@ -97,6 +97,8 @@ export class CheckinActionsComponent implements OnInit {
     galleryDialog: any;
     subscription: Subscription;
     checkinsByLabel: any = [];
+    labelsforRemove: any = [];
+    showApply = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private shared_functions: SharedFunctions, private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -538,7 +540,7 @@ export class CheckinActionsComponent implements OnInit {
             this.loading = false;
         });
     }
-    deleteLabel(label) {
+    deleteLabel() {
         // this.provider_services.deleteLabelfromCheckin(checkinId, label).subscribe(data => {
         //     this.dialogRef.close('reload');
         // },
@@ -546,14 +548,20 @@ export class CheckinActionsComponent implements OnInit {
         //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //     });
         let ids = [];
+        // if (this.data.multiSelection) {
+        //     ids = this.checkinsByLabel[label];
+        // } else {
+        //     ids.push(this.checkin.ynwUuid);
+        // }
         if (this.data.multiSelection) {
-            ids = this.checkinsByLabel[label];
+            for (let label of this.labelsforRemove) {
+                ids = ids.concat(this.checkinsByLabel[label]);
+            }
         } else {
             ids.push(this.checkin.ynwUuid);
         }
         const postData = {
-            'labelName': label,
-            'labelValue': 'true',
+            'labelNames': this.labelsforRemove,
             'uuid': ids
         };
         this.provider_services.deleteLabelFromMultipleCheckin(postData).subscribe(data => {
@@ -581,7 +589,7 @@ export class CheckinActionsComponent implements OnInit {
                 // this.labels();
                 this.labelMap = new Object();
                 this.labelMap[data.label] = data.value;
-                this.addLabel(data.label);
+                this.addLabel();
                 this.getDisplayname(data.label);
                 // }, 500);
             }
@@ -595,7 +603,7 @@ export class CheckinActionsComponent implements OnInit {
             }
         }
     }
-    addLabel(label) {
+    addLabel() {
         // this.provider_services.addLabeltoCheckin(this.checkin.ynwUuid, this.labelMap).subscribe(data => {
         //     this.dialogRef.close('reload');
         // },
@@ -610,9 +618,13 @@ export class CheckinActionsComponent implements OnInit {
         } else {
             ids.push(this.checkin.ynwUuid);
         }
+        // const postData = {
+        //     'labelName': label,
+        //     'labelValue': 'true',
+        //     'uuid': ids
+        // };
         const postData = {
-            'labelName': label,
-            'labelValue': 'true',
+            'labels': this.labelMap,
             'uuid': ids
         };
         this.provider_services.addLabeltoMultipleCheckin(postData).subscribe(data => {
@@ -621,6 +633,14 @@ export class CheckinActionsComponent implements OnInit {
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
+    }
+    applyLabel() {
+        if (Object.keys(this.labelMap).length > 0) {
+            this.addLabel();
+        }
+        if (this.labelsforRemove.length > 0) {
+            this.deleteLabel();
+        }
     }
     labels() {
         for (let i = 0; i < this.providerLabels.length; i++) {
@@ -683,12 +703,26 @@ export class CheckinActionsComponent implements OnInit {
             });
     }
     addLabeltoAppt(label, event) {
-        this.labelMap = new Object();
+        this.showApply = false;
+        let labelArr = this.providerLabels.filter(lab => lab.label === label);
+        if (this.labelMap[label]) {
+            delete this.labelMap[label];
+        }
+        if (this.labelsforRemove.indexOf(label) !== -1) {
+            this.labelsforRemove.splice(this.labelsforRemove.indexOf(label), 1);
+        }
         if (event.checked) {
-            this.labelMap[label] = true;
-            this.addLabel(label);
+            if (labelArr[0] && labelArr[0].selected) {
+            } else {
+                this.labelMap[label] = true;
+            }
         } else {
-            this.deleteLabel(label);
+            if (labelArr[0] && labelArr[0].selected) {
+                this.labelsforRemove.push(label);
+            }
+        }
+        if (Object.keys(this.labelMap).length > 0 || this.labelsforRemove.length > 0) {
+            this.showApply = true;
         }
     }
     labelselection() {
