@@ -2153,7 +2153,7 @@ export class CatalogdetailComponent implements OnInit {
             this.catalogItem[index].selected = true;
             this.selectedCount++;
         } else {
-            this.catalogItem[index].selected = true;
+            this.catalogItem[index].selected = false;
             this.selectedCount--;
         }
     }

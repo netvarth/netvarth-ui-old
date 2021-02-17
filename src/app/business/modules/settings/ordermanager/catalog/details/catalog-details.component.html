@@ -896,22 +896,23 @@
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
                               <!-- min -->
-                              <div [class.hide_qty]="!item.id" class="input-group">
+                              <div  class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
-                                <input class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
+                                <input *ngIf="item.id" class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
                                   id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}" readonly>
+                                <input *ngIf="!item.id" class="form-control" placeholder="Min Qty" (keypress)="isNumber($event)"
+                                  id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}">
                               </div>
                               <!-- Max -->
-                              <div [class.hide_qty]="!item.id" class="input-group mt-2">
+                              <div  class="input-group mt-2">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
-                                <input class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
+                                <input *ngIf="item.id" class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
                                   (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}" readonly>
+                                <input *ngIf="!item.id" class="form-control" placeholder="Max Qty" id="maxquty_{{item.itemId}}"
+                                  (keypress)="isNumber($event)" type="number" min="1" value="{{item.maxQuantity}}">
                               </div>
-
-                              <!-- <span class="">Min. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></span>   
-                                                <span class="">Max. Qty<input class="ip-field pl5" style="width: 60px; height: 20px;" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </span>    -->
                             </div>
                             <!--end::Details-->
                           </div>
