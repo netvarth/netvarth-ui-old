@@ -691,9 +691,12 @@
                       <div class="col-xl-6 ynw-common-form-nm">
                         <!--begin::Input-->
                         <mat-form-field appearance="fill">
-                          <mat-label>Order Status</mat-label>
-                          <mat-select [formControl]="toppings" multiple>
-                            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                          <label>Order Status</label>
+                          <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
+                            <mat-option *ngFor=" let stat of status" [value]="stat.value"
+                              [disabled]="stat.value === 'Order Received'||stat.value === 'Cancelled' || stat.value === 'Order Confirmed'">
+                              {{stat.value}}
+                            </mat-option>
                           </mat-select>
                         </mat-form-field>
                         <!--end::Input-->
@@ -1610,11 +1613,16 @@
                             <div class="col-xl-6">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <label>Available time window(s)</label><br>
-
-                                <label>Currently no timewindows are added</label> &nbsp;
-                                <label class="link underline pointer-cursor"
-                                  (click)="showTimewindow('store')">Add</label>
+                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="storetimewindow_list.length > 0" (click)="showTimewindow('store')" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <div *ngIf="storetimewindow_list.length == 0">
+                                  Currently no timewindows are added&nbsp; <a class="pointlist" (click)="showTimewindow('store')">Add</a>
+                                </div>
+                              <div *ngIf="storetimewindow_list.length > 0">  <ul *ngFor="let window of storetimewindow_list;let i = index">
+                                 <li>
+                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('store',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                 </li>
+                               </ul>
+                              </div>
                               </div>
                               <!--end::Input-->
                             </div>
@@ -1674,9 +1682,17 @@
                             <div class="col-xl-6">
 
                               <div class="form-group">
-                                <label>Available time windows</label> &nbsp;
-                                <span class="form-text text-muted">Currently no timewindows are added Add</span>
-                                <!--end::Input-->
+                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="hometimewindow_list.length > 0" (click)="showTimewindow('home')"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <div *ngIf="hometimewindow_list.length == 0">
+                                  Currently no timewindows are added &nbsp; <a class="pointlist" (click)="showTimewindow('home')">Add</a>
+                                </div>
+                                <div *ngIf="hometimewindow_list.length > 0">
+                               <ul *ngFor="let window of hometimewindow_list;let i = index">
+                                 <li>
+                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('home',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                 </li>
+                               </ul>
+                               </div>
                               </div>
                             </div>
                           </div>
