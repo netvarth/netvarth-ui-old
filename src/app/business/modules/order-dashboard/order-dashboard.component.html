@@ -30,7 +30,7 @@
                <span> New order</span>
               </mat-grid-tile-footer>
           </mat-grid-tile>
-          <mat-grid-tile>
+          <mat-grid-tile (click)="newOrder()">
             <div class="flex-shrink-0 text-center" style="width: 40px;">
               <i class="fas fa-phone-alt fa-2x pitch_blu"></i>
               </div>
@@ -38,7 +38,7 @@
                 <span>New Phone-In</span>
               </mat-grid-tile-footer>
           </mat-grid-tile>
-          <mat-grid-tile>
+          <mat-grid-tile (click)="searchCustomer()">
             <div class="flex-shrink-0 text-center" style="width: 40px;">
               <i class="fas fa-user-plus fa-2x pitch_blu"></i>
               </div>

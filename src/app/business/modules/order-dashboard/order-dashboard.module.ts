@@ -20,6 +20,7 @@ import { AddressComponent } from './order-wizard/address/address.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CustomerModule } from '../customer/customer.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DisplaylabelpopupComponent,
     OrderWizardComponent,
     AddressComponent
+
 
   ],
   entryComponents: [
@@ -53,6 +55,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDialogModule,
     MatChipsModule,
     MatDatepickerModule,
+    CustomerModule
 
 
 
