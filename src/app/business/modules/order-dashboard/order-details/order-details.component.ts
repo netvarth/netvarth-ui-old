@@ -36,6 +36,7 @@ export class OrderDetailsComponent implements OnInit {
   image_list_popup: Image[];
   imagelist: any = [];
   orderlist_history: any = [];
+  orderstatus: any = projectConstantsLocal.ORDER_STATUS_FILTER;
 customPlainGalleryRowConfig: PlainGalleryConfig = {
   strategy: PlainGalleryStrategy.CUSTOM,
   layout: new AdvancedLayout(-1, true)
@@ -195,6 +196,13 @@ getorderHistory(uuid) {
         //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
       }
     );
+}
+getRandomClass(status) {
+for (const stat of this.orderstatus) {
+ if (stat.value === status) {
+    return stat.clas;
+    }
+  }
 }
 sortMessages() {
   this.communication_history.sort(function (message1, message2) {

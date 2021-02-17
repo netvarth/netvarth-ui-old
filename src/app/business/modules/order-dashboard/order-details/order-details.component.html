@@ -9,7 +9,7 @@
 
   <section>
     <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
-        <div class="orderdetails col-md-9 col-xs-12 col-sm-12 col-lg-9">
+        <div class="orderdetails col-md-10 col-xs-12 col-sm-12 col-lg-10">
             <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
                 <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
@@ -43,108 +43,8 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
-            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20">
-                <div class="pull-left bold font11">
-                    Order Items
-                </div>
-                <div class="pull-right viewtypes">
-                    View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
-                        (click)="selectViewType('list')" [matTooltipClass]="tooltipcls" [matTooltip]="'List View'"></i>
-                    <i class="fa fa-th-large pointer-cursor" [class.selectedView]="selectedType==='grid'"
-                        (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
-                </div>
-            </div>
-            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small mgn-bt-20 mgn-up-20"
-                *ngIf="selectedType==='grid'">
-                
-                <div class="bus-item-O" *ngFor="let item of orderItems">
-                    <app-card [item]="item" (noteClicked)="showConsumerNote($event)"></app-card>
-                </div>
-            </div>
-            <div class="itemlist col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="selectedType==='list'">
-                <table style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Sl No</th>
-                            <th>Item Name</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of orderDetails.orderItem;let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.quantity}}
-                            </td>
-                            <td><span class="rupee-font">{{item.totalPrice|currency:'&#8377;'}}</span>
-                                <i *ngIf="item.consumerNote" [matTooltip]="'Notes'"
-                                    class="icon-note pointer-cursor pull-right" (click)="showConsumerNote(item)"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
-        <!-- <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9" *ngIf="image_list_popup && orderDetails.shoppingList">
-            <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
-        </div> -->
-        <!-- <div  class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12" *ngIf="orderDetails.shoppingList">
-                <div  class="col-sm-10 col-md-8 col-lg-6 col-xl-4 col-xs-12" >
-            <ul class="shoppinglist-gal">
-                <ng-container *ngFor="let file of image_list_popup;let i = index">
-                    <li *ngIf="i<2" class="shoppinglist-li">
-                        <div class="shoppinglistbx">
-                            <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
-                                <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
-                                    *ngIf="file.modal.img" />
-                            </div>
-                        </div>
-                    </li>
-                </ng-container>
-                <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
-                    <div class="shoppinglistbx">
-                        <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
-                            *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
-                        <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
-                                *ngIf="image_list_popup[2].modal.img"
-                                [src]="image_list_popup[2].modal.img" /></div>
 
-                        <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
-                            *ngIf="(image_list_popup.length-3)==0">
-                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                *ngIf="image_list_popup[2].modal.img"
-                                [src]="image_list_popup[2].modal.img" />
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-            [plainGalleryConfig]="customPlainGalleryRowConfig"
-            [buttonsConfig]="customButtonsFontAwesomeConfig"
-            (buttonBeforeHook)="onButtonBeforeHook()"
-            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-               
-
-        </div>
-    </div> -->
-    </div>
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 mgn-up-10" *ngIf="!loading" >
-    <div class="card">
-            <h5>Order History</h5>
-            <div class="c-history-outer">
-              <ul class="c-history">
-                <li class="{{history.orderStatus}}" *ngFor="let history of orderlist_history">
-                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                  <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
-                </li>
-              </ul>
-              <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 " *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
+        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
                 <div class="pull-left bold font11">
                     Order Items
@@ -188,11 +88,12 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  mgn-bt-10 mgn-up-10" *ngIf="image_list_popup && orderDetails.shoppingList">
+        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails" *ngIf="image_list_popup && orderDetails.shoppingList">
+        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10" >
             <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
         </div>
-        <div  class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xs-12 order" *ngIf="orderDetails.shoppingList">
-                <div  class="col-sm-10 col-md-8 col-lg-6 col-xl-4 col-xs-12" >
+        <div  class="col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xs-12 order" *ngIf="orderDetails.shoppingList">
+                <div  class="col-sm-10 col-md-10 col-lg-10 col-xl-8 col-xs-12" >
             <ul class="shoppinglist-gal">
                 <ng-container *ngFor="let file of image_list_popup;let i = index">
                     <li *ngIf="i<2" class="shoppinglist-li">
@@ -230,6 +131,23 @@
 
         </div>
     </div>
+</div> 
+    </div>
+    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-3 mgn-up-10" *ngIf="!loading" >
+    <div class="card">
+            <h5>Order History</h5>
+            <div class="c-history-outer">
+              <ul class="c-history">
+                <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
+                  <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                  <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
+                </li>
+              </ul>
+              <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
+            </div>
+          </div>
+        </div>
+       
   </section>
   <div class="clearfix"></div>
   <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
