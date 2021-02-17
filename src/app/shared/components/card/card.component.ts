@@ -59,6 +59,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 this.buttonCaption = 'Get Appointment';
+                console.log(this.service);
                 break;
             case 'donation':
                 this.service = this.item.item;
@@ -222,6 +223,18 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
         } else {
             return '../../../../assets/images/order/Items.svg';
+        }
+    }
+    getServiceType(){
+        if(this.service.serviceType == 'physicalService') {
+            return 'Physical Service';
+        } else {
+            if(this.service.virtualServiceType == 'videoService') {
+                return this.service.virtualCallingModes[0].callingMode + " " + "Video";
+            }
+            else if(this.service.virtualServiceType == 'audioService') {
+                return this.service.virtualCallingModes[0].callingMode + " " + "Audio";
+            }
         }
     }
 }
