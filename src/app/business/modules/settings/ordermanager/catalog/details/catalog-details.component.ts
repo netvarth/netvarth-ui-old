@@ -2153,7 +2153,7 @@ export class CatalogdetailComponent implements OnInit {
             this.catalogItem[index].selected = true;
             this.selectedCount++;
         } else {
-            this.catalogItem[index].selected = false;
+            this.catalogItem[index].selected = true;
             this.selectedCount--;
         }
     }
@@ -2396,7 +2396,6 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     editCatalogItem(item) {
-        console.log(item);
         this.editcataItemdialogRef = this.dialog.open(EditcatalogitemPopupComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2434,6 +2433,7 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     deleteCatalogItem(itm) {
+        console.log(itm);
         this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
           width: '50%',
           panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -2446,9 +2446,10 @@ export class CatalogdetailComponent implements OnInit {
             console.log(result);
           if (result) {
             this.api_loading = true;
-            this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+            this.provider_services.deleteCatalogItem(this.cataId, itm.itemId).subscribe(
               (data) => {
-                this.getCatalog();
+               // this.getCatalog();
+               this.getUpdatedItems();
                 this.api_loading = false;
               }, error => {
                 this.api_loading = false;

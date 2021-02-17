@@ -835,7 +835,6 @@
                             <a class="link underline pointer-cursor" data-toggle="modal"
                               data-target="#exampleModalSizeLg"><u>Create items</u></a>
                           </div>
-                          <!-- <label class="link underline pointer-cursor" (click)="addcancelpolicy()">Add Item</label> -->
                         </div>
                         <div *ngIf="item_count === 0">
                           <p class="font-italic">You haven't created any items
@@ -844,19 +843,7 @@
                           </p>
                         </div>
 
-                        <!-- <div *ngIf="catalogItems && catalogItems.length > 0" class="col-md-12 col-xs-12 col-sm-12">
-                          <h6>{{catalogItems.length}} items are in your catalog</h6>
-                          <p *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
-                            {{seletedCatalogItems.length}} more items are selected</p>
-                          <a *ngIf="item_count !== catalogItems.length" class="link underline pointer-cursor"
-                            (click)="addItemstoCart('add',amForm.value)"><u>Add items1</u></a>&nbsp;
-                          <a class="link underline pointer-cursor" (click)="addItemstoCart('edit',amForm.value)"><u>Edit
-                              items</u></a>&nbsp;
-                          <a class="link underline pointer-cursor" data-toggle="modal"
-                            data-target="#exampleModalSizeLg"><u>Create items</u></a>
-                        </div> -->
-
-                        <!--end::Input-->
+                       
                       </div>
 
                     </div>
@@ -874,16 +861,13 @@
                           <button mat-menu-item (click)="deleteCatalogItem(item)">
                             <i class="icon-delete"></i>Delete</button>
                         </mat-menu>
-                        <div class="card card-custom card-shadowless" (click)="selectItem(i)"
-                          [class.itemselected]="item.selected">
+                        <div class="card card-custom card-shadowless" (click)="selectItem(i)"  [class.itemselected]="item.selected">
                           <div class="card-body p-0">
                             <!--begin::Image-->
                             <div class="overlay">
 
                               <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
                                 [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
-                                <!-- <img [src]="getItemImg(item)"
-                                                        alt="" class="mw-100 w-150px" /> -->
                               </div>
                             </div>
                             <!--end::Image-->
@@ -924,25 +908,20 @@
 
                     </div>
 
-                    <div class="row" *ngIf="showAddItem && itemsforadd && itemsforadd.length > 0">
+                    <!-- <div class="row" *ngIf="showAddItem && itemsforadd && itemsforadd.length > 0">
 
                       <div class="col-md-4 col-xxl-4 col-lg-4 mb-3" *ngFor="let item of itemsforadd;let i=index;">
 
                         <div class="card card-custom card-shadowless" (click)="selectaddItem(i)"
                           [class.itemselected]="item.selected">
                           <div class="card-body p-0">
-                            <!--begin::Image-->
                             <div class="overlay">
 
                               <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
                                 [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
-                                <!-- <img [src]="getItemImg(item)"
-                                                          alt="" class="mw-100 w-200px" /> -->
                               </div>
                             </div>
-                            <!--end::Image-->
 
-                            <!--begin::Details-->
                             <div
                               class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
                               <a
@@ -956,7 +935,6 @@
                                   id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1"
                                   value="{{item.maxQuantity}}"> </span>
                             </div>
-                            <!--end::Details-->
                           </div>
                         </div>
 
@@ -964,7 +942,8 @@
                       </div>
 
 
-                    </div>
+                    </div> -->
+
                     <!--end::Card-->
 
                     <!--Modal begin-->
