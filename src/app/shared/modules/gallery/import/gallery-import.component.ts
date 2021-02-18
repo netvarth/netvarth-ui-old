@@ -58,6 +58,9 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         if (this.data.source_id) {
             this.source_id = this.data.source_id;
+            if (this.source_id ==='attachment' || this.source_id ==='consumerimages' ){
+               this.img_save_caption = 'send';
+            }
         }
         else {
             this.dialogRef.close();

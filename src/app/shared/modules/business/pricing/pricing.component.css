@@ -292,3 +292,261 @@ h6.display-5 {
   background-color: #F2B51C !important;
   color: #fff !important;
 }
+
+body {
+  background: #2e3237
+}
+
+#about {
+  text-align: center;
+  color: #fafafa;
+  font: normal small Arial, Helvetica;
+}
+
+#about a {
+  color: #777;
+}
+
+/* --------------- */
+  /* total computed width = 200 x 4 + 210 */
+/* plan width = 158 + 20 + 20 + 1 + 1 = 200px */  
+.pricing-table {
+  /*margin: 100px auto 50px auto;*/
+  text-align: center;
+margin:auto !important;
+padding-top: 10px;
+width:100%;
+  /*width: 1010px; */
+}
+.plancontainer {
+  width: 99%;
+  margin:auto;
+}
+.pricing-table .plan {
+  font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
+  text-shadow: 0 1px rgba(255,255,255,.8);        
+  background: #fff;      
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 20px 0 20px 0;  
+width:100%;
+/* margin:1% auto; */
+  float: left;
+  position: relative;
+}
+
+.pricing-table #most-popular {
+  z-index: 2;
+  top: -13px;
+  border-width: 3px;
+  padding: 30px 20px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+  -webkit-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+  box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);    
+}
+
+.pricing-table .plan:nth-child(1) {
+  -moz-border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;        
+}
+
+.pricing-table .plan:nth-child(4) {
+  -moz-border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;        
+}
+
+/* --------------- */	
+
+.pricing-table h3 {
+  font-size: 20px;
+  font-weight: normal;
+  padding: 20px;
+  background-color: #eee;
+  background-image: -moz-linear-gradient(#fff,#eee);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));    
+  background-image: -webkit-linear-gradient(#fff, #eee);
+  background-image: -o-linear-gradient(#fff, #eee);
+  background-image: -ms-linear-gradient(#fff, #eee);
+  background-image: linear-gradient(#fff, #eee);
+}
+
+.pricing-table #most-popular h3 {
+  background-color: #ddd;
+  background-image: -moz-linear-gradient(#eee,#ddd);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));    
+  background-image: -webkit-linear-gradient(#eee, #ddd);
+  background-image: -o-linear-gradient(#eee, #ddd);
+  background-image: -ms-linear-gradient(#eee, #ddd);
+  background-image: linear-gradient(#eee, #ddd);
+  margin-top: -30px;
+  padding-top: 30px;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0; 		
+}
+
+.pricing-table .plan:nth-child(1) h3 {
+  -moz-border-radius: 5px 0 0 0;
+  -webkit-border-radius: 5px 0 0 0;
+  border-radius: 5px 0 0 0;       
+}
+
+.pricing-table .plan:nth-child(4) h3 {
+  -moz-border-radius: 0 5px 0 0;
+  -webkit-border-radius: 0 5px 0 0;
+  border-radius: 0 5px 0 0;       
+}	
+
+.pricing-table h3 span {
+  display: block;
+  font: bold 25px/100px Georgia, Serif;
+  color: #777;
+  background: #fff;
+  border: 5px solid #fff;
+  height: 120px;
+  width: 120px;
+  margin: 10px auto -65px;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+  -moz-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+  -webkit-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+  box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+}
+
+/* --------------- */
+
+.pricing-table ul {
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-table li {
+  /* border-top: 1px solid #ddd; */
+  padding: 10px 0;
+  cursor: pointer;
+}
+.pricing-table li.noborder {
+  border-top: 0px !important;
+}
+.pricing-table li.head  {
+  font-weight: 700;
+  font-size: 1rem;
+}
+.pricing-table li.nolink {
+  cursor: auto !important;
+}
+/* --------------- */
+  
+.pricing-table .signup {
+  position: relative;
+  padding: 8px 20px; 
+  color: #fff;
+  font: bold 14px Arial, Helvetica;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;       
+  background-color:  #1e4079 ;
+  background-image: -moz-linear-gradient( #1e4079 , #656b61);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#1e4079 ), to(#656b61));    
+  background-image: -webkit-linear-gradient(#1e4079 ,#656b61);
+  background-image: -o-linear-gradient( #1e4079 , #656b61);
+  background-image: -ms-linear-gradient( #1e4079 , #656b61);
+  background-image: linear-gradient( #1e4079 , #656b61);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;     
+  text-shadow: 0 1px 0 rgba(0,0,0,.3);        
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+}
+
+.pricing-table .signup:hover {
+  background-color: #656b61;
+  background-image: -moz-linear-gradient(#656b61, #1e4079);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#656b61), to(#1e4079));      
+  background-image: -webkit-linear-gradient(#656b61, #1e4079);
+  background-image: -o-linear-gradient(#656b61, #1e4079);
+  background-image: -ms-linear-gradient(#656b61, #1e4079);
+  background-image: linear-gradient(#656b61, #1e4079); 
+}
+
+.pricing-table .signup:active, .pricing-table .signup:focus {
+  background: #656b61;       
+  top: 2px;
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset; 
+}
+
+/* --------------- */
+
+.clear:before, .clear:after {
+  content:"";
+  display:table
+}
+
+.clear:after {
+  clear:both
+}
+
+.clear	{
+  zoom:1
+}
+.pad-up-50 {
+  padding-top: 50px !important;
+}
+.mat-tab-label {
+  background-color: #fff !important;
+  color: #000 !important;
+  opacity: 1 !important;
+  font-size: 1.5rem;
+  border-top-left-radius: 30px 20px;
+  border-top-right-radius: 30px 20px;
+  margin-right: 10px;
+}
+.mat-tab-label-active {
+  background-color:  #1e4079 !important;
+  color: #fff !important;
+}
+.pricing-table .info {
+  margin: 50px 0 0 0;
+  min-height: 40px;
+  
+}
+.pricing-table .info p {
+  font-size: 0.75rem !important;
+  color: red;
+  margin: 0 !important;
+}
+.healthTab .features {
+  margin: 40px 0 0 0; 
+  min-height: 350px;
+}
+.nonhealthTab .features {
+  margin: 40px 0 0 0; 
+  min-height: 320px;
+}
+.listing {
+  min-height: 210px;
+}
+.recommend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  background: red;
+  color: white;
+  width: 100%;
+  font-size: 1rem;
+}
+.addon-hgt {
+  min-height: 260px;
+}
