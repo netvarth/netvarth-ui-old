@@ -47,6 +47,8 @@
 }
 .add_item {
     float: right;
+}
+.flat_item {
     line-height: 0.9 !important;
     border-radius: 0 !important;
 }
@@ -54,4 +56,36 @@
     color: #ffffff;
     background-color: #4caf50 !important;
     border-color: #4caf50 !important;
+}
+.ip_feild {
+    border: 1px solid #80808096;
+    border-radius: 5px;
+    width: 100px;
+}
+.btn_prim {
+    background: #1e4079 !important;
+}
+.hr_content {
+    float: right;
+    display: flex;
+}
+.flx_1 {
+    flex: 1;
+}
+.disp_grid {
+    display: grid;
+}
+.extra-bill {
+    font-family: system-ui;
+    font-weight: 600;
+    font-size: smaller;
+}
+.fl_rt {
+    float: right;
+}
+.clr_grn {
+    color: #28a745;
+}
+.clr_red {
+    color: #dc3545;
 }
