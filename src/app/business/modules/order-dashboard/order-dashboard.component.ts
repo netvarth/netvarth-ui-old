@@ -405,6 +405,8 @@ export class OrderDashboardComponent implements OnInit {
   getPaymentTooltip(order) {
     if (order.bill && order.bill.billPaymentStatus) {
       return this.billPaymentStatuses[order.bill.billPaymentStatus];
+    } else if (order.advanceAmountPaid > 0 ) {
+      return 'Advance amount paid';
     } else {
       return 'Not Paid';
     }
@@ -468,7 +470,7 @@ export class OrderDashboardComponent implements OnInit {
     }
   }
 
-  
+
   getDisplayformatTruncateLabel(labeldetails) {
     let labelString = ' ';
     Object.keys(labeldetails.label).forEach(key => {
