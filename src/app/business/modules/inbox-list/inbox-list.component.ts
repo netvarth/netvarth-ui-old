@@ -74,6 +74,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   type = 'all';
   userHeight;
   msgHeight;
+  // @ViewChildren("userMsg") userMsg: QueryList<ElementRef>;
+  scrollDone = false;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -128,10 +130,6 @@ export class InboxListComponent implements OnInit, OnDestroy {
     this.provider_services.readConsumerMessages(consumerId, messageId, providerId).subscribe(data => {
       this.getInboxUnreadCnt();
       this.getInboxMessages();
-    }, error => {
-      setTimeout(() => {
-        this.scrollToElement();
-      }, 100);
     });
   }
   getInboxUnreadCnt() {
@@ -180,6 +178,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.messages = data;
+          this.scrollDone = true;
           console.log(this.messages);
           this.setMessages();
           this.loading = false;
@@ -372,6 +371,26 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   showChatSection() {
     this.showChat = !this.showChat;
+    // if (!this.showChat) {
+    //   setTimeout(() => {
+    //     this.userMsg.toArray().forEach(element => {
+    //       if (element.nativeElement.innerHTML.trim() === this.selectedCustomer.trim()) {
+    //         console.log(element.nativeElement);
+
+    // var height = element.nativeElement.offsetHeight;
+    // console.log(height);
+    //     window.scroll({
+    //         top: height,
+    //         left: 0,
+    //         behavior: 'smooth'
+    //     });
+
+    // element.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    // return false;
+    //       }
+    //   });
+    //   }, 500);
+    // }
   }
   scrollToElement() {
     try {
@@ -438,11 +457,10 @@ export class InboxListComponent implements OnInit, OnDestroy {
       console.log(unreadMsgs[0].accountId);
       console.log(unreadMsgs[0].providerId);
       this.readConsumerMessages(unreadMsgs[0].accountId, messageids.split(',').join('-'), unreadMsgs[0].providerId);
-    } else {
-      setTimeout(() => {
-        this.scrollToElement();
-      }, 100);
     }
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.messagestatus === 'in');
@@ -474,14 +492,15 @@ export class InboxListComponent implements OnInit, OnDestroy {
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       const filter = {};
-      console.log(this.selectedUser);
-      if (this.selectedUser.userType === 'PROVIDER') {
-        filter['provider'] = this.selectedUser.id;
+      console.log(this.selectedUserMessages);
+      if (this.selectedUserMessages[0].providerId !== 0) {
+        filter['provider'] = this.selectedUserMessages[0].providerId;
       }
       this.shared_service.addProvidertoConsumerNote(this.selectedUserMessages[0].accountId,
         dataToSend, filter)
         .subscribe(
           () => {
+            this.scrollDone = false;
             this.message = '';
             this.getInboxMessages();
             this.clearImg();
@@ -538,6 +557,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   changeMsgType(type) {
     this.type = type;
+    this.message = '';
     console.log(this.tempSelectedUserMessages);
     if (this.type === 'all') {
       this.selectedUserMessages = this.tempSelectedUserMessages;

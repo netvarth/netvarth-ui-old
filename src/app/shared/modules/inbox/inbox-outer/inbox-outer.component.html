@@ -143,6 +143,9 @@
                               <!--end::Message Out-->
                             </div>
                             <!--end::Messages-->
+                            <div class="loading" *ngIf="!scrollDone">
+                            <app-common-innerloading-spinner  ></app-common-innerloading-spinner>
+                          </div>
                           </div>
                           <!--end::Scroll-->
                         </div>
@@ -160,7 +163,7 @@
                               <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
                                   class="material-icons">attach_file</i></a>
                             </div>
-                            <div>
+                            <div *ngIf="message !== ''">
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
                                 *ngIf="!small_device_display"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send

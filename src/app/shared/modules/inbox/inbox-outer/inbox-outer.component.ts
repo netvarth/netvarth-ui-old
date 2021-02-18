@@ -63,6 +63,7 @@ export class InboxOuterComponent implements OnInit {
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
   type = 'all';
   tempSelectedUserMessages: any = [];
+  scrollDone = false;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -89,6 +90,7 @@ export class InboxOuterComponent implements OnInit {
       .subscribe(
         data => {
           this.messages = data;
+          this.scrollDone = true;
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
             this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedProvider];
@@ -151,11 +153,10 @@ export class InboxOuterComponent implements OnInit {
       const ids = unreadMsgs.map(msg => msg.messageId);
       const messageids = ids.toString();
       this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
-    } else {
-      setTimeout(() => {
-        this.scrollToElement();
-      }, 100);
     }
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
@@ -164,10 +165,6 @@ export class InboxOuterComponent implements OnInit {
   readProviderMessages(providerId, messageId, accountId) {
     this.inbox_services.readProviderMessages(providerId, messageId, accountId).subscribe(data => {
       this.getInboxMessages();
-    }, error => {
-      setTimeout(() => {
-        this.scrollToElement();
-      }, 100);
     });
   }
   sendMessage() {
@@ -194,6 +191,7 @@ export class InboxOuterComponent implements OnInit {
         .subscribe(
           () => {
             this.message = '';
+            this.scrollDone = false;
             this.getInboxMessages();
             this.clearImg();
             this.sendMessageCompleted = true;

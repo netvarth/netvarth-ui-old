@@ -128,3 +128,9 @@ textarea {
 .flex-row {
     width: 100%;
 }
+.display-none {
+    display: none;
+}
+.loading {
+    margin-top: -50px
+}

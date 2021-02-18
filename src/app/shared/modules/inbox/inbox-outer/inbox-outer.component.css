@@ -90,3 +90,6 @@ textarea {
 .flex-row {
     width: 100%;
 }
+.loading {
+    margin-top: -50px
+}
