@@ -283,6 +283,7 @@ export class CatalogdetailComponent implements OnInit {
                                                 this.catalogcaption = this.catalog.catalogName;
                                                 if (this.catalog.catalogItem) {
                                                     this.catalogItems = this.catalog.catalogItem;
+                                                    console.log(this.catalogItems);
                                                     this.setItemFromCataDetails();
                                                 }
                                                 if (this.action === 'edit') {
@@ -361,13 +362,34 @@ export class CatalogdetailComponent implements OnInit {
     gotoNext() {
         this.step = this.step + 1;
         if (this.step === 3) {
-            this.selectedItems();
+            if(this.cataId){
+                this.selectedaddItems();
+            } else {
+                this.selectedItems();
+            }
+            
         }
     }
     gotoPrev() {
         this.step = this.step - 1;
         if (this.step === 2) {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
+            if(this.cataId){
+                if (this.addCatalogItems && this.addCatalogItems.length > 0 ) {
+                    this.selecteditemCount = this.addCatalogItems.length;
+                    for (const itm of this.itemsforadd) {
+                      for (const selitem of this.addCatalogItems) {
+                         if (itm.itemId === selitem.item.itemId) {
+                          itm.selected = true;
+                          itm.id = selitem.id;
+                          itm.minQuantity = selitem.minQuantity;
+                          itm.maxQuantity = selitem.maxQuantity;
+                         }
+                    }
+                  }
+            
+                   }
+        } else {
             if (this.addCatalogItems && this.addCatalogItems.length > 0) {
                 this.selectedCount = this.addCatalogItems.length;
                 for (const itm of this.catalogItem) {
@@ -382,7 +404,11 @@ export class CatalogdetailComponent implements OnInit {
                 }
             }
         }
+        }
     }
+
+
+
     getItems() {
         const apiFilter = {};
         apiFilter['itemStatus-eq'] = 'ACTIVE';
@@ -1679,11 +1705,15 @@ export class CatalogdetailComponent implements OnInit {
 
         };
         if (this.action === 'add') {
-            postdata['catalogItem'] = this.seletedCatalogItems;
+            // postdata['catalogItem'] = this.seletedCatalogItems;
+            postdata['catalogItem'] = this.catalogItemsSelected;
             this.addCatalog(postdata);
         } else if (this.action === 'edit') {
             // postdata['catalogItem'] = this.catalogItems;
-            postdata['catalogItem'] = this.seletedCatalogItems;
+            //postdata['catalogItem'] = this.seletedCatalogItems;
+            const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+            postdata['catalogItem'] = additems;
+            console.log(postdata);
             this.editCatalog(postdata);
         }
     }
@@ -2153,7 +2183,11 @@ export class CatalogdetailComponent implements OnInit {
             this.catalogItem[index].selected = true;
             this.selectedCount++;
         } else {
-            this.catalogItem[index].selected = true;
+            if(this.cataId){
+                this.catalogItem[index].selected = true; 
+            } else {
+                this.catalogItem[index].selected = false;
+            }
             this.selectedCount--;
         }
     }
@@ -2199,6 +2233,7 @@ export class CatalogdetailComponent implements OnInit {
                 this.catalogItemsSelected.push(this.seletedCatalogItems1);
             }
         }
+        console.log(this.catalogItemsSelected);
         this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogItemsSelected);
         //     const navigationExtras: NavigationExtras = {
         //       queryParams: { action: 'add',
@@ -2207,7 +2242,6 @@ export class CatalogdetailComponent implements OnInit {
         //     this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', 'add'], navigationExtras);
     }
     selectedaddItems() {
-        this.api_loading = true;
         this.catalogSelectedItemsadd = [];
         for (let ia = 0; ia < this.itemsforadd.length; ia++) {
             this.seletedCatalogItemsadd = {};
@@ -2227,6 +2261,8 @@ export class CatalogdetailComponent implements OnInit {
                 this.catalogSelectedItemsadd.push(this.seletedCatalogItemsadd);
             }
         }
+        const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+        console.log(additems);
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
             //   const navigationExtras: NavigationExtras = {
@@ -2235,6 +2271,8 @@ export class CatalogdetailComponent implements OnInit {
             //   };
             //   this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', this.cataId], navigationExtras);
             //  this.addItems(this.catalogSelectedItemsadd);
+        } else {
+            this.lStorageService.removeitemfromLocalStorage('selecteditems');
         }
     }
     createItem(form_data, isfrom?) {
@@ -2384,15 +2422,18 @@ export class CatalogdetailComponent implements OnInit {
 
     // New functions
     setItemFromCataDetails() {
-        for (let j = 0; j < this.catalogItem.length; j++) {
-            const itemArr = this.catalog.catalogItem.filter(item => item.item.itemId === this.catalogItem[j].itemId);
-            if (itemArr.length > 0) {
-                this.catalogItem[j].minQuantity = itemArr[0].minQuantity;
-                this.catalogItem[j].maxQuantity = itemArr[0].maxQuantity;
-                this.catalogItem[j].id = itemArr[0].id;
-                this.selectItem(j);
-            }
-        }
+        this.itemsforadd = [];
+        this.itemsforadd = this.catalogItem.filter(o1 => this.catalog.catalogItem.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
+       
+        // for (let j = 0; j < this.catalogItem.length; j++) {
+        //     const itemArr = this.catalog.catalogItem.filter(item => item.item.itemId === this.catalogItem[j].itemId);
+        //     if (itemArr.length > 0) {
+        //         this.catalogItem[j].minQuantity = itemArr[0].minQuantity;
+        //         this.catalogItem[j].maxQuantity = itemArr[0].maxQuantity;
+        //         this.catalogItem[j].id = itemArr[0].id;
+        //         this.selectItem(j);
+        //     }
+        // }
     }
 
     editCatalogItem(item) {
@@ -2446,7 +2487,7 @@ export class CatalogdetailComponent implements OnInit {
             console.log(result);
           if (result) {
             this.api_loading = true;
-            this.provider_services.deleteCatalogItem(this.cataId, itm.itemId).subscribe(
+            this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
               (data) => {
                // this.getCatalog();
                this.getUpdatedItems();
