@@ -849,6 +849,14 @@ export class ProviderServices {
       const url = 'provider/waitlist/label/' + uuid + '/' + label;
       return this.servicemeta.httpDelete(url);
    }
+   addLabeltoMultipleCheckin(data) {
+      const url = 'provider/waitlist/labelBatch';
+      return this.servicemeta.httpPost(url, data);
+   }
+   deleteLabelFromMultipleCheckin(data) {
+      const url = 'provider/waitlist/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
    addSalesCode(id) {
       const url = 'provider/salesChannel/' + id;
       return this.servicemeta.httpPost(url);
@@ -1850,10 +1858,6 @@ getDeliveryAddress(customerId) {
    }
    editContactInfo(data) {
       return this.servicemeta.httpPut('provider/order/settings/contact/info', data);
-   }
-   addLabeltoMultipleCheckin(data) {
-      const url = 'provider/waitlist/labelBatch';
-      return this.servicemeta.httpPost(url, data);
    }
    addLabeltoMultipleAppt(data) {
       const url = 'provider/appointment/labelBatch';
