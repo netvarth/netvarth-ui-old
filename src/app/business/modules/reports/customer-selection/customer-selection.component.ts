@@ -89,6 +89,7 @@ export class CustomerSelectionComponent implements OnInit {
     this.placeHolder_msg = placeholder.replace('customer', this.customer_label);
   }
   handleChange(event) {
+    this.count = -1;
     if (this.customerSelected === 'all') {
       const customerData = {
         'jaldee_customers': 'All',

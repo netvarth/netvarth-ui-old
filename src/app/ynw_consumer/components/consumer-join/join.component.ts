@@ -59,10 +59,10 @@ export class ConsumerJoinComponent implements OnInit {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
+  TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
+  preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
   phoneDialCode;
   constructor(
@@ -137,7 +137,7 @@ export class ConsumerJoinComponent implements OnInit {
   onSubmit(data) {
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
-   
+
 
     // const pN = this.mobile_num.trim();
     const pW = data.password.trim();
@@ -154,7 +154,7 @@ export class ConsumerJoinComponent implements OnInit {
       }
     }
     let loginId = pN;
-    if(pN.startsWith(dialCode)) {
+    if (pN.startsWith(dialCode)) {
       loginId = pN.split(dialCode)[1];
     }
     const ob = this;
@@ -239,7 +239,7 @@ export class ConsumerJoinComponent implements OnInit {
 
     }
 
-       const userProfile = {
+    const userProfile = {
       // countryCode: '+91',
       countryCode: dialCode,
       primaryMobileNo: loginId || null,
@@ -248,7 +248,7 @@ export class ConsumerJoinComponent implements OnInit {
     };
     if (this.loginForm.get('emailId').value) {
       userProfile['email'] = this.loginForm.get('emailId').value.trim();
-  }
+    }
     // if (userProfile.firstName === null) {
     //   userProfile.firstName = 'undefined';
     // }
@@ -334,9 +334,10 @@ export class ConsumerJoinComponent implements OnInit {
     this.resetApiErrors();
     const ob = this;
     const dialCode = this.loginForm.get('phone').value.dialCode;
-    const post_data = { 
+    const post_data = {
       countryCode: dialCode,
-      password: submit_data.new_password };
+      password: submit_data.new_password
+    };
     this.shared_services.ConsumerSetPassword(this.otp, post_data)
       .subscribe(
         () => {
@@ -453,8 +454,9 @@ export class ConsumerJoinComponent implements OnInit {
 
   checkAccountExists() {
     this.mobile_num = this.document.getElementById('phone').value;
-    this. phoneDialCode = this.loginForm.get('phone').value.dialCode;
+    this.phoneError = null;
     if (this.mobile_num) {
+      this.phoneDialCode = this.loginForm.get('phone').value.dialCode;
       this.shared_services.consumerMobilenumCheck(this.mobile_num, this.phoneDialCode).subscribe((accountExists) => {
         if (accountExists) {
           this.phoneExists = true;
@@ -467,6 +469,8 @@ export class ConsumerJoinComponent implements OnInit {
         }
       }
       );
+    } else {
+      this.phoneError = 'Mobile number required';
     }
   }
 }

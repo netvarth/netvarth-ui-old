@@ -677,7 +677,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="checkin.waitlistStatus != 'cancelled'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -698,7 +698,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -807,7 +807,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="bill_data.billStatus !== 'Cancel'"
 																	(click)="adjustItem(item.itemName, item.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1117,7 +1117,7 @@
 																<span class="number">
 																	<mat-form-field class="example-full-width">
 																		<span matPrefix class="rupee-font"
-																			style="font-size: larger;"> ₹ &nbsp;</span>
+																			style="font-size: larger;"> â‚¹ &nbsp;</span>
 																		<mat-form-field class="bill-ip">
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"
@@ -1164,7 +1164,7 @@
 																<span class="number">
 																	<mat-form-field class="example-full-width">
 																		<span matPrefix class="rupee-font"
-																			style="font-size: larger;">₹ &nbsp;</span>
+																			style="font-size: larger;">â‚¹ &nbsp;</span>
 																		<mat-form-field class="bill-ip">
 																			<input type="number" matInput #payamounttxt
 																				aria-label="Number" matInput value="1"

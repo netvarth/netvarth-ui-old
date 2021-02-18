@@ -711,6 +711,7 @@ export class CustomerSearchComponent implements OnInit {
                             filter['phone'] = form_data.search_input;
                         }
                         filter['source'] = 'clist';
+                        filter['type'] = 'create';
                         const navigationExtras: NavigationExtras = {
                             queryParams: filter
                         };
