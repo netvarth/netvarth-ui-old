@@ -168,20 +168,23 @@ export class CustomerDetailComponent implements OnInit {
                     this.save_btn = 'Proceed';
                 }
             } else {
-                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block')) {
+                if (this.type && this.type === 'create' && (this.source === 'token' || this.source === 'checkin' || this.source === 'appointment' || this.source === 'appt-block' || this.source === 'waitlist-block' || this.source === 'clist')) {
                     this.customerErrorMsg = 'This record is not found in your ' + this.customer_label + 's list.';
+                    this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details';
                     if (this.source === 'waitlist-block') {
                         if (this.showToken) {
-                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create token';
+                            this.customerErrorMsg1 = this.customerErrorMsg1 + ' to create token';
                         } else {
-                            this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create check-in';
+                            this.customerErrorMsg1 = this.customerErrorMsg1 + ' to create check-in';
                         }
                     } else if (this.source === 'appt-block') {
-                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create appointment';
-                    } else {
-                        this.customerErrorMsg1 = 'Please fill ' + this.customer_label + ' details to create ' + this.source;
+                        this.customerErrorMsg1 = this.customerErrorMsg1 + ' to create appointment';
+                    } else if (this.source !== 'clist') {
+                        this.customerErrorMsg1 = this.customerErrorMsg1 + ' to create ' + this.source;
                     }
-                    this.save_btn = 'Proceed';
+                    if (this.source !== 'clist') {
+                        this.save_btn = 'Proceed';
+                    }
                 }
             }
             if (qparams.email) {

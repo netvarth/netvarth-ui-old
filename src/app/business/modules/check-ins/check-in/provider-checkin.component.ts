@@ -322,6 +322,11 @@ export class ProviderCheckinComponent implements OnInit {
                         } else {
                             this.customer_data = data[0];
                         }
+                        if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                            this.countryCode = this.customer_data.countryCode;
+                        } else {
+                            this.countryCode = '+91';
+                        }
                         this.jaldeeId = this.customer_data.jaldeeId;
                         this.getFamilyMembers();
                         this.initCheckIn();
@@ -492,7 +497,6 @@ export class ProviderCheckinComponent implements OnInit {
                             } else {
                                 this.countryCode = '+91';
                             }
-
                             if (this.source === 'waitlist-block') {
                                 this.showBlockHint = true;
                                 if (this.showtoken) {
@@ -1050,6 +1054,11 @@ export class ProviderCheckinComponent implements OnInit {
                         this.customer_data = data[0];
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                        this.countryCode = this.customer_data.countryCode;
+                    } else {
+                        this.countryCode = '+91';
+                    }
                     this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
                     this.saveCheckin();
                 });
@@ -1073,9 +1082,12 @@ export class ProviderCheckinComponent implements OnInit {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                 this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
             } else if (!this.thirdParty) {
-                const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
-                console.log(this.callingModes)
+                console.log(this.countryCode);
+                if (this.countryCode) {
+                    const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = unChangedPhnoCountryCode + '' + this.callingModes;
+                    console.log(this.callingModes)
+                }
             } else {
                 console.log("third party")
                 const thirdparty_countrycode = '91';
