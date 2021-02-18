@@ -1097,6 +1097,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
+
     const nDt = new Date(ndate);
     if (nDt.getTime() >= strtDt.getTime()) {
       this.sel_checkindate = ndate;
@@ -1152,6 +1153,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
     const datee2 = new Date(dte2);
+    const last_date = moment().add(30, 'days');
+    console.log('30 day date..' + last_date);
+    const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+    if (dte2 > thirty_date) {
+      console.log('greater than 30');
+    } else {
+      console.log('less than 30');
+    }
+
     if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
       this.isFuturedate = true;
     } else {
