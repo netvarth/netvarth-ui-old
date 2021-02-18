@@ -58,6 +58,9 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         if (this.data.source_id) {
             this.source_id = this.data.source_id;
+            if (this.source_id ==='attachment' || this.source_id ==='consumerimages' ){
+               this.img_save_caption = 'send';
+            }
         }
         else {
             this.dialogRef.close();
@@ -97,7 +100,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.error_list = [];
         if (input.files) {
             for (const file of input.files) {
-                this.success_error = this.sharedfunctionObj.imageValidation(file);
+                this.success_error = this.sharedfunctionObj.imageValidation(file , this.source_id);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
                     const reader = new FileReader();
@@ -186,4 +189,11 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.img_save_caption = 'Save';
         this.canceldisabled = false;
     }
+    getImage(url, file) {
+        if (file.type == 'application/pdf') {
+          return '../../../../../assets/images/pdf.png';
+        } else {
+          return url;
+        }
+      }
 }

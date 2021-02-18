@@ -15,8 +15,8 @@
                   <i class="fa fa-arrow-left"></i>
                 </a>
                 <span class=" mgn-lt-10 amount">Continue shopping</span>
-                <!-- <span class="pull-right mgn-rt-10" *ngIf="getItemQty()>0"><i class="fa fa-shopping-cart"
-                    (click)="checkout()"><sup class="blue"> {{updateCartCount()}}</sup></i></span> -->
+                <span class="pull-right mgn-rt-10" *ngIf="getItemQty()>0"><i class="fa fa-shopping-cart"
+                    (click)="checkout()"><sup class="blue"> {{updateCartCount()}}</sup></i></span>
               </h5>
             </div>
             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -76,7 +76,9 @@
                     </p>
                   </div>
                   <div class="col-md-12  mr-area">
-                    <p *ngIf = "currentItem.itemDesc" class="m0 question-header">Description</p>
+                    <p class="m0 question-header">Description</p>
+                    <p>{{currentItem.shortDesc}}</p>
+                    <p *ngIf = "currentItem.itemDesc" class="m0 question-header">Detail Description</p>
                     <p>{{currentItem.itemDesc}}</p>
                     <!-- <textarea name="paragraph_text" maxlength="500" cols="10" rows="2"></textarea> -->
                   </div>
@@ -91,7 +93,7 @@
                   </div>
                   <div class="col-md-12 pad-lt-25 mgn-bt-50">
                     <div class="btn-lt pull-left">
-                      <button [ngClass]="{'disabled1': currentItemObject.minqty === getItemQty()|| !currentItem.isStockAvailable}" (click)="decrement()">-</button>
+                      <button [ngClass]="{'disabled1': !currentItem.isStockAvailable}" (click)="decrement()">-</button>
                     </div>
                     <div class="count-o pull-left">
                       {{getItemQty()}}
@@ -109,7 +111,12 @@
                     <p>{{currentItemObject.maxqty}}</p>
                   </div>
                 </div>
+                <div >
+                  <button class="btn pull-right btncheckout" (click)="checkout();" *ngIf="getItemQty()>0"> Checkout</button>
+
+                </div>
               </div>
+
             </div>
           </div>
         </div>

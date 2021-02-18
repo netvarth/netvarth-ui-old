@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Image, ImageEvent, AccessibilityConfig } from '@ks89/angular-modal-gallery';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,6 +14,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class ItemDetailsSharedComponent implements OnInit {
 
+  businessDetails: any;
+  accountId: any;
   provider_bussiness_id: any;
   currentItemObject: any;
   price: number;
@@ -79,59 +81,8 @@ export class ItemDetailsSharedComponent implements OnInit {
   isPromotionalpricePertage;
   isPrice;
   loading = true;
-  showitemprice;
-  // imagesRect: Image[] = [
-  //   new Image(
-  //     0,
-  //     {
-  //       img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/milan-pegasus-gallery-statue.jpg',
-  //       description: 'Description 1'
-  //     },
-  //     { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-milan-pegasus-gallery-statue.jpg',
-  //     title: 'First image title',
-  //     alt: 'First image alt',
-  //     ariaLabel: 'First image aria-label' }
-  //   ),
-  //   new Image(1, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-47223.jpeg' }, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-47223.jpg' }),
-  //   new Image(
-  //     2,
-  //     {
-  //       img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-52062.jpeg',
-  //       description: 'Description 3',
-  //       title: 'Third image title',
-  //       alt: 'Third image alt',
-  //       ariaLabel: 'Third image aria-label'
-  //     },
-  //     {
-  //       img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-52062.jpg',
-  //       description: 'Description 3'
-  //     }
-  //   ),
-  //   new Image(
-  //     3,
-  //     {
-  //       img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-66943.jpeg',
-  //       description: 'Description 4',
-  //       title: 'Fourth image title (modal obj)',
-  //       alt: 'Fourth image alt (modal obj)',
-  //       ariaLabel: 'Fourth image aria-label (modal obj)'
-  //     },
-  //     { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-66943.jpg',
-  //     title: 'Fourth image title (plain obj)',
-  //     alt: 'Fourth image alt (plain obj)',
-  //     ariaLabel: 'Fourth image aria-label (plain obj)' }
-  //   ),
-  //   new Image(4, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-93750.jpeg' }, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-93750.jpg' }),
-  //   new Image(
-  //     5,
-  //     {
-  //       img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-94420.jpeg',
-  //       description: 'Description 6'
-  //     },
-  //     { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-94420.jpg' }
-  //   ),
-  //   new Image(6, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/pexels-photo-96947.jpeg' }, { img: 'https://raw.githubusercontent.com/Ks89/angular-modal-gallery/master/examples/systemjs/assets/images/gallery/thumbs/t-pexels-photo-96947.jpg' })
-  // ];
+  showitemprice = true;
+
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
     public route: ActivatedRoute,
@@ -142,8 +93,15 @@ export class ItemDetailsSharedComponent implements OnInit {
       params => {
         this.item = params.item;
         this.provider_bussiness_id = parseInt(params.providerId, 0);
-        this.showitemprice = params.showpric;
-        console.log(this.showitemprice);
+
+        if (params.showpric === 'false') {
+          this.showitemprice = false;
+        } else {
+          this.showitemprice = true;
+        }
+        if (params.businessDetails) {
+          this.businessDetails = params.businessDetails;
+        }
       });
   }
   updateCartCount() {
@@ -187,25 +145,18 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.loading = false;
   }
 
-  // this.customOptions = {
-  //   dots: true,
-  //   loop: true,
-  //   autoplay: true,
-  //   responsiveClass: true,
-  //   responsive: {
-  //     0: {
-  //       items: 1
-  //     },
-  //     992: {
-  //       items: 1,
-  //       center: true,
-  //     }
-  //   }
-  // };
+
 
   checkout() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.router.navigate(['consumer', 'order', 'cart']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        account_id: this.provider_bussiness_id
+
+      }
+
+    };
+    this.router.navigate(['order/shoppingcart'], navigationExtras);
   }
   getItemQty() {
     const orderList = this.orderList;
@@ -230,24 +181,54 @@ export class ItemDetailsSharedComponent implements OnInit {
   decrement() {
     this.removeFromCart();
   }
+  // addToCart() {
+  //   const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+  //   if (spId === null) {
+  //     this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+  //   } else {
+  //     if (this.orderList !== null && this.orderList.length !== 0) {
+  //       if (spId !== this.provider_bussiness_id) {
+  //         if (this.getConfirmation()) {
+  //           this.lStorageService.removeitemfromLocalStorage('order');
+  //         }
+  //       }
+  //     }
+  //   }
+  //   this.orderList.push(this.currentItemObject);
+  //   console.log(this.orderList);
+  //   this.lStorageService.setitemonLocalStorage('order', this.orderList);
+  //   this.getItemQty();
+  //   this.updateCartCount();
+
+  // }
+
+  // OrderItem add to cart
   addToCart() {
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
+      this.orderList = [];
       this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.orderList.push(this.currentItemObject);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', this.businessDetails);
+      this.getItemQty();
     } else {
       if (this.orderList !== null && this.orderList.length !== 0) {
         if (spId !== this.provider_bussiness_id) {
           if (this.getConfirmation()) {
             this.lStorageService.removeitemfromLocalStorage('order');
           }
+        } else {
+          this.orderList.push(this.currentItemObject);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          this.getItemQty();
         }
+      } else {
+        this.orderList.push(this.currentItemObject);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.getItemQty();
       }
     }
-    this.orderList.push(this.currentItemObject);
-    console.log(this.orderList);
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.getItemQty();
-    this.updateCartCount();
 
   }
   getConfirmation() {

@@ -140,7 +140,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     this.linear = false;
     this.orderList = JSON.parse(localStorage.getItem('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-   this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
+    this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
     this.catlogArry();
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -151,7 +151,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
       this.doLogin('consumer');
     }
 
-   // this.getaddress();
+    // this.getaddress();
     this.loginForm = this._formBuilder.group({
       phone: [this.customer_phoneNumber, Validators.required]
     });
@@ -184,11 +184,17 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     this.todaydate = dtoday;
     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-if (this.todaydate === this.sel_checkindate) {
-this.isFuturedate = false;
-} else {
-  this.isFuturedate = true;
-}
+    if (this.todaydate === this.sel_checkindate) {
+      this.isFuturedate = false;
+    } else {
+      console.log(this.maxDate);
+      this.isFuturedate = true;
+      if (this.sel_checkindate > this.maxDate) {
+        console.log(this.maxDate);
+      } else {
+        console.log('within the range');
+      }
+    }
   }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
@@ -199,10 +205,10 @@ this.isFuturedate = false;
   }
   isLoggedIn() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-   if (activeUser) {
-    this.loginForm.get('phone').setValue(activeUser.primaryPhoneNumber);
-   // this.getaddress();
-   }
+    if (activeUser) {
+      this.loginForm.get('phone').setValue(activeUser.primaryPhoneNumber);
+      // this.getaddress();
+    }
     return true;
   }
   getTaxCharges() {

@@ -61,7 +61,8 @@ const routes: Routes = [
     { path: 'order/checkout', component: CheckoutSharedComponent },
     { path: 'order/shoppingcart', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
     { path: 'order/shoppingcart/checkout', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
-    { path: 'order/item-details', component: ItemDetailsSharedComponent}
+    { path: 'order/item-details', component: ItemDetailsSharedComponent},
+    { path: ':id/:userEncId', component: BusinessPageComponent}
     // { path: '**', redirectTo: 'not-found' }
 ];
 

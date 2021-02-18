@@ -102,6 +102,8 @@ import { TwilioService } from './shared/services/twilio-service';
 import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
+import { DateTimeProcessor } from './shared/services/datetime-processor.service';
+import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -232,6 +234,8 @@ export function init_app(globalService: GlobalService) {
     CookieProcessor,
     GroupStorageService,
     WordProcessor,
+    DateTimeProcessor,
+    DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
     MeetService,

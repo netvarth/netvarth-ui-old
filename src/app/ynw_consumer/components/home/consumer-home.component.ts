@@ -208,6 +208,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   screenWidth: number;
   no_of_grids: number;
   bookingStatusClasses = projectConstantsLocal.BOOKING_STATUS_CLASS;
+  display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
   galleryDialog: any;
   gallerysubscription: Subscription;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -290,6 +291,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (stat === true) {
       this.showOrder = true;
     }
+    //  else {
+    //   this.showOrder = false;
+    // }
     this.breadcrumbs = [
       {
         title: 'My Jaldee'
@@ -2087,6 +2091,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
      this.galleryDialog.afterClosed().subscribe(result => {
+      this.reloadAPIs();
     });
   }
 

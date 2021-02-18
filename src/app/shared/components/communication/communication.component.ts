@@ -25,7 +25,7 @@ export class CommunicationComponent implements OnInit {
   type: any;
   message: any;
   uid: any;
-  ownerName = 'provider';
+  ownerName = 'Provider';
   selectedMsg = -1;
   newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   dateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;

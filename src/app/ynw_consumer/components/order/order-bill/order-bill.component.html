@@ -62,10 +62,10 @@
                                                                             <span
                                                                                 class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                                         </span>
-                                                                        <span class="columns mgn-up-10" *ngIf="checkin.orderNumber"> <span
+                                                                        <!-- <span class="columns mgn-up-10" *ngIf="checkin.orderNumber"> <span
                                                                             class="dynamic">Order Id </span>
                                                                         <span class="dynamic">{{checkin.orderNumber}}</span>
-                                                                    </span>
+                                                                    </span> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -355,8 +355,8 @@
                                                                     <button class="cs-btn bt1"
                                                                         (click)="payuPayment()">CC/DC/Net
                                                                         Banking/UPI</button>
-                                                                    <button class="cs-btn bt1" *ngIf="paytmEnabled"
-                                                                        (click)="paytmPayment()">Paytm</button>
+                                                                    <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled"
+                                                                        (click)="paytmPayment()">Paytm</button> -->
                                                                     <button class="cs-btn bt1"
                                                                         (click)="cashPayment()">Cash</button>
                                                                 </div>

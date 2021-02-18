@@ -134,11 +134,11 @@
                                                     <button mat-menu-item  (click)="sendAttachment(booking,'appt')">
                                                         <!-- <i class="fa chat-icon"></i>-->
                                                          <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>	
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -312,11 +312,11 @@
                                                     </button>
                                                     <button mat-menu-item   (click)="sendAttachment(booking,'checkin')">
                                                        <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>	
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -539,11 +539,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>	
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -715,11 +715,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
-                                                         Send Attachment
+                                                         Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -959,11 +959,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'appt')">
                                                        <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
@@ -1118,11 +1118,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                       <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -1352,11 +1352,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'appt')">
                                                       <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>	
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
@@ -1511,11 +1511,11 @@
                                                     </button>
                                                     <button mat-menu-item (click)="sendAttachment(booking,'checkin')">
                                                      <i class="material-icons">attach_file</i>
-                                                        Send Attachment
+                                                        Send Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
-                                                        View Attachment
+                                                        View Attachments
                                                     </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
@@ -1715,7 +1715,7 @@
                             TODAY
                         </div>
                         <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let oder of todayOrderslst;" (click)="showBookingDetails(oder)">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
                                         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
@@ -1765,6 +1765,9 @@
                                                     {{oder.orderFor.firstName}}
                                                     {{oder.orderFor.lastName}}
                                                 </div> -->
+                                                <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                    {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
@@ -1787,7 +1790,7 @@
 
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus | capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
@@ -1800,7 +1803,7 @@
                         </div>
                         <ng-container *ngIf="more_tdyOrdersShow">
                             <div *ngIf="total_tdy_order.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                     <mat-grid-tile *ngFor="let oder of todayOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
@@ -1846,6 +1849,9 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
+                                                        <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -1869,7 +1875,7 @@
 
                                             </div>
                                             <div
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus | capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>
@@ -1888,7 +1894,7 @@
                         </div>
                         <div *ngIf="total_future_order && (total_future_order.length != 0)"
                             class="mgn-up-10 mgn-bt-10 grid-card">
-                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                            <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                 <mat-grid-tile *ngFor="let oder of futureOrderslst;" (click)="showBookingDetails(oder)">
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 fit_in no-padding">
                                         <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xs-2 no-padding">
@@ -1929,6 +1935,9 @@
                                                 <span class="sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
+                                                    <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                 <!-- <div class="userName">
                                                     <i class="fa fa-user for"></i>
                                                     {{oder.orderFor.firstName}}
@@ -1956,7 +1965,7 @@
 
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                             {{oder.orderStatus | capitalizeFirst}}</div>
                                     </div>
                                 </mat-grid-tile>
@@ -1970,7 +1979,7 @@
                         <ng-container *ngIf="more_futrOrdersShow">
                             <div *ngIf="total_future_order && total_future_order.length != 0"
                                 class="mgn-up-10 mgn-bt-10 grid-card">
-                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="130px" [gutterSize]="'10px'">
+                                <mat-grid-list cols="{{no_of_grids}}" rowHeight="175px" [gutterSize]="'10px'">
                                     <mat-grid-tile *ngFor="let oder of futureOrderslst_more;"
                                         (click)="showBookingDetails(oder)">
                                         <div
@@ -2014,6 +2023,9 @@
                                                         (click)="providerDetail(oder.providerAccount,$event)">
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
+                                                        <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}},
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}</div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -2037,7 +2049,7 @@
 
                                             </div>
                                             <div
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom ordr_status">
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom "[ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
                                                 {{oder.orderStatus | capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>

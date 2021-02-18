@@ -30,7 +30,7 @@
                                         <div class="tp" *ngIf="payments">
                                             <div class="item"><span class="ttle">Date & Time</span> <span>
                                                     {{stringtoDate(payments.paymentOn,
-                                        'date')}} {{stringtoDate(payments.paymentOn,
+                                        'date')}} & {{stringtoDate(payments.paymentOn,
 											'time')}}
                                                 </span></div>
                                             <div class="item"><span class="ttle">Provider</span> <a (click)="providerDetail(payments.accountEncodedId,$event)">
