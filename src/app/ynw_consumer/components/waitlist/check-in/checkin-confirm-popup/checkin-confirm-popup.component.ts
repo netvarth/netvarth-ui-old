@@ -147,6 +147,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     }
                 });
                 if (this.selectedMessage.files.length > 0) {
+                    console.log(retUUID);
                     this.consumerNoteAndFileSave(uuidList);
                 }
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
