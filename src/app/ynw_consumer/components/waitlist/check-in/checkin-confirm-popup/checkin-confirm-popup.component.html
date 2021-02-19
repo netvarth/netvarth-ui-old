@@ -57,7 +57,7 @@
             {{member.lastName | capitalizeFirst}}
         </h6>
 
-        <div class="contact-section">
+        <div class="contact-section mgn-bt-5">
             <i class="fa fa-mobile "></i>
             <i *ngIf="service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)"
                 class="fa wtsapaud-icon wtsap-cal"></i>
@@ -77,7 +77,7 @@
                 The provider will contact you in this number
             </div>
         </div>
-        <div class="contact-section"
+        <div class="contact-section mgn-bt-5"
             *ngIf="changePhno && currentPhone != callingModes && service_det && service_det.virtualCallingModes && service_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
             <i class="fa wtsapaud-icon wtsap-cal"></i>
             <span class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
@@ -93,7 +93,7 @@
             <i class="fa fa-mobile "></i>
             <span class="mgn-lt-10 phonevallabel">{{userPhone}}</span>
         </div> -->
-        <div class="" *ngIf="eMail != ''">
+        <div class="mgn-bt-5" *ngIf="eMail != ''">
              <i class="fa fa-envelope-o "></i>
              <span class="mgn-lt-5 phonevallabel">{{eMail}}</span>
              </div>
