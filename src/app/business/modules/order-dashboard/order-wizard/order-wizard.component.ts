@@ -304,6 +304,7 @@ export class OrderWizardComponent implements OnInit {
             }
             this.disabledNextbtn = false;
             this.jaldeeId = this.customer_data.jaldeeId;
+            this.step = 2;
             console.log(this.jaldeeId);
             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
               this.countryCode = this.customer_data.countryCode;
