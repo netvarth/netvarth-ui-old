@@ -923,14 +923,14 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   CreateConsumerOrder(accountid, postData) {
-    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, postData);
+    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
   }
   CreateWalkinOrder(accountid, postData) {
     return this.servicemeta.httpPost('provider/orders/', postData);
   }
-  CreateConsumerOrderlist(accountid, dataappend) {
-    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
-  }
+  // CreateConsumerOrderlist(accountid, dataappend) {
+  //   return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
+  // }
   getAvailableDatesForPickup(catalogid, accountid?) {
     return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid + '?account=' + accountid);
   }
@@ -956,17 +956,17 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerAppointmentAttachment(accountid, uuid, body) {
-    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;
+    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
   getConsumerAppointmentAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/appointment/attachment/' + uuid + '?account=' + accountid;
+    const url = 'consumer/appointment/attachment/' + uuid+'?account=' + accountid;
     return this.servicemeta.httpGet(url);
-  }
-  getConsumerWaitlistAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/waitlist/attachment/' + uuid + '?account=' + accountid;
-    return this.servicemeta.httpGet(url);
-  }
+ }
+ getConsumerWaitlistAttachmentsByUuid(uuid , accountid) {
+  const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
+  return this.servicemeta.httpGet(url);
+}
 getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);

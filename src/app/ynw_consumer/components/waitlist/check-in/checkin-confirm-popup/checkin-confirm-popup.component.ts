@@ -147,7 +147,8 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     }
                 });
                 if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(retUUID);
+                    console.log(retUUID);
+                    this.consumerNoteAndFileSave(uuidList);
                 }
                 // this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'users', this.userId, 'bprofile', 'media']);
                 const member = [];
@@ -184,7 +185,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     // this.api_loading = false;
                 });
     }
-    consumerNoteAndFileSave(uuid) {
+    consumerNoteAndFileSave(uuids) {
         const dataToSend: FormData = new FormData();
         // this.consumerNote = this.post_Data.consumerNote;
         // if (this.consumerNote === '') {
@@ -205,6 +206,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
         console.log(dataToSend);
         // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
         //     dataToSend)
+        for( const uuid of uuids){
         this.shared_services.addConsumerWaitlistAttachment(this.account_id,uuid,dataToSend)    
             .subscribe(
                 () => {
@@ -213,6 +215,7 @@ export class CheckinConfirmPopupComponent implements OnInit {
                     this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
+        }
     }
     addEmail() {
         if (this.payEmail && this.payEmail.trim() !== '') {

@@ -12,9 +12,9 @@ onSubmit(loginForm.value)">
                 <mat-label for="phone">Enter your Mobile Number</mat-label>
                 <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                     [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                    [maxLength]="15" [tooltipField]="TooltipLabel.Name" [phoneValidation]="true"
-                    [selectedCountryISO] = "selectedCountry"
+                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                    [selectFirstCountry]="false" [maxLength]="15" [tooltipField]="TooltipLabel.Name"
+                    [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
                     [separateDialCode]="separateDialCode" [numberFormat]="PhoneNumberFormat.National" name="phone"
                     formControlName="phone">
                 </ngx-intl-tel-input>
@@ -66,10 +66,10 @@ onSubmit(loginForm.value)">
             <!-- Signin Password -->
             <div class="form-group" *ngIf="phoneExists">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">Password</mat-label>
+                <mat-label for="password">Password</mat-label>
 
-                    <input type="password" class="form-control" id="password" 
-                        formControlName="password" autocomplete="off" (keyup)="handlekeyup($event)">
+                <input type="password" class="form-control" id="password" formControlName="password" autocomplete="off"
+                    (keyup)="handlekeyup($event)">
                 <!-- </mat-form-field> -->
                 <a class="cust-logpg-fgtpwd" (click)="doForgotPassword()">Forgot Password?</a>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
@@ -79,8 +79,7 @@ onSubmit(loginForm.value)">
         </div>
         <div class="mat-dialog-actions">
             <button class="cust-logpg-submt mgn-up-20" *ngIf="!phoneExists" type="submit" mat-button
-                [disabled]="api_loading" (click)="checkAccountExists()"
-                (keyup)="clearPhoneExists()">
+                [disabled]="api_loading" (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
                 <span *ngIf="!api_loading">Continue</span>
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                 </app-common-innerloading-spinner>
@@ -106,13 +105,15 @@ onSubmit(loginForm.value)">
     <!-- step 3 for otp -->
     <div *ngIf="step==3" class="cust-loginpge-color">
         <div class="mat-dialog-content">
+            <div class="mgn-bt-20">
+                <span class="fa fa-arrow-left pointer-cursor" (click)="cancelForgotPassword()"></span>
+            </div>
             <div class="form-group" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">First Name *</mat-label>
+                <mat-label for="password">First Name *</mat-label>
 
-                    <input type="text"  class="form-control" id="first_name" 
-                        formControlName="first_name" (keypress)="resetApiErrors()" autocomplete="off"
-                        (blur)="onFieldBlur('first_name')">
+                <input type="text" class="form-control" id="first_name" formControlName="first_name"
+                    (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
                 <!-- </mat-form-field> -->
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
             {
@@ -123,11 +124,10 @@ onSubmit(loginForm.value)">
             </div>
             <div class="form-group" *ngIf="!resendViaEmail">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">Last Name *</mat-label>
+                <mat-label for="password">Last Name *</mat-label>
 
-                    <input type="text"  class="form-control" id="last_name"
-                        formControlName="last_name" autocomplete="off" (keypress)="resetApiErrors()"
-                        (blur)="onFieldBlur('last_name')">
+                <input type="text" class="form-control" id="last_name" formControlName="last_name" autocomplete="off"
+                    (keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
                 <!-- </mat-form-field> -->
                 <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
                     {
@@ -139,11 +139,10 @@ onSubmit(loginForm.value)">
 
             <div class="form-group" *ngIf="!resendViaEmail && phoneDialCode != '+91'">
                 <!-- <mat-form-field> -->
-                    <mat-label for="password">Email *</mat-label>
+                <mat-label for="password">Email *</mat-label>
 
-                    <input type="text"  class="form-control" id="emailId"
-                        formControlName="emailId" autocomplete="off" (keypress)="resetApiErrors()"
-                        (blur)="onFieldBlur('emailId')">
+                <input type="text" class="form-control" id="emailId" formControlName="emailId" autocomplete="off"
+                    (keypress)="resetApiErrors()" (blur)="onFieldBlur('emailId')">
                 <!-- </mat-form-field> -->
                 <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(loginForm,'emailId')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
                     {
@@ -181,20 +180,20 @@ onSubmit(loginForm.value)">
         </app-field-error-display> -->
     </div>
     <!-- step 6 for signup password -->
-    
+
     <div class="example-container joinotp" *ngIf="step==4">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-        <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
-            (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
-            [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
-            (resendOTPEmail)="resendOTPEmail($event)">
-        </app-otp-form>
+            <app-otp-form [type]="'signup'" [submitdata]="user_details" (retonOtpSubmit)="onOtpSubmit($event)"
+                (resetApiErrors)="resetApiErrors()" [actionstarted]="actionstarted" (resendOtp)="resendOtp($event)"
+                [resendemailotpsuccess]="resendemailotpsuccess" [consumerlogin]="consumerjoin"
+                (resendOTPEmail)="resendOTPEmail($event)">
+            </app-otp-form>
         </div>
         <div class="clearfix"></div>
-           <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-            </app-field-error-display>
+        <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+        </app-field-error-display>
     </div>
-    
+
     <div class="example-container" *ngIf="step==6">
         <app-sp-form (retonPasswordSubmit)="onPasswordSubmit($event)" (resetApiErrors)="resetApiErrors()"
             (onCancelBtn)="onCancelPass()" [checkConsumerOrProvider]="'consumer'" [consumerlogin]="consumerjoin">

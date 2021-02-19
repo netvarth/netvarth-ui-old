@@ -24,6 +24,50 @@ export class ItemDetailsComponent implements OnInit {
   showArrows = true;
   showDots = true;
   imagesRect: Image[] = new Array <Image> ();
+  accessibilityConfig: AccessibilityConfig = {
+    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
+    backgroundTitle: 'CUSTOM background title',
+
+    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
+    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
+
+    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
+    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
+
+    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
+    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
+
+    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
+    mainContainerTitle: 'CUSTOM main container title',
+    mainPrevImageAriaLabel: 'CUSTOM Previous image',
+    mainPrevImageTitle: 'CUSTOM Previous image',
+    mainNextImageAriaLabel: 'CUSTOM Next image',
+    mainNextImageTitle: 'CUSTOM Next image',
+
+    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
+    dotsContainerTitle: 'CUSTOM dots container title',
+    dotAriaLabel: 'CUSTOM Navigate to image number',
+
+    previewsContainerAriaLabel: 'CUSTOM Image previews',
+    previewsContainerTitle: 'CUSTOM previews title',
+    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
+    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
+    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
+    previewScrollNextTitle: 'CUSTOM Scroll next previews',
+
+    carouselContainerAriaLabel: 'Current image and navigation',
+    carouselContainerTitle: '',
+    carouselPrevImageAriaLabel: 'Previous image',
+    carouselPrevImageTitle: 'Previous image',
+    carouselNextImageAriaLabel: 'Next image',
+    carouselNextImageTitle: 'Next image',
+    carouselPreviewsContainerAriaLabel: 'Image previews',
+    carouselPreviewsContainerTitle: '',
+    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
+    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
+    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
+    carouselPreviewScrollNextTitle: 'Scroll next previews'
+  };
   // imagesRect: Image[] = [
   //   new Image(
   //     0,
@@ -103,26 +147,12 @@ export class ItemDetailsComponent implements OnInit {
           this.imagesRect = [... this.imagesRect, imgobj]
         }
       }
-    );  
-    // this.customOptions = {
-    //   dots: true,
-    //   loop: true,
-    //   autoplay: true,
-    //   responsiveClass: true,
-    //   responsive: {
-    //     0: {
-    //       items: 1
-    //     },
-    //     992: {
-    //       items: 1,
-    //       center: true,
-    //     }
-    //   }
-    // };
+    );
+
   }
   checkout() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.router.navigate(['consumer', 'order', 'cart']);
+    this.router.navigate(['order/shoppingcart']);
   }
   getItemQty() {
     const orderList = this.orderList;
@@ -165,50 +195,7 @@ export class ItemDetailsComponent implements OnInit {
 
     this.getItemQty();
   }
-  accessibilityConfig: AccessibilityConfig = {
-    backgroundAriaLabel: 'CUSTOM Modal gallery full screen background',
-    backgroundTitle: 'CUSTOM background title',
 
-    plainGalleryContentAriaLabel: 'CUSTOM Plain gallery content',
-    plainGalleryContentTitle: 'CUSTOM plain gallery content title',
-
-    modalGalleryContentAriaLabel: 'CUSTOM Modal gallery content',
-    modalGalleryContentTitle: 'CUSTOM modal gallery content title',
-
-    loadingSpinnerAriaLabel: 'CUSTOM The current image is loading. Please be patient.',
-    loadingSpinnerTitle: 'CUSTOM The current image is loading. Please be patient.',
-
-    mainContainerAriaLabel: 'CUSTOM Current image and navigation',
-    mainContainerTitle: 'CUSTOM main container title',
-    mainPrevImageAriaLabel: 'CUSTOM Previous image',
-    mainPrevImageTitle: 'CUSTOM Previous image',
-    mainNextImageAriaLabel: 'CUSTOM Next image',
-    mainNextImageTitle: 'CUSTOM Next image',
-
-    dotsContainerAriaLabel: 'CUSTOM Image navigation dots',
-    dotsContainerTitle: 'CUSTOM dots container title',
-    dotAriaLabel: 'CUSTOM Navigate to image number',
-
-    previewsContainerAriaLabel: 'CUSTOM Image previews',
-    previewsContainerTitle: 'CUSTOM previews title',
-    previewScrollPrevAriaLabel: 'CUSTOM Scroll previous previews',
-    previewScrollPrevTitle: 'CUSTOM Scroll previous previews',
-    previewScrollNextAriaLabel: 'CUSTOM Scroll next previews',
-    previewScrollNextTitle: 'CUSTOM Scroll next previews',
-
-    carouselContainerAriaLabel: 'Current image and navigation',
-    carouselContainerTitle: '',
-    carouselPrevImageAriaLabel: 'Previous image',
-    carouselPrevImageTitle: 'Previous image',
-    carouselNextImageAriaLabel: 'Next image',
-    carouselNextImageTitle: 'Next image',
-    carouselPreviewsContainerAriaLabel: 'Image previews',
-    carouselPreviewsContainerTitle: '',
-    carouselPreviewScrollPrevAriaLabel: 'Scroll previous previews',
-    carouselPreviewScrollPrevTitle: 'Scroll previous previews',
-    carouselPreviewScrollNextAriaLabel: 'Scroll next previews',
-    carouselPreviewScrollNextTitle: 'Scroll next previews'
-  };
 
   // addRandomImage() {
   //   const imageToCopy: Image = this.imagesRect[Math.floor(Math.random() * this.imagesRect.length)];
@@ -240,4 +227,5 @@ export class ItemDetailsComponent implements OnInit {
   onLastImage(event: ImageEvent) {
     console.log('lastImage', event);
   }
+
 }

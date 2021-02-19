@@ -103,8 +103,9 @@ flex-basis: 50% !important;
 
 .highlight{
 //   background: #42A948 !important; /* green */
-  box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
-  border: 2px dashed #0707eca1 !important;
+box-shadow: 0 3px 5px 0 rgba(17, 17, 17, 0.78) !important;
+border: 3px dashed #0707eca1 !important;
+
 }
 ::ng-deep .mat-stepper-vertical {
     background: #f2f2f2 !important;
@@ -377,7 +378,7 @@ display: grid !important;
    padding: 15px !important;
 }
 .slotdiv {
-   max-height: auto; 
+   max-height: auto;
    margin-top: 0px !important;
 }
 

@@ -271,7 +271,9 @@
                   </div>
                 </div>
                 <div class="date-outer">
-                  <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                  <!-- <div class="date-head">{{checkinLabel}} {{date_cap}}</div> -->
+                  <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
+                  <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>
                   <div class="date-body">
                     <span class="selected-date">
                       <span class="icon-minus" [class.disable]="disableMinus()"

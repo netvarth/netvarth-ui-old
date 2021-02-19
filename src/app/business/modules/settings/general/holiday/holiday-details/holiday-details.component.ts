@@ -62,7 +62,7 @@ export class HolidayDetailsComponent implements OnInit {
   holiday: any;
   //  halyday_name : any;
   //    data: any;
-
+selectedDate;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -97,6 +97,7 @@ export class HolidayDetailsComponent implements OnInit {
                   this.getholiday(this.holiday_id).then(
                     (item) => {
                       this.holiday = item;
+                      this.selectedDate = this.holiday.startDay;
                       //  this.halyday_name = this.holiday.name;
                       if (this.action === 'edit') {
 

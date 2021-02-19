@@ -139,7 +139,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const pN = this.loginForm.get('phone').value.e164Number;
     // const pN = this.document.getElementById('phonenumber').value.trim();
     // const pN = this.document.getElementById('emailId').value.trim();
-    const pW = this.document.getElementById('password').value.trim();
+    const pW = this.document.getElementById('password').value;
     // if (pN === '') {
     //   if (this.document.getElementById('phonenumber')) {
     //     this.document.getElementById('phonenumber').focus();
@@ -164,7 +164,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // const pN = data.phonenumber.trim();
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
-    const pW = data.password.trim();
+    const pW = data.password;
     //  const email = data.emailId.trim();
     // if (pN === '') {
     //   if (this.document.getElementById('emailId')) {

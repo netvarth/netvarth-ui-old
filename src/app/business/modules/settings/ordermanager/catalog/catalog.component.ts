@@ -19,6 +19,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 })
 export class CatalogComponent implements OnInit, OnDestroy {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
+    newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     tooltipcls = '';
     name_cap = Messages.ITEM_NAME_CAP;
     price_cap = Messages.PRICES_CAP;

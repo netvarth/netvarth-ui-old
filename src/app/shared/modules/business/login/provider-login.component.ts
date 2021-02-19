@@ -186,7 +186,7 @@ export class ProviderLoginComponent implements OnInit {
 
   onSubmit(data) {
     const pN = data.emailId.trim();
-    const pW = data.password.trim();
+    const pW = data.password;
     if (pN === '') {
       if (this.document.getElementById('emailId')) {
         this.document.getElementById('emailId').focus();
@@ -247,7 +247,7 @@ export class ProviderLoginComponent implements OnInit {
   showError() {
     this.show_error = true;
     const pN = this.document.getElementById('emailId').value.trim();
-    const pW = this.document.getElementById('password').value.trim();
+    const pW = this.document.getElementById('password').value;
     if (pN === '') {
       if (this.document.getElementById('emailId')) {
         this.document.getElementById('emailId').focus();

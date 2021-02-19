@@ -39,8 +39,8 @@
                                                 <td data-title="Date & Time" class="td3">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
-                                                            <i *ngIf="his_wait.token" class="fa token-icon"></i>
-                                                            <i *ngIf="!his_wait.token" class="fa chckn-icon"></i>
+                                                            <i *ngIf="his_wait.token" [matTooltip]="'Token'"  class="fa token-icon"></i>
+                                                            <i *ngIf="!his_wait.token"  [matTooltip]="'Waitlist'" class="fa chckn-icon"></i>
                                                         </div>
                                                         <span>&nbsp;{{his_wait.date | date: newDateFormat }},<br>&nbsp;{{his_wait.queue.queueStartTime}}
                                                             -
@@ -127,7 +127,7 @@
                                                 <td data-title="Date & Time" class="td3">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
-                                                            <i class="fa appt-icon"></i>
+                                                            <i class="fa appt-icon"  [matTooltip]="'Appointment'"></i>
                                                         </div>
                                                         <span> &nbsp;{{his_wait.date | date: newDateFormat }},<br>
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].sTime}} -

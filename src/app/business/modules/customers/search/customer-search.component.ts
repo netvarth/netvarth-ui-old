@@ -671,11 +671,6 @@ export class CustomerSearchComponent implements OnInit {
                 mode = 'id';
             }
         }
-        // if (this.appt) {
-        //     this.qParams['source'] = 'appointment';
-        // } else {
-        //     this.qParams['source'] = 'checkin';
-        // }
         switch (mode) {
             case 'phone':
                 post_data = {
@@ -718,6 +713,7 @@ export class CustomerSearchComponent implements OnInit {
                         }
                         filter['source'] = 'clist';
                         filter['id'] = 'add';
+                        filter['type'] = 'create';
                         const navigationExtras: NavigationExtras = {
                             queryParams: filter
                         };

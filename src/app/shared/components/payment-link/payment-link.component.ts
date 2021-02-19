@@ -275,7 +275,7 @@ export class PaymentLinkComponent implements OnInit {
     );
   }
   billview() {
-    this.showbill = true;
+    this.showbill = !this.showbill;
   }
 }
 

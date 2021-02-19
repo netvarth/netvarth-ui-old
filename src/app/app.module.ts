@@ -98,6 +98,8 @@ import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
+import { DateTimeProcessor } from './shared/services/datetime-processor.service';
+import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -225,6 +227,8 @@ export function init_app(globalService: GlobalService) {
     CookieProcessor,
     GroupStorageService,
     WordProcessor,
+    DateTimeProcessor,
+    DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
     Title,
