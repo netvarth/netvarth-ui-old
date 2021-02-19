@@ -160,7 +160,10 @@ export class OrderWizardComponent implements OnInit {
       }
     });
   }
-
+  goBackToCheckout(futureAvailableTime ,queue) {
+    console.log(futureAvailableTime);
+    console.log(queue);
+  }
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.createForm();
