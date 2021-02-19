@@ -112,16 +112,16 @@
 									<mat-icon>more_vert</mat-icon>
 								</button>
 								<mat-menu #topmenu="matMenu">
-									<button mat-menu-item>
-										Apply  Order Discount
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2">
+										Apply Order Discount
 									</button>
-									<button mat-menu-item>
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault">
 					 					Apply Coupon
 									</button>
 									<button mat-menu-item>
 										Apply Jaldee Coupon
 									</button>
-									<button mat-menu-item>
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3">
 										Add Display Note
 									</button>
 									<button mat-menu-item>
@@ -210,6 +210,57 @@
 										<div class="modal-footer p-0">
 											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
 											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal for order discound -->
+							<div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<select class="form-control">
+												<option>Disc 1</option>
+												<option>Disc 2</option>
+												<option>Disc 3</option>
+											</select>
+											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+												<input type="checkbox" name="Checkboxes16">
+												<span style="margin-right: 0.75rem;"></span>
+												Private note
+											</label>
+											<div class="form-group mt-2 mb-1">
+												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+											</div>
+											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+												<input type="checkbox" name="Checkboxes16">
+												<span style="margin-right: 0.75rem;"></span>
+												Notes for Patient
+											</label>
+											<div class="form-group mt-2 mb-1">
+												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+											</div>
+										</div>
+										<div class="modal-footer p-2">
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Modal for Add Notes -->
+							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="form-group mt-2 mb-1">
+												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+											</div>
+										</div>
+										<div class="modal-footer p-2">
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add Note</button>
 										</div>
 									</div>
 								</div>

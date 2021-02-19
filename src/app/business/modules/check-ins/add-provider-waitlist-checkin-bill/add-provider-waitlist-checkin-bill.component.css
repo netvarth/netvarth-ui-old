@@ -95,3 +95,9 @@
 .lh-p6 {
     line-height: 0.6;
 }
+.fnt-p8 {
+    font-size: 0.8rem !important;
+}
+.radii {
+    border-radius: 5px;
+}
