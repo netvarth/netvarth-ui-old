@@ -78,16 +78,6 @@
                           </div>
                         </div>
                         <!--end::Header-->
-
-                        <!-- <div class="top-buttons" *ngIf="getEnquiry().length > 0">
-                            <button mat-flat-button class="mgn-rt-10"
-                                (click)="changeMsgType('all')"
-                                [class.selected-btn]="type=='all'">All</button>
-                            <button mat-flat-button [class.selected-btn]="type=='enquiry'"
-                                (click)="changeMsgType('enquiry')">Enquiry</button>
-                        </div> -->
-
-
                         <!--begin::Body-->
                         <div class="card-body no-padding-small">
                           <!--begin::Scroll-->
@@ -144,8 +134,8 @@
                             </div>
                             <!--end::Messages-->
                             <div class="loading" *ngIf="!scrollDone">
-                            <app-common-innerloading-spinner  ></app-common-innerloading-spinner>
-                          </div>
+                              <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                            </div>
                           </div>
                           <!--end::Scroll-->
                         </div>
