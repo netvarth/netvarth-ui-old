@@ -1,11 +1,5 @@
-.customersList {
-
-}
 .customersList .pitch_blu {
   color: #1e4079 !important;
-}
-.customersList .hide_th {
-  /* display: inline-block !important; */
 }
 .customersList .hidden_th {
   display: none !important;
@@ -82,7 +76,7 @@
   font-weight: normal;
   font-style: italic;
 }
-.add_btn .fa-trash, .add_btn .fa-comments {
+.add_btn .fa-trash, .add_btn .flaticon2-chat-1 {
   font-size: 1.1rem;
   color: white !important;
 }
@@ -132,4 +126,11 @@
  }
  .cust-name {
    font-size: 0.9rem;
+ }
+ .customer-selected {
+  text-transform: capitalize;
+  font-size: smaller;
+ }
+ .pad-bt-0 {
+   padding-bottom: 0 !important;
  }

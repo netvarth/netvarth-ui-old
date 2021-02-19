@@ -91,7 +91,7 @@ export class CustomersListComponent implements OnInit {
   selectedIndex: any = [];
   hide_msgicon = false;
   mrdialogRef: any;
-  selectedcustomersforcall: any[];
+  selectedcustomersforcall: any = [];
   customerlist: any;
   customerDetails: any;
   voicedialogRef: any;
@@ -145,6 +145,9 @@ export class CustomersListComponent implements OnInit {
     } else {
       this.getCustomerListByGroup();
     }
+    if (this.groupService.getitemFromGroupStorage('customerPage')) {
+      this.pagination.startpageval = this.groupService.getitemFromGroupStorage('customerPage');
+    }
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.subdomain = user.subSector;
@@ -177,7 +180,7 @@ export class CustomersListComponent implements OnInit {
   }
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
-    this.resetList();
+    // this.resetList();
     this.customers = [];
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
@@ -209,6 +212,7 @@ export class CustomersListComponent implements OnInit {
   clearFilter() {
     this.resetFilter();
     this.filterapplied = false;
+    this.resetList();
     if (this.selectedGroup == 'all') {
       this.getCustomersList(true);
     } else {
@@ -235,13 +239,17 @@ export class CustomersListComponent implements OnInit {
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
+    this.groupService.setitemToGroupStorage('customerPage', pg);
     this.filter.page = pg;
-    this.doSearch();
+    this.doSearch('pageclick');
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-  doSearch() {
+  doSearch(type?) {
+    if (!type) {
+      this.resetList();
+    }
     if (this.selectedGroup == 'all') {
       this.getCustomersList();
     } else {
@@ -337,25 +345,15 @@ export class CustomersListComponent implements OnInit {
     this.filter_sidebar = false;
   }
 
-  selectcustomers(index) {
+  selectcustomers(customer) {
     this.hide_msgicon = false;
-    this.selectedcustomersformsg = [];
-    this.selectedcustomersforcall = [];
-    if (this.customerSelected[index]) {
-      delete this.customerSelected[index];
-      this.customerselection--;
+    const custArr = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
+    if (custArr.length === 0) {
+      this.selectedcustomersformsg.push(customer);
     } else {
-      this.customerSelected[index] = true;
-      this.customerselection++;
+      this.selectedcustomersformsg.splice(this.selectedcustomersformsg.indexOf(customer), 1);
     }
-    for (let i = 0; i < this.customerSelected.length; i++) {
-      if (this.customerSelected[i]) {
-        if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
-          this.selectedcustomersformsg.push(this.customers[i]);
-        }
-      }
-    }
-    if (this.customerselection === 1) {
+    if (this.selectedcustomersformsg.length === 1) {
       if (!this.selectedcustomersformsg[0].phoneNo && !this.selectedcustomersformsg[0].email) {
         this.hide_msgicon = true;
       }
@@ -365,18 +363,28 @@ export class CustomersListComponent implements OnInit {
         this.hide_msgicon = true;
       }
     }
-    for (let i = 0; i < this.customerSelected.length; i++) {
-      if (this.customerSelected[i]) {
-        if (this.selectedcustomersforcall.indexOf(this.customers[i]) === -1) {
-          this.selectedcustomersforcall.push(this.customers[i]);
-        }
-      }
+    const custArr1 = this.selectedcustomersforcall.filter(cust => cust.id === customer.id);
+    if (custArr1.length === 0) {
+      this.selectedcustomersforcall.push(customer);
+    } else {
+      this.selectedcustomersforcall.splice(this.selectedcustomersforcall.indexOf(customer), 1);
     }
     if (this.selectedcustomersformsg.length === this.customers.length) {
       this.allCustomerSelected = true;
-      this.selectAllcustomers();
     } else {
       this.allCustomerSelected = false;
+    }
+  }
+  isAllCustomerSelected() {
+    let customers = 0;
+    for (let customer of this.customers) {
+      const custArr = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
+      if (custArr.length > 0) {
+        customers++;
+      }
+    }
+    if (customers === this.customers.length) {
+      return true;
     }
   }
   CustomersInboxMessage(customer?) {
@@ -487,6 +495,7 @@ export class CustomersListComponent implements OnInit {
     });
     notedialogRef.afterClosed().subscribe(result => {
       this.getLabel();
+      this.resetList();
       if (this.selectedGroup == 'all') {
         this.getCustomersList();
       } else {
@@ -494,18 +503,19 @@ export class CustomersListComponent implements OnInit {
       }
     });
   }
-  selectAll() {
-    this.allCustomerSelected = !this.allCustomerSelected;
-    this.selectAllcustomers();
-  }
-  selectAllcustomers() {
-    this.selectedcustomersformsg = [];
-    this.customerSelected = [];
-    if (this.allCustomerSelected) {
+  selectAllcustomers(event) {
+    if (event.target.checked) {
       for (let i = 0; i < this.customers.length; i++) {
-        if (this.selectedcustomersformsg.indexOf(this.customers[i]) === -1) {
-          this.customerSelected[i] = true;
+        const customer = this.selectedcustomersformsg.filter(customer => customer.id === this.customers[i].id);
+        if (customer.length === 0) {
           this.selectedcustomersformsg.push(this.customers[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < this.customers.length; i++) {
+        const customer = this.selectedcustomersformsg.filter(customer => customer.id === this.customers[i].id);
+        if (customer.length > 0) {
+          this.selectedcustomersformsg = this.selectedcustomersformsg.filter(cust => cust.id !== customer[0].id);
         }
       }
     }
@@ -551,6 +561,7 @@ export class CustomersListComponent implements OnInit {
     this.selectedGroup = group;
     this.groupService.setitemToGroupStorage('group', this.selectedGroup);
     this.resetFilter();
+    this.resetList();
     if (this.selectedGroup === 'all') {
       this.getCustomersList();
     } else {
@@ -577,6 +588,7 @@ export class CustomersListComponent implements OnInit {
     this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
       (data: any) => {
         this.showCustomers = false;
+        this.resetList();
         this.getCustomerListByGroup();
       },
       error => {
@@ -608,6 +620,7 @@ export class CustomersListComponent implements OnInit {
         this.provider_services.removeCustomerFromGroup(this.selectedGroup.groupName, ids).subscribe(
           (data: any) => {
             this.showCustomers = false;
+            this.resetList();
             this.getCustomerListByGroup();
           },
           error => {
@@ -618,11 +631,12 @@ export class CustomersListComponent implements OnInit {
   }
   showCustomerstoAdd() {
     this.showCustomers = true;
+    this.resetList();
     this.getCustomersList();
   }
   getCustomerListByGroup() {
     this.apiloading = true;
-    this.resetList();
+    // this.resetList();
     this.customers = this.groupCustomers = [];
     let api_filter = this.setFilterForApi();
     api_filter['groups-eq'] = this.selectedGroup.id;
@@ -730,9 +744,16 @@ export class CustomersListComponent implements OnInit {
   }
   cancelAdd() {
     this.showCustomers = false;
+    this.resetList();
     this.getCustomerListByGroup();
   }
   resetError() {
     this.apiError = '';
+  }
+  checkSelection(customer) {
+    const custom = this.selectedcustomersformsg.filter(cust => cust.id === customer.id);
+    if (custom.length > 0) {
+      return true;
+    }
   }
 }

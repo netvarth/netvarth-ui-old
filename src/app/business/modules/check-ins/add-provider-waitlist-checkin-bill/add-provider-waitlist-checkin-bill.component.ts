@@ -1716,7 +1716,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       const postData = {
         'refundAmount': this.amounttoRefund,
         'refundBy': mode,
-        'paymentRefId': this.selectedPayment.paymentRefId
+        'paymentRefId': this.selectedPayment.paymentRefId,
+        'purpose': 'prePayment'
       };
       if (mode === 'online') {
         postData['paymentId'] = this.selectedPayment.transactionId;
