@@ -960,17 +960,17 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   addConsumerAppointmentAttachment(accountid, uuid, body) {
-    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;
+    const url = 'consumer/appointment/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
   getConsumerAppointmentAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/appointment/attachment/' + uuid + '?account=' + accountid;
+    const url = 'consumer/appointment/attachment/' + uuid+'?account=' + accountid;
     return this.servicemeta.httpGet(url);
-  }
-  getConsumerWaitlistAttachmentsByUuid(uuid, accountid) {
-    const url = 'consumer/waitlist/attachment/' + uuid + '?account=' + accountid;
-    return this.servicemeta.httpGet(url);
-  }
+ }
+ getConsumerWaitlistAttachmentsByUuid(uuid , accountid) {
+  const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
+  return this.servicemeta.httpGet(url);
+}
 getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);

@@ -17,19 +17,11 @@ import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, Plai
 export class InboxOuterComponent implements OnInit {
 
   messages: any = [];
-  breadcrumbs = [
-    {
-      title: 'Inbox'
-    }
-  ];
-  selectedMsg = -1;
   userDet;
-  obtainedMsgs = false;
   groupedMsgs: any = [];
   selectedUserMessages: any = [];
   loading = false;
   message = '';
-  providerName = '';
   selectedProvider = '';
   selectedMessage = {
     files: [],
@@ -61,8 +53,6 @@ export class InboxOuterComponent implements OnInit {
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
-  type = 'all';
-  tempSelectedUserMessages: any = [];
   scrollDone = false;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
@@ -93,13 +83,12 @@ export class InboxOuterComponent implements OnInit {
           this.scrollDone = true;
           this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
-            this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedProvider];
+            this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
               this.scrollToElement();
             }, 100);
           }
           this.sortMessages();
-          this.obtainedMsgs = true;
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
           this.loading = false;
         },
@@ -144,7 +133,7 @@ export class InboxOuterComponent implements OnInit {
     this.clearImg();
     this.message = '';
     this.selectedProvider = msgs.key;
-    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
+    this.selectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
@@ -300,23 +289,5 @@ export class InboxOuterComponent implements OnInit {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
-  }
-  changeMsgType(type) {
-    this.type = type;
-    this.message = '';
-    console.log(this.tempSelectedUserMessages);
-    if (this.type === 'all') {
-      this.selectedUserMessages = this.tempSelectedUserMessages;
-    } else {
-      this.selectedUserMessages = this.getEnquiry();
-    }
-    console.log(this.selectedUserMessages);
-    setTimeout(() => {
-      this.scrollToElement();
-    }, 100);
-  }
-  getEnquiry() {
-    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
-    return msgs;
   }
 }

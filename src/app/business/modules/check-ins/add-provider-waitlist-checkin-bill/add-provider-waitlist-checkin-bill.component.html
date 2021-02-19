@@ -116,7 +116,10 @@
 										Apply Order Discount
 									</button>
 									<button mat-menu-item>
-										Apply Coupon
+					 					Apply Coupon
+									</button>
+									<button mat-menu-item>
+										Add Display Note
 									</button>
 								</mat-menu>
 							</div>
@@ -1315,12 +1318,12 @@
 																<div class="td three"
 																	*ngIf="bill_data.billStatus!='Settled'">
 																	<span class="amt rupee-font"
-																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">{{payment.refundableAmount
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'">{{payment.refundableAmount
 																		|
 																		currency:'&#8377; '}}</span>
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
-																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS'">Refund</button>
+																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'">Refund</button>
 																</div>
 															</div>
 															<div class="refunds-table"
