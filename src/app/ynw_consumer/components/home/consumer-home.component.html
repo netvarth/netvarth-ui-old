@@ -1863,7 +1863,7 @@
                                             </div>
                                             <div
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 setAtBottom " [ngClass]="oder.orderStatus === 'Cancelled'?'darkred':'darkblue'">
-                                                {{oder.orderStatus | capitalizeFirst}}</div>
+                                                {{oder.orderStatus==='Order Received' ? 'Order Placed':oder.orderStatus| capitalizeFirst}}</div>
                                         </div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
