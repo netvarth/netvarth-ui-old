@@ -83,7 +83,7 @@ export class ProviderReimburseReportComponent implements OnInit {
     'to_date': false,
     'pay_status': false
   };
-
+  allPayStatusSelected = false;
   statusMultiCtrl: any = [];
   constructor(private dialog: MatDialog, private router: Router,
     public dateformat: DateFormatPipe,
@@ -207,21 +207,35 @@ export class ProviderReimburseReportComponent implements OnInit {
    * @param type Filter Key eg. status-eq
    * @param value Filter Value eg. PAYMENTPENDING
    */
-  setFilterData(type, value) {
-    if (type === 'status') {
+  setFilterData(type, event, value?) {
+    if (type === 'all') {
+      this.statusMultiCtrl = [];
+      this.allPayStatusSelected = false;
+      if (event.checked) {
+        for (const mode of this.report_status_filter) {
+          if (this.statusMultiCtrl.indexOf(mode.value) === -1) {
+            this.statusMultiCtrl.push(mode.value);
+          }
+        }
+        this.allPayStatusSelected = true;
+      }
+    } else {
+      this.allPayStatusSelected = false;
       const indx = this.statusMultiCtrl.indexOf(value);
       if (indx === -1) {
         this.statusMultiCtrl.push(value);
       } else {
         this.statusMultiCtrl.splice(indx, 1);
       }
-    } else {
-      this.filter[type] = value;
+    }
+    if (this.statusMultiCtrl.length === this.report_status_filter.length) {
+      this.allPayStatusSelected = true;
     }
     this.resetPaginationData();
     this.doSearch();
   }
   statusSelection(value) {
+    console.log(this.statusMultiCtrl.indexOf(value));
     if (this.statusMultiCtrl.indexOf(value) !== -1) {
       return true;
     } else {
@@ -369,6 +383,6 @@ export class ProviderReimburseReportComponent implements OnInit {
     this.filter_sidebar = false;
   }
   redirecToJaldeeBilling() {
-    this.router.navigate(['provider', 'settings' , 'pos' , 'coupon']);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
 }
