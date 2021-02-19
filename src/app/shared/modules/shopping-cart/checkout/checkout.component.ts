@@ -923,7 +923,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount > 0) {
+
+          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);
@@ -971,7 +972,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuid: this.trackUuid
             }
           };
-          if (this.catalog_details.paymentType !== 'NONE' || prepayAmount > 0) {
+          console.log('prepaymentAmount' + prepayAmount);
+          if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
             this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
               .subscribe(res => {
                 console.log(res);
