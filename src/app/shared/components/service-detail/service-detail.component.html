@@ -1,4 +1,4 @@
-<h1 class="mat-dialog-title">
+<h1 class="mat-dialog-title service-detail-title">
     <span class="name">
         <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
             <span>
@@ -21,7 +21,7 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
-<mat-dialog-content>
+<mat-dialog-content class="service-detail-content service-popup-content">
     <div class="servicedet_outer" *ngIf="service.name !==''">
         <!-- <div class="img-outer" *ngIf="!image_list_popup || image_list_popup.length==0">
             <div class="galbx" *ngIf="!service.servicegallery && !is_donation_serv">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="outer">
-            <div class="outer1 line">
+            <div class="outer1 line" *ngIf="data.serdet && data.serdet.description">
                 <!-- <span class="name" >  
                     <span class="dispvalue" *ngIf="data.serdet && data.serdet.name">
                         <span>
@@ -69,71 +69,78 @@
                     [innerHTML]="data.serdet.description | nl2br">
                 </div>
             </div>
-            <div class="outer3" *ngIf="data.serdet && data.serdet.totalAmount && data.serdet.totalAmount != 0">
+            <div class="outer5 service-duration" *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
                 <div class="duration">
-                    <span> {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} Fee : </span>
-                    <span style="font-weight: bold" class="rupee-font">&nbsp;
-                        {{data.serdet.totalAmount | currency:'&#8377;'}}
+                    <span>{{service_duration}} : </span>
+                    <span style="font-weight: bold">
+                        {{HHMM}}
                     </span>
                 </div>
             </div>
-            <div class="mgn-bt-5" *ngIf="data.serdet.minPrePaymentAmount == data.serdet.totalAmount">
-                {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be paid in advance while
-                booking
+            <div class="outer3" *ngIf="data.serdet && data.serdet.totalAmount && data.serdet.totalAmount != 0">
+                <div class="duration">
+                    <span class="data-label"> {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} Fee : </span>
+                    <span style="font-weight: bold" class="rupee-font data-value">
+                        <i class='fa fa-inr'></i>{{data.serdet.totalAmount | currency: '':''}}
+                    </span>
+                </div>
             </div>
             <div class="outer4"
                 *ngIf="data.serdet && data.serdet.isPrePayment && data.serdet.minPrePaymentAmount != data.serdet.totalAmount">
                 <div class="prepayment">
-                    <span>Advance Payment : </span><span style="font-weight: bold" class="rupee-font">
-                        {{data.serdet.minPrePaymentAmount | currency:'&#8377;'}}
+                    <span class="data-label">Advance Payment : </span>
+                    <span style="font-weight: bold" class="rupee-font data-value">
+                        <i class="fa fa-inr"></i>{{data.serdet.minPrePaymentAmount | currency: '':''}}
                     </span>
                 </div>
             </div>
-            <div class="outer4" *ngIf="this.data.serdet.taxable">
-                <span>Tax Applicable : </span><span style="font-weight: bold">
+            <div class="outer4 tax" *ngIf="this.data.serdet.taxable">
+                <span class="data-label">Tax Applicable : </span>
+                <span style="font-weight: bold" class="data-value">
                     Yes
                 </span>
             </div>
             <div class="outer4" *ngIf="data.serdet && data.serdet.prePayment">
                 <div class="prepayment">
-                    <span>{{prepayment_amount}} : </span><span style="font-weight: bold">
-                        <span class="rupee-font">&#8377; </span>{{data.serdet.minAmount}}
+                    <span class="data-label">{{prepayment_amount}} : </span>
+                    <span style="font-weight: bold" class="rupee-font data-value">
+                        <i class="fa fa-inr"></i>{{data.serdet.minAmount | currency: '':''}}
                     </span>
                 </div>
             </div>
-            <div class="outer5" *ngIf="data.serdet && data.serdet.serviceDuration && !is_donation_serv">
+            <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
-                    <span>{{service_duration}} : </span><span style="font-weight: bold">
-                        {{HHMM}}
-                    </span>
-                </div>
-            </div>
-            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
-                <div class="duration">
-                    <span>Min amount: </span><span *ngIf="data.serdet.minValue" style="font-weight: bold">
+                    <span class="data-label">Min amount: </span>
+                    <span class="data-value" *ngIf="data.serdet.minValue" style="font-weight: bold">
                         {{data.serdet.minValue}}
                     </span>
-                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font">
-                        {{data.serdet.minDonationAmount| currency:'&#8377;'}}
+                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font data-value">
+                        <i class="fa fa-inr"></i>{{data.serdet.minDonationAmount| currency:'':''}}
                     </span>
                 </div>
             </div>
-            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+            <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
-                    <span>Max amount : </span><span *ngIf="data.serdet.maxValue" style="font-weight: bold">
+                    <span class="data-label">Max amount : </span>
+                    <span class="data-value" *ngIf="data.serdet.maxValue" style="font-weight: bold">
                         {{data.serdet.maxValue}}
                     </span>
-                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font">
-                        {{data.serdet.maxDonationAmount| currency:'&#8377;'}}
+                    <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font data-value">
+                        <i class="fa fa-inr"></i>{{data.serdet.maxDonationAmount| currency:'':''}}
                     </span>
                 </div>
             </div>
-            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+            <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
-                    <span>Multiples : </span><span style="font-weight: bold">
+                    <span class="data-label">Multiples : </span>
+                    <span class="data-value" style="font-weight: bold">
                         {{data.serdet.multiples}}
                     </span>
                 </div>
+            </div>
+            <div class="mgn-bt-5" *ngIf="data.serdet.minPrePaymentAmount == data.serdet.totalAmount">
+                Note: {{(data.sector=='healthCare') ? 'Consultation' : ' Service'}} fee should be paid in advance while
+                booking.
             </div>
         </div>
     </div>

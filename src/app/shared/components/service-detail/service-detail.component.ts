@@ -9,7 +9,8 @@ import {
 
 @Component({
   selector: 'app-service-detail',
-  templateUrl: './service-detail.component.html'
+  templateUrl: './service-detail.component.html',
+  styleUrls: ['./service-detail.component.css']
 })
 
 export class ServiceDetailComponent implements OnInit {

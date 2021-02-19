@@ -304,6 +304,7 @@ export class OrderWizardComponent implements OnInit {
             }
             this.disabledNextbtn = false;
             this.jaldeeId = this.customer_data.jaldeeId;
+            this.step = 2;
             console.log(this.jaldeeId);
             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
               this.countryCode = this.customer_data.countryCode;
@@ -998,6 +999,9 @@ export class OrderWizardComponent implements OnInit {
     }
     return found;
   }
+  addItem(){
+    this.step = 2;
+  }
   applyCoupons(jCoupon) {
     this.api_cp_error = null;
     this.couponvalid = true;
@@ -1170,4 +1174,5 @@ export class OrderWizardComponent implements OnInit {
   // }
 
 }
+
 

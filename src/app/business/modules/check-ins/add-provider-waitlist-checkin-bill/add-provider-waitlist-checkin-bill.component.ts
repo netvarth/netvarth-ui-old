@@ -222,6 +222,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedPayment;
   showDeliveryChargeSection = false;
   deliveryCharge = 0;
+  discountClicked = false;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -1763,5 +1764,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.selectedPayment = [];
       this.showRefundSection = false;
     }
+  }
+
+  sampleDiscount() {
+    console.log('clik');
+    this.discountClicked = true;
   }
 }
