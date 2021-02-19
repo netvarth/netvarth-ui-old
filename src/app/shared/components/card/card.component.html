@@ -48,7 +48,7 @@
                 <div class="service-buttons">
                     <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
                     <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
-                        class="btn pointer-cursor btn-warning moreDetails">...</button>
+                        class="btn pointer-cursor btn-warning moreDetails">. . .</button>
                 </div>
         <!-- </div> -->
             </div>
@@ -128,7 +128,9 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst}}</a>
         </h4>
-        <h6 class="qualification">BDS</h6>
+        <h6 class="qualification">
+            {{user.qualifications[0]}}{{ user.qualifications.length > 1 ? ", +" + (user.qualifications.length-1) : "" }}
+        </h6>
         <label class="specialization">DENTIST</label>
         <p class="availability">Next Available Time<br/>Feb 15, 02:00 PM</p>
         <button type="button" class="btn btn-outline-warning">Book Now</button>
