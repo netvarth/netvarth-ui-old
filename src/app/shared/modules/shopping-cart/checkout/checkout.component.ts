@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 // import * as itemjson from '../../assets/json/item.json';
 // import * as itemjson from '../../../../assets/json/item.json';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -28,7 +28,7 @@ import { Messages } from '../../../constants/project-messages';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   totaltax = 0;
   provider_id: any;
   s3url;
@@ -154,6 +154,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   selected_coupon;
   showCouponWB: boolean;
   cartDetails: any = [];
+  // @ViewChild('closeModal') private closeModal: ElementRef;
+  @ViewChild('firstStep', { read: ElementRef }) private nextbtn: ElementRef;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -167,6 +169,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService
 
   ) {
+
+
+    this.loginForm = this._formBuilder.group({
+      phone: [this.customer_phoneNumber, Validators.required]
+    });
+
+    this.storeContact = this._formBuilder.group({
+
+      phone: [this.phonenumber, Validators.required],
+      email: ['', Validators.required]
+    });
+
     this.route.queryParams.subscribe(
       params => {
         this.provider_id = params.providerId;
@@ -230,25 +244,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       console.log(this.orders);
-      this.getcartDetails();
+
     }
-    // this.catlogArry();
-    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (activeUser) {
-      this.getProfile();
-      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-      this.customer_countrycode = credentials.countryCode;
-      this.phonenumber = activeUser.primaryPhoneNumber;
-      this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
-      console.log(this.customer_phoneNumber);
-      this.getaddress();
-    } else {
-      this.doLogin('consumer');
-    }
+
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
       this.imagelist = this.selectedImagelist;
       this.orderType = this.catalog_details.orderType;
+      this.loading = false;
+      if (this.orderType !== 'SHOPPINGLIST') {
+        this.getCartDetails();
+      }
       if (this.orderType === 'SHOPPINGLIST') {
         this.gets3curl();
         this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
@@ -281,7 +287,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
       }
       this.advance_amount = this.catalog_details.advanceAmount;
-      this.loading = false;
+
       if (this.catalog_details.pickUp) {
         if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
           this.store_pickup = true;
@@ -299,15 +305,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.getAvailabilityByDate(this.sel_checkindate);
     });
     this.getStoreContact();
-    this.loginForm = this._formBuilder.group({
-      phone: [this.customer_phoneNumber, Validators.required]
-    });
-
-    this.storeContact = this._formBuilder.group({
-
-      phone: [this.phonenumber, Validators.required],
-      email: ['', Validators.required]
-    });
 
     this.showfuturediv = false;
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -339,9 +336,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.isFuturedate = true;
     }
 
+    // this.catlogArry();
+
 
   }
-  getcartDetails() {
+  ngAfterViewInit() {
+    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (activeUser) {
+      this.getProfile();
+      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      this.customer_countrycode = credentials.countryCode;
+      this.phonenumber = activeUser.primaryPhoneNumber;
+      // this.storeContact.get('phone').value(this.phonenumber);
+      this.storeContact.controls.phone.setValue(this.phonenumber);
+      this.customer_phoneNumber = this.customer_countrycode + activeUser.primaryPhoneNumber;
+      console.log(this.customer_phoneNumber);
+      this.getaddress();
+      this.nextbtn.nativeElement.click();
+    } else {
+      this.doLogin('consumer');
+    }
+  }
+  getCartDetails() {
     console.log('details');
     let delivery = false;
     if (this.delivery_type === 'home') {
@@ -842,7 +858,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         const pdata = { 'ttype': 'updateuserdetails' };
         this.sharedFunctionobj.sendMessage(pdata);
         this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        this.isLoggedIn();
+        if (this.isLoggedIn()) {
+          this.nextbtn.nativeElement.click();
+        }
         // if (passParam['callback'] === 'communicate') {
         //   // this.getFavProviders();
         //   // this.showCommunicate(passParam['providerId']);

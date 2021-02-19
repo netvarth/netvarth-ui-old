@@ -100,7 +100,7 @@ export class PaymentComponent implements OnInit {
                     if (this.status === 'success') {
                         this.snackbarService.openSnackBar(Messages.PAY_DONE_SUCCESS_CAP);
                            this.router.navigate(['consumer']);
-                       
+
                     } else {
                         this.snackbarService.openSnackBar(Messages.PAY_FAILED_CAP, { 'panelClass': 'snackbarerror' });
                         this.router.navigate(['consumer']);
@@ -111,8 +111,8 @@ export class PaymentComponent implements OnInit {
                 }
             );
     }
-    payuPayment() {
-        console.log('hi');
+    payuPayment(event) {
+        event.preventDefault();
         let paymentWay;
         paymentWay = 'DC';
         this.makeFailedPayment(paymentWay);
