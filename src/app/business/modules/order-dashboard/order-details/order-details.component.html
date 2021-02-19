@@ -9,7 +9,7 @@
 
   <section>
     <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
-        <div class="orderdetails col-md-10 col-xs-12 col-sm-12 col-lg-10">
+        <div class="orderdetails col-md-11 col-xs-12 col-sm-12 col-lg-11">
             <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
                 <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
                 <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
+        <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList">
             <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
                 <div class="pull-left bold font11">
                     Order Items
@@ -67,7 +67,7 @@
                         (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
                 </div>
             </div>
-            <div class="gridlist col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-20 mgn-up-20 padding-tp-10 order"
+            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 mgn-up-20 order no-padding"
                 *ngIf="selectedType==='grid'">
 
                 <div class="bus-item-O" *ngFor="let item of orderItems">
