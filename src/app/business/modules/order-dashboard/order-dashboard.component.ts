@@ -671,4 +671,8 @@ export class OrderDashboardComponent implements OnInit {
   newOrder() {
     this.router.navigate(['provider', 'orders', 'order-wizard']);
   }
+  searchCustomer() {
+    // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
+    this.router.navigate(['provider', 'customers', 'find']);
+  }
 }

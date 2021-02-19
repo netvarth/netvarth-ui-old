@@ -18,6 +18,7 @@
     max-width: 100px;
     padding: 15px 10px;
     width: 50px;
+    height: 50px;
     text-align: center;
     max-height: 50px;
 }
@@ -84,11 +85,51 @@
 .galul li {
     float: left;
 }
+.mat-flat-button {
+    background: #1e4079;
+    color: white;
+    border-radius: 5px;
+}
+.top-buttons {
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0px 5px 0 rgb(0 0 0 / 16%), 0 0px 0px 0 rgb(0 0 0 / 12%);
+}
+.top-buttons button {
+    color: #1e4079;
+    background-color: transparent;
+    border-color: transparent;
+    padding: 5px 10px;
+    width: 48%;
+    border-radius: 5px;
+}
+.selected-btn {
+    font-weight: bold;
+    background-color: #fdcb70 !important;
+}
+.user-section {
+    display: flex;
+    overflow-x: auto;
+}
+.user-section .user-name {
+    background: #ddd !important;
+}
+.user-goback {
+    margin: 10px;
+}
+.user-goback span,
+.user-goback i {
+    color: black;
+    font-weight: bold;
+}
 textarea {
     resize: none !important;
 }
 .flex-row {
     width: 100%;
+}
+.display-none {
+    display: none;
 }
 .loading {
     margin-top: -50px

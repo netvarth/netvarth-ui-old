@@ -24,8 +24,8 @@
                   </div>
                   <span class="svg-icon svg-icon-xl wizard-arrow">
                     <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                      viewBox="0 0 24 24" version="1.1">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                      version="1.1">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <polygon points="0 0 24 0 24 24 0 24" />
                         <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
@@ -48,8 +48,8 @@
                   </div>
                   <span class="svg-icon svg-icon-xl wizard-arrow">
                     <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                      viewBox="0 0 24 24" version="1.1">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                      version="1.1">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <polygon points="0 0 24 0 24 24 0 24" />
                         <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
@@ -71,8 +71,8 @@
                   </div>
                   <span class="svg-icon svg-icon-xl wizard-arrow last">
                     <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                      viewBox="0 0 24 24" version="1.1">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                      version="1.1">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <polygon points="0 0 24 0 24 24 0 24" />
                         <rect fill="#000000" opacity="0.3" transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
@@ -95,57 +95,57 @@
               <div class="col-lg-12">
                 <!--begin::Wizard Form-->
                 <!-- <form class="form"> -->
-                  <!--begin::Wizard Step 1-->
-                  <div class="pb-5" *ngIf="step == 1">
-                    <form class="form" [formGroup]="searchForm">
-                      <h3 class="mb-10 font-weight-bold text-dark"> Find Customer </h3>
-                      <!--begin::Input-->
-                      <div class="form-group disp-flex">
-                        <input type="text" formControlName="search_input" class=" form-control1 form-control1-solid form-control1-lg" name="search"
-                          placeholder="Search by patient id/email/phone number" />
-                        <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
-                                              searchCustomer(searchForm.value)">  Find  </button>
-                      </div>
+                <!--begin::Wizard Step 1-->
+                <div class="pb-5" *ngIf="step == 1">
+                  <form class="form" [formGroup]="searchForm">
+                    <h3 class="mb-10 font-weight-bold text-dark"> Find Customer </h3>
+                    <!--begin::Input-->
+                    <div class="form-group disp-flex">
+                      <input type="text" formControlName="search_input" class=" form-control1 form-control1-solid form-control1-lg" name="search"
+                        placeholder="Search by patient id/email/phone number" />
+                      <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                              searchCustomer(searchForm.value)"> Find </button>
+                    </div>
 
-                    </form>
-                    <!--end::Input-->
-                  </div>
+                  </form>
+                  <!--end::Input-->
+                </div>
 
-                  <!-- Show customer details -->
-                  <div class="pb-5 row" *ngIf="show_customer && step == 1 ">
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                      <!--begin::Card-->
-                      <div class="card card-custom gutter-b card-stretch">
-                        <!--begin::Body-->
-                        <div class="card-body text-center pt-4">
-                          <!--begin::User-->
-                          <!-- <div class="mt-7 pb-2">
+                <!-- Show customer details -->
+                <div class="pb-5 row" *ngIf="show_customer && step == 1 ">
+                  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                    <!--begin::Card-->
+                    <div class="card card-custom gutter-b card-stretch">
+                      <!--begin::Body-->
+                      <div class="card-body text-center pt-4">
+                        <!--begin::User-->
+                        <!-- <div class="mt-7 pb-2">
                             <div class="symbol symbol-lg-75 symbol-circle symbol-light-primary">
                               <span class="font-size-h3 symbol-label font-weight-boldest"></span>
                             </div>
                           </div> -->
-                          <!--end::User-->
+                        <!--end::User-->
 
-                          <!--begin::Name-->
-                          <div class="my-2">
-                            <a  class="text-dark font-weight-bold text-hover-primary font-size-h4">{{ customer_data.firstName }} {{ customer_data.lastName  }}
-                            </a>
-                          </div>
-                          <!--end::Name-->
-
-                          <!--begin::Label-->
-                          <a class="label label-inline label-lg label-light-primary font-weight-bold">Id - {{ jaldeeId  }}</a>
-                          <!--end::Label-->
-
+                        <!--begin::Name-->
+                        <div class="my-2">
+                          <a class="text-dark font-weight-bold text-hover-primary font-size-h4">{{ customer_data.firstName }} {{ customer_data.lastName }}
+                          </a>
                         </div>
-                        <!--end::Body-->
-                      </div>
-                      <!--end::Card-->
-                    </div>
+                        <!--end::Name-->
 
+                        <!--begin::Label-->
+                        <a class="label label-inline label-lg label-light-primary font-weight-bold">Id - {{ jaldeeId }}</a>
+                        <!--end::Label-->
+
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Card-->
                   </div>
 
-                  <!-- New customer creation -->
+                </div>
+
+                <!-- New customer creation
                   <div class="pb-5" *ngIf="create_customer">
                     <form id="customer_creation" class="form" [formGroup]="createCustomer">
                       <div class="card-body p-0">
@@ -242,179 +242,178 @@
                         </div>
                       </div>
                     </form>
-                  </div>
+                  </div> -->
 
 
 
-                  <!--end::Wizard Step 1-->
+                <!--end::Wizard Step 1-->
 
-                  <!--begin::Wizard Step 2-->
-                  <div class="pb-5" *ngIf="step == 2">
-                    <!--begin::Layout-->
-                    <div class="flex-row-fluid">
-                      <!--begin::Card-->
-                      <div class="">
+                <!--begin::Wizard Step 2-->
+                <div class="pb-5" *ngIf="step == 2">
+                  <!--begin::Layout-->
+                  <div class="flex-row-fluid">
+                    <!--begin::Card-->
+                    <div class="">
 
-                        <!--begin::Engage Widget 15-->
-                        <div class="card card-custom mb-12">
-                          <div class="card-body rounded p-0 d-flex " style="background-color:#DAF0FD;">
-                            <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-10 p-md-20">
-                              <h1 class="font-weight-bolder text-dark ">Search Goods
-                              </h1>
-                              <div class="font-size-h4 mb-8">Get Amazing Gadgets</div>
-                              <!--begin::Form-->
-                              <form class="d-flex flex-center py-2 px-6 bg-white rounded">
-                                <span class="svg-icon svg-icon-lg svg-icon-primary">
-                                  <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/General/Search.svg-->
-                                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                    height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                      <rect x="0" y="0" width="24" height="24" />
-                                      <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                        fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                      <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                        fill="#000000" fill-rule="nonzero" />
-                                    </g>
-                                  </svg>
-                                  <!--end::Svg Icon-->
-                                </span>
-                                <input type="text" class="form-control border-0 font-weight-bold pl-2" placeholder="Search Goods"
-                                />
-                              </form>
-                              <!--end::Form-->
-                            </div>
-                            <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover" style="background-image: url(../../../../../../../../../../assets/media/products/progress.svg);">
-                            </div>
+                      <!--begin::Engage Widget 15-->
+                      <div class="card card-custom mb-12">
+                        <div class="card-body rounded p-0 d-flex " style="background-color:#DAF0FD;">
+                          <div class="d-flex flex-column flex-lg-row-auto w-auto w-lg-350px w-xl-450px w-xxl-500px p-10 p-md-20">
+                            <h1 class="font-weight-bolder text-dark ">Search Goods
+                            </h1>
+                            <div class="font-size-h4 mb-8">Get Amazing Gadgets</div>
+                            <!--begin::Form-->
+                            <form class="d-flex flex-center py-2 px-6 bg-white rounded">
+                              <span class="svg-icon svg-icon-lg svg-icon-primary">
+                                <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/General/Search.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
+                                  version="1.1">
+                                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                      fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                    <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                      fill="#000000" fill-rule="nonzero" />
+                                  </g>
+                                </svg>
+                                <!--end::Svg Icon-->
+                              </span>
+                              <input type="text" class="form-control border-0 font-weight-bold pl-2" placeholder="Search Goods" />
+                            </form>
+                            <!--end::Form-->
                           </div>
-                        </div>
-
-                        <!--end::Engage Widget 15-->
-                        <!--begin::Section-->
-                        <div class="mb-2">
-                          <!--begin::Products-->
-                          <div class="row">
-                            <!--begin::Product-->
-                            <div class="card-body p-0">
-                              <ng-container *ngFor="let item of orderItems">
-                                <div class="col-md-4 col-xxl-4 col-lg-12">
-                                  <!--begin::Card-->
-                                  <div class="card card-custom card-shadowless">
-                                    <div class="card-body p-0">
-                                      <!--begin::Image-->
-                                      <div class="overlay">
-                                        <div class="add_qty">
-                                          <td class="text-center align-middle">
-                                            <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
-                                              <i class="ki ki-minus icon-xs"></i>
-                                            </a>
-                                            <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
-                                            <a class="btn btn-xs btn-light-primary btn-icon"  (click)="increment(item);">
-                                              <i class="ki ki-plus icon-xs"></i>
-                                            </a>
-                                          </td>
-                                        </div>
-                                        <div class="overlay-wrapper rounded bg-light text-center">
-                                          <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px" />
-                                        </div>
-                                      </div>
-                                      <!--end::Image-->
-
-                                      <!--begin::Details-->
-                                      <div class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
-                                        <a href="#" class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{ item.item.displayName }}
-                                        </a>
-                                        <span class="font-size-lg">{{ item.item.shortDesc }}</span>
-                                      </div>
-                                      <div class="font-size-h6 text-muted font-weight-bolder">{{ item.item.price }}</div>
-                                      <!--end::Details-->
-                                    </div>
-                                  </div>
-                                  <!--end::Card-->
-                                </div>
-                              </ng-container>
-                              <!--end::Product-->
-                            </div>
-                            <!--end::Products-->
+                          <div class="d-none d-md-flex flex-row-fluid bgi-no-repeat bgi-position-y-center bgi-position-x-left bgi-size-cover" style="background-image: url(../../../../../../../../../../assets/media/products/progress.svg);">
                           </div>
-                          <!--end::Section-->
                         </div>
                       </div>
-                      <!--end::Card-->
-                    </div>
-                    <!--end::Layout-->
-                  </div>
-                  <!--end::Wizard Step 2-->
 
-                  <!--begin::Wizard Step 3-->
-                  <div class="pb-5" *ngIf="step == 3">
-                    <div class="flex-row-fluid">
-
+                      <!--end::Engage Widget 15-->
                       <!--begin::Section-->
-                      <div>
-                        <!--begin::Header-->
-                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                          <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
-                            </span>
-                          </h3>
-                        </div>
-                        <!--end::Header-->
-
-                        <div class="card-body p-0">
-                          <!--begin::Shopping Cart-->
-                          <div class="table-responsive">
-                            <table class="table">
-                              <!--begin::Cart Header-->
-                              <thead>
-                                <tr>
-                                  <th>Product</th>
-                                  <th class="text-center">Qty</th>
-                                  <th class="text-right">Price</th>
-                                  <th></th>
-                                </tr>
-                              </thead>
-                              <!--end::Cart Header-->
-
-                              <tbody>
-                                <!--begin::Cart Content-->
-                                <tr *ngFor="let item of orders">
-                                  <td class="d-flex align-items-center font-weight-bolder">
-                                    <!--begin::Symbol-->
-                                    <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
-                                      <div class="symbol-label" style="background-image: url('assets/media/products/11.png')">
+                      <div class="mb-2">
+                        <!--begin::Products-->
+                        <div class="row">
+                          <!--begin::Product-->
+                          <div class="card-body p-0">
+                            <ng-container *ngFor="let item of orderItems">
+                              <div class="col-md-4 col-xxl-4 col-lg-12">
+                                <!--begin::Card-->
+                                <div class="card card-custom card-shadowless">
+                                  <div class="card-body p-0">
+                                    <!--begin::Image-->
+                                    <div class="overlay">
+                                      <div class="add_qty">
+                                        <td class="text-center align-middle">
+                                          <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                            <i class="ki ki-minus icon-xs"></i>
+                                          </a>
+                                          <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
+                                          <a class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                            <i class="ki ki-plus icon-xs"></i>
+                                          </a>
+                                        </td>
+                                      </div>
+                                      <div class="overlay-wrapper rounded bg-light text-center">
+                                        <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px" />
                                       </div>
                                     </div>
-                                    <!--end::Symbol-->
-                                    <a class="text-dark text-hover-primary">{{ item.item.displayName }}
-                                    </a>
-                                  </td>
-                                  <td class="text-center align-middle">
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2"  (click)="decrement(item);">
-                                      <i class="ki ki-minus icon-xs"></i>
-                                    </a>
-                                    <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
-                                    <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
-                                      <i class="ki ki-plus icon-xs"></i>
-                                    </a>
-                                  </td>
-                                  <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                   {{ getItemPrice(item) }}
-                                  </td>
-                                  <td class="text-right align-middle"(click)="removeItemFromCart(item)" >
-                                    <a class="btn btn-danger font-weight-bolder font-size-sm">
-                                      Remove
-                                    </a>
-                                  </td>
-                                </tr>
+                                    <!--end::Image-->
 
-                              </tbody>
-                            </table>
+                                    <!--begin::Details-->
+                                    <div class="text-center mt-5 mb-md-0 mb-lg-5 mb-md-0 mb-lg-5 mb-lg-0 mb-5 d-flex flex-column">
+                                      <a href="#" class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{ item.item.displayName }}
+                                      </a>
+                                      <span class="font-size-lg">{{ item.item.shortDesc }}</span>
+                                    </div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder">{{ item.item.price }}</div>
+                                    <!--end::Details-->
+                                  </div>
+                                </div>
+                                <!--end::Card-->
+                              </div>
+                            </ng-container>
+                            <!--end::Product-->
                           </div>
-                          <!-- begin: Invoice footer-->
-                          <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
-                            <div class="col-md-10 ln-ht-2"  *ngIf="home_delivery && store_pickup">
-                              <div class="text-muted">DELIVERY TYPE</div>
-                              <ng-container *ngIf="home_delivery && store_pickup">
+                          <!--end::Products-->
+                        </div>
+                        <!--end::Section-->
+                      </div>
+                    </div>
+                    <!--end::Card-->
+                  </div>
+                  <!--end::Layout-->
+                </div>
+                <!--end::Wizard Step 2-->
+
+                <!--begin::Wizard Step 3-->
+                <div class="pb-5" *ngIf="step == 3">
+                  <div class="flex-row-fluid">
+
+                    <!--begin::Section-->
+                    <div>
+                      <!--begin::Header-->
+                      <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                        <h3 class="card-title align-items-start flex-column">
+                          <span class="card-label font-weight-bolder font-size-h3 text-dark">Order Summary
+                          </span>
+                        </h3>
+                      </div>
+                      <!--end::Header-->
+
+                      <div class="card-body p-0">
+                        <!--begin::Shopping Cart-->
+                        <div *ngIf="orders.length != 0" class="table-responsive">
+                          <table class="table">
+                            <!--begin::Cart Header-->
+                            <thead>
+                              <tr>
+                                <th>Product</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-right">Price</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <!--end::Cart Header-->
+
+                            <tbody>
+                              <!--begin::Cart Content-->
+                              <tr *ngFor="let item of orders">
+                                <td class="d-flex align-items-center font-weight-bolder">
+                                  <!--begin::Symbol-->
+                                  <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                    <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                    </div>
+                                  </div>
+                                  <!--end::Symbol-->
+                                  <a class="text-dark text-hover-primary">{{ item.item.displayName }}
+                                  </a>
+                                </td>
+                                <td class="text-center align-middle">
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
+                                    <i class="ki ki-minus icon-xs"></i>
+                                  </a>
+                                  <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                    <i class="ki ki-plus icon-xs"></i>
+                                  </a>
+                                </td>
+                                <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                  {{ getItemPrice(item) }}
+                                </td>
+                                <td class="text-right align-middle" (click)="removeItemFromCart(item)">
+                                  <a class="btn btn-danger font-weight-bolder font-size-sm">
+                                    Remove
+                                  </a>
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- begin: Invoice footer-->
+                        <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
+                          <div class="col-md-10 ln-ht-2" >
+                            <div class="text-muted">DELIVERY TYPE</div>
+                            <ng-container *ngIf="home_delivery && store_pickup">
                               <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" name="choose_type">
                                 <mat-radio-button [value]="'store'" [checked]="storeChecked">
                                   Store pick up
@@ -430,259 +429,346 @@
                             <div *ngIf="home_delivery && !store_pickup">
                               Home delivery
                             </div>
-                              <div class="text-muted">DATE/TIME
-                                <div class="fl-right"><a (click)="changeTime()">Change</a></div>
+                            <div class="text-muted">DATE/TIME
+                              <div class="fl-right">
+                                <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#datePickerModal">
+                                  Change </button>
                               </div>
-                              <div>
-                                <span *ngIf="!isFuturedate">Today ,</span>
-                                <span *ngIf="!isFuturedate">
-                                  {{nextAvailableTime}}
-                                </span>
-                                <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-                                </span>
-                                <span *ngIf="isFuturedate">
-                                  {{nextAvailableTime}}
-                                </span>
-                              </div>
-
-                                                            <!-- Home Address -->
-                                                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
-                                                            <div  *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)" [ngClass]="{'highlight': selectedRowIndex == i}">
-                                                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
-                                                                  <div
-                                                                      class="card card-custom gutter-b rounded-0 card-stretch p-2">
-                                                                      <div
-                                                                          class="card-body text-left pl-5 p-0 font-addrss">
-                                                                          <div class="adrs-data">
-                                                                            <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                                                                            <div>{{address.address}}</div>
-                                                                            <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
-                                                                            <div> +91 {{address.phoneNumber}}</div>
-                                                                            <div> {{address.email}}</div>
-                                                                          </div>
-                                                                          <button class="add-adrs-btn" mat-flat-button (click)="updateAddress(address,i)">
-                                                                            Edit
-                                                                          </button> &nbsp;
-                                                                          <button class="add-adrs-btn" mat-flat-button (click)="deleteAddress(address,i)">
-                                                                           Delete
-                                                                          </button>
-                                                                      </div>
-                                                                  </div>
-                                                              </div>
-                                                              <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
-                                                                  <div
-                                                                      class="card card-custom gutter-b rounded-0 card-stretch p-2">
-                                                                      <div
-                                                                          class="card-body text-center p-0">
-                                                                          <button type="button" class="btn btn-success px-2 py-1" (click)=addAddress();>
-                                                                              Add New </button>
-                                                                      </div>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                          </ng-container>
-
-                                                          <!-- Address Adding Modal box -->
-                                                          <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
-                                                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                  <form class="form"[formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
-                                                                  <div class="modal-content">
-                                                                      <div class="modal-body">
-
-                                                                            <div class="lbl col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small mgn-bt-10">
-
-
-                                                                              <div class="form-group" >
-                                                                                <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
-                                                                                  <span class="input-group-text" style="margin-top:auto;">+91</span>
-                                                                                  <mat-form-field>
-                                                                                          <input matInput type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
-                                                                                        </mat-form-field>
-                                                                                </div>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
-                                                                                                              {
-                                                                                                                'required' : 'Mobile number is required',
-                                                                                                                'minlength' : 'Enter a 10 digit mobile number',
-                                                                                                                'maxlength' : 'Enter a 10 digit mobile number',
-                                                                                                                'pattern' : 'Only numbers are allowed'
-                                                                                                              })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-
-                                                                              <div class="form-group">
-                                                                                  <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="First name" formControlName="firstName">
-                                                                                  </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
-                                                                                                            {
-                                                                                                              'required' : 'First name is required',
-                                                                                                              'pattern' : 'Only alphabets are allowed'
-                                                                                                            })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-                                                                              <div class="form-group">
-                                                                                  <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="Last name" formControlName="lastName">
-                                                                                  </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
-                                                                                                          {
-                                                                                                            'required' : 'Last name is required',
-                                                                                                            'pattern' : 'Only alphabets are allowed'
-                                                                                                          })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-                                                                              <div class="form-group">
-                                                                                <mat-form-field>
-                                                                              <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
-                                                                       </mat-form-field>
-                                                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
-                                                                                                      {
-                                                                                                        'required' : 'Email is required',
-                                                                                                        'pattern' : 'Please enter valid email'
-                                                                                                      })">
-                                                                              </app-field-error-display>
-                                                                            </div>
-
-
-
-                                                                            </div>
-                                                                            <div class="lbr col-sm-6 col-md-6 col-lg-6 col-xl-6 no-padding-small">
-                                                                              <div class="form-group">
-                                                                                  <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="Address" formControlName="address">
-                                                                                  </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'address')" [errorMsgs]="fed_service.getErrorMessage(amForm,'address',
-                                                                                {
-                                                                                  'required' : 'Please enter address'
-                                                                                })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-
-                                                                              <div class="form-group">
-                                                                                  <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="City" formControlName="city">
-                                                                                  </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
-                                                                              {
-                                                                                'required' : 'Please enter city name',
-                                                                                'pattern' : 'Only alphabets are allowed'
-                                                                              })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-
-                                                                              <div class="form-group">
-                                                                                  <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
-                                                                                  </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
-                                                                            {
-                                                                              'required' : 'Please enter Postal Code ',
-                                                                              'minlength' : 'Enter a 6 digit Postal Code',
-                                                                              'maxlength' : 'Enter a 6 digit Postal Code',
-                                                                              'pattern' : 'Only numbers are allowed'
-                                                                            })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-
-                                                                              <div class="form-group">
-                                                                              <mat-form-field>
-                                                                                <input matInput type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
-                                                                              </mat-form-field>
-                                                                                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
-                                                                          {
-                                                                            'required' : 'Please enter landmark'
-                                                                          })">
-                                                                                </app-field-error-display>
-                                                                              </div>
-
-                                                                            </div>
-
-
-                                                                      </div>
-                                                                      <div class="modal-footer">
-                                                                          <button type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                                                          <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
-                                                                      </div>
-                                                                  </div>
-                                                                </form>
-                                                              </div>
-                                                          </div>
-
+                              <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
+                            </div>
+                            <div>
+                              <span *ngIf="!isFuturedate">Today ,</span>
+                              <span *ngIf="!isFuturedate">
+                                {{nextAvailableTime}}
+                              </span>
+                              <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
+                              </span>
+                              <span *ngIf="isFuturedate">
+                                {{nextAvailableTime}}
+                              </span>
                             </div>
 
-                          </div>
-                          <!-- end: Invoice footer-->
-                          <!-- Total summary -->
-                          <div>
-                            <form>
-                              <div class="form-group row mt-5">
-                                <div class="col-md-3 d-flex align-items-center">
-                                  <label class="font-weight-bolder">Apply Promo code
-                                  </label>
+                            <!-- Home Address -->
+                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                              <div>
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                                  [ngClass]="{'highlight': selectedRowIndex == i}">
+                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
+                                    <div class="card-body text-left pl-5 p-0 font-addrss">
+                                      <div class="adrs-data">
+                                        <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                        <div>{{address.address}}</div>
+                                        <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                        <div> +91 {{address.phoneNumber}}</div>
+                                        <div> {{address.email}}</div>
+                                      </div>
+
+                                    </div>
+                                  </div>
                                 </div>
-                                <div class="col-md-7">
-                                  <div class="input-group w-100">
-                                    <input type="text" class="form-control" placeholder="Voucher Code">
-                                    <div class="input-group-append">
-                                      <button class="btn btn-secondary line-height-sm" type="button">Apply</button>
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
+                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                    <div class="card-body text-center p-0">
+                                      <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                        Add New </button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </form>
+                            </ng-container>
+                            <!-- Add Address Modal  -->
+                            <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
+                              aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <form class="form" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
+                                  <div class="modal-content">
+                                    <div class="modal-body">
+
+                                      <div class="">
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
+                                              <span class="input-group-text" style="margin-top:auto;">+91</span>
+
+                                              <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+
+                                            </div>
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
+                                                                                                                        {
+                                                                                                                          'required' : 'Mobile number is required',
+                                                                                                                          'minlength' : 'Enter a 10 digit mobile number',
+                                                                                                                          'maxlength' : 'Enter a 10 digit mobile number',
+                                                                                                                          'pattern' : 'Only numbers are allowed'
+                                                                                                                        })">
+                                            </app-field-error-display>
+
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
+                                                                                        {
+                                                                                          'required' : 'First name is required',
+                                                                                          'pattern' : 'Only alphabets are allowed'
+                                                                                        })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <div class="input-group">
+                                              <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
+                                                                                            {
+                                                                                              'required' : 'Last name is required',
+                                                                                              'pattern' : 'Only alphabets are allowed'
+                                                                                            })">
+                                              </app-field-error-display>
+                                            </div>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <div class="input-group">
+                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                              <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
+                                                                                            {
+                                                                                              'required' : 'Email is required',
+                                                                                              'pattern' : 'Please enter valid email'
+                                                                                            })">
+                                              </app-field-error-display>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+                                                                                    {
+                                                                                      'required' : 'Please enter city name',
+                                                                                      'pattern' : 'Only alphabets are allowed'
+                                                                                    })">
+                                            </app-field-error-display>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
+                                                                                      {
+                                                                                        'required' : 'Please enter city name',
+                                                                                        'pattern' : 'Only alphabets are allowed'
+                                                                                      })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
+                                                                                          {
+                                                                                            'required' : 'Please enter Postal Code ',
+                                                                                            'minlength' : 'Enter a 6 digit Postal Code',
+                                                                                            'maxlength' : 'Enter a 6 digit Postal Code',
+                                                                                            'pattern' : 'Only numbers are allowed'
+                                                                                          })">
+                                            </app-field-error-display>
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
+                                                                                            {
+                                                                                              'required' : 'Please enter landmark'
+                                                                                            })">
+                                            </app-field-error-display>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                            <!--Change Date picker  -->
+                            <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog" aria-labelledby="datePickerModal" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
+                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                          Choose Date
+                                        </div>
+                                        <div class="pull-left brd-round brd-light mgn-up-20">
+                                          <div class="icon-minus pull-left" (click)="calculateDate(-1)">
+                                          </div>
+
+                                          <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
+                                          <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
+                                        </div>
+                                        <div class="pickerouter caldiv pull-left mgn-up-20">
+                                          <mat-datepicker-toggle matSuffix [for]="picker">
+                                          </mat-datepicker-toggle>
+                                          <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                                          <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                            [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
+                                                                          Timings  </div>
+                                                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+
+
+                                                                          <div class="col-md-6 col-xs-12 col-sm-8 form-group" *ngIf="isfutureAvailableTime">
+
+                                                                            <mat-chip-list class="">
+                                                                              <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
+                                                                              (click)="handleQueueSelection(queue, i)">
+                                                                              <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                                                                  {{queue['sTime'] + ' - ' +
+                                                                                  queue['eTime']}}
+                                                                              </mat-chip>
+                                                                          </mat-chip-list>
+                                                                          </div>
+                                                                          <div  *ngIf="!isfutureAvailableTime">
+                                                                              <p>No timings are available</p>
+                                                                            </div>
+                                                                        </div>
+                                                                      </div>
+                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
+                                        <button (click)="goBackToCheckout(futureAvailableTime ,queue)" [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
+                                          type="button">Ok</button>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button #closeDateModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+
+
+
                           </div>
 
-                          <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
-                            <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
-
-                            <div class="d-flex justify-content-between mb-3">
-                              <span class="mr-15 font-weight-bold">Price ({{orderItems.length}} items)</span>
-                              <span class="text-right">{{getTotalItemPrice()}}</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
-                              <span class="mr-15 font-weight-bold">Tax</span>
-                              <span class="text-right">{{getTotalItemTax(catalog_details.taxPercentage)}}</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3">
-                              <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                              <span class="text-right">{{getDeliveryCharge()}}</span>
-                            </div>
-
-                            <div class="d-flex justify-content-between">
-                              <span class="mr-15 font-weight-bold">Total Price</span>
-                              <span class="text-right">{{getSubTotal()}}</span>
-                            </div>
-                          </div>
-
-
-
-
-                          <!--end::Shopping Cart-->
                         </div>
+                        <!-- end: Invoice footer-->
+                        <!-- Total summary -->
+                        <div>
+
+                              <div class="form-group row mt-5">
+
+                              <div class="col-md-3 d-flex align-items-center">
+                                  <a class="btn btn-primary"  (click)="toggleCoupon();">Apply promo code</a>
+
+                              </div>
+                              <div class="col-md-7" *ngIf="showCoupon" >
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
+                                  <i class="icon-bell"></i>{{applied_inbilltime}}
+                                </div>
+                                <div class="input-group w-100">
+                                  <input type="text" class="form-control" [(ngModel)]="selected_coupon" placeholder="Voucher Code">
+                                  <div class="input-group-append">
+                                    <button class="btn btn-secondary line-height-sm" (click)="applyCoupons(selected_coupon)" type="button">Apply</button>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;" *ngIf="api_cp_error !== null">
+                                {{api_cp_error}}</div>
+                              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
+
+                              </div>
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
+                              *ngIf="couponsList && couponsList.length>0">
+                              <label style="color:blue">Coupon Applied</label>
+                              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                *ngFor="let coupon of couponsList let i=index">
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
+                                  <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
+                                    {{coupon.couponCode}} </div>
+                                  <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
+                                    <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
+                                        class="pointer-cursor lnk read-more-checkin">Read
+                                        T & C </a></span>
+                                    <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
+                                          (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
+                                          [matTooltip]="'Remove Coupon'"></i></a></span>
+                                  </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
+                                  *ngIf="coupon.showme">
+                                  {{coupon.instructions}}
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
+                          <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                          <div class="d-flex justify-content-between mb-3">
+                            <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
+                            <span class="text-right">{{getTotalItemPrice()}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
+                            <span class="mr-15 font-weight-bold">Tax</span>
+                            <span class="text-right">{{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                            <span class="text-right">{{getDeliveryCharge()}}</span>
+                          </div>
+
+                          <div class="d-flex justify-content-between">
+                            <span class="mr-15 font-weight-bold">Total Price</span>
+                            <span class="text-right">{{getSubTotal()}}</span>
+                          </div>
+                        </div>
+
+
+
+
+                        <!--end::Shopping Cart-->
                       </div>
-                      <!--end::Section-->
                     </div>
+                    <!--end::Section-->
                   </div>
-                  <!--end::Wizard Step 3-->
+                </div>
+                <!--end::Wizard Step 3-->
 
-                  <!--begin::Wizard Actions-->
-                  <div class="d-flex justify-content-between border-top mt-2 py-5">
-                    <div class="mr-2" *ngIf="step == 2 || step == 3">
-                      <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoPrev()">
-                        Previous
-                      </button>
-                    </div>
-                    <div>
-
-                      <button *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1" (click)="confirm()">
-                        Place Order
-                      </button>
-                      <button  [disabled]="placeOrderDisabled"*ngIf="step == 1 || step == 2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
-                        Next
-                      </button>
-                    </div>
+                <!--begin::Wizard Actions-->
+                <div class="d-flex justify-content-between border-top mt-2 py-5">
+                  <div class="mr-2" *ngIf="step == 2 || step == 3">
+                    <button type="button" class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoPrev()">
+                      Previous
+                    </button>
                   </div>
-                  <!--end::Wizard Actions-->
+                  <div>
+
+                    <button [disabled]="placeOrderDisabled" *ngIf="step == 3" type="button" class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
+                      (click)="confirm()">
+                      Place Order
+                    </button>
+                    <button [disabled]='disabledNextbtn' *ngIf="step == 1 || step == 2" type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                      (click)="gotoNext()">
+                      Next
+                    </button>
+                  </div>
+                </div>
+                <!--end::Wizard Actions-->
                 <!-- </form> -->
                 <!--end::Wizard Form-->
               </div>
@@ -697,4 +783,3 @@
   </div>
 
 </section>
-

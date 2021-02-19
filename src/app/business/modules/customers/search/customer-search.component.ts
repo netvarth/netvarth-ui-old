@@ -592,12 +592,13 @@ export class CustomerSearchComponent implements OnInit {
     }
     createNew() {
         const filter = {
-            'source': 'clist'
+            'source': 'clist',
+            'id': 'add'
         }
         const navigationExtras: NavigationExtras = {
             queryParams: filter
         };
-        this.router.navigate(['/provider/customers/add'], navigationExtras);
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
     }
 
     checkinClicked() {
@@ -670,6 +671,11 @@ export class CustomerSearchComponent implements OnInit {
                 mode = 'id';
             }
         }
+        // if (this.appt) {
+        //     this.qParams['source'] = 'appointment';
+        // } else {
+        //     this.qParams['source'] = 'checkin';
+        // }
         switch (mode) {
             case 'phone':
                 post_data = {
@@ -711,11 +717,11 @@ export class CustomerSearchComponent implements OnInit {
                             filter['phone'] = form_data.search_input;
                         }
                         filter['source'] = 'clist';
-                        filter['type'] = 'create';
+                        filter['id'] = 'add';
                         const navigationExtras: NavigationExtras = {
                             queryParams: filter
                         };
-                        this.router.navigate(['/provider/customers/add'], navigationExtras);
+                        this.router.navigate(['/provider/customers/create'], navigationExtras);
                         this.create_new = true;
                         this.searchClicked = true;
                     } else {

@@ -7,7 +7,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../app.component';
 import { ViewChild } from '@angular/core';
-import { AdvancedLayout, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
+import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -26,7 +26,6 @@ export class InboxOuterComponent implements OnInit {
   userDet;
   obtainedMsgs = false;
   groupedMsgs: any = [];
-  groupedMsgsCopy: any = [];
   selectedUserMessages: any = [];
   loading = false;
   message = '';
@@ -41,22 +40,35 @@ export class InboxOuterComponent implements OnInit {
   screenWidth;
   small_device_display = false;
   sendMessageCompleted = true;
-  userScrollHeight;
-  msgScrollHeight;
   @ViewChild('scrollMe') scrollFrame: ElementRef;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
   };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   image_list_popup: Image[];
   image_list_popup_temp: Image[];
   imageAllowed = ['JPEG', 'JPG', 'PNG'];
+  type = 'all';
+  tempSelectedUserMessages: any = [];
+  scrollDone = false;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
     private location: Location, private snackbarService: SnackbarService,
     public shared_services: SharedServices) { }
-
   ngOnInit() {
     this.onResize();
     this.loading = true;
@@ -67,17 +79,10 @@ export class InboxOuterComponent implements OnInit {
   onResize() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 767) {
-    } else {
-      this.small_device_display = false;
-    }
-    if (this.screenWidth <= 1040) {
       this.small_device_display = true;
     } else {
       this.small_device_display = false;
     }
-    const screenHeight = window.innerHeight;
-    this.userScrollHeight = screenHeight - 280;
-    this.msgScrollHeight = screenHeight - 427;
   }
   getInboxMessages() {
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
@@ -85,23 +90,17 @@ export class InboxOuterComponent implements OnInit {
       .subscribe(
         data => {
           this.messages = data;
-          console.log(this.messages);
-          this.groupedMsgs = this.groupedMsgsCopy = this.shared_functions.groupBy(this.messages, 'accountName');
-          console.log(this.groupedMsgs);
-          console.log(this.selectedUserMessages);
-          console.log(this.selectedProvider);
+          this.scrollDone = true;
+          this.groupedMsgs = this.shared_functions.groupBy(this.messages, 'accountName');
           if (this.selectedProvider !== '') {
-            this.selectedUserMessages = this.groupedMsgs[this.selectedProvider];
-            console.log(this.selectedUserMessages);
+            this.selectedUserMessages = this.tempSelectedUserMessages = this.groupedMsgs[this.selectedProvider];
             setTimeout(() => {
               this.scrollToElement();
-            }, 200);
+            }, 100);
           }
           this.sortMessages();
-          console.log(this.groupedMsgs);
           this.obtainedMsgs = true;
           this.shared_functions.sendMessage({ 'ttype': 'load_unread_count' });
-          // this.shared_functions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
           this.loading = false;
         },
         () => {
@@ -134,7 +133,6 @@ export class InboxOuterComponent implements OnInit {
     const obtshowtime = this.shared_functions.addZero(pubDate.getHours()) + ':' + this.shared_functions.addZero(pubDate.getMinutes());
     const today = new Date();
     const todaydate = new Date(today.getFullYear() + '-' + this.shared_functions.addZero((today.getMonth() + 1)) + '-' + this.shared_functions.addZero(today.getDate()));
-
     if (obtdate.getTime() === todaydate.getTime()) {
       retdate = this.shared_functions.convert24HourtoAmPm(obtshowtime);
     } else {
@@ -143,24 +141,22 @@ export class InboxOuterComponent implements OnInit {
     return retdate;
   }
   providerSelection(msgs) {
-    console.log(msgs);
+    this.clearImg();
+    this.message = '';
     this.selectedProvider = msgs.key;
-    this.selectedUserMessages = msgs.value;
+    this.selectedUserMessages = this.tempSelectedUserMessages = msgs.value;
     if (this.small_device_display) {
       this.showChat = true;
     }
     const unreadMsgs = msgs.value.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
-    console.log(unreadMsgs);
     if (unreadMsgs.length > 0) {
       const ids = unreadMsgs.map(msg => msg.messageId);
       const messageids = ids.toString();
-      console.log(ids);
       this.readProviderMessages(unreadMsgs[0].owner.id, messageids.split(',').join('-'), unreadMsgs[0].accountId);
-    } else {
-      setTimeout(() => {
-        this.scrollToElement();
-      }, 200);
     }
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
   }
   getUnreadCount(messages) {
     const unreadMsgs = messages.filter(msg => !msg.read && msg.owner.id !== this.userDet.id);
@@ -190,17 +186,14 @@ export class InboxOuterComponent implements OnInit {
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-      this.shared_services.addConsumertoProviderNote(this.selectedUserMessages[0].accountId,
-        dataToSend)
+      const filter = { 'account': this.selectedUserMessages[0].accountId };
+      this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
             this.message = '';
+            this.scrollDone = false;
             this.getInboxMessages();
-    this.selectedMessage = {
-      files: [],
-      base64: [],
-      caption: []
-    };
+            this.clearImg();
             this.sendMessageCompleted = true;
           },
           error => {
@@ -210,36 +203,20 @@ export class InboxOuterComponent implements OnInit {
         );
     }
   }
+  clearImg() {
+    this.selectedMessage = {
+      files: [],
+      base64: [],
+      caption: []
+    };
+  }
   getUserName(user) {
-    // const name = user.match(/\b(\w)/g);
     const name = user.split(' ');
-    // console.log(user.split(' '));
     let nameShort = name[0].charAt(0);
     if (name.length > 1) {
       nameShort = nameShort + name[name.length - 1].charAt(0);
     }
-    return nameShort;
-  }
-  searchByName() {
-    console.log(this.providerName);
-    this.groupedMsgs = this.groupedMsgsCopy;
-    if (this.providerName !== '') {
-      let arr = [];
-      Object.keys(this.groupedMsgs).forEach(key => {
-        if (key.search(this.providerName)) {
-          console.log(key);
-        } else {
-          if (arr.indexOf(key) === -1) {
-            arr.push(key);
-          }
-        }
-      });
-      console.log(arr);
-      for (let value of arr) {
-        delete this.groupedMsgs[value];
-      }
-    }
-    console.log(this.groupedMsgs);
+    return nameShort.toUpperCase();
   }
   filesSelected(event) {
     const input = event.target.files;
@@ -260,6 +237,13 @@ export class InboxOuterComponent implements OnInit {
       }
     }
   }
+  getImage(url, file) {
+    if (file.type == 'application/pdf') {
+      return '../../../../assets/images/pdf.png';
+    } else {
+      return url;
+    }
+  }
   showChatSection() {
     this.showChat = !this.showChat;
   }
@@ -275,6 +259,8 @@ export class InboxOuterComponent implements OnInit {
       return attachment.s3path;
     }
   }
+  onButtonBeforeHook() { }
+  onButtonAfterHook() { }
   openImageModalRow(image: Image) {
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
@@ -284,19 +270,15 @@ export class InboxOuterComponent implements OnInit {
   }
   openImage(attachements, index) {
     this.image_list_popup_temp = this.image_list_popup = [];
-    console.log(attachements);
     let count = 0;
     for (let comIndex = 0; comIndex < attachements.length; comIndex++) {
       const thumbPath = attachements[comIndex].thumbPath;
       let imagePath = thumbPath;
       const description = attachements[comIndex].s3path;
-      console.log(description);
       const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-      console.log(thumbPathExt);
       if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
         imagePath = attachements[comIndex].s3path;
       }
-      console.log(imagePath);
       const imgobj = new Image(
         count,
         { // modal
@@ -304,16 +286,37 @@ export class InboxOuterComponent implements OnInit {
           description: description
         },
       );
-      console.log(imgobj);
       this.image_list_popup_temp.push(imgobj);
       count++;
     }
     if (count > 0) {
       this.image_list_popup = this.image_list_popup_temp;
-      console.log(this.image_list_popup);
       setTimeout(() => {
         this.openImageModalRow(this.image_list_popup[index]);
       }, 200);
     }
+  }
+  deleteTempImage(i) {
+    this.selectedMessage.files.splice(i, 1);
+    this.selectedMessage.base64.splice(i, 1);
+    this.selectedMessage.caption.splice(i, 1);
+  }
+  changeMsgType(type) {
+    this.type = type;
+    this.message = '';
+    console.log(this.tempSelectedUserMessages);
+    if (this.type === 'all') {
+      this.selectedUserMessages = this.tempSelectedUserMessages;
+    } else {
+      this.selectedUserMessages = this.getEnquiry();
+    }
+    console.log(this.selectedUserMessages);
+    setTimeout(() => {
+      this.scrollToElement();
+    }, 100);
+  }
+  getEnquiry() {
+    const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
+    return msgs;
   }
 }

@@ -7,7 +7,7 @@ import { OrderWizardComponent } from './order-wizard/order-wizard.component';
 
 const routes: Routes = [
     { path: '', component: OrderDashboardComponent },
-    { path: 'edit', component: OrderEditComponent },
+    { path: 'edit/:id', component: OrderEditComponent },
     { path: 'order-wizard',  component: OrderWizardComponent},
     { path: ':id', component: OrderDetailsComponent }
 ];

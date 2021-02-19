@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
+
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
