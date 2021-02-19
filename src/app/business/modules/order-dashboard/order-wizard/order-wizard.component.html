@@ -323,8 +323,14 @@
 
                       <div class="card-body p-0">
                         <!--begin::Shopping Cart-->
-                        <div *ngIf="orders.length == 0" class="table-responsive">
-                          No items in the cart
+                        <div  *ngIf="orders.length == 0"  class="card card-shadow card-custom card-shadowless mgn-bt-10">
+                          <div class="card-body p-0">
+                        <div class="no-dta text-center">
+                          <p>No items in the cart</p>
+                          <span class="cs-btn bt3" (click)="addItem()">
+                              Add Item</span>
+                      </div>
+                          </div>
                         </div>
                         <div *ngIf="orders.length != 0" class="table-responsive">
                           <table class="table">
@@ -434,8 +440,9 @@
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
                                   <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
+                                      <p class="mgn-up-10">No address found</p>
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
-                                        Add New </button>
+                                        Add Address </button>
                                     </div>
                                   </div>
                                 </div>

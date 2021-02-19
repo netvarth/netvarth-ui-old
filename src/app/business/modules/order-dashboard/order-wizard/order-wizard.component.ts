@@ -999,6 +999,9 @@ export class OrderWizardComponent implements OnInit {
     }
     return found;
   }
+  addItem(){
+    this.step = 2;
+  }
   applyCoupons(jCoupon) {
     this.api_cp_error = null;
     this.couponvalid = true;
@@ -1171,4 +1174,5 @@ export class OrderWizardComponent implements OnInit {
   // }
 
 }
+
 
