@@ -65,7 +65,8 @@ export class OrderActionsComponent implements OnInit {
   setActions() {
     if (!this.mulipleSelection) {
       this.showSendDetails = true;
-      if (this.pos && (this.orderDetails.orderStatus !== 'Cancelled' || (this.orderDetails.orderStatus === 'Cancelled' && this.orderDetails.bill && this.orderDetails.bill.billPaymentStatus !== 'NotPaid'))) {
+      if (this.pos && (this.orderDetails.orderStatus !== 'Cancelled' || (this.orderDetails.orderStatus === 'Cancelled' && this.orderDetails.bill && this.orderDetails.bill.billPaymentStatus !== 'NotPaid'))
+      ||  (this.orderDetails.orderStatus === 'Cancelled' && this.orderDetails.advanceAmountPaid > 0 )) {
         this.showBill = true;
       }
       this.getCatalog();
@@ -215,7 +216,7 @@ export class OrderActionsComponent implements OnInit {
               console.log(this.catalogfilterStats);
             }
 
-          
+
         }
         this.loading = false;
       });
