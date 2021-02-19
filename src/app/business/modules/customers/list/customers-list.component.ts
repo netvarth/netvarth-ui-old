@@ -507,7 +507,7 @@ export class CustomersListComponent implements OnInit {
     if (event.target.checked) {
       for (let i = 0; i < this.customers.length; i++) {
         const customer = this.selectedcustomersformsg.filter(customer => customer.id === this.customers[i].id);
-        if (customer.length === 0) {
+        if (customer.length === 0 && !this.showText(this.customers[i])) {
           this.selectedcustomersformsg.push(this.customers[i]);
         }
       }
