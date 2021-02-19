@@ -235,12 +235,12 @@
                   <div class="flex-row-fluid">
                     <div *ngIf="show_customer && step == 2" class="orderdetails col-md-12 col-xs-12 col-sm-12 col-lg-12">
                       <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
-                          <div class="bold font11">
+                          <div class="bold font11" *ngIf="customer_data.firstName || customer_data.lastName">
                             {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
-                          <div>Id - {{ jaldeeId }}</div>
-                          <div> <i class="fa fa-phone"
+                          <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
+                          <div *ngIf="customer_data.phoneNo"> <i class="fa fa-phone"
                                   aria-hidden="true"></i> {{countryCode}} {{customer_data.phoneNo}}</div>
-                                  <div> <i class="fa fa-envelope"
+                                  <div *ngIf="customer_email"> <i class="fa fa-envelope"
                                       aria-hidden="true"></i> {{customer_email}}</div>
                       </div>
                   </div>
@@ -323,6 +323,9 @@
 
                       <div class="card-body p-0">
                         <!--begin::Shopping Cart-->
+                        <div *ngIf="orders.length == 0" class="table-responsive">
+                          No items in the cart
+                        </div>
                         <div *ngIf="orders.length != 0" class="table-responsive">
                           <table class="table">
                             <!--begin::Cart Header-->
@@ -392,10 +395,10 @@
                               Home delivery
                             </div>
                             <div class="text-muted">DATE/TIME
-                              <div class="fl-right">
+                              <span>
                                 <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#datePickerModal">
                                   Change </button>
-                              </div>
+                                </span>
                               <!-- <div class="fl-right"><a  data-toggle="modal" data-target="#datePickerModal">Change</a></div> -->
                             </div>
                             <div>
