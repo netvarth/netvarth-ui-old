@@ -105,7 +105,8 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="sendimages()"  *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
+        <div class="action-box pointer-cursor" (click)="sendimages()"
+            *ngIf="!data.multiSelection && checkin.waitlistStatus!=='blocked'">
             <div class="action-box-sub">
                 <span><i class="material-icons">attach_file</i></span>
                 <div class="icon-text">Send Attachments</div>
@@ -209,10 +210,9 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <!-- <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</span>
-        <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage labels</span> -->
-        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
-        <a class="" (click)="gotoLabel()">Manage labels</a>
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+        <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">

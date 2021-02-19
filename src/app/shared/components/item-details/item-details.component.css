@@ -94,3 +94,12 @@ img.ordericon.home {
   cursor: default !important;
   pointer-events: none !important;
 }
+.btncheckout {
+  background-color:orange;
+  color:blue;
+  margin: 5%;
+  margin-right: 15%;
+  font-weight: bold;
+  border:1px solid blue;
+
+}

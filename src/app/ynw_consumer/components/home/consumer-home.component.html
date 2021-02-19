@@ -139,10 +139,10 @@
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
-                                                    </button>	
+                                                    </button>
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
-                                                    </button>	
+                                                    </button>
                                                     <!-- <button mat-menu-item *ngIf="booking.apptStatus == 'Completed'">
                                                         <span class="rate-service" [class.rated]="isRated(booking)"
                                                             (click)="rateService(booking,'appointment')">{{rate_visit}}</span>
@@ -195,11 +195,11 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div
-                                                        [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -314,7 +314,7 @@
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
-                                                    </button>	
+                                                    </button>
                                                     <button mat-menu-item *ngIf="booking.waitlistStatus == 'done'" (click)="rateService(booking,'checkin')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
@@ -396,10 +396,10 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -537,7 +537,7 @@
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
-                                                    </button>	
+                                                    </button>
                                                     <button mat-menu-item  *ngIf="booking.apptStatus == 'Completed'" (click)="rateService(booking,'appointment')" >
                                                             <i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}
                                                     </button>
@@ -593,10 +593,10 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
 
                                                             <span>
                                                                 <span>
@@ -791,10 +791,10 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
 
                                                             <span>
                                                                 <span>
@@ -949,7 +949,7 @@
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
-                                                    </button>	
+                                                    </button>
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -986,10 +986,10 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1191,10 +1191,10 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1342,7 +1342,7 @@
                                                     <button mat-menu-item *ngIf="booking.hasAttachment"  (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
-                                                    </button>	
+                                                    </button>
                                                     <button mat-menu-item *ngIf="booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Completed'
                                                     && booking.apptStatus !== 'Cancelled'"
                                                         (click)="getMeetingDetails(booking,'appt')">
@@ -1379,10 +1379,10 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1584,10 +1584,10 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
-                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme wrap_txt disply-flex">
+                                                        <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'" class="prov_nme disply-flex">
                                                             <span>
                                                                 <span>
                                                                     <i class="fa phon-icon"
@@ -1767,7 +1767,8 @@
                                             <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                 {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
-                                            <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                <span *ngIf="oder.bill && oder.bill.refundedAmount >0" style="color:green"> Refunded </span>
+                                                <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
                                                     (click)="viewBill(oder,'order',$event)">Receipt</button>
@@ -1852,7 +1853,8 @@
                                                     <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0" class="amtPaid">Paid
                                                     {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid | currency:'&#8377;') : (oder.advanceAmountPaid | currency:'&#8377;'))}}</span> &nbsp;&nbsp;
-                                                <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
+                                                    <span *ngIf="oder.bill && oder.bill.refundedAmount >0" style="color:green"> Refunded </span>
+                                                    <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
                                                         (click)="viewBill(oder,'order',$event)">Receipt</button>

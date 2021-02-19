@@ -2087,6 +2087,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
      this.galleryDialog.afterClosed().subscribe(result => {
+      this.reloadAPIs();
     });
   }
 

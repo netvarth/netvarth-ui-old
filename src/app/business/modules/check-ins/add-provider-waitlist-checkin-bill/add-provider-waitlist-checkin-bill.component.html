@@ -351,10 +351,10 @@
 															<span class="dynamic">{{spname}}</span>
 														</span>
 														<span *ngIf="source === 'order'"
-															[class.red]="bill_data.billStatus === 'Cancel'">
+															[class.red]="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
 															<!-- <span class="title">Order Id </span>
 															<span class="dynamic">{{checkin.orderNumber}}</span> -->
-															<div *ngIf="bill_data.billStatus === 'Cancel'">Cancelled
+															<div *ngIf="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">Cancelled
 															</div>
 														</span>
 													</div>
@@ -362,7 +362,7 @@
 											</div>
 										</div>
 										<ng-container *ngIf="bill_data.billStatus!='Settled'">
-											<div class="workbench mat-form-field-wrapper" *ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') || 
+											<div class="workbench mat-form-field-wrapper" *ngIf="pos && ((!source && checkin.waitlistStatus != 'cancelled') ||
 												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
 												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))">
 												<ng-container
@@ -957,7 +957,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="checkin.waitlistStatus != 'cancelled'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -978,7 +978,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1087,7 +1087,7 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item
+																<button mat-menu-item *ngIf="bill_data.billStatus !== 'Cancel'"
 																	(click)="adjustItem(item.itemName, item.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1303,7 +1303,7 @@
 																		<span class="mode">
 																			<span class="title">Payment Mode</span>
 																			<span>{{payment.acceptPaymentBy |
-																				capitalizeFirst}}<ng-container *ngIf="payment.paymentMode && 
+																				capitalizeFirst}}<ng-container *ngIf="payment.paymentMode &&
 																				payment.acceptPaymentBy != payment.paymentMode.toLowerCase()">/{{payment.paymentMode}}
 																				</ng-container>
 																			</span>

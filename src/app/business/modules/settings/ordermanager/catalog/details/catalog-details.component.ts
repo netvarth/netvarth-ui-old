@@ -189,20 +189,6 @@ export class CatalogdetailComponent implements OnInit {
     };
     showadditems = true;
     status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
-    // status: any = ['Order Received',
-    //     'Order Acknowledged',
-    //     'Order Confirmed',
-    //     'Preparing',
-    //     'Packing',
-    //     'Payment Required',
-    //     'Ready For Pickup',
-    //     'Ready For Shipment',
-    //     'Ready For Delivery',
-    //     'Completed',
-    //     'In Transit',
-    //     'Shipped',
-    //     'Cancelled'
-    // ];
     selectedStatus;
     uploadcatalogImages: any = [];
     payAdvance = 'NONE';

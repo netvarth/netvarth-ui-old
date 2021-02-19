@@ -19,6 +19,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
   styleUrls: ['./order-details.component.css']
 })
 export class OrderDetailsComponent implements OnInit {
+  delivery_address: any;
   msgCount = 0;
   communication_history = [];
   uid;
@@ -36,23 +37,24 @@ export class OrderDetailsComponent implements OnInit {
   image_list_popup: Image[];
   imagelist: any = [];
   orderlist_history: any = [];
-customPlainGalleryRowConfig: PlainGalleryConfig = {
-  strategy: PlainGalleryStrategy.CUSTOM,
-  layout: new AdvancedLayout(-1, true)
-};
-customButtonsFontAwesomeConfig: ButtonsConfig = {
-visible: true,
-strategy: ButtonsStrategy.CUSTOM,
-buttons: [
-    {
+  orderstatus: any = projectConstantsLocal.ORDER_STATUS_FILTER;
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
         className: 'inside close-image',
         type: ButtonType.CLOSE,
         ariaLabel: 'custom close aria label',
         title: 'Close',
         fontSize: '20px'
-    }
-]
-};
+      }
+    ]
+  };
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     public location: Location, public sharedFunctions: SharedFunctions,
@@ -84,6 +86,9 @@ buttons: [
     this.image_list_popup = [];
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
+      if (this.orderDetails.homeDeliveryAddress) {
+        this.delivery_address = this.orderDetails.homeDeliveryAddress;
+      }
       if (this.orderDetails && this.orderDetails.orderItem) {
         for (const item of this.orderDetails.orderItem) {
           this.orderItems.push({ 'type': 'order-details-item', 'item': item });
@@ -95,10 +100,10 @@ buttons: [
           const imgobj = new Image(
             i,
             { // modal
-                img: this.imagelist[i].s3path,
-                description: this.imagelist[i].caption || ''
+              img: this.imagelist[i].s3path,
+              description: this.imagelist[i].caption || ''
             });
-        this.image_list_popup.push(imgobj);
+          this.image_list_popup.push(imgobj);
         }
       }
       this.loading = false;
@@ -162,74 +167,81 @@ buttons: [
   }
   getOrderCommunications() {
     this.providerservice.getProviderInbox()
-    .subscribe(
-      data => {
-        const history: any = data;
-        this.communication_history = [];
-        for (const his of history) {
-          if (his.waitlistId === this.uid || his.waitlistId === this.uid.replace('h_', '')) {
-            this.communication_history.push(his);
+      .subscribe(
+        data => {
+          const history: any = data;
+          this.communication_history = [];
+          for (const his of history) {
+            if (his.waitlistId === this.uid || his.waitlistId === this.uid.replace('h_', '')) {
+              this.communication_history.push(his);
+            }
+
           }
-
+          this.msgCount = this.communication_history.length;
+          this.sortMessages();
+          this.sharedFunctions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
+        },
+        () => {
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
-        this.msgCount = this.communication_history.length;
-        this.sortMessages();
-        this.sharedFunctions.sendMessage({ 'ttype': 'load_unread_count', 'action': 'setzero' });
-      },
-      () => {
-        //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-      }
-  );
+      );
 
-}
+  }
 
-getorderHistory(uuid) {
-  console.log(uuid);
-  this.providerservice.getProviderorderlistHistroy(uuid)
-    .subscribe(
-      data => {
-        console.log(data);
-        this.orderlist_history = data;
-      },
-      () => {
-        //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+  getorderHistory(uuid) {
+    console.log(uuid);
+    this.providerservice.getProviderorderlistHistroy(uuid)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.orderlist_history = data;
+        },
+        () => {
+          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+        }
+      );
+  }
+  sortMessages() {
+    this.communication_history.sort(function (message1, message2) {
+      if (message1.timeStamp < message2.timeStamp) {
+        return 1;
+      } else if (message1.timeStamp > message2.timeStamp) {
+        return -1;
+      } else {
+        return 0;
       }
-    );
-}
-sortMessages() {
-  this.communication_history.sort(function (message1, message2) {
-    if (message1.timeStamp < message2.timeStamp) {
-      return 1;
-    } else if (message1.timeStamp > message2.timeStamp) {
-      return -1;
-    } else {
-      return 0;
+    });
+  }
+  getRandomClass(status) {
+for (const stat of this.orderstatus) {
+ if (stat.value === status) {
+    return stat.clas;
     }
-  });
+  }
 }
-showCommunication() {
-  const dialogRef = this.dialog.open(CommunicationComponent, {
-    width: '40%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
-    disableClose: true,
-    data: {
-      message: this.communication_history,
-      type: 'provider',
-      id: this.uid,
-      orderDetails: this.orderDetails
-    }
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result === 'reloadlist') {
-    }
-  });
-}
-getformatedTime(time) {
-  let timeDate;
-  timeDate = time.replace(/\s/, 'T');
-  console.log(timeDate);
-  return timeDate;
-}
+  showCommunication() {
+    const dialogRef = this.dialog.open(CommunicationComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        message: this.communication_history,
+        type: 'provider',
+        id: this.uid,
+        orderDetails: this.orderDetails
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
+  getformatedTime(time) {
+    let timeDate;
+    timeDate = time.replace(/\s/, 'T');
+    console.log(timeDate);
+    return timeDate;
+  }
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }

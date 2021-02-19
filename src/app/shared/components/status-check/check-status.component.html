@@ -180,9 +180,9 @@
                     *ngIf="type=='order' && ((statusInfo.bill && statusInfo.bill.amountPaid > 0) || statusInfo.advanceAmountPaid > 0)">
                     <td width="48%" align="right">Amount paid</td>
                     <td width="2%">&nbsp;:&nbsp;</td>
-                    <td><span class="rupee-font">&#8377;
-                      </span> {{(statusInfo.bill) ? statusInfo.bill.amountPaid :
-                      statusInfo.advanceAmountPaid}}</td>
+                    <td class="rupee-font"><span class="rupee-font">
+                      </span> {{((statusInfo.bill) ? (statusInfo.bill.amountPaid | currency:'&#8377;') :
+                      (statusInfo.advanceAmountPaid | currency:'&#8377;'))}}</td>
                   </tr>
                 </tbody>
               </table>
