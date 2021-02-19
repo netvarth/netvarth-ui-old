@@ -1060,7 +1060,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
     }
-    this.getcartDetails();
+    if (this.orderType !== 'SHOPPINGLIST') {
+      this.getCartDetails();
+    }
     if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
     } else {
