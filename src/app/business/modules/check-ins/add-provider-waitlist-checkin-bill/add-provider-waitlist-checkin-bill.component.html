@@ -108,28 +108,33 @@
 									(click)="showAddItem()"
 									class="btn btn-sm btn-success font-weight-bold py-2 px-3 flat_item px-xxl-5 my-1">Add
 									Service/Item</a>
-								<button mat-icon-button [matMenuTriggerFor]="menu">
+								<button mat-icon-button [matMenuTriggerFor]="topmenu">
 									<mat-icon>more_vert</mat-icon>
 								</button>
-								<mat-menu #menu="matMenu">
+								<mat-menu #topmenu="matMenu">
 									<button mat-menu-item>
-										Apply Order Discount
+										Apply  Order Discount
 									</button>
 									<button mat-menu-item>
 					 					Apply Coupon
 									</button>
 									<button mat-menu-item>
+										Apply Jaldee Coupon
+									</button>
+									<button mat-menu-item>
 										Add Display Note
+									</button>
+									<button mat-menu-item>
+										Add Private Note
 									</button>
 								</mat-menu>
 							</div>
 
 
-							<!-- <input type="number" min="0" max="{{qty_limit}}" matInput #itemserviceqty aria-label="Number" (keypress)="isNumeric($event)" (keyup)="isvalid($event)" matInput value="1"
-								size="3" [(ngModel)]="deliveryCharge" [ngModelOptions]="{standalone: true}"> -->
-
+						
 						</div>
 						<div class="col-md-11">
+							<!-- revamp table -->
 							<div class="table-responsive">
 								<table class="table">
 									<thead>
@@ -146,15 +151,15 @@
 											<td class="text-right pt-7">80</td>
 											<td class="text-right pt-7">$40.00
 
-												<button mat-icon-button [matMenuTriggerFor]="menu">
+												<button mat-icon-button [matMenuTriggerFor]="tdmenu">
 													<mat-icon>more_horiz</mat-icon>
 												</button>
-												<mat-menu #menu="matMenu">
-													<button mat-menu-item>
+												<mat-menu #tdmenu="matMenu">
+													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault">
 														Apply Discount
 													</button>
 
-													<button mat-menu-item>
+													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1">
 														Change Qty
 													</button>
 													<button mat-menu-item>
@@ -171,8 +176,46 @@
 										</tr>
 									</tbody>
 								</table>
-
 							</div>
+							<!-- Modal for apply discount -->
+							<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<select class="form-control">
+												<option>Disc 1</option>
+												<option>Disc 2</option>
+												<option>Disc 3</option>
+											</select>
+										</div>
+										<div class="modal-footer p-0">
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal for Change qty -->
+							<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="form-group mb-0 row">
+												<label for="example-number-input" class="col-12 col-form-label">number</label>
+												<div class="col-12">
+													<input class="form-control" type="number" value="42" id="example-number-input">
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer p-0">
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
 							<hr>
 							<div class="col-lg-6 col-md-6 col-xs-6 disp_grid extra-bill fl_rt">
 								<div class="hr_content">

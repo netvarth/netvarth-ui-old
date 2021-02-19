@@ -89,3 +89,9 @@
 .clr_red {
     color: #dc3545;
 }
+.fade {
+    opacity: 5 !important;
+}
+.lh-p6 {
+    line-height: 0.6;
+}
