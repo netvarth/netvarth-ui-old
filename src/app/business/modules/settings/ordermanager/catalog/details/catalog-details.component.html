@@ -620,7 +620,7 @@
             <div class="row justify-content-center my-10 px-8 my-lg-10 px-lg-10">
               <div class="col-xl-12 col-xxl-12">
                 <!--begin::Wizard Form-->
-                <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                <form [formGroup]="amForm" novalidate 
                   (keyup)="resetApiErrors()" *ngIf="!showInfo" class="form">
                   <!--begin::Wizard Step 1-->
                   <div class="pb-5" *ngIf="step == 1">
@@ -850,9 +850,8 @@
 
                     <!--begin::Card-->
                     <div class="row bg-grey" *ngIf="cataId">
-
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItems;let i=index;">
-                        <button *ngIf="item.id" class="pull-right more_btn" mat-icon-button [matMenuTriggerFor]="appMenu">
+                        <button *ngIf="item.id" class="pull-right more_btn"  mat-icon-button [matMenuTriggerFor]="appMenu" >
                           <mat-icon>more_horiz</mat-icon>
                         </button>
                         <mat-menu #appMenu="matMenu">
@@ -867,7 +866,7 @@
                             <div class="overlay">
 
                               <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
-                                [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
+                                [ngStyle]="{ 'background-image': 'url(' + getItemImg(item.item) + ')'}">
                               </div>
                             </div>
                             <!--end::Image-->
@@ -1299,7 +1298,7 @@
                       </button>
                     </div>
                     <div>
-                      <button *ngIf="step == 4" type="submit"
+                      <button *ngIf="step == 4" type="button" (click)="onSubmit(amForm.value)"
                         class="btn btn-success font-weight-bold text-uppercase px-9 py-1"
                         [disabled]="!amForm.valid || disableButton">
                         Save
@@ -1335,14 +1334,10 @@
                 </div>
                 <div class="modal-body">
                   <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                    <form [formGroup]="amItemForm" novalidate  class="form">
-                    <!-- <div class="col-sm-12"><hr></div> -->
+                    <form [formGroup]="amItemForm"   class="form">
+                    
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="itemName"
-                                                        placeholder="Item Name *" formControlName="itemName" autocomplete="off"
-                                                        maxlength="50">
-                                                </mat-form-field> -->
+                      
                       <div class="">
                         <label class="form-control-label">
                           Item name
@@ -1360,11 +1355,7 @@
                       </app-field-error-display>
                     </div>
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="displayName"
-                                                        placeholder="Display Name *" formControlName="displayName"
-                                                        autocomplete="off" maxlength="50">
-                                                </mat-form-field> -->
+                      
                       <div class="">
                         <label class="form-control-label">
                           Display Name
@@ -1383,10 +1374,25 @@
                       </app-field-error-display>
                     </div>
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="itemCode"
-                                                        placeholder="Item Code" formControlName="itemCode" autocomplete="off">
-                                                </mat-form-field> -->
+                     
+                      <div class="">
+                          <label class="form-control-label">
+                              Item Local Name
+                          </label>
+                          <input type="text" class="form-control" id="itemNameInLocal"
+                              placeholder="Enter item code" formControlName="itemNameInLocal" 
+                              autocomplete="off">
+                      </div>
+                      <app-field-error-display
+                          [displayError]="fed_service.isFieldValid(amItemForm,'itemNameInLocal')" [errorMsgs]="fed_service.getErrorMessage(amItemForm,'itemNameInLocal',
+                  {
+                    'required' : 'Enter a code for item',
+                    'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
+                  })">
+                      </app-field-error-display>
+                  </div>
+                    <div class="form-group col-sm-6">
+                     
                       <div class="">
                         <label class="form-control-label">
                           Item Code
@@ -1403,11 +1409,7 @@
                       </app-field-error-display>
                     </div>
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <input matInput type="text" class="form-control" id="shortDec"
-                                                        placeholder="Short Description *" formControlName="shortDec"
-                                                        autocomplete="off">
-                                                </mat-form-field> -->
+                      
                       <div class="">
                         <label class="form-control-label">
                           Short Description
@@ -1426,12 +1428,7 @@
                       </app-field-error-display>
                     </div>
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <textarea matInput class="form-control" id="displayDesc"
-                                                        placeholder="{{detailed_dec_cap}} " formControlName="displayDesc"
-                                                        (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
-                                                        maxlength="500"></textarea>
-                                                </mat-form-field> -->
+                     
                       <div class="">
                         <label class="form-control-label">Detailed Description</label>
                         <textarea class="form-control1" id="displayDesc"
@@ -1451,11 +1448,7 @@
                         characters remaining</span>
                     </div>
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                    <textarea matInput class="form-control" id="note" placeholder="Note "
-                                                        formControlName="note" (keyup)="setnoteCharCount()" (focus)="setnoteFocus()"
-                                                        (blur)="lostnoteFocus()" maxlength="500"></textarea>
-                                                </mat-form-field> -->
+                      
                       <div class="">
                         <label class="form-control-label">Notes</label>
                         <textarea class="form-control1" id="note" placeholder="Enter any notes"
@@ -1474,13 +1467,7 @@
                     </div>
 
                     <div class="form-group col-sm-6">
-                      <!-- <mat-form-field>
-                                                        <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
-                                                   <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
-                                                        (keyup)="isvalid($event)" class="form-control number-ip-sm"
-                                                        formControlName="price" id="price"
-                                                        placeholder="{{price_cap}}*" autocomplete="off">
-                                                </mat-form-field> -->
+                      
                       <div class="">
                         <label class="form-control-label">
                           {{price_cap}}
@@ -1521,14 +1508,7 @@
                         </mat-radio-group>
                       </div>
                       <div class="form-group" *ngIf="showPromotionalPrice">
-                        <!-- <mat-form-field>
-                                                        <span matPrefix *ngIf="curtype == 'FIXED'" class='rupee'><i class="fa fa-inr"></i>  &nbsp;</span>
-                                                        <span matPrefix *ngIf="curtype == 'PCT'" class='rupee'> % &nbsp;</span>
-                                                        <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
-                                                            (keyup)="isvalid($event)" class="form-control number-ip-sm"
-                                                            formControlName="promotionalPrice" id="promotionalPrice"
-                                                            [placeholder]="valueCaption" autocomplete="off">
-                                                    </mat-form-field> -->
+                        
                         <div class="">
                           <label class="form-control-label">
                             Discounted Price
@@ -1563,11 +1543,7 @@
                         </mat-radio-group>
                       </div>
                       <div class="form-group" *ngIf="showPromotionalPrice && showCustomlabel">
-                        <!-- <mat-form-field>
-                                                        <input matInput type="text" class="form-control" id="customlabel"
-                                                            placeholder="Custom Label " formControlName="customlabel"
-                                                            autocomplete="off">
-                                                    </mat-form-field> -->
+                       
                         <div class="">
                           <label class="form-control-label">
                             Custom Label

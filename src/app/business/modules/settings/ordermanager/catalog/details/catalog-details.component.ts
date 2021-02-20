@@ -733,6 +733,7 @@ export class CatalogdetailComponent implements OnInit {
     createItemform(){
         this.amItemForm = this.fb.group({
             itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
             itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
             displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
             shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
@@ -1489,7 +1490,7 @@ console.log(this.catalog.catalogName);
 
     }
     onSubmit(form_data) {
-
+console.log('hi submit');
         // const daystr: any = [];
         // for (const cday of this.selday_arr) {
         //     daystr.push(cday);
@@ -2317,6 +2318,7 @@ console.log(this.catalog.catalogName);
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
+                'itemNameInLocal' : form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
@@ -2505,6 +2507,10 @@ console.log(this.catalog.catalogName);
           }
         });
     }
+    stopprop(event) {
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+      }
 
     getUpdatedItems() {
         this.getItems().then(
