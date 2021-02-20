@@ -360,8 +360,7 @@ export class OrderWizardComponent implements OnInit {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
-    console.log(this.selectedAddress);
+    this.selectedAddress = address;
   }
   getCatalog() {
     this.getCatalogDetails().then(data => {
@@ -1174,5 +1173,6 @@ export class OrderWizardComponent implements OnInit {
   // }
 
 }
+
 
 

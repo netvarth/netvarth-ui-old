@@ -119,6 +119,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   amForm: FormGroup;
   nextAvailableTimeQueue: any;
   @ViewChild('closeModal') private closeModal: ElementRef;
+  @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -209,17 +210,32 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
   onSubmit(form_data) {
-
     console.log(JSON.stringify(form_data));
-    this.disableSave = true;
-    this.added_address.push(form_data);
-    console.log('addres' + JSON.stringify(this.added_address));
-    this.providerservice.updateDeliveryaddress(this.customerId, this.added_address)
+    const timeslot = this.nextAvailableTime.split(' - ');
+    this.selectedAddress = form_data;
+    const post_data = {
+      'homeDelivery': true,
+      'homeDeliveryAddress': this.selectedAddress,
+      'uid': this.orderDetails.uid,
+      'timeSlot': {
+        'sTime': timeslot[0],
+        'eTime': timeslot[1]
+      },
+      'orderDate': this.orderDetails.orderDate,
+      'countryCode': this.orderDetails.countryCode,
+      'phoneNumber': this.orderDetails.phoneNumber,
+      'email': this.orderDetails.email
+
+    };
+    console.log(post_data);
+    this.closeModal.nativeElement.click();
+
+    this.providerservice.updateProviderOrders(post_data)
       .subscribe(
         data => {
           this.disableSave = false;
           this.closeModal.nativeElement.click();
-          this.getDeliveryAddress();
+          this.getOrderDetails(this.uid);
         },
         error => {
           this.disableSave = false;
@@ -231,6 +247,20 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   // goBack() {
   //   this.router.navigate(['providers', 'orders']);
   // }
+  editAddress() {
+    this.amForm.setValue({
+      'phoneNumber': this.orderDetails.homeDeliveryAddress.phoneNumber || null,
+      'firstName': this.orderDetails.homeDeliveryAddress.firstName || null,
+      'lastName': this.orderDetails.homeDeliveryAddress.lastName || null,
+      'email': this.orderDetails.homeDeliveryAddress.email || null,
+      'address': this.orderDetails.homeDeliveryAddress.address || null,
+      'city': this.orderDetails.homeDeliveryAddress.city || null,
+      'postalCode': this.orderDetails.homeDeliveryAddress.postalCode || null,
+      'landMark': this.orderDetails.homeDeliveryAddress.landMark || null,
+      'countryCode': '+91',
+    });
+
+  }
   getOrderItems() {
 
     this.orderSummary = [];
@@ -333,11 +363,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         this.choose_type = 'home';
         this.home_delivery = true;
         this.selectedRowIndex = 'i';
-
       }
       if (this.orderDetails.orderFor) {
         this.customerId = this.orderDetails.orderFor.id;
-        this.getDeliveryAddress();
+       // this.getDeliveryAddress();
       }
       this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
       console.log(JSON.stringify(this.orders));
@@ -351,12 +380,13 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
 
-  goBackToCheckout(selectesTimeslot, queue) {
-    this.action = '';
+  goBackToSummary(selectesTimeslot, queue) {
+
     console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
+    this.datepickerModal.nativeElement.click();
 
   }
   handleQueueSelection(queue, index) {
@@ -985,3 +1015,4 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
 }
+
