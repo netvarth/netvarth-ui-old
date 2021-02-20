@@ -1870,7 +1870,7 @@ export class AppointmentComponent implements OnInit {
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
-        _this.shared_services.getAvailableDatessByLocationService(locid, servid, accountid)
+        _this.shared_services.getProviderAvailableDatessByLocationService(locid, servid, accountid)
             .subscribe((data: any) => {
                 const availables = data.filter(obj => obj.availableSlots);
                 const availDates = availables.map(function (a) { return a.date; });

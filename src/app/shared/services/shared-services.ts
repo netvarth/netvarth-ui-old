@@ -696,7 +696,10 @@ export class SharedServices {
     const url = 'consumer/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-
+  getProviderAvailableDatessByLocationService(locid, servid, accountid?) {
+    const url = 'provider/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
