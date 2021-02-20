@@ -128,10 +128,12 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst}}</a>
         </h4>
-        <h6 class="qualification">
+        <h6 class="qualification" *ngIf="user.qualifications.length>0">
             {{user.qualifications[0]}}{{ user.qualifications.length > 1 ? ", +" + (user.qualifications.length-1) : "" }}
         </h6>
-        <label class="specialization">DENTIST</label>
+        <h6 class="qualification" *ngIf="user.qualifications.length==0" style="height:17px;"></h6>
+        <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
+        <label *ngIf="!user.businessUserName" style="padding:5px 10px; margin:0 !important;">&nbsp;</label>
         <p class="availability">Next Available Time<br/>Feb 15, 02:00 PM</p>
         <button type="button" class="btn btn-outline-warning">Book Now</button>
     </div>
