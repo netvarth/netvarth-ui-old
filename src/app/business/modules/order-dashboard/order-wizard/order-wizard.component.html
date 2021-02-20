@@ -420,7 +420,7 @@
                             </div>
 
                             <!-- Home Address -->
-                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                            <!-- <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                               <div>
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
                                   [ngClass]="{'highlight': selectedRowIndex == i}">
@@ -446,7 +446,25 @@
                                   </div>
                                 </div>
                               </div>
-                            </ng-container>
+                            </ng-container> -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                                        <!-- Grid View -->
+                                        <mat-grid-list  style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
+                                        *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                                        [ngClass]="{'highlight': selectedRowIndex == i}">
+                                            <mat-grid-tile>
+                                            </mat-grid-tile>
+                                            <div class="item-contnt">
+                                              <div class="text-center">
+                                                <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                                <div>{{address.address}}</div>
+                                                <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                                <div> +91 {{address.phoneNumber}}</div>
+                                                <div> {{address.email}}</div>
+                                              </div>
+                                          </div>
+                                        </mat-grid-list>
+                                    </div>
                             <!-- Add Address Modal  -->
                             <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
                               aria-hidden="true">

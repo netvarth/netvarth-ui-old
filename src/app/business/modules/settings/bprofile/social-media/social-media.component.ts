@@ -9,7 +9,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 @Component({
     selector: 'app-social-media',
     templateUrl: './social-media.component.html',
-    styleUrls: ['./social-media.component.css']
+    styleUrls: ['./social-media.component.css', '../../../../../../assets/css/style.bundle.css', '../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class SocialMediaComponent implements OnInit {
 

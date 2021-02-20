@@ -8,7 +8,78 @@
     </div>
 </section>
 <section>
-    <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12">
+
+     <!--begin::Col-->
+     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mgn-up-10">
+        <!--begin::Card-->
+        <div class="card card-custom gutter-b card-stretch" *ngFor="let social of orgsocial_list;let i=index">
+            <!--begin::Body-->
+            <div class="card-body text-center pt-4">
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end">
+                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
+                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ki ki-bold-more-hor"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                            <!--begin::Navigation-->
+<ul class="navi navi-hover py-5">
+    <li class="navi-item">
+        <a href="#" class="navi-link">
+            <span class="navi-icon"><i class="flaticon2-drop"></i></span>
+            <span class="navi-text">Delete</span>
+        </a>
+    </li>
+</ul>
+<!--end::Navigation-->
+                        </div>
+                    </div>
+                </div>
+                <!--end::Toolbar-->
+
+                <!--begin::User-->
+                <div class="mt-7">
+                    <div class="symbol symbol-circle symbol-lg-75">
+                        <span [class]="social.iconClass"></span>
+                    </div>
+                    <div class="symbol symbol-lg-75 symbol-circle symbol-primary">
+                        <span class="font-size-h3 symbol-label font-weight-boldest d-none">LD</span>
+                    </div>
+                </div>
+                <!--end::User-->
+
+                <!--begin::Name-->
+                <div class="my-2">
+                    <a href="#" class="text-dark font-weight-bold text-hover-primary font-size-h4">Luca Doncic</a>
+                </div>
+                <!--end::Name-->
+
+                <!--begin::Label-->
+                <a href="#" class="label label-inline label-lg label-light-danger font-weight-bold">Active</a>
+                <!--end::Label-->
+
+                <!--begin::Buttons-->
+                <div class="mt-9 mb-6">
+                    <a href="#" class="btn btn-md btn-icon btn-light-facebook btn-pill mx-2">
+                        <i class="socicon-facebook"></i>
+                    </a>
+                    <a href="#" class="btn btn-md btn-icon btn-light-twitter btn-pill mx-2">
+                        <i class="socicon-twitter"></i>
+                    </a>
+                    <a href="#" class="btn btn-md btn-icon btn-light-linkedin btn-pill mx-2">
+                        <i class="socicon-linkedin"></i>
+                    </a>
+                </div>
+                <!--end::Buttons-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Col-->
+
+
+    <!-- <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="social-box" *ngFor="let social of orgsocial_list;let i=index">
                 <div class="col-lg-3 col-md-3 no-padding col-xs-2 col-sm-3">
@@ -21,8 +92,6 @@
                             <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" matInput type="text" class="form-control mgn-up-10"
                               placeholder="Insert link">
                           </mat-form-field>
-                    <!-- <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)"
-                        placeholder="https://www.{{social.displayName}}.com/"> -->
                     <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="showDelete(social.key)">
                         <mat-icon>more_vert</mat-icon>
                     </button>
@@ -42,6 +111,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="clearfix"></div>
 </section>
