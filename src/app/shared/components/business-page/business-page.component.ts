@@ -372,6 +372,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
+        alert(this.accountEncId);
 
         if (params.get('userEncId')) {
           this.userEncId = params.get('userEncId');

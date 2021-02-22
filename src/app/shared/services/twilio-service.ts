@@ -75,7 +75,9 @@ export class TwilioService {
         }).then(
             localTracks => {
                 this.previewTracks = localTracks;
+                console.log(localTracks);
                 localTracks.forEach(localTrack => {
+                    console.log(localTrack);
                     if (localTrack.kind === 'video') {
                         this.camDeviceCount++;
                         console.log(this.camDeviceCount);

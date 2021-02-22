@@ -1918,4 +1918,8 @@ export class ProviderServices {
       const url = 'provider/orders/states/' + uuid;
       return this.servicemeta.httpGet(url);
    }
+   uploadMRfiles(mrId, data) {
+      const url = 'provider/mr/uploadMR/' + mrId;
+      return this.servicemeta.httpPost(url, data);
+   }
 }

@@ -54,7 +54,6 @@ const routes: Routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'blog', component: JaldeeBlogComponent },
     { path: ':id', component: BusinessPageComponent },
-    { path: ':id/:userUniqueId', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },

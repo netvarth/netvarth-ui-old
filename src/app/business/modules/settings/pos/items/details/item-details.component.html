@@ -199,18 +199,23 @@
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <!-- <mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="itemNameInLocal"
+                                            placeholder="Item Local Name" formControlName="itemNameInLocal" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'itemNameInLocal')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemNameInLocal',
+                                {
+                                  'required' : 'Enter a code for item',
+                                  'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
                                         <input matInput type="text" class="form-control" id="itemCode"
                                             placeholder="Item Code" formControlName="itemCode" autocomplete="off">
-                                    </mat-form-field> -->
-                                    <div class="">
-                                        <label class="form-control-label">
-                                            Item Code
-                                        </label>
-                                        <input type="text" class="form-control" id="itemCode"
-                                            placeholder="Enter item code" formControlName="itemCode" 
-                                            autocomplete="off">
-                                    </div>
+                                    </mat-form-field>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'itemCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemCode',
                                 {
@@ -218,7 +223,7 @@
                                   'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
                                 })">
                                     </app-field-error-display>
-                                </div>
+                                </div>                                
                                 <div class="form-group col-sm-6">
                                     <!-- <mat-form-field>
                                         <input matInput type="text" class="form-control" id="shortDec"

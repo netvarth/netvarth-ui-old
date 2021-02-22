@@ -319,8 +319,9 @@ width:100%;
   /*width: 1010px; */
 }
 .plancontainer {
-  width: 99%;
+  width: 95%;
   margin:auto;
+  min-width: 220px;
 }
 .pricing-table .plan {
   font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
@@ -373,6 +374,15 @@ width:100%;
   background-image: -o-linear-gradient(#fff, #eee);
   background-image: -ms-linear-gradient(#fff, #eee);
   background-image: linear-gradient(#fff, #eee);
+}
+.pricing-table.healthTab h3 {
+  background-color: #008080 !important;
+  background-image: -moz-linear-gradient(#fff,#008080) !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#008080));    
+  background-image: -webkit-linear-gradient(#fff,#008080);
+  background-image: -o-linear-gradient(#fff, #008080);
+  background-image: -ms-linear-gradient(#fff,#008080);
+  background-image: linear-gradient(#fff, #008080);
 }
 
 .pricing-table #most-popular h3 {
@@ -438,6 +448,7 @@ width:100%;
 .pricing-table li.head  {
   font-weight: 700;
   font-size: 1rem;
+  list-style-type: none !important; 
 }
 .pricing-table li.nolink {
   cursor: auto !important;
@@ -448,9 +459,9 @@ width:100%;
 } */
 .pricing-table .signup {
   position: relative;
-  padding: 8px 20px; 
+  padding: 10px 20px; 
   color: #fff !important;
-  font: bold 14px Arial, Helvetica;
+  font: bold 16px Arial, Helvetica;
   text-transform: uppercase;
   text-decoration: none;
   display: inline-block;       
@@ -550,5 +561,14 @@ width:100%;
   font-size: 1rem;
 }
 #prov_home_n .addon-hgt {
-  min-height: 260px;
+  min-height: 320px;
+}
+
+.keepleft {
+  text-align: left;
+  margin-left: 40px;
+  margin-right: 10px;
+  display: list-item;          /* This has to be "list-item"                                               */
+  list-style-type: '✔️ ';       /* See https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type     */
+  list-style-position: outside;
 }
