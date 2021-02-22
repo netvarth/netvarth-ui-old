@@ -223,6 +223,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   showDeliveryChargeSection = false;
   deliveryCharge = 0;
   discountClicked = false;
+  discountId_servie: any;
+  discountid;
+  @ViewChild('closebutton') closebutton;
+  @ViewChild('closebutton1') closebutton1;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -292,6 +296,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getProviderSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
+  selectChangeHandler(event:any) {
+    this.discountId_servie = event;
+}
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
@@ -938,6 +945,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.curSelItm.qty = 1;
             this.getWaitlistBill();
             resolve();
+            this.closeGroupDialog();
+            this.closeGroupDialogitem();
           },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1075,10 +1084,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Apply Service Level Discount
    * @param service Service Details
    */
+
+
   applyServiceDiscount(service) {
     const action = 'addServiceLevelDiscount';
     const discountIds = [];
-    discountIds.push(service.serviceDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(service.serviceDiscount.id);
     const data = {};
     data['serviceId'] = service.serviceId;
     data['discountIds'] = discountIds;
@@ -1120,7 +1132,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applyItemDiscount(item) {
     const action = 'addItemLevelDiscount';
     const discountIds = [];
-    discountIds.push(item.itemDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(item.itemDiscount.id);
     const data = {};
     data['itemId'] = item.itemId;
     data['discountIds'] = discountIds;
@@ -1769,5 +1782,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   sampleDiscount() {
     console.log('clik');
     this.discountClicked = true;
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+  }
+  closeGroupDialogitem() {
+    this.closebutton1.nativeElement.click();
   }
 }
