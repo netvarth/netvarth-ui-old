@@ -24,6 +24,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 
 @Component({
   selector: 'app-business-page',
@@ -269,6 +270,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   nextAvailableTime;
   customId: any;
   accEncUid: any;
+
+  accountEncId: string;
+  userEncId: string;
+
+
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -283,47 +289,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private domainConfigService: DomainConfigGenerator
   ) {
-    this.getDomainList();
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
   }
-  getDomainList() {
-    const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
-    let run_api = true;
-    if (bconfig && bconfig.cdate && bconfig.bdata) { // case if data is there in local storage
-      const bdate = bconfig.cdate;
-      // const bdata = bconfig.bdata;
-      const saveddate = new Date(bdate);
-      if (bconfig.bdata) {
-        const diff = this.sharedFunctionobj.getdaysdifffromDates('now', saveddate);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
-          run_api = false;
-          this.domainList = bconfig;
-          // this.domainlist_data = ddata.bdata;
-          // this.domain_obtained = true;
-        }
-      }
-    }
-    if (run_api) { // case if data is not there in data
-      this.shared_services.bussinessDomains()
-        .subscribe(
-          res => {
-            this.domainList = res;
-            // this.domain_obtained = true;
-            const today = new Date();
-            const postdata = {
-              cdate: today,
-              bdata: this.domainList
-            };
-            this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
-          }
-        );
-    }
-  }
+
   ngOnInit() {
     this.api_loading = true;
     this.userId = null;
@@ -371,15 +345,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
-      if (qparams.userId) {
-        this.userId = qparams.userId;
-      }
       if (qparams.src) {
         this.pSource = qparams.src;
       }
-      // if (qparams.pId) {
-      //   this.businessid = qparams.pId;
-      // }
       this.businessjson = [];
       this.servicesjson = [];
       this.apptServicesjson = [];
@@ -403,29 +371,48 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.activaterouterobj.paramMap
       .subscribe(params => {
-        // this.provider_id = params.get('id');
-        const customId = params.get('id').replace(/\s/g, '');
+        this.accountEncId = params.get('id');
 
-        const inputValues = customId.split('___');
-
-        if (inputValues.length > 1) {
-          this.provider_id = inputValues[0];
-          this.userId = inputValues[1];
-          this.gets3curl();
+        if (params.get('userEncId')) {
+          this.userEncId = params.get('userEncId');
+          this.userId = this.userEncId;
         } else {
-          this.shared_services.getBusinessUniqueId(customId).subscribe(
-            id => {
-              this.provider_id = id;
-              this.gets3curl();
-            },
-            error => {
-              this.provider_id = customId;
-              this.gets3curl();
-            }
-          );
+          this.userId = null;
         }
+        this.domainConfigService.getDomainList().then(
+          (domainConfig) => {
+            this.domainList = domainConfig;
+            this.getAccountIdFromEncId(this.accountEncId).then(
+              (id: string) => {
+                this.provider_id = id;
+                this.gets3curl();
+              }
+            )
+          }
+        )
       });
   }
+
+  /**
+   * 
+   * @param encId encId/customId which represents the Account
+   * @returns the unique provider id which will gives access to the s3
+   */
+  getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          console.error(error);
+          resolve(encId);
+        }
+      );
+    });
+  }
+
   ngAfterViewInit() {
     const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
     if (!appPopupDisplayed) {
@@ -487,7 +474,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.titleService.setTitle(this.businessjson.businessName);
             this.metaService.addTags([
               // {name: 'keywords', content: 'Angular, Universal, Example'},
-              {name: 'description', content: this.businessjson.businessDesc}
+              { name: 'description', content: this.businessjson.businessDesc }
               // {name: 'robots', content: 'index, follow'}
             ]);
             this.getbusinessprofiledetails_json('virtualFields', true);
@@ -637,33 +624,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.bLogo !== '../../../assets/images/img-null.svg') {
               this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
               indx = 1;
-              // const imgobj = new Image(
-              //   0,
-              //   { // modal
-              //     img: this.bLogo,
-              //     description: 'logo'
-              //   });
-              //   this.image_list_popup.push(imgobj);
-              //   this.galleryenabledArr.push(0);
             }
-            // for (let i = 0; i < this.galleryjson.length; i++) {
-            //   this.galleryenabledArr.push(i);
-            // }
             for (let i = 0; i < this.tempgalleryjson.length; i++) {
               this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-              // if (this.galleryenabledArr.length < 5) {
-              //   this.galleryenabledArr.push(i + indx);
-              // }
             }
-
-            // const count = 5 - this.galleryenabledArr.length;
-            // if (count > 0) {
-            //   for (let ind = 0; ind < count; ind++) {
-            //     this.gallerydisabledArr.push(ind);
-            //   }
-            // }
-            // this.gallery_exists = true;
-            // this.image_list_popup = [];
             if (this.galleryjson.length > 0) {
               this.galleryExists = true;
               for (let i = 0; i < this.galleryjson.length; i++) {
@@ -698,10 +662,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           case 'location': {
             this.locationjson = res;
             this.location_exists = true;
-            // let schedule_arr: any = [];
-            // const locarr = [];
-            // const wait_locarr = [];
-            // const appt_locarr = [];
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
               const place = this.locationjson[i].place;
@@ -713,55 +673,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               if (this.locationjson[i].parkingType) {
                 this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               }
-              // schedule_arr = [];
-              // if (this.locationjson[i].bSchedule) {
-              //   if (this.locationjson[i].bSchedule.timespec) {
-              //     if (this.locationjson[i].bSchedule.timespec.length > 0) {
-              //       schedule_arr = [];
-              //       // extracting the schedule intervals
-              //       for (let j = 0; j < this.locationjson[i].bSchedule.timespec.length; j++) {
-              //         for (let k = 0; k < this.locationjson[i].bSchedule.timespec[j].repeatIntervals.length; k++) {
-              //           // pushing the schedule details to the respective array to show it in the page
-              //           schedule_arr.push({
-              //             day: this.locationjson[i].bSchedule.timespec[j].repeatIntervals[k],
-              //             sTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].sTime,
-              //             eTime: this.locationjson[i].bSchedule.timespec[j].timeSlots[0].eTime,
-              //             recurrtype: this.locationjson[i].bSchedule.timespec[j].recurringType
-              //           });
-              //         }
-              //       }
-              //     }
-              //   }
-              // }
-              // let display_schedule = [];
-              // display_schedule = this.sharedFunctionobj.arrageScheduleforDisplay(schedule_arr);
-              // this.locationjson[i]['display_schedule'] = display_schedule;
-              // this.locationjson[i]['services'] = [];
-              // // this.getServiceByLocationid(this.locationjson[i].id, i);
-              // // this.getApptServiceByLocationid(this.locationjson[i].id, i);
-              // // this.generateServicesAndDoctorsForLocation(null, this.locationjson[i].id);
-              // this.locationjson[i]['checkins'] = [];
-              // // if (this.userType === 'consumer') {
-              // //   this.getExistingCheckinsByLocation(this.locationjson[i].id, i);
-              // // }
-              // locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id, 'locindx': i });
-              // if (this.businessjson.id && this.userId) {
-              //   // appt_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
-              //   wait_locarr.push({ 'locid': this.userId + '-' + this.locationjson[i].id, 'locindx': i });
-              //   appt_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-              //   // wait_locarr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[i].id + '-' + this.userId, 'locindx': i });
-              // }
             }
-            // this.selectedLocation = this.locationjson[0];
-            // this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
             this.changeLocation(this.locationjson[0]);
-            // if (this.userId) {
-            //   this.getUserWaitingTime(wait_locarr);
-            //   this.getUserApptTime(appt_locarr);
-            // } else {
-            //   this.getWaitingTime(locarr);
-            //   this.getApptTime(locarr);
-            // }
             this.api_loading = false;
             break;
           }
@@ -844,173 +757,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
   }
-  // private getUserWaitingTime(provids_locid) {
-  //   if (provids_locid.length > 0) {
-  //     const post_provids_locid: any = [];
-  //     for (let i = 0; i < provids_locid.length; i++) {
-  //       post_provids_locid.push(provids_locid[i].locid);
-  //     }
-  //     if (post_provids_locid.length === 0) {
-  //       return;
-  //     }
-  //     this.providerdetailserviceobj.getUserEstimatedWaitingTime(post_provids_locid)
-  //       .subscribe(data => {
-  //         this.waitlisttime_arr = data;
-  //         if (this.waitlisttime_arr === '"Account doesn\'t exist"') {
-  //           this.waitlisttime_arr = [];
-  //         }
-  //         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  //         const today = new Date(todaydt);
-  //         const dd = today.getDate();
-  //         const mm = today.getMonth() + 1; // January is 0!
-  //         const yyyy = today.getFullYear();
-  //         let cday = '';
-  //         if (dd < 10) {
-  //           cday = '0' + dd;
-  //         } else {
-  //           cday = '' + dd;
-  //         }
-  //         let cmon;
-  //         if (mm < 10) {
-  //           cmon = '0' + mm;
-  //         } else {
-  //           cmon = '' + mm;
-  //         }
-  //         const dtoday = yyyy + '-' + cmon + '-' + cday;
-  //         let locindx;
-  //         // const check_dtoday = new Date(dtoday);
-  //         // let cdate;
-  //         for (let i = 0; i < this.waitlisttime_arr.length; i++) {
-  //           locindx = provids_locid[i].locindx;
-  //           this.locationjson[locindx]['waitingtime_res'] = this.waitlisttime_arr[i];
-  //           this.locationjson[locindx]['estimatedtime_det'] = [];
-  //           if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
-  //             this.locationjson[locindx]['calculationMode'] = this.waitlisttime_arr[i]['nextAvailableQueue']['calculationMode'];
-  //             this.locationjson[locindx]['showToken'] = this.waitlisttime_arr[i]['nextAvailableQueue']['showToken'];
-  //             this.locationjson[locindx]['waitlist'] = this.waitlisttime_arr[i]['nextAvailableQueue']['waitlistEnabled'];
-  //             this.locationjson[locindx]['onlineCheckIn'] = this.waitlisttime_arr[i]['nextAvailableQueue']['onlineCheckIn'];
-  //             this.locationjson[locindx]['isAvailableToday'] = this.waitlisttime_arr[i]['nextAvailableQueue']['isAvailableToday'];
-  //             this.locationjson[locindx]['personAhead'] = this.waitlisttime_arr[i]['nextAvailableQueue']['personAhead'];
-  //             this.locationjson[locindx]['isCheckinAllowed'] = this.waitlisttime_arr[i]['isCheckinAllowed'];
-  //             this.locationjson[locindx]['opennow'] = this.waitlisttime_arr[i]['nextAvailableQueue']['openNow'];
-  //             this.locationjson[locindx]['estimatedtime_det']['cdate'] = this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'];
-  //             this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 1;
-  //             // cdate = new Date(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']);
-  //             if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-  //               this.locationjson[locindx]['availableToday'] = true;
-  //             } else {
-  //               this.locationjson[locindx]['availableToday'] = false;
-  //             }
-  //             if (!this.locationjson[locindx]['opennow']) {
-  //               this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
-  //               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
-  //                 if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-  //                   this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
-  //                 } else {
-  //                   this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
-  //                 }
-  //                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
-  //                   + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //               } else {
-  //                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
-  //                   + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-  //               }
-  //               this.locationjson[locindx]['estimatedtime_det']['nextAvailDate'] = this.locationjson[locindx]['estimatedtime_det']['date'] + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //             } else {
-  //               this.locationjson[locindx]['estimatedtime_det']['caption'] = this.estimateCaption; // 'Estimated Waiting Time';
-  //               if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
-  //                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
-  //               } else {
-  //                 if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
-  //                   this.locationjson[locindx]['estimatedtime_det']['date'] = 'Today';
-  //                 } else {
-  //                   this.locationjson[locindx]['estimatedtime_det']['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' });
-  //                 }
-  //                 this.locationjson[locindx]['estimatedtime_det']['time'] = this.locationjson[locindx]['estimatedtime_det']['date']
-  //                   + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //                 this.locationjson[locindx]['estimatedtime_det']['caption'] = this.nextavailableCaption + ' ';
-  //                 // this.locationjson[locindx]['estimatedtime_det']['time'] = 'Today, ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
-  //               }
-  //             }
-  //           } else {
-  //             this.locationjson[locindx]['estimatedtime_det']['queue_available'] = 0;
-  //           }
-  //           if (this.waitlisttime_arr[i]['message']) {
-  //             this.locationjson[locindx]['estimatedtime_det']['message'] = this.waitlisttime_arr[i]['message'];
-  //           }
-
-  //         }
-  //       });
-  //   }
-  // }
-  // getUserApptTime(provids_locid) {
-  //   if (provids_locid.length > 0) {
-  //     const post_provids_locid: any = [];
-  //     for (let i = 0; i < provids_locid.length; i++) {
-  //       post_provids_locid.push(provids_locid[i].locid);
-  //     }
-  //     if (post_provids_locid.length === 0) {
-  //       return;
-  //     }
-  //     this.providerdetailserviceobj.getUserApptTime(post_provids_locid)
-  //       .subscribe(data => {
-  //         this.appttime_arr = data;
-  //         if (this.appttime_arr === '"Account doesn\'t exist"') {
-  //           this.appttime_arr = [];
-  //         }
-  //         let locindx;
-  //         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  //         const today = new Date(todaydt);
-  //         const dd = today.getDate();
-  //         const mm = today.getMonth() + 1; // January is 0!
-  //         const yyyy = today.getFullYear();
-  //         let cday = '';
-  //         if (dd < 10) {
-  //           cday = '0' + dd;
-  //         } else {
-  //           cday = '' + dd;
-  //         }
-  //         let cmon;
-  //         if (mm < 10) {
-  //           cmon = '0' + mm;
-  //         } else {
-  //           cmon = '' + mm;
-  //         }
-  //         const dtoday = yyyy + '-' + cmon + '-' + cday;
-  //         for (let i = 0; i < this.appttime_arr.length; i++) {
-  //           if (provids_locid[i]) {
-  //             locindx = provids_locid[i].locindx;
-  //             if (provids_locid[i]) {
-  //               locindx = provids_locid[i].locindx;
-  //               this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['isCheckinAllowed'];
-  //               this.locationjson[locindx]['appttime_det'] = [];
-  //               if (this.appttime_arr[i]['availableSchedule']) {
-  //                 this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-  //                 this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-  //                 this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-  //               }
-  //               if (this.appttime_arr[i]['availableSlots']) {
-  //                 this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
-  //                 this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
-  //                 if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
-  //                   this.locationjson[locindx]['apptAvailableToday'] = true;
-  //                   this.locationjson[locindx]['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
-  //                 } else {
-  //                   this.locationjson[locindx]['apptAvailableToday'] = false;
-  //                   this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-  //                     + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
-  //                 }
-  //               }
-  //               console.log(this.locationjson[locindx]);
-  //               if (this.appttime_arr[i]['message']) {
-  //                 this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
-  //               }
-  //             }
-  //           }
-  //         }
-  //       });
-  //   }
-  // }
   getUserbusinessprofiledetails_json(section, userId, modDateReq: boolean) {
     let UTCstring = null;
     if (modDateReq) {
@@ -1019,13 +765,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shared_services.getUserbusinessprofiledetails_json(this.provider_id, userId, this.s3url, section, UTCstring)
       .subscribe((res: any) => {
         switch (section) {
-          case 'providerBusinessProfile': {            
+          case 'providerBusinessProfile': {
             this.socialMedialist = [];
             this.businessjson = res;
             this.titleService.setTitle(this.businessjson.businessName);
             this.metaService.addTags([
               // {name: 'keywords', content: 'Angular, Universal, Example'},
-              {name: 'description', content: this.businessjson.businessDesc},
+              { name: 'description', content: this.businessjson.businessDesc },
               // {name: 'robots', content: 'index, follow'}
             ]);
             const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
@@ -1045,18 +791,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               // this.bLogo = '';
               this.bLogo = '../../../assets/images/img-null.svg';
             }
-            // this.image_list_popup = [];
-            // if (this.galleryjson.length > 0) {
-            //   for (let i = 0; i < this.galleryjson.length; i++) {
-            //     const imgobj = new Image(
-            //       i,
-            //       { // modal
-            //         img: this.galleryjson[i].url,
-            //         description: this.galleryjson[i].caption || ''
-            //       });
-            //     this.image_list_popup.push(imgobj);
-            //   }
-            // }
             if (this.businessjson.specialization) {
               this.specializationslist = this.businessjson.specialization;
             }
@@ -1347,38 +1081,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  // getServiceByLocationid(locid, passedIndx) {
-  //   this.locationjson[passedIndx]['wlservices'] = [];
-  //   this.shared_services.getServicesByLocationId(locid)
-  //     .subscribe(data => {
-  //       this.locationjson[passedIndx]['services'] = data;
-
-  //       if (this.showDepartments) {
-  //         this.locationjson[passedIndx]['wlservices'] = this.sharedFunctionobj.groupBy(data, 'department');
-  //       } else {
-  //         this.locationjson[passedIndx]['wlservices'] = data;
-  //       }
-  //       console.log(this.locationjson[passedIndx]['wlservices']);
-  //     },
-  //       error => {
-  //         this.wordProcessor.apiErrorAutoHide(this, error);
-  //       });
-  // }
-  // getApptServiceByLocationid(locid, passedIndx) {
-  //   this.locationjson[passedIndx]['apptservices'] = [];
-  //   this.shared_services.getServicesforAppontmntByLocationId(locid)
-  //     .subscribe(data => {
-  //       if (this.showDepartments) {
-  //         this.locationjson[passedIndx]['apptservices'] = this.sharedFunctionobj.groupBy(data, 'department');
-  //       } else {
-  //         this.locationjson[passedIndx]['apptservices'] = data;
-  //       }
-  //       console.log(this.locationjson[passedIndx]['wlservices']);
-  //     },
-  //       error => {
-  //         this.wordProcessor.apiErrorAutoHide(this, error);
-  //       });
-  // }
   getServicesByDepartment(dept) {
     this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
   }
@@ -1530,6 +1232,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       data: {
         caption: 'Enquiry',
         user_id: provid,
+        userId: this.userId,
         source: 'consumer-common',
         type: 'send',
         terminologies: this.terminologiesjson,
@@ -1954,27 +1657,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-  // Edited//
-  // showExistingCheckin(locId, locName, index) {
-  //   this.extChecindialogRef = this.dialog.open(ExistingCheckinComponent, {
-  //     width: '50%',
-  //     panelClass: ['commonpopupmainclass', 'popup-class'],
-  //     disableClose: true,
-  //     data: {
-  //       locId: locId,
-  //       locName: locName,
-  //       terminologies: this.terminologiesjson,
-  //       settings: this.settingsjson
-  //     }
-  //   });
-
-  //   this.extChecindialogRef.afterClosed().subscribe(result => {
-  //     if (result === true) {
-  //       this.getExistingCheckinsByLocation(locId, index);
-  //     }
-  //   });
-  // }
-
   showServiceDetail(serv, busname) {
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
@@ -2107,71 +1789,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
-  // getApptTime(provids_locid) {
-  //   if (provids_locid.length > 0) {
-  //     const post_provids_locid: any = [];
-  //     for (let i = 0; i < provids_locid.length; i++) {
-  //       post_provids_locid.push(provids_locid[i].locid);
-  //     }
-  //     if (post_provids_locid.length === 0) {
-  //       return;
-  //     }
-  //     this.providerdetailserviceobj.getApptTime(post_provids_locid)
-  //       .subscribe(data => {
-  //         this.appttime_arr = data;
-  //         if (this.appttime_arr === '"Account doesn\'t exist"') {
-  //           this.appttime_arr = [];
-  //         }
-  //         let locindx;
-  //         const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
-  //         const today = new Date(todaydt);
-  //         const dd = today.getDate();
-  //         const mm = today.getMonth() + 1; // January is 0!
-  //         const yyyy = today.getFullYear();
-  //         let cday = '';
-  //         if (dd < 10) {
-  //           cday = '0' + dd;
-  //         } else {
-  //           cday = '' + dd;
-  //         }
-  //         let cmon;
-  //         if (mm < 10) {
-  //           cmon = '0' + mm;
-  //         } else {
-  //           cmon = '' + mm;
-  //         }
-  //         const dtoday = yyyy + '-' + cmon + '-' + cday;
-  //         for (let i = 0; i < this.appttime_arr.length; i++) {
-  //           if (provids_locid[i]) {
-  //             locindx = provids_locid[i].locindx;
-  //             this.locationjson[locindx]['apptAllowed'] = this.appttime_arr[i]['apptEnabled'];
-  //             this.locationjson[locindx]['appttime_det'] = [];
-  //             if (this.appttime_arr[i]['availableSchedule']) {
-  //               this.locationjson[locindx]['futureAppt'] = this.appttime_arr[i]['availableSchedule']['futureAppt'];
-  //               this.locationjson[locindx]['todayAppt'] = this.appttime_arr[i]['availableSchedule']['todayAppt'];
-  //               this.locationjson[locindx]['apptopennow'] = this.appttime_arr[i]['availableSchedule']['openNow'];
-  //             }
-  //             if (this.appttime_arr[i]['availableSlots']) {
-  //               this.locationjson[locindx]['appttime_det']['cdate'] = this.appttime_arr[i]['availableSlots']['date'];
-  //               this.locationjson[locindx]['appttime_det']['caption'] = 'Next Available Time';
-  //               if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
-  //                 this.locationjson[locindx]['apptAvailableToday'] = true;
-  //                 this.locationjson[locindx]['appttime_det']['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
-  //               } else {
-  //                 this.locationjson[locindx]['apptAvailableToday'] = false;
-  //                 this.locationjson[locindx]['appttime_det']['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
-  //                   + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
-  //               }
-  //             }
-  //             console.log(this.locationjson[locindx]);
-  //             if (this.appttime_arr[i]['message']) {
-  //               this.locationjson[locindx]['appttime_det']['message'] = this.appttime_arr[i]['message'];
-  //             }
-  //           }
-  //         }
-  //       });
-  //   }
-  // }
+
   getTimeToDisplay(min) {
     return this.sharedFunctionobj.convertMinutesToHourMinute(min);
   }
@@ -2260,14 +1878,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    const account = this.provider_id + '___' + userId;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         src: 'bp'
       }
     };
-    this.routerobj.navigate([account], navigationExtras);
-    // this.routerobj.navigate([this.provider_id], { queryParams: { userId: userId, pId: this.businessjson.id, psource: 'details-page' } });
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
 
   cardClicked(actionObj) {
@@ -2366,7 +1982,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   getPic(user) {
     if (user.profilePicture) {
-      // alert(JSON.parse(user.profilePicture)['url']);
       return JSON.parse(user.profilePicture)['url'];
     }
     return 'assets/images/img-null.svg';
@@ -2559,8 +2174,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
               const showpric = this.activeCatalog.showPrice;
               if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-              orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item , 'showpric':showpric });
-              this.itemCount++;
+                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                this.itemCount++;
               }
             }
           }
@@ -2735,6 +2350,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   reset() {
 
   }
+
+  /**
+   * 
+   */
   showOrderFooter() {
     let showFooter = false;
     this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
@@ -2751,6 +2370,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     return showFooter;
   }
 
+  /**
+   * 
+   */
   shoppinglistupload() {
     const chosenDateTime = {
       delivery_type: this.choose_type,
@@ -2784,6 +2406,4 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.doLogin('consumer', passParam);
     }
   }
-
 }
-

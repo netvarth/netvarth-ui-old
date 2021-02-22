@@ -19,7 +19,7 @@
                            
                         <div class="lbr col-sm-12 col-md-4 col-lg-5 bg-white">
                             <div class="cr1">
-                                <div class="no-dta" *ngIf="!haveMainImg && !mainImage">
+                                <div class="no-dta" *ngIf="!haveMainImg && selectedMessageMain.files.length == 0">
                                     <div class="col-sm-12 col-md-12 col-lg-12 mgn-bt-20">
                                         <div class="addorderitem" (click)="imagefile.click()">
                                             <p class="addorderitemp1"><a class="pointer-cursor"><input #imagefile
@@ -177,6 +177,19 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field>
+                                        <input matInput type="text" class="form-control" id="itemNameInLocal"
+                                            placeholder="Item Local Name" formControlName="itemNameInLocal" autocomplete="off">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'itemNameInLocal')" [errorMsgs]="fed_service.getErrorMessage(amForm,'itemNameInLocal',
+                                {
+                                  'required' : 'Enter a code for item',
+                                  'maxlength' : 'Item code can contain only ' + maxChars + ' characters'
+                                })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field>
                                         <input matInput type="text" class="form-control" id="itemCode"
                                             placeholder="Item Code" formControlName="itemCode" autocomplete="off">
                                     </mat-form-field>
@@ -239,7 +252,7 @@
                                 <div class="form-group">
                                     <mat-form-field>
                                             <span matPrefix><i class="fa fa-inr"></i>&nbsp;</span>
-                                       <input matInput type="text" min="0" max="100000" (keypress)="isNumeric($event)"
+                                       <input matInput type="text" min="0"  (keypress)="isNumeric($event)"
                                             (keyup)="isvalid($event)" class="form-control number-ip-sm"
                                             formControlName="price" id="price"
                                             placeholder="{{price_cap}}*" autocomplete="off">
@@ -249,7 +262,7 @@
                                 {
                                   'required' : 'Please enter the price.',
                                   'pattern' : 'Please enter valid price',
-                                  'maxlength' : 'Price can have only ' + maxNumbers + ' digits'
+                                  'maxlength' : 'Price exceeds the limit'
                                 })">
                                     </app-field-error-display>
                                 </div>

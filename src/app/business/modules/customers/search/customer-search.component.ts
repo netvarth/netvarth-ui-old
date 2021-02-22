@@ -234,7 +234,6 @@ export class CustomerSearchComponent implements OnInit {
     display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
 
 
-
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -243,7 +242,7 @@ export class CustomerSearchComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private _location: Location,
         public provider_services: ProviderServices,
-        private snackbarService:SnackbarService,
+        private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService) {
@@ -311,9 +310,9 @@ export class CustomerSearchComponent implements OnInit {
                     );
                 }
             }
-            if (qparams.source) {
-                this.qParams['source'] = qparams.source;
-            }
+            // if (qparams.source) {
+            //     this.qParams['source'] = qparams.source;
+            // }
             this.phoneNo = qparams.phoneNo;
             // if (qparams.appt) {
 
@@ -592,9 +591,11 @@ export class CustomerSearchComponent implements OnInit {
         this._location.back();
     }
     createNew() {
-        this.qParams['source'] = 'clist';
+        const filter = {
+            'source': 'clist'
+        }
         const navigationExtras: NavigationExtras = {
-            queryParams: this.qParams
+            queryParams: filter
         };
         this.router.navigate(['/provider/customers/add'], navigationExtras);
     }
@@ -638,13 +639,14 @@ export class CustomerSearchComponent implements OnInit {
     }
 
     searchCustomer(form_data, mod?) {
+        const filter = {};
+        filter['source'] = this.source;
         this.emptyFielderror = false;
         if (form_data.search_input === '' || null) {
             this.emptyFielderror = true;
             this.searchClicked = false;
             return;
         }
-        console.log(form_data);
         this.loading = true;
         let mode = 'id';
         if (mod) {
@@ -668,20 +670,15 @@ export class CustomerSearchComponent implements OnInit {
                 mode = 'id';
             }
         }
-        // if (this.appt) {
-        //     this.qParams['source'] = 'appointment';
-        // } else {
-        //     this.qParams['source'] = 'checkin';
-        // }
         switch (mode) {
             case 'phone':
                 post_data = {
                     'phoneNo-eq': form_data.search_input
                 };
-                this.qParams['phone'] = form_data.search_input;
+                filter['phone'] = form_data.search_input;
                 break;
             case 'email':
-                this.qParams['email'] = form_data.search_input;
+                filter['email'] = form_data.search_input;
                 post_data = {
                     'email-eq': form_data.search_input
                 };
@@ -697,7 +694,6 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
-                    console.log(data);
                     this.loading = false;
                     if (data.length === 0) {
                         // this.form_data = data;
@@ -712,11 +708,12 @@ export class CustomerSearchComponent implements OnInit {
                         // }
 
                         if (mode === 'phone') {
-                            this.qParams['phone'] = form_data.search_input;
+                            filter['phone'] = form_data.search_input;
                         }
-                        this.qParams['source'] = 'clist';
+                        filter['source'] = 'clist';
+                        filter['type'] = 'create';
                         const navigationExtras: NavigationExtras = {
-                            queryParams: this.qParams
+                            queryParams: filter
                         };
                         this.router.navigate(['/provider/customers/add'], navigationExtras);
                         this.create_new = true;

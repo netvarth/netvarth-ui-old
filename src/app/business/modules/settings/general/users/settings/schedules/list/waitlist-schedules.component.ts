@@ -32,7 +32,8 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
     locations;
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
-    tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
+    // tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
+    tooltip_queueedit = Messages.SCHEDULENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
     isAllServicesSelected = false;
     services_selected: any = [];

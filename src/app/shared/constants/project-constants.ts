@@ -923,19 +923,19 @@ export const projectConstantsLocal = {
     Phone: { displayName: 'Phone', placeHolder: 'Update Phone number', title: 'Configure Phone' }
   },
   ORDER_STATUS_FILTER: [
-    { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true},
-    { displayName: 'Order Acknowledged', value: 'Order Acknowledged' , delivery: true , pickup: true },
-    { displayName: 'Order Confirmed', value: 'Order Confirmed', delivery: true , pickup: true },
-    { displayName: 'Preparing', value: 'Preparing', delivery: true , pickup: true },
-    { displayName: 'Packing', value: 'Packing', delivery: true , pickup: true },
-    { displayName: 'Payment Required', value: 'Payment Required', delivery: true , pickup: true },
-    { displayName: 'Ready For Pickup', value: 'Ready For Pickup', delivery: false , pickup: true },
-    { displayName: 'Ready For Shipment', value: 'Ready For Shipment', delivery: true , pickup: false },
-    { displayName: 'Ready For Delivery', value: 'Ready For Delivery', delivery: true , pickup: false },
-    { displayName: 'Completed', value: 'Completed' , delivery: true , pickup: true },
-    { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false },
-    { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false },
-    { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true }
+    { displayName: 'Order Received', value: 'Order Received', delivery: true , pickup: true , clas: 'orderreceived'},
+    { displayName: 'Order Acknowledged', value: 'Order Acknowledged' , delivery: true , pickup: true , clas: 'orderacknowledged'},
+    { displayName: 'Order Confirmed', value: 'Order Confirmed', delivery: true , pickup: true , clas: 'orderconfirmed'},
+    { displayName: 'Preparing', value: 'Preparing', delivery: true , pickup: true , clas: 'orderpreparing'},
+    { displayName: 'Packing', value: 'Packing', delivery: true , pickup: true , clas: 'orderpacking'},
+    { displayName: 'Payment Required', value: 'Payment Required', delivery: true , pickup: true , clas: 'orderpaymentrequired'},
+    { displayName: 'Ready For Pickup', value: 'Ready For Pickup', delivery: false , pickup: true , clas: 'orderreadyforpickup'},
+    { displayName: 'Ready For Shipment', value: 'Ready For Shipment', delivery: true , pickup: false , clas: 'orderreadyforshipment'},
+    { displayName: 'Ready For Delivery', value: 'Ready For Delivery', delivery: true , pickup: false , clas: 'orderreadyfordelivery'},
+    { displayName: 'Completed', value: 'Completed' , delivery: true , pickup: true , clas: 'ordercompleted'},
+    { displayName: 'In Transit', value: 'In Transit', delivery: true , pickup: false , clas: 'orderintransit'},
+    { displayName: 'Shipped', value: 'Shipped', delivery: true , pickup: false , clas: 'ordershipped'},
+    { displayName: 'Cancelled', value: 'Cancelled', delivery: true , pickup: true , clas: 'ordercancelled'}
   ]
 };
 

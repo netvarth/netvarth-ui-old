@@ -417,13 +417,13 @@ export class SharedServices {
     const url = typ + '/communications/unreadCount';
     return this.servicemeta.httpGet(url);
   }
-  addConsumertoProviderNote(uuid, message) {
-    const url = 'consumer/communications?account=' + uuid;
-    return this.servicemeta.httpPost(url, message);
+  addConsumertoProviderNote(message, filter) {
+    const url = 'consumer/communications';
+    return this.servicemeta.httpPost(url, message, null, filter);
   }
-  addProvidertoConsumerNote(uuid, message) {
-    const url = 'provider/communications/' + uuid;
-    return this.servicemeta.httpPost(url, message);
+  addProvidertoConsumerNote(consumerId, message, filter?) {
+    const url = 'provider/communications/' + consumerId;
+    return this.servicemeta.httpPost(url, message, null, filter);
   }
   addProviderWaitlistNote(uuid, body) {
     const url = 'provider/waitlist/communicate/' + uuid;
@@ -696,7 +696,10 @@ export class SharedServices {
     const url = 'consumer/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
-
+  getProviderAvailableDatessByLocationService(locid, servid, accountid?) {
+    const url = 'provider/appointment/availability/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    return this.servicemeta.httpGet(url);
+  }
   getTodaysAvailableTimeSlots(date, sheduleid, accountid?) {
     const url = 'consumer/appointment/schedule/' + sheduleid + '/' + date + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -923,11 +926,11 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   CreateConsumerOrder(accountid, postData) {
-    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, postData);
+    return this.servicemeta.httpPost('consumer/orders?account=' + accountid, postData);
   }
-  CreateConsumerOrderlist(accountid, dataappend) {
-    return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
-  }
+  // CreateConsumerOrderlist(accountid, dataappend) {
+  //   return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
+  // }
   getAvailableDatesForPickup(catalogid, accountid?) {
     return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid + '?account=' + accountid);
   }
@@ -963,5 +966,9 @@ export class SharedServices {
  getConsumerWaitlistAttachmentsByUuid(uuid , accountid) {
   const url = 'consumer/waitlist/attachment/' + uuid +'?account=' + accountid;
   return this.servicemeta.httpGet(url);
+}
+getCartdetails(accountid, data) {
+  const url = 'consumer/orders/amount' + '?account=' + accountid;
+  return this.servicemeta.httpPut(url, data);
 }
 }

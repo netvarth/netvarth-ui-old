@@ -128,13 +128,13 @@
                     <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                       <li>
                         {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                        <div *ngIf="jaldeeId">
+                          {{customer_label | capitalizeFirst}} id: {{getJaldeeId(waitfor)}}</div>
                         <!-- <span class="cs-btn bt8 changemember"
                                                     (click)="handleServiceForWhom()"
                                                     *ngIf="i==0 && queuejson.length > 0">{{add_change_member}}</span> -->
                       </li>
                     </ng-container>
-                    <li *ngIf="jaldeeId">
-                      {{customer_label | capitalizeFirst}} id: {{jaldeeId}}</li>
                   </ul>
                   <div *ngIf="thirdParty !== ''">
                     {{customer_label | capitalizeFirst}} from
@@ -271,7 +271,9 @@
                   </div>
                 </div>
                 <div class="date-outer">
-                  <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                  <!-- <div class="date-head">{{checkinLabel}} {{date_cap}}</div> -->
+                  <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
+                  <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>
                   <div class="date-body">
                     <span class="selected-date">
                       <span class="icon-minus" [class.disable]="disableMinus()"

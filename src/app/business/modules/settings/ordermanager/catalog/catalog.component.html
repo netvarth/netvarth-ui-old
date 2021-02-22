@@ -47,8 +47,8 @@
                                               </td>
                                               <td data-title="Store Pickup" class="td3 ">{{(catalog.pickUp && catalog.pickUp.orderPickUp) ? 'Yes' : 'No'}}</td>
                                               <td data-title="Home Delivery" class="td3 ">{{(catalog.homeDelivery && catalog.homeDelivery.homeDelivery) ? 'Yes' : 'No'}}</td>
-                                              <td data-title="Start Date" class="td4 ">{{catalog.catalogSchedule.startDate | date: dateFormat}}</td>
-                                              <td data-title="End Date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: dateFormat}}</td>
+                                              <td data-title="Start Date" class="td4 ">{{catalog.catalogSchedule.startDate | date: newDateFormat}}</td>
+                                              <td data-title="End Date" class="td4 ">{{catalog.catalogSchedule.terminator.endDate | date: newDateFormat}}</td>
                                               <!-- <td data-title="Payment Type" class="td3">{{catalog.paymentType}} 
                                               </td>-->
                                               <td data-title="Status"

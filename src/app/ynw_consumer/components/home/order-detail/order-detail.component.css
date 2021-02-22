@@ -1,0 +1,206 @@
+.orderedItems mat-grid-tile {
+    background-color: #fff !important;
+    border-radius: .25rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+    overflow: hidden !important;
+}
+.orderedItems mat-grid-list {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.orderedItems mat-grid-tile-header {
+    background-repeat: round;
+    height: 50%;
+    border: 4px solid white;
+}
+.order-det .cust-det-outline {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.order-det .l-ht-2 {
+    line-height: 2;
+}
+.order-det .txt-custdet {
+    font-size: 0.8rem;
+    color: dimgrey;
+}
+.order-det .txt-cust-name {
+    font-size: 1.3rem;
+}
+.order-det .txt-addrs {
+    font-size: 0.9rem;
+    color: grey;
+}
+.order-det .fa-phone, .order-det .fa-map-marker, .order-det .fa-envelope {
+    color: #35568a;
+    margin-right: 5px;
+}
+.order-det .action-btn {
+    background: #3d5c8f;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 50px;
+}
+.order-det .cancel-btn {
+    background: #ffffff;
+    color: #222223;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 50px;
+    border: 1px solid #3d5c8f;
+}
+.order-det .mat-button-toggle {
+    height: 30px !important;
+}
+.order-det .l-ht-0 {
+    line-height: 0 !important;
+}
+.order-det .mat-icon {
+    height: 14px !important;
+    width: 14px !important;
+}
+.order-det .mat-button-toggle-checked {
+    background-color: #3d5c8f !important;
+    color: white !important;
+}
+.order-det .item-contnt {
+    display: grid;
+    margin-top: 80px;
+    width: 100%;
+    text-align: center;
+    word-break: break-all;
+    line-height: 1.2;
+    /* line-height: 1.7; */
+}
+.order-det .itm-nme {
+    font-size: 0.9rem;
+    color: #3d5c8f;
+    font-weight: 600;
+}
+.order-det .itm-amt {
+    font-size: 0.88rem;
+    color: #3d5c8f;
+}
+.order-det .itm-qty {
+    font-size: 0.8rem;
+}
+.order-det .bt-lst-bdr {
+    border-bottom: 1px solid #80808063;
+}
+.order-det .lst-img {
+    background: beige;
+    height: 70px;
+    width: 90px;
+    float: right;
+    background-repeat: round;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.order-det .content_wrap {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.order-det .store_cont_outr {
+    position: absolute;
+    z-index: 10;
+    background: #3c5c8d;
+    color: white;
+    padding: 30px;
+    height: 60%;
+    margin-top: 30px;
+}
+.order-det .opacit_5 {
+    opacity: 0.5;
+}
+.order-det .store_cont_outr .addrs {
+    line-height: 3;
+    display: grid;
+}
+.order-det .store_cont_outr .addrs i {
+    color: #f1b616 !important;
+}
+.order-det .fa-times-circle, .order-det .show_nte {
+    cursor: pointer;
+}
+.order-det .view_as {
+    font-size: 0.9rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: grey;
+}
+.order-det .mat-grid-tile .mat-grid-tile-header {
+    background-color: #ffefc9;
+}
+.order-det .default_img {
+    background-image: url('http://jaldeetest.s3-website.ap-south-1.amazonaws.com/101130/item/828/thumbnail/1608363716998.jpg');
+}
+.order-det .txt-center {
+    text-align: center;
+}
+.order-det  .mat-grid-tile .mat-grid-tile-footer {
+    height: 25px !important;
+    color: #fff;
+    background: rgb(60 92 141 / 54%);
+}
+.order-det .show_nte {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+.order-det .curs-pont {
+    cursor: pointer;
+}
+
+/* Notes view */
+.order-det .snd_msg_outer {
+    margin-top: 15px;
+    color: #686b78;
+    font-size: 13px;
+    width: 100%;
+}
+.order-det .snd_msg_outer .txtArea {
+    border: 0;
+    outline: 0;
+    resize: none;
+    width: 100%;
+    height: 50px;
+    padding: 16px 16px 16px 40px;
+    color: #3d4152;
+    font-weight: 400;
+    background: #e6e2e2;
+}
+.order-det .odr-nte{
+    font-size: 1.2rem;
+    float: left;
+    margin-left: -2px;
+    color: #183e7a;
+}
+.order-det .odr_msg_outer {
+    margin-top: 0;
+    margin-left: 6px;
+    color: black;
+    font-size: 0.7rem;
+    margin-left: -1px;
+}
+.order-det .odr_msg_outer .txtArea {
+    border-radius: 0;
+    height: 40px;
+    background: #e1e1e178;
+    padding: 10px 10px 20px 10px;
+    /* border: 0; */
+    outline: 0;
+    border: 1px solid #8080801c;
+    resize: none;
+    width: 100%;
+    color: #3d4152;
+    font-weight: 400;
+}
+.white-icon {
+  color: white;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.white-icon svg {
+  fill: white;
+}

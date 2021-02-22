@@ -102,11 +102,12 @@
                 <div class="icon-text">Send Message</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="sendimages()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
+        <div class="action-box pointer-cursor" (click)="sendimages()"
+            *ngIf="!data.multiSelection && appt.apptStatus!=='blocked'">
             <div class="action-box-sub">
                 <!-- <span class="message-icon"></span> -->
                 <span><i class="material-icons">attach_file</i></span>
-                <div class="icon-text">Send Attachment</div>
+                <div class="icon-text">Send Attachments</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showSendDetails" (click)="smsCheckin()">
@@ -142,8 +143,7 @@
                 <div class="icon-text">View Details</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus!=='blocked'"
-            (click)="showLabels()">
+        <div class="action-box pointer-cursor" *ngIf="appt.apptStatus!=='blocked'" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
                 <div class="icon-text">Labels</div>
@@ -208,10 +208,9 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <!-- <span class="cs-btn bt3 pointer-cursor mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</span>
-        <span class="cs-btn bt3 pointer-cursor" (click)="gotoLabel()">Manage labels</span> -->
-        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
-        <a class="" (click)="gotoLabel()">Manage labels</a>
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+        <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">

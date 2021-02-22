@@ -90,7 +90,7 @@
     line-height: 1.6;
 }
 .bus-item-O {
-    width: 35%;
+    width: 40%;
     float: left !important;
     margin-bottom: 10px !important;
     padding: 0 5px 0 5px !important;
@@ -122,3 +122,53 @@
       padding: 0 40px !important;
     }
   }
+.card .c-history li .time {
+    color: #999999;
+    font-size: .75rem;
+ }
+.card .c-history li .action {
+        font-weight: 600;
+        color: black;
+        font-size: 14px;
+ }
+.c-history li.orderreceived{
+    color: green;
+ }
+.c-history li.orderacknowledged{
+    color: blue;
+ }
+.c-history li.orderconfirmed{
+   color: yellow;
+ }
+.c-history li.orderpreparing{
+    color: orange;
+}
+.c-history li.orderpacking{
+    color: pink;
+}
+.c-history li.orderpaymentrequired{
+    color: violet;
+}
+.c-history li.orderreadyforpickup{
+    color: magenta;
+}
+.c-history li.orderreadyforshipment{
+    color: brown;
+}
+.c-history li.orderreadyfordelivery{
+    color: salmon;
+}
+.c-history li.ordercompleted{
+    color: lightseagreen;
+}
+.c-history li.orderintransit{
+    color: aqua;
+}
+.c-history li.ordershipped{
+    color: khaki;
+}
+.c-history li.ordercancelled{
+    color: red;
+}
+
+

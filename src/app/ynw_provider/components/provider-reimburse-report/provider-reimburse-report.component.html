@@ -80,11 +80,11 @@
                                       <div>
                                           <label class="filterHeaders">Select payment status</label>
                                           <li class="filterli filterCheckboxborder filtercheckboxSize">
-                                            <mat-checkbox (change)="selectAllStatus($event)" [value]="'all'"> {{all_cap}}</mat-checkbox>
+                                            <mat-checkbox (change)="setFilterData('all', $event)" [value]="'all'" [checked]="allPayStatusSelected"> {{all_cap}}</mat-checkbox>
                                           </li>
                                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
-                                            <mat-checkbox *ngFor="let status of report_status_filter" (click)="setFilterData('status', status.value)"
-                                            [checked]="statusSelection(status.value)">
+                                            <mat-checkbox *ngFor="let status of report_status_filter" (change)="setFilterData('status', $event, status.value)"
+                                            [checked]="statusMultiCtrl.indexOf(status.value) !== -1">
                                             {{status.displayName}}
                                             </mat-checkbox>
                                           </li>

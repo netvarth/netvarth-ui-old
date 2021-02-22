@@ -7,9 +7,11 @@
     <li *ngFor="let file of item_pic.files;let i = index ">
       <div class="galimg_outer">
       <div class="gal_img">
-        <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]">
+        <!-- <img [src]="item_pic.base64[i]" *ngIf="item_pic.base64[i]"> -->
+        <img [src]="getImage(item_pic.base64[i], file)"
+        *ngIf="item_pic.base64[i]">
       </div>
-      <div class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div>
+      <div *ngIf="source_id ==='gallery'" class="gal_caption"><input type="text" matInput [(ngModel)]="item_pic.caption[i]" placeholder="Caption" autocomplete="off"></div>
       <div class="gal_action"  *ngIf="!canceldisabled">
           <button type="button" mat-icon-button [matMenuTriggerFor]="menu" >
               <mat-icon>more_vert</mat-icon>
