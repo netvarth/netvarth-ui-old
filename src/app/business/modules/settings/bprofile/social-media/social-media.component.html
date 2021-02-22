@@ -9,28 +9,34 @@
 </section>
 <section>
 
+    <div class="d-flex flex-column-fluid">
+		<!--begin::Container-->
+		<div class=" container ">
      <!--begin::Col-->
-     <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mgn-up-10">
+     
+
+     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mgn-up-10" >
+        <div class="row">
         <!--begin::Card-->
         <div class="card card-custom gutter-b card-stretch" *ngFor="let social of orgsocial_list;let i=index">
             <!--begin::Body-->
             <div class="card-body text-center pt-4">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end">
-                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="d-flex justify-content-end" *ngIf="showDelete(social.key)">
+                    <div class="dropdown dropdown-inline"  data-placement="left">
+                        <a  class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ki ki-bold-more-hor"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" >
                             <!--begin::Navigation-->
-<ul class="navi navi-hover py-5">
-    <li class="navi-item">
-        <a href="#" class="navi-link">
-            <span class="navi-icon"><i class="flaticon2-drop"></i></span>
-            <span class="navi-text">Delete</span>
-        </a>
-    </li>
-</ul>
+                            <ul class="navi navi-hover py-5">
+                                <li class="navi-item">
+                                    <a class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon2-drop"></i></span>
+                                        <span class="navi-text" (click)="deleteSocialmedia(social.key)">Delete</span>
+                                    </a>
+                                    </li>
+                            </ul>
 <!--end::Navigation-->
                         </div>
                     </div>
@@ -41,9 +47,6 @@
                 <div class="mt-7">
                     <div class="symbol symbol-circle symbol-lg-75">
                         <span [class]="social.iconClass"></span>
-                    </div>
-                    <div class="symbol symbol-lg-75 symbol-circle symbol-primary">
-                        <span class="font-size-h3 symbol-label font-weight-boldest d-none">LD</span>
                     </div>
                 </div>
                 <!--end::User-->
@@ -59,7 +62,10 @@
                     <!-- <label style="text-align: left !important;">Insert Link</label> -->
                     <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" type="text" class="form-control1 mgn-up-10"
                               placeholder="Insert link">
+                         <span> <button *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"
+                            class="cs-btn bt3 mgn-up-10">Save</button></span>     
                   </div>
+                
                 <!--end::Label-->
 
                 <!--begin::Buttons-->
@@ -72,6 +78,9 @@
             <!--end::Body-->
         </div>
         <!--end::Card-->
+    </div>
+</div>
+        </div>
     </div>
     <!--end::Col-->
 
