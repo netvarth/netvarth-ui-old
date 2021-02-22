@@ -43,7 +43,7 @@
                       </div>
                     </form>
                     <div>
-                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
+                      <button  #firstStep type="button" class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
 
                   </mat-step>
@@ -277,7 +277,7 @@
                                   <!-- <div class="price rupee-font"> &#8377;{{getTotalItemPrice()}}</div> -->
                                   <div class="price rupee-font"> {{cartDetails.itemTotal | currency:'&#8377;'}}</div>
                                 </div>
-                                
+
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.taxAmount">
                                   <div class="bill-labels">Total Tax </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div> -->
@@ -289,7 +289,7 @@
                                   <div class="price rupee-font">{{cartDetails.jaldeeCouponDiscount | currency:'&#8377;'}}</div>
                                 </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.jdnDiscount">
-                                  <div class="bill-labels">Jdn Discount </div>
+                                  <div class="bill-labels">JDN Discount </div>
                                   <!-- <div class="price rupee-font">&#8377;{{getDeliveryCharges()}}</div> -->
                                   <div class="price rupee-font">{{cartDetails.jdnDiscount | currency:'&#8377;'}}</div>
                                 </div>

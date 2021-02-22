@@ -403,5 +403,9 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
+  uploadFileforMr(){
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'fileupload']);
+  }
+  
 }
 

@@ -10,6 +10,7 @@ import { MedicalrecordListComponent } from './medicalrecord-list/medicalrecord-l
 import { UploadDigitalSignatureComponent } from './prescription/upload-digital-signature/upload-digital-signature.component';
 import { UploadSignatureComponent } from './prescription/upload-digital-signature/uploadsignature/upload-signature.component';
 import { ManualSignatureComponent } from './prescription/upload-digital-signature/manualsignature/manual-signature.component';
+import { UploadFileComponent } from './uploadfile/uploadfile.component';
 
 
 
@@ -32,8 +33,8 @@ const routes: Routes = [
   { path: 'addrxlist', component: DrugListComponent },
   {path: 'uploadsign', component: UploadDigitalSignatureComponent},
   {path: 'uploadsignature', component: UploadSignatureComponent},
-  {path: 'manualsignature', component: ManualSignatureComponent}
-
+  {path: 'manualsignature', component: ManualSignatureComponent},
+  {path: 'fileupload', component: UploadFileComponent}
 
 
 ];
