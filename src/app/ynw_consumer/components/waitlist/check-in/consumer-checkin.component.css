@@ -794,15 +794,15 @@ ul.bus-actions li a.lnk {
 }
 
 .border-tp {
-  border-top: 1px solid #ccc !important;
+  /* border-top: 1px solid #EBEDF3 !important; */
 }
 
 .border-bt {
-  border-bottom: 1px solid #ccc !important;
+  border-bottom: 1px solid #EBEDF3 !important;
 }
 
 .border-rt {
-  border-right: 1px solid #ccc !important;
+  border-right: 1px solid #EBEDF3 !important;
 }
 
 .ln-hgt-20 {
@@ -1250,4 +1250,15 @@ ngx-intl-tel-input input {
 .module-nomargin {
   /* margin: 0 0 1em 0; */
   overflow: hidden !important;
+}
+.tab-selected h3,
+.tab-selected i {
+  color: #3699FF !important;
+}
+.fa {
+  font: normal normal normal 14px/1 FontAwesome !important;
+  font-size: inherit !important;
+}
+.fa-arrow-left {
+color: black;
 }

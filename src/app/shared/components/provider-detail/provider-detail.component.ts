@@ -1503,6 +1503,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
       sel_date: curdate,
       cur: this.changedate_req,
       unique_id: this.provider_id,
@@ -1526,6 +1527,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,

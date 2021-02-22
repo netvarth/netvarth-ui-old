@@ -25,7 +25,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
-    styleUrls: ['./consumer-appointment.component.css']
+    styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit {
     tooltipcls = '';
@@ -251,6 +251,8 @@ export class ConsumerAppointmentComponent implements OnInit {
     bookingForm: FormGroup;
     showmoreSpec = false;
     @ViewChild('imagefile') fileInput: ElementRef;
+    bookStep = 1;
+    locationName;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -268,6 +270,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
+                this.locationName = params.locname;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }
@@ -1848,8 +1851,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         // }
     }
-    goBack() {
-        if (this.action === '') {
+    goBack(type?) {
+        if (type) {
             this.location.back();
         } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
             || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
@@ -2196,4 +2199,14 @@ export class ConsumerAppointmentComponent implements OnInit {
           this.showmoreSpec = true;
         }
       }
+      
+    goToStep(type) {
+        if (type === 'next') {
+            this.bookStep++;
+        } else if (type === 'prev') {
+            this.bookStep--;
+        } else {
+            this.bookStep = type;
+        }
+    }
 }

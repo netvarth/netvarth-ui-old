@@ -25,7 +25,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 @Component({
     selector: 'app-consumer-checkin',
     templateUrl: './consumer-checkin.component.html',
-    styleUrls: ['./consumer-checkin.component.css'],
+    styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class ConsumerCheckinComponent implements OnInit {
@@ -257,6 +257,8 @@ export class ConsumerCheckinComponent implements OnInit {
     bookingForm: FormGroup;
     whatsapperror = '';
     showmoreSpec = false;
+    bookStep = 1;
+    locationName;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -276,6 +278,7 @@ export class ConsumerCheckinComponent implements OnInit {
         this.route.queryParams.subscribe(
             params => {
                 this.sel_loc = params.loc_id;
+                this.locationName = params.locname;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }
@@ -663,6 +666,10 @@ export class ConsumerCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        if (serv.provider && serv.provider.businessName) {
+this.sel_ser_det.provider = serv.provider.businessName;
+        }
+        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount;
         this.serviceCost = this.sel_ser_det.price;
     }
@@ -700,6 +707,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.sel_queue_indx = selindx;
                         // this.sel_queue_waitingmins = this.queuejson[0].queueWaitingTime + ' Mins';
                         this.sel_queue_waitingmins = this.sharedFunctionobj.providerConvertMinutesToHourMinute(this.queuejson[selindx].queueWaitingTime);
+                        console.log( this.sel_queue_waitingmins);
                         this.sel_queue_servicetime = this.queuejson[selindx].serviceTime || '';
                         this.sel_queue_name = this.queuejson[selindx].name;
                         // this.sel_queue_timecaption = '[ ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[selindx].queueSchedule.timeSlots[0]['eTime'] + ' ]';
@@ -988,8 +996,9 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.api_error === null) {
             post_Data['consumer'] = { id: this.customer_data.id };
             if (!this.is_wtsap_empty) {
-                this.showConfirmPopup(post_Data)
-                // this.addCheckInConsumer(post_Data);
+                // this.showConfirmPopup(post_Data)
+
+                // this.addWaitlistAdvancePayment(post_Data);
             }
         }
     }
@@ -1607,7 +1616,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
                     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
                 } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     this.selectedMessage.files.push(file);
                     const reader = new FileReader();
@@ -1653,9 +1662,9 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.shared_services.addConsumerWaitlistAttachment(this.account_id,uuid,dataToSend)    
-        // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
-        //     dataToSend)
+        this.shared_services.addConsumerWaitlistAttachment(this.account_id, uuid, dataToSend)
+            // this.shared_services.addConsumerWaitlistNote(this.account_id, uuid,
+            //     dataToSend)
             .subscribe(
                 () => {
                 },
@@ -1997,8 +2006,8 @@ export class ConsumerCheckinComponent implements OnInit {
         }
         // }
     }
-    goBack() {
-        if (this.action === '') {
+    goBack(type?) {
+        if (type) {
             this.location.back();
         } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
             || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
@@ -2376,9 +2385,27 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     showSpec() {
         if (this.showmoreSpec) {
-          this.showmoreSpec = false;
+            this.showmoreSpec = false;
         } else {
-          this.showmoreSpec = true;
+            this.showmoreSpec = true;
         }
-      }
+    }
+    goToStep(type) {
+        if (type === 'next') {
+            this.bookStep++;
+        } else if (type === 'prev') {
+            this.bookStep--;
+        } else {
+            this.bookStep = type;
+        }
+    }
+    addWaitlistAdvancePayment(post_Data) {
+        this.shared_services.addWaitlistAdvancePayment(this.account_id, post_Data)
+        .subscribe(data => {
+            console.log(data);
+        },
+        error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+    }
 }

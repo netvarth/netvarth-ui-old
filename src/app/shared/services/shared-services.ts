@@ -975,4 +975,8 @@ getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);
 }
+addWaitlistAdvancePayment(accountId, body) {
+  const url = 'consumer/waitlist/advancePayment?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
 }

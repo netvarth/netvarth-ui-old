@@ -703,11 +703,11 @@ ul.bus-actions li a.lnk {
   font-size: 1.5rem !important;
 }
 
-.service-icon .meet-icon, .service-icon .phon-icon{
+.service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
 .service-icon .zoom-icon {
-  width: 30px !important;
+  width: 30px !important; 
 }
 .service-icon .wtsapaud-icon, .service-icon .wtsapvid-icon {
   width: 40px !important;
@@ -794,15 +794,15 @@ ul.bus-actions li a.lnk {
 }
 
 .border-tp {
-  border-top: 1px solid #ccc !important;
+  /* border-top: 1px solid #EBEDF3 !important; */
 }
 
 .border-bt {
-  border-bottom: 1px solid #ccc !important;
+  border-bottom: 1px solid #EBEDF3 !important;
 }
 
 .border-rt {
-  border-right: 1px solid #ccc !important;
+  border-right: 1px solid #EBEDF3 !important;
 }
 
 .ln-hgt-20 {
@@ -843,16 +843,17 @@ ul.bus-actions li a.lnk {
 
 .c-checkin-new .slotdiv mat-chip {
   font-weight: 600;
-  font-size: 0.70rem !important;
+  font-size: 1rem !important;
   background-color: #fff !important;
   border: 1px solid #ccc !important;
   border-radius: 20px !important;
   min-width: 80px !important;
+  padding: 15px !important;
 }
 .c-checkin-new .slotdiv {
-  /* max-height: 175px !important; */
+  max-height: 175px !important;
   overflow: auto;
-  margin-top: 20px !important;
+  margin-top: 0px !important;
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
@@ -947,12 +948,7 @@ ul.member-ul {
 .pad-up-10 {
   padding-top: 10px !important;
 }
-.pad-up-25 {
-  padding-top: 25px !important;
-}
-.pad-up-50 {
-  padding-top: 50px !important;
-}
+
 .coupon-apply-btn {
   margin-left: 10px !important;
     padding: 6px 15px 8px 15px !important;
@@ -1159,7 +1155,7 @@ height: 150px !important;
 .wtsapaud-icon {
   top: -2px !important;
 }
-.disableActn{ 
+.disableActn{
   background: #dbdbdb !important;
   color: #999999 !important;
   border: none !important;
@@ -1169,40 +1165,38 @@ height: 150px !important;
   border: 1px solid;
   margin: 20px;
   }
-  .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
-    margin: 8px !important;
-}
-.example-custom-date-class {
-  background:rgb(133,233,133);
-  border-radius: 100%;
- }
- .whatsappNo {
-  color: #1572a8;
-  font-size: 1.2rem;
-  font-weight: 300;
- }
- .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button {
-  width: 50px !important;
-  height: 50px !important;
- }
- .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button svg{
-  height: 40px;
-  width: 40px;
- }
- .mode-hint {
-  margin-bottom: 5px;
-  color: #919090;
-  font-style: italic;
-  font-size: 0.75rem !important;
- }
- .contact-section .wtsapaud-icon{
-  width: 25px !important;
-  top: 4px !important;
- }
-  .changephemail {
+
+  .example-custom-date-class {
+    background:rgb(133,233,133);
+    border-radius: 100%;
+   }
+   .whatsappNo {
+    color: #1572a8;
+    font-size: 1.2rem;
+    font-weight: 300;
+   }
+   .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button {
+    width: 50px !important;
+    height: 50px !important;
+   }
+   .c-checkin-new .caldiv mat-datepicker-toggle button.mat-icon-button svg{
+    height: 40px;
+    width: 40px;
+   }
+   .mode-hint {
+    margin-bottom: 5px;
+    color: #919090;
+    font-style: italic;
+    font-size: 0.75rem !important;
+   }
+   .contact-section .wtsapaud-icon{
+    width: 25px !important;
+    top: 4px !important;
+   }
+   .changephemail {
      /* width: 65px !important; */
    }
-   .changephemail .wtsapaud-icon {
+  .changephemail .wtsapaud-icon {
     top: 5px !important;
 }
 .mandatoryChip {
@@ -1238,7 +1232,7 @@ ngx-intl-tel-input input {
   height: 40px !important;
 }
 .prenotes {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc80;
   padding: 10px;
   max-height: 100px;
   overflow: auto;
@@ -1256,4 +1250,12 @@ ngx-intl-tel-input input {
 .module-nomargin {
   /* margin: 0 0 1em 0; */
   overflow: hidden !important;
+}
+.tab-selected h3,
+.tab-selected i {
+  color: #3699FF !important;
+}
+.fa {
+  font: normal normal normal 14px/1 FontAwesome !important;
+  font-size: inherit !important;
 }
