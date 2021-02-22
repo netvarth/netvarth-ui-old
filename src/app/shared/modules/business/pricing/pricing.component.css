@@ -375,6 +375,15 @@ width:100%;
   background-image: -ms-linear-gradient(#fff, #eee);
   background-image: linear-gradient(#fff, #eee);
 }
+.pricing-table.healthTab h3 {
+  background-color: #008080 !important;
+  background-image: -moz-linear-gradient(#fff,#008080) !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#008080));    
+  background-image: -webkit-linear-gradient(#fff,#008080);
+  background-image: -o-linear-gradient(#fff, #008080);
+  background-image: -ms-linear-gradient(#fff,#008080);
+  background-image: linear-gradient(#fff, #008080);
+}
 
 .pricing-table #most-popular h3 {
   background-color: #ddd;
