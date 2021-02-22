@@ -474,28 +474,73 @@
 							<div class="col-lg-6 col-md-6 col-xs-6 disp_grid extra-bill fl_rt">
 								<div class="hr_content">
 									<div class="flx_1">Amount</div>
-									<div>₹50.00</div>
+									<div class="rupee-font">{{bill_data.netTotal | currency:'&#8377;'}}</div>
 								</div>
-								<div class="hr_content">
+								<div class="hr_content" *ngIf="bill_data.jdn && bill_data.jdn.discount">
 									<div class="flx_1">JDN</div>
-									<div>(-) ₹5.00</div>
+									<div  class="rupee-font">(-){{bill_data.jdn.discount| currency:'&#8377;'}}</div>
 								</div>
-								<div class="hr_content">
-									<div class="flx_1">Tax 18% of
-										₹45.00</div>
-									<div>₹5.00</div>
+								<div class="hr_content" *ngFor="let discount of bill_data.discount">
+									<div class="flx_1">{{discount.name}}</div>
+									<div class="rupee-font">(-){{discount.discValue | currency:'&#8377;'}}
+									  <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
+											class="fa fa-window-close" 	aria-hidden="true"></i>	</div>
+								</div>
+								<div class="hr_content" *ngFor="let coupon of bill_data.providerCoupon">
+								     <div class="flx_1">{{coupon.name}}</div>
+									 <div class="rupee-font">(-){{coupon.couponValue | 	currency:'&#8377;'}}
+										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
+										class="fa fa-window-close" aria-hidden="true"></i></div>
+								</div>
+								<div class="hr_content" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
+									<div class="flx_1">{{jcoupon.key}} (Jaldee Coupon)</div>
+									<div class="rupee-font">
+										<span (click)="showJCCouponNote(jcoupon)" [class.couponAmt]="jcoupon.value.value === '0.0'"
+											style="margin-right: 5px">{{jcoupon.value.value | currency:'&#8377;'}}</span> 
+										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
+											class="fa fa-window-close" aria-hidden="true"></i>
+									</div>
+								</div>
+								<div class="hr_content"  *ngIf="bill_data.taxableTotal">
+									<div class="name"><span class="tax-top">Tax {{bill_data.taxPercentage}}% of
+									  <span class="rupee-font">{{bill_data.taxableTotal | currency:'&#8377;'}}</span></span>
+									  <span class="txn">(CGST-{{bill_data.taxPercentage/2}}%, SGST-{{bill_data.taxPercentage/2}}%)</span></div>
+									<div class="price rupee-font"> (+){{bill_data.totalTaxAmount | currency:'&#8377;'}}</div>
+								</div>
+								<div class="hr_content" *ngIf="bill_data.deliveryCharges > 0">
+								   <div class="name"><span class="tax-top">Delivery	Charge</span></div>
+								   <div class="rupee-font">(+){{bill_data.deliveryCharges | currency:'&#8377;'}}</div>
 								</div>
 								<div class="hr_content">
 									<div class="flx_1">Net Total</div>
-									<div>₹5.00</div>
+									<div class="rupee-font">{{bill_data.netRate | currency:'&#8377;'}}</div>
 								</div>
-								<div class="hr_content">
-									<div class="flx_1">Amount Paid</div>
-									<div>₹5.00</div>
+
+								<div class="hr_content" *ngIf="bill_data.totalAmountPaid > 0">
+									<div class="flx_1"> <span class="link" (click)="showpaidSection()">Amount Paid</span></div>
+									<div  class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
-								<div class="hr_content">
+								<div class="hr_content" *ngIf="bill_data.amountDue >= 0">
 									<div class="flx_1">Amount Due</div>
-									<div>₹5.00</div>
+									<div class="rupee-font">{{bill_data.amountDue | currency:'&#8377;'}}</div>
+								</div>
+								<div class="hr_content" *ngIf="bill_data.amountDue < 0">
+									<div class="flx_1">Refund</div>
+									<div class="rupee-font">{{refund_value | currency:'&#8377;'}}</div>
+								</div>
+								<div class="hr_content" *ngIf="bill_data.refundedAmount > 0">
+									<div class="flx_1">Amount Refunded</div>
+									<div class="rupee-font">{{bill_data.refundedAmount | currency:'&#8377;'}}</div>
+								</div>
+
+								<div class="hr_content" *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
+									<div class="flx_1">{{customer_label | capitalizeFirst}} will save
+										{{bill_data.totalAmountSaved | 	currency:'&#8377;'}}</div>
+								</div>
+
+								<div class="hr_content" 	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
+									<div class="flx_1">{{customer_label | capitalizeFirst}} have saved
+										{{bill_data.totalAmountSaved | 	currency:'&#8377;'}}</div>
 								</div>
 							</div>
 						</div>
@@ -508,12 +553,68 @@
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-5 pb-10 pb-md-8">
 									<div class="d-flex flex-column flex-md-row">
-										<div class="d-flex flex-column extra-bill">
-											<button _ngcontent-tyf-c451="" type="button" onclick="window.print();" class="btn rounded-0 btn-light-primary font-weight-bold mb-2">Download Invoice</button>
-
-											<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2">Settle Bill</button>
-
-											<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2">Print Invoice</button>
+								      <div class="d-flex flex-column extra-bill" *ngIf="!showPayWorkBench && !showRefundSection">
+												<button _ngcontent-tyf-c451="" type="button" onclick="window.print();" class="btn rounded-0 btn-light-primary font-weight-bold mb-2" *ngIf="bill_data.billStatus=='Settled'" (click)="printMe()">Print</button>
+	
+												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+	
+												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">{{email_bill_cap}}</button>
+	
+												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
+													  (click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
+											  
+												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+													(click)="paymentlink()">SMS/Email link</button>
+	
+												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2" 	*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
+													(click)="showPayment()">{{paybycashothers_cap}}</button>
+										</div>
+										<div *ngIf="showPayWorkBench">
+											<div class="section-two pay-wb" style="display: flex;">
+												<div class="add-serv-item edit-row service no-padding">
+													<div class="spl no-padding">
+														<div class="item qty no-padding" style="margin-left: 0px;">
+															<span class="label"
+																style="font-size:.875rem;color: #000;">{{wbamount_cap}}</span>
+															<span class="number">
+																<mat-form-field class="example-full-width">
+																	<span matPrefix class="rupee-font"
+																		style="font-size: larger;"> ₹ &nbsp;</span>
+																	<mat-form-field class="bill-ip">
+																		<input type="number" matInput #payamounttxt
+																			aria-label="Number" matInput value="1"
+																			size="5" max="{{price_limit}}" min="0"
+																			[(ngModel)]="amountpay"
+																			[ngModelOptions]="{standalone: true}"
+																			(keyup)="isvalid($event)"
+																			autocomplete="off">
+																	</mat-form-field>
+																</mat-form-field>
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 p0">
+												<div class="col-md-6 p0">
+													<mat-form-field>
+														<label style="font-weight: 500;">Leave a Payment Note
+														</label>
+														<textarea matInput style="margin-bottom: 10px;"
+															[(ngModel)]="paynot"></textarea>
+													</mat-form-field>
+												</div>
+											</div>
+											<div>
+												<button type="button" mat-button class="cs-btn bt1 accept"
+													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+													(click)="initPayment('cash',amountpay,paynot)">{{paybycash_cap}}</button>
+												<button type="button" mat-button class="cs-btn bt1 accept"
+													*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled'"
+													(click)="initPayment('other',amountpay,paynot)">{{paybyothers_cap}}</button>
+												<button type="button" mat-button class="cs-btn bt2 cancel"
+													(click)="hidePayWorkBench()">{{cancel_btn_cap}}</button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -555,7 +656,7 @@
 										<div class="font-weight-boldest font-size-h5">TOTAL AMOUNT</div>
 										<div class="text-right d-flex flex-column">
 											<span
-												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">₹20,600.00</span>
+												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue | currency:'&#8377;'}}</span>
 											<span class="font-size-sm">Taxes included</span>
 										</div>
 									</div>
