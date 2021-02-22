@@ -60,7 +60,7 @@ export class CorporateSettingsComponent implements OnInit {
         );
     }
     onSubmitJoinCorp(corpId) {
-        if (this.corpId === '') {
+        if (this.corpId.trim() === '') {
             this.snackbarService.openSnackBar('Please enter corporate uid', { 'panelClass': 'snackbarerror' });
         } else {
             this.shared_services.joinCorp(corpId).subscribe(

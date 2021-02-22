@@ -258,7 +258,7 @@
                                             <div class="form-group">
                                                 <input style="border-bottom: 1px solid" class="form-control emailPrepay"
                                                     id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
-                                                    autocomplete="off" (keyup)="showConfrmEmail($event)"
+                                                    autocomplete="off" (keyup)="resetApiErrors();showConfrmEmail($event)"
                                                     onpaste="return false;" oncopy="return false" oncut="return false"
                                                     ondrag="return false" ondrop="return false">
                                                 <app-field-error-display [displayError]="true"
@@ -271,7 +271,7 @@
                                                     id="email1" placeholder="Re-enter Email(user@xyz.com)"
                                                     [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
                                                     oncopy="return false" oncut="return false" ondrag="return false"
-                                                    ondrop="return false">
+                                                    ondrop="return false" (keyup)="resetApiErrors()">
                                                 <!-- </mat-form-field> -->
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="email1error != null" errorMsg={{email1error}}>

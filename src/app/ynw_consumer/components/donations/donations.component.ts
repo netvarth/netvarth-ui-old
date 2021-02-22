@@ -27,7 +27,7 @@ export class ConsumerDonationsComponent implements OnInit {
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
     donations: any = [];
-    newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+    newDateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     constructor(public shared_functions: SharedFunctions,
         private shared_services: SharedServices) {
 

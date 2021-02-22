@@ -119,8 +119,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -136,7 +136,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -198,7 +198,7 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -250,7 +250,7 @@
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
-                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
+                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -295,9 +295,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -309,11 +309,11 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item   (click)="sendAttachment(booking,'checkin')">
+                                                    <button mat-menu-item Â  (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -401,7 +401,7 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -470,7 +470,7 @@
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
-                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
+                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -523,8 +523,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -539,7 +539,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -601,7 +601,7 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -652,7 +652,7 @@
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
-                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
+                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'appointment',$event)">Pay
                                                         {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -697,9 +697,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -715,7 +715,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -803,7 +803,7 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -874,7 +874,7 @@
                                                 </div>
                                                 <div class="mgn-lft-10">
                                                     <button
-                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
+                                                        *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
                                                         (click)="viewBill(booking,'checkin',$event)">Pay
                                                         {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -943,8 +943,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -958,7 +958,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1000,7 +1000,7 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -1050,7 +1050,7 @@
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
+                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1101,9 +1101,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1119,7 +1119,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1207,7 +1207,7 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -1278,7 +1278,7 @@
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
+                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                     mat-flat-button class="btns  rupee-font"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1339,8 +1339,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  *ngIf="booking.apptStatus == 'Confirmed' ||
-                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
+                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -1354,7 +1354,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1396,7 +1396,7 @@
                                             <!-- Extra Info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -1446,7 +1446,7 @@
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected'"
+                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'appointment',$event)">Pay
                                                     {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1497,9 +1497,9 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item  
+                                                    <buttonÂ mat-menu-itemÂ Â 
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                         (click)="gotoWaitlistReschedule(booking)">
+                                                        Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1515,7 +1515,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment"  
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1603,7 +1603,7 @@
                                             <!-- extra info -->
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <div
-                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding disp-flex">
+                                                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding">
                                                     <div class="pull-left">
                                                         <div class="prov_lbl">Service</div>
                                                         <div [class.mgn-tp-8]="booking.service.serviceType === 'virtualService'"
@@ -1674,7 +1674,7 @@
                                             </div>
                                             <div class="mgn-lft-10">
                                                 <button
-                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled'"
+                                                    *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.waitlistStatus != 'cancelled' && booking.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(booking,'checkin',$event)">Pay
                                                     {{booking.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1790,7 +1790,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
-                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
+                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">Pay
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1890,7 +1890,7 @@
                                             </div>
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
-                                                    *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
+                                                    *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -1987,7 +1987,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                             <button
-                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
+                                                *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">Pay
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
@@ -2075,7 +2075,7 @@
                                             </div>
                                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                 <button
-                                                    *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled'"
+                                                    *ngIf="oder.amountDue>0 && oder.bill && (oder.bill.billViewStatus =='Show') && oder.orderStatus != 'Cancelled' && oder.bill.billStatus!='Settled'"
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">Pay
                                                     {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;

@@ -582,8 +582,6 @@ export class ConsumerDonationComponent implements OnInit {
         let passtyp;
         const stat = this.validateEmail(this.payEmail);
         const stat1 = this.validateEmail(this.payEmail1);
-        console.log(stat);
-        console.log(this.payEmail);
         if (this.payEmail === '' || !stat) {
                 this.emailerror = 'Please enter a valid email.';
         }
