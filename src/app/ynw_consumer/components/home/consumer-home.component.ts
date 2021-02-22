@@ -348,7 +348,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
-    this.gets3curl();
+    // this.gets3curl();
+    this.getFavouriteProvider();
     this.getAppointmentToday();
     // this.getAppointmentFuture();
     // this.getTdyOrder();
@@ -825,11 +826,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   setWaitlistTimeDetails() {
-    let k = 0;
+    // let k = 0;
     for (const x of this.fav_providers) {
       this.fav_providers_id_list.push(x.id);
-      this.toogleDetail(x, k);
-      k++;
+      // this.toogleDetail(x, k);
+      // k++;
     }
   }
 
@@ -1253,7 +1254,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .then(
         res => {
           this.s3url = res;
-          this.getFavouriteProvider();
+          // this.getFavouriteProvider();
         },
         error => {
           this.wordProcessor.apiErrorAutoHide(this, error);

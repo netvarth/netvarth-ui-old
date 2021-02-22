@@ -2288,4 +2288,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   getNumberArray(num) {
     return this.shared_functions.getNumberArray(num);
   }
+  stopprop(event) {
+    event.stopPropagation();
+  }
 }

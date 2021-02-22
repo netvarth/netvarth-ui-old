@@ -559,37 +559,42 @@ export class CustomerDetailComponent implements OnInit {
             if (form_data.customer_id) {
                 post_data['jaldeeId'] = form_data.customer_id;
             }
-            this.provider_services.updateProviderCustomer(post_data)
-                .subscribe(
-                    data => {
-                        this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.snackbarService.openSnackBar('Updated Successfully');
-                        const qParams = {};
-                        qParams['pid'] = data;
-                        if (this.source === 'checkin' || this.source === 'token') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
-                                }
-                            };
-                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-                        } else if (this.source === 'appointment') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
-                                }
-                            };
-                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-                        } else {
-                            this.router.navigate(['provider', 'customers']);
-                        }
-                    },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.disableButton = false;
-                    });
+            if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL' && !form_data.customer_id) {
+                this.snackbarService.openSnackBar('Please provide ' + this.customer_label + ' id', { 'panelClass': 'snackbarerror' });
+                this.disableButton = false;
+            } else {
+                this.provider_services.updateProviderCustomer(post_data)
+                    .subscribe(
+                        data => {
+                            this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                            this.snackbarService.openSnackBar('Updated Successfully');
+                            const qParams = {};
+                            qParams['pid'] = data;
+                            if (this.source === 'checkin' || this.source === 'token') {
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                        ph: form_data.mobile_number,
+                                        checkin_type: this.checkin_type
+                                    }
+                                };
+                                this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                            } else if (this.source === 'appointment') {
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                        ph: form_data.mobile_number,
+                                        checkin_type: this.checkin_type
+                                    }
+                                };
+                                this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                            } else {
+                                this.router.navigate(['provider', 'customers']);
+                            }
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.disableButton = false;
+                        });
+            }
         }
     }
     confirmApptBlock(id) {

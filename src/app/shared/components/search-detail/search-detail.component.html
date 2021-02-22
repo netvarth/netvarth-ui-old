@@ -386,7 +386,7 @@
                                               <div class="pointer-cursor" (click)="providerDetClicked(search_result)">
                                                   <h3>{{search_result.fields.title | capitalizeFirst}} <span
                                                           class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1"
-                                                          (click)="openJdn(search_result)"
+                                                          (click)="stopprop($event);openJdn(search_result)"
                                                           [matTooltip]="jdnTooltip"><img height="30" width="30"
                                                               src="./assets/images/JDN.png"></span></h3>
                                                   <div
