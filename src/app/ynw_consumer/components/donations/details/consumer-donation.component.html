@@ -94,10 +94,12 @@
                                                     <div
                                                         class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
                                                         <mat-chip-list class="btns">
-                                                            <mat-chip (click)="handleSideScreen('note')"><a
+                                                            <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory"
+                                                            (click)="handleSideScreen('note')"><a
                                                                     class="lnk action pointer-cursor"><i
                                                                         class="fa fa-file-text-o mgn-rt-5"
                                                                         aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
+                                                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
                                                                 </a>
                                                             </mat-chip>
                                                         </mat-chip-list>
@@ -256,7 +258,7 @@
                                             <div class="form-group">
                                                 <input style="border-bottom: 1px solid" class="form-control emailPrepay"
                                                     id="email" placeholder="Email(user@xyz.com)" [(ngModel)]="payEmail"
-                                                    autocomplete="off" (keyup)="showConfrmEmail($event);resetApiErrors()"
+                                                    autocomplete="off" (keyup)="showConfrmEmail($event)"
                                                     onpaste="return false;" oncopy="return false" oncut="return false"
                                                     ondrag="return false" ondrop="return false">
                                                 <app-field-error-display [displayError]="true"
@@ -269,7 +271,7 @@
                                                     id="email1" placeholder="Re-enter Email(user@xyz.com)"
                                                     [(ngModel)]="payEmail1" autocomplete="off" onpaste="return false;"
                                                     oncopy="return false" oncut="return false" ondrag="return false"
-                                                    ondrop="return false" (keyup)="resetApiErrors()">
+                                                    ondrop="return false">
                                                 <!-- </mat-form-field> -->
                                                 <app-field-error-display [displayError]="true"
                                                     *ngIf="email1error != null" errorMsg={{email1error}}>
