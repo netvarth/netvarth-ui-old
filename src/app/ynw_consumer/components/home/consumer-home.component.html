@@ -119,7 +119,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
                                                         booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -179,7 +179,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
@@ -295,7 +296,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -309,7 +310,8 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item Â  (click)="sendAttachment(booking,'checkin')">
+                                                    <button mat-menu-item Â 
+                                                        (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
@@ -356,7 +358,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
@@ -523,7 +526,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
                                                         booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -582,7 +585,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
@@ -697,7 +701,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -758,7 +762,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
@@ -943,7 +948,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
                                                         booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -1101,7 +1106,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -1162,7 +1167,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
@@ -1339,7 +1345,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
+                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
                                                         booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
@@ -1497,7 +1503,7 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <buttonÂ mat-menu-itemÂ Â 
+                                                    <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
                                                         Â (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
@@ -1558,7 +1564,8 @@
 
                                                     <button class="custId-cursor" mat-menu-item
                                                         *ngIf="booking.prescShared" (click)="viewprescription(booking)">
-                                                        <i class="mr-rx-icon-customer"></i>view prescription</button>
+                                                        <i class="mr-rx-icon-customer"></i>view
+                                                        prescription</button>
                                                 </mat-menu>
                                             </div>
 
