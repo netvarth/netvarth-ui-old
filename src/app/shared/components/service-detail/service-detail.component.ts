@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, /* Inject, */ OnInit } from '@angular/core';
+/* import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; */
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import {
   AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy
 } from '@ks89/angular-modal-gallery';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-service-detail',
@@ -14,6 +15,8 @@ import {
 })
 
 export class ServiceDetailComponent implements OnInit {
+
+  data: any;
 
   service_cap = Messages.SERVICE_CAP;
   duration_cap = Messages.DURATION_CAP;
@@ -52,10 +55,11 @@ export class ServiceDetailComponent implements OnInit {
   image_list_popup: any = [];
 
   constructor(
-    public dialogRef: MatDialogRef<ServiceDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    /* public dialogRef: MatDialogRef<ServiceDetailComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, */
     public shared_services: SharedServices,
-    public sharedfunctionObj: SharedFunctions) {
+    public sharedfunctionObj: SharedFunctions,
+    public bsModalRef: BsModalRef) {
   }
 
   ngOnInit() {
