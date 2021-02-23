@@ -119,8 +119,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -136,7 +136,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -298,7 +298,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                       (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -310,12 +310,12 @@
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
                                                     </button>
-                                                    <button mat-menu-item Â 
+                                                    <button mat-menu-item
                                                         (click)="sendAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -526,8 +526,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item *ngIf="booking.apptStatus =='Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -542,7 +542,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -703,7 +703,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                      (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -719,7 +719,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -948,8 +948,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -963,7 +963,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1108,7 +1108,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                       (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1124,7 +1124,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment" 
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1345,8 +1345,8 @@
                                                     <mat-icon>more_horiz</mat-icon>
                                                 </button>
                                                 <mat-menu #appMenu="matMenu">
-                                                    <button mat-menu-item *ngIf="booking.apptStatusÂ ==Â 'Confirmed' ||
-                                                        booking.apptStatusÂ ==Â 'Arrived'"Â (click)="gotoAptmtReschedule(booking)">
+                                                    <button mat-menu-item *ngIf="booking.apptStatus == 'Confirmed' ||
+                                                        booking.apptStatus == 'Arrived'" (click)="gotoAptmtReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>Reschedule</button>
                                                     <button mat-menu-item
                                                         *ngIf="booking.apptStatus == 'Confirmed' || booking.apptStatus == 'Arrived' || booking.apptStatus=='prepaymentPending'"
@@ -1360,7 +1360,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'appt')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
@@ -1505,7 +1505,7 @@
                                                 <mat-menu #appMenu="matMenu">
                                                     <button mat-menu-item
                                                         *ngIf="booking.waitlistStatus == 'checkedIn' || booking.waitlistStatus == 'arrived'"
-                                                        Â (click)="gotoWaitlistReschedule(booking)">
+                                                        (click)="gotoWaitlistReschedule(booking)">
                                                         <i class="consumer-reschedule-icon"></i>
                                                         Reschedule</button>
                                                     <button mat-menu-item
@@ -1521,7 +1521,7 @@
                                                         <i class="material-icons">attach_file</i>
                                                         Send Attachments
                                                     </button>
-                                                    <button mat-menu-item *ngIf="booking.hasAttachment" Â 
+                                                    <button mat-menu-item *ngIf="booking.hasAttachment"
                                                         (click)="viewAttachment(booking,'checkin')">
                                                         <i class="material-icons">attach_file</i>
                                                         View Attachments
