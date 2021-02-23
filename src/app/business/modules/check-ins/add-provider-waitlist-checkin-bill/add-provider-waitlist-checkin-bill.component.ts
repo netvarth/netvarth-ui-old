@@ -1181,7 +1181,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applyJCoupon(jCoupon) {
     const action = 'addJaldeeCoupons';
     let jaldeeCoupon: string;
-    jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';
+    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
+    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
     this.disableJCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
   }
@@ -1262,7 +1263,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['id'] = this.bill_data.id;
     const discounts = [];
     const discount = {};
-    discount['id'] = this.selOrderDiscount.id;
+    discount['id'] = this.selOrderDiscount;
+    // discount['id'] = this.selOrderDiscount.id;
     if (this.selOrderDiscount.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
@@ -1294,7 +1296,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const data = {};
     data['id'] = this.bill_data.id;
     const coupons = [];
-    coupons.push(this.selOrderProviderCoupon.id);
+    coupons.push(this.selOrderProviderCoupon);
+    // coupons.push(this.selOrderProviderCoupon.id);
     data['couponIds'] = coupons;
     this.disableCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, data);

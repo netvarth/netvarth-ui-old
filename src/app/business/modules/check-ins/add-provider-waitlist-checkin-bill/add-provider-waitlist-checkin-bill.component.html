@@ -141,20 +141,31 @@
 									<mat-icon>more_vert</mat-icon>
 								</button>
 								<mat-menu #topmenu="matMenu">
-									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2">
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2"
+									(click)="orderDiscountSelected()" *ngIf="(discounts.length > 0)">
 										Apply Order Discount
 									</button>
-									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault">
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2" 
+									   (click)="orderPCouponSelected()" *ngIf="(coupons.length >0)">
 										Apply Coupon
 									</button>
-									<button mat-menu-item>
-										Apply Jaldee Coupon
-									</button>
-									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3">
+								 <button  mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2"
+									*ngIf="(jCouponsList.length>0)" (click)="jCouponSelected()">
+									 Apply Jaldee Coupon
+								 </button>
+									<!-- <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3">
 										Add Display Note
 									</button>
 									<button mat-menu-item>
 										Add Private Note
+									</button> -->
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3" (click)="disaplynoteSelected()">
+										<span *ngIf="!displayNoteedit">{{add_display_note}}</span>
+										<span *ngIf="displayNoteedit">{{update_display_note}}</span>
+									</button>
+									<button  mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3" (click)="privatenoteSelected()">
+										<span *ngIf="!privateNoteedit">{{add_private_note}}</span>
+										<span *ngIf="privateNoteedit">{{update_private_note}}</span>
 									</button>
 								</mat-menu>
 							</div>
@@ -469,7 +480,7 @@
 								</div>
 							</div>
 							<!-- Modal for order discound -->
-							<div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog"
+							<!-- <div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog"
 								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
@@ -509,10 +520,73 @@
 										</div>
 									</div>
 								</div>
+							</div> -->
+							<div  *ngIf="(showPCouponSection || showDiscountSection || showJCouponSection)" class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+												   <select *ngIf="discounts.length >0 && showDiscountSection" class="form-control" 	[(ngModel)]="selOrderDiscount"
+													  >
+														<option *ngFor="let discount of discounts; let i = index"  [value]="discount.id">{{discount.name}}</option>
+													</select>	
+													<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control" [(ngModel)]="selOrderProviderCoupon">
+															<option *ngFor="let coupon of coupons; let i = index" [value]="coupon.id">{{coupon.name}}</option>
+													</select>
+													<select *ngIf="jCouponsList.length>0 && showJCouponSection" class="form-control" [(ngModel)]="selOrderProviderjCoupon">
+														<option *ngFor="let jcoupon of jCouponsList; let i = index" [value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}</option>
+													</select>
+										
+											
+
+											<div *ngIf="showDiscountSection"> 
+											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+												<input [(ngModel)]="isProvNote" type="checkbox" name="Checkboxes16">
+												<span style="margin-right: 0.75rem;"></span>
+												Private note
+											</label>
+											<div class="form-group mt-2 mb-1" *ngIf="isProvNote">
+												<textarea   [(ngModel)]="discProvNote" class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+											</div>
+											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+												<input [(ngModel)]="isConsNote" type="checkbox" name="Checkboxes16">
+												<span style="margin-right: 0.75rem;"></span>
+												Notes for Patient
+											</label>
+											<div class="form-group mt-2 mb-1" *ngIf="isConsNote">
+												<textarea [(ngModel)]="discConsNote" class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+											</div>
+										  </div>
+										</div>
+										<div class="modal-footer p-2">
+
+											<!-- <button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button> -->
+											<!-- <button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button> -->
+
+											<button *ngIf="discounts.length >0 && showDiscountSection" type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+											[class.grey-bg]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
+											[disabled]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
+											(click)="applyOrderDiscount()">{{apply_cap}}</button>
+
+										<button *ngIf="coupons.length >0 && showPCouponSection" type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+											[disabled]="selOrderProviderCoupon==='' || disableCouponbtn"
+											(click)="applyOrderCoupon()">{{apply_cap}}</button>
+
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold" 
+											*ngIf="jCouponsList.length >0 && showJCouponSection"
+											[disabled]="selOrderProviderjCoupon==='' || disableJCouponbtn"
+											(click)="applyJCoupon(selOrderProviderjCoupon)">{{apply_cap}}</button>
+									
+
+										<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal"
+								 			(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<!-- Modal for Add Notes -->
-							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog"
+							<!-- <div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog"
 								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
@@ -529,6 +603,40 @@
 											<button type="button"
 												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add
 												Note</button>
+										</div>
+									</div>
+								</div>
+							</div> -->
+							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true"
+							*ngIf="showDisplaynoteSection || showPrivatenoteSection">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+											<div class="form-group mt-2 mb-1" *ngIf="showDisplaynoteSection">
+												<textarea class="form-control radii" id="exampleTextarea" placeholder="Message"  [(ngModel)]="billDisplayNote"  (keyup)="handledisplaykeyup()" rows="3">
+												</textarea>
+											</div>
+											<div class="form-group mt-2 mb-1" *ngIf="showPrivatenoteSection">
+												<textarea class="form-control radii" id="exampleTextarea" placeholder="Message"  [(ngModel)]="billPrivateNote"  (keyup)="handleprivatekeyup()" rows="3">
+												</textarea>
+											</div>
+										</div>
+										<div class="modal-footer p-2">
+											<!-- <button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add Note</button> -->
+
+											<button type="button"  class="btn btn-primary lh-p6 rounded-0 font-weight-bold" [disabled]="displaybuttondisabled"
+												*ngIf="showDisplaynoteSection" (click)="addDisplaynote()">
+												<span style="display:grid" *ngIf="!displayNoteedit">{{add_note_btn}}</span>
+												<span style="display:grid" *ngIf="displayNoteedit">{{update_note_btn}}</span>
+											</button>
+											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold" [disabled]="privatebuttondisabled"	
+												*ngIf="showPrivatenoteSection" (click)="addPrivatenote()">
+												<span style="display:grid" *ngIf="!privateNoteedit">{{add_note_btn}}</span>
+												<span style="display:grid" *ngIf="privateNoteedit">{{update_note_btn}}</span>
+											</button>
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+										     	(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 										</div>
 									</div>
 								</div>
@@ -613,7 +721,7 @@
 											Paid</span></div>
 									<div class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
-								<!--begin::Modal-->
+								<!--begin::Modal For Refund-->
 								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
 									aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
