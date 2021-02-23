@@ -557,6 +557,28 @@ export class SharedFunctions {
     }
   }
 
+
+  fileValidation(file ) {
+    // let file_types;
+    //  if (source === 'attachment' || source === 'consumerimages' ) {
+    //      file_types = projectConstants.FILETYPES_UPLOAD;
+    //  } else {
+    //      file_types = projectConstants.IMAGE_FORMATS;
+    //  }
+     const image_max_size = 15000000;
+     const error = [];
+     let is_error = false;
+     if (file.size && file.size > image_max_size) {
+       error['size'] = true;
+       is_error = true;
+     }
+     if (is_error === false) {
+       return true;
+     } else {
+       return error;
+     }
+   }
+
   getApiError(error) {
     if (error.error && typeof error.error === 'string') {
       return error.error;

@@ -1333,13 +1333,15 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // Change pro pic
   changeProPic(image) {
     console.log(image);
+    console.log(this.blogo);
     this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         'userdata': this.bProfile,
-        img_type: image
+        img_type: image,
+        'logoExist': (this.blogo[0]) ? true : false
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

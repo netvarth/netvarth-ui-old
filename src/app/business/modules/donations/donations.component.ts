@@ -44,7 +44,7 @@ export class DonationsComponent implements OnInit {
   };
   isCheckin;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  newDateFormat = projectConstantsLocal.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
 
   loadComplete = false;
   minday = new Date(2015, 0, 1);

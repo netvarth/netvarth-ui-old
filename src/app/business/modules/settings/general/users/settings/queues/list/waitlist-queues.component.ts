@@ -511,7 +511,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line:radix
         this.start_min = parseInt(moment(new Date(todaydt), ['hh:mm A']).format('mm'));
         this.now = moment(new Date(todaydt), ['hh:mm A']).add(2, 'hours').format('hh:mm A');
-        if (!this.qAvailability.availableNow) {
+        if (!this.qAvailability.availableNow || this.queuedata.length === 0) {
             this.fromDateCaption = 'Now';
             if (this.qAvailability.timeRange) {
                 this.toDateCaption = this.qAvailability.timeRange.eTime;

@@ -53,7 +53,6 @@
         </span> -->
         </div>
         <div  class="col-md-5 col-lg-5 col-xs-12 col-sm-12 no-padding">
-            <a (click)="uploadFileforMr()">upload file</a><br>
           <label *ngIf="mrId !== 0">Medical Record#</label><span *ngIf="mrId !== 0"> {{mrNumber}}</span><br>
           <div *ngIf="mrId !== 0">
             <label>Created On</label>
@@ -61,6 +60,84 @@
           </div>
         </div>
         <div class="clearfix"></div>
+        <hr>
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+          <!-- <span class="normal-sz mgn-bt-10">For uploading files </span> <button (click)="uploadFileforMr()">Click here</button><br> -->
+<span  *ngIf="selectedMessage.files && selectedMessage.files.length > 0"><a class="pointlist" (click)="isShowtable()"><u>{{selectedMessage.files.length}} files are uploaded</u></a></span>
+          <div class="w-dta" *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showtable" >
+              <div class="row">
+                  <div class="copy">
+                      <div class="table-outer q-itm">
+            <div class="pad-10 drugdetailslist" >
+              <h5 class="heading3b"> Files uploaded</h5>
+              <table class="table " >
+                <thead>
+                  <tr>
+                    <th>
+                      File 
+                    </th>
+                    <th>
+                      Caption
+                    </th>
+                    <th>
+                      Image size
+                    </th>
+                    <!-- <th>
+                      audio
+                      </th> -->
+                    <th>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of selectedMessage.files; let i = index;">
+                    <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'">
+                      {{file.name}}
+                    </td>
+                    <td data-title="File" *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ||file.type =='image/jpeg'" >
+                      <!-- <img  [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]" style="width: 25px; height:25px;" class="img-responsive pointer-cursor"(click)="openImageModalRow(image_list_popup[0])"> -->
+                      <img alt="" src="{{file.url}}"   id="prescription-image1" style="width: 25px; height:25px;"  class="img-responsive pointer-cursor" (click)="openImageModalRow(image_list_popup[i])">
+                    </td>
+                    <td data-title="status">
+                      {{file.caption}}
+                    </td>
+                    <td data-title="Image size">
+                      {{imageSize(file.size)}} KB
+                    </td>
+                    <!-- <td data-title="audio">
+                        <audio src = "https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3" controls >
+                         </audio>
+                      </td> -->
+                    <td class="action">
+                      <span class="mbt">
+                          <button type="button" mat-icon-button
+                              [matMenuTriggerFor]="menu">
+                              <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                              <button type="button" (click)="deleteTempImage(file,i)"
+                                  mat-menu-item>
+                                  <i class="icon-delete"></i>
+                                  Delete
+                              </button>
+                          </mat-menu>
+                      </span>
+                      <span class="mbt-mobile-show">
+                          <button class="deletecls" type="button"
+                              (click)="deleteTempImage(file,i)">Delete</button>
+                      </span>
+                  </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
+                [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+                [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+                (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+             </div></div></div></div>
+            </div>
         <hr>
       </div>
       <div class="clearfix"></div>
