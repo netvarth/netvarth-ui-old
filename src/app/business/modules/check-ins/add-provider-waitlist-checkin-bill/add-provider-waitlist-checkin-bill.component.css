@@ -101,3 +101,6 @@
 .radii {
     border-radius: 5px;
 }
+.lh-1 {
+    line-height: 1 !important;
+}

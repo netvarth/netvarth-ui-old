@@ -517,9 +517,69 @@
 								</div>
 
 								<div class="hr_content" *ngIf="bill_data.totalAmountPaid > 0">
-									<div class="flx_1"> <span class="link" (click)="showpaidSection()">Amount Paid</span></div>
+									<div class="flx_1"> <span class="link" (click)="showpaidSection()" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund">Amount Paid</span></div>
 									<div  class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
+								<!--begin::Modal-->
+								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-body pb-3">
+												<div class="row">
+													<div class="col-md-8 py-md-10 pr-md-10">
+														<div class="table-responsive">
+															<table class="table">
+																<thead>
+																	<tr>
+																		<th class=" text-center font-weight-bolder text-muted  text-uppercase">Status</th>
+																		<th class=" text-center font-weight-bolder text-muted  text-uppercase">Mode</th>
+																		<th class=" text-center pr-0 font-weight-bolder text-muted text-uppercase">Gateway</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="font-weight-bolder font-size-sm">
+																		<td class="text-center pt-7">Success</td>
+																		<td class="text-center pt-7">Selfpay</td>
+																		<td class="pr-0 pt-7  text-center">Razorpay</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+								
+													</div>
+													<div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right">
+														<!--begin::Total Amount-->
+														<div class="font-size-h5 font-weight-bolder text-muted mb-3">AMOUNT PAID</div>
+														<div *ngIf="!applydisc" class="font-size-h2 font-weight-boldest">$400.00</div>
+														<div *ngIf="applydisc">
+															<input class="form-control" type="number" value="400" id="example-number-input">
+														</div>
+														<!--end::Total Amount-->
+								
+														<div class="border-bottom w-100 mb-10"></div>
+														<!--begin::Invoice Date-->
+														<div class="text-dark-50 font-size-lg font-weight-bold mb-3">DATE</div>
+														<div class="font-size-lg font-weight-bold">12 May, 2020</div>
+														<!--end::Invoice Date-->
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer p-1">
+												<button *ngIf="!applydisc" type="button" class="btn btn-light-primary btn-square lh-1 font-weight-bold" data-dismiss="modal">Close</button>
+												<button *ngIf="!applydisc" type="button" class="btn btn-primary btn-square lh-1 font-weight-bold" (click)="applyRefund()">Refund</button>
+
+												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by Cash</button>
+												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by Others</button>
+												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay Online</button>
+												<button *ngIf="applydisc" type="button" class="btn btn-light-primary btn-square lh-p6 font-weight-bold" (click)="revokeRefund()">Cancel</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--end::Modal-->
+
+
+
 								<div class="hr_content" *ngIf="bill_data.amountDue >= 0">
 									<div class="flx_1">Amount Due</div>
 									<div class="rupee-font">{{bill_data.amountDue | currency:'&#8377;'}}</div>

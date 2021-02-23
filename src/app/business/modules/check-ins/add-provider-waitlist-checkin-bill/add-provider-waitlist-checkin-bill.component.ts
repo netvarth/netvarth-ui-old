@@ -225,6 +225,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountClicked = false;
   discountId_servie: any;
   discountid;
+  applydisc = false;
   @ViewChild('closebutton') closebutton;
   @ViewChild('closebutton1') closebutton1;
   constructor(
@@ -1788,5 +1789,11 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   closeGroupDialogitem() {
     this.closebutton1.nativeElement.click();
+  }
+  applyRefund() {
+    this.applydisc = true;
+  }
+  revokeRefund() {
+    this.applydisc = false;
   }
 }
