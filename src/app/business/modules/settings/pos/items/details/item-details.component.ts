@@ -288,8 +288,8 @@ export class ItemDetailsComponent implements OnInit {
             // this.itemcaption = 'Item Details';
             this.amForm = this.fb.group({
                 itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
@@ -457,7 +457,7 @@ export class ItemDetailsComponent implements OnInit {
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
-                'itemNameInLocal': form_data.itemNameInLocal,
+                'itemNameInLocal' :form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
@@ -488,7 +488,7 @@ export class ItemDetailsComponent implements OnInit {
         } else if (this.action === 'edit') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
-                'itemNameInLocal': form_data.itemNameInLocal,
+                'itemNameInLocal' :form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec || '',
