@@ -44,7 +44,7 @@
 										fill="#AD84FF"></path>
 								</g>
 							</svg>
-							<!--end::Svg Icon--> 
+							<!--end::Svg Icon-->
 						</span></div>
 					<div class="row justify-content-center py-8 px-8 py-md-3 px-md-0 bg-primary">
 						<div class="col-md-11">
@@ -59,14 +59,14 @@
 									<span class="text-white d-flex flex-column align-items-md-end opacity-70">
 										<span>{{bname | capitalizeFirst}}</span>
 										<span *ngIf="spname">
-										    <span class="title">{{provider_label |
+											<span class="title">{{provider_label |
 												capitalizeFirst}}:</span>
 											<span class="dynamic">{{spname}}</span>
 										</span>
 										<span class="dynamic fl-right" *ngIf="gstnumber">
-												<span class="title">{{gstin_cap}} </span>
-												<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
-											</span>
+											<span class="title">{{gstin_cap}} </span>
+											<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
+										</span>
 										<span>Thrissur</span>
 									</span>
 								</div>
@@ -84,25 +84,24 @@
 								<div class="d-flex flex-column flex-root">
 									<span class="font-weight-bolder mb-2">INVOICE TO.</span>
 									<span class="opacity-70">
-									  <ng-container *ngIf="!source">
-											<span class="dynamic"
-											*ngFor="let user of checkin.waitlistingFor">
-											{{user.firstName | capitalizeFirst}}
-											{{user.lastName | capitalizeFirst}}
+										<ng-container *ngIf="!source">
+											<span class="dynamic" *ngFor="let user of checkin.waitlistingFor">
+												{{user.firstName | capitalizeFirst}}
+												{{user.lastName | capitalizeFirst}}
 											</span>
-									   </ng-container>
+										</ng-container>
 										<ng-container *ngIf="source === 'appt'">
-								  			<span class="dynamic" *ngFor="let user of checkin.appmtFor">
-											{{user.firstName | capitalizeFirst}}
-											{{user.lastName | capitalizeFirst}}
+											<span class="dynamic" *ngFor="let user of checkin.appmtFor">
+												{{user.firstName | capitalizeFirst}}
+												{{user.lastName | capitalizeFirst}}
 											</span>
-								    	</ng-container>
+										</ng-container>
 										<ng-container *ngIf="source === 'order'">
 											<span class="dynamic">
-											{{checkin.orderFor.firstName | capitalizeFirst}}
-											{{checkin.orderFor.lastName | capitalizeFirst}}
+												{{checkin.orderFor.firstName | capitalizeFirst}}
+												{{checkin.orderFor.lastName | capitalizeFirst}}
 											</span>
-										</ng-container>	
+										</ng-container>
 										<!-- Sneha S, P.O. Box 283 8562 Fusce RD.<br />Fredrick
 										Nebraska 20620 -->
 									</span>
@@ -146,7 +145,7 @@
 										Apply Order Discount
 									</button>
 									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault">
-					 					Apply Coupon
+										Apply Coupon
 									</button>
 									<button mat-menu-item>
 										Apply Jaldee Coupon
@@ -161,7 +160,7 @@
 							</div>
 
 
-						
+
 						</div>
 						<div class="col-md-11">
 							<!-- revamp table -->
@@ -176,71 +175,88 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="font-weight-boldest font-size-lg" *ngFor="let service of bill_data.service; let i = index">
+										<tr class="font-weight-boldest font-size-lg"
+											*ngFor="let service of bill_data.service; let i = index">
 											<!-- <td class="pl-0 pt-7">Creative Design</td>
 											<td class="text-right pt-7">80</td>
 											<td class="text-right pt-7">$40.00 -->
-													<td class="pl-0 pt-7">	{{service.serviceName | capitalizeFirst}}</td>
-													<td class="text-right pt-7" *ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
+											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}</td>
+											<td class="text-right pt-7"
+												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-													{{service.quantity}}</td>
-													<td class="text-right pt-7" *ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+												{{service.quantity}}</td>
+											<td class="text-right pt-7"
+												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-																					{{service.quantity}}</td>
-													
-													<td class="text-right pt-7" style="color: red;font-size: smaller;" *ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId && service.quantity === 0">
-														Cancelled</td>
-													<td class="text-right pt-7"  style="color: red;font-size: smaller;" *ngIf="source && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled') && bill_data.checkinedService === service.serviceId && service.quantity === 0">
-														Cancelled</td>
-													<td class="text-right pt-7" *ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+												{{service.quantity}}</td>
+
+											<td class="text-right pt-7" style="color: red;font-size: smaller;"
+												*ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId && service.quantity === 0">
+												Cancelled</td>
+											<td class="text-right pt-7" style="color: red;font-size: smaller;"
+												*ngIf="source && (bill_data.apptStatus === 'Rejected' || bill_data.apptStatus === 'Cancelled') && bill_data.checkinedService === service.serviceId && service.quantity === 0">
+												Cancelled</td>
+											<td class="text-right pt-7"
+												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 											                     ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-																 <span class="rupee-font">{{(service.quantity * service.price) |	currency:'&#8377;'}}</span>
-													<td class="text-right pt-7"
-															*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
+												<span class="rupee-font">{{(service.quantity * service.price) |
+													currency:'&#8377;'}}</span>
+											<td class="text-right pt-7"
+												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-															<span class="rupee-font">{{(service.quantity *
-																service.price) |
-																currency:'&#8377;'}}</span>
+												<span class="rupee-font">{{(service.quantity *
+													service.price) |
+													currency:'&#8377;'}}</span>
 
-												 <div *ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
-												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">   
-												<button mat-icon-button [matMenuTriggerFor]="tdmenu">
-													<mat-icon>more_horiz</mat-icon>
-												</button>
-												<mat-menu #tdmenu="matMenu">
-													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault" (click)="serviceDiscCoupSec(i)"
-													        *ngIf="itemdiscounts.length > 0">
-														Apply Discount
-													</button>
-
-													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1"
-													             *ngIf="checkin.waitlistStatus != 'cancelled'"
-																	(click)="adjustService(service.serviceName, service.quantity)">
-														Change Qty
-													</button>
-													<button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
-														Remove Service
-													</button>
-												</mat-menu>
-											    </div>
-
-												<div *ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
-														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">   
+												<div
+													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
+												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
 														<mat-icon>more_horiz</mat-icon>
 													</button>
 													<mat-menu #tdmenu="matMenu">
-														<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault" (click)="serviceDiscCoupSec(i)"
-																*ngIf="itemdiscounts.length > 0">
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault"
+															(click)="serviceDiscCoupSec(i)"
+															*ngIf="itemdiscounts.length > 0">
 															Apply Discount
 														</button>
 
-														<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1"
-														*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
-														(click)="adjustService(service.serviceName, service.quantity)">
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault1"
+															*ngIf="checkin.waitlistStatus != 'cancelled'"
+															(click)="adjustService(service.serviceName, service.quantity)">
 															Change Qty
 														</button>
-														<button mat-menu-item (click)="removeService(service.serviceId, service.quantity)">
+														<button mat-menu-item
+															(click)="removeService(service.serviceId, service.quantity)">
+															Remove Service
+														</button>
+													</mat-menu>
+												</div>
+
+												<div
+													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
+													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
+														<mat-icon>more_horiz</mat-icon>
+													</button>
+													<mat-menu #tdmenu="matMenu">
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault"
+															(click)="serviceDiscCoupSec(i)"
+															*ngIf="itemdiscounts.length > 0">
+															Apply Discount
+														</button>
+
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault1"
+															*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
+															(click)="adjustService(service.serviceName, service.quantity)">
+															Change Qty
+														</button>
+														<button mat-menu-item
+															(click)="removeService(service.serviceId, service.quantity)">
 															Remove Service
 														</button>
 													</mat-menu>
@@ -248,136 +264,165 @@
 
 
 											</td>
-											<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true" >
-												<div class="modal-dialog modal-dialog-centered" role="document" *ngIf="itemdiscounts.length > 0" >
+											<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1"
+												role="dialog" aria-labelledby="exampleModalSizeDefault"
+												aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document"
+													*ngIf="itemdiscounts.length > 0">
 													<div class="modal-content">
 														<div class="modal-body">
-														<select class="form-control" [(ngModel)]="discountid" (ngModelChange)="selectChangeHandler($event)">
-															<option *ngFor="let discount of itemdiscounts; let i = index"  [value]="discount.id">{{discount.name}}</option>
-														</select>														
-														<div class="modal-footer p-0">
-															<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal" 
-															#closebutton>Close</button>
-															<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold" 
-															(click)="applyServiceDiscount(bill_data.service[i])" >Add </button>
+															<select class="form-control" [(ngModel)]="discountid"
+																(ngModelChange)="selectChangeHandler($event)">
+																<option
+																	*ngFor="let discount of itemdiscounts; let i = index"
+																	[value]="discount.id">{{discount.name}}</option>
+															</select>
+															<div class="modal-footer p-0">
+																<button type="button"
+																	class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+																	data-dismiss="modal" #closebutton>Close</button>
+																<button type="button"
+																	class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+																	(click)="applyServiceDiscount(bill_data.service[i])">Add
+																</button>
+															</div>
 														</div>
-													</div>
 													</div>
 												</div>
 											</div>
 
-											<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+											<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1"
+												role="dialog" aria-labelledby="exampleModalSizeDefault"
+												aria-hidden="true">
 												<div class="modal-dialog modal-dialog-centered" role="document">
 													<div class="modal-content">
 														<div class="modal-body">
 															<div class="form-group mb-0 row">
-																<label for="example-number-input" class="col-12 col-form-label">number</label>
+																<label for="example-number-input"
+																	class="col-12 col-form-label">number</label>
 																<div class="col-12">
-																	<input class="form-control" type="number" value="42" id="example-number-input">
+																	<input class="form-control" type="number" value="42"
+																		id="example-number-input">
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer p-0">
-															<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-															<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+															<button type="button"
+																class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+																data-dismiss="modal">Close</button>
+															<button type="button"
+																class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add
+															</button>
 														</div>
 													</div>
 												</div>
 											</div>
 
-											<div class="discount-row" 
-																	*ngFor="let discount of service.discount">
-																	<div class="name">{{discount.name}}</div>
-																	<div class="price">
-																		<span
-																			class="rupee-font">(-){{discount.discountValue
-																			|
-																			currency:'&#8377;'}}</span> <i
-																			(click)="removeServiceDiscount(service.serviceId, discount.id)"
-																			class="fa fa-window-close"
-																			aria-hidden="true"></i>
-																	</div>
-																</div>
-															
-															<div class="c-row three"
-																*ngIf="service.discount && service.discount.length > 0">
-																<div class="name">{{sub_tot_cap}}</div>
-																<div class="price rupee-font">{{service.netRate |
-																	currency:'&#8377;'}}</div>
-															</div>
-											
+											<div class="discount-row" *ngFor="let discount of service.discount">
+												<div class="name">{{discount.name}}</div>
+												<div class="price">
+													<span class="rupee-font">(-){{discount.discountValue
+														|
+														currency:'&#8377;'}}</span> <i
+														(click)="removeServiceDiscount(service.serviceId, discount.id)"
+														class="fa fa-window-close" aria-hidden="true"></i>
+												</div>
+											</div>
+
+											<div class="c-row three"
+												*ngIf="service.discount && service.discount.length > 0">
+												<div class="name">{{sub_tot_cap}}</div>
+												<div class="price rupee-font">{{service.netRate |
+													currency:'&#8377;'}}</div>
+											</div>
+
 										</tr>
-										<tr *ngFor="let item of bill_data.items; let i = index" class="font-weight-boldest border-bottom-0 font-size-lg">
+										<tr *ngFor="let item of bill_data.items; let i = index"
+											class="font-weight-boldest border-bottom-0 font-size-lg">
 											<!-- <td class="border-top-0 pl-0 py-4">Front-End Development</td>
 											<td class="border-top-0 text-right py-4">120</td>
 											<td class="border-top-0 text-right py-4"><sup>Tax</sup>$40.00</td> -->
-												<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
-												<td class="border-top-0 text-right py-4">{{item.quantity}}</td>
-												<td class="border-top-0 text-right py-4" > 	<span class="rupee-font">   <sup [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'" 	*ngIf="item.GSTpercentage > 0">Tax</sup> 
+											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
+											<td class="border-top-0 text-right py-4">{{item.quantity}}</td>
+											<td class="border-top-0 text-right py-4"> <span class="rupee-font"> <sup
+														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+														*ngIf="item.GSTpercentage > 0">Tax</sup>
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-												
-	
-													<div *ngIf="bill_data.billStatus!='Settled' && pos">   
-												<button mat-icon-button [matMenuTriggerFor]="tdmenu">
-													<mat-icon>more_horiz</mat-icon>
-												</button>
-												<mat-menu #tdmenu="matMenu">
-													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault7"   (click)="itemDiscCoupSec(i)"
-													*ngIf="itemdiscounts.length > 0">
-														Apply Discount
+
+
+												<div *ngIf="bill_data.billStatus!='Settled' && pos">
+													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
+														<mat-icon>more_horiz</mat-icon>
 													</button>
-	
-													<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault1"
-													*ngIf="bill_data.billStatus !== 'Cancel'" (click)="adjustItem(item.itemName, item.quantity)">
-														Change Qty
-													</button>
-													<button mat-menu-item (click)="removeItem(item.itemId, item.quantity)">
-														Remove Item
-													</button>
-												</mat-menu>
+													<mat-menu #tdmenu="matMenu">
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault7"
+															(click)="itemDiscCoupSec(i)"
+															*ngIf="itemdiscounts.length > 0">
+															Apply Discount
+														</button>
+
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault1"
+															*ngIf="bill_data.billStatus !== 'Cancel'"
+															(click)="adjustItem(item.itemName, item.quantity)">
+															Change Qty
+														</button>
+														<button mat-menu-item
+															(click)="removeItem(item.itemId, item.quantity)">
+															Remove Item
+														</button>
+													</mat-menu>
 												</div>
-	
-												<div class="discount-row"
-												*ngFor="let discount of item.discount">
-												<div class="name">{{discount.name}}</div>
-												<div class="price rupee-font">
-													(-){{discount.discountValue |
-													currency:'&#8377;'}} <i
-														(click)="removeItemDiscount(item.itemId, discount.id)"
-														class="fa fa-window-close"
-														aria-hidden="true"></i></div>
-											</div>
-										
-										<div class="c-row three"
-											*ngIf="item.discount &&item.discount.length > 0">
-											<div class="name">{{sub_tot_cap}}</div>
-											<div class="price rupee-font">{{item.netRate |
-												currency:'&#8377;'}}</div>
-										</div>
-	
-												</td>
-	
-												<div class="modal fade" id="exampleModalSizeDefault7" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true" >
-														<div class="modal-dialog modal-dialog-centered" role="document" *ngIf="discounts.length > 0">
-															<div class="modal-content">
-																<div class="modal-body">
-																<select class="form-control" [(ngModel)]="discountid" (ngModelChange)="selectChangeHandler($event)">
-																	<option *ngFor="let discount of itemdiscounts; let i = index"  [value]="discount.id">{{discount.name}}</option>
-																</select>														
-																<div class="modal-footer p-0">
-																	<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal"
-																	#closebutton1>Close</button>
-																	<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold" 																
-																			(click)="applyItemDiscount(bill_data.items[i])">Add </button>
-																</div>
-															</div>
+
+												<div class="discount-row" *ngFor="let discount of item.discount">
+													<div class="name">{{discount.name}}</div>
+													<div class="price rupee-font">
+														(-){{discount.discountValue |
+														currency:'&#8377;'}} <i
+															(click)="removeItemDiscount(item.itemId, discount.id)"
+															class="fa fa-window-close" aria-hidden="true"></i></div>
+												</div>
+
+												<div class="c-row three"
+													*ngIf="item.discount &&item.discount.length > 0">
+													<div class="name">{{sub_tot_cap}}</div>
+													<div class="price rupee-font">{{item.netRate |
+														currency:'&#8377;'}}</div>
+												</div>
+
+											</td>
+
+											<div class="modal fade" id="exampleModalSizeDefault7" tabindex="-1"
+												role="dialog" aria-labelledby="exampleModalSizeDefault"
+												aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document"
+													*ngIf="discounts.length > 0">
+													<div class="modal-content">
+														<div class="modal-body">
+															<select class="form-control" [(ngModel)]="discountid"
+																(ngModelChange)="selectChangeHandler($event)">
+																<option
+																	*ngFor="let discount of itemdiscounts; let i = index"
+																	[value]="discount.id">{{discount.name}}</option>
+															</select>
+															<div class="modal-footer p-0">
+																<button type="button"
+																	class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+																	data-dismiss="modal" #closebutton1>Close</button>
+																<button type="button"
+																	class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+																	(click)="applyItemDiscount(bill_data.items[i])">Add
+																</button>
 															</div>
 														</div>
 													</div>
-											</tr>
-									
+												</div>
+											</div>
+										</tr>
+
 									</tbody>
-								
+
 								</table>
 							</div>
 							<!-- Modal for apply discount -->
@@ -399,26 +444,33 @@
 								</div>
 							</div> -->
 							<!-- Modal for Change qty -->
-							<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+							<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-body">
 											<div class="form-group mb-0 row">
-												<label for="example-number-input" class="col-12 col-form-label">number</label>
+												<label for="example-number-input"
+													class="col-12 col-form-label">number</label>
 												<div class="col-12">
-													<input class="form-control" type="number" value="42" id="example-number-input">
+													<input class="form-control" type="number" value="42"
+														id="example-number-input">
 												</div>
 											</div>
 										</div>
 										<div class="modal-footer p-0">
-											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+											<button type="button"
+												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+												data-dismiss="modal">Close</button>
+											<button type="button"
+												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- Modal for order discound -->
-							<div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+							<div class="modal fade" id="exampleModalSizeDefault2" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-body">
@@ -427,43 +479,56 @@
 												<option>Disc 2</option>
 												<option>Disc 3</option>
 											</select>
-											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+											<label
+												class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
 												<input type="checkbox" name="Checkboxes16">
 												<span style="margin-right: 0.75rem;"></span>
 												Private note
 											</label>
 											<div class="form-group mt-2 mb-1">
-												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+												<textarea class="form-control radii" id="exampleTextarea"
+													rows="3"></textarea>
 											</div>
-											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+											<label
+												class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
 												<input type="checkbox" name="Checkboxes16">
 												<span style="margin-right: 0.75rem;"></span>
 												Notes for Patient
 											</label>
 											<div class="form-group mt-2 mb-1">
-												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+												<textarea class="form-control radii" id="exampleTextarea"
+													rows="3"></textarea>
 											</div>
 										</div>
 										<div class="modal-footer p-2">
-											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+											<button type="button"
+												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+												data-dismiss="modal">Close</button>
+											<button type="button"
+												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
 										</div>
 									</div>
 								</div>
 							</div>
 
 							<!-- Modal for Add Notes -->
-							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-body">
 											<div class="form-group mt-2 mb-1">
-												<textarea class="form-control radii" id="exampleTextarea" rows="3"></textarea>
+												<textarea class="form-control radii" id="exampleTextarea"
+													rows="3"></textarea>
 											</div>
 										</div>
 										<div class="modal-footer p-2">
-											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add Note</button>
+											<button type="button"
+												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+												data-dismiss="modal">Close</button>
+											<button type="button"
+												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add
+												Note</button>
 										</div>
 									</div>
 								</div>
@@ -471,6 +536,22 @@
 
 
 							<hr>
+							<div class="col-lg-6" style="display: inline-grid;">
+								<mat-accordion class="example-headers-align" multi>
+									<mat-expansion-panel>
+									  <mat-expansion-panel-header>
+										<mat-panel-title>
+											<i class="flaticon2-layers-1"></i> Notes
+										</mat-panel-title>
+									  </mat-expansion-panel-header>
+									  <mat-form-field>
+										<mat-label>Date</mat-label>
+										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+									  </mat-form-field>
+									  <mat-datepicker #picker></mat-datepicker>
+									</mat-expansion-panel>
+								  </mat-accordion>
+							</div>
 							<div class="col-lg-6 col-md-6 col-xs-6 disp_grid extra-bill fl_rt">
 								<div class="hr_content">
 									<div class="flx_1">Amount</div>
@@ -478,38 +559,48 @@
 								</div>
 								<div class="hr_content" *ngIf="bill_data.jdn && bill_data.jdn.discount">
 									<div class="flx_1">JDN</div>
-									<div  class="rupee-font">(-){{bill_data.jdn.discount| currency:'&#8377;'}}</div>
+									<div class="rupee-font">(-){{bill_data.jdn.discount| currency:'&#8377;'}}</div>
 								</div>
 								<div class="hr_content" *ngFor="let discount of bill_data.discount">
 									<div class="flx_1">{{discount.name}}</div>
 									<div class="rupee-font">(-){{discount.discValue | currency:'&#8377;'}}
-									  <i *ngIf="bill_data.billStatus!='Settled'" (click)="removeOrderDiscount(discount)"
-											class="fa fa-window-close" 	aria-hidden="true"></i>	</div>
+										<i *ngIf="bill_data.billStatus!='Settled'"
+											(click)="removeOrderDiscount(discount)" class="fa fa-window-close"
+											aria-hidden="true"></i>
+									</div>
 								</div>
 								<div class="hr_content" *ngFor="let coupon of bill_data.providerCoupon">
-								     <div class="flx_1">{{coupon.name}}</div>
-									 <div class="rupee-font">(-){{coupon.couponValue | 	currency:'&#8377;'}}
-										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeProviderCoupon(coupon)"
-										class="fa fa-window-close" aria-hidden="true"></i></div>
+									<div class="flx_1">{{coupon.name}}</div>
+									<div class="rupee-font">(-){{coupon.couponValue | currency:'&#8377;'}}
+										<i *ngIf="bill_data.billStatus!='Settled'"
+											(click)="removeProviderCoupon(coupon)" class="fa fa-window-close"
+											aria-hidden="true"></i>
+									</div>
 								</div>
 								<div class="hr_content" *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
 									<div class="flx_1">{{jcoupon.key}} (Jaldee Coupon)</div>
 									<div class="rupee-font">
-										<span (click)="showJCCouponNote(jcoupon)" [class.couponAmt]="jcoupon.value.value === '0.0'"
-											style="margin-right: 5px">{{jcoupon.value.value | currency:'&#8377;'}}</span> 
+										<span (click)="showJCCouponNote(jcoupon)"
+											[class.couponAmt]="jcoupon.value.value === '0.0'"
+											style="margin-right: 5px">{{jcoupon.value.value |
+											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
 											class="fa fa-window-close" aria-hidden="true"></i>
 									</div>
 								</div>
-								<div class="hr_content"  *ngIf="bill_data.taxableTotal">
+								<div class="hr_content" *ngIf="bill_data.taxableTotal">
 									<div class="name"><span class="tax-top">Tax {{bill_data.taxPercentage}}% of
-									  <span class="rupee-font">{{bill_data.taxableTotal | currency:'&#8377;'}}</span></span>
-									  <span class="txn">(CGST-{{bill_data.taxPercentage/2}}%, SGST-{{bill_data.taxPercentage/2}}%)</span></div>
-									<div class="price rupee-font"> (+){{bill_data.totalTaxAmount | currency:'&#8377;'}}</div>
+											<span class="rupee-font">{{bill_data.taxableTotal |
+												currency:'&#8377;'}}</span></span>
+										<span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+											SGST-{{bill_data.taxPercentage/2}}%)</span>
+									</div>
+									<div class="price rupee-font"> (+){{bill_data.totalTaxAmount | currency:'&#8377;'}}
+									</div>
 								</div>
 								<div class="hr_content" *ngIf="bill_data.deliveryCharges > 0">
-								   <div class="name"><span class="tax-top">Delivery	Charge</span></div>
-								   <div class="rupee-font">(+){{bill_data.deliveryCharges | currency:'&#8377;'}}</div>
+									<div class="name"><span class="tax-top">Delivery Charge</span></div>
+									<div class="rupee-font">(+){{bill_data.deliveryCharges | currency:'&#8377;'}}</div>
 								</div>
 								<div class="hr_content">
 									<div class="flx_1">Net Total</div>
@@ -517,11 +608,14 @@
 								</div>
 
 								<div class="hr_content" *ngIf="bill_data.totalAmountPaid > 0">
-									<div class="flx_1"> <span class="link" (click)="showpaidSection()" data-toggle="modal" data-target="#exampleModalSizeDefaultrefund">Amount Paid</span></div>
-									<div  class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
+									<div class="flx_1"> <span class="link" (click)="showpaidSection()"
+											data-toggle="modal" data-target="#exampleModalSizeDefaultrefund">Amount
+											Paid</span></div>
+									<div class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
 								<!--begin::Modal-->
-								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-body pb-3">
@@ -531,9 +625,15 @@
 															<table class="table">
 																<thead>
 																	<tr>
-																		<th class=" text-center font-weight-bolder text-muted  text-uppercase">Status</th>
-																		<th class=" text-center font-weight-bolder text-muted  text-uppercase">Mode</th>
-																		<th class=" text-center pr-0 font-weight-bolder text-muted text-uppercase">Gateway</th>
+																		<th
+																			class=" text-center font-weight-bolder text-muted  text-uppercase">
+																			Status</th>
+																		<th
+																			class=" text-center font-weight-bolder text-muted  text-uppercase">
+																			Mode</th>
+																		<th
+																			class=" text-center pr-0 font-weight-bolder text-muted text-uppercase">
+																			Gateway</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -545,33 +645,49 @@
 																</tbody>
 															</table>
 														</div>
-								
+
 													</div>
 													<div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right">
 														<!--begin::Total Amount-->
-														<div class="font-size-h5 font-weight-bolder text-muted mb-3">AMOUNT PAID</div>
-														<div *ngIf="!applydisc" class="font-size-h2 font-weight-boldest">$400.00</div>
+														<div class="font-size-h5 font-weight-bolder text-muted mb-3">
+															AMOUNT PAID</div>
+														<div *ngIf="!applydisc"
+															class="font-size-h2 font-weight-boldest">$400.00</div>
 														<div *ngIf="applydisc">
-															<input class="form-control" type="number" value="400" id="example-number-input">
+															<input class="form-control" type="number" value="400"
+																id="example-number-input">
 														</div>
 														<!--end::Total Amount-->
-								
+
 														<div class="border-bottom w-100 mb-10"></div>
 														<!--begin::Invoice Date-->
-														<div class="text-dark-50 font-size-lg font-weight-bold mb-3">DATE</div>
+														<div class="text-dark-50 font-size-lg font-weight-bold mb-3">
+															DATE</div>
 														<div class="font-size-lg font-weight-bold">12 May, 2020</div>
 														<!--end::Invoice Date-->
 													</div>
 												</div>
 											</div>
 											<div class="modal-footer p-1">
-												<button *ngIf="!applydisc" type="button" class="btn btn-light-primary btn-square lh-1 font-weight-bold" data-dismiss="modal">Close</button>
-												<button *ngIf="!applydisc" type="button" class="btn btn-primary btn-square lh-1 font-weight-bold" (click)="applyRefund()">Refund</button>
+												<button *ngIf="!applydisc" type="button"
+													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
+													data-dismiss="modal">Close</button>
+												<button *ngIf="!applydisc" type="button"
+													class="btn btn-primary btn-square lh-1 font-weight-bold"
+													(click)="applyRefund()">Refund</button>
 
-												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by Cash</button>
-												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by Others</button>
-												<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold">Pay Online</button>
-												<button *ngIf="applydisc" type="button" class="btn btn-light-primary btn-square lh-p6 font-weight-bold" (click)="revokeRefund()">Cancel</button>
+												<button *ngIf="applydisc" type="button"
+													class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by
+													Cash</button>
+												<button *ngIf="applydisc" type="button"
+													class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by
+													Others</button>
+												<button *ngIf="applydisc" type="button"
+													class="btn btn-success btn-square lh-p6 font-weight-bold">Pay
+													Online</button>
+												<button *ngIf="applydisc" type="button"
+													class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
+													(click)="revokeRefund()">Cancel</button>
 											</div>
 										</div>
 									</div>
@@ -593,14 +709,16 @@
 									<div class="rupee-font">{{bill_data.refundedAmount | currency:'&#8377;'}}</div>
 								</div>
 
-								<div class="hr_content" *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
+								<div class="hr_content"
+									*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
 									<div class="flx_1">{{customer_label | capitalizeFirst}} will save
-										{{bill_data.totalAmountSaved | 	currency:'&#8377;'}}</div>
+										{{bill_data.totalAmountSaved | currency:'&#8377;'}}</div>
 								</div>
 
-								<div class="hr_content" 	*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
+								<div class="hr_content"
+									*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
 									<div class="flx_1">{{customer_label | capitalizeFirst}} have saved
-										{{bill_data.totalAmountSaved | 	currency:'&#8377;'}}</div>
+										{{bill_data.totalAmountSaved | currency:'&#8377;'}}</div>
 								</div>
 							</div>
 						</div>
@@ -612,24 +730,56 @@
 						<div class="col-md-10">
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-5 pb-10 pb-md-8">
+									<div class="form-group" *ngIf="showPayWorkBench">
+										<textarea class="form-control form-control-solid" rows="3"></textarea>
+									</div>
 									<div class="d-flex flex-column flex-md-row">
-								      <div class="d-flex flex-column extra-bill" *ngIf="!showPayWorkBench && !showRefundSection">
-												<button _ngcontent-tyf-c451="" type="button" onclick="window.print();" class="btn rounded-0 btn-light-primary font-weight-bold mb-2" *ngIf="bill_data.billStatus=='Settled'" (click)="printMe()">Print</button>
-	
-												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billStatus!='Settled'" (click)="confirmSettleBill()">{{settle_bill_cap}}</button>
-	
-												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billStatus=='Settled'" (click)="emailBill()">{{email_bill_cap}}</button>
-	
-												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
-													  (click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
-											  
-												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2"*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
-													(click)="paymentlink()">SMS/Email link</button>
-	
-												<button type="button" class="btn btn-primary rounded-0 font-weight-bold mb-2" 	*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
-													(click)="showPayment()">{{paybycashothers_cap}}</button>
+										<div class="d-flex flex-column extra-bill"
+											*ngIf="!showPayWorkBench && !showRefundSection">
+											<button _ngcontent-tyf-c451="" type="button" onclick="window.print();"
+												class="btn rounded-0 btn-light-primary font-weight-bold mb-2"
+												*ngIf="bill_data.billStatus=='Settled'"
+												(click)="printMe()">Print</button>
+
+											<button type="button"
+												class="btn btn-primary rounded-0 font-weight-bold mb-2"
+												*ngIf="bill_data.billStatus!='Settled'"
+												(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+
+											<button type="button"
+												class="btn btn-primary rounded-0 font-weight-bold mb-2"
+												*ngIf="bill_data.billStatus=='Settled'"
+												(click)="emailBill()">{{email_bill_cap}}</button>
+
+											<button type="button"
+												class="btn btn-primary rounded-0 font-weight-bold mb-2"
+												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
+												(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
+
+											<button type="button"
+												class="btn btn-primary rounded-0 font-weight-bold mb-2"
+												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+												(click)="paymentlink()">SMS/Email link</button>
+
+											<button type="button"
+												class="btn btn-primary rounded-0 font-weight-bold mb-2"
+												*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
+												(click)="showPayment()">{{paybycashothers_cap}}</button>
 										</div>
-										<div *ngIf="showPayWorkBench">
+										<div class="d-flex flex-row mt-1 mb-10 extra-bill" *ngIf="showPayWorkBench">
+											<button type="button"
+												class="btn btn-success btn-square font-weight-bold mb-2 mr-1">By
+												Cash</button>
+											<button type="button"
+												class="btn btn-success btn-square font-weight-bold mb-2 mr-1">By
+												Others</button>
+											<button type="button"
+												class="btn btn-danger btn-square font-weight-bold mb-2 "
+												(click)="hidePayWorkBench()">Cancel</button>
+										</div>
+
+
+										<!-- <div *ngIf="showPayWorkBench">
 											<div class="section-two pay-wb" style="display: flex;">
 												<div class="add-serv-item edit-row service no-padding">
 													<div class="spl no-padding">
@@ -675,10 +825,12 @@
 												<button type="button" mat-button class="cs-btn bt2 cancel"
 													(click)="hidePayWorkBench()">{{cancel_btn_cap}}</button>
 											</div>
-										</div>
+										</div> -->
+
+
 									</div>
 								</div>
-								<div class="col-md-7 pt-md-10">
+								<div class="col-md-7 pt-md-10 pb-md-10">
 									<div style="background-image: linear-gradient(#9e9e9e, #1e4079);"
 										class="bg-primary rounded d-flex align-items-center justify-content-between text-white max-w-350px position-relative ml-auto p-7">
 										<!--begin::Shape-->
@@ -715,8 +867,15 @@
 										<!--end::Shape-->
 										<div class="font-weight-boldest font-size-h5">TOTAL AMOUNT</div>
 										<div class="text-right d-flex flex-column">
-											<span
-												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue | currency:'&#8377;'}}</span>
+											<span *ngIf="!showPayWorkBench"
+												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue
+												| currency:'&#8377;'}}</span>
+
+											<span *ngIf="showPayWorkBench"
+												class="font-size-sm line-height-sm rupee-font">&#8377;
+												<input class="form-control" type="number" value="400"
+													id="example-number-input">
+											</span>
 											<span class="font-size-sm">Taxes included</span>
 										</div>
 									</div>
@@ -812,7 +971,9 @@
 															[class.red]="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
 															<!-- <span class="title">Order Id </span>
 															<span class="dynamic">{{checkin.orderNumber}}</span> -->
-															<div *ngIf="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">Cancelled
+															<div
+																*ngIf="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
+																Cancelled
 															</div>
 														</span>
 													</div>
@@ -1415,7 +1576,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="checkin.waitlistStatus != 'cancelled'"
+																<button mat-menu-item
+																	*ngIf="checkin.waitlistStatus != 'cancelled'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1436,7 +1598,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
+																<button mat-menu-item
+																	*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1545,7 +1708,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="bill_data.billStatus !== 'Cancel'"
+																<button mat-menu-item
+																	*ngIf="bill_data.billStatus !== 'Cancel'"
 																	(click)="adjustItem(item.itemName, item.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
