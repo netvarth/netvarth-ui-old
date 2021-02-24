@@ -16,14 +16,15 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
-  templateUrl: './provider-waitlist-checkin-detail.component.html'
+  templateUrl: './provider-waitlist-checkin-detail.component.html',
+  styleUrls: ['../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css', './checkin-detail.component.css']
 })
 
 export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy {
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
   details_cap = Messages.CHECK_DET_DETAILS_CAP;
   name_cap = Messages.CHECK_DET_NAME_CAP;
-  date_cap = Messages.CHECK_DET_DATE_CAP;
+  date_cap = Messages.CHECK_DET_DATE_CAP; 
   location_cap = Messages.CHECK_DET_LOCATION_CAP;
   waitlist_for_cap = Messages.CHECK_DET_WAITLIST_FOR_CAP;
   service_cap = Messages.CHECK_DET_SERVICE_CAP;

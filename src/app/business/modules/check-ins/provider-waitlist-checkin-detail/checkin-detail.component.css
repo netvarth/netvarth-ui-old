@@ -1,0 +1,24 @@
+.fa-dot-circle-o {
+    font-weight: 100;
+    font-size: 0.8rem;
+    color: #11ba11;
+}
+.text-success {
+    color: green !important;
+}
+.lh-1 {
+    line-height: 0.8 !important;
+}
+.disp-grid {
+    display: grid  !important;
+}
+.btn-start {
+    background: green;
+    color: white;
+}
+.font-p8 {
+    font-size: 0.8rem !important;
+}
+.round-10 {
+    border-radius: 10px;
+}
