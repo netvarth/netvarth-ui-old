@@ -1175,3 +1175,11 @@ img.ordericon.home {
   height: 22px;
   margin-bottom: -5px;
 }
+
+::ng-deep .serv-detail-modal {
+  transform: translate(0, 5%) !important;
+}
+
+::ng-deep .serv-detail-modal-container {
+  opacity: 1 !important;
+}
