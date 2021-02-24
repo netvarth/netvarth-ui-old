@@ -843,33 +843,37 @@
 									<div class="modal-content">
 										<div class="modal-body pb-3">
 											<div class="row">
-												<div class="col-md-8 py-md-10 pr-md-10">
+												<div class="col-md-8 py-md-10 pr-md-5">
 													<div class="table-responsive">
 														<table class="table">
 															<thead>
 																<tr>
 																	<th
-																		class=" text-center font-weight-bolder text-muted  text-uppercase">
+																		class="fnt-p7 text-center font-weight-bolder text-muted  text-uppercase">
 																		Status</th>
 																	<th
-																		class=" text-center font-weight-bolder text-muted  text-uppercase">
+																		class="fnt-p7 text-center font-weight-bolder text-muted  text-uppercase">
 																		Mode</th>
 																	<th
-																		class=" text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
+																		class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
 																		Gateway</th>
+																		<th
+																		class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
+																		Amount</th>	
 																</tr>
 															</thead>
 															<tbody *ngFor="let payment of pre_payment_log; let i = index">
 																<tr class="font-weight-bolder font-size-sm">
-																	<td class="text-center pt-7">{{payment.status | capitalizeFirst}}</td>
-																	<td class="text-center pt-7">
+																	<td class="fnt-p7 text-center pt-7">{{payment.status | capitalizeFirst}}</td>
+																	<td class=" fnt-p7 text-center pt-7">
 																		<span>{{payment.acceptPaymentBy |
 																			capitalizeFirst}}<ng-container *ngIf="payment.paymentMode &&
 																			payment.acceptPaymentBy != payment.paymentMode.toLowerCase()">/{{payment.paymentMode}}
 																			</ng-container>
 																		</span>
 																	</td>
-																	<td class="pr-0 pt-7  text-center">{{payment.paymentGateway}}</td>
+																	<td class="fnt-p7 pr-0 pt-7  text-center">{{payment.paymentGateway}}</td>
+																	<td class="fnt-p7 text-center pt-7">300</td>
 																</tr>
 
 																<!-- <div class="refunds-table"
@@ -961,7 +965,7 @@
 
 
 											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
-												(click)="refundPayment('cash')">Pay by Cash</button>
+												(click)="refundPayment('cash')" data-dismiss="modal">Pay by Cash</button>
 
 											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
 												(click)="refundPayment('other')">Pay by Others</button>
@@ -2230,29 +2234,6 @@
 																	<button class="cs-btn bt3"
 																		(click)="showRefund(payment)"
 																		*ngIf="payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'">Refund</button>
-																</div>
-															</div>
-															<div class="refunds-table"
-																*ngIf="payment.refundDetails.length">
-																<div class="table-th">
-																	<h5>{{refunds_cap}}</h5>
-																</div>
-																<div class="table-th1">
-																	<div class="th one">{{status_cap}}</div>
-																	<div class="th two">{{mode_cap}}</div>
-																	<div class="th three">{{amount_cap}}</div>
-																</div>
-																<div class="tbody"
-																	*ngFor="let refund of payment.refundDetails">
-																	<div class="td one">
-																		<span
-																			[class]="refund.status | lowercase">{{refund.status
-																			| capitalizeFirst}}</span>
-																	</div>
-																	<div class="td two">
-																		{{refund.refundMode | capitalizeFirst }}</div>
-																	<div class="td three rupee-font">{{refund.amount |
-																		currency:'&#8377;' }}</div>
 																</div>
 															</div>
 														</div>
