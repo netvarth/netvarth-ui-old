@@ -1668,6 +1668,10 @@ export class ProviderServices {
       const url = 'provider/customers/bookings/history/' + id;
       return this.servicemeta.httpGet(url);
    }
+   getCustomerOrderVisit(id){
+      const url = 'provider/orders/customer/' + id;
+      return this.servicemeta.httpGet(url);
+   }
    getMRAudits(id) {
       const url = 'provider/mr/auditLog/' + id;
       return this.servicemeta.httpGet(url);
@@ -1876,4 +1880,5 @@ export class ProviderServices {
       const url = 'provider/mr/uploadMR/' + mrId;
       return this.servicemeta.httpPost(url, data);
    }
+   
 }
