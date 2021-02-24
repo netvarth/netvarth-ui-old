@@ -233,6 +233,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    } else {
+      this.isfirstCheckinOffer = true;
     }
     this.nosearch_results = false;
     this.retscrolltop = this.groupService.getitemFromGroupStorage('sctop') || 0;
