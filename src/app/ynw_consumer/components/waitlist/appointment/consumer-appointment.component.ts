@@ -691,13 +691,11 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
-                let retUUID;
                 this.uuidList = [];
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         this.prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        retUUID = retData[key];
                         this.trackUuid = retData[key];
                         this.uuidList.push(retData[key]);
                     }

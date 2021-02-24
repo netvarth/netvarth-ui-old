@@ -715,13 +715,11 @@ export class ConsumerCheckinComponent implements OnInit {
         this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 const retData = data;
-                let retUUID;
                 this.uuidList = [];
                 Object.keys(retData).forEach(key => {
                     if (key === '_prepaymentAmount') {
                         this.prepayAmount = retData['_prepaymentAmount'];
                     } else {
-                        retUUID = retData[key];
                         this.trackUuid = retData[key];
                         this.uuidList.push(retData[key]);
                     }
