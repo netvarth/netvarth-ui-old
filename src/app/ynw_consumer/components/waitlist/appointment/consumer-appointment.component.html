@@ -1571,14 +1571,14 @@
                                                             </div>
                                             
                                         </div>
-                                        <div class="pay-section" *ngIf="prepaymentAmount > 0">
+                                        <div class="pay-section" *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
                                             <div class="bold">
-                                                Payment required now <span class="rupee-font">{{prepaymentAmount |
+                                                Payment required now <span class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>

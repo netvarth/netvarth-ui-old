@@ -53,7 +53,6 @@ export class ConsumerAppointmentComponent implements OnInit {
     sel_ser;
     sel_ser_det: any = [];
     prepaymentAmount = 0;
-    checkinenable = false;
     checkindisablemsg = '';
     pass_loc;
     sel_queue_id;
@@ -201,6 +200,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     razorModel: Razorpaymodel;
     uuidList: any = [];
     prepayAmount;
+    paymentDetails: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1417,6 +1417,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     goToStep(type) {
+        if (this.action === '') {
         if (type === 'next') {
             if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                 this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
@@ -1428,11 +1429,15 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else {
             this.bookStep = type;
         }
+        if (this.bookStep === 3) {
+            this.saveCheckin();
+        }
+    }
     }
     addApptAdvancePayment(post_Data) {
         this.shared_services.addApptAdvancePayment(this.account_id, post_Data)
             .subscribe(data => {
-                console.log(data);
+                this.paymentDetails = data;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

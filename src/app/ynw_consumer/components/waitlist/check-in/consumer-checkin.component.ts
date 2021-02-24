@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -170,6 +169,100 @@ export class ConsumerCheckinComponent implements OnInit {
     razorModel: Razorpaymodel;
     uuidList: any = [];
     prepayAmount;
+    paymentDetails: any = [];
+    questionnaireList: any = [{
+        "id": 2,
+        "account": 2,
+        "transactionType": "SERVICE",
+        "transactionId": 1,
+        "channel": "ONLINE",
+        "questions": [{
+            "id": 1,
+            "labelName": "blood",
+            "fieldDataType": "List",
+            "fieldScope": "consumer",
+            "label": "Enter  your blood group",
+            "labelValues": ["A+", "B+", "O+"],
+            "listPropertie": {},
+            "billable": false
+        }, {
+            "id": 2,
+            "labelName": "Place Name",
+            "fieldDataType": "PlainText",
+            "fieldScope": "consumer",
+            "label": "Enter your address",
+            "labelValues": "kochi",
+            "plainTextPropertie": {
+                "minNoOfLetter": 5,
+                "maxNoOfLetter": 100
+            },
+            "billable": false
+        }, {
+            "id": 3,
+            "labelName": "weight",
+            "fieldDataType": "Number",
+            "fieldScope": "consumer",
+            "label": "Enter your weight",
+            "labelValues": "50.0",
+            "numberPropertie": {
+                "start": 10,
+                "end": 10
+            },
+            "billable": false
+        }, {
+            "id": 4,
+            "labelName": "aadhaar card",
+            "fieldDataType": "FileUpload",
+            "fieldScope": "consumer",
+            "label": "upload your aadhaar card",
+            "labelValues": null,
+            "filePropertie": {
+                "minSize": 100,
+                "maxSize": 100,
+                "fileTypes": ["jpg", "png", "doc", "pdf"],
+                "minNoOfFile": 1,
+                "maxNoOfFile": 2,
+                "allowedDocuments": ["Adhar Card", " Ration Card"]
+            },
+            "billable": false
+        }, {
+            "id": 5,
+            "labelName": "records",
+            "fieldDataType": "FileUpload",
+            "fieldScope": "consumer",
+            "label": "former medical records, if any ",
+            "labelValues": null,
+            "filePropertie": {
+                "minSize": 10,
+                "maxSize": 10,
+                "fileTypes": ["jpg", "png", "doc", "pdf"],
+                "minNoOfFile": 1,
+                "allowedDocuments": ["recodes"]
+            },
+            "billable": false
+        }, {
+            "id": 6,
+            "labelName": "medical conditions",
+            "fieldDataType": "List",
+            "fieldScope": "service",
+            "label": "known medical conditions including allergies",
+            "labelValues": ["diabetes", "pressure "],
+            "listPropertie": {},
+            "billable": false
+        }, {
+            "id": 7,
+            "labelName": "birthdate",
+            "fieldDataType": "Date",
+            "fieldScope": "consumer",
+            "label": "enter your birth date",
+            "labelValues": null,
+            "dateProperties": {
+                "startDate": "01-01-1980",
+                "endDate": "01-01-2021"
+            },
+            "billable": false
+        }]
+    }];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -221,6 +314,7 @@ export class ConsumerCheckinComponent implements OnInit {
             });
     }
     ngOnInit() {
+        console.log(this.questionnaireList);
         this.bookingForm = this.fb.group({
             newEmail: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
             newWhatsapp: new FormControl(undefined),
@@ -346,16 +440,6 @@ export class ConsumerCheckinComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-    }
-    isDepartmentHaveServices(serviceIds: any, servicesjson: any) {
-        let found = false;
-        for (let j = 0; j < servicesjson.length; j++) {
-            if (serviceIds.indexOf(servicesjson[j].id) !== -1) {
-                found = true;
-                break;
-            }
-        }
-        return found;
     }
     getWaitlistMgr() {
         const _this = this;
@@ -549,28 +633,6 @@ export class ConsumerCheckinComponent implements OnInit {
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
         this.action = '';
     }
-    handleQueueSel(mod) {
-        if (mod === 'next') {
-            if ((this.queuejson.length - 1) > this.sel_queue_indx) {
-                this.sel_queue_indx = this.sel_queue_indx + 1;
-            }
-        } else if (mod === 'prev') {
-            if ((this.queuejson.length > 0) && (this.sel_queue_indx > 0)) {
-                this.sel_queue_indx = this.sel_queue_indx - 1;
-            }
-        }
-        if (this.sel_queue_indx !== -1) {
-            this.sel_queue_id = this.queuejson[this.sel_queue_indx].id;
-            this.sel_queue_waitingmins = this.sharedFunctionobj.convertMinutesToHourMinute(this.queuejson[this.sel_queue_indx].queueWaitingTime);
-            this.sel_queue_servicetime = this.queuejson[this.sel_queue_indx].serviceTime || '';
-            this.sel_queue_name = this.queuejson[this.sel_queue_indx].name;
-            this.sel_queue_timecaption = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
-            this.sel_queue_personaahead = this.queuejson[this.sel_queue_indx].queueSize;
-            if (this.calc_mode === 'Fixed' && this.queuejson[this.sel_queue_indx].timeInterval && this.queuejson[this.sel_queue_indx].timeInterval !== 0) {
-                this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeInterval);
-            }
-        }
-    }
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
@@ -609,10 +671,6 @@ export class ConsumerCheckinComponent implements OnInit {
             this.isFuturedate = false;
         }
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-    }
-    handleServiceForWhom() {
-        this.holdwaitlist_for = this.waitlist_for;
-        this.step = 3;
     }
     handleCheckinClicked() {
         let error = '';
@@ -1509,6 +1567,7 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     goToStep(type) {
+        if (this.action === '') {
         if (type === 'next') {
             if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                 this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
@@ -1524,11 +1583,12 @@ export class ConsumerCheckinComponent implements OnInit {
             this.saveCheckin();
         }
     }
+    }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
-                console.log(data);
+                this.paymentDetails = data;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

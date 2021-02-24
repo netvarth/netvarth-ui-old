@@ -905,10 +905,6 @@
                                                             <div
                                                                 class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
                                                                 {{showCheckinButtonCaption()}} For
-                                                                <!-- <a *ngIf="type !== 'waitlistreschedule' && servicesjson.length > 1"
-                                                                    class="changeitem  pointer-cursor mgn-lt-10 pull-right"
-                                                                    (click)="changeService()">Change
-                                                                    Service</a> -->
                                                             </div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12">
                                                                 <div class=""
@@ -1169,7 +1165,7 @@
                                                                         class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
                                                                         <div class="checkin-btn-bp pointer-cursor"
                                                                             *ngIf="type == 'waitlistreschedule'"
-                                                                            [class.disableActn]="checkinenable || (queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                                                            [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
                                                                             (click)="rescheduleWaitlist()">
                                                                             Reschedule
                                                                             <i
@@ -1627,8 +1623,7 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                                                                *ngIf="!showCreateMember">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
                                                                 <button mat-button class="cs-btn bt1 backtocheckin"
                                                                     (click)="saveMemberDetails()">OK
                                                                 </button>
@@ -1655,7 +1650,14 @@
 
                                         <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 2">
-                                            Questionnaire
+                                            <div>
+                                            Please provide us with a little more information complete your booking
+                                        </div>
+<div>
+    
+</div>
+
+
                                         </div>
                                         <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3">
@@ -1761,14 +1763,14 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="pay-section" *ngIf="prepaymentAmount > 0">
+                                            <div class="pay-section" *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div>
                                                     Service Fee <span class="rupee-font">{{serviceCost |
                                                         currency:'&#8377;'}}
                                                     </span>
                                                 </div>
                                                 <div class="bold">
-                                                    Payment required now <span class="rupee-font">{{prepaymentAmount |
+                                                    Payment required now <span class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                         currency:'&#8377;'}}
                                                     </span>
                                                 </div>
