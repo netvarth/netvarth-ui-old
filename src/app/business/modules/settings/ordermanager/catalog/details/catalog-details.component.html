@@ -780,8 +780,7 @@
                       <h4 class="mb-10 font-weight-bolder text-dark">Items information</h4>
 
                       <div class="col-lg-6">
-                        <button type="reset" class="btn btn-success mr-2" data-toggle="modal"
-                          data-target="#exampleModalSizeLg">Create New Item</button>
+                        <button type="reset" class="btn btn-success mr-2" (click)="showCreateItemPopup()">Create New Item</button>
                       </div>
                     </div>
 
@@ -825,21 +824,19 @@
                           <div *ngIf="!seletedCatalogItems">
                             <h6>Add items to your cart</h6>
                             <a class="link underline pointer-cursor"><u>Add items</u></a>&nbsp;
-                            <a class="link underline pointer-cursor" data-toggle="modal"
-                              data-target="#exampleModalSizeLg"><u>Create items</u></a>
+                            <a class="link underline pointer-cursor"
+                              (click)="showCreateItemPopup()"><u>Create items</u></a>
                           </div>
                           <div *ngIf="seletedCatalogItems && seletedCatalogItems.length > 0">
                             <h6>{{seletedCatalogItems.length}} items are selected</h6>
                             <a class="link underline pointer-cursor" (click)="showAddItemSection('add')"><u> Edit
                                 items</u></a>&nbsp;
-                            <a class="link underline pointer-cursor" data-toggle="modal"
-                              data-target="#exampleModalSizeLg"><u>Create items</u></a>
+                            <a class="link underline pointer-cursor" (click)="showCreateItemPopup()"><u>Create items</u></a>
                           </div>
                         </div>
                         <div *ngIf="item_count === 0">
                           <p class="font-italic">You haven't created any items
-                            <a class="link underline pointer-cursor" data-toggle="modal"
-                              data-target="#exampleModalSizeLg">create items </a>
+                            <a class="link underline pointer-cursor" (click)="showCreateItemPopup()">create items </a>
                           </p>
                         </div>
 
@@ -1322,7 +1319,7 @@
             </div>
 
             <!--Modal begin-->
-            <div class="modal modal-opacity fade" id="exampleModalSizeLg" tabindex="-1" role="dialog"
+            <!-- <div class="modal modal-opacity fade" id="exampleModalSizeLg" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalSizeLg" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
@@ -1740,7 +1737,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!--Modal end-->
             <!--end::Wizard Body-->
           </div>

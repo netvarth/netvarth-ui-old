@@ -19,6 +19,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import {FormControl} from '@angular/forms';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
+import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -207,6 +208,7 @@ export class CatalogdetailComponent implements OnInit {
     storetimewindow_list: any = [];
     hometimewindow_list: any = [];
     addtimewindowdialogRef;
+    createitemdialogRef;
     itemsforadd: any = [];
     catalogItem: any = [];
     selectedCount = 0;
@@ -2169,6 +2171,15 @@ console.log('hi submit');
                 } else {
                     this.hometimewindow_list.push(result);
                 }
+            }
+        });
+    }
+    showCreateItemPopup (){
+        this.addtimewindowdialogRef = this.dialog.open(CreateItemPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
             }
         });
     }
