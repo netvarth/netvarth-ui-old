@@ -1793,8 +1793,16 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   closeGroupDialogitem() {
     this.closebutton1.nativeElement.click();
   }
-  applyRefund() {
+  applyRefund(payment) {
     this.applydisc = true;
+    if (payment) {
+      this.selectedPayment = payment;
+      this.amounttoRefund = payment.refundableAmount;
+      this.showRefundSection = true;
+    } else {
+      this.selectedPayment = [];
+      this.showRefundSection = false;
+    }
   }
   revokeRefund() {
     this.applydisc = false;

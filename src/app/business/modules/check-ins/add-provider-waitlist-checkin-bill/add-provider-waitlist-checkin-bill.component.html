@@ -644,7 +644,7 @@
 
 
 							<hr>
-							<div class="col-lg-6" style="display: inline-grid;">
+							<div class="col-lg-6" style="display: inline-grid;" *ngIf="bill_data && billNotesExists">
 								<mat-accordion class="example-headers-align" multi>
 									<mat-expansion-panel>
 									  <mat-expansion-panel-header>
@@ -653,8 +653,42 @@
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
 									  <mat-form-field>
-										<mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+				      				<div class="section-three" *ngIf="bill_data && billNotesExists">
+										<a class="learnmore-pointer" id="customer-help"
+											(click)="billNotesClicked()">Bill notes</a>
+										<div class="bill-notes"
+											*ngIf="(discountDisplayNotes || bill_data.displayNotes)">
+											<div>Notes for {{customer_label}}:</div>
+											<ul>
+												<li *ngIf="bill_data.displayNotes">
+													{{bill_data.displayNotes.displayNotes}}</li>
+												<div class *ngFor="let discount of bill_data.discount">
+													<li *ngIf="discount.displayNote">
+														<span style="font-weight: 600"> {{discount.name}} - </span>
+														{{discount.displayNote}}
+													</li>
+												</div>
+											</ul>
+										</div>
+										<div class="bill-notes"
+											*ngIf="(discountPrivateNotes || bill_data.privateNotes)">
+											<div>Private note:</div>
+											<ul>
+												<li *ngIf="bill_data.privateNotes">
+													{{bill_data.privateNotes.privateNotes}}</li>
+												<div class *ngFor="let discount of bill_data.discount">
+													<li *ngIf="discount.privateNote">
+														<span style="font-weight: 600"> {{discount.name}} - </span>
+														{{discount.privateNote}}
+													</li>
+												</div>
+											</ul>
+										</div>
+									</div>
+									
+
+										<!-- <mat-label>Date</mat-label>
+										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly> -->
 									  </mat-form-field>
 									  <mat-datepicker #picker></mat-datepicker>
 									</mat-expansion-panel>
@@ -722,8 +756,8 @@
 									<div class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
 								<!--begin::Modal For Refund-->
-								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
-									aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<!-- <div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalSizeDefault" aria-hidden="true" *ngIf="showPaidlist">
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-body pb-3">
@@ -756,7 +790,7 @@
 
 													</div>
 													<div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right">
-														<!--begin::Total Amount-->
+														
 														<div class="font-size-h5 font-weight-bolder text-muted mb-3">
 															AMOUNT PAID</div>
 														<div *ngIf="!applydisc"
@@ -765,14 +799,14 @@
 															<input class="form-control" type="number" value="400"
 																id="example-number-input">
 														</div>
-														<!--end::Total Amount-->
+													
 
 														<div class="border-bottom w-100 mb-10"></div>
-														<!--begin::Invoice Date-->
+													
 														<div class="text-dark-50 font-size-lg font-weight-bold mb-3">
 															DATE</div>
 														<div class="font-size-lg font-weight-bold">12 May, 2020</div>
-														<!--end::Invoice Date-->
+						
 													</div>
 												</div>
 											</div>
@@ -780,7 +814,7 @@
 												<button *ngIf="!applydisc" type="button"
 													class="btn btn-light-primary btn-square lh-1 font-weight-bold"
 													data-dismiss="modal">Close</button>
-												<button *ngIf="!applydisc" type="button"
+												<button *ngIf="!applydisc && bill_data.billStatus!='Settled'" type="button"
 													class="btn btn-primary btn-square lh-1 font-weight-bold"
 													(click)="applyRefund()">Refund</button>
 
@@ -799,8 +833,150 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 								<!--end::Modal-->
+
+								<!-- <****newone**> -->
+								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalSizeDefault" aria-hidden="true" *ngIf="showPaidlist">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body pb-3">
+											<div class="row">
+												<div class="col-md-8 py-md-10 pr-md-10">
+													<div class="table-responsive">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th
+																		class=" text-center font-weight-bolder text-muted  text-uppercase">
+																		Status</th>
+																	<th
+																		class=" text-center font-weight-bolder text-muted  text-uppercase">
+																		Mode</th>
+																	<th
+																		class=" text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
+																		Gateway</th>
+																</tr>
+															</thead>
+															<tbody *ngFor="let payment of pre_payment_log; let i = index">
+																<tr class="font-weight-bolder font-size-sm">
+																	<td class="text-center pt-7">{{payment.status | capitalizeFirst}}</td>
+																	<td class="text-center pt-7">
+																		<span>{{payment.acceptPaymentBy |
+																			capitalizeFirst}}<ng-container *ngIf="payment.paymentMode &&
+																			payment.acceptPaymentBy != payment.paymentMode.toLowerCase()">/{{payment.paymentMode}}
+																			</ng-container>
+																		</span>
+																	</td>
+																	<td class="pr-0 pt-7  text-center">{{payment.paymentGateway}}</td>
+																</tr>
+
+																<!-- <div class="refunds-table"
+																*ngIf="payment.refundDetails.length">
+																<div class="table-th">
+																	<h5>{{refunds_cap}}</h5>
+																</div>
+																<div class="table-th1">
+																	<div class="th one">{{status_cap}}</div>
+																	<div class="th two">{{mode_cap}}</div>
+																	<div class="th three">{{amount_cap}}</div>
+																</div>
+																<div class="tbody"
+																	*ngFor="let refund of payment.refundDetails">
+																	<div class="td one">
+																		<span
+																			[class]="refund.status | lowercase">{{refund.status
+																			| capitalizeFirst}}</span>
+																	</div>
+																	<div class="td two">
+																		{{refund.refundMode | capitalizeFirst }}</div>
+																	<div class="td three rupee-font">{{refund.amount |
+																		currency:'&#8377;' }}</div>
+																</div>
+															</div> -->
+
+															</tbody>
+														</table>
+													</div>
+
+												</div>
+												<div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right" *ngFor="let payment of pre_payment_log; let i = index">
+													<!--begin::Total Amount-->
+													<div class="font-size-h5 font-weight-bolder text-muted mb-3">
+														  AMOUNT </div>
+													<div *ngIf="!applydisc"
+														class="font-size-h2 font-weight-boldest" >{{payment.refundableAmount | currency:'&#8377; '}}</div>
+													<div *ngIf="applydisc">
+														<!-- <input class="form-control" type="number" value="400"
+															id="example-number-input"> -->
+														<input type="number" class="form-control" type="number"   
+															 aria-label="Number" matInput value="1" size="5"
+															  max="{{price_limit}}" min="0"  id="example-number-input"
+															 [(ngModel)]="amounttoRefund">
+													</div>
+													<!--end::Total Amount-->
+
+													<div class="border-bottom w-100 mb-10"></div>
+													<!--begin::Invoice Date-->
+													<div class="text-dark-50 font-size-lg font-weight-bold mb-3">
+														DATE</div>
+													<div class="font-size-lg font-weight-bold">
+															<span class="date">{{payment.paymentOn | date: dateFormat}}</span>,
+															<span class="time">{{payment.paymentTime}}</span>
+													</div>
+													<!--end::Invoice Date-->
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer p-1"  *ngFor="let payment of pre_payment_log; let i = index">
+											<button *ngIf="!applydisc" type="button"
+												class="btn btn-light-primary btn-square lh-1 font-weight-bold"
+												data-dismiss="modal">Close</button>
+											<!-- <button *ngIf="!applydisc" type="button"
+												class="btn btn-primary btn-square lh-1 font-weight-bold"
+												(click)="applyRefund(payment)">Refund</button> -->
+
+											<button  type="button" class="btn btn-primary btn-square lh-1 font-weight-bold"
+												*ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'"
+												(click)="applyRefund(payment)">Refund</button>
+
+
+											<!-- <button *ngIf="!applydisc" type="button"
+											class="btn btn-primary btn-square lh-1 font-weight-bold"  (click)="applyRefund()"
+												*ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'">Refund</button> -->
+
+											<!-- <button *ngIf="applydisc" type="button"
+												class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by
+												Cash</button>
+											<button *ngIf="applydisc" type="button"
+												class="btn btn-success btn-square lh-p6 font-weight-bold">Pay by
+												Others</button>
+											<button *ngIf="applydisc" type="button"
+												class="btn btn-success btn-square lh-p6 font-weight-bold">Pay
+												Online</button>
+											<button *ngIf="applydisc" type="button"
+												class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
+												(click)="revokeRefund()">Cancel</button> -->
+
+
+											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
+												(click)="refundPayment('cash')">Pay by Cash</button>
+
+											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
+												(click)="refundPayment('other')">Pay by Others</button>
+											<button  type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
+												*ngIf="applydisc && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
+												(click)="refundPayment('online')">Pay Online</button>
+		
+											<button *ngIf="applydisc" type="button" class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
+												(click)="revokeRefund()">Cancel</button>
+																					
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- end -->
 
 
 
