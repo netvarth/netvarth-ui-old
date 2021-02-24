@@ -163,8 +163,8 @@ onSubmit(loginForm.value)">
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
-                <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
-                        [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
+                <!-- <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
+                        [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span> -->
             </div>
         </div>
         <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">

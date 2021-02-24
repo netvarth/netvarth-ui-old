@@ -40,6 +40,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   cronHandle: Subscription;
   refreshTime = 30;
   otp_mobile = null;
+  terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   @Input() actionstarted;
   @Input() submitdata;
   @Input() country_code;
