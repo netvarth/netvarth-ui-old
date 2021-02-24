@@ -978,8 +978,12 @@ getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);
 }
-addWaitlistAdvancePayment(accountId, body) {
-  const url = 'consumer/waitlist/advancePayment?account=' + accountId;
-  return this.servicemeta.httpPost(url, body);
+addWaitlistAdvancePayment(param, body) {
+  const url = 'consumer/waitlist/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
+}
+addApptAdvancePayment(param, body) {
+  const url = 'consumer/appointment/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
 }
 }

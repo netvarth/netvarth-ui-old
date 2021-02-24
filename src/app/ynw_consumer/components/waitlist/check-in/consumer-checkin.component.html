@@ -774,15 +774,13 @@
 
             <!--begin::Entry-->
             <div class="pad-10 d-flex flex-column-fluid">
-                <!--begin::Container-->
-                <div class=" container ">
                     <div class="card card-custom">
                         <div class="card-body p-0">
                             <!--begin::Wizard-->
                             <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                                 data-wizard-clickable="false">
                                 <!--begin::Wizard Nav-->
-                                <div class="wizard-nav border-bottom">
+                                <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
                                     <div class="wizard-steps p-8 p-lg-10">
                                         <!--begin::Wizard Step 1 Nav-->
                                         <div class="wizard-step tab-selected" data-wizard-type="step"
@@ -940,23 +938,6 @@
                                                                             {{sel_ser_det.description}}</p>
                                                                         <p *ngIf="showmoreSpec" (click)="showSpec()">
                                                                             {{sel_ser_det.description}}</p>
-                                                                        <span
-                                                                            *ngIf="sel_ser_det.price && type != 'waitlistreschedule'">
-                                                                            Service Fee
-                                                                            <span class="prepaymin-cls bold"><span
-                                                                                    class="rupee-font">{{serviceCost |
-                                                                                    currency:'&#8377;'}}
-                                                                                </span></span>
-                                                                        </span>&nbsp;
-                                                                        <span
-                                                                            *ngIf="sel_ser_det.isPrePayment && type != 'waitlistreschedule'">
-                                                                            Booking Fee
-                                                                            <span class="prepaymin-cls bold"><span
-                                                                                    class="rupee-font">{{prepaymentAmount
-                                                                                    |
-                                                                                    currency:'&#8377;'}}
-                                                                                </span></span>
-                                                                        </span>
                                                                     </div>
                                                                     <div class="">
                                                                         <div class="clearfix"></div>
@@ -1008,7 +989,7 @@
                                                                                             aria-hidden="true"></i>Upload
                                                                                         File
                                                                                         <span
-                                                                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+                                                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">&nbsp;({{getAttachLength()}})</span>
                                                                                     </a></mat-chip>
                                                                             </mat-chip-list>
                                                                         </div>
@@ -1182,23 +1163,10 @@
                                                                         Promocode applied</a>
                                                                     {{selected_coupons.toString()}}
                                                                 </div>
-                                                                <!-- <div
+                                                                <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                                        <div class="checkin-btn-bp pointer-cursor"
-                                                                            *ngIf="type !== 'waitlistreschedule'"
-                                                                            [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || waitlist_for.length == 0"
-                                                                            (click)="handleCheckinClicked()">
-                                                                            <span
-                                                                                *ngIf="!sel_ser_det.isPrePayment">Confirm
-                                                                                {{showCheckinButtonCaption()}}</span>
-                                                                            <span
-                                                                                *ngIf="sel_ser_det.isPrePayment">Confirm
-                                                                                {{showCheckinButtonCaption()}}</span>
-                                                                            <i
-                                                                                class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                                        </div>
                                                                         <div class="checkin-btn-bp pointer-cursor"
                                                                             *ngIf="type == 'waitlistreschedule'"
                                                                             [class.disableActn]="checkinenable || (queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
@@ -1208,7 +1176,7 @@
                                                                                 class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                                         </div>
                                                                     </div>
-                                                                </div> -->
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1218,8 +1186,9 @@
                                                     <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i>  Choose
-                                                            Date</div>
+                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i> Choose
+                                                            Date
+                                                        </div>
                                                         <div class="pull-left brd-round brd-light mgn-up-20">
                                                             <div class="icon-minus pull-left"
                                                                 [class.disable]="disableMinus()"
@@ -1278,8 +1247,9 @@
                                                 <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                     *ngIf="action=='coupons'">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                         <i class="fa fa-arrow-left" (click)="goBack()"></i> Apply
-                                                        promocode</div>
+                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i> Apply
+                                                        promocode
+                                                    </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
                                                         <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
                                                             *ngIf="showCouponWB">
@@ -1356,7 +1326,8 @@
                                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                     *ngIf="action=='note'">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i> {{sel_ser_det.consumerNoteTitle}}
+                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                        {{sel_ser_det.consumerNoteTitle}}
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                         <textarea class="form-control mgn-bt-20 mgn-up-20"
@@ -1370,12 +1341,14 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </div>                                    
+                                                </div>
                                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                                                     *ngIf="action=='addmember'">
                                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i> {{add_member_cap}}</div>
+                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                            {{add_member_cap}}
+                                                        </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             <app-checkin-consumer-add-member [calledFrom]="'checkin'"
                                                                 (returnDetails)="handleReturnDetails($event)">
@@ -1394,10 +1367,11 @@
                                                     *ngIf="action=='attachment'">
                                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i> </div>
+                                                            <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                        </div>
                                                         <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
-                                                            <mat-chip-list class="">
-                                                                <mat-chip><a class="lnk pointer-cursor"
+                                                            <mat-chip-list class="btns">
+                                                                <mat-chip><a class="lnk action pointer-cursor"
                                                                         (click)="imagefile.click()"><input #imagefile
                                                                             type="file" accept="/*;capture=camera"
                                                                             style="display:none;" multiple
@@ -1407,40 +1381,43 @@
                                                                         File</a></mat-chip>
                                                             </mat-chip-list>
                                                         </div>
-                                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 lnk pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
-                                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
                                                             Uploaded Files
                                                         </div>
-                                                        <ng-container class="attachment"
-                                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                                            <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-                                                                *ngFor="let item of selectedMessage.files; let i = index">
-                                                                <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
-                                                                    <span class="ln-hgt-40">{{item.name}}</span>
-                                                                </div>
-                                                                <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-                                                                    <span class="">
-                                                                        <button type="button" mat-icon-button
-                                                                            [matMenuTriggerFor]="menu">
-                                                                            <mat-icon>more_vert</mat-icon>
-                                                                        </button>
-                                                                        <mat-menu #menu="matMenu">
-                                                                            <button type="button"
-                                                                                (click)="deleteTempImage(i)"
-                                                                                mat-menu-item>
-                                                                                <i class="icon-delete"></i>
-                                                                                <span>delete</span>
-                                                                            </button>
-                                                                        </mat-menu>
-                                                                    </span>
-                                                                </div>
+
+
+
+                                                        <div class="img-section mgn-up-20"
+                                                        *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
+                                                        <ul class="galul">
+                                                        
+                                                            <ng-container *ngIf="type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0">
+                                                                <li *ngFor="let file of waitlist.attchment;let i = index ">
+                                                                  <div class="galimg_outer">
+                                                                    <div class="gal_img">
+                                                                      <img [src]="getThumbUrl(file)">
+                                                                    </div>
+                                                                  </div>
+                                                                </li>
+                                                              </ng-container>
+
+                                                            <ng-container *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                                                          <li *ngFor="let file of selectedMessage.files;let i = index ">
+                                                            <div class="galimg_outer">
+                                                              <div class="gal_img">
+                                                                <img [src]="getImage(selectedMessage.base64[i], file)"
+                                                                  *ngIf="selectedMessage.base64[i]">
+                                                              </div>
+                                                              <div class="gal_action" (click)="deleteTempImage(i)">
+                                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                                              </div>
                                                             </div>
-                                                            <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 col-lg-12 actiondiv">
-                                                                <button mat-button class="cs-btn bt1 savemember"
-                                                                    (click)="goBack()">OK</button>
-                                                            </div>
+                                                          </li>
                                                         </ng-container>
+                                                        </ul>
+                                                      </div>
+                                                 
                                                     </div>
                                                 </div>
                                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
@@ -1490,11 +1467,12 @@
                                                             </div>
                                                         </ng-container>
                                                     </div>
-                                                </div>                                   
+                                                </div>
                                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                                                     *ngIf="action=='members'">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
-                                                        <div class="pull-left">  <i class="fa fa-arrow-left" (click)="goBack()"></i> Booking for
+                                                        <div class="pull-left"> <i class="fa fa-arrow-left"
+                                                                (click)="goBack()"></i> Booking for
                                                         </div>
                                                         <a class="lnk pointer-cursoraction mgn-lt-20"
                                                             (click)="addMember()"><i class="fa fa-user-plus"></i>
@@ -1605,7 +1583,6 @@
                                                                                     name="newEmail"
                                                                                     formControlName="newEmail"
                                                                                     autocomplete="off"
-                                                                                    (keyup)="showConfrmEmail($event)"
                                                                                     onpaste="return false;"
                                                                                     oncopy="return false"
                                                                                     oncut="return false"
@@ -1661,7 +1638,8 @@
                                                 </div>
                                                 <div class="lbl notes preinfoDesc" *ngIf="action=='preInfo'">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20"
-                                                        style="font-size: 1rem !important"><i class="fa fa-arrow-left" (click)="goBack()"></i>  {{sel_ser_det.preInfoTitle}}
+                                                        style="font-size: 1rem !important"><i class="fa fa-arrow-left"
+                                                            (click)="goBack()"></i> {{sel_ser_det.preInfoTitle}}
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
                                                         <div [innerHTML]="sel_ser_det.preInfoText">
@@ -1681,9 +1659,9 @@
                                         </div>
                                         <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3">
-<div>Confirm your token details</div>
+                                            <div class="confirm-head">Confirm your token details</div>
 
-                                            <table class="book-details-sub chkntoknappt-details">
+                                            <table class="bookdetails">
                                                 <tbody>
                                                     <tr *ngIf="!sel_ser_det.provider">
                                                         <td width="48%" align="right">
@@ -1704,8 +1682,10 @@
                                                         <td> {{locationName}}</td>
                                                     </tr> -->
                                                     <tr>
-                                                        <td width="48%" align="right" *ngIf="settingsjson.showTokenId">Token for</td>
-                                                        <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">Check-in for</td>
+                                                        <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
+                                                            Token for</td>
+                                                        <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
+                                                            Check-in for</td>
                                                         <td width="2%">&nbsp;:&nbsp;</td>
                                                         <td>{{waitlist_for[0].firstName}}
                                                             {{waitlist_for[0].lastName}}</td>
@@ -1730,66 +1710,81 @@
                                                             <span>{{sel_ser_det.name}}</span>
                                                         </td>
                                                     </tr>
+
+                                                    <tr>
+                                                        <td width="48%" align="right">Contact #</td>
+                                                        <td width="2%">&nbsp;:&nbsp;</td>
+                                                        <td>{{countryCode}} {{userPhone}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="userData.userProfile.email">
+                                                        <td width="48%" align="right">Email</td>
+                                                        <td width="2%">&nbsp;:&nbsp;</td>
+                                                        <td>{{userData.userProfile.email}}</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
 
-                                            <div class="containerAppt textcenter" style="background-color:white">
-                                                <h5 class="mgn-up-10 no-mgn-bt"><b>Date/Time</b></h5> 
-                                                <h6 class="card-title serv-time border-style waitinginLine">
+                                            <div class="containerAppt textcenter">
+                                                <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
+                                                <div class="mgn-bt-5">
                                                     <span *ngIf="!isFuturedate">Today, </span>
-                                                    <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
+                                                    <span *ngIf="isFuturedate">{{sel_checkindate | date:
+                                                        newDateFormat}},
                                                     </span>
-                                                    <span *ngIf="!isFuturedate">
+                                                    <span>
                                                         {{queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['sTime']
                                                         + '
                                                         - ' +
                                                         queuejson[sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                                     </span>
-                                                </h6>
-                                                <h5 class="mgn-up-15 no-mgn-bt"><b> Waiting in line</b></h5>
-                                                <h6 class="card-title serv-time border-style waitinginLine">
+                                                </div>
+                                                <div class="no-mgn-bt bold"> Waiting in line</div>
+                                                <div class="mgn-bt-10 pad-bt-10">
                                                     <span *ngIf="sel_queue_personaahead <= 0">0 People</span>
-                                                    <span *ngIf="sel_queue_personaahead == 1">1<span> Person</span></span>
-                                                    <span *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
-                                                    People</span>
-                                                    </span>
-                                                    
+                                                    <span *ngIf="sel_queue_personaahead == 1">1<span>
+                                                            Person</span></span>
                                                     <span
-                                                    *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
-                                                    <span class="color-grey">\</span>
-                                                    <span>{{sel_queue_waitingmins}}</span>
+                                                        *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
+                                                            People</span>
+                                                    </span>
 
-                                                </span>
-                                                <span
-                                                    *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
-                                                    <ng-container *ngIf="!isFuturedate">
-                                                        <span><span class="color-grey"> \
-                                                            </span>{{sel_queue_servicetime}}</span>
-                                                    </ng-container>
-                                                </span>
-                                                </h6>
+                                                    <span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
+                                                        <span class="color-grey">\</span>
+                                                        <span>{{sel_queue_waitingmins}}</span>
+
+                                                    </span>
+                                                    <span *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
+                                                        <ng-container *ngIf="!isFuturedate">
+                                                            <span><span class="color-grey"> \
+                                                                </span>{{sel_queue_servicetime}}</span>
+                                                        </ng-container>
+                                                    </span>
+                                                </div>
                                             </div>
-<div *ngIf="prepaymentAmount > 0">
-    <div>
-   Service Fee <span
-    class="rupee-font">{{serviceCost | currency:'&#8377;'}}
-</span>
-</div>
-<div>
-    Payment required now <span
-     class="rupee-font">{{prepaymentAmount | currency:'&#8377;'}}
- </span>
- </div>
- <div>
-     Select payment options
-     <div></div>
+                                            <div class="pay-section" *ngIf="prepaymentAmount > 0">
+                                                <div>
+                                                    Service Fee <span class="rupee-font">{{serviceCost |
+                                                        currency:'&#8377;'}}
+                                                    </span>
+                                                </div>
+                                                <div class="bold">
+                                                    Payment required now <span class="rupee-font">{{prepaymentAmount |
+                                                        currency:'&#8377;'}}
+                                                    </span>
+                                                </div>
+                                                <div class="">
+                                                    <div class="select-pay"> Select payment options</div>
+                                                    <div class="">
+                                                        <span class="razorpay-icon mgn-rt-20 selected-payment"></span>
+                                                        <span class="paytm-icon"></span>
+                                                    </div>
 
- </div>
-</div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <!--begin::Wizard Actions-->
-                                        <div class="d-flex justify-content-between border-top pt-10">
+                                        <div class="d-flex justify-content-between border-top pt-10" *ngIf="type!='waitlistreschedule'">
                                             <div class="mr-2">
                                                 <button type="button" *ngIf="bookStep > 1"
                                                     class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1798,9 +1793,10 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <button type="button" *ngIf="bookStep == 3"
+                                                <button type="button" *ngIf="bookStep == 3" (click)="saveCheckin('checkin')"
                                                     class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-                                                    Submit
+                                                <ng-container *ngIf="prepaymentAmount > 0">   Pay</ng-container> 
+                                                <ng-container *ngIf="prepaymentAmount == 0">   Confirm</ng-container> 
                                                 </button>
                                                 <button type="button" *ngIf="bookStep != 3"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
@@ -1819,8 +1815,6 @@
                         </div>
                         <!--end::Wizard-->
                     </div>
-                </div>
-                <!--end::Container-->
             </div>
             <!--end::Entry-->
 
