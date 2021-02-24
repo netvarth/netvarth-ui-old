@@ -44,6 +44,7 @@ export class CatalogdetailComponent implements OnInit {
     status_cap = Messages.COUPONS_STATUS_CAP;
     item_detail_cap = Messages.ITEM_DETAIL_CAP;
     amForm: FormGroup;
+    amItemForm: FormGroup;
     api_error = null;
     api_success = null;
     parent_id;
@@ -192,7 +193,6 @@ export class CatalogdetailComponent implements OnInit {
     selectedStatus;
     uploadcatalogImages: any = [];
     payAdvance = 'NONE';
-    isFromadd = false;
     prefillData: any = [];
     step = 1;
     item_count = 0;
@@ -239,14 +239,13 @@ export class CatalogdetailComponent implements OnInit {
         this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         this.onResize();
-        this.activated_route.queryParams.subscribe(
-            (qParams) => {
-                this.isFromadd = qParams.isFrom;
-                if (this.isFromadd) {
-                    this.prefillData = this.lStorageService.getitemfromLocalStorage('prefilldata');
-                    //  this.prefillData = this.provider_services.getCatalogPrefiledDetails();
-                }
-            });
+        // this.activated_route.queryParams.subscribe(
+        //     (qParams) => {
+        //         this.isFromadd = qParams.isFrom;
+        //         if (this.isFromadd) {
+        //             this.prefillData = this.lStorageService.getitemfromLocalStorage('prefilldata');
+        //         }
+        //     });
         this.activated_route.params.subscribe(
             (params) => {
                 this.catalog_id = params.id;
@@ -267,25 +266,20 @@ export class CatalogdetailComponent implements OnInit {
                                             (catalog) => {
                                                 this.catalog = catalog;
                                                 this.catalogcaption = this.catalog.catalogName;
+                                                if (this.action === 'edit') {
+                                                    this.createForm();
+                                                    this.api_loading = false;
+                                                } 
                                                 if (this.catalog.catalogItem) {
                                                     this.catalogItems = this.catalog.catalogItem;
                                                     console.log(this.catalogItems);
                                                     this.setItemFromCataDetails();
                                                 }
-                                                if (this.action === 'edit') {
-                                                    this.createForm();
-                                                    this.api_loading = false;
-                                                } else if (this.action === 'view') {
-                                                    this.catalogcaption = 'Catalog Details';
-                                                    this.api_loading = false;
-                                                }
-                                                // if (!this.seletedCatalogItems) {
-                                                //     if (this.catalog.catalogItem) {
-                                                //         this.seletedCatalogItems = this.catalog.catalogItem;
-                                                //         console.log(this.seletedCatalogItems);
-                                                //         this.lStorageService.setitemonLocalStorage('selecteditems', this.seletedCatalogItems);
-                                                //     }
+                                                // else if (this.action === 'view') {
+                                                //     this.catalogcaption = 'Catalog Details';
+                                                //     this.api_loading = false;
                                                 // }
+                                               
                                             }
                                         );
                                     });
@@ -326,7 +320,6 @@ export class CatalogdetailComponent implements OnInit {
                             }
                         );
                     } else {
-                        // this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
                         if (this.addCatalogItems && this.addCatalogItems.length > 0) {
                             this.selectedCount = this.addCatalogItems.length;
                             for (const itm of this.catalogItem) {
@@ -347,7 +340,8 @@ export class CatalogdetailComponent implements OnInit {
     }
     gotoNext() {
         this.step = this.step + 1;
-        if (this.step === 3) {
+        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
+            console.log(this.amForm.get('orderType').value);
             if(this.cataId){
                 this.selectedaddItems();
             } else {
@@ -358,7 +352,7 @@ export class CatalogdetailComponent implements OnInit {
     }
     gotoPrev() {
         this.step = this.step - 1;
-        if (this.step === 2) {
+        if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
             if(this.cataId){
                 if (this.addCatalogItems && this.addCatalogItems.length > 0 ) {
@@ -392,8 +386,6 @@ export class CatalogdetailComponent implements OnInit {
         }
         }
     }
-
-
 
     getItems() {
         const apiFilter = {};
@@ -649,22 +641,22 @@ export class CatalogdetailComponent implements OnInit {
                 // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                 // homeotpverify: [false],
                 deliverykms: [''],
-                deliverycharge: [''],
+                deliverycharge: ['']
                 //Add item form controls
-                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [true],
-                stockAvailable: [true],
-                taxable: [false],
-                price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPriceType: [],
-                promotionallabel: [],
-                customlabel: []
+                // itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                // displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                // showOnLandingpage: [true],
+                // stockAvailable: [true],
+                // taxable: [false],
+                // price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                // promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                // promotionalPriceType: [],
+                // promotionallabel: [],
+                // customlabel: []
             });
             this.amForm.get('orderType').setValue('SHOPPINGCART');
             const dt = new Date();
@@ -676,10 +668,12 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
             this.amForm.get('advancePaymentStatus').setValue('NONE');
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
-            if (this.action === 'add' && this.isFromadd) {
-                this.updateprefillForm();
-            }
+           this.createItemform();
+            // if (this.action === 'add' && this.isFromadd) {
+            //     this.updateprefillForm();
+            // }
         } else {
+            console.log(this.action);
             this.amForm = this.fb.group({
                 catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
@@ -707,32 +701,53 @@ export class CatalogdetailComponent implements OnInit {
                 // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                 // homeotpverify: [false],
                 deliverykms: [''],
-                deliverycharge: [''],
+                deliverycharge: ['']
                 //add item
-                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [true],
-                stockAvailable: [true],
-                taxable: [false],
-                price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPriceType: [],
-                promotionallabel: [],
-                customlabel: []
+                // itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                // note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                // displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                // showOnLandingpage: [true],
+                // stockAvailable: [true],
+                // taxable: [false],
+                // price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                // promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                // promotionalPriceType: [],
+                // promotionallabel: [],
+                // customlabel: []
             });
+            this.createItemform();
         }
         setTimeout(() => {
-            if (this.action === 'edit' && !this.isFromadd) {
+            if (this.action === 'edit') {
                 this.updateForm();
-            } else if (this.action === 'edit' && this.isFromadd) {
-                this.updateprefillForm();
-            }
+            } 
+            // else if (this.action === 'edit' && this.isFromadd) {
+            //     this.updateprefillForm();
+            // }
         }, 200);
 
+    }
+    createItemform(){
+        this.amItemForm = this.fb.group({
+            itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            showOnLandingpage: [true],
+            stockAvailable: [true],
+            taxable: [false],
+            price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            promotionalPriceType: [],
+            promotionallabel: [],
+            customlabel: []
+        });
     }
     setDescFocus() {
         this.isfocused = true;
@@ -839,6 +854,7 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     updateForm() {
+        console.log(this.catalog);
         // const sttime = {
         //     hour: parseInt(moment(this.catalog.catalogSchedule.timeSlots[0].sTime,
         //         ['h:mm A']).format('HH'), 10),
@@ -1004,7 +1020,7 @@ export class CatalogdetailComponent implements OnInit {
         if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
-
+console.log(this.catalog.catalogName);
         this.amForm.setValue({
             'catalogName': this.catalog.catalogName,
             'catalogDesc': this.catalog.catalogDesc || '',
@@ -1474,7 +1490,7 @@ export class CatalogdetailComponent implements OnInit {
 
     }
     onSubmit(form_data) {
-
+console.log('hi submit');
         // const daystr: any = [];
         // for (const cday of this.selday_arr) {
         //     daystr.push(cday);
@@ -1697,8 +1713,8 @@ export class CatalogdetailComponent implements OnInit {
         } else if (this.action === 'edit') {
             // postdata['catalogItem'] = this.catalogItems;
             //postdata['catalogItem'] = this.seletedCatalogItems;
-            const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
-            postdata['catalogItem'] = additems;
+           // const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+            postdata['catalogItem'] = this.catalogSelectedItemsadd;
             console.log(postdata);
             this.editCatalog(postdata);
         }
@@ -2249,6 +2265,10 @@ export class CatalogdetailComponent implements OnInit {
         }
         const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
         console.log(additems);
+        if(additems.length == 0){
+            this.snackbarService.openSnackBar('Please add items to catalog', { 'panelClass': 'snackbarerror' });
+            return;
+        }
         if (this.catalogSelectedItemsadd.length > 0) {
             this.lStorageService.setitemonLocalStorage('selecteditems', this.catalogSelectedItemsadd);
             //   const navigationExtras: NavigationExtras = {
@@ -2298,6 +2318,7 @@ export class CatalogdetailComponent implements OnInit {
         if (this.action === 'add') {
             const post_itemdata = {
                 'itemCode': form_data.itemCode,
+                'itemNameInLocal' : form_data.itemNameInLocal,
                 'itemName': form_data.itemName,
                 'displayName': form_data.displayName,
                 'shortDesc': form_data.shortDec,
@@ -2486,6 +2507,10 @@ export class CatalogdetailComponent implements OnInit {
           }
         });
     }
+    stopprop(event) {
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+      }
 
     getUpdatedItems() {
         this.getItems().then(

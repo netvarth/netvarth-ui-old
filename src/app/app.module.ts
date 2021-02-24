@@ -104,6 +104,7 @@ import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -200,9 +201,11 @@ export function init_app(globalService: GlobalService) {
     TruncateModule,
     CardModule,
     MatStepperModule,
-    NgxIntlTelInputModule
+    NgxIntlTelInputModule,
+    ModalModule.forRoot()
   ],
   providers: [
+    BsModalService,
     AuthGuardConsumer,
     AuthGuardProvider,
     AuthGuardHome,

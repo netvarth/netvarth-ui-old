@@ -1300,3 +1300,11 @@ img.ordericon.home {
   opacity: 1 !important;
   font-size: 1.75rem !important;
 }
+
+::ng-deep .service-detail-modal {
+  transform: translate(0, 5%) !important;
+}
+
+::ng-deep .service-detail-modal-container {
+  opacity: 1 !important;
+}

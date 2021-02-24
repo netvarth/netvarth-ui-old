@@ -8,7 +8,84 @@
     </div>
 </section>
 <section>
-    <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12">
+
+    <div class="d-flex flex-column-fluid">
+		<!--begin::Container-->
+		<div class=" container ">
+     <!--begin::Col-->
+     
+
+     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mgn-up-10" >
+        <div class="row">
+        <!--begin::Card-->
+        <div class="card card-custom gutter-b card-stretch" *ngFor="let social of orgsocial_list;let i=index">
+            <!--begin::Body-->
+            <div class="card-body text-center pt-4">
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end" *ngIf="showDelete(social.key)">
+                    <div class="dropdown dropdown-inline"  data-placement="left">
+                        <a  class="btn btn-clean btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ki ki-bold-more-hor"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" >
+                            <!--begin::Navigation-->
+                            <ul class="navi navi-hover py-5">
+                                <li class="navi-item">
+                                    <a class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon2-drop"></i></span>
+                                        <span class="navi-text" (click)="deleteSocialmedia(social.key)">Delete</span>
+                                    </a>
+                                    </li>
+                            </ul>
+<!--end::Navigation-->
+                        </div>
+                    </div>
+                </div>
+                <!--end::Toolbar-->
+
+                <!--begin::User-->
+                <div class="mt-7">
+                    <div class="symbol symbol-circle symbol-lg-75">
+                        <span [class]="social.iconClass"></span>
+                    </div>
+                </div>
+                <!--end::User-->
+
+                <!--begin::Name-->
+                <div class="my-2">
+                    <div style="font-size: 10px;">Add your {{social.displayName}} page URL to your Jaldee page.</div>
+                </div>
+                <!--end::Name-->
+
+                <!--begin::Label-->
+                <div class="form-group">
+                    <!-- <label style="text-align: left !important;">Insert Link</label> -->
+                    <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" type="text" class="form-control1 mgn-up-10"
+                              placeholder="Insert link">
+                         <span> <button *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"
+                            class="cs-btn bt3 mgn-up-10">Save</button></span>     
+                  </div>
+                
+                <!--end::Label-->
+
+                <!--begin::Buttons-->
+                <div class="mgn-up-10" style="font-size: 10px;">
+                    <span>Get more bookings with {{social.displayName}}.</span><br>
+                    <span>Link your {{social.displayName}} Business Page with Jaldee.</span>
+                </div>
+                <!--end::Buttons-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Card-->
+    </div>
+</div>
+        </div>
+    </div>
+    <!--end::Col-->
+
+
+    <!-- <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
             <div class="social-box" *ngFor="let social of orgsocial_list;let i=index">
                 <div class="col-lg-3 col-md-3 no-padding col-xs-2 col-sm-3">
@@ -21,8 +98,6 @@
                             <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" matInput type="text" class="form-control mgn-up-10"
                               placeholder="Insert link">
                           </mat-form-field>
-                    <!-- <input class="mgn-up-10" [(ngModel)]="socialLink[i]" (keyup)="keyPressed(i)"
-                        placeholder="https://www.{{social.displayName}}.com/"> -->
                     <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="showDelete(social.key)">
                         <mat-icon>more_vert</mat-icon>
                     </button>
@@ -42,6 +117,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="clearfix"></div>
 </section>

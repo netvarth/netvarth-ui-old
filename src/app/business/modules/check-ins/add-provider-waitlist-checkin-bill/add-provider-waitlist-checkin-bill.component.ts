@@ -222,6 +222,12 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   selectedPayment;
   showDeliveryChargeSection = false;
   deliveryCharge = 0;
+  discountClicked = false;
+  discountId_servie: any;
+  discountid;
+  applydisc = false;
+  @ViewChild('closebutton') closebutton;
+  @ViewChild('closebutton1') closebutton1;
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -291,6 +297,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.getProviderSettings();
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
+  selectChangeHandler(event:any) {
+    this.discountId_servie = event;
+}
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
@@ -937,6 +946,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.curSelItm.qty = 1;
             this.getWaitlistBill();
             resolve();
+            this.closeGroupDialog();
+            this.closeGroupDialogitem();
           },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1074,10 +1085,13 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Apply Service Level Discount
    * @param service Service Details
    */
+
+
   applyServiceDiscount(service) {
     const action = 'addServiceLevelDiscount';
     const discountIds = [];
-    discountIds.push(service.serviceDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(service.serviceDiscount.id);
     const data = {};
     data['serviceId'] = service.serviceId;
     data['discountIds'] = discountIds;
@@ -1119,7 +1133,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applyItemDiscount(item) {
     const action = 'addItemLevelDiscount';
     const discountIds = [];
-    discountIds.push(item.itemDiscount.id);
+    discountIds.push(this.discountId_servie);
+    // discountIds.push(item.itemDiscount.id);
     const data = {};
     data['itemId'] = item.itemId;
     data['discountIds'] = discountIds;
@@ -1166,7 +1181,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   applyJCoupon(jCoupon) {
     const action = 'addJaldeeCoupons';
     let jaldeeCoupon: string;
-    jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';
+    // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
+    jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
     this.disableJCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
   }
@@ -1247,7 +1263,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['id'] = this.bill_data.id;
     const discounts = [];
     const discount = {};
-    discount['id'] = this.selOrderDiscount.id;
+    discount['id'] = this.selOrderDiscount;
+    // discount['id'] = this.selOrderDiscount.id;
     if (this.selOrderDiscount.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
@@ -1279,7 +1296,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const data = {};
     data['id'] = this.bill_data.id;
     const coupons = [];
-    coupons.push(this.selOrderProviderCoupon.id);
+    coupons.push(this.selOrderProviderCoupon);
+    // coupons.push(this.selOrderProviderCoupon.id);
     data['couponIds'] = coupons;
     this.disableCouponbtn = true;
     this.applyAction(action, this.bill_data.uuid, data);
@@ -1716,7 +1734,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       const postData = {
         'refundAmount': this.amounttoRefund,
         'refundBy': mode,
-        'paymentRefId': this.selectedPayment.paymentRefId
+        'paymentRefId': this.selectedPayment.paymentRefId,
+        'purpose': 'prePayment'
       };
       if (mode === 'online') {
         postData['paymentId'] = this.selectedPayment.transactionId;
@@ -1762,5 +1781,30 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.selectedPayment = [];
       this.showRefundSection = false;
     }
+  }
+
+  sampleDiscount() {
+    console.log('clik');
+    this.discountClicked = true;
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+  }
+  closeGroupDialogitem() {
+    this.closebutton1.nativeElement.click();
+  }
+  applyRefund(payment) {
+    this.applydisc = true;
+    if (payment) {
+      this.selectedPayment = payment;
+      this.amounttoRefund = payment.refundableAmount;
+      this.showRefundSection = true;
+    } else {
+      this.selectedPayment = [];
+      this.showRefundSection = false;
+    }
+  }
+  revokeRefund() {
+    this.applydisc = false;
   }
 }

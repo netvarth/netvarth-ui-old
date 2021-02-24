@@ -102,6 +102,7 @@ font-weight: 500;
 }
 
 .booking-card .card-body {
+    position: relative;
     text-align: center; 
     display: flex;
     flex-direction: column;
@@ -569,7 +570,7 @@ button.fxmenu {
     justify-content: space-around;
 }
 .booking-card.card.service .card-body .service-details .service-buttons .bookingButton {
-    width: 70%;
+    width: 90%;
     border: 1px solid #FFC107;
     background-color: #FFC107;
     color: #073B4C;
@@ -581,15 +582,17 @@ button.fxmenu {
     border-color: #D39E00;
 }
 .booking-card.card.service .card-body .service-details .service-buttons .moreDetails {
-	width: 20%;
+    position: absolute;
+    top: 0;
+    right: 0;
     color: #073B4C;
 	font-weight: 700;
-    background-color: #FFC107;
-    border-color: #FFC107;
+    background-color: transparent;
+    border-color: transparent;
 }
 .booking-card.card.service .card-body .service-details .service-buttons .moreDetails:hover {
     color: #073B4C !important;
-    background-color: #E0A800 !important;
-    border-color: #D39E00;
+    background-color: transparent !important;
+    border-color: #073B4C;
 }
  

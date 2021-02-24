@@ -420,7 +420,7 @@
                             </div>
 
                             <!-- Home Address -->
-                            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                            <!-- <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                               <div>
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
                                   [ngClass]="{'highlight': selectedRowIndex == i}">
@@ -440,14 +440,31 @@
                                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
                                   <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
-                                      <p class="mgn-up-10">No address found</p>
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
                                         Add Address </button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </ng-container>
+                            </ng-container> -->
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                                        <!-- Grid View -->
+                                        <mat-grid-list  style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
+                                        *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                                        [ngClass]="{'highlight': selectedRowIndex == i}">
+                                            <mat-grid-tile>
+                                            </mat-grid-tile>
+                                            <div class="item-contnt">
+                                              <div class="text-center">
+                                                <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                                <div>{{address.address}}</div>
+                                                <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                                <div> +91 {{address.phoneNumber}}</div>
+                                                <div> {{address.email}}</div>
+                                              </div>
+                                          </div>
+                                        </mat-grid-list>
+                                    </div>
                             <!-- Add Address Modal  -->
                             <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
                               aria-hidden="true">
@@ -611,16 +628,13 @@
                                                                             </div>
                                                                         </div>
                                                                       </div>
-                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                                        <button [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
-                                          type="button">Ok</button>
-                                      </div>
+
                                     </div>
 
                                   </div>
                                   <div class="modal-footer">
-                                    <button #closeDateModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                    <button #closeDatepickerModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                                    <button type="button" [disabled]="!isfutureAvailableTime" (click)="goBackToSummary(futureAvailableTime ,queue)"  class="btn ln-ht-1 btn-primary font-weight-bold">Ok</button>
                                   </div>
                                 </div>
 
@@ -634,8 +648,9 @@
 
                         </div>
                         <!-- end: Invoice footer-->
-                        <!-- Total summary -->
-                        <div>
+                        <!-- Coupon  start-->
+
+                        <!-- <div>
 
                               <div class="form-group row mt-5">
 
@@ -686,27 +701,28 @@
                             </div>
 
 
-                        </div>
+                        </div> -->
 
+                         <!-- Coupon  end-->
                         <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
                             <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
-                            <span class="text-right">{{getTotalItemPrice()}}</span>
+                            <span class="text-right">&#8377; {{getTotalItemPrice()}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">{{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                            <span class="text-right">&#8377; {{getTotalItemTax(catalog_details.taxPercentage)}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">{{getDeliveryCharge()}}</span>
+                            <span class="text-right">&#8377; {{getDeliveryCharge()}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">{{getSubTotal()}}</span>
+                            <span class="text-right">&#8377; {{getSubTotal()}}</span>
                           </div>
                         </div>
 
@@ -755,3 +771,4 @@
   </div>
 
 </section>
+
