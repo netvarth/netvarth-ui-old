@@ -363,9 +363,6 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
           <div class="col-xl-8">
             <!--begin::Input-->
             <div class="form-group">
-              <!-- <label>Your location</label>
-              <input type="text" class="form-control1 form-control-solid form-control-lg" 
-                placeholder="Catalog Name*"  maxlength="50"/> -->
                 <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1">
                   <i class="fa fa-map-marker-alt text-primary"></i>{{location_map_cap}}</button><br>
                 <span class="expl">{{location_map_message}}</span>
@@ -481,13 +478,14 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
             </div>
           </div>
         </form>
-      </form>
-
         <div class="actiondiv col-md-12" style="margin-top: 15px;display: inline-flex;">
           <button type="button" (click)="closeClick()" class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn}}</button>&nbsp;
           <button type="submit" mat-button [disabled]="!amForm.valid || disableButton" class="cs-btn bt1">{{save_btn}}
           </button>
         </div>
+      </form>
+
+        
       </div>
   </div>
 </div>
