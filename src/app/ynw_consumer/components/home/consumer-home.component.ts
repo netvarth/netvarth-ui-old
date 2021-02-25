@@ -2067,9 +2067,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (type === 'appt') {
       pass_ob['type'] = type;
       pass_ob['uuid'] = booking.uid;
-    } else {
+    } else if (type === 'checkin') {
       pass_ob['type'] = type;
       pass_ob['uuid'] = booking.ynwUuid;
+    } else {
+      pass_ob['type'] = type;
+      pass_ob['uuid'] = booking.uid;
     }
     this.addattachment(pass_ob);
   }
@@ -2129,8 +2132,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       },
       error => { }
     );
-    }  else 
-      if(type === 'checkin') {
+    }  else if (type === 'checkin') {
       this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
         (communications: any) => {
           console.log(communications);
