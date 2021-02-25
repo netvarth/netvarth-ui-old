@@ -52,11 +52,6 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'patient' } });
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        // };
-        // this.lStorageService.removeitemfromLocalStorage('mrId');
-        // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     medicalRecord() {
         this.closeDialog();
@@ -66,14 +61,7 @@ export class CustomerActionsComponent implements OnInit {
         const mrId = 0;
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
-
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
-        // this.closeDialog();
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        // };
-        // this.lStorageService.removeitemfromLocalStorage('mrId');
-        // this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     lastvisits() {
         this.closeDialog();
@@ -108,10 +96,6 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
-        //     const navigationExtras: NavigationExtras = {
-        //         queryParams: { 'id': this.customerDetails[0].id }
-        //     };
-        //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
     }
     editCustomer() {
         this.dialogRef.close('edit');
@@ -133,9 +117,7 @@ export class CustomerActionsComponent implements OnInit {
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             this.loading = false;
-            // if (this.customerDetails.length === 1) {
             this.labelSelection();
-            // }
         });
     }
     gotoLabel() {
@@ -193,11 +175,6 @@ export class CustomerActionsComponent implements OnInit {
         }
     }
     addLabel() {
-        // const postData = {
-        //     'labelName': label,
-        //     'labelValue': 'true',
-        //     'proConIds': ids
-        // };
         const ids = [];
         for (const customer of this.customerDetails) {
             ids.push(customer.id);
