@@ -452,7 +452,7 @@
                             &nbsp;Call</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('started', 'Started', appt)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -479,7 +479,7 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="stopprop($event);changeWaitlistStatus('started', 'Completed', appt)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                             *ngIf="!small_device_display">
@@ -717,7 +717,7 @@
                             <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                           </a>
                           <a class="statusText btn-play pointer-cursor start-btn"
-                            (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', apptByTimeSlot[appt.time][0])"
+                            (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', apptByTimeSlot[appt.time][0])"
                             *ngIf="(apptByTimeSlot[appt.time][0].apptStatus == 'Arrived' || apptByTimeSlot[appt.time][0].apptStatus == 'Confirmed') && time_type != 2 && (!apptByTimeSlot[appt.time][0].virtualService)"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                             <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -744,7 +744,7 @@
                             </span>
                           </a>
                           <a class="statusText btn-play pointer-cursor done-btn"
-                            (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', apptByTimeSlot[appt.time][0])"
+                            (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Completed', apptByTimeSlot[appt.time][0])"
                             [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'"
                             *ngIf="apptByTimeSlot[appt.time][0].apptStatus == 'Started'">
                             <i class="dashboardcomplete-icon" style="color: green;"></i> <span
@@ -906,7 +906,7 @@
                           <span *ngIf="!small_device_display"> Add {{customer_label}}</span>
                         </a>
                         <a class="statusText btn-play pointer-cursor start-btn"
-                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', appt)"
                           *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                           <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -933,7 +933,7 @@
                           </span>
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
-                          (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                          (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Completed', appt)"
                           [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                           <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                             *ngIf="!small_device_display">
@@ -1238,7 +1238,7 @@
                           &nbsp;Call</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', appt)"
                         *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1265,7 +1265,7 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Completed', appt)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">
@@ -1611,7 +1611,7 @@
                           &nbsp;Call</span>
                       </a>
                       <a class="statusText btn-play pointer-cursor start-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Started', appt)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Started', appt)"
                         *ngIf="(appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed') && time_type != 2 && (!appt.virtualService)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Start'">
                         <i class="dashboardstart-icon"></i> <span *ngIf="!small_device_display"> Start</span>
@@ -1638,7 +1638,7 @@
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
-                        (click)="stopprop($event);changeWaitlistStatus(statusAction, 'Completed', appt)"
+                        (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus(statusAction, 'Completed', appt)"
                         [matTooltipClass]="tooltipcls" [matTooltip]="'Complete'" *ngIf="appt.apptStatus == 'Started'">
                         <i class="dashboardcomplete-icon" style="color: green;"></i> <span
                           *ngIf="!small_device_display">

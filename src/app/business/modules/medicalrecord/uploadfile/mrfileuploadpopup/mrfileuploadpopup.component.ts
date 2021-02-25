@@ -82,7 +82,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                this.success_error = this.sharedfunctionObj.imageValidation(file);
+                this.success_error = this.sharedfunctionObj.fileValidation(file);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
                     const reader = new FileReader();
@@ -92,9 +92,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
                     reader.readAsDataURL(file);
                 } else {
                     this.error_list.push(this.success_error);
-                    if (this.error_list[0].type) {
-                        this.error_msg = 'Selected image type not supported';
-                    } else if (this.error_list[0].size) {
+                   if (this.error_list[0].size) {
                         this.error_msg = 'Please upload images with size < 15mb';
                     }
                 }
@@ -102,9 +100,6 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
             console.log(this.item_pic.files);
         }
     }
-
-   
-
 
     deleteTempImage(i) {
         this.item_pic.files.splice(i, 1);
@@ -164,6 +159,7 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
           },
             error => {
               this.savedisabled = false;
+              this.img_save_caption = 'Save';
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
       }

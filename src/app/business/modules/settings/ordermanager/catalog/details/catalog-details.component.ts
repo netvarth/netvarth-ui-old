@@ -230,8 +230,8 @@ export class CatalogdetailComponent implements OnInit {
         private fb: FormBuilder,
         private activated_route: ActivatedRoute,
         private wordProcessor: WordProcessor,
-        private lStorageService: LocalStorageService,
-        private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService,
+    private snackbarService: SnackbarService,
         public fed_service: FormMessageDisplayService) {
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
@@ -563,6 +563,7 @@ export class CatalogdetailComponent implements OnInit {
                 'deliveryCharge': form_data.deliverycharge || ''
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': this.payAdvance,
             'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
             'preInfo': {
@@ -626,6 +627,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
+               autoconfirm: [true],
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -686,6 +688,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
+               autoconfirm: [true],
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -1033,6 +1036,7 @@ console.log(this.catalog.catalogName);
             'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
+            'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1688,6 +1692,7 @@ console.log('hi submit');
                 'deliveryCharge': form_data.deliverycharge
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': form_data.advancePaymentStatus,
             'advanceAmount': form_data.advancePaymentStatus === 'FIXED' ? form_data.advancePayment : 0,
             'preInfo': {

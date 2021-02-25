@@ -31,9 +31,9 @@
                     <h4 class="card-title mbr-fonts-style align-center mb-4 display-1">
                       <strong><br /></strong><br /><strong>Start for free. Pay later.</strong>
                     </h4>
-                    <p class="mbr-text mbr-fonts-style mb-4 display-7">Get a FREE 30-day trial of Jaldee Premium
-                      <br />✔️ No credit card needed
-                      <br />✔️ Cancel at any time<br />
+                    <p class="mbr-text mbr-fonts-style mb-4 display-7">Get a FREE 45-day trial of Jaldee Premium
+                      <br />No credit card needed
+                      <br />Cancel at any time<br />
                     </p>
                   </div>
                 </div>
@@ -56,9 +56,10 @@
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-10">
-                  <div class="mbr-section-btn align-center"><a class="btn-started display-4 mgn-rt-5" href="">GET
+                  <div class="mbr-section-btn align-center"><a class="btn-started display-4 mgn-rt-5"
+                      routerLink="/business/signup">GET
                       STARTED FREE</a>
-                    <a class="btn-contact display-4" href="">CONTACT SALES</a>
+                    <a class="btn-contact display-4" href="https://contact.jaldee.com">CONTACT SALES</a>
                   </div>
                 </div>
               </div>
@@ -68,7 +69,7 @@
       </div>
     </div>
     <section id="pricing" class="page-content pricing">
-      <div class="container-fluid no-padding-small">
+      <div class="container no-padding-small">
         <div>
           <mat-tab-group mat-align-tabs="center">
             <mat-tab label="Healthcare" class="healthTab">
@@ -79,28 +80,31 @@
                       <h3>Jaldee Starter<span>Free</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li (click)="openDialog('multiChannelBookings')">✔️ Multichannel bookings</li>
-                          <li (click)="openDialog('apptManager')">✔️ Appointment Manager</li>
-                          <li (click)="openDialog('qManager')">✔️ QManager</li>
-                          <li (click)="openDialog('busListing')">✔️ Jaldee.com listing</li>
-                          <li (click)="openDialog('privateCustomerDB')">✔️ Patient Relationship Management System</li>
-                          <li (click)="openDialog('onlinePayments')">✔️ Online Payments</li>
-                          <li (click)="openDialog('webAndQR')">✔️ Custom Branded Website - Link & QR Code</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="keepleft" (click)="openDialog('multiChannelBookings', 'patients')">Multichannel
+                            bookings</li>
+                          <li class="keepleft" (click)="openDialog('apptManager', 'patients')">Appointment Manager</li>
+                          <li class="keepleft" (click)="openDialog('qManager', 'patients')">QManager</li>
+                          <li class="keepleft" (click)="openDialog('busListing', 'patients')">Jaldee.com listing</li>
+                          <li class="keepleft" (click)="openDialog('privateCustomerDB', 'patients')">Patient
+                            Relationship Management System</li>
+                          <li class="keepleft" (click)="openDialog('onlinePayments', 'patients')">Online Payments</li>
+                          <li class="keepleft" (click)="openDialog('webAndQR', 'patients')">Custom Branded Website -
+                            Link & QR Code</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head">Custom Branded Website Limits</li>
-                          <li>Up to 100 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'patients')">Custom Branded Website
+                            Limits</li>
+                          <li class="nolink keepleft">Up to 100 bookings per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings</li>
-                          <li class="nolink">For metros 10% commission on all bookings</li>
-                          <li class="nolink">For non-metros 5% commission on all bookings</li>
-                          <li class="nolink">&nbsp;<br /></li>
+                          <li  class="head" (click)="openDialog('jaldeeListing', 'patients')">Jaldee.com listing - Online Bookings</li>
+                          <li class="nolink keepleft">&#8377;49/- flat fee on bookings above &#8377;199/- from
+                            Jaldee.com</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -111,28 +115,30 @@
                       <h3>Jaldee Basic<span class="rupee-font">&#8377;499</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Starter</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('posBilling')">✔️ POS & Billing</li>
-                          <li (click)="openDialog('smsEmailCampaigns')">✔️ SMS and E-mail campaigns</li>
-                          <li (click)="openDialog('teleHealth')">✔️ Telehealth Video consultations</li>
-                          <li (click)="openDialog('tvDisplayborad')">✔️ TV Display Board</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Starter, and:</li>
+                          <li class="keepleft" (click)="openDialog('posBilling', 'patients')">POS & Billing</li>
+                          <li class="keepleft" (click)="openDialog('smsEmailCampaigns', 'patients')">SMS and E-mail
+                            campaigns</li>
+                          <li class="keepleft" (click)="openDialog('teleHealth', 'patients')">Telehealth Video
+                            consultations</li>
+                          <li class="keepleft" (click)="openDialog('tvDisplayborad', 'patients')">TV Display Board</li>
                         </ul>
                       </div>
 
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 300 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'patients')">Custom Branded Website
+                            Limits</li>
+                          <li class="nolink keepleft">Up to 300 bookings per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings</li>
-                          <li class="nolink">For metros 8% commission on all bookings</li>
-                          <li class="nolink">For non-metros 3% commission on all bookings</li>
-                          <li class="nolink">First 5 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'patients')">Jaldee.com listing - Online Bookings</li>
+                          <li class="nolink keepleft">&#8377;39/- flat fee on bookings above &#8377;199/- from
+                            Jaldee.com</li>
+                          <li class="nolink keepleft">First 5 Jaldee.com bookings of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -140,37 +146,41 @@
                   </div>
                   <div class="plancontainer item">
                     <div class="plan">
-                      <span class="recommend">30 Day Free Trial</span>
+                      <span class="recommend">45 Day Free Trial</span>
                       <h3>Jaldee Premium<span class="rupee-font">&#8377;1499</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Basic</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('multiDept_Spec')">✔️ Multidepartment and Multispecialization</li>
-                          <li (click)="openDialog('multiUser')">✔️ Multiuser - upto 6 users</li>
-                          <li (click)="openDialog('medicalRecords')">✔️ Medical Records & E-prescriptions</li>
-                          <!-- <li (click)="openDialog('ePrescription')">✔️ E-prescription</li> -->
-                          <li (click)="openDialog('liveTracking')">✔️ Customer Live Tracking</li>
-                          <!-- <li (click)="openDialog('customDomain')">✔️ Custom Domain Name</li> -->
-                          <li (click)="openDialog('discountCoupons')">✔️ Discount Coupons</li>
-                          <!-- <li (click)="openDialog('b2bReferral')">✔️ B2B Referral Network</li> -->
-                          <!-- <li (click)="openDialog('frontDeskLite')">✔️ Jaldee FrontDesk - Lite</li> -->
-                          <li (click)="openDialog('dedicatedRelationMgr')">✔️ Dedicated Relationship Manager</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Basic, and:</li>
+                          <li class="keepleft" (click)="openDialog('multiDept_Spec', 'patients')">Multidepartment and
+                            Multispecialization</li>
+                          <li class="keepleft" (click)="openDialog('multiUser', 'patients')">Multiuser - upto 6 users
+                          </li>
+                          <li class="keepleft" (click)="openDialog('medicalRecords', 'patients')">Medical Records &
+                            E-prescriptions</li>
+                          <!-- <li (click)="openDialog('ePrescription')">E-prescription</li> -->
+                          <li class="keepleft" (click)="openDialog('liveTracking', 'patients')">Customer Live Tracking
+                          </li>
+                          <!-- <li (click)="openDialog('customDomain')">Custom Domain Name</li> -->
+                          <li class="keepleft" (click)="openDialog('discountCoupons', 'patients')">Discount Coupons</li>
+                          <!-- <li (click)="openDialog('b2bReferral')">B2B Referral Network</li> -->
+                          <!-- <li (click)="openDialog('frontDeskLite')">Jaldee FrontDesk - Lite</li> -->
+                          <li class="keepleft" (click)="openDialog('dedicatedRelationMgr', 'patients')">Dedicated
+                            Relationship Manager</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 600 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'patients')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 600 bookings per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings</li>
-                          <li class="nolink">First 10 Jaldee.com transactions of the month FREE</li>
-                          <li class="nolink">For metros 8% commission on all bookings</li>
-                          <li class="nolink">For non-metros 3% commission on all bookings</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'patients')">Jaldee.com listing - Online Bookings</li>
+                          <li class="nolink keepleft">&#8377;29/- flat fee on bookings above &#8377;199/- from
+                            Jaldee.com</li>
+                          <li class="nolink keepleft">First 10 Jaldee.com bookings of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -181,29 +191,29 @@
                       <h3>Jaldee Team<span class="rupee-font">&#8377;2999</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Premium</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('personalMobile')">✔️ Multiuser - upto 6 users</li>
-                          <!-- <li (click)="openDialog('personalMobile')">✔️ Personalized Mobile Application</li> -->
-                          <li (click)="openDialog('seo')">✔️ Search Engine Optimization</li>
-                          <li (click)="openDialog('multiChannelBookings')">✔️ WhatsApp and Telegram Chatbot</li>
-                          <!-- <li (click)="openDialog('performAnaysis')">✔️ Performance Analytics</li> -->
-                          <!-- <li (click)="openDialog('frontDeskFull')">✔️ Jaldee FrontDesk Full</li> -->
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Premium, and:</li>
+                          <li class="keepleft" (click)="openDialog('personalMobile', 'patients')">Multiuser - upto 6
+                            users</li>
+                          <!-- <li (click)="openDialog('personalMobile')">Personalized Mobile Application</li> -->
+                          <li class="keepleft" (click)="openDialog('seo', 'patients')">Search Engine Optimization</li>
+                          <li class="nolink keepleft">WhatsApp and Telegram Chatbot</li>
+                          <!-- <li (click)="openDialog('performAnaysis')">Performance Analytics</li> -->
+                          <!-- <li (click)="openDialog('frontDeskFull')">Jaldee FrontDesk Full</li> -->
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 2,000 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'patients')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 2000 bookings per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings</li>
-                          <li class="nolink">For metros 8% commission on all bookings</li>
-                          <li class="nolink">For non-metros 3% commission on all bookings</li>
-                          <li class="nolink">First 50 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'patients')">Jaldee.com listing - Online Bookings</li>
+                          <li class="nolink keepleft">&#8377;29/- flat fee on bookings above &#8377;199/- from
+                            Jaldee.com</li>
+                          <li class="nolink keepleft">First 50 Jaldee.com bookings of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -214,27 +224,28 @@
                       <h3>Jaldee Enterprise<span class="rupee-font">&#8377;7999</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Team</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('multiUser')">✔️ Multiuser - upto 25 users</li>
-                          <li (click)="openDialog('dedicatedCallCenter')">✔️ Dedicated Call Center</li>
-                          <li class="nolink">✔️ Dedicated Advertisements</li>
-                          <li class="nolink">✔️ Pharmacy and Lab Integration</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Team, and:</li>
+                          <li class="keepleft" (click)="openDialog('multiUser', 'patients')">Multiuser - upto 25 users
+                          </li>
+                          <li class="keepleft" (click)="openDialog('dedicatedCallCenter', 'patients')">Dedicated Call
+                            Center</li>
+                          <li class="nolink keepleft">Dedicated Advertisements</li>
+                          <li class="nolink keepleft">Pharmacy and Lab Integration</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 10,000 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'patients')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Unlimited bookings per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings</li>
-                          <li class="nolink">For metros 5% commission on all bookings</li>
-                          <li class="nolink">For non-metros 2% commission on all bookings</li>
-                          <li class="nolink">First 100 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'patients')">Jaldee.com listing - Online Bookings</li>
+                          <li class="nolink keepleft">&#8377;29/- flat fee on bookings above &#8377;199/- from
+                            Jaldee.com</li>
+                          <li class="nolink keepleft">First 100 Jaldee.com bookings of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -243,7 +254,7 @@
                 </owl-carousel>
               </div>
             </mat-tab>
-            <mat-tab label="Non Healthcare" class="nonhealthTab">
+            <mat-tab label="Personal Care, Professionals and Businesses" class="nonhealthTab">
               <div id="pricing-table1" class="clear pricing-table nonhealthTab">
                 <owl-carousel [options]="carouselTwo" [carouselClasses]="['owl-carousel', 'owl-theme']">
                   <div class="plancontainer item">
@@ -251,30 +262,30 @@
                       <h3>Jaldee Starter<span>Free</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li (click)="openDialog('multiChannelBookings')">✔️ Multichannel bookings</li>
-                          <li (click)="openDialog('apptManager')">✔️ Appointment Manager</li>
-                          <li (click)="openDialog('qManager')">✔️ QManager</li>
-                          <li (click)="openDialog('busListing')">✔️ Jaldee.com listing</li>
-                          <li (click)="openDialog('privateCustomerDB')">✔️ Customer Relationship Management System</li>
-                          <li (click)="openDialog('onlinePayments')">✔️ Online Payments</li>
-                          <li (click)="openDialog('webAndQR')">✔️ Custom Branded Website - Link & QR Code</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="keepleft" (click)="openDialog('multiChannelBookings', 'customers')">Multichannel
+                            bookings</li>
+                          <li class="keepleft" (click)="openDialog('apptManager', 'customers')">Appointment Manager</li>
+                          <li class="keepleft" (click)="openDialog('qManager', 'customers')">QManager</li>
+                          <li class="keepleft" (click)="openDialog('busListing', 'customers')">Jaldee.com listing</li>
+                          <li class="keepleft" (click)="openDialog('privateCustomerDB', 'customers')">Customer
+                            Relationship Management System</li>
+                          <li class="keepleft" (click)="openDialog('onlinePayments', 'customers')">Online Payments</li>
+                          <li class="keepleft" (click)="openDialog('webAndQR', 'customers')">Custom Branded Website -
+                            Link & QR Code</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 100 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'customers')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 100 bookings/orders per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings and Orders</li>
-                          <li class="nolink">For metros:- 7% commission on all bookings and 4% commission on all orders
-                          </li>
-                          <li class="nolink">For non-metros:- 3% commission on all bookings and 2% commision on all
-                            orders</li>
-                          <li class="nolink">&nbsp;<br /></li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'customers')">Jaldee.com listing - Online Bookings and Orders</li>
+                          <li class="nolink keepleft">&#8377;19/- flat fee on bookings/orders above &#8377;99/- from
+                            Jaldee.com</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -285,30 +296,27 @@
                       <h3>Jaldee Basic<span class="rupee-font">&#8377;499</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Starter</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('posBilling')">✔️ POS & Billing</li>
-                          <li (click)="openDialog('smsEmailCampaigns')">✔️ SMS and E-mail campaigns</li>
-                          <li (click)="openDialog('teleHealth')">✔️ Video consultations</li>
-                          <li (click)="openDialog('tvDisplayborad')">✔️ TV Display Board</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Starter, and:</li>
+                          <li class="keepleft" (click)="openDialog('posBilling', 'customers')">POS & Billing</li>
+                          <li class="keepleft" (click)="openDialog('smsEmailCampaigns', 'customers')">SMS and E-mail
+                            campaigns</li>
+                          <li class="keepleft" (click)="openDialog('teleHealth', 'customers')">Video consultations</li>
+                          <li class="keepleft" (click)="openDialog('tvDisplayborad', 'customers')">TV Display Board</li>
                         </ul>
                       </div>
 
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 300 bookings per month</li>
+                          <li class="head" (click)="openDialog('customBrandLimits', 'customers')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 300 bookings/orders per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings and Orders</li>
-                          <li class="nolink">For metros:- 5% commission on all bookings and 3% commission on all orders
-                          </li>
-                          <li class="nolink">For non-metros:- 2% commission on all bookings and 1% commision on all
-                            orders</li>
-                          <li class="nolink">First 5 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'customers')">Jaldee.com listing - Online Bookings and Orders</li>
+                          <li class="nolink keepleft">&#8377;14/- flat fee on bookings/orders from Jaldee.com</li>
+                          <li class="nolink keepleft">First 5 Jaldee.com bookings/orders of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -316,38 +324,40 @@
                   </div>
                   <div class="plancontainer item">
                     <div class="plan">
+                      <span class="recommend">45 Day Free Trial</span>
                       <h3>Jaldee Premium<span class="rupee-font">&#8377;1499</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Basic</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('multiDept_Spec')">✔️ Multidepartment and Multispecialization</li>
-                          <li (click)="openDialog('multiUser')">✔️ Multiuser - upto 6 users</li>
-                          <!-- <li (click)="openDialog('medicalRecords')">✔️ Medical Records & E-prescriptions</li> -->
-                          <!-- <li (click)="openDialog('ePrescription')">✔️ E-prescription</li> -->
-                          <li (click)="openDialog('liveTracking')">✔️ Customer Live Tracking</li>
-                          <!-- <li (click)="openDialog('customDomain')">✔️ Custom Domain Name</li> -->
-                          <li (click)="openDialog('discountCoupons')">✔️ Discount Coupons</li>
-                          <!-- <li (click)="openDialog('b2bReferral')">✔️ B2B Referral Network</li> -->
-                          <!-- <li (click)="openDialog('frontDeskLite')">✔️ Jaldee FrontDesk - Lite</li> -->
-                          <li (click)="openDialog('dedicatedRelationMgr')">✔️ Dedicated Relationship Manager</li>
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Basic, and:</li>
+                          <li class="keepleft" (click)="openDialog('multiDept_Spec', 'customers')">Multidepartment and
+                            Multispecialization</li>
+                          <li class="keepleft" (click)="openDialog('multiUser', 'customers')">Multiuser - upto 6 users
+                          </li>
+                          <!-- <li (click)="openDialog('medicalRecords')">Medical Records & E-prescriptions</li> -->
+                          <!-- <li (click)="openDialog('ePrescription')">E-prescription</li> -->
+                          <li class="keepleft" (click)="openDialog('liveTracking', 'customers')">Customer Live Tracking
+                          </li>
+                          <!-- <li (click)="openDialog('customDomain')">Custom Domain Name</li> -->
+                          <li class="keepleft" (click)="openDialog('discountCoupons', 'customers')">Discount Coupons
+                          </li>
+                          <!-- <li (click)="openDialog('b2bReferral')">B2B Referral Network</li> -->
+                          <!-- <li (click)="openDialog('frontDeskLite')">Jaldee FrontDesk - Lite</li> -->
+                          <li class="keepleft" (click)="openDialog('dedicatedRelationMgr', 'customers')">Dedicated
+                            Relationship Manager</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 600 bookings per month</li>
+                          <li  class="head" (click)="openDialog('customBrandLimits', 'customers')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 300 bookings/orders per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings and Orders</li>
-                          <li class="nolink">For metros:- 5% commission on all bookings and 3% commission on all orders
-                          </li>
-                          <li class="nolink">For non-metros:- 2% commission on all bookings and 1% commision on all
-                            orders</li>
-                          <li class="nolink">First 10 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'customers')">Jaldee.com listing - Online Bookings and Orders</li>
+                          <li class="nolink keepleft">&#8377;9/- flat fee on bookings/orders from Jaldee.com</li>
+                          <li class="nolink keepleft">First 10 Jaldee.com bookings/orders of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -358,31 +368,28 @@
                       <h3>Jaldee Team<span class="rupee-font">&#8377;2999</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Premium</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('multiUser')">✔️ Multiuser - upto 6 users</li>
-                          <!-- <li (click)="openDialog('personalMobile')">✔️ Personalized Mobile Application</li> -->
-                          <li (click)="openDialog('seo')">✔️ Search Engine Optimization</li>
-                          <li (click)="openDialog('multiChannelBookings')">✔️ WhatsApp and Telegram Chatbot</li>
-                          <!-- <li (click)="openDialog('performAnaysis')">✔️ Performance Analytics</li> -->
-                          <!-- <li (click)="openDialog('frontDeskFull')">✔️ Jaldee FrontDesk Full</li> -->
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Premium, and:</li>
+                          <li class="keepleft" (click)="openDialog('multiUser', 'customers')">Multiuser - upto 6 users
+                          </li>
+                          <!-- <li (click)="openDialog('personalMobile')">Personalized Mobile Application</li> -->
+                          <li class="keepleft" (click)="openDialog('seo', 'customers')">Search Engine Optimization</li>
+                          <li class="nolink keepleft">WhatsApp and Telegram Chatbot</li>
+                          <!-- <li (click)="openDialog('performAnaysis')">Performance Analytics</li> -->
+                          <!-- <li (click)="openDialog('frontDeskFull')">Jaldee FrontDesk Full</li> -->
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 2,000 bookings per month</li>
+                          <li  class="head" (click)="openDialog('customBrandLimits', 'customers')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Up to 600 bookings/orders per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings and Orders</li>
-                          <li class="nolink">For metros:- 5% commission on all bookings and 3% commission on all orders
-                          </li>
-                          <li class="nolink">For non-metros:- 2% commission on all bookings and 1% commision on all
-                            orders</li>
-                          <li class="nolink">First 50 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'customers')">Jaldee.com listing - Online Bookings and Orders</li>
+                          <li class="nolink keepleft">&#8377;9/- flat fee on bookings/orders from Jaldee.com</li>
+                          <li class="nolink keepleft">First 50 Jaldee.com bookings/orders of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -393,29 +400,26 @@
                       <h3>Jaldee Enterprise<span class="rupee-font">&#8377;7999</span></h3>
                       <div class="features">
                         <ul>
-                          <li class="head nolink">Jaldee PlatForm Features</li>
-                          <li class="nolink">✔️ Everything in Jaldee Team</li>
-                          <li class="nolink">+</li>
-                          <li (click)="openDialog('multiUser')">✔️ Multiuser - upto 25 users</li>
-                          <li (click)="openDialog('dedicatedCallCenter')">✔️ Dedicated Call Center</li>
-                          <li class="nolink">✔️ Dedicated Advertisements</li>
-                          <!-- <li class="nolink">✔️ Pharmacy and Lab Integration</li> -->
+                          <li class="head nolink">Jaldee Platform Features</li>
+                          <li class="nolink keepleft">Everything in Jaldee Team, and:</li>
+                          <li class="keepleft" (click)="openDialog('multiUser', 'customers')">Multiuser - upto 25 users
+                          </li>
+                          <li class="keepleft" (click)="openDialog('dedicatedCallCenter', 'customers')">Dedicated Call
+                            Center</li>
+                          <li class="nolink keepleft">Dedicated Advertisements</li>
                         </ul>
                       </div>
                       <div class="limits">
                         <ul>
-                          <li class="head nolink">Custom Branded Website Limits</li>
-                          <li class="nolink">Up to 10,000 bookings per month</li>
+                          <li  class="head" (click)="openDialog('customBrandLimits', 'customers')">Custom Branded Website Limits</li>
+                          <li class="nolink keepleft">Unlimited bookings/orders per month</li>
                         </ul>
                       </div>
                       <div class="listing">
                         <ul>
-                          <li class="head nolink">Jaldee.com listing - Online Bookings and Orders</li>
-                          <li class="nolink">For metros:- 5% commission on all bookings and 3% commission on all orders
-                          </li>
-                          <li class="nolink">For non-metros:- 2% commission on all bookings and 1% commision on all
-                            orders</li>
-                          <li class="nolink">First 100 Jaldee.com transactions of the month FREE</li>
+                          <li class="head" (click)="openDialog('jaldeeListing', 'customers')">Jaldee.com listing - Online Bookings and Orders</li>
+                          <li class="nolink keepleft">&#8377;9/- flat fee on bookings/orders from Jaldee.com</li>
+                          <li class="nolink keepleft">First 100 Jaldee.com bookings/orders of the month FREE</li>
                         </ul>
                       </div>
                       <a class="signup" routerLink="/business/signup">Get started Free</a>
@@ -447,62 +451,64 @@
         </div>
       </section>
       <section class="content10 cid-shN1xeMSHm" id="content10-14">
-        <div class="pricing-table clear">
-          <div class="plancontainer">
-            <div class="plan">
-              <h3>Jaldee Business Platform Add-ons</h3>
-              <div class="col-md-12">
-                <div class="col-md-4">
-                  <div class="card addon-hgt">
-                    <ul>
-                      <li class="head nolink">Multi user - Add more users</li>
-                      <li class="nolink blue">Min pkg - Team and above</li>
-                      <li class="nolink">Multi user 25 - Rs. 17999 per month</li>
-                      <li class="nolink">Multi user 50 - Rs. 29999 per month</li>
-                      <li class="nolink">Multi user 100 - Rs. 49999 per month</li>
-                      <li class="nolink">Multi user 250 - Rs. 99999 per month</li>
-                    </ul>
+        <div class="container">
+          <div class="pricing-table clear">
+            <div class="plancontainer">
+              <div class="plan">
+                <h3>Jaldee Business Platform Add-ons</h3>
+                <div class="col-md-12">
+                  <div class="col-md-4 col-sm-6 col-xs-12 mgn-up-10">
+                    <div class="card addon-hgt">
+                      <ul>
+                        <li class="head nolink">Multi user - Add more users</li>
+                        <li class="nolink blue">Min pkg - Team and above</li>
+                        <li class="nolink">Multi user 25 - Rs. 17999 per month</li>
+                        <li class="nolink">Multi user 50 - Rs. 29999 per month</li>
+                        <li class="nolink">Multi user 100 - Rs. 49999 per month</li>
+                        <li class="nolink">Multi user 250 - Rs. 99999 per month</li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card addon-hgt">
-                    <ul>
-                      <li class="head nolink">Jaldee Messaging - Buy SMS credits</li>
-                      <li class="nolink blue">Note: Jaldee messaging means only SMS</li>
-                      <li class="nolink">Jaldee messaging 1000 - Rs. 250 per month</li>
-                      <li class="nolink">Jaldee messaging 2500 - Rs. 625 per month</li>
-                      <li class="nolink">Jaldee messaging 10000 - Rs. 2500 per month</li>
-                      <li class="nolink">Jaldee messaging 25000 - Rs. 6250 per month</li>
-                    </ul>                    
+                  <div class="col-md-4 col-sm-6 col-xs-12 mgn-up-10">
+                    <div class="card addon-hgt">
+                      <ul>
+                        <li class="head nolink">Jaldee Messaging - Buy SMS credits</li>
+                        <li class="nolink blue">Note: Jaldee messaging means only SMS</li>
+                        <li class="nolink">Jaldee messaging 1000 - Rs. 250 per month</li>
+                        <li class="nolink">Jaldee messaging 2500 - Rs. 625 per month</li>
+                        <li class="nolink">Jaldee messaging 10000 - Rs. 2500 per month</li>
+                        <li class="nolink">Jaldee messaging 25000 - Rs. 6250 per month</li>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card addon-hgt">
-                    <ul>
-                      <li class="head nolink">Add QBoards</li>
-                      <li class="nolink blue">Minimum pkg - Premium and above</li>
-                      <li class="nolink">2 QBoards - Rs.759 per month</li>
-                      <li class="nolink">5 QBoards - Rs.1499 per month</li>
-                      <li class="nolink">10 QBoards - Rs.2499 per month</li>
-                      <li class="nolink">25 QBoards - Rs.4999 per month</li>
-                      <li class="nolink">100 QBoards - Rs.19999 per month</li>
-                    </ul>
+                  <div class="col-md-4 col-sm-6 col-xs-12 mgn-up-10">
+                    <div class="card addon-hgt">
+                      <ul>
+                        <li class="head nolink">Add QBoards</li>
+                        <li class="nolink blue">Minimum pkg - Premium and above</li>
+                        <li class="nolink">2 QBoards - Rs.759 per month</li>
+                        <li class="nolink">5 QBoards - Rs.1499 per month</li>
+                        <li class="nolink">10 QBoards - Rs.2499 per month</li>
+                        <li class="nolink">25 QBoards - Rs.4999 per month</li>
+                        <li class="nolink">100 QBoards - Rs.19999 per month</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="plancontainer item">
-            <div class="plan">
-              <h3>Jaldee.com listing- Online Bookings and Orders Add-ons</h3>
-              <div class="col-md-12">
-                <div class="col-md-4">
-                  <div class="card addon-hgt">
-                    <ul>
-                      <li class="head nolink">Add more search keywords</li>
-                      <li class="nolink">Pack of 5 search keywords - Rs.250/month</li>
-                      <li class="nolink">Pack of 20 search keywords - Rs. 1000/month</li>
-                    </ul>
+            <div class="plancontainer item">
+              <div class="plan">
+                <h3>Jaldee.com listing- Online Bookings and Orders Add-ons</h3>
+                <div class="col-md-12">
+                  <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="card addon-hgt">
+                      <ul>
+                        <li class="head nolink">Add more search keywords</li>
+                        <li class="nolink">Pack of 5 search keywords - Rs.250/month</li>
+                        <li class="nolink">Pack of 20 search keywords - Rs. 1000/month</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

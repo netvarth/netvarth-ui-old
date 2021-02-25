@@ -233,6 +233,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.isfirstCheckinOffer = activeUser.firstCheckIn;
+    } else {
+      this.isfirstCheckinOffer = true;
     }
     this.nosearch_results = false;
     this.retscrolltop = this.groupService.getitemFromGroupStorage('sctop') || 0;
@@ -2287,5 +2289,8 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   }
   getNumberArray(num) {
     return this.shared_functions.getNumberArray(num);
+  }
+  stopprop(event) {
+    event.stopPropagation();
   }
 }

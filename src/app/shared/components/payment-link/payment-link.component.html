@@ -27,7 +27,7 @@
 
                                             <li>
                                                 <p class="textcenter"><span>{{this.businessname}}</span><br><span>
-                                                        {{this.location}}</span><br>{{billtime}}, {{billdate}}</p>
+                                                        {{this.location}}</span><br>{{billtime}}, {{bill_data.createdDate | date : 'mediumDate'}}</p>
                                                 <br><br>
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
@@ -79,7 +79,7 @@
                                                                                     {{this.firstname}}
                                                                                 </span> <span
                                                                                     class="columns rightalign"><span
-                                                                                        class="dynamic">{{billdate}}
+                                                                                        class="dynamic">{{bill_data.createdDate | date : 'mediumDate'}}
                                                                                         {{billtime}}</span>
                                                                                 </span> <span class="columns"
                                                                                     *ngIf="billnumber"> <span

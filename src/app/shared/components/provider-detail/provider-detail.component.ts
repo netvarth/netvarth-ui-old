@@ -273,7 +273,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   dotor_specialization_hint = Messages.DOCTORS_SPECIALIZATION_HINT;
   accountEncId: string;
   userEncId: string;
-
+  locId;
   bsModalRef: BsModalRef;
 
   constructor(
@@ -349,6 +349,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
       if (qparams.src) {
         this.pSource = qparams.src;
+      }
+      if (qparams.locId) {
+        this.locId = qparams.locId;
       }
       // if (qparams.pId) {
       //   this.businessid = qparams.pId;
@@ -690,7 +693,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                 this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
               }
             }
+            console.log(this.locId);
+            if (this.locId) {
+              const location1 = this.locationjson.filter(loc => loc.id === this.locId);
+              console.log(location1);
+              const location = this.locationjson.filter(loc => loc.id === JSON.parse(this.locId));
+              console.log(location);
+              this.changeLocation(location[0]);
+            } else {
             this.changeLocation(this.locationjson[0]);
+            }
             this.api_loading = false;
             break;
           }

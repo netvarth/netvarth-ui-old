@@ -46,7 +46,7 @@ export class UploadFileComponent implements OnInit {
 
   upload_status = 'Added to list';
   disable = false;
-  heading = 'Create Prescription';
+  heading = 'Upload file';
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   navigationParams: any;
   navigationExtras: NavigationExtras;
