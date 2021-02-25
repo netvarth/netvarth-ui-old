@@ -80,7 +80,8 @@
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
-        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')">Create new</a>
-        <a class="" (click)="gotoLabel()">Manage labels</a>
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+        <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
 </div>
