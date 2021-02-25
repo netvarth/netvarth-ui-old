@@ -359,18 +359,15 @@ onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
       <div class="card-body">
         <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
 onSubmit(amForm.value,locamForm.value)" class="ynw-common-form">
-        <div class="row">
-          <div class="col-xl-8">
+        <div class="row" style="text-align: center;">
+          <div class="col-xl-12">
             <!--begin::Input-->
             <div class="form-group">
                 <button type="button" (click)="showGooglemap()" class="cs-btn bt3" tabindex="-1">
                   <i class="fa fa-map-marker-alt text-primary"></i>{{location_map_cap}}</button><br>
-                <span class="expl">{{location_map_message}}</span>
+                <span class="expl mgn-up-5">{{location_map_message}}</span>
             </div>
             <!--end::Input-->
-          </div>
-          <div class="col-xl-4">
-           
           </div>
         </div>
         <div class="row mgn-up-10">

@@ -12,7 +12,7 @@
                 Item name
                 <span style="color:red">*</span>
               </label>
-              <input type="text" class="form-control1" id="itemName" placeholder="Enter item name"
+              <input type="text" class="form-control" id="itemName" placeholder="Enter item name"
                 formControlName="itemName" autocomplete="off" maxlength="50">
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amItemForm,'itemName')"
@@ -30,7 +30,7 @@
                 Display Name
                 <span style="color:red">*</span>
               </label>
-              <input type="text" class="form-control1" id="displayName"
+              <input type="text" class="form-control" id="displayName"
                 placeholder="Enter display name" formControlName="displayName" autocomplete="off"
                 maxlength="50">
             </div>
@@ -66,7 +66,7 @@
               <label class="form-control-label">
                 Item Code
               </label>
-              <input type="text" class="form-control1" id="itemCode" placeholder="Enter item code"
+              <input type="text" class="form-control" id="itemCode" placeholder="Enter item code"
                 formControlName="itemCode" autocomplete="off">
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amItemForm,'itemCode')"
@@ -84,7 +84,7 @@
                 Short Description
                 <span style="color:red">*</span>
               </label>
-              <input type="text" class="form-control1" id="shortDec"
+              <input type="text" class="form-control" id="shortDec"
                 placeholder="Enter a short description" formControlName="shortDec"
                 autocomplete="off">
             </div>
@@ -100,7 +100,7 @@
            
             <div class="">
               <label class="form-control-label">Detailed Description</label>
-              <textarea class="form-control1" id="displayDesc"
+              <textarea class="form-control" id="displayDesc"
                 placeholder="Enter a detailed description" formControlName="displayDesc"
                 (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
                 maxlength="500">
@@ -120,7 +120,7 @@
             
             <div class="">
               <label class="form-control-label">Notes</label>
-              <textarea class="form-control1" id="note" placeholder="Enter any notes"
+              <textarea class="form-control" id="note" placeholder="Enter any notes"
                 formControlName="note" maxlength="500">
                                           </textarea>
             </div>
@@ -144,7 +144,7 @@
                 <span style="color:red">*</span>
               </label>
               <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"
-                (keyup)="isvalid($event)" class="form-control1 number-ip-sm" formControlName="price"
+                (keyup)="isvalid($event)" class="form-control number-ip-sm" formControlName="price"
                 id="price" autocomplete="off">
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(amItemForm,'price')"
@@ -185,7 +185,7 @@
                   <span *ngIf="curtype == 'PCT'" class='rupee'>(%)</span>
                 </label>
                 <input type="text" min="0" max="100000" (keypress)="isNumeric($event)"
-                  (keyup)="isvalid($event)" class="form-control1 number-ip-sm"
+                  (keyup)="isvalid($event)" class="form-control number-ip-sm"
                   formControlName="promotionalPrice" id="promotionalPrice" autocomplete="off">
               </div>
               <app-field-error-display
@@ -217,7 +217,7 @@
                 <label class="form-control-label">
                   Custom Label
                 </label>
-                <input type="text" class="form-control1" id="customlabel"
+                <input type="text" class="form-control" id="customlabel"
                   placeholder="Enter the custom label" formControlName="customlabel"
                   autocomplete="off">
               </div>
