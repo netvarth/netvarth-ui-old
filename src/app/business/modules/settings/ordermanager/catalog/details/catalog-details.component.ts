@@ -341,7 +341,12 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
     gotoNext() {
-        this.step = this.step + 1;
+        if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            this.step = 3;
+        } else {
+            this.step = this.step + 1;
+        }
+        
         if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
@@ -353,7 +358,12 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
     gotoPrev() {
-        this.step = this.step - 1;
+        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            this.step = 1;
+        } else {
+            this.step = this.step - 1;
+        }
+       
         if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
             if(this.cataId){
