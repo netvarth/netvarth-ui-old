@@ -225,6 +225,7 @@ export class ProviderCheckinComponent implements OnInit {
     countryCode;
     checkin_label;
     provider_label = '';
+    showQuestionnaire = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1178,6 +1179,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
+                this.showQuestionnaire = true;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
@@ -1194,7 +1196,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
-                this.router.navigate(['provider', 'check-ins']);
+                // this.router.navigate(['provider', 'check-ins']);
 
             },
                 error => {

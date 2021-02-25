@@ -1497,7 +1497,11 @@
 
                                         <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 2">
-                                            Questionnaire
+                                            <div>
+                                                Please provide us with a little more information complete your booking
+                                            </div>
+                                            <app-questionnaire [questionnaireList]="questionnaireList" [source]="consCheckin"></app-questionnaire>
+
                                         </div>
                                         <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
@@ -1602,11 +1606,11 @@
                                                     Previous
                                                 </button>
                                             </div>
-                                            <div>{{prepaymentAmount}}
+                                            <div>
                                                 <button type="button" *ngIf="bookStep == 3" (click)="saveCheckin('appt')"
                                                 class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
-                                            <ng-container *ngIf="prepaymentAmount > 0">   Pay</ng-container> 
-                                            <ng-container *ngIf="prepaymentAmount == 0">   Confirm</ng-container> 
+                                            <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">   Pay</ng-container> 
+                                            <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow == 0">   Confirm</ng-container> 
                                             </button>
                                                 <button type="button" *ngIf="bookStep != 3"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"

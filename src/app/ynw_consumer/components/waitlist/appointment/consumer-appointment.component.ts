@@ -201,6 +201,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     uuidList: any = [];
     prepayAmount;
     paymentDetails: any = [];
+    questionnaireList: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

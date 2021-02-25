@@ -28,6 +28,7 @@ export class DynamicFormQuestionComponent implements OnInit {
     private wordProcessor: WordProcessor) { }
 
   ngOnInit() {
+    console.log(this.question);
     this.errors = this.messages[this.question.key] || [];
     if (this.question['type'] !== 'url') {
       this.placeholder = this.question.label;

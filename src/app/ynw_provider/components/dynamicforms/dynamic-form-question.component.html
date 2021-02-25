@@ -2,7 +2,7 @@
   <!-- <label class="col-form-label" *ngIf="showlabel" for="{{question.label}}" [attr.for]="question.key">
     {{question.label}} <span *ngIf="question.required">*</span>
   </label> -->
-  <ng-container [ngSwitch]="question.controlType">
+  <ng-container [ngSwitch]="question.fieldDataType">
     <ng-container *ngSwitchCase="'textbox'">
 
       <!-- <mat-form-field class="example-full-width" *ngIf="question.type != 'checkbox'" >
@@ -115,19 +115,19 @@
       </div>
     </div>
 
-    <div class="form-check" *ngSwitchCase="'enumlist'" [id]="question.key" [formArrayName]="question.key">
+    <div class="form-check" *ngSwitchCase="'List'" [id]="question.labelName" [formArrayName]="question.labelName">
       <div class="form-group">
-        <div [formGroup]="form['controls'][question.key]['controls'][0]">
+        <div [formGroup]="form['controls'][question.labelName]">
 
-          <div *ngFor="let option of question['options'];let i = index; ">
-            <mat-checkbox [value]="option.name" [formControlName]="option.name">
+          <div *ngFor="let option of question['labelValues'];let i = index; ">
+            <mat-checkbox [value]="option" [formControlName]="option">
               {{option.displayName}}
             </mat-checkbox>
           </div>
         </div>
         <app-field-error-display *ngIf="question.controlType =='enumlist'"
-          [displayError]="fed_service.isFieldValid(form,question.key)"
-          [errorMsgs]="fed_service.getErrorMessage(form,question.key,this.errors)">
+          [displayError]="fed_service.isFieldValid(form,question.labelName)"
+          [errorMsgs]="fed_service.getErrorMessage(form,question.labelName,this.errors)">
         </app-field-error-display>
       </div>
     </div>
