@@ -30,14 +30,14 @@
                 <div class="disp-flex">
                   <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
 
-                    <input matInput type="text" class="form-control" formControlName="search_input" autocomplete="off">
+                    <input matInput type="text" (keyup)="resetError()" class="form-control" formControlName="search_input" autocomplete="off">
 
                   </div>
                   <div class="col-md-2 col-xs-2 col-sm-2  mgn-lt-5">
-                    <button class="create_new_button cs-btn bt3" (click)="searchForm.valid &&
-                  searchCustomer(searchForm.value)">Find</button>
+                    <button class="create_new_button cs-btn bt3" (click)="searchCustomer(searchForm.value)">Find</button>
                   </div>
                 </div>
+                <div class="red" *ngIf="showError">Please enter Phone# or ID or Email</div>
               </div>
             </div>
           </form>
