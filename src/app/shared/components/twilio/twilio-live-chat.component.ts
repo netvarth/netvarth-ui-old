@@ -1,16 +1,18 @@
 import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TwilioService } from '../../services/twilio-service';
-// import { projectConstantsLocal } from '../../constants/project-constants';
-import { SharedServices } from '../../services/shared-services';
 import { Location } from '@angular/common';
-// import { ServiceMeta } from '../../services/service-meta';
-// import { projectConstantsLocal } from '../../constants/project-constants';
+import { interval as observableInterval, Subscription } from 'rxjs';
+import { MeetService } from '../../services/meet-service';
+import { SnackbarService } from '../../services/snackbar.service';
 @Component({
     selector: 'app-live-chat',
     templateUrl: './twilio-live-chat.component.html',
     styleUrls: ['./twilio-live-chat.component.css']
 })
+/**
+ * Class for Meeting Room for a consumer
+ */
 export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('localVideo') localVideo: ElementRef;
     @ViewChild('previewContainer') previewContainer: ElementRef;
@@ -22,25 +24,84 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     screenHeight: number;
     videoId: any;
     cameraMode = 'user';
+    loading = true;
+    providerReady = false;
+    cronHandle: Subscription;
     private renderer: Renderer2;
+    uuid: any;
+    result;
+    meetObj;
+    type: any;
+    status: string;
+    refreshTime = 10;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
-        private sharedServices: SharedServices,
         public twilioService: TwilioService,
-        public rendererFactory: RendererFactory2
-        // private baCustomPreLoader: BaCustomPreLoader
+        private meetService: MeetService,
+        public rendererFactory: RendererFactory2,
+        private snackbarService: SnackbarService,
+        private router: Router
     ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.renderer = rendererFactory.createRenderer(null, null);
         console.log(this.renderer);
         window.addEventListener('unload', () => {
             this.disconnect();
         });
+        this.activateroute.params.subscribe(
+            (params) => {
+                this.uuid = params['id'];
+                alert(this.uuid);
+                this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
+            }
+        );
     }
+    /**
+     * Calls after the view initialization
+     */
     ngAfterViewInit() {
         this.twilioService.previewContainer = this.previewContainer;
         this.twilioService.previewMedia();
+        this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
+            this.isProviderReady();
+        });
     }
+    /**
+     * Method which marks the consumer readiness and returns the token 
+     * to connect to the meeting room if provider is ready
+     */
+    isProviderReady() {
+        const _this = this;
+        _this.meetService.isProviderReady(_this.uuid)
+            .subscribe(data => {
+               if(data){
+                   console.log(data);
+                   _this.meetObj = data;
+                   _this.loading = false;
+                   _this.providerReady = true;
+                   _this.status = 'Ready..'
+                if (_this.cronHandle) {
+                    _this.cronHandle.unsubscribe();  
+                }                               
+               } else {
+                    _this.loading = false;
+                    _this.providerReady = false;
+                    _this.meetObj = null;
+                    _this.status = 'Waiting for the provider...'
+               }
+        }, error => {
+            _this.loading = false;
+            _this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+            _this.cronHandle.unsubscribe();
+            setTimeout(() => {
+                _this.location.back();
+            }, 3000);
+        });
+    }
+    /**
+     * Init method
+     */
     ngOnInit() {
         this.screenWidth = window.innerWidth;
         this.screenHeight = window.innerHeight;
@@ -65,6 +126,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         };
     }
+    /**
+     * Method to exit from the video call
+     */
     disconnect() {
         if (this.twilioService.previewTracks) {
             this.twilioService.previewTracks.forEach(localTrack => {
@@ -79,10 +143,14 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.location.back();
         }
     }
+    /**
+     * Method to start the video
+     */
     connect(tokenObj) {
         console.log(tokenObj.tokenId);
         this.twilioService.cameraMode = 'user';
         this.twilioService.connectToRoom(tokenObj.tokenId, {
+            
             name: tokenObj.roomName,
             audio: true,
             video: { height: '100%', frameRate: 24, width: '100%', facingMode: 'user' },
@@ -128,6 +196,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     startVideo() {
         this.twilioService.enableVideo();
     }
+    /**
+     * Method to switch from and back cameras
+     */
     switchCamera() {
         if (this.twilioService.cameraMode === 'user') {
             this.twilioService.switchCamera('environment');
@@ -135,19 +206,22 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.twilioService.switchCamera('user');
         }
     }
+    /**
+     * Method to enter to a room. which will invoke the connect method
+     */
     joinRoom() {
-        this.activateroute.params.subscribe(params => {
-            const videoId = params.id;
-            this.sharedServices.getJaldeeVideoAccessToken(videoId).subscribe(
-                (tokenObj: any) => {
-                    console.log(tokenObj);
-                    // this.access_token = tokenObj.token;
-                    this.twilioService.localVideo = this.localVideo;
-                    this.twilioService.remoteVideo = this.remoteVideo;
-                    this.connect(tokenObj);
-                }
-            );
-        });
+        console.log(this.meetObj);
+        this.twilioService.localVideo = this.localVideo;
+        this.twilioService.remoteVideo = this.remoteVideo;
+        this.connect(this.meetObj);
     }
-    ngOnDestroy() { this.disconnect(); }
+    /**
+     * called when the page destroyed
+     */
+    ngOnDestroy() {
+        if (this.cronHandle) {
+            this.cronHandle.unsubscribe();
+        }
+        this.disconnect(); 
+    }
 }

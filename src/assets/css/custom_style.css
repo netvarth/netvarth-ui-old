@@ -1910,7 +1910,7 @@ sup {
 
 @media only screen and (max-width: 640px) {
   th, td, tr {
-    font-size: .833rem !important;
+    font-size: .833rem;
   }
 }
 
@@ -15124,7 +15124,7 @@ sup {
 
 @media only screen and (max-width: 640px) {
   th, td, tr {
-    font-size: .833rem !important;
+    font-size: .833rem;
   }
 }
 
@@ -27182,4 +27182,3 @@ width: 40px !important;
   background-color: #ddd;
   margin-left: 15px;
 }
- 

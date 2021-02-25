@@ -535,7 +535,7 @@ export class SharedServices {
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     } else if (type === 'order') {
-      path = 'consumer/orders/rating';
+      path = 'consumer/order/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
   }
@@ -946,6 +946,10 @@ export class SharedServices {
   CreateConsumerEmail(uuid, accountid, post_Data) {
     return this.servicemeta.httpPut('consumer/orders/' + uuid + '/email?account=' + accountid, post_Data);
   }
+  getVideoList(countrycode,phonenumber) {
+    const url = 'consumer/appointment/meeting/'+ countrycode+ '/' + phonenumber;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderWaitlistAttachment(uuid, body) {
     const url = 'provider/waitlist/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);
@@ -973,5 +977,13 @@ export class SharedServices {
 getCartdetails(accountid, data) {
   const url = 'consumer/orders/amount' + '?account=' + accountid;
   return this.servicemeta.httpPut(url, data);
+}
+addWaitlistAdvancePayment(param, body) {
+  const url = 'consumer/waitlist/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
+}
+addApptAdvancePayment(param, body) {
+  const url = 'consumer/appointment/advancePayment';
+  return this.servicemeta.httpPut(url, body, null, param);
 }
 }

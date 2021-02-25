@@ -88,6 +88,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddAddressComponent } from './shared/components/checkout/add-address/add-address.component';
 import {  ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { CookieProcessor } from './shared/services/cookie-processor.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -97,6 +98,9 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
+import { TwilioService } from './shared/services/twilio-service';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
+import { MeetService } from './shared/services/meet-service';
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
@@ -134,10 +138,12 @@ export function init_app(globalService: GlobalService) {
     JdnComponent,
     UpdateProfilePopupComponent,
     LiveChatComponent,
+    JaldeeVideoComponent,
     JaldeeBlogComponent,
     CheckoutSharedComponent,
     AddAddressComponent,
     ItemDetailsSharedComponent,
+    MeetingRoomComponent,
     CommunicationComponent
   ],
   entryComponents: [
@@ -219,6 +225,7 @@ export function init_app(globalService: GlobalService) {
     GlobalFunctions,
     GlobalService,
     SharedFunctions,
+    TwilioService,
     FormMessageDisplayService,
     ErrorMessagingService,
     SearchDetailServices,
@@ -234,6 +241,7 @@ export function init_app(globalService: GlobalService) {
     DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
+    MeetService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},

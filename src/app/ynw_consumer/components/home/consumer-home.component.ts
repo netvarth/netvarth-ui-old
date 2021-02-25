@@ -34,6 +34,7 @@ import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
+  styleUrls: ['./consumer-home.component.css'],
   animations: [
     trigger('hideShowAnimator', [
       state('true', style({ opacity: 1, height: '100%' })),
@@ -1361,7 +1362,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     }
   }
-
+  btnJoinVideoClicked(checkin, event) {
+    event.stopPropagation();
+    this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid]);
+  }
   viewBill(checkin, type, event) {
     event.stopPropagation();
     if (type === 'appointment') {

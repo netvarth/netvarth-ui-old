@@ -20,6 +20,8 @@ import { TwilioService } from './shared/services/twilio-service';
 import { JaldeeBlogComponent } from './shared/components/jaldee-blog/jaldee-blog.component';
 import { CheckoutSharedComponent } from './shared/components/checkout/checkout.component';
 import { ItemDetailsSharedComponent } from './shared/components/item-details/item-details.component';
+import { JaldeeVideoComponent } from './shared/components/jaldee-video/jaldee-video.component';
+import { MeetingRoomComponent } from './business/shared/meeting-room/meeting-room.component';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', component: AdminLoginComponent },
     {
@@ -44,11 +46,15 @@ const routes: Routes = [
         // canActivate: [AuthGuardProvider]
     },
     // { path: 'client', component: LiveChatClientComponent},
-    {path: 'video/:id',  component: LiveChatComponent},
+    // {path: 'video/:id',  component: LiveChatComponent},
+    {path: 'meeting/provider/:id', component: MeetingRoomComponent},
+    {path: 'meeting/:phonenumber/:id', component: LiveChatComponent},
+    {path: 'meeting/:phonenumber',  component: JaldeeVideoComponent},    
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'blog', component: JaldeeBlogComponent },
     { path: ':id', component: BusinessPageComponent },
+    { path: ':id/:userUniqueId', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
