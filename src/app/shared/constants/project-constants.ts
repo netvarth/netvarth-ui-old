@@ -755,6 +755,11 @@ export const projectConstantsLocal = {
     { displayName: 'Payment', value: 'PAYMENT' },
 
   ],
+  BOOKING_MODE: [
+    { displayName: 'Walk-in ', value: 'WALK_IN' },
+    { displayName: 'Online', value: 'ONLINE' },
+    { displayName: 'Phone-in', value: 'PHONE_IN' },
+  ],
 
   REPORT_TRANSACTION_TYPE: [
     { displayName: 'Check-in/Token', value: 'Waitlist' },
