@@ -6,6 +6,7 @@
     <div class="card-body">
         <!-- Title -->
         <!-- <div class="card-head"> -->
+            <div style="height:100px;">
             <div class="text-center service-image"
                 *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                 <i class="fa phon-icon"
@@ -22,6 +23,7 @@
             <div class="text-center service-image"
                 *ngIf="service.serviceType && service.serviceType != 'virtualService'">
             </div>
+            </div>
             <div class="service-details">
                 <div class="module line-clamp m-0"
                     [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
@@ -32,10 +34,11 @@
         <!-- </div>
         <div class="card-content"> -->
                 <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6>
+                <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>
                 <p class="card-text donationAmount" *ngIf="item.type=='donation'">
-                    <span class="rupee-font bold">{{service.minDonationAmount| currency:'&#8377;'}}</span>
+                    <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount| currency:'':''}}</span>
                     To
-                    <span class="rupee-font bold">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
+                    <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.maxDonationAmount| currency:'':''}}</span>
                 </p>
                 <p class="card-text peopleAhead" *ngIf="personsAheadText">{{personsAheadText}}</p>
                 <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
@@ -133,7 +136,7 @@
         </h6>
         <h6 class="qualification" *ngIf="user.qualifications.length==0" style="height:17px;"></h6>
         <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
-        <label *ngIf="!user.businessUserName" style="padding:5px 10px; margin:0 !important;">&nbsp;</label>
+        <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
         <p class="availability">Next Available Time<br/>Feb 15, 02:00 PM</p>
         <button type="button" class="btn btn-outline-warning">Book Now</button>
     </div>
