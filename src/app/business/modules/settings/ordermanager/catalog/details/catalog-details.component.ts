@@ -19,6 +19,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import {FormControl} from '@angular/forms';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
+import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -30,7 +31,7 @@ export class CatalogdetailComponent implements OnInit {
     toppings = new FormControl();
     toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
     catalog_id;
-    rupee_symbol = 'â‚¹';
+    rupee_symbol = 'Ã¢â€šÂ¹';
     item_hi_cap = Messages.ITEM_HI_CAP;
     item_name_cap = Messages.ITEM_NAME_CAP;
     short_desc_cap = Messages.SHORT_DESC_CAP;
@@ -207,6 +208,7 @@ export class CatalogdetailComponent implements OnInit {
     storetimewindow_list: any = [];
     hometimewindow_list: any = [];
     addtimewindowdialogRef;
+    createitemdialogRef;
     itemsforadd: any = [];
     catalogItem: any = [];
     selectedCount = 0;
@@ -339,7 +341,12 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
     gotoNext() {
-        this.step = this.step + 1;
+        if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            this.step = 3;
+        } else {
+            this.step = this.step + 1;
+        }
+        
         if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             console.log(this.amForm.get('orderType').value);
             if(this.cataId){
@@ -351,7 +358,12 @@ export class CatalogdetailComponent implements OnInit {
         }
     }
     gotoPrev() {
-        this.step = this.step - 1;
+        if (this.step === 3 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
+            this.step = 1;
+        } else {
+            this.step = this.step - 1;
+        }
+       
         if (this.step === 2 && this.amForm.get('orderType').value === 'SHOPPINGCART') {
             this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
             if(this.cataId){
@@ -624,12 +636,8 @@ export class CatalogdetailComponent implements OnInit {
                 //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
-<<<<<<< HEAD
                 itemPriceInfo: [true],
-=======
-               itemPriceInfo: [true],
                autoconfirm: [true],
->>>>>>> refs/remotes/origin/1.7-order
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -689,12 +697,8 @@ export class CatalogdetailComponent implements OnInit {
                 // qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
-<<<<<<< HEAD
                 itemPriceInfo: [true],
-=======
-               itemPriceInfo: [true],
                autoconfirm: [true],
->>>>>>> refs/remotes/origin/1.7-order
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -1273,12 +1277,7 @@ console.log(this.catalog.catalogName);
             //  'qendtime': edtime,
             'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
-<<<<<<< HEAD
             'itemPriceInfo': this.prefillData.showPrice,
-=======
-           'itemPriceInfo': this.prefillData.showPrice,
-           'autoconfirm':this.prefillData.autoConfirm,
->>>>>>> refs/remotes/origin/1.7-order
             'advancePaymentStatus': this.prefillData.paymentType,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -2187,6 +2186,15 @@ console.log('hi submit');
                 } else {
                     this.hometimewindow_list.push(result);
                 }
+            }
+        });
+    }
+    showCreateItemPopup (){
+        this.addtimewindowdialogRef = this.dialog.open(CreateItemPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
             }
         });
     }

@@ -56,14 +56,9 @@
                 </mat-radio-group>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'calculationType')" errorMsg="Please enter your coupon type.">
                 </app-field-error-display>
-<<<<<<< HEAD
                 <!-- <mat-form-field class="example-full-width">
-                  <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> ₹ &nbsp;</span>
-=======
-                <mat-form-field class="example-full-width">
                   <span matPrefix *ngIf="curtype == 'Fixed'" class='rupee'> 
                     <span class="price rupee-font"> &#8377; </span> &nbsp;</span>
->>>>>>> refs/remotes/origin/1.7-order
                   <span matPrefix *ngIf="curtype == 'Percentage'" class='rupee'> % &nbsp;</span>
                     <input matInput type="text" class="form-control cupn-price" min="0" max={{maxlimit}}  (keypress)="isNumeric($event)" (keyup)="isvalid($event)"
                       id="coupValue" [placeholder]="valueCaption" formControlName="coupValue" autocomplete="off">
