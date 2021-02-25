@@ -31,7 +31,7 @@ export class CatalogdetailComponent implements OnInit {
     toppings = new FormControl();
     toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
     catalog_id;
-    rupee_symbol = 'â‚¹';
+    rupee_symbol = 'Ã¢â€šÂ¹';
     item_hi_cap = Messages.ITEM_HI_CAP;
     item_name_cap = Messages.ITEM_NAME_CAP;
     short_desc_cap = Messages.SHORT_DESC_CAP;
@@ -230,8 +230,8 @@ export class CatalogdetailComponent implements OnInit {
         private fb: FormBuilder,
         private activated_route: ActivatedRoute,
         private wordProcessor: WordProcessor,
-    private lStorageService: LocalStorageService,
-    private snackbarService: SnackbarService,
+        private lStorageService: LocalStorageService,
+        private snackbarService: SnackbarService,
         public fed_service: FormMessageDisplayService) {
         this.dstart_time = { hour: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_STARTTIME, ['h:mm A']).format('mm'), 10) };
         this.dend_time = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
