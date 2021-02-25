@@ -9,11 +9,13 @@ import { MaterialModule } from '../../../../../shared/modules/common/material.mo
 import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.module';
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { CreateCouponComponent } from './create-coupon/create-coupon.component';
 
 @NgModule({
     declarations: [
         PosCouponsComponent,
-        PosCouponDetailComponent
+        PosCouponDetailComponent,
+        CreateCouponComponent
     ],
     imports: [
         CouponsRoutingModule,

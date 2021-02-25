@@ -1,0 +1,34 @@
+
+    <h1 class="mat-dialog-title">Add
+      <button  mat-dialog-close  tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+      <!-- <mat-form-field appearance="fill">
+        <label>Services</label>
+        <mat-select placeholder="Service" formControlName="services" [multiple]="true">
+          <mat-option *ngFor=" let service of service_list" [value]="service.name">
+            {{service.name}}
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field> -->
+      <mat-selection-list #services>
+
+        <mat-list-option *ngFor=" let service of service_list">
+
+          {{service.name}}
+
+        </mat-list-option>
+
+      </mat-selection-list>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" >Save</button>
+    </div>
+    </mat-dialog-actions>
+
