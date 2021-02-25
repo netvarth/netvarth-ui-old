@@ -237,7 +237,7 @@
                                                     <span *ngIf="his_wait.orderItem">{{his_wait.orderItem.length}}</span>
                                                 </td>
                                                 <td data-title="Status" class="td4">
-                                                    <span>{{his_wait.orderStatus}}</span>
+                                                    <span>{{his_wait.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':his_wait.orderStatus| capitalizeFirst}}</span>
                                                 </td>
 
                                                 <td data-title="" class="td5" >

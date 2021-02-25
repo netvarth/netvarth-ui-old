@@ -12,7 +12,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 
 @Component({
-  'selector': 'app-payment-link.component',
+  'selector': 'app-payment-link',
   'templateUrl': './payment-link.component.html'
 })
 

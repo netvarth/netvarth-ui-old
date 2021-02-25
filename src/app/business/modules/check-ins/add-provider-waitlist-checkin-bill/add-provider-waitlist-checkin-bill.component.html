@@ -1251,15 +1251,19 @@
 																capitalizeFirst}}:</span>
 															<span class="dynamic">{{spname}}</span>
 														</span>
-														<span *ngIf="source === 'order'"
-															[class.red]="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
+														<div class="red" *ngIf="bill_data.billStatus === 'Cancel'">
 															<!-- <span class="title">Order Id </span>
 															<span class="dynamic">{{checkin.orderNumber}}</span> -->
+<<<<<<< HEAD
 															<div
 																*ngIf="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
 																Cancelled
 															</div>
 														</span>
+=======
+															Cancelled
+														</div>
+>>>>>>> refs/remotes/origin/1.7-order
 													</div>
 												</div>
 											</div>

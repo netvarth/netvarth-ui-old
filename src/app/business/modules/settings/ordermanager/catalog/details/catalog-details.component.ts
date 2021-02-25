@@ -561,6 +561,7 @@ export class CatalogdetailComponent implements OnInit {
                 'deliveryCharge': form_data.deliverycharge || ''
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': this.payAdvance,
             'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
             'preInfo': {
@@ -623,7 +624,12 @@ export class CatalogdetailComponent implements OnInit {
                 //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
+<<<<<<< HEAD
                 itemPriceInfo: [true],
+=======
+               itemPriceInfo: [true],
+               autoconfirm: [true],
+>>>>>>> refs/remotes/origin/1.7-order
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -683,7 +689,12 @@ export class CatalogdetailComponent implements OnInit {
                 // qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
+<<<<<<< HEAD
                 itemPriceInfo: [true],
+=======
+               itemPriceInfo: [true],
+               autoconfirm: [true],
+>>>>>>> refs/remotes/origin/1.7-order
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -1031,6 +1042,7 @@ console.log(this.catalog.catalogName);
             'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
+            'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1261,7 +1273,12 @@ console.log(this.catalog.catalogName);
             //  'qendtime': edtime,
             'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
+<<<<<<< HEAD
             'itemPriceInfo': this.prefillData.showPrice,
+=======
+           'itemPriceInfo': this.prefillData.showPrice,
+           'autoconfirm':this.prefillData.autoConfirm,
+>>>>>>> refs/remotes/origin/1.7-order
             'advancePaymentStatus': this.prefillData.paymentType,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1686,6 +1703,7 @@ console.log('hi submit');
                 'deliveryCharge': form_data.deliverycharge
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': form_data.advancePaymentStatus,
             'advanceAmount': form_data.advancePaymentStatus === 'FIXED' ? form_data.advancePayment : 0,
             'preInfo': {

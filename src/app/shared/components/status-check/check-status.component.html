@@ -222,7 +222,7 @@
               </div>
               <div class="txt-align-center" *ngIf="type == 'order'">
                 <span class="green">
-                  Status: {{statusInfo.orderStatus==='Order Received' ? 'Order Placed':statusInfo.orderStatus}}
+                  Status: {{statusInfo.orderStatus==='Order Received' ? 'Order Placed - Waiting for confirmation':statusInfo.orderStatus| capitalizeFirst}}
                 </span>
               </div>
               <div class="notes"

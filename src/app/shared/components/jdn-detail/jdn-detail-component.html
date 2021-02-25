@@ -13,7 +13,8 @@
                     {{jdnDetailList.displayNote}}
                 </div>
                 <div class="name" *ngIf="jdnDetailList.discPercentage">
-                    You will get a discount of <strong>{{jdnDetailList.discPercentage}}% (upto ₹{{jdnDetailList.discMax}})</strong> for every visit.
+                    You will get a discount of <strong>{{jdnDetailList.discPercentage}}% (upto <span class="rupee-font">{{jdnDetailList.discMax |
+                        currency:'&#8377;'}}</span>)</strong> for every visit.
                 </div>
             </div>
             <div class="outer3" *ngIf="jdnDetailList.label">

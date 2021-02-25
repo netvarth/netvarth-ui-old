@@ -98,6 +98,9 @@ export class CustomerDetailComponent implements OnInit {
     todayvisitDetails: any = [];
     futurevisitDetails: any = [];
     historyvisitDetails: any = [];
+    ordervisitDetails: any = [];
+    todayordervisitDetails: any = [];
+    futureordervisitDetails: any = [];
     customerAction = '';
     waitlistModes = {
         WALK_IN_CHECKIN: 'Walk in Check-in',
@@ -116,9 +119,13 @@ export class CustomerDetailComponent implements OnInit {
     communication_history: any = [];
     todayVisitDetailsArray: any = [];
     futureVisitDetailsArray: any = [];
+    todayorderVisitDetailsArray: any = [];
+    futureorderVisitDetailsArray: any = [];
     showMoreFuture = false;
-    showMoreToday = false;
+    showMoreToday = false;    
     showMoreHistory = false;
+    showMoreorderFuture = false;
+    showMoreorderToday = false;
     selectedDetailsforMsg: any = [];
     uid;
     customernotes = '';
@@ -279,6 +286,7 @@ export class CustomerDetailComponent implements OnInit {
                                                 this.getCustomerTodayVisit();
                                                 this.getCustomerFutureVisit();
                                                 this.getCustomerHistoryVisit();
+                                                this.getCustomerOrderVisit();
                                             }
                                         }
                                     }
@@ -559,37 +567,42 @@ export class CustomerDetailComponent implements OnInit {
             if (form_data.customer_id) {
                 post_data['jaldeeId'] = form_data.customer_id;
             }
-            this.provider_services.updateProviderCustomer(post_data)
-                .subscribe(
-                    data => {
-                        this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-                        this.snackbarService.openSnackBar('Updated Successfully');
-                        const qParams = {};
-                        qParams['pid'] = data;
-                        if (this.source === 'checkin' || this.source === 'token') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
-                                }
-                            };
-                            this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-                        } else if (this.source === 'appointment') {
-                            const navigationExtras: NavigationExtras = {
-                                queryParams: {
-                                    ph: form_data.mobile_number,
-                                    checkin_type: this.checkin_type
-                                }
-                            };
-                            this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-                        } else {
-                            this.router.navigate(['provider', 'customers']);
-                        }
-                    },
-                    error => {
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        this.disableButton = false;
-                    });
+            if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL' && !form_data.customer_id) {
+                this.snackbarService.openSnackBar('Please provide ' + this.customer_label + ' id', { 'panelClass': 'snackbarerror' });
+                this.disableButton = false;
+            } else {
+                this.provider_services.updateProviderCustomer(post_data)
+                    .subscribe(
+                        data => {
+                            this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
+                            this.snackbarService.openSnackBar('Updated Successfully');
+                            const qParams = {};
+                            qParams['pid'] = data;
+                            if (this.source === 'checkin' || this.source === 'token') {
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                        ph: form_data.mobile_number,
+                                        checkin_type: this.checkin_type
+                                    }
+                                };
+                                this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+                            } else if (this.source === 'appointment') {
+                                const navigationExtras: NavigationExtras = {
+                                    queryParams: {
+                                        ph: form_data.mobile_number,
+                                        checkin_type: this.checkin_type
+                                    }
+                                };
+                                this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
+                            } else {
+                                this.router.navigate(['provider', 'customers']);
+                            }
+                        },
+                        error => {
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                            this.disableButton = false;
+                        });
+            }
         }
     }
     confirmApptBlock(id) {
@@ -790,6 +803,20 @@ export class CustomerDetailComponent implements OnInit {
             }
         );
     }
+    getCustomerOrderVisit() {
+        this.loading = true;
+        this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
+            (data: any) => {
+                this.ordervisitDetails = data;
+                this.todayorderVisitDetailsArray = data.todayOrders;
+                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = data.futureOrders;
+                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                console.log(this.ordervisitDetails);
+                this.loading = false;
+            }
+        );
+    }
     stopprop(event) {
         event.stopPropagation();
     }
@@ -847,8 +874,10 @@ export class CustomerDetailComponent implements OnInit {
     gotoCustomerDetail(visit, time_type) {
         if (visit.waitlist) {
             this.router.navigate(['provider', 'check-ins', visit.waitlist.ynwUuid], { queryParams: { timetype: time_type } });
-        } else {
+        } else  if (visit.appointmnet) {
             this.router.navigate(['provider', 'appointments', visit.appointmnet.uid], { queryParams: { timetype: time_type } });
+        } else {
+            this.router.navigate(['provider', 'orders', visit.uid], { queryParams: { timetype: time_type } });
         }
     }
     goBack() {
@@ -909,8 +938,10 @@ export class CustomerDetailComponent implements OnInit {
         let uuid;
         if (this.selectedDetailsforMsg.waitlist) {
             uuid = this.selectedDetailsforMsg.waitlist.ynwUuid;
-        } else {
+        } else if(this.selectedDetailsforMsg.appointmnet){
             uuid = this.selectedDetailsforMsg.appointmnet.uid;
+        } else {
+            uuid = this.selectedDetailsforMsg.uid;
         }
         this.provider_services.getProviderInbox()
             .subscribe(
@@ -961,6 +992,25 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futurevisitDetails = this.futureVisitDetailsArray.slice(0, 5);
             this.showMoreFuture = false;
+        }
+    }
+
+    showorderMore(type) {
+        if (type === 'today') {
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray;
+            this.showMoreorderToday = true;
+        } else if (type === 'future') {
+            this.futureordervisitDetails = this.futureorderVisitDetailsArray;
+            this.showMoreorderFuture = true;
+        }
+    }
+    showorderLess(type) {
+        if (type === 'today') {
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+            this.showMoreorderToday = false;
+        } else if (type === 'future') {
+            this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+            this.showMoreorderFuture = false;
         }
     }
     getSingleTime(slot) {

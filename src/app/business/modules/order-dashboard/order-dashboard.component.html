@@ -192,7 +192,7 @@
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
                 <div  [ngClass]="order.orderStatus === 'Cancelled'?'darkorange bold':'darkblue bold'">
-                  {{order.orderStatus}}
+                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
@@ -365,7 +365,7 @@
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
                 <div [ngClass]="order.orderStatus === 'Cancelled'?'darkorange bold':'darkblue bold'">
-                  {{order.orderStatus}}
+                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
@@ -537,7 +537,7 @@
                   {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                 </div>
                 <div [ngClass]="order.orderStatus === 'Cancelled'?'darkorange bold':'darkblue bold'">
-                  {{order.orderStatus}}
+                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>

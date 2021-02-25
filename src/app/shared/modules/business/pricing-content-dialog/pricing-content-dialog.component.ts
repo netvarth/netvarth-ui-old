@@ -5,7 +5,8 @@ export interface PricingDialogData {
   part: 'multiChannelBookings' | 'apptManager' | 'qManager' | 'webAndQR' | 'busListing' | 'privateCustomerDB' | 'teleHealth' | 'onlinePayments' |
   'posBilling' | 'smsEmailCampaigns' | 'tvDisplayborad' | 'multiDept_Spec' | 'medicalRecords' | 'ePrescription' | 'liveTracking' | 'customDomain' | 
   'discountCoupons' |  'b2bReferral' | 'frontDeskLite' | 'dedicatedRelationMgr' | 'multiUser' | 'personalMobile' | 'seo' | 'performAnaysis' | 
-  'frontDeskFull' | 'dedicatedCallCenter';
+  'frontDeskFull' | 'dedicatedCallCenter'| 'customBrandLimits' | 'jaldeeListing';
+  type: 'patients' | 'customers';
 }
 
 /**
@@ -19,9 +20,11 @@ export interface PricingDialogData {
 })
 export class PricingContentDialog {
   part: string;
+  type: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: PricingDialogData) 
     { 
       this.part = data.part;
+      this.type = data.type;
     }
 }
