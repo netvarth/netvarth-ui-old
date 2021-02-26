@@ -67,7 +67,7 @@
 											<span class="title">{{gstin_cap}} </span>
 											<span class="dynamic">{{gstnumber | capitalizeFirst}}</span>
 										</span>
-										<span>Thrissur</span>
+										<!-- <span>Thrissur</span> -->
 									</span>
 								</div>
 							</div>
@@ -141,6 +141,11 @@
 									<mat-icon>more_vert</mat-icon>
 								</button>
 								<mat-menu #topmenu="matMenu">
+									<button mat-menu-item data-toggle="modal" data-target="#exampleModalDeliveryCharge" 
+									   (click)="showDeliveryCharge()" *ngIf="source==='order' && checkin.homeDelivery">    
+										<span *ngIf="bill_data.deliveryCharges > 0">Update Delivery Charge</span>
+										<span *ngIf="bill_data.deliveryCharges === 0">Add Delivery Charge</span>
+									</button>																	
 									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault2"
 									(click)="orderDiscountSelected()" *ngIf="(discounts.length > 0)">
 										Apply Order Discount
@@ -153,13 +158,7 @@
 									*ngIf="(jCouponsList.length>0)" (click)="jCouponSelected()">
 									 Apply Jaldee Coupon
 								 </button>
-									<!-- <button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3">
-										Add Display Note
-									</button>
-									<button mat-menu-item>
-										Add Private Note
-									</button> -->
-									<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3" (click)="disaplynoteSelected()">
+								<button mat-menu-item data-toggle="modal" data-target="#exampleModalSizeDefault3" (click)="disaplynoteSelected()">
 										<span *ngIf="!displayNoteedit">{{add_display_note}}</span>
 										<span *ngIf="displayNoteedit">{{update_display_note}}</span>
 									</button>
@@ -219,10 +218,12 @@
 													service.price) |
 													currency:'&#8377;'}}</span>
 
-												<div
+												<!-- <div
+													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
+												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
+													<button mat-icon-button [matMenuTriggerFor]="tdmenu"
 													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
 												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
 														<mat-icon>more_horiz</mat-icon>
 													</button>
 													<mat-menu #tdmenu="matMenu">
@@ -244,12 +245,14 @@
 															Remove Service
 														</button>
 													</mat-menu>
-												</div>
+												<!-- </div> -->
 
-												<div
+												<!-- <div
+													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
+													<button mat-icon-button [matMenuTriggerFor]="tdmenu" 
 													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
 														<mat-icon>more_horiz</mat-icon>
 													</button>
 													<mat-menu #tdmenu="matMenu">
@@ -271,10 +274,11 @@
 															Remove Service
 														</button>
 													</mat-menu>
-												</div>
+												<!-- </div> -->
 
 
 											</td>
+										    <!-- Modal for Service level apply discount -->
 											<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1"
 												role="dialog" aria-labelledby="exampleModalSizeDefault"
 												aria-hidden="true">
@@ -301,34 +305,6 @@
 													</div>
 												</div>
 											</div>
-
-											<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1"
-												role="dialog" aria-labelledby="exampleModalSizeDefault"
-												aria-hidden="true">
-												<div class="modal-dialog modal-dialog-centered" role="document">
-													<div class="modal-content">
-														<div class="modal-body">
-															<div class="form-group mb-0 row">
-																<label for="example-number-input"
-																	class="col-12 col-form-label">number</label>
-																<div class="col-12">
-																	<input class="form-control" type="number" value="42"
-																		id="example-number-input">
-																</div>
-															</div>
-														</div>
-														<div class="modal-footer p-0">
-															<button type="button"
-																class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
-																data-dismiss="modal">Close</button>
-															<button type="button"
-																class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add
-															</button>
-														</div>
-													</div>
-												</div>
-											</div>
-
 											<div class="discount-row" *ngFor="let discount of service.discount">
 												<div class="name">{{discount.name}}</div>
 												<div class="price">
@@ -350,9 +326,6 @@
 										</tr>
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg">
-											<!-- <td class="border-top-0 pl-0 py-4">Front-End Development</td>
-											<td class="border-top-0 text-right py-4">120</td>
-											<td class="border-top-0 text-right py-4"><sup>Tax</sup>$40.00</td> -->
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
 											<td class="border-top-0 text-right py-4">{{item.quantity}}</td>
 											<td class="border-top-0 text-right py-4"> <span class="rupee-font"> <sup
@@ -361,13 +334,13 @@
 													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
 
 
-												<div *ngIf="bill_data.billStatus!='Settled' && pos">
-													<button mat-icon-button [matMenuTriggerFor]="tdmenu">
+												<!-- <div *ngIf="bill_data.billStatus!='Settled' && pos"> -->
+													<button mat-icon-button [matMenuTriggerFor]="tdmenu"  *ngIf="bill_data.billStatus!='Settled' && pos">
 														<mat-icon>more_horiz</mat-icon>
 													</button>
 													<mat-menu #tdmenu="matMenu">
 														<button mat-menu-item data-toggle="modal"
-															data-target="#exampleModalSizeDefault7"
+															data-target="#exampleModaItemDiscount"
 															(click)="itemDiscCoupSec(i)"
 															*ngIf="itemdiscounts.length > 0">
 															Apply Discount
@@ -384,7 +357,7 @@
 															Remove Item
 														</button>
 													</mat-menu>
-												</div>
+												<!-- </div> -->
 
 												<div class="discount-row" *ngFor="let discount of item.discount">
 													<div class="name">{{discount.name}}</div>
@@ -403,8 +376,8 @@
 												</div>
 
 											</td>
-
-											<div class="modal fade" id="exampleModalSizeDefault7" tabindex="-1"
+											<!-- Modal for Item level apply discount -->
+											<div class="modal fade" id="exampleModaItemDiscount" tabindex="-1"
 												role="dialog" aria-labelledby="exampleModalSizeDefault"
 												aria-hidden="true">
 												<div class="modal-dialog modal-dialog-centered" role="document"
@@ -420,7 +393,7 @@
 															<div class="modal-footer p-0">
 																<button type="button"
 																	class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
-																	data-dismiss="modal" #closebutton1>Close</button>
+																	data-dismiss="modal" #itemdiscountapply>Close</button>
 																<button type="button"
 																	class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
 																	(click)="applyItemDiscount(bill_data.items[i])">Add
@@ -431,30 +404,11 @@
 												</div>
 											</div>
 										</tr>
-
 									</tbody>
-
 								</table>
 							</div>
-							<!-- Modal for apply discount -->
-							<!-- <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-body">
-											<select class="form-control" *ngIf="itemdiscounts.length > 0">
-												<option>Disc 1</option>
-												<option>Disc 2</option>
-												<option>Disc 3</option>
-											</select>
-										</div>
-										<div class="modal-footer p-0">
-											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
-										</div>
-									</div>
-								</div>
-							</div> -->
-							<!-- Modal for Change qty -->
+				
+							<!-- Modal for Change qty For Service and Item -->
 							<div class="modal fade" id="exampleModalSizeDefault1" tabindex="-1" role="dialog"
 								aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered" role="document">
@@ -462,19 +416,25 @@
 										<div class="modal-body">
 											<div class="form-group mb-0 row">
 												<label for="example-number-input"
-													class="col-12 col-form-label">number</label>
+													class="col-12 col-form-label"> {{qty_cap}}</label>
 												<div class="col-12">
 													<input class="form-control" type="number" value="42"
-														id="example-number-input">
+														id="example-number-input" type="number" min="0"
+														max="{{qty_limit}}" (keypress)="isNumber($event)"
+														(keyup)="isvalid($event)" matInput
+														value="1" size="3"
+														[(ngModel)]="curSelItm.qty"
+														[ngModelOptions]="{standalone: true}"
+														(blur)="blurQty($event.target.value, curSelItm)">
 												</div>
 											</div>
 										</div>
 										<div class="modal-footer p-0">
 											<button type="button"
 												class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
-												data-dismiss="modal">Close</button>
+												data-dismiss="modal" #itemserviceqtynew>Close</button>
 											<button type="button"
-												class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button>
+												class="btn btn-primary lh-p6 rounded-0 font-weight-bold" (click)="addService_Item()">Add </button>
 										</div>
 									</div>
 								</div>
@@ -577,9 +537,37 @@
 											(click)="applyJCoupon(selOrderProviderjCoupon)">{{apply_cap}}</button>
 									
 
-										<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal"
+										<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal" #closeJcDiscPc
 								 			(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Modal For delivery charge -->
+							<div  *ngIf="showDeliveryChargeSection" class="modal fade" id="exampleModalDeliveryCharge" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-body">
+												<div class="form-group mb-0 row">
+														<label for="example-number-input"
+															class="col-12 col-form-label"> Delivery Charge</label>
+														<div class="col-12">
+															<input class="form-control" type="number" 
+																id="example-number-input" type="number" min="0"
+																max="{{qty_limit}}" (keypress)="isNumber($event)"
+																(keyup)="isvalid($event)" matInput
+																value="1" size="3"
+																[(ngModel)]="deliveryCharge"
+																[ngModelOptions]="{standalone: true}">
+														</div>
+													</div>															
+											</div>
+										<div class="modal-footer p-2">																	
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal" #closeDelivery
+													(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+											<button  type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+												(click)="applyDeliveryCharge()">{{apply_cap}}</button>
 										</div>
 									</div>
 								</div>
@@ -614,7 +602,7 @@
 												<span style="display:grid" *ngIf="!privateNoteedit">{{add_note_btn}}</span>
 												<span style="display:grid" *ngIf="privateNoteedit">{{update_note_btn}}</span>
 											</button>
-											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0"
+											<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal" #closenotesdialog
 										     	(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 										</div>
 									</div>
@@ -632,7 +620,7 @@
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
 									  <mat-form-field>
-				      				<div class="section-three" *ngIf="bill_data && billNotesExists">
+				      				<!-- <div class="section-three" *ngIf="bill_data && billNotesExists">
 										<a class="learnmore-pointer" id="customer-help"
 											(click)="billNotesClicked()">Bill notes</a>
 										<div class="bill-notes"
@@ -663,11 +651,11 @@
 												</div>
 											</ul>
 										</div>
-									</div>
+									</div> -->
 									
 
-										<!-- <mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly> -->
+										<mat-label>Date</mat-label>
+										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
 									  </mat-form-field>
 									  <mat-datepicker #picker></mat-datepicker>
 									</mat-expansion-panel>
@@ -720,7 +708,7 @@
 									</div>
 								</div>
 								<div class="hr_content" *ngIf="bill_data.deliveryCharges > 0">
-									<div class="name"><span class="tax-top">Delivery Charge</span></div>
+									<div class="flx_1">Delivery Charge</div>
 									<div class="rupee-font">(+){{bill_data.deliveryCharges | currency:'&#8377;'}}</div>
 								</div>
 								<div class="hr_content">
