@@ -100,3 +100,45 @@
 .mat-grid-tile .mat-grid-tile-footer {
     height: 60px !important;
 }
+.socicon-facebook::before {
+    font-size: 4.5rem !important;
+    margin-left: 10px !important;
+    color: #3f51b5 !important;
+    line-height: unset !important;
+}
+.socicon-twitter::before {
+    color: #0b7bb4 !important;
+    font-size: 4rem !important;
+    margin-left: 14px !important;
+    line-height: unset !important;
+}
+.socicon-youtube::before {
+    color: #e50b0b !important;
+    font-size: 4rem !important;
+    margin-left: 11px !important;
+    line-height: unset !important;
+}
+.socicon-linkedin::before {
+    font-size: 3.2rem !important;
+    color: #266c95 !important;
+    margin-left: 20px !important;
+    line-height: unset !important;
+}
+.socicon-pinterest::before {
+    color: #cc0c0c !important;
+    font-size: 4rem !important;
+    margin-left: 12px !important;
+    line-height: unset !important;
+}
+.socicon-instagram::before {
+    line-height: unset !important;
+    font-size: 3.8rem;
+    margin-left: 12px;
+    color: #b721d1;
+}
+.flaticon2-world::before {
+    color: grey;
+    font-size: 4rem;
+    margin-left: 11px;
+    line-height: unset !important;
+}

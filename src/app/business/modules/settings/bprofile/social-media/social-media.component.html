@@ -18,20 +18,20 @@
                     <div class="ico_bdr" [class]="social.iconClass">
                     </div>
                 </mat-grid-tile-header>
-                <div class="mt-5 p-2">
+                <div class="mt-9 p-2">
                     <div class="txt_center">
                         {{social.displayName}}</div>
                     <div class="form-group mb-3"><input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" type="text"
-                        class="form-control1 mgn-up-10" placeholder="Insert link"></div>
+                        class="form-control mgn-up-10" placeholder="Insert link"></div>
                     <div style="font-size: 0.7rem;text-align: center;">
                         Get more bookings with {{social.displayName}}.<br>
                         Link your {{social.displayName}} Business Page with Jaldee.
                     </div>
                 </div>
                 <mat-grid-tile-footer class="bdr_top">
-                    <div class="wdth_50" ><button (click)="deleteSocialmedia(social.key)" type="button" class="btn btn-light-danger px-3 py-1"> Delete </button></div>
+                    <div class="wdth_50" ><button (click)="deleteSocialmedia(social.key)" type="button" class="btn btn-light-danger btn-square px-3 py-1"> Delete </button></div>
                     <div class="wdth_50">
-                        <button style="float: right;"  type="button" class="btn btn-light-success px-3 py-1" *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"> Save </button>
+                        <button style="float: right;"  type="button" class="btn btn-light-success px-3 py-1 btn-square" *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"> Save </button>
                     </div>
                 </mat-grid-tile-footer>
             </mat-grid-tile>
