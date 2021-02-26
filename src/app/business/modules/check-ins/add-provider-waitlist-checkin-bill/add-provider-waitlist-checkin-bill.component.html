@@ -305,7 +305,8 @@
 													</div>
 												</div>
 											</div>
-											<div class="discount-row" *ngFor="let discount of service.discount">
+
+											<!-- <div class="discount-row" *ngFor="let discount of service.discount">
 												<div class="name">{{discount.name}}</div>
 												<div class="price">
 													<span class="rupee-font">(-){{discount.discountValue
@@ -314,15 +315,25 @@
 														(click)="removeServiceDiscount(service.serviceId, discount.id)"
 														class="fa fa-window-close" aria-hidden="true"></i>
 												</div>
-											</div>
+											</div> -->
 
-											<div class="c-row three"
+											<!-- <div class="c-row three"
 												*ngIf="service.discount && service.discount.length > 0">
 												<div class="name">{{sub_tot_cap}}</div>
 												<div class="price rupee-font">{{service.netRate |
 													currency:'&#8377;'}}</div>
-											</div>
+											</div> -->
 
+										</tr>
+										<tr>
+											<td></td>
+											<td class="text-right font-size-sm ">Item Level Discount</td>
+											<td class="text-right rupee-font font-size-sm">-₹ 45</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td class="text-right font-size-sm font-weight-boldest">Sub total</td>
+											<td class="text-right rupee-font font-size-sm font-weight-boldest">₹ 4985</td>
 										</tr>
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg">
@@ -616,7 +627,7 @@
 									<mat-expansion-panel>
 									  <mat-expansion-panel-header>
 										<mat-panel-title>
-											<i class="flaticon2-layers-1"></i> Notes
+											<i class="flaticon2-layers-1 mr-3"></i> Notes
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
 									  <mat-form-field>
