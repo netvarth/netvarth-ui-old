@@ -89,3 +89,21 @@
 .clr_red {
     color: #dc3545;
 }
+.fade {
+    opacity: 5 !important;
+}
+.lh-p6 {
+    line-height: 0.6;
+}
+.fnt-p8 {
+    font-size: 0.8rem !important;
+}
+.fnt-p7 {
+    font-size: 0.7rem  !important;
+}
+.radii {
+    border-radius: 5px;
+}
+.lh-1 {
+    line-height: 1 !important;
+}

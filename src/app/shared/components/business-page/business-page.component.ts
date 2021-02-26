@@ -25,6 +25,8 @@ import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import * as $ from 'jquery'; 
 
 @Component({
   selector: 'app-business-page',
@@ -274,6 +276,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountEncId: string;
   userEncId: string;
 
+  bsModalRef: BsModalRef;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -290,7 +293,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private domainConfigService: DomainConfigGenerator
+    private domainConfigService: DomainConfigGenerator,
+    private modalService: BsModalService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -1506,6 +1510,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
       sel_date: curdate,
       cur: this.changedate_req,
       unique_id: this.provider_id,
@@ -1529,6 +1534,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
     const queryParam = {
       loc_id: locid,
+      locname: locname,
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
@@ -1674,14 +1680,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         serdet: serv
       };
     }
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+
+    const initialState = {
+      data: servData
+    };
+
+    this.bsModalRef = this.modalService.show(ServiceDetailComponent, {
+      initialState,
+      class: 'commonpopupmainclass popup-class specialclass service-detail-modal',
+      backdrop: "static"
+    });
+
+    $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
+
+/*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
       width: '40%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
       disableClose: true,
       data: servData
     });
     this.servicedialogRef.afterClosed().subscribe(() => {
-    });
+    }); */
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {

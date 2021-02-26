@@ -6,6 +6,7 @@
     <div class="card-body">
         <!-- Title -->
         <!-- <div class="card-head"> -->
+            <div style="height:100px;">
             <div class="text-center service-image"
                 *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                 <i class="fa phon-icon"
@@ -20,7 +21,13 @@
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
             </div>
             <div class="text-center service-image"
-                *ngIf="service.serviceType && service.serviceType != 'virtualService'">
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                <img class="card-img img-responsive" src="assets/images/donation.png" alt="Donation Image">
+            </div>
+            <div class="text-center service-image"
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService'" style="width: 140px !important;">
+                <img class="card-img img-responsive" src="assets/images/meeting_Artboard 1.png" alt="Physical Service Image">
+            </div> 
             </div>
             <div class="service-details">
                 <div class="module line-clamp m-0"
@@ -32,10 +39,11 @@
         <!-- </div>
         <div class="card-content"> -->
                 <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6>
+                <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>
                 <p class="card-text donationAmount" *ngIf="item.type=='donation'">
-                    <span class="rupee-font bold">{{service.minDonationAmount| currency:'&#8377;'}}</span>
+                    <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount| currency:'':''}}</span>
                     To
-                    <span class="rupee-font bold">{{service.maxDonationAmount| currency:'&#8377;'}}</span>
+                    <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.maxDonationAmount| currency:'':''}}</span>
                 </p>
                 <p class="card-text peopleAhead" *ngIf="personsAheadText">{{personsAheadText}}</p>
                 <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
@@ -48,7 +56,7 @@
                 <div class="service-buttons">
                     <button type="button" class="btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
                     <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
-                        class="btn pointer-cursor btn-warning moreDetails">...</button>
+                        class="btn pointer-cursor btn-warning moreDetails">. . .</button>
                 </div>
         <!-- </div> -->
             </div>
@@ -128,8 +136,12 @@
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
                 capitalizeFirst}}</a>
         </h4>
-        <h6 class="qualification">BDS</h6>
-        <label class="specialization">DENTIST</label>
+        <h6 class="qualification" *ngIf="user.hasOwnProperty('qualifications') && user.qualifications.length>0">
+            {{user.qualifications[0]}}{{ user.qualifications.length > 1 ? ", +" + (user.qualifications.length-1) : "" }}
+        </h6>
+        <h6 class="qualification" *ngIf="(!user.hasOwnProperty('qualifications')) || user.qualifications.length==0" style="height:17px;"></h6>
+        <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
+        <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
         <p class="availability">Next Available Time<br/>Feb 15, 02:00 PM</p>
         <button type="button" class="btn btn-outline-warning">Book Now</button>
     </div>

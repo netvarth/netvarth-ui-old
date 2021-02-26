@@ -210,7 +210,7 @@
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2" (click)="customerGroupSelection('all')"
-          [ngClass]="{'highlight': selectedGroup == 'all'}">All patients</div>
+          [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
         <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Group</button>
         <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)"
@@ -242,7 +242,7 @@
         <div class="p-3">
           <h3 class="align-items-start flex-column">
             <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all'">All
-              Patients</span>
+              {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
           </h3>
@@ -250,9 +250,9 @@
         <div class="p-2 row">
           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()"
-              *ngIf="!showCustomers">Create Patient</button>
+              *ngIf="!showCustomers">Create {{customer_label | capitalizeFirst}}</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-              *ngIf="selectedGroup !== 'all' && !showCustomers">Add Patient</button>
+              *ngIf="selectedGroup !== 'all' && !showCustomers">Add {{customer_label | capitalizeFirst}}</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10"
               *ngIf="selectedGroup == 'all' && groups.length == 0" data-toggle="modal"
               data-target="#exampleModalCenter">Create Group</button>
@@ -265,7 +265,7 @@
                     <div class="form-group">
                       <label for="exampleInputPassword1">Name <span class="text-danger">*</span></label>
                       <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Name"
-                        [(ngModel)]="groupName" (keypress)="resetError()" />
+                        [(ngModel)]="groupName" (keypress)="resetError()" autocomplete="off" />
                     </div>
                     <div class="form-group mb-1">
                       <label for="exampleTextarea">Description</label>
@@ -299,7 +299,7 @@
             </button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0 && !hide_msgicon"><i
-                class="fa fa-comments" aria-hidden="true"></i> </button>
+                class="flaticon2-chat-1" aria-hidden="true"></i> </button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showLabelPopup()"
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="label-icon"></i></button>
@@ -385,9 +385,15 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead *ngIf="customers.length > 0">
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 150px" class="pl-7"><span class="text-dark-75">
-                        <input type="checkbox" (change)="selectAll()" [checked]="allCustomerSelected">
-                        Name</span></th>
+                    <th style="min-width: 150px" class="pl-7" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
+                      <span class="text-dark-75">
+                        <input type="checkbox" (change)="selectAllcustomers($event)"
+                          [checked]="isAllCustomerSelected()">
+                        Name</span>
+                      <div class="customer-selected" *ngIf="selectedcustomersformsg.length > 0">
+                        {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
+                        : customer_label + 's'}} selected </div>
+                    </th>
                     <th class="hide_th" style="min-width: 100px">Id</th>
                     <th class="hide_th" style="min-width: 100px">Phone</th>
                     <th class="hide_th" style="min-width: 10px">DOB</th>
@@ -402,13 +408,13 @@
                       <div class="d-flex align-items-center">
                         <div class="pr-3">
                           <span class="symbol-label">
-                            <input type="checkbox" name="Checkboxes4" [checked]="customerSelected[i]"
-                              (change)="selectcustomers(i)" [disabled]="showText(customer)">
+                            <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
+                              (change)="selectcustomers(customer)" [disabled]="showText(customer)">
                           </span>
                         </div>
                         <div>
-                          <a href="#" class="text-dark-75 text-hover-primary mb-1 cust-name">{{customer.firstName}}
-                            {{customer.lastName}}</a>
+                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">{{customer.firstName}}
+                            {{customer.lastName}}</span>
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
@@ -432,15 +438,15 @@
                         {{customer.dob | date : dateFormat}}
                       </span>
                     </td>
-                    <td>
+                    <td *ngIf="!showCustomers">
                       <button class="hide_th" mat-flat-button (click)="CustomersInboxMessage(customer)">Message</button>
                       <i class="text-dark-50 flaticon2-chat-1 hidden_th" (click)="CustomersInboxMessage(customer)"></i>
                     </td>
-                    <td>
+                    <td *ngIf="!showCustomers">
                       <button mat-flat-button class="prof_btn hide_th" (click)="viewCustomer(customer)">Details</button>
                       <i class="text-dark-50 flaticon-profile-1 hidden_th" (click)="viewCustomer(customer)"></i>
                     </td>
-                    <td class="pr-0 text-right">
+                    <td class="pr-0 text-right" *ngIf="!showCustomers">
                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_horiz</mat-icon>
                       </button>
@@ -499,7 +505,6 @@
                       class="ki ki-bold-double-arrow-back icon-xs"></i></a>
                   <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
                       class="ki ki-bold-arrow-back icon-xs"></i></a>
-
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">23</a>
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary active mr-2 my-1">24</a>
@@ -508,7 +513,6 @@
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">27</a>
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">28</a>
                   <a href="#" class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1">...</a>
-
                   <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
                       class="ki ki-bold-arrow-next icon-xs"></i></a>
                   <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i

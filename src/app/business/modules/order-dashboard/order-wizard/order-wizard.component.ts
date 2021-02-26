@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -113,6 +113,8 @@ export class OrderWizardComponent implements OnInit {
   tooltipcls = '';
   showCouponWB: boolean;
   showCoupon = false;
+  screenWidth: number;
+  no_of_grids: any;
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
 
@@ -160,9 +162,22 @@ export class OrderWizardComponent implements OnInit {
       }
     });
   }
-  goBackToCheckout(futureAvailableTime ,queue) {
-    console.log(futureAvailableTime);
-    console.log(queue);
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    let divider;
+    const divident = this.screenWidth / 37.8;
+    if (this.screenWidth > 1000) {
+       divider = divident / 6;
+    } else if (this.screenWidth > 500 && this.screenWidth < 1000) {
+      divider = divident / 4;
+    } else if (this.screenWidth > 375 && this.screenWidth < 500) {
+      divider = divident / 3;
+    } else if (this.screenWidth < 375) {
+      divider = divident / 2;
+    }
+    this.no_of_grids = Math.round(divident / divider);
   }
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
@@ -363,8 +378,7 @@ export class OrderWizardComponent implements OnInit {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
     this.customer_email = address.email;
-    this.selectedAddress = address.firstName + ' ' + address.lastName + '</br>' + address.address + '</br>' + address.landMark + ',' + address.city + ',' + address.countryCode + ' ' + address.phoneNumber + '</br>' + address.email;
-    console.log(this.selectedAddress);
+    this.selectedAddress = address;
   }
   getCatalog() {
     this.getCatalogDetails().then(data => {
@@ -1177,5 +1191,6 @@ export class OrderWizardComponent implements OnInit {
   // }
 
 }
+
 
 

@@ -647,7 +647,7 @@ pre code {
   }
 }
 
-.row {
+:host .row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

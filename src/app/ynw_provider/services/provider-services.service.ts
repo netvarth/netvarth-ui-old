@@ -1926,4 +1926,50 @@ export class ProviderServices {
       const url = 'provider/mr/uploadMR/' + mrId;
       return this.servicemeta.httpPost(url, data);
    }
+   
+     // Customer Grouping
+  createCustomerGroup(data) {
+   const url = 'provider/customers/group';
+   return this.servicemeta.httpPost(url, data);
+ }
+ updateCustomerGroup(data) {
+   const url = 'provider/customers/group';
+   return this.servicemeta.httpPut(url, data);
+ }
+ getCustomerGroup() {
+   const url = 'provider/customers/group';
+   return this.servicemeta.httpGet(url);
+ }
+ getCustomerGroupById(id) {
+   const url = 'provider/customers/group/' + id;
+   return this.servicemeta.httpGet(url);
+ }
+ updateCustomerGroupStatus(id, status) {
+   const url = 'provider/customers/group/' + id + '/' + status;
+   return this.servicemeta.httpPut(url);
+ }
+ addCustomerToGroup(name, data) {
+   const url = 'provider/customers/group/' + name;
+   return this.servicemeta.httpPost(url, data);
+ }
+ removeCustomerFromGroup(name, data) {
+   const url = 'provider/customers/group/' + name;
+   return this.servicemeta.httpDelete(url, data);
+ }
+ updateOrder(data) {
+   const url = 'provider/orders';
+   return this.servicemeta.httpPut(url, data);
+ }
+ updateOrderItems(uid, data) {
+   const url ='provider/orders/item/' + uid;
+   return this.servicemeta.httpPut(url, data);
+ }
+ getDeliveryAddress(customerId) {
+   const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress';
+   return this.servicemeta.httpGet(url);
+ }
+ updateDeliveryaddress(customerId, data) {
+   const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
+   return this.servicemeta.httpPut(url, data);
+ }
 }

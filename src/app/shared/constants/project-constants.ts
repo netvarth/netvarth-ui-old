@@ -252,14 +252,14 @@ export const projectConstantsLocal = {
     insurance: { help: '', iconClass: 'veterinarydoctor_doc' }
   },
   SOCIAL_MEDIA: [
-    { key: 'facebook', iconClass: 'fa fa-facebook-square fb', iconImg: 'facebook.png', displayName: 'Facebook' },
-    { key: 'twitter', iconClass: 'fa fa-twitter-square tw', iconImg: 'twitter.png', displayName: 'Twitter' },
-    { key: 'youtube', iconClass: 'youTube youtube', iconImg: 'youtube.png', displayName: 'Youtube' },
-    { key: 'linkedin', iconClass: 'fa fa-linkedin lkd', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
-    { key: 'pinterest', iconClass: 'fa fa-pinterest-square pntr', iconImg: 'pinterest.png', displayName: 'Pinterest' },
-    { key: 'instagram', iconClass: 'instagram insta', iconImg: 'instagram.png', displayName: 'Instagram' },
+    { key: 'facebook', iconClass: 'socicon-facebook text-danger', iconImg: 'facebook.png', displayName: 'Facebook' },
+    { key: 'twitter', iconClass: 'socicon-twitter', iconImg: 'twitter.png', displayName: 'Twitter' },
+    { key: 'youtube', iconClass: 'socicon-youtube', iconImg: 'youtube.png', displayName: 'Youtube' },
+    { key: 'linkedin', iconClass: 'socicon-linkedin', iconImg: 'linkedin.png', displayName: 'LinkedIn' },
+    { key: 'pinterest', iconClass: 'socicon-pinterest', iconImg: 'pinterest.png', displayName: 'Pinterest' },
+    { key: 'instagram', iconClass: 'socicon-instagram', iconImg: 'instagram.png', displayName: 'Instagram' },
     { key: 'bizyGlobe', iconClass: 'bizyGlobe bglobe', iconImg: 'bizyglobe.png', displayName: 'BizyGlobe' },
-    { key: 'website', iconClass: 'fa fa-globe site', iconImg: 'website.png', displayName: 'Website' }
+    { key: 'website', iconClass: 'flaticon2-world', iconImg: 'website.png', displayName: 'Website' }
   ],
   PRIVACY_PERMISSIONS: {
     'all': 'Public (All can see)',

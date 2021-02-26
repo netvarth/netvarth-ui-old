@@ -245,11 +245,19 @@
                                                         *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                                                     <span [class]="getBookingStatusClass(booking.apptStatus)"
                                                         *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus}}</span>
+<<<<<<< HEAD
                                                         <span *ngIf="booking.isRescheduled">
+=======
+                                                    <span *ngIf="booking.isRescheduled">
+>>>>>>> refs/remotes/origin/jaldee-static-UI
                                                         <i class="resche_ico_wtlist" [matTooltip]="'Rescheduled'"></i>
                                                     </span>
                                                 </div>
+<<<<<<< HEAD
                                                 <div class="mgn-lft-10 mgl-auto">
+=======
+                                                <div class="mgn-lft-10">
+>>>>>>> refs/remotes/origin/jaldee-static-UI
                                                     <button
                                                         *ngIf="booking.amountDue>0 && (booking.billViewStatus=='Show') && booking.apptStatus != 'Cancelled' && booking.apptStatus != 'Rejected' && booking.billStatus!='Settled'"
                                                         mat-flat-button class="btns rupee-font"
@@ -267,7 +275,11 @@
                                                     </span>
                                                 </div>
                                             </mat-grid-tile-footer>
+<<<<<<< HEAD
                                         
+=======
+
+>>>>>>> refs/remotes/origin/jaldee-static-UI
                                         </div>
                                     </ng-container>
                                     <!-- Checkins -->
@@ -1068,7 +1080,7 @@
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="(booking.apptStatus === 'Cancelled' || booking.apptStatus === 'Rejected') && booking.paymentStatus !== 'NotPaid'"
                                                         (click)="viewBill(booking,'appointment',$event)">Receipt</button>
-                                                </span>                                                
+                                                </span>
                                             </div>
                                         </mat-grid-tile-footer>
                                     </ng-container>

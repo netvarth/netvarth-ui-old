@@ -678,9 +678,10 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
             this.amForm.get('advancePaymentStatus').setValue('NONE');
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
-            if (this.action === 'add' && this.isFromadd) {
-                this.updateprefillForm();
-            }
+           this.createItemform();
+            // if (this.action === 'add' && this.isFromadd) {
+            //     this.updateprefillForm();
+            // }
         } else {
             this.amForm = this.fb.group({
                 catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
@@ -710,22 +711,7 @@ export class CatalogdetailComponent implements OnInit {
                 // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
                 // homeotpverify: [false],
                 deliverykms: [''],
-                deliverycharge: [''],
-                //add item
-                itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                showOnLandingpage: [true],
-                stockAvailable: [true],
-                taxable: [false],
-                price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-                promotionalPriceType: [],
-                promotionallabel: [],
-                customlabel: []
+                deliverycharge: ['']
             });
         }
         setTimeout(() => {
@@ -736,6 +722,25 @@ export class CatalogdetailComponent implements OnInit {
             }
         }, 200);
 
+    }
+    createItemform(){
+        this.amItemForm = this.fb.group({
+            itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+            note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+            showOnLandingpage: [true],
+            stockAvailable: [true],
+            taxable: [false],
+            price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+            promotionalPriceType: [],
+            promotionallabel: [],
+            customlabel: []
+        });
     }
     setDescFocus() {
         this.isfocused = true;
@@ -1703,8 +1708,8 @@ export class CatalogdetailComponent implements OnInit {
         } else if (this.action === 'edit') {
             // postdata['catalogItem'] = this.catalogItems;
             //postdata['catalogItem'] = this.seletedCatalogItems;
-            const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
-            postdata['catalogItem'] = additems;
+           // const additems = this.catalogItems.concat(this.catalogSelectedItemsadd);
+            postdata['catalogItem'] = this.catalogSelectedItemsadd;
             console.log(postdata);
             this.editCatalog(postdata);
         }
@@ -2162,6 +2167,15 @@ export class CatalogdetailComponent implements OnInit {
             }
         });
     }
+    showCreateItemPopup (){
+        this.addtimewindowdialogRef = this.dialog.open(CreateItemPopupComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+            }
+        });
+    }
     deletetimeslot(type, index) {
         if (type === 'store') {
             this.storetimewindow_list.splice(index, 1);
@@ -2492,7 +2506,10 @@ export class CatalogdetailComponent implements OnInit {
           }
         });
     }
-
+  stopprop(event) {
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+      }
     getUpdatedItems() {
         this.getItems().then(
             (data) => {
