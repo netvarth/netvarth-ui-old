@@ -50,8 +50,12 @@
         </div>
       </div>
       <div class="mat-dialog-actions">
-        <button type="submit" mat-button class="cust-logpg-submt"
+        <button type="submit" mat-button class="cust-logpg-submt no-margin"
           [disabled]="buttonclicked || !otp_form.valid">verify</button>
+        <div class="mgn-bt-10" *ngIf="type=='signup'">
+          <span class="exstschdlesze">By clicking Verify, you agree to the Jaldee <a rel="noopener"
+              [routerLink]="['/terms']" target="_blank">{{terms_cond_cap}}</a></span>
+        </div>
         <div class="resendouter" style="text-align: center !important;" *ngIf="resetCounterVal==0">
           <span (click)="resendOTPMobile()" mat-button> {{resend_otp_to_cap}} <ng-container
               *ngIf="type=='change_email'">

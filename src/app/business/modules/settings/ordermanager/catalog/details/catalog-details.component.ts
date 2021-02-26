@@ -569,6 +569,7 @@ export class CatalogdetailComponent implements OnInit {
                 'deliveryCharge': form_data.deliverycharge || ''
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': this.payAdvance,
             'advanceAmount': form_data.advancePayment ? form_data.advancePayment : 0,
             'preInfo': {
@@ -632,6 +633,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
+               autoconfirm: [true],
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -690,6 +692,7 @@ export class CatalogdetailComponent implements OnInit {
                 orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
+               autoconfirm: [true],
                 advancePaymentStatus: [],
                 advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
                 cancelationPolicyStatus: [true],
@@ -1015,6 +1018,7 @@ export class CatalogdetailComponent implements OnInit {
             'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
+            'autoconfirm': this.catalog.autoConfirm,
             'advancePaymentStatus': this.catalog.paymentType,
             'advancePayment': this.catalog.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1246,6 +1250,7 @@ export class CatalogdetailComponent implements OnInit {
             'orderType': this.prefillData.orderType,
             'orderStatuses': this.prefillData.orderStatuses,
             'itemPriceInfo': this.prefillData.showPrice,
+           'autoconfirm':this.prefillData.autoConfirm,
             'advancePaymentStatus': this.prefillData.paymentType,
             'advancePayment': this.prefillData.advanceAmount || '',
             'cancelationPolicyStatus': true,
@@ -1670,6 +1675,7 @@ export class CatalogdetailComponent implements OnInit {
                 'deliveryCharge': form_data.deliverycharge
             },
             'showPrice': form_data.itemPriceInfo,
+            'autoConfirm': form_data.autoconfirm,
             'paymentType': form_data.advancePaymentStatus,
             'advanceAmount': form_data.advancePaymentStatus === 'FIXED' ? form_data.advancePayment : 0,
             'preInfo': {

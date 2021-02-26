@@ -225,3 +225,6 @@
   font-weight: 600;
   font-size: 1rem;
 }
+.mandatoryChip {
+  border: 1px solid rgb(255, 0, 0) !important;
+}

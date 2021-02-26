@@ -710,7 +710,8 @@ this.business_name_cap = this.provider_label + '\'s  Name *';
       data: {
         'userId': this.userId,
         'userdata': this.user_arr,
-        img_type : image
+        img_type : image,
+        'logoExist': (this.blogo[0]) ? true : false
       }
     });
     this.notedialogRef.afterClosed().subscribe(result => {

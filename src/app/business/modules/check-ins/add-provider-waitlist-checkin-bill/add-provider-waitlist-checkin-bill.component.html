@@ -350,13 +350,11 @@
 																capitalizeFirst}}:</span>
 															<span class="dynamic">{{spname}}</span>
 														</span>
-														<span *ngIf="source === 'order'"
-															[class.red]="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">
+														<div class="red" *ngIf="bill_data.billStatus === 'Cancel'">
 															<!-- <span class="title">Order Id </span>
 															<span class="dynamic">{{checkin.orderNumber}}</span> -->
-															<div *ngIf="bill_data.billStatus === 'Cancel'||bill_data.orderStatus==='Cancelled'">Cancelled
-															</div>
-														</span>
+															Cancelled
+														</div>
 													</div>
 												</div>
 											</div>
@@ -957,7 +955,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="checkin.waitlistStatus != 'cancelled'"
+																<button mat-menu-item
+																	*ngIf="checkin.waitlistStatus != 'cancelled'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -978,7 +977,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
+																<button mat-menu-item
+																	*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
 																	(click)="adjustService(service.serviceName, service.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>
@@ -1087,7 +1087,8 @@
 																	*ngIf="itemdiscounts.length > 0">
 																	<span>{{applydiscount_cap}}</span>
 																</button>
-																<button mat-menu-item *ngIf="bill_data.billStatus !== 'Cancel'"
+																<button mat-menu-item
+																	*ngIf="bill_data.billStatus !== 'Cancel'"
 																	(click)="adjustItem(item.itemName, item.quantity)">
 																	<span>{{changeqty_cap}}</span>
 																</button>

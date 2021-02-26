@@ -202,44 +202,44 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="!userId && ((locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none') ||
-                                (locationjson[0].open24hours && locationjson[0].open24hours==1) || locationjson[0]?.locationVirtualFields?.traumacentre=='true' ||
-                                locationjson[0]?.locationVirtualFields?.docambulance=='true' || locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
-                                locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true' || locationjson[0]?.locationVirtualFields?.firstaid=='true'
-                                || locationjson[0]?.locationVirtualFields?.deliveryoptions=='true')">
+                                <div class="question-main-outer col-md-6 col-lg-6 col-xs-12 col-sm-6 mgn-up-10" *ngIf="(selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none') ||
+                              (selectedLocation.open24hours && selectedLocation.open24hours==1) || selectedLocation?.locationVirtualFields?.traumacentre=='true' ||
+                              selectedLocation?.locationVirtualFields?.docambulance=='true' || selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                              selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
+                              selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
+                              selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
+                              selectedLocation?.locationVirtualFields?.veterinaryemergencyservices=='true' || selectedLocation?.locationVirtualFields?.firstaid=='true'
+                              || selectedLocation?.locationVirtualFields?.deliveryoptions=='true'">
                                     <div class="question-header">Amenities</div>
                                     <div class="question-value1">
-                                        <ul class="details badges m0 no-padding">
-                                            <ng-container *ngIf="locationjson && locationjson.length > 0">
-                                                <li *ngIf="locationjson[0].parkingType && locationjson[0].parkingType!=='' && locationjson[0].parkingType != undefined && locationjson[0].parkingType != 'none'"
-                                                    [matTooltip]="'Parking Type: ' + locationjson[0].parkingType | capitalizeFirst">
+                                        <ul class="details badges no-padding">
+                                            <ng-container *ngIf="selectedLocation">
+                                                <li *ngIf="selectedLocation.parkingType && selectedLocation.parkingType!=='' && selectedLocation.parkingType != undefined && selectedLocation.parkingType != 'none'"
+                                                    [matTooltip]="'Parking Type: ' + selectedLocation.parkingType">
                                                     <span class="icon-parking"></span>
                                                 </li>
                                                 <li
-                                                    *ngIf="locationjson[0].open24hours && locationjson[0].open24hours==1">
+                                                    *ngIf="selectedLocation.open24hours && selectedLocation.open24hours==1">
                                                     <span class="icon-open-time" [matTooltip]="'24 Hours Open'"></span>
                                                 </li>
-                                                <li *ngIf="locationjson[0]?.locationVirtualFields?.traumacentre=='true'"
+                                                <li *ngIf="selectedLocation?.locationVirtualFields?.traumacentre=='true'"
                                                     [matTooltip]="'Trauma Centre'"><span class="icon-trauma"></span>
                                                 </li>
-                                                <li *ngIf="locationjson[0]?.locationVirtualFields?.docambulance=='true'"
+                                                <li *ngIf="selectedLocation?.locationVirtualFields?.docambulance=='true'"
                                                     [matTooltip]="'Ambulance Services'"><span
                                                         class="icon-ambulance"></span>
                                                 </li>
-                                                <li [matTooltip]="'Emergency Services'" *ngIf="locationjson[0]?.locationVirtualFields?.physiciansemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.dentistemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.altemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.hosemergencyservices=='true' ||
-                                    locationjson[0]?.locationVirtualFields?.veterinaryemergencyservices=='true'">
+                                                <li [matTooltip]="'Emergency Services'" *ngIf="selectedLocation?.locationVirtualFields?.physiciansemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.dentistemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.altemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.hosemergencyservices=='true' ||
+                                                selectedLocation?.locationVirtualFields?.veterinaryemergencyservices=='true'">
                                                     <span class="icon-emergency"></span>
                                                 </li>
-                                                <li *ngIf="locationjson[0]?.locationVirtualFields?.firstaid=='true'"
+                                                <li *ngIf="selectedLocation?.locationVirtualFields?.firstaid=='true'"
                                                     [matTooltip]="'First Aid'"><span class="icon-first-aid"></span>
                                                 </li>
-                                                <li *ngIf="locationjson[0]?.locationVirtualFields?.deliveryoptions=='true'"
+                                                <li *ngIf="selectedLocation?.locationVirtualFields?.deliveryoptions=='true'"
                                                     [matTooltip]="'Delivery'"><span class="fa delivery-amenity"></span>
                                                 </li>
                                             </ng-container>

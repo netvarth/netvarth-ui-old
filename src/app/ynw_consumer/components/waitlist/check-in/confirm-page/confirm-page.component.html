@@ -9,7 +9,7 @@
             <div class="panel-body no-padding">
                 <div class="card p0">
                     <div class="copy locd block-level" *ngIf="!apiloading">
-                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngFor="let wtlst of waitlist">
+                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngFor="let wtlst of waitlist;let i=index">
                             <div class="info-img">
                                 <img src="assets/images/bg-01.png">
                             </div>
@@ -35,7 +35,7 @@
                                         <tr *ngIf="wtlst.provider">
                                             <td width="48%" align="right">
                                                 <!-- Name of the -->
-                                                {{provider_label | capitalizeFirst}}</td>
+                                                Provider</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="name-line-ht">{{wtlst.provider.businessName}},
                                                 {{wtlst.providerAccount?.businessName}}</td>
@@ -151,7 +151,7 @@
                                     <div [innerHTML]="wtlst.service.postInfoText">
                                     </div>
                                 </div>
-                                <div class="ok-btn">
+                                <div class="ok-btn" *ngIf="i == (waitlist.length-1)">
                                     <span class="pointer-cursor" (click)="okClick(wtlst)">
                                         <strong>OK</strong></span>
                                 </div>

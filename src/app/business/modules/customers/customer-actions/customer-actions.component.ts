@@ -21,10 +21,13 @@ export class CustomerActionsComponent implements OnInit {
     providerLabels: any = [];
     loading = false;
     showMessage = false;
+    showApply = false;
+    labelsforRemove: any = [];
+    labelMap = {};
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private provider_services: ProviderServices,
-    private snackbarService: SnackbarService,
-    private groupService: GroupStorageService,
-     private router: Router,
+        private snackbarService: SnackbarService,
+        private groupService: GroupStorageService,
+        private router: Router,
         public dialog: MatDialog, private provider_shared_functions: ProviderSharedFuctions,
         public dialogRef: MatDialogRef<CustomerActionsComponent>) {
     }
@@ -49,11 +52,6 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'patient' } });
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        // };
-        // this.lStorageService.removeitemfromLocalStorage('mrId');
-        // this.router.navigate(['provider', 'customers', 'medicalrecord', 'prescription'], navigationExtras);
     }
     medicalRecord() {
         this.closeDialog();
@@ -63,14 +61,7 @@ export class CustomerActionsComponent implements OnInit {
         const mrId = 0;
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
-
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
-        // this.closeDialog();
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: { 'customerDetail': JSON.stringify(this.customerDetails[0]), 'mrId': 0, back_type: 'consumer', 'booking_type': 'FOLLOWUP' }
-        // };
-        // this.lStorageService.removeitemfromLocalStorage('mrId');
-        // this.router.navigate(['provider', 'customers', 'medicalrecord'], navigationExtras);
     }
     lastvisits() {
         this.closeDialog();
@@ -105,10 +96,6 @@ export class CustomerActionsComponent implements OnInit {
         const bookingType = 'FOLLOWUP';
         const bookingId = 0;
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
-        //     const navigationExtras: NavigationExtras = {
-        //         queryParams: { 'id': this.customerDetails[0].id }
-        //     };
-        //     this.router.navigate(['provider', 'customers', 'medicalrecord', 'list'], navigationExtras);
     }
     editCustomer() {
         this.dialogRef.close('edit');
@@ -130,9 +117,7 @@ export class CustomerActionsComponent implements OnInit {
         this.provider_services.getLabelList().subscribe((data: any) => {
             this.providerLabels = data.filter(label => label.status === 'ENABLED');
             this.loading = false;
-            if (this.customerDetails.length === 1) {
-                this.labelSelection();
-            }
+            this.labelSelection();
         });
     }
     gotoLabel() {
@@ -151,30 +136,51 @@ export class CustomerActionsComponent implements OnInit {
         });
         labeldialogRef.afterClosed().subscribe(data => {
             if (data) {
-                const ids = [];
-                for (const customer of this.customerDetails) {
-                    ids.push(customer.id);
-                }
-                this.addLabel(data.label, ids);
+                this.labelMap = new Object();
+                this.labelMap[data.label] = data.value;
+                this.addLabel();
             }
             this.getLabel();
         });
     }
     addLabeltoPatient(label, event) {
+        this.showApply = false;
+        let labelArr = this.providerLabels.filter(lab => lab.label === label);
+        if (this.labelMap[label]) {
+            delete this.labelMap[label];
+        }
+        if (this.labelsforRemove.indexOf(label) !== -1) {
+            this.labelsforRemove.splice(this.labelsforRemove.indexOf(label), 1);
+        }
         if (event.checked) {
-            const ids = [];
-            for (const customer of this.customerDetails) {
-                ids.push(customer.id);
+            if (labelArr[0] && labelArr[0].selected) {
+            } else {
+                this.labelMap[label] = true;
             }
-            this.addLabel(label, ids);
         } else {
-            this.deleteLabel(label, this.customerDetails[0].id);
+            if (labelArr[0] && labelArr[0].selected) {
+                this.labelsforRemove.push(label);
+            }
+        }
+        if (Object.keys(this.labelMap).length > 0 || this.labelsforRemove.length > 0) {
+            this.showApply = true;
         }
     }
-    addLabel(label, ids) {
+    applyLabel() {
+        if (Object.keys(this.labelMap).length > 0) {
+            this.addLabel();
+        }
+        if (this.labelsforRemove.length > 0) {
+            this.deleteLabel();
+        }
+    }
+    addLabel() {
+        const ids = [];
+        for (const customer of this.customerDetails) {
+            ids.push(customer.id);
+        }
         const postData = {
-            'labelName': label,
-            'labelValue': 'true',
+            'labels': this.labelMap,
             'proConIds': ids
         };
         this.provider_services.addLabeltoCustomer(postData).subscribe(data => {
@@ -184,8 +190,16 @@ export class CustomerActionsComponent implements OnInit {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             });
     }
-    deleteLabel(label, id) {
-        this.provider_services.deleteLabelFromCustomer(id, label).subscribe(data => {
+    deleteLabel() {
+        const ids = [];
+        for (const customer of this.customerDetails) {
+            ids.push(customer.id);
+        }
+        const postData = {
+            'labelNames': this.labelsforRemove,
+            'uuid': ids
+        };
+        this.provider_services.deleteLabelFromCustomer(postData).subscribe(data => {
             this.dialogRef.close();
         },
             error => {
@@ -197,15 +211,18 @@ export class CustomerActionsComponent implements OnInit {
     }
     labelSelection() {
         const values = [];
-        if (this.customerDetails[0].label) {
-            Object.keys(this.customerDetails[0].label).forEach(key => {
-                values.push(key);
-            });
-            for (let i = 0; i < this.providerLabels.length; i++) {
-                for (let k = 0; k < values.length; k++) {
-                    if (this.providerLabels[i].label === values[k]) {
-                        this.providerLabels[i].selected = true;
-                    }
+        for (let i = 0; i < this.customerDetails.length; i++) {
+            if (this.customerDetails[i].label) {
+                Object.keys(this.customerDetails[i].label).forEach(key => {
+                    values.push(key);
+                });
+            }
+        }
+        for (let i = 0; i < this.providerLabels.length; i++) {
+            for (let k = 0; k < values.length; k++) {
+                const filteredArr = values.filter(value => value === this.providerLabels[i].label);
+                if (filteredArr.length === this.customerDetails.length) {
+                    this.providerLabels[i].selected = true;
                 }
             }
         }

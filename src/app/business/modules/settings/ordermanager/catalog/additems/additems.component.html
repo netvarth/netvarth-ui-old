@@ -28,8 +28,8 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                             </div>
                             <div class="price_outer">
-                                <input class="ip-field" id="minquty_{{item.itemId}}" type="number" value = "{{item.minQuantity}}" placeholder="Min Qty">
-                                <input class="ip-field" id="maxquty_{{item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty">
+                                <input class="ip-field" id="minquty_{{item.itemId}}" type="text" value = "{{item.minQuantity}}" placeholder="Min Qty">
+                                <input class="ip-field" id="maxquty_{{item.itemId}}" type="text" value = "{{item.maxQuantity}}" placeholder="Max Qty">
                             </div>
                         </div>
                     </div>
@@ -57,16 +57,14 @@
                                 <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                             </div>
                             <div class="price_outer">
-                              <div><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small>  </div>
-                              <div><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" > </small></div>
+                              <div><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="text" min="1"maxlength="6" value = "{{item.minQuantity}}" ></small>  </div>
+                              <div><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="text" min="1" maxlength="6" value = "{{item.maxQuantity}}" > </small></div>
                             </div>
                         </div>
                     </div>
                 </mat-grid-tile>
             </mat-grid-list>
         </div>
-
-
         </ng-container>
         <ng-container *ngIf=" itemsforadd && itemsforadd.length > 0">
                 <div class="card">
@@ -82,8 +80,8 @@
                                     <div class="item-price price rupee-font">&#8377;{{item.price}}</div>
                                 </div>
                                 <div class="price_outer">
-                                        <div ><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" ></small> </div>
-                                        <div ><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="number" min="1" value = "{{item.maxQuantity}}" ></small></div>
+                                        <div ><small>Min.Qty&nbsp;&nbsp;<input class="ip-field pl5" (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="text" maxlength="6" min="1" value = "{{item.minQuantity}}" ></small> </div>
+                                        <div ><small>Max.Qty <input class="ip-field pl5" id="maxquty_{{item.itemId}}" (keypress)="isNumber($event)" type="text" min="1" maxlength="6" value = "{{item.maxQuantity}}" ></small></div>
                                 </div>
                             </div>
                         </div>
@@ -165,8 +163,8 @@
                             <div class="price_outer">
                                 <small>Min.Qty : {{item.minQuantity}}<br></small>
                                 <small>Max.Qty : {{item.maxQuantity}}</small>
-                                <!-- <input class="ip-field" id="minquty_{{item.item.itemId}}" type="number" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
-                                <input class="ip-field" id="maxquty_{{item.item.itemId}}" type="number" value = "{{item.maxQuantity}}" placeholder="Max Qty"> -->
+                                <!-- <input class="ip-field" id="minquty_{{item.item.itemId}}" type="text" min="1" value = "{{item.minQuantity}}" placeholder="Min Qty">
+                                <input class="ip-field" id="maxquty_{{item.item.itemId}}" type="text" value = "{{item.maxQuantity}}" placeholder="Max Qty"> -->
                             </div>
                         </div>
                     </div>
