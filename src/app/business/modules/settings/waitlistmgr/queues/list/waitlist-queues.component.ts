@@ -31,6 +31,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     locations;
     api_loading = true;
     add_button = Messages.ADD_BUTTON;
+    add_queue =  'Click to create a queue';
     tooltipcls = projectConstants.TOOLTIP_CLS;
     tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];
