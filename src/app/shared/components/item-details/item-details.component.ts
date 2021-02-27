@@ -82,6 +82,7 @@ export class ItemDetailsSharedComponent implements OnInit {
   isPrice;
   loading = true;
   showitemprice = true;
+  logo: any;
 
   constructor(public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -101,6 +102,11 @@ export class ItemDetailsSharedComponent implements OnInit {
         }
         if (params.businessDetails) {
           this.businessDetails = params.businessDetails;
+          console.log(this.businessDetails);
+        }
+        if (params.logo) {
+          this.logo = params.logo;
+          console.log(this.logo);
         }
       });
   }
@@ -151,7 +157,8 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        account_id: this.provider_bussiness_id
+        account_id: this.provider_bussiness_id,
+        'logo': this.logo
 
       }
 

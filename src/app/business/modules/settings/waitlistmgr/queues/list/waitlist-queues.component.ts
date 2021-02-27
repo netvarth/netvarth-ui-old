@@ -614,7 +614,8 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
             const error = 'Please enter an integer value for ' + this.customer_label + 's served at a time';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         } else if (JSON.parse(instantQ.qserveonce) === 0 || (JSON.parse(instantQ.qserveonce) > JSON.parse(instantQ.qcapacity))) {
-            const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.customer_label + 's served.';
+            const error = this.customer_label + 's' + ' ' + 'served at a time should greter than Zero';
+            // const error = this.customer_label + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' + this.customer_label + 's served.';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             return;
         } else {
