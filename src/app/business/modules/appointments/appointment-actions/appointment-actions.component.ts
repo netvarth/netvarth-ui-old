@@ -55,6 +55,7 @@ export class AppointmentActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    showAttachment = false;
     selectedTime = '';
     holdselectedTime = '';
     sel_checkindate;
@@ -383,6 +384,9 @@ export class AppointmentActionsComponent implements OnInit {
         }
         if (this.data.timetype !== 2 && this.appt.apptStatus !== 'blocked' && (this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected')) {
             this.showmrrx = true;
+        }
+        if (this.appt.providerConsumer.email || this.appt.providerConsumer.phoneNo) {
+            this.showAttachment = true;
         }
     }
     getLabel() {
