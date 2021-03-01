@@ -33,11 +33,8 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { UploadFileComponent } from './uploadfile/uploadfile.component';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
 
-<<<<<<< HEAD
-=======
 // import { SignaturePadModule } from '@ng-plus/signature-pad';
 
->>>>>>> refs/remotes/origin/jaldee-static-UI
 
 @NgModule({
   declarations: [MedicalrecordComponent,

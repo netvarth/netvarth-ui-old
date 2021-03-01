@@ -19,6 +19,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import {FormControl} from '@angular/forms';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
+import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -353,7 +354,7 @@ export class CatalogdetailComponent implements OnInit {
             } else {
                 this.selectedItems();
             }
-            
+
         }
     }
     gotoPrev() {
@@ -373,7 +374,7 @@ export class CatalogdetailComponent implements OnInit {
                          }
                     }
                   }
-            
+
                    }
         } else {
             if (this.addCatalogItems && this.addCatalogItems.length > 0) {
@@ -724,23 +725,23 @@ export class CatalogdetailComponent implements OnInit {
 
     }
     createItemform(){
-        this.amItemForm = this.fb.group({
-            itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-            displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-            showOnLandingpage: [true],
-            stockAvailable: [true],
-            taxable: [false],
-            price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-            promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-            promotionalPriceType: [],
-            promotionallabel: [],
-            customlabel: []
-        });
+        // this.amItemForm = this.fb.group({
+        //     itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        //     itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        //     itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        //     displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        //     shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+        //     note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+        //     displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+        //     showOnLandingpage: [true],
+        //     stockAvailable: [true],
+        //     taxable: [false],
+        //     price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+        //     promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+        //     promotionalPriceType: [],
+        //     promotionallabel: [],
+        //     customlabel: []
+        // });
     }
     setDescFocus() {
         this.isfocused = true;
@@ -1801,7 +1802,7 @@ export class CatalogdetailComponent implements OnInit {
                 // }
                 // if (this.action === 'add' && this.params.source === 'location_detail' && this.params.locationId) {
                 // this.selected_locationId = this.params.locationId;
-                // } else 
+                // } else
                 if (this.action === 'add' && this.loc_list.length === 1) {
                     // this.amForm.get('qlocation').setValue(this.loc_list[0].id);
                     this.selected_locationId = this.loc_list[0].id;
@@ -2190,7 +2191,7 @@ export class CatalogdetailComponent implements OnInit {
             this.selectedCount++;
         } else {
             if(this.cataId){
-                this.catalogItem[index].selected = true; 
+                this.catalogItem[index].selected = true;
             } else {
                 this.catalogItem[index].selected = false;
             }
@@ -2430,7 +2431,7 @@ export class CatalogdetailComponent implements OnInit {
     setItemFromCataDetails() {
         this.itemsforadd = [];
         this.itemsforadd = this.catalogItem.filter(o1 => this.catalog.catalogItem.filter(o2 => o2.item.itemId === o1.itemId).length === 0);
-       
+
         // for (let j = 0; j < this.catalogItem.length; j++) {
         //     const itemArr = this.catalog.catalogItem.filter(item => item.item.itemId === this.catalogItem[j].itemId);
         //     if (itemArr.length > 0) {
