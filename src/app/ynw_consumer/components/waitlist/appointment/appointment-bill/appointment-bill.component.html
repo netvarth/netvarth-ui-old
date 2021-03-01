@@ -66,6 +66,8 @@
                                                                             <span
                                                                                 class="dynamic">{{checkin.provider.businessName}}</span>
                                                                         </span>
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red" *ngIf="checkin.apptStatus === 'Cancelled' || checkin.apptStatus === 'Rejected'">
+                                                                            Cancelled</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -88,15 +90,13 @@
                                                                                             [matTooltip]="'Taxable'"
                                                                                             *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                                                                     </div>
-                                                                                    <div class="quantity" *ngIf="checkin.apptStatus !== 'Cancelled'">
+                                                                                    <div class="quantity">
                                                                                         {{qnty_cap}}
                                                                                         {{service.quantity}}</div>
-                                                                                    <div class="price rupee-font"  *ngIf="checkin.apptStatus !== 'Cancelled'">
+                                                                                    <div class="price rupee-font">
                                                                                         {{(service.quantity *
                                                                                         service.price) |
                                                                                         currency:'&#8377; '}}</div>
-                                                                                    <div class="price" style="color: red;font-size: smaller;"  *ngIf="checkin.apptStatus === 'Cancelled'">
-                                                                                        Cancelled</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two">
                                                                                     <div class="discount-row two-col"
@@ -336,7 +336,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="section-three other-section">
+                                                        <div class="section-three other-section" *ngIf="checkin.apptStatus != 'Cancelled' && checkin.apptStatus != 'Rejected'">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf="this.couponList.length > 0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div

@@ -1697,9 +1697,9 @@ export class ProviderServices {
       const url = 'provider/customers/label';
       return this.servicemeta.httpPost(url, data);
    }
-   deleteLabelFromCustomer(id, label) {
-      const url = 'provider/customers/' + id + '/label/' + label;
-      return this.servicemeta.httpDelete(url);
+   deleteLabelFromCustomer(data) {
+      const url = 'provider/customers/masslabel';
+      return this.servicemeta.httpDelete(url, data);
    }
    uploadCoverFoto(data) {
       return this.servicemeta.httpPost('provider/coverPicture', data);

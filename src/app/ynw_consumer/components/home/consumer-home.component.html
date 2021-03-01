@@ -1969,6 +1969,15 @@
                                                     <i class="fa chat-icon"></i>
                                                     {{send_msg_cap}}
                                                 </button>
+                                                <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                    <span class="icon-favourite-filled"
+                                                        (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                </button>
+                                                <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
+                                                    <span class="icon-favourite"
+                                                        (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
+                                                        to Favourites</span>
+                                                </button>
                                             </mat-menu>
                                         </div>
                                         <div
@@ -2060,6 +2069,15 @@
                                                     <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                         <i class="fa chat-icon"></i>
                                                         {{send_msg_cap}}
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="checkIfFav(oder.providerAccount.id)">
+                                                        <span class="icon-favourite-filled"
+                                                            (click)="doDeleteFavProvider(oder.providerAccount)">&nbsp;&nbsp;{{remove_fav_cap}}</span>
+                                                    </button>
+                                                    <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
+                                                        <span class="icon-favourite"
+                                                            (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;Add
+                                                            to Favourites</span>
                                                     </button>
                                                 </mat-menu>
                                             </div>

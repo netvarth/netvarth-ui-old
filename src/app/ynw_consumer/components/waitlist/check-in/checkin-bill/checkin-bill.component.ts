@@ -451,7 +451,7 @@ export class ConsumerCheckinBillComponent implements OnInit {
         if (this.checkCouponValid(this.jCoupon)) {
             this.applyAction(this.jCoupon, this.bill_data.uuid);
         } else {
-            this.snackbarService.openSnackBar('Coupon Invalid', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Enter a valid coupon', { 'panelClass': 'snackbarerror' });
         }
     }
     clearJCoupon() {

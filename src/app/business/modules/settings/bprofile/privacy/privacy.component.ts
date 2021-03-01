@@ -204,7 +204,7 @@ export class PrivacyComponent implements OnInit, OnDestroy {
         let msg = '';
         if (mod === 'phone') {
             msg = Messages.BPROFILE_PRIVACY_PHONE_DELETE;
-            msg = msg.replace('[DATA]', this.phonearr[indx].instance);
+            msg = msg.replace('[DATA]', '+91 ' + this.phonearr[indx].instance);
         } else if (mod === 'email') {
             msg = Messages.BPROFILE_PRIVACY_EMAIL_DELETE;
             msg = msg.replace('[DATA]', this.emailarr[indx].instance);
