@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -171,6 +171,7 @@ export class ConsumerCheckinComponent implements OnInit {
     prepayAmount;
     paymentDetails: any = [];
     questionnaireList: any = [];
+    @ViewChild('closebutton') closebutton;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1306,6 +1307,7 @@ export class ConsumerCheckinComponent implements OnInit {
         } else if (this.action === 'timeChange') {
             this.action = '';
         }
+        this.closebutton.nativeElement.click();
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1425,6 +1427,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     };
                     this.updateEmail(post_data).then(
                         () => {
+                            this.closebutton.nativeElement.click();
                             this.action = '';
                         },
                         error => {
@@ -1434,10 +1437,12 @@ export class ConsumerCheckinComponent implements OnInit {
                         }
                     )
                 } else {
+                    this.closebutton.nativeElement.click();
                     this.action = '';
                 }
             }
         } else {
+            this.closebutton.nativeElement.click();
             this.action = '';
         }
         this.editBookingFields = false;
@@ -1576,5 +1581,14 @@ export class ConsumerCheckinComponent implements OnInit {
             length = length + this.waitlist.attchment.length;
         }
         return length;
+    }
+    actionCompleted() {
+        if (this.action === 'members') {
+            this.saveMemberDetails();
+        } else if (this.action === 'addmember') {
+            this.handleSaveMember();
+        } else if (this.action === 'note' || this.action === 'timeChange') {
+            this.goBack();
+        }
     }
 }

@@ -879,8 +879,7 @@
 
                                         <div class="panel-body no-padding">
 
-                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                                *ngIf="action==''">
+                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
                                                 <div
                                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
@@ -974,7 +973,7 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
                                                             <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
-                                                                    (click)="changeTime()">Change
+                                                                    (click)="changeTime()" data-toggle="modal" data-target="#exampleModalCenter" >Change
                                                                 </a></span>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -1041,7 +1040,7 @@
                                                         *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
                                                         No timings available.
                                                         <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                                                (click)="changeTime()">Change Time
+                                                                (click)="changeTime()" data-toggle="modal" data-target="#exampleModalCenter" >Change Time
                                                             </a></span>
                                                     </div>
                                                 </div>
@@ -1055,8 +1054,12 @@
                                                                 Booking
                                                                 For <a *ngIf="type !== 'waitlistreschedule'"
                                                                     class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                                    (click)="handleSideScreen('members')">Change
+                                                                    data-toggle="modal" data-target="#exampleModalCenter" (click)="handleSideScreen('members')">Change
                                                                 </a>
+                                                                <!-- <a *ngIf="type !== 'waitlistreschedule'"
+                                                                    class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
+                                                                    (click)="handleSideScreen('members')">Change
+                                                                </a> -->
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
@@ -1121,7 +1124,7 @@
                                                         <mat-chip-list class="btns">
                                                             <mat-chip
                                                                 [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'waitlistreschedule'"
-                                                                (click)="handleSideScreen('note')">
+                                                                (click)="handleSideScreen('note')" data-toggle="modal" data-target="#exampleModalCenter" >
                                                                 <a class="lnk action pointer-cursor"><i
                                                                         class="fa fa-file-text-o mgn-rt-5"
                                                                         aria-hidden="true"></i>
@@ -1149,7 +1152,7 @@
                                                                 *ngIf="(s3CouponsList.length > 0) && type != 'waitlistreschedule'">
                                                                 <a class="lnk pointer-cursor action"
                                                                     *ngIf="selected_coupons.length === 0"
-                                                                    (click)="applyPromocode()">Apply
+                                                                    (click)="applyPromocode()" data-toggle="modal" data-target="#exampleModalCenter" >Apply
                                                                     Promocode</a>
                                                                 <a class="lnk pointer-cursor action"
                                                                     *ngIf="selected_coupons.length > 0"
@@ -1174,294 +1177,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                                                *ngIf="action=='timeChange'">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
-                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i> Choose
-                                                        Date
-                                                    </div>
-                                                    <div class="pull-left brd-round brd-light mgn-up-20">
-                                                        <div class="icon-minus pull-left"
-                                                            [class.disable]="disableMinus()"
-                                                            *ngIf="settingsjson.futureDateWaitlist"
-                                                            (click)="calculateDate(-1)">
-                                                        </div>
-                                                        <div class="pull-left chkindt">{{sel_checkindate | date:
-                                                            dateFormat}}</div>
-                                                        <div class="icon-add pull-left"
-                                                            *ngIf="settingsjson.futureDateWaitlist"
-                                                            (click)="calculateDate(1)"></div>
-                                                    </div>
-                                                    <div class="pickerouter caldiv pull-left mgn-up-20"
-                                                        *ngIf="settingsjson.futureDateWaitlist">
-                                                        <mat-datepicker-toggle matSuffix [for]="picker">
-                                                        </mat-datepicker-toggle>
-                                                        <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
-                                                        </mat-datepicker>
-                                                        <input class="" style="visibility: hidden; width:1px"
-                                                            type="text" [matDatepicker]="picker" [min]="minDate"
-                                                            [max]="maxDate" [value]="ddate"
-                                                            (dateChange)="handleFutureDateChange($event)">
+                                         
+                                        
+                                        
 
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">
-                                                        Choose
-                                                        Timings</div>
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                                                        <mat-chip-list class=""
-                                                            *ngIf="queuejson && queuejson.length > 0">
-                                                            <mat-chip *ngFor="let queue of queuejson, let i= index"
-                                                                [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                                                                (click)="handleQueueSelection(queue, i)">
-                                                                {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - '
-                                                                +
-                                                                queue.queueSchedule.timeSlots[0]['eTime']}}
-                                                            </mat-chip>
-                                                        </mat-chip-list>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
-                                                            *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
-                                                            No timings available.
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                                                    <button (click)="goBack()"
-                                                        class="btn bt3 btn-default coupon-apply-btn"
-                                                        type="button">Ok</button>
-                                                </div>
-                                            </div>
-                                            <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                                                *ngIf="action=='coupons'">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i> Apply
-                                                    promocode
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
-                                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                                        *ngIf="showCouponWB">
-                                                        <div
-                                                            class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-                                                            <i class="icon-bell"></i>{{applied_inbilltime}}
-                                                        </div>
-                                                        <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
-                                                            <div class="input-group">
-                                                                <input [ngClass]="{'invalid':!couponvalid}"
-                                                                    (keydown)="clearCouponErrors()"
-                                                                    placeholder="Enter coupon code" type="text"
-                                                                    class="form-control" [(ngModel)]="selected_coupon">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn bt3 btn-default coupon-apply-btn"
-                                                                        (click)="applyCoupons(selected_coupon)"
-                                                                        type="button">Add</button>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                                            style="color: red;" *ngIf="api_cp_error !== null">
-                                                            {{api_cp_error}}</div>
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
+                                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                              <div class="modal-content">
 
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-                                                        *ngIf="couponsList && couponsList.length>0">
-                                                        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-                                                            *ngFor="let coupon of couponsList let i=index">
-                                                            <div
-                                                                class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-                                                                <div
-                                                                    class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                                                                    {{coupon.couponCode}} </div>
-                                                                <div
-                                                                    class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                                                                    <span><a *ngIf="coupon.instructions"
-                                                                            (click)="toggleterms(i)"
-                                                                            class="pointer-cursor lnk read-more-checkin">Read
-                                                                            T & C </a></span>
-                                                                    <span><a class="pointer-cursor lnk"><i
-                                                                                class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                                                                                (click)="removeJCoupon(i)"
-                                                                                [matTooltipClass]="tooltipcls"
-                                                                                [matTooltip]="'Remove Coupon'"></i></a></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
-                                                                *ngIf="coupon.showme">
-                                                                {{coupon.instructions}}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer"
-                                                    *ngIf="coupon_status">
-                                                    <div class="form-group">
-                                                        <span *ngIf="coupon_status=='success'"
-                                                            class="coupon_success">Coupon Code(s)
-                                                            applied
-                                                            successfully</span>
-                                                        <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon
-                                                            Code(s) not
-                                                            valid</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
-                                                *ngIf="action=='note'">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i>
-                                                    {{sel_ser_det.consumerNoteTitle}}
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <textarea class="form-control mgn-bt-20 mgn-up-20"
-                                                        [(ngModel)]="consumerNote" #consumernote
-                                                        (change)="handleConsumerNote(consumernote.value)"
-                                                        maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                        <button mat-button class="cs-btn bt1 backtocheckin"
-                                                            (click)="goBack()">OK
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                                *ngIf="action=='addmember'">
-                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i>
-                                                        {{add_member_cap}}
-                                                    </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                        <app-checkin-consumer-add-member [calledFrom]="'checkin'"
-                                                            (returnDetails)="handleReturnDetails($event)">
-                                                        </app-checkin-consumer-add-member>
-                                                        <div class="actiondiv">
-                                                            <button type="button" class="cs-btn bt2 backbtn"
-                                                                (click)="goBack()">{{cancel_btn}}</button>&nbsp;
-                                                            <button mat-button class="cs-btn bt1 savemember"
-                                                                [disabled]="disable"
-                                                                (click)="handleSaveMember()">OK</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                                *ngIf="action=='attachment'">
-                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                        <i class="fa fa-arrow-left" (click)="goBack()"></i>
-                                                    </div>
-                                                    <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
-                                                        <mat-chip-list class="btns">
-                                                            <mat-chip><a class="lnk action pointer-cursor"
-                                                                    (click)="imagefile.click()"><input #imagefile
-                                                                        type="file" accept="/*;capture=camera"
-                                                                        style="display:none;" multiple
-                                                                        (change)="filesSelected($event)"><i
-                                                                        class="fa fa-paperclip mgn-rt-5"
-                                                                        aria-hidden="true"></i>Upload
-                                                                    File</a></mat-chip>
-                                                        </mat-chip-list>
-                                                    </div>
-                                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
-                                                        *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
-                                                        Uploaded Files
-                                                    </div>
-
-
-
-                                                    <div class="img-section mgn-up-20"
-                                                        *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
-                                                        <ul class="galul">
-
-                                                            <ng-container
-                                                                *ngIf="type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0">
-                                                                <li
-                                                                    *ngFor="let file of waitlist.attchment;let i = index ">
-                                                                    <div class="galimg_outer">
-                                                                        <div class="gal_img">
-                                                                            <img [src]="getThumbUrl(file)">
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ng-container>
-
-                                                            <ng-container
-                                                                *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                                                <li
-                                                                    *ngFor="let file of selectedMessage.files;let i = index ">
-                                                                    <div class="galimg_outer">
-                                                                        <div class="gal_img">
-                                                                            <img [src]="getImage(selectedMessage.base64[i], file)"
-                                                                                *ngIf="selectedMessage.base64[i]">
-                                                                        </div>
-                                                                        <div class="gal_action"
-                                                                            (click)="deleteTempImage(i)">
-                                                                            <i class="fa fa-times-circle"
-                                                                                aria-hidden="true"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ng-container>
-                                                        </ul>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                                *ngIf="action=='service'">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
-                                                    Choose the service you want
-                                                </div>
-                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                    <ng-container *ngFor="let service of servicesjson; let i = index">
-                                                        <div class="bus-item-medium"
-                                                            [class.div-selected-outline]="service.id==sel_ser">
-                                                            <div class="card card-item-n no-padding ">
-                                                                <div class="card-item-title">
-                                                                    <a class="pointer-cursor"
-                                                                        (click)="showServiceDetail(service, businessjson.businessName)">
-                                                                        <span class="service-icon"
-                                                                            *ngIf="service.serviceType == 'virtualService'">
-                                                                            <i class="fa phon-icon"
-                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                            <i class="fa meet-icon"
-                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                                            <i class="fa zoom-icon"
-                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                                            <i class="fa wtsapaud-icon"
-                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'audioService'"></i>
-                                                                            <i class="fa wtsapvid-icon"
-                                                                                *ngIf="service.virtualCallingModes && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"></i>
-                                                                        </span>
-                                                                        <b>
-                                                                            {{service.name | capitalizeFirst}}
-                                                                        </b>
-                                                                    </a>
-                                                                    <p class="title-style"
-                                                                        *ngIf="service.provider && service.provider.businessName">
-                                                                        {{service.provider.businessName}}</p>
-                                                                </div>
-                                                                <div class="card-item-content">
-                                                                    <div class="card-item-content-action">
-                                                                        <div class="checkin-btn-bp1 mgn-up-10"
-                                                                            (click)="handleServiceSel(service.id)">
-                                                                            Select
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-                                                </div>
-                                            </div>
                                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                                                 *ngIf="action=='members'">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
@@ -1620,25 +1344,242 @@
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20">
-                                                            <button mat-button class="cs-btn bt1 backtocheckin"
-                                                                (click)="saveMemberDetails()">OK
-                                                            </button>
-                                                        </div>
                                                     </ng-container>
                                                 </div>
                                             </div>
-                                            <div class="lbl notes preinfoDesc" *ngIf="action=='preInfo'">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20 mgn-bt-20"
-                                                    style="font-size: 1rem !important"><i class="fa fa-arrow-left"
-                                                        (click)="goBack()"></i> {{sel_ser_det.preInfoTitle}}
+
+                                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
+                                            *ngIf="action=='attachment'">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
+                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12 mgn-bt-20">
-                                                    <div [innerHTML]="sel_ser_det.preInfoText">
+                                                <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
+                                                    <mat-chip-list class="btns">
+                                                        <mat-chip><a class="lnk action pointer-cursor"
+                                                                (click)="imagefile.click()"><input #imagefile
+                                                                    type="file" accept="/*;capture=camera"
+                                                                    style="display:none;" multiple
+                                                                    (change)="filesSelected($event)"><i
+                                                                    class="fa fa-paperclip mgn-rt-5"
+                                                                    aria-hidden="true"></i>Upload
+                                                                File</a></mat-chip>
+                                                    </mat-chip-list>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+                                                    *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
+                                                    Uploaded Files
+                                                </div>
+
+
+
+                                                <div class="img-section mgn-up-20"
+                                                    *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
+                                                    <ul class="galul">
+
+                                                        <ng-container
+                                                            *ngIf="type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0">
+                                                            <li
+                                                                *ngFor="let file of waitlist.attchment;let i = index ">
+                                                                <div class="galimg_outer">
+                                                                    <div class="gal_img">
+                                                                        <img [src]="getThumbUrl(file)">
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+
+                                                        <ng-container
+                                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                                                            <li
+                                                                *ngFor="let file of selectedMessage.files;let i = index ">
+                                                                <div class="galimg_outer">
+                                                                    <div class="gal_img">
+                                                                        <img [src]="getImage(selectedMessage.base64[i], file)"
+                                                                            *ngIf="selectedMessage.base64[i]">
+                                                                    </div>
+                                                                    <div class="gal_action"
+                                                                        (click)="deleteTempImage(i)">
+                                                                        <i class="fa fa-times-circle"
+                                                                            aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                        *ngIf="action=='timeChange'">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                                <i class="fa fa-arrow-left" (click)="goBack()"></i> Choose
+                                                Date
+                                            </div>
+                                            <div class="pull-left brd-round brd-light mgn-up-20">
+                                                <div class="icon-minus pull-left"
+                                                    [class.disable]="disableMinus()"
+                                                    *ngIf="settingsjson.futureDateWaitlist"
+                                                    (click)="calculateDate(-1)">
+                                                </div>
+                                                <div class="pull-left chkindt">{{sel_checkindate | date:
+                                                    dateFormat}}</div>
+                                                <div class="icon-add pull-left"
+                                                    *ngIf="settingsjson.futureDateWaitlist"
+                                                    (click)="calculateDate(1)"></div>
+                                            </div>
+                                            <div class="pickerouter caldiv pull-left mgn-up-20"
+                                                *ngIf="settingsjson.futureDateWaitlist">
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                                                </mat-datepicker>
+                                                <input class="" style="visibility: hidden; width:1px"
+                                                    type="text" [matDatepicker]="picker" [min]="minDate"
+                                                    [max]="maxDate" [value]="ddate"
+                                                    (dateChange)="handleFutureDateChange($event)">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">
+                                                Choose
+                                                Timings</div>
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                                                <mat-chip-list class=""
+                                                    *ngIf="queuejson && queuejson.length > 0">
+                                                    <mat-chip *ngFor="let queue of queuejson, let i= index"
+                                                        [selected]="queue.id === queuejson[this.sel_queue_indx].id"
+                                                        (click)="handleQueueSelection(queue, i)">
+                                                        {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - '
+                                                        +
+                                                        queue.queueSchedule.timeSlots[0]['eTime']}}
+                                                    </mat-chip>
+                                                </mat-chip-list>
+                                                <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
+                                                    *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                                    No timings available.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                        *ngIf="action=='coupons'">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                            <i class="fa fa-arrow-left" (click)="goBack()"></i> Apply
+                                            promocode
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
+                                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                                *ngIf="showCouponWB">
+                                                <div
+                                                    class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
+                                                    <i class="icon-bell"></i>{{applied_inbilltime}}
+                                                </div>
+                                                <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
+                                                    <div class="input-group">
+                                                        <input [ngClass]="{'invalid':!couponvalid}"
+                                                            (keydown)="clearCouponErrors()"
+                                                            placeholder="Enter coupon code" type="text"
+                                                            class="form-control" [(ngModel)]="selected_coupon">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn bt3 btn-default coupon-apply-btn"
+                                                                (click)="applyCoupons(selected_coupon)"
+                                                                type="button">Add</button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                                    style="color: red;" *ngIf="api_cp_error !== null">
+                                                    {{api_cp_error}}</div>
+                                                <div
+                                                    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
+                                                *ngIf="couponsList && couponsList.length>0">
+                                                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
+                                                    *ngFor="let coupon of couponsList let i=index">
+                                                    <div
+                                                        class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
+                                                        <div
+                                                            class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
+                                                            {{coupon.couponCode}} </div>
+                                                        <div
+                                                            class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
+                                                            <span><a *ngIf="coupon.instructions"
+                                                                    (click)="toggleterms(i)"
+                                                                    class="pointer-cursor lnk read-more-checkin">Read
+                                                                    T & C </a></span>
+                                                            <span><a class="pointer-cursor lnk"><i
+                                                                        class="pointer-cursor icon-delete mgn-lt-10 lnk"
+                                                                        (click)="removeJCoupon(i)"
+                                                                        [matTooltipClass]="tooltipcls"
+                                                                        [matTooltip]="'Remove Coupon'"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding"
+                                                        *ngIf="coupon.showme">
+                                                        {{coupon.instructions}}
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer"
+                                            *ngIf="coupon_status">
+                                            <div class="form-group">
+                                                <span *ngIf="coupon_status=='success'"
+                                                    class="coupon_success">Coupon Code(s)
+                                                    applied
+                                                    successfully</span>
+                                                <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon
+                                                    Code(s) not
+                                                    valid</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
+                                        *ngIf="action=='note'">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                            <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                            {{sel_ser_det.consumerNoteTitle}}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <textarea class="form-control mgn-bt-20 mgn-up-20"
+                                                [(ngModel)]="consumerNote" #consumernote
+                                                (change)="handleConsumerNote(consumernote.value)"
+                                                maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
+                                        *ngIf="action=='addmember'">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
+                                                <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                {{add_member_cap}}
+                                            </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
+                                                <app-checkin-consumer-add-member [calledFrom]="'checkin'"
+                                                    (returnDetails)="handleReturnDetails($event)">
+                                                </app-checkin-consumer-add-member>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                                                  #closebutton>Close</button>
+                                                <button type="button" class="btn btn-primary font-weight-bold" (click)="actionCompleted()">Ok</button>
+                                              </div>
+                                            </div>
+                                            </div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -1713,6 +1654,11 @@
                                                     <td width="48%" align="right">Contact #</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>{{countryCode}} {{userPhone}}</td>
+                                                </tr>
+                                                <tr *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                    <td width="48%" align="right">WhatsApp #</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td> +{{callingModes}}</td>
                                                 </tr>
                                                 <tr *ngIf="userData.userProfile.email">
                                                     <td width="48%" align="right">Email</td>
@@ -1797,7 +1743,7 @@
                                             <button type="button" *ngIf="bookStep == 3" (click)="saveCheckin('checkin')"
                                                 class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
                                                 <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0"> Pay</ng-container>
-                                                <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow == 0"> Confirm</ng-container>
+                                                <ng-container *ngIf="!paymentDetails || (paymentDetails && paymentDetails.amountRequiredNow == 0)"> Confirm</ng-container>
                                             </button>
                                             <button type="button" *ngIf="bookStep != 3"
                                                 class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"

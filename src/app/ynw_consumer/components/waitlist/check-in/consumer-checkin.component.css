@@ -1365,3 +1365,6 @@ ngx-intl-tel-input input {
 .fa-times-circle {
   font-size: 1.3rem !important;
 }
+.fade {
+  opacity: 2 !important;
+}

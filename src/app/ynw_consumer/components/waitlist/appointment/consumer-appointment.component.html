@@ -1555,6 +1555,11 @@
                                                     <td width="2%">&nbsp;:&nbsp;</td>
                                                     <td>{{countryCode}} {{userPhone}}</td>
                                                 </tr>
+                                                <tr *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                    <td width="48%" align="right">WhatsApp #</td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td> +{{callingModes}}</td>
+                                                </tr>
                                                 <tr *ngIf="userData.userProfile.email">
                                                     <td width="48%" align="right">Email</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -1610,7 +1615,7 @@
                                                 <button type="button" *ngIf="bookStep == 3" (click)="saveCheckin('appt')"
                                                 class="btn btn-success font-weight-bold text-uppercase px-9 py-4">
                                             <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">   Pay</ng-container> 
-                                            <ng-container *ngIf="paymentDetails && paymentDetails.amountRequiredNow == 0">   Confirm</ng-container> 
+                                            <ng-container *ngIf="!paymentDetails || (paymentDetails && paymentDetails.amountRequiredNow == 0)"> Confirm</ng-container>
                                             </button>
                                                 <button type="button" *ngIf="bookStep != 3"
                                                     class="btn btn-primary font-weight-bold text-uppercase px-9 py-4"
