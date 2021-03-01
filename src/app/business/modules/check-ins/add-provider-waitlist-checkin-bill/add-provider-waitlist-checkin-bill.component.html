@@ -195,10 +195,16 @@
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
 												{{service.quantity}}<br><br>
-												<span class="text-right text-muted-dark font-size-xs ">Item Level Discount</span> <br>
-												<span class="text-right font-size-xs font-weight-boldest">Sub total</span>
-											
-											
+                                                <div *ngFor="let discount of service.discount">
+													<span class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span> <br>
+													<span class="text-right font-size-xs font-weight-boldest">
+														<span class="rupee-font">(-){{discount.discountValue
+															|
+															currency:'&#8377;'}}</span> <i
+															(click)="removeServiceDiscount(service.serviceId, discount.id)"
+															class="fa fa-window-close" aria-hidden="true"></i>
+													</span>	
+												</div>
 											</td>
 											<td class="text-right pt-7"
 												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
@@ -281,10 +287,8 @@
 													</mat-menu>
 												<!-- </div> -->
 												<br> 
-												<span class="text-right rupee-font font-size-xs text-muted-dark">-₹ 45</span> <br>
-												<span class="text-right rupee-font font-size-xs font-weight-boldest">₹ 4985</span>
-
-
+												<span *ngIf="service.discount && service.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
+												<span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
 											</td>
 										    <!-- Modal for Service level apply discount -->
 											<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1"
@@ -348,13 +352,22 @@
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
-											<td class="border-top-0 text-right py-4">{{item.quantity}}</td>
+											<td class="border-top-0 text-right py-4">{{item.quantity}} 
+												<br><br>
+                                                <div *ngFor="let discount of item.discount">
+													<span class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span> <br>
+													<span class="text-right font-size-xs font-weight-boldest">
+														<span class="rupee-font">(-){{discount.discountValue															|
+															currency:'&#8377;'}}</span> <i
+															(click)="removeItemDiscount(item.itemId, discount.id)"
+															class="fa fa-window-close" aria-hidden="true"></i>
+													</span>	
+												</div>
+											</td>
 											<td class="border-top-0 text-right py-4"> <span class="rupee-font"> <sup
 														[matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
 														*ngIf="item.GSTpercentage > 0">Tax</sup>
-													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>
-
-
+													{{(item.quantity * item.price) | currency:'&#8377;'}}</span>													
 												<!-- <div *ngIf="bill_data.billStatus!='Settled' && pos"> -->
 													<button mat-icon-button [matMenuTriggerFor]="tdmenu"  *ngIf="bill_data.billStatus!='Settled' && pos">
 														<mat-icon>more_horiz</mat-icon>
@@ -380,21 +393,25 @@
 													</mat-menu>
 												<!-- </div> -->
 
-												<div class="discount-row" *ngFor="let discount of item.discount">
+												<!-- <div class="discount-row" *ngFor="let discount of item.discount">
 													<div class="name">{{discount.name}}</div>
 													<div class="price rupee-font">
 														(-){{discount.discountValue |
 														currency:'&#8377;'}} <i
 															(click)="removeItemDiscount(item.itemId, discount.id)"
 															class="fa fa-window-close" aria-hidden="true"></i></div>
-												</div>
+												</div> -->
 
-												<div class="c-row three"
+												<!-- <div class="c-row three"
 													*ngIf="item.discount &&item.discount.length > 0">
 													<div class="name">{{sub_tot_cap}}</div>
 													<div class="price rupee-font">{{item.netRate |
 														currency:'&#8377;'}}</div>
-												</div>
+												</div> -->
+												<br> 
+												<span *ngIf="item.discount &&item.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
+												<span *ngIf="item.discount &&item.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate | currency:'&#8377;'}}</span>
+												
 
 											</td>
 											<!-- Modal for Item level apply discount -->
