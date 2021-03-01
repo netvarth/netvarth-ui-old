@@ -194,7 +194,12 @@
 											<td class="text-right pt-7"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 													    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
-												{{service.quantity}}</td>
+												{{service.quantity}}<br><br>
+												<span class="text-right text-muted-dark font-size-xs ">Item Level Discount</span> <br>
+												<span class="text-right font-size-xs font-weight-boldest">Sub total</span>
+											
+											
+											</td>
 											<td class="text-right pt-7"
 												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
@@ -221,7 +226,7 @@
 												<!-- <div
 													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
 												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
-													<button mat-icon-button [matMenuTriggerFor]="tdmenu"
+													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu"
 													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
 												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 														<mat-icon>more_horiz</mat-icon>
@@ -250,7 +255,7 @@
 												<!-- <div
 													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
-													<button mat-icon-button [matMenuTriggerFor]="tdmenu" 
+													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu" 
 													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 														<mat-icon>more_horiz</mat-icon>
@@ -275,6 +280,9 @@
 														</button>
 													</mat-menu>
 												<!-- </div> -->
+												<br> 
+												<span class="text-right rupee-font font-size-xs text-muted-dark">-₹ 45</span> <br>
+												<span class="text-right rupee-font font-size-xs font-weight-boldest">₹ 4985</span>
 
 
 											</td>
@@ -325,7 +333,8 @@
 											</div> -->
 
 										</tr>
-										<tr>
+
+										<!-- <tr>
 											<td></td>
 											<td class="text-right font-size-sm ">Item Level Discount</td>
 											<td class="text-right rupee-font font-size-sm">-₹ 45</td>
@@ -334,7 +343,8 @@
 											<td></td>
 											<td class="text-right font-size-sm font-weight-boldest">Sub total</td>
 											<td class="text-right rupee-font font-size-sm font-weight-boldest">₹ 4985</td>
-										</tr>
+										</tr> -->
+
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>

@@ -110,3 +110,6 @@
 .dashed_bdr {
     border: 1px dashed grey;
 }
+.text-muted-dark {
+    color:grey  !important;
+}
