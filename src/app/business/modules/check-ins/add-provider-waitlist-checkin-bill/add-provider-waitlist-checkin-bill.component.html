@@ -112,13 +112,43 @@
 					<!-- begin: Invoice body-->
 					<div class="row justify-content-center py-8 px-8 py-md-2 px-md-0">
 						<div class="col-md-12 mt-2 mb-2">
-							<div style="display: flex;" class="col-md-8" *ngIf="showAddItemsec">
-								<select class="form-control" id="exampleSelect1">
-									<option>OP</option>
-									<option>consultation</option>
-									<option>medicine</option>
-									<option>item</option>
-								</select>
+							<div style="display: flex;" class="col-md-8 ynw-common-form-nm" *ngIf="showAddItemsec">
+
+									<input type="text" #itemservicesearch
+										aria-label="Number"
+										[formControl]="itemServiceSearch"
+										(keyup)="itemServiceManualAdd('',itemServiceSearch)"
+										[matAutocomplete]="auto">
+									<mat-autocomplete #auto="matAutocomplete">
+										<ng-container
+											*ngIf="!(actiontype=='adjustService' || actiontype=='adjustItem')">
+											<ng-container
+												*ngFor="let group of ItemServiceGroupOptions | async">
+												<ng-container
+													*ngIf="group.type=='Items' || (group.type=='Services' && isServiceBillable)">
+													<mat-option
+														*ngFor="let value of group.values; let i = index"
+														[value]="value"
+														(onSelectionChange)="itemServiceSelected(group.type,value)">
+														{{ value }} <span
+															class="bill_item_service">{{(group.type=='Items')?
+															'Item' :
+															'Service'}}</span>
+													</mat-option>
+												</ng-container>
+												<mat-option
+													*ngIf="group.values.length==0 && source !== 'order'"
+													[disabled]="true">
+													<span
+														class="no-data"></span>{{no_cap}}
+													{{group.type}}
+													{{available_cap}}
+												</mat-option>
+												<!-- </mat-optgroup> -->
+											</ng-container>
+										</ng-container>
+									</mat-autocomplete>
+
 								<input type="number" min="0" aria-label="Number" value="1" size="3"
 									class="mat-input-element mat-form-field-autofill-control ml-5 ip_feild"
 									id="mat-input-4" aria-invalid="false" aria-required="false">

@@ -1055,7 +1055,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showDeliveryChargeSection = false;
-    this.showAddItemsec = true;
+    // this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);
