@@ -226,6 +226,7 @@ export class ProviderCheckinComponent implements OnInit {
     checkin_label;
     provider_label = '';
     showQuestionnaire = false;
+    questionnaireList: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

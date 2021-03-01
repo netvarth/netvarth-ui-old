@@ -48,9 +48,7 @@ export class DynamicFormComponent implements OnInit {
     private wordProcessor: WordProcessor) { }
 
   ngOnInit() {
-    console.log(this.questions);
     const form_ob = this.qcs.toFormGroup(this.questions);
-    console.log(form_ob);
     this.form = form_ob.form;
     this.messages = form_ob.messages;
   }
@@ -58,7 +56,7 @@ export class DynamicFormComponent implements OnInit {
   onSubmit() {
     this.api_error = null;
     // this.payLoad = JSON.stringify(this.form.value);
-console.log(this.form);
+
     const curdate = this.findDateField();
     const mon_year_key = this.findYearMonthField();
     if (mon_year_key['year_field'] && mon_year_key['month_field']) {

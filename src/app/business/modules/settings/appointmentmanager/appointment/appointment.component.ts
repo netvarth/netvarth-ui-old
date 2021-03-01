@@ -229,6 +229,7 @@ export class AppointmentComponent implements OnInit {
     emptyFielderror = false;
     provider_label = '';
     showQuestionnaire = false;
+    questionnaireList: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,

@@ -27182,3 +27182,7 @@ width: 40px !important;
   background-color: #ddd;
   margin-left: 15px;
 }
+.infotext textarea {
+  width: 100%;
+  resize: none;
+}
