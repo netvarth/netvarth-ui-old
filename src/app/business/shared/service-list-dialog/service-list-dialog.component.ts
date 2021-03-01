@@ -9,21 +9,30 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 })
 export class ServiceListDialogComponent implements OnInit {
 
-  service_list :any   = [];
+  former_chosen_services: any = [];
+  service_list: any = [];
+  selectedServices: any = [];
+
   constructor(public dialogRef: MatDialogRef<ServiceListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private provider_services: ProviderServices) { }
+    private provider_services: ProviderServices) {
+
+  }
 
   ngOnInit(): void {
+    this.former_chosen_services = this.data.services;
     this.getServices();
+
   }
+
   getServices() {
     const filter1 = { 'serviceType-neq': 'donationService', 'status-eq': 'ACTIVE' };
     this.provider_services.getServicesList(filter1)
       .subscribe(
         data => {
           this.service_list = data;
+
         },
         () => { }
       );
@@ -31,5 +40,25 @@ export class ServiceListDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+  onServiceChange(event) {
+    console.log(event);
+  }
 
+  onConfirm(serviceObject) {
+    const selected_service_obj = serviceObject.selected.map(service => service.value);
+    const result = selected_service_obj.map(a => a.id);
+    console.log('selected service', result);
+   this.dialogRef.close(result);
+  }
+  isSelected(service) {
+
+    if (this.former_chosen_services.some(e => e === service.id)) {
+      /* former_chosen_services contains the service we're looking for */
+
+      return true;
+    } else {
+
+      return false;
+    }
+  }
 }

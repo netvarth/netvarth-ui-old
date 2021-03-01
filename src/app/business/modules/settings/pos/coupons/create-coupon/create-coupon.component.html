@@ -61,7 +61,7 @@
               <div class="row justify-content-center py-10 px-8 py-lg-12 px-lg-10">
                 <div class="col-xl-12 col-xxl-7">
                   <!--begin: Wizard Form-->
-                  <form [formGroup]="couponForm" novalidate (ngSubmit)="onSubmit(couponForm.value)" (keyup)="resetApiErrors()"
+                  <form [formGroup]="couponForm" novalidate (ngSubmit)="onSubmit()" (keyup)="resetApiErrors()"
                     class="form">
                     <!--begin: Wizard Step 1-->
                     <div class="pb-5" *ngIf="step == 1">
@@ -71,7 +71,7 @@
                           <!--begin::Input-->
                           <div class="form-group">
                             <label>Coupon Name</label>
-                            <input type="text" class="form-control1 form-control-solid form-control-lg" id="couponName" placeholder="Coupon Name*" formControlName="couponName"
+                            <input type="text" class="form-control1 form-control-solid form-control-lg" id="name" placeholder="Coupon Name*" formControlName="name"
                               maxlength="50" />
                             <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'couponName')" [errorMsgs]="fed_service.getErrorMessage(couponForm,'couponName',
           {
@@ -127,8 +127,8 @@
                           <!--begin::Input-->
                           <div class="form-group">
                             <label>Coupon Description</label>
-                            <textarea type="text" class="form-control1 form-control-solid form-control-lg" id="couponDesc" placeholder="Enter coupon description"
-                              formControlName="couponDesc" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+                            <textarea type="text" class="form-control1 form-control-solid form-control-lg" id="description" placeholder="Enter coupon description"
+                              formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
                               maxlength="500"></textarea>
                             <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(couponForm,'couponDesc')"
                               [errorMsgs]="fed_service.getErrorMessage(couponForm,'couponDesc',
@@ -157,7 +157,7 @@
                           <div class="form-group">
                             <div class="input-group date">
                               <label>Valid From</label>
-                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)" placeholder="Valid From" formControlName="validFrom"
+                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)" placeholder="Valid From" formControlName="startDate"
                               />
                             </div>
                           </div>
@@ -168,7 +168,7 @@
                           <div class="form-group">
                             <div class="input-group date">
                               <label>Valid To</label>
-                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)" placeholder="Valid To" formControlName="validTo"
+                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)" placeholder="Valid To" formControlName="endDate"
                               />
                             </div>
                           </div>
@@ -260,9 +260,11 @@
                     <!--end: Wizard Step 2-->
 
                     <!--begin: Wizard Step 3-->
-                    <div class="pb-5" *ngIf="step==3" formGroupName="couponRules">
+                    <div class="pb-5" *ngIf="step==3" >
 
                       <h4 class="mb-10 font-weight-bold text-dark">Apply this coupon to</h4>
+                      <div formGroupName="couponRules">
+                      <div formGroupName="policies">
                       <div class="row">
                         <div class="col-xl-12">
                           <div class="form-group">
@@ -274,17 +276,20 @@
 
 
                       </div>
-                      <div class="row" [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false">
+                      <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                                 <button mat-raised-button  class="dialogbtn" (click)="openServiceDialog()">Services</button>
 
                             </div>
+                            <p *ngIf="services.length>0">
+                              {{ services.length }} Services Selected
+                            </p>
                           </div>
                         </div>
 
 
-                        <div [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false">
+                        <div [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || active_user.type!=='BRANCH'">
                       <div class="row">
                         <div class="col-xl-12">
                           <div class="form-group">
@@ -293,18 +298,21 @@
                           </div>
                         </div>
                         </div>
-                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false || this.couponForm.get('couponRules').get('isDepartment').value==false">
+                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || this.couponForm.get('couponRules').get('policies').get('isDepartment').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                                 <button mat-raised-button  class="dialogbtn" (click)="openDepartmentDialog()">Departments</button>
 
                             </div>
+                            <p *ngIf="departments.length>0">
+                              {{ departments.length }} Departments Selected
+                            </p>
                           </div>
                         </div>
 
 
                       </div>
-                      <div [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false">
+                      <div [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false  || active_user.type!=='BRANCH'">
                       <div class="row">
                         <div class="col-xl-12">
                           <div class="form-group">
@@ -312,19 +320,22 @@
                             </mat-checkbox>
                           </div>
                         </div>
-                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('isUser').value==false">
+                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isUser').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                                 <button mat-raised-button  class="dialogbtn" (click)="openUserDialog()">Users</button>
 
                             </div>
+                            <p *ngIf="users.length>0">
+                              {{ users.length }} Users Selected
+                            </p>
                           </div>
                         </div>
 
 
                       </div>
                       </div>
-                      <div [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false">
+                      <div [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                       <div class="row" >
                         <div class="col-xl-12">
                           <div class="form-group">
@@ -334,18 +345,21 @@
                           </div>
                         </div>
 
-                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('isCustomerLabel').value==false">
+                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                                 <button mat-raised-button  class="dialogbtn" (click)="openCustomerLabelDialog()">Customer Labels</button>
 
                             </div>
+                            <p *ngIf="customer_labels.length>0">
+                              {{ customer_labels.length }} Labels Selected
+                            </p>
                           </div>
                         </div>
 
                       </div>
                     </div>
-                    <div [hidden]="this.couponForm.get('couponRules').get('isServiceBased').value==false">
+                    <div [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                       <div class="row">
                           <div class="col-xl-12">
                             <div class="form-group">
@@ -358,12 +372,15 @@
 
 
                         </div>
-                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('isCustomerGroup').value==false">
+                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                                 <button mat-raised-button  class="dialogbtn" (click)="openCustomerGroupDialog()">Customer Groups</button>
 
                             </div>
+                            <p *ngIf="customer_groups.length>0">
+                              {{ customer_groups.length }} Groups Selected
+                            </p>
                           </div>
                         </div>
                         </div>
@@ -383,7 +400,7 @@
 
                       </div>
 
-                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('isCatalogBased').value==false && this.couponForm.get('couponRules').get('isCatalog').value==false">
+                        <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isCatalogBased').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
                               <mat-form-field appearance="fill">
@@ -407,149 +424,30 @@
                                 Items
                               </mat-checkbox>
                             </div>
+
                           </div>
 
 
 
                         </div>
-                            <div class="row" [hidden]="this.couponForm.get('couponRules').get('isItem').value==false">
+                            <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isItem').value==false">
                               <div class="col-xl-12">
                                 <div class="form-group">
                                     <button mat-raised-button  class="dialogbtn" (click)="openItemDialog()">Items</button>
 
                                 </div>
+                                <p *ngIf="items.length>0">
+                                  {{ items.length }} Items Selected
+                                </p>
                               </div>
+                            </div>
+                            </div>
                             </div>
 
 
-<!--
-                      <div class="row"  *ngIf="active_user.type ==='BRANCH'">
-                        <div class="col-xl-6" *ngIf="department_list.length>0">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Departments</label>
-                              <mat-select placeholder="Department" formControlName="departments" [multiple]="true">
-
-                                <mat-option *ngFor=" let dept of department_list" [value]="dept.name">
-                                  {{dept.displayName}}
-                                </mat-option>
-
-                              </mat-select>
-
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="col-xl-6" *ngIf="user_list.length>0" >
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Users</label>
-                              <mat-select placeholder="user" formControlName="users" [multiple]="true">
-
-                                <mat-option *ngFor=" let user of user_list" [value]="user.name">
-                                  {{user.displayName}}
-                                </mat-option>
 
 
-
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                        </div>
-
-                      </div>
-                      <div class="row">
-                        <div class="col-xl-6" *ngIf="service_list.length>0">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Services</label>
-                              <mat-select placeholder="Service" formControlName="services" [multiple]="true">
-                                <mat-option *ngFor=" let service of service_list" [value]="service.name">
-                                  {{service.name}}
-                                </mat-option>
-
-                              </mat-select>
-                            </mat-form-field>
-
-                          </div>
-                        </div>
-                        <div class="col-xl-6" *ngIf="customer_group_list.length>0">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Consumer Groups</label>
-                              <mat-select placeholder="Consumer Groups" formControlName="consumerGroups" [multiple]="true">
-                                <mat-option *ngFor=" let group of customer_group_list" [value]="group.name">
-                                  {{group.displayName}}
-                                </mat-option>
-
-                              </mat-select>
-                            </mat-form-field>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-
-                        <div class="col-xl-6" *ngIf="customer_label_list.length>0">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Consumer Labels</label>
-                              <mat-select placeholder="Consumer Labels" formControlName="consumerLabels" [multiple]="true">
-                                <mat-option *ngFor=" let label of customer_label_list" [value]="label.label">
-                                  {{label.displayName}}
-                                </mat-option>
-
-                              </mat-select>
-                            </mat-form-field>
-
-                          </div>
-                        </div>
-
-                      </div>
-
-
-
-
-                      <div class="row">
-                        <div class="col-x1-6" *ngIf="catalog_list.length>0">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Catalogue</label>
-                              <mat-select placeholder="Catalogue" formControlName="catalogues" [multiple]="true">
-                                <mat-option *ngFor=" let catalog of catalog_list" [value]="catalog.catalogName">
-                                  {{catalog.catalogName}}
-                                </mat-option>
-
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                        </div>
-
-
-
-                      </div>
-
-
-                      <div class="row">
-
-                        <div class="col-xl-6">
-                          <div class="form-group">
-                            <mat-form-field appearance="fill">
-                              <label>Items</label>
-                              <mat-select placeholder="item" formControlName="items" [multiple]="true">
-
-                                <mat-option *ngFor=" let item of item_list" [value]="item.name">
-                                  {{item.displayName}}
-                                </mat-option>
-
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                        </div>
-
-
-                      </div> -->
-
-                    <div class="row">
+                    <div class="row" >
                        <div class="col-xl-6">
                           <div class="form-group">
                             <mat-form-field appearance="fill">

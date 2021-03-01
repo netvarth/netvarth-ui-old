@@ -1,1 +1,25 @@
-<p>department-list-dialog works!</p>
+
+    <h1 class="mat-dialog-title">  Departments
+      <button  mat-dialog-close  tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+
+      <mat-selection-list #departments [(ngModel)]="selectedDepartments" (ngModelChange)="onDepartmentChange($event)" >
+
+        <mat-list-option *ngFor=" let department of department_list" [value] ="department" [selected]="isSelected(department)">
+
+          {{department.name}}
+
+        </mat-list-option>
+
+      </mat-selection-list>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button" (click)="onConfirm(departments.selectedOptions)" >Confirm</button>
+    </div>
+    </mat-dialog-actions>

@@ -3,13 +3,17 @@ import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-import { projectConstants } from '../../../../../../app.component';
 import { TimewindowPopupComponent } from '../../../ordermanager/catalog/timewindowpopup/timewindowpopup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { ServiceListDialogComponent } from '../../../../../shared/service-list-dialog/service-list-dialog.component';
+import { ItemListDialogComponent } from '../../../../../shared/item-list-dialog/item-list-dialog.component';
+import { DepartmentListDialogComponent } from '../../../../../shared/department-list-dialog/department-list-dialog.component';
+import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-group-dialog/consumer-group-dialog.component';
+import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
+import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
 
 
 @Component({
@@ -19,13 +23,24 @@ import { ServiceListDialogComponent } from '../../../../../shared/service-list-d
 
 })
 export class CreateCouponComponent implements OnInit {
+  consumerLabeldialogRef: any;
+  services: any = [];
+  items: any = [];
+  departments: any = [];
+  users: any = [];
+  customer_groups: any = [];
+  customer_labels: any = [];
+  couponBasedOnValue = '';
   servicedialogRef: any;
+  itemdialogRef: any;
+  userdialogRef: any;
+  consumerGroupdialogRef: any;
+  departmentdialogRef: any;
   showServiceSection: boolean;
   showCatalogSection: boolean;
   active_user: any;
   deptObj;
   department_list: any = [];
-  service_list: any = [];
   item_list: any = [];
   customer_label_list: any = [];
   customer_group_list: any = [];
@@ -38,12 +53,15 @@ export class CreateCouponComponent implements OnInit {
   max_char_count: any;
   char_count: number;
   isfocused: boolean;
+  coupon_timeslots: any = [];
   public couponForm: FormGroup;
   step = 1;
   maxChars = projectConstantsLocal.VALIDATOR_MAX50;
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
-  weekdays = projectConstants.myweekdaysSchedule;
-  bookingMode = projectConstants.BOOKING_MODE;
+  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  bookingMode = projectConstantsLocal.BOOKING_MODE;
+  selday_arr: any = [];
+  selallweekdays = false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -70,39 +88,41 @@ export class CreateCouponComponent implements OnInit {
 
   createForm() {
     this.couponForm = this.formbuilder.group({
-      couponName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       couponCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-      couponDesc: [''],
+      description: [''],
       calculationType: [''],
       amount: [''],
       couponRules: this.formbuilder.group({
-        validFrom: ['', [Validators.required]],
-        validTo: ['', [Validators.required]],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
         firstCheckinOnly: [''],
         minBillAmount: [''],
         maxDiscountValue: [''],
         isproviderAcceptCoupon: [''],
         maxProviderUseLimit: [''],
-        departments: ['', [Validators.required]],
-        services: ['', [Validators.required]],
-        users: ['', [Validators.required]],
-        catalogues: ['', [Validators.required]],
-        consumerGroups: ['', [Validators.required]],
-        consumerLabels: ['', [Validators.required]],
-        items: ['', [Validators.required]],
-        couponBasedOn: [''],
-        isDepartment: [''],
-        isUser: [''],
-        isService: [''],
-        isCatalog: [''],
-        isItem: [''],
-        isCustomerGroup: [''],
-        isCustomerLabel: [''],
-        isCatalogBased: [''],
-        isServiceBased: ['']
+        validTimeRange: [''],
+        policies: this.formbuilder.group({
+          departments: ['', [Validators.required]],
+          services: ['', [Validators.required]],
+          users: ['', [Validators.required]],
+          catalogues: ['', [Validators.required]],
+          consumerGroups: ['', [Validators.required]],
+          consumerLabels: ['', [Validators.required]],
+          items: ['', [Validators.required]],
+          isDepartment: [''],
+          isUser: [''],
+          isItem: [''],
+          isCustomerGroup: [''],
+          isCustomerLabel: [''],
+          isCatalogBased: [''],
+          isServiceBased: ['']
+        })
+
       }),
 
-      bookingChannel: ['']
+      bookingChannel: [''],
+      couponBasedOn: ['']
     });
 
   }
@@ -118,11 +138,7 @@ export class CreateCouponComponent implements OnInit {
       this.showServiceSection = false;
     }
   }
-  onSubmit(form) {
-    console.log(form);
-    console.log(form.value);
-    console.log(JSON.stringify(form.value));
-  }
+
   showTimewindow() {
     this.timewindowdialogRef = this.dialog.open(TimewindowPopupComponent, {
       width: '50%',
@@ -143,13 +159,13 @@ export class CreateCouponComponent implements OnInit {
   }
   setDescFocus() {
     this.isfocused = true;
-    this.char_count = this.max_char_count - this.couponForm.get('couponDesc').value.length;
+    this.char_count = this.max_char_count - this.couponForm.get('description').value.length;
   }
   lostDescFocus() {
     this.isfocused = false;
   }
   setCharCount() {
-    this.char_count = this.max_char_count - this.couponForm.get('couponDesc').value.length;
+    this.char_count = this.max_char_count - this.couponForm.get('description').value.length;
   }
   gotoNext() {
     this.step = this.step + 1;
@@ -182,6 +198,17 @@ export class CreateCouponComponent implements OnInit {
     }
   }
   handleDaychange(index) {
+    const selindx = this.selday_arr.indexOf(index);
+    if (selindx === -1) {
+      this.selday_arr.push(index);
+    } else {
+      this.selday_arr.splice(selindx, 1);
+    }
+    if (this.selday_arr.length === 7) {
+      this.selallweekdays = true;
+    } else {
+      this.selallweekdays = false;
+    }
 
   }
   getDepartments() {
@@ -247,26 +274,165 @@ export class CreateCouponComponent implements OnInit {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
+      data: {
+        'services': this.services
+      }
 
     });
     this.servicedialogRef.afterClosed().subscribe(result => {
-
+      if (result) {
+        this.services = result;
+      }
     });
   }
   openItemDialog() {
+    this.itemdialogRef = this.dialog.open(ItemListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'items': this.items
+      }
+
+    });
+    this.itemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.items = result;
+      }
+    });
 
   }
   openDepartmentDialog() {
+    this.departmentdialogRef = this.dialog.open(DepartmentListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'departments': this.departments
+      }
 
+    });
+    this.departmentdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.departments = result;
+      }
+    });
   }
   openCustomerGroupDialog() {
+    this.consumerGroupdialogRef = this.dialog.open(ConsumerGroupDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'groups': this.customer_groups
+      }
+
+    });
+    this.consumerGroupdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.customer_groups = result;
+      }
+    });
 
   }
   openCustomerLabelDialog() {
+    this.consumerLabeldialogRef = this.dialog.open(ConsumerLabelDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'labels': this.customer_labels
+      }
+
+    });
+    this.consumerLabeldialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.customer_labels = result;
+      }
+    });
 
   }
   openUserDialog() {
+    this.userdialogRef = this.dialog.open(UsersListDialogComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        'users': this.users
+      }
 
+    });
+    this.userdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.users = result;
+      }
+    });
+  }
+
+  onSubmit() {
+    this.couponBasedOnValue='';
+    const form_data = this.couponForm.value;
+    console.log(form_data);
+    const timeRangeObject = {
+      'recurringType': 'Weekly',
+      'repeatIntervals': this.selday_arr,
+      'timeSlots': this.timewindow_list
+    };
+
+    console.log(timeRangeObject);
+    form_data.couponRules.validTimeRange = timeRangeObject;
+    if (form_data.couponRules.policies.isServiceBased) {
+      form_data.couponRules.policies.services = this.services;
+      this.couponBasedOnValue = this.couponBasedOnValue + 'ServiceBased';
+    }
+    if (form_data.couponRules.policies.isCatalogBased) {
+      if (this.couponBasedOnValue === '') {
+        this.couponBasedOnValue = this.couponBasedOnValue + 'CatalogueBased';
+      } else {
+        this.couponBasedOnValue = this.couponBasedOnValue + ',CatalogueBased';
+      }
+    }
+    console.log('base' + this.couponBasedOnValue);
+    if (form_data.couponRules.policies.isDepartment) {
+      form_data.couponRules.policies.departments = this.departments;
+
+    }
+    if (form_data.couponRules.policies.isUser) {
+      form_data.couponRules.policies.users = this.users;
+
+    }
+
+    if (form_data.couponRules.policies.isItem) {
+      form_data.couponRules.policies.items = this.items;
+
+    }
+    if (form_data.couponRules.policies.isCustomerGroup) {
+      form_data.couponRules.policies.customerGroup = this.customer_groups;
+
+    }
+    if (form_data.couponRules.policies.isCustomerLabel) {
+      form_data.couponRules.policies.customerLabel = this.customer_labels;
+
+    }
+    form_data.couponBasedOn = this.couponBasedOnValue;
+    delete form_data.couponRules.policies.isDepartment;
+    delete form_data.couponRules.policies.isUser;
+    delete form_data.couponRules.policies.isItem;
+    delete form_data.couponRules.policies.isCustomerGroup;
+    delete form_data.couponRules.policies.isCustomerLabel;
+    delete form_data.couponRules.policies.isServiceBased;
+    delete form_data.couponRules.policies.isCatalogBased;
+    console.log(form_data);
+    this.createCoupon(form_data);
+  }
+
+  createCoupon(data){
+    this.provider_services.createCoupon(data)
+    .subscribe(result=>{
+      console.log('createdSuccessfully');
+    });
   }
 }
+
+
 

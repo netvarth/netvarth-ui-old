@@ -57,6 +57,7 @@ import { DepartmentListDialogComponent } from './shared/department-list-dialog/d
 import { UsersListDialogComponent } from './shared/users-list-dialog/users-list-dialog.component';
 import { ConsumerGroupDialogComponent } from './shared/consumer-group-dialog/consumer-group-dialog.component';
 import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dialog.component';
+import { ConsumerLabelDialogComponent } from './shared/consumer-label-dialog/consumer-label-dialog.component';
 
 @NgModule({
     declarations: [
@@ -89,7 +90,8 @@ import { ItemListDialogComponent } from './shared/item-list-dialog/item-list-dia
         DepartmentListDialogComponent,
         UsersListDialogComponent,
         ConsumerGroupDialogComponent,
-        ItemListDialogComponent
+        ItemListDialogComponent,
+        ConsumerLabelDialogComponent
     ],
     imports: [
         BusinessRoutingModule,

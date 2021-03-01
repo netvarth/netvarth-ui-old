@@ -1,1 +1,29 @@
-<p>consumer-group-dialog works!</p>
+
+    <h1 class="mat-dialog-title">  Consumer Groups
+      <button  mat-dialog-close  tabindex="-1">
+        <i class="fa fa-window-close" aria-hidden="true"></i>
+      </button>
+    </h1>
+    <mat-dialog-content>
+      <!-- <div *ngIf="consumer_group.length>0"> -->
+      <mat-selection-list #groups [(ngModel)]="selectedGroups" (ngModelChange)="onGroupChange($event)" >
+
+        <mat-list-option *ngFor=" let group of consumer_group" [value] ="group" [selected]="isSelected(group)">
+
+          {{group.displayName}}
+
+        </mat-list-option>
+
+      </mat-selection-list>
+      <!-- </div> -->
+      <!-- <div *ngIf="consumer_group.length==0">
+<p>Consumer Groups Not Found</p>
+      </div> -->
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
+      <button   type="button"  class="cs-btn bt2 "(click)="close();" > Cancel</button>
+      <button  mat-button class="cs-btn bt1 style-button" type="button" (click)="onConfirm(groups.selectedOptions)" >Confirm</button>
+    </div>
+    </mat-dialog-actions>
