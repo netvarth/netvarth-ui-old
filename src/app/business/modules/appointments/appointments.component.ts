@@ -349,6 +349,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   endminday;
   maxday = new Date();
   endmaxday = new Date();
+  statusChangeClicked = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2067,10 +2068,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.statusChangeClicked = true;
     this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
+          this.statusChangeClicked = false;
           this.loadApiSwitch(result);
+        }, error => {
+          this.statusChangeClicked = false;
         }
       );
   }

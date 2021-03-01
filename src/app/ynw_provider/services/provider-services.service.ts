@@ -1668,6 +1668,10 @@ export class ProviderServices {
       const url = 'provider/customers/bookings/history/' + id;
       return this.servicemeta.httpGet(url);
    }
+   getCustomerOrderVisit(id){
+      const url = 'provider/orders/customer/' + id;
+      return this.servicemeta.httpGet(url);
+   }
    getMRAudits(id) {
       const url = 'provider/mr/auditLog/' + id;
       return this.servicemeta.httpGet(url);
@@ -1693,9 +1697,9 @@ export class ProviderServices {
       const url = 'provider/customers/label';
       return this.servicemeta.httpPost(url, data);
    }
-   deleteLabelFromCustomer(id, label) {
-      const url = 'provider/customers/' + id + '/label/' + label;
-      return this.servicemeta.httpDelete(url);
+   deleteLabelFromCustomer(data) {
+      const url = 'provider/customers/masslabel';
+      return this.servicemeta.httpDelete(url, data);
    }
    uploadCoverFoto(data) {
       return this.servicemeta.httpPost('provider/coverPicture', data);
@@ -1876,4 +1880,5 @@ export class ProviderServices {
       const url = 'provider/mr/uploadMR/' + mrId;
       return this.servicemeta.httpPost(url, data);
    }
+   
 }

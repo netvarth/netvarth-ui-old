@@ -250,7 +250,7 @@ export const Messages = {
   'FILTERICON_TOOPTIP': 'Use filters to find specific data',
   'FILTERICON_CLEARTOOLTIP': 'Clear filtered data',
   'BRPFOLE_SEARCH_TOOLTIP': 'Set up your profile here',
-  'WAITLIST_TOOLTIP': 'Manage working hours and waitlist',
+  'WAITLIST_TOOLTIP': 'Manage working hours',
   'LINCENSE_TOOLTIP': 'View and change your license package',
   'PAYMENT_TOOLTIP': 'View and edit online payment settings and tax settings',
   'BILLPOS_TOOLTIP': 'Add items, discounts, coupons',

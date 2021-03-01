@@ -649,7 +649,8 @@ export class WaitlistQueueDetailComponent implements OnInit {
         return;
       } else {
         if (JSON.parse(form_data.qserveonce) === 0 || (JSON.parse(form_data.qserveonce) > JSON.parse(form_data.qcapacity))) {
-          const error = this.customer_label_upper + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
+          const error = this.customer_label + 's' + ' ' + 'served at a time should greter than Zero';
+          // const error = this.customer_label_upper + 's' + ' ' + 'served at a time should be lesser than Maximum' + ' ' +  this.customer_label + 's served.';
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           return;
         }

@@ -61,8 +61,7 @@
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.amountPaid">
                 <span class="itemHead">Amount Paid</span>
-                <span class="price rupee-font">
-                  &#8377;{{waitlist_data.amountPaid}}
+                <span class="price rupee-font">{{waitlist_data.amountPaid| currency:'&#8377;'}}
                 </span>
               </div>
               

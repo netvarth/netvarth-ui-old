@@ -287,12 +287,10 @@
                             </mat-slide-toggle>
                           </label>
                         </div>
-                        
-                          <!-- <label>Advance payment &nbsp;</label>
-                            <mat-checkbox formControlName="advancePaymentStatus"
-                              (change)="handleadvancePayment($event)">
-                            </mat-checkbox> -->
-
+                        <div class="form-group">
+                          <label>Auto confirm order &nbsp;</label>
+                            <mat-checkbox formControlName="autoconfirm"></mat-checkbox>
+                          </div>
                             <div class="form-group" >
                               <label class="col-form-label" for="advancepaymentstat">Advance payment</label>
                               <mat-radio-group formControlName="advancePaymentStatus">

@@ -336,6 +336,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   addCustomerTooltip = '';
   qloading: boolean;
   firstTime = true;
+  statusChangeClicked = false;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -2788,10 +2789,15 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_shared_functions.changeWaitlistStatus(this, waitlist, action);
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    this.statusChangeClicked = true;
     this.provider_shared_functions.changeWaitlistStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
+          this.statusChangeClicked = false;
           this.loadApiSwitch(result);
+        }, error => {
+          this.statusChangeClicked = false;
+          console.log('eer');
         }
       );
   }

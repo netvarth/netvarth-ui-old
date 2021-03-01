@@ -129,6 +129,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
+                    this.snackbarService.openSnackBar( catalog.catalogName + ' disabled successfully');
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -139,6 +140,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
+                    this.snackbarService.openSnackBar( catalog.catalogName + ' enabled successfully');
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

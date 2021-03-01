@@ -41,7 +41,7 @@ export class CustomerSelectionComponent implements OnInit {
     { 'name': 'some name 2', ID: 'D2', 'checked': false }
   ];
 
-
+  showError = false;
   displayedColumns = ['select', 'id', 'fname', 'lname', 'phone', 'status'];
   public patient_dataSource = new MatTableDataSource<any>([]);
   constructor(private router: Router,
@@ -201,76 +201,83 @@ export class CustomerSelectionComponent implements OnInit {
   redirecToReports() {
     this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
-  searchCustomer(form_data) {
-    this.customer_selected = [];
-
-    let mode = 'id';
-    this.form_data = null;
-
-    let post_data = {};
-    const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-    const isEmail = emailPattern.test(form_data.search_input);
-    if (isEmail) {
-      mode = 'email';
-    } else {
-      const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-      const isNumber = phonepattern.test(form_data.search_input);
-      const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-      const isCount10 = phonecntpattern.test(form_data.search_input);
-      if (isNumber && isCount10) {
-        mode = 'phone';
-      } else {
-        mode = 'id';
-      }
-    }
-
-    switch (mode) {
-      case 'phone':
-        post_data = {
-          'phoneNo-eq': form_data.search_input
-        };
-        break;
-      case 'email':
-        post_data = {
-          'email-eq': form_data.search_input
-        };
-        break;
-      case 'id':
-        post_data = {
-          'jaldeeId-eq': form_data.search_input
-        };
-        break;
-    }
-
-    this.provider_services.getCustomer(post_data)
-      .subscribe(
-        (data: any) => {
-          this.patient_dataSource.data = data;
-          this.count = data.length;
-          // this.masterToggle();
-          // if (this.count > 0) {
-
-          // }
-
-          // if (data.length === 0) {
-
-          // } else {
-
-          //   if (data.length > 1) {
-          //     const customer = data.filter(member => !member.parent);
-          //     this.customer_data = customer[0];
-          //   } else {
-          // this.customer_data = data[0];
-          // }
-          // this.jaldeeId = this.customer_data.jaldeeId;
-          // this.getFamilyMembers();
-          // this.initCheckIn();
-          // }
-        },
-        error => {
-          this.wordProcessor.apiErrorAutoHide(this, error);
-        }
-      );
+  resetError() {
+    this.showError = false;
   }
+  searchCustomer(form_data) {
+    console.log(form_data.search_input);
+    if (form_data.search_input === '') {
+      this.showError = true;
+    } else {
+      this.customer_selected = [];
 
+      let mode = 'id';
+      this.form_data = null;
+
+      let post_data = {};
+      const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const isEmail = emailPattern.test(form_data.search_input);
+      if (isEmail) {
+        mode = 'email';
+      } else {
+        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const isNumber = phonepattern.test(form_data.search_input);
+        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const isCount10 = phonecntpattern.test(form_data.search_input);
+        if (isNumber && isCount10) {
+          mode = 'phone';
+        } else {
+          mode = 'id';
+        }
+      }
+
+      switch (mode) {
+        case 'phone':
+          post_data = {
+            'phoneNo-eq': form_data.search_input
+          };
+          break;
+        case 'email':
+          post_data = {
+            'email-eq': form_data.search_input
+          };
+          break;
+        case 'id':
+          post_data = {
+            'jaldeeId-eq': form_data.search_input
+          };
+          break;
+      }
+
+      this.provider_services.getCustomer(post_data)
+        .subscribe(
+          (data: any) => {
+            this.patient_dataSource.data = data;
+            this.count = data.length;
+            // this.masterToggle();
+            // if (this.count > 0) {
+
+            // }
+
+            // if (data.length === 0) {
+
+            // } else {
+
+            //   if (data.length > 1) {
+            //     const customer = data.filter(member => !member.parent);
+            //     this.customer_data = customer[0];
+            //   } else {
+            // this.customer_data = data[0];
+            // }
+            // this.jaldeeId = this.customer_data.jaldeeId;
+            // this.getFamilyMembers();
+            // this.initCheckIn();
+            // }
+          },
+          error => {
+            this.wordProcessor.apiErrorAutoHide(this, error);
+          }
+        );
+    }
+  }
 }
