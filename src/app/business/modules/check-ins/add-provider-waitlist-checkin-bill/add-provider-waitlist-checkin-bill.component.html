@@ -102,8 +102,6 @@
 												{{checkin.orderFor.lastName | capitalizeFirst}}
 											</span>
 										</ng-container>
-										<!-- Sneha S, P.O. Box 283 8562 Fusce RD.<br />Fredrick
-										Nebraska 20620 -->
 									</span>
 								</div>
 							</div>
@@ -187,9 +185,6 @@
 									<tbody>
 										<tr class="font-weight-boldest font-size-lg"
 											*ngFor="let service of bill_data.service; let i = index">
-											<!-- <td class="pl-0 pt-7">Creative Design</td>
-											<td class="text-right pt-7">80</td>
-											<td class="text-right pt-7">$40.00 -->
 											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}</td>
 											<td class="text-right pt-7"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
@@ -228,11 +223,7 @@
 												<span class="rupee-font">{{(service.quantity *
 													service.price) |
 													currency:'&#8377;'}}</span>
-
-												<!-- <div
-													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
-												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
-													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu"
+  												<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu"
 													*ngIf="pos && !source && bill_data.billStatus!='Settled' && (bill_data.checkinStatus !== 'cancelled' ||
 												    (bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 														<mat-icon>more_horiz</mat-icon>
@@ -256,11 +247,6 @@
 															Remove Service
 														</button>
 													</mat-menu>
-												<!-- </div> -->
-
-												<!-- <div
-													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
-														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))"> -->
 													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu" 
 													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
@@ -285,7 +271,6 @@
 															Remove Service
 														</button>
 													</mat-menu>
-												<!-- </div> -->
 												<br> 
 												<span *ngIf="service.discount && service.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
 												<span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
@@ -317,38 +302,7 @@
 													</div>
 												</div>
 											</div>
-
-											<!-- <div class="discount-row" *ngFor="let discount of service.discount">
-												<div class="name">{{discount.name}}</div>
-												<div class="price">
-													<span class="rupee-font">(-){{discount.discountValue
-														|
-														currency:'&#8377;'}}</span> <i
-														(click)="removeServiceDiscount(service.serviceId, discount.id)"
-														class="fa fa-window-close" aria-hidden="true"></i>
-												</div>
-											</div> -->
-
-											<!-- <div class="c-row three"
-												*ngIf="service.discount && service.discount.length > 0">
-												<div class="name">{{sub_tot_cap}}</div>
-												<div class="price rupee-font">{{service.netRate |
-													currency:'&#8377;'}}</div>
-											</div> -->
-
 										</tr>
-
-										<!-- <tr>
-											<td></td>
-											<td class="text-right font-size-sm ">Item Level Discount</td>
-											<td class="text-right rupee-font font-size-sm">-₹ 45</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td class="text-right font-size-sm font-weight-boldest">Sub total</td>
-											<td class="text-right rupee-font font-size-sm font-weight-boldest">₹ 4985</td>
-										</tr> -->
-
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}</td>
@@ -392,22 +346,6 @@
 														</button>
 													</mat-menu>
 												<!-- </div> -->
-
-												<!-- <div class="discount-row" *ngFor="let discount of item.discount">
-													<div class="name">{{discount.name}}</div>
-													<div class="price rupee-font">
-														(-){{discount.discountValue |
-														currency:'&#8377;'}} <i
-															(click)="removeItemDiscount(item.itemId, discount.id)"
-															class="fa fa-window-close" aria-hidden="true"></i></div>
-												</div> -->
-
-												<!-- <div class="c-row three"
-													*ngIf="item.discount &&item.discount.length > 0">
-													<div class="name">{{sub_tot_cap}}</div>
-													<div class="price rupee-font">{{item.netRate |
-														currency:'&#8377;'}}</div>
-												</div> -->
 												<br> 
 												<span *ngIf="item.discount &&item.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
 												<span *ngIf="item.discount &&item.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate | currency:'&#8377;'}}</span>
@@ -799,31 +737,6 @@
 																	<td class="fnt-p7 pr-0 pt-7  text-center">{{payment.paymentGateway}}</td>
 																	<!-- <td class="fnt-p7 text-center pt-7">300</td> -->
 																</tr>
-
-																<!-- <div class="refunds-table"
-																*ngIf="payment.refundDetails.length">
-																<div class="table-th">
-																	<h5>{{refunds_cap}}</h5>
-																</div>
-																<div class="table-th1">
-																	<div class="th one">{{status_cap}}</div>
-																	<div class="th two">{{mode_cap}}</div>
-																	<div class="th three">{{amount_cap}}</div>
-																</div>
-																<div class="tbody"
-																	*ngFor="let refund of payment.refundDetails">
-																	<div class="td one">
-																		<span
-																			[class]="refund.status | lowercase">{{refund.status
-																			| capitalizeFirst}}</span>
-																	</div>
-																	<div class="td two">
-																		{{refund.refundMode | capitalizeFirst }}</div>
-																	<div class="td three rupee-font">{{refund.amount |
-																		currency:'&#8377;' }}</div>
-																</div>
-															</div> -->
-
 															</tbody>
 														</table>
 													</div>
