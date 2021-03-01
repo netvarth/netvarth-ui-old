@@ -466,7 +466,7 @@
             </section>
         </div>
         <div style="text-align: center;" *ngIf="paidStatus == 'true'">
-            <div class="rupee-font" style="padding-bottom: 10px"><b>&#8377;{{this.amountDue}}</b></div>
+            <div class="rupee-font" style="padding-bottom: 10px"><b>{{amountDue| currency:'&#8377;'}}</b></div>
             <i class="fa fa-check-circle" style="color: green;"><span style="font-size: large;">Paid Successfully</span>
             </i><br>
             <div style="font-size:14px;" class="ivc">

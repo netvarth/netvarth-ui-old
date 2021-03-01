@@ -197,7 +197,7 @@ export class CustomerActionsComponent implements OnInit {
         }
         const postData = {
             'labelNames': this.labelsforRemove,
-            'uuid': ids
+            'proConIds': ids
         };
         this.provider_services.deleteLabelFromCustomer(postData).subscribe(data => {
             this.dialogRef.close();

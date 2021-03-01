@@ -31,7 +31,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
     customer_label = '';
     locations;
     api_loading = true;
-    add_button = Messages.ADD_BUTTON;
+    add_button = 'Click to create a schedule';
     // tooltip_queueedit = Messages.QUEUENAME_TOOLTIP;
     tooltip_queueedit = Messages.SCHEDULENAME_TOOLTIP;
     breadcrumb_moreoptions: any = [];

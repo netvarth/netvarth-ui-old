@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
-
 import { HomeComponent } from './shared/components/home/home.component';
 import { LogoutComponent } from './shared/components/logout/logout.component';
 import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
@@ -53,8 +51,6 @@ const routes: Routes = [
     { path: 'home/:id', loadChildren: () => import('./shared/modules/about-jaldee/about-jaldee.module').then(m => m.AboutJaldeeModule) },
     { path: 'maintenance', component: MaintenanceComponent },
     { path: 'blog', component: JaldeeBlogComponent },
-    { path: ':id', component: BusinessPageComponent },
-    { path: ':id/:userUniqueId', component: BusinessPageComponent },
     { path: 'manage/:id', component: ManageProviderComponent },
     { path: 'status/:id', component: CheckYourStatusComponent },
     // { path: 'appt/status/:id', component: CheckYourStatusComponent },
@@ -64,6 +60,7 @@ const routes: Routes = [
     { path: 'order/shoppingcart', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
     { path: 'order/shoppingcart/checkout', loadChildren: () => import ('./shared/modules/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule)},
     { path: 'order/item-details', component: ItemDetailsSharedComponent},
+    { path: ':id', component: BusinessPageComponent },
     { path: ':id/:userEncId', component: BusinessPageComponent}
     // { path: '**', redirectTo: 'not-found' }
 ];

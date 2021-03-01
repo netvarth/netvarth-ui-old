@@ -74,7 +74,7 @@
                     <div class="addrs">
                       <div>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</div>
                       <div *ngIf="storeContact.address">
-                        <i class="fa fa-map-marker"></i> {{storeContact.address}}
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContact.address}}
                       </div>
                       <div><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</div>
                       <div *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</div>

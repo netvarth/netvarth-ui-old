@@ -56,6 +56,7 @@ export class CheckinActionsComponent implements OnInit {
     pos = false;
     showBill = false;
     showMsg = false;
+    showAttachment = false;
     domain;
     customer_label = '';
     showmrrx = false;
@@ -523,6 +524,9 @@ export class CheckinActionsComponent implements OnInit {
         }
         if (this.data.timetype !== 2 && this.checkin.waitlistStatus !== 'cancelled' && this.checkin.waitlistStatus !== 'blocked') {
             this.showmrrx = true;
+        }
+        if ((this.checkin.waitlistingFor[0].phoneNo && this.checkin.waitlistingFor[0].phoneNo !== 'null') || this.checkin.waitlistingFor[0].email) {
+            this.showAttachment = true;
         }
     }
     getLabel() {
