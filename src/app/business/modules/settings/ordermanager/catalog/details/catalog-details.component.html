@@ -569,7 +569,7 @@
 
                 <div class="wizard-step">
                   <div class="wizard-label">
-                    <i class="wizard-icon flaticon-list"></i>
+                    <i class="wizard-icon flaticon-piggy-bank"></i>
                     <h3 class="wizard-title">3. Payment Information</h3>
                   </div>
                   <span class="svg-icon svg-icon-xl wizard-arrow">
@@ -784,7 +784,7 @@
                       <h4 class="mb-10 font-weight-bolder text-dark">Items information</h4>
 
                       <div class="col-lg-6">
-                        <button type="reset" class="btn btn-success mr-2" (click)="showCreateItemPopup()">Create New Item</button>
+                        <button type="button" class="btn btn-success mr-2" (click)="showCreateItemPopup()">Create New Item</button>
                       </div>
                     </div>
 
@@ -1064,7 +1064,7 @@
                       <div class="col-xl-6">
                         <!--begin::Select-->
                         <div class="form-group">
-                          <label>Order Type</label><br>
+                          <label>Advance Payment</label><br>
                           <mat-radio-group formControlName="advancePaymentStatus">
                             <mat-radio-button (click)="handlePaymentchange('none')" value="NONE">None
                             </mat-radio-button>&nbsp;&nbsp;
@@ -1100,6 +1100,8 @@
                         </div>
                         <!--end::Input-->
                       </div>
+                    </div>
+                    <div class="row">
                       <div class="col-xl-6" *ngIf="showpolicy">
                         <!--begin::Select-->
                         <div class="form-group">

@@ -6,7 +6,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     margin: auto !important;
     overflow: hidden !important;
-    height: 340px !important;
+    height: 300px !important;
     max-width: 260px !important;
     min-width: 210px !important;
 }
@@ -242,7 +242,7 @@ font-weight: 500;
 }
 
 .booking-card .card-item-head {
-    height: 110px !important;
+    height: 100px !important;
     align-self: center !important;
 }
 
@@ -253,7 +253,7 @@ font-weight: 500;
 
 .booking-card .card-item-content {
     /* height: 75px !important; */
-    margin-top: 10px;
+    margin-top: 6px;
     text-align: center;
     display: table;
     width: 100%;
@@ -337,8 +337,8 @@ font-weight: 500;
     border-top-right-radius: calc(0.25rem - 1px) !important; */
     /* height: 100px !important;
     max-width: 100px !important; */
-    width: 100px !important;
-    height: 100px;
+    width: 90px !important;
+    height: 90px;
     border: 1px solid #ddd;
     margin-top: 10px;
     vertical-align: middle;
@@ -468,7 +468,7 @@ button.fxmenu {
 }
 
 .booking-card-user.user .card-item-content .qualification {
-    margin: 8px 0;
+    margin: 6px 0;
     color: #073B4C;
     font-size: 16px !important;
 }
@@ -477,7 +477,7 @@ button.fxmenu {
     margin: 0 !important;
     border-radius: 5px;
     background-color: #FFC107;
-    padding: 5px 10px;
+    padding: 2px 6px;
     color: white;
     font-weight: 600;
     font-size: 15px;
@@ -485,11 +485,12 @@ button.fxmenu {
 }
 
 .booking-card-user.user .card-item-content .availability {
-    height: 78px;
-    padding: 15px;
+    height: 68px;
+    padding: 10px;
     font-size: 16px !important;
     font-weight: 600;
     color: #073B4C;
+    margin: 0 !important;
 }
 
 
@@ -512,11 +513,11 @@ button.fxmenu {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	height: 100px;
-	width: 100px;
+	height: 90px;
+	width: 90px;
     margin: 5px;
     padding: 5px;
-	font-size: 90px;
+	font-size: 80px;
 }
 .booking-card.card.service .card-body .service-image i.wtsapaud-icon,
 .booking-card.card.service .card-body .service-image i.wtsapvid-icon,
@@ -529,7 +530,7 @@ button.fxmenu {
 }
 .booking-card.card.service .card-body .service-details {
     width: 100%;
-	margin-top: 10px;
+	margin-top: 6px;
 }
 .booking-card.card.service .card-body .service-details .service-title {
     margin: 0 !important;
@@ -539,7 +540,7 @@ button.fxmenu {
     line-height: 1.25 !important;
 }
 .booking-card.card.service .card-body .service-details .service-type {
-    margin: 8px 0;
+    margin: 6px 0;
     color: #073B4C;
     font-size: 16px !important;
     font-weight: 600 !important;
@@ -547,20 +548,20 @@ button.fxmenu {
 .booking-card.card.service .card-body .service-details .donationAmount,
 .booking-card.card.service .card-body .service-details .peopleAhead {
     margin: 0 !important;
-	padding: 5px 10px;
+	padding: 2px 6px;
     font-weight: 600;
     font-size: 15px !important;
     color: #073B4C;
 }
 .booking-card.card.service .card-body .service-details .emptySpace {
     margin: 0 !important;
-	padding: 5px 10px;
-    height: 32px;
+	padding: 2px 6px;
+    height: 26px;
 }
 .booking-card.card.service .card-body .service-details .availability {
-    height: 78px;
-    margin: 0 0 5px !important;
-    padding: 15px;
+    height: 68px;
+    margin: 0 !important;
+    padding: 10px;
     font-size: 16px !important;
     font-weight: 600;
     color: #073B4C;
