@@ -155,7 +155,7 @@
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
-                    <div class="order-label" *ngIf="catalog_details.taxPercentage">
+                    <div class="order-label" *ngIf="catalog_details.taxPercentage && getTotalItemTax(catalog_details.taxPercentage) > 0">
                       <div class="flex1">Tax</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemTax(catalog_details.taxPercentage)}}</div>
                     </div>
