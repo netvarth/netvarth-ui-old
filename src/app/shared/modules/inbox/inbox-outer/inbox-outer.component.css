@@ -103,3 +103,11 @@ textarea {
     background: #ccc !important;
     border-color: #ccc !important;
 }
+.inbox-img {
+    content: url(../../../../../assets/images/inbox.png);
+    margin-left: auto;
+    margin-right: auto;
+}
+.null-img {
+    margin: auto;
+}

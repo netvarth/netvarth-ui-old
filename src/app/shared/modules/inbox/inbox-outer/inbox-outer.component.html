@@ -60,6 +60,9 @@
                       <!--end::Card-->
                     </div>
                     <!--end::Aside-->
+                    <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content" *ngIf="selectedProvider == ''">
+                      <div class="inbox-img" [ngStyle]="{'height.vh': 70}"></div>
+                    </div>
                     <!--begin::Content-->
                     <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                       *ngIf="(selectedProvider != '' && !small_device_display) || (small_device_display && showChat)">

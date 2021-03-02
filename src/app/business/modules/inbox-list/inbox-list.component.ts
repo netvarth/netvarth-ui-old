@@ -210,7 +210,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         if (this.selectedUser.businessName) {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
         } else {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastsName];
+          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
         }
         console.log(this.groupedMsgs);
       } else {
