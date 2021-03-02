@@ -141,6 +141,13 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            share
+                                        </span>
+                                    </a>
+                                </li>
                                 <li class="more_less centeralign" *ngIf="!showMore"><a
                                         class="mgn-lt-3 lnk pointer-cursor" (click)="showMoreInfo()">More Info</a></li>
                                 <li class="more_less centeralign" *ngIf="showMore"><a

@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../../../app.component';
+import { projectConstants } from '../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-qrcodegenerator',
-  templateUrl: './qrcodegenerator.component.html'
+  templateUrl: './qrcodegeneratordetail.component.html'
 })
-export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
+export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   elementType = 'url';
   accuid: any;
   qr_code_cId = false;
@@ -21,25 +21,25 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
   window_path: any;
   customId: any;
   constructor(private changeDetectorRef: ChangeDetectorRef,
-    public dialogRef: MatDialogRef<QRCodeGeneratorComponent>,
+    public dialogRef: MatDialogRef<QRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
     private titleService: Title ,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
   private qrCodeParent: ElementRef;
-  @ViewChild('qrCodeOnlineId', { read: ElementRef }) set content1(content1: ElementRef) {
+  @ViewChild('qrCodeOnlineId1', { read: ElementRef }) set content1(content1: ElementRef) {
     if (content1) { // initially setter gets called with undefined
       this.qrCodeParent = content1;
     }
   }
   // private qrCodeCustId: ElementRef;
 
-  @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
-    if (content2) { // initially setter gets called with undefined
-      this.qrCodeParent = content2;
-    }
-  }
+  // @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
+  //   if (content2) { // initially setter gets called with undefined
+  //     this.qrCodeParent = content2;
+  //   }
+  // }
   // ngAfterViewChecked() {
   //     this.changeDetectorRef.detectChanges();
   // }
@@ -64,7 +64,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-      console.log(this.qrCodePath);
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
         { property: 'og:image', content: this.imageUrl },

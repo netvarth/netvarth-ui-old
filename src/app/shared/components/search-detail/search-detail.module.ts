@@ -21,6 +21,11 @@ import { SearchFormModule } from '../search-form/search-form.module';
 import { ConsumerFooterModule } from '../../../ynw_consumer/components/footer/footer.module';
 import { TruncateModule } from '../../pipes/limitTo.module';
 import { CardModule } from '../card/card.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -41,14 +46,20 @@ import { CardModule } from '../card/card.module';
         SearchFormModule,
         ConsumerFooterModule,
         TruncateModule,
-        CardModule
+        CardModule,
+        MatDialogModule,
+        NgxQRCodeModule,
+        ShareButtonsModule,
+        ShareIconsModule
     ],
     declarations: [
         SearchDetailComponent,
         ProviderDetailComponent,
-        ConsumerWaitlistHistoryComponent
+        ConsumerWaitlistHistoryComponent,
+        QRCodeGeneratordetailComponent
     ],
     entryComponents: [
+        QRCodeGeneratordetailComponent
     ]
 })
 

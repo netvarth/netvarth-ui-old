@@ -1442,6 +1442,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
+      console.log(this.qrCodePath);
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
         { property: 'og:image', content: this.imageUrl },
