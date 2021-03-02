@@ -93,3 +93,13 @@ textarea {
 .loading {
     margin-top: -50px
 }
+.fa-paper-plane {
+    color: #1e4079;
+}
+.grey {
+    color: lightgrey !important;
+}
+.btn.btn-primary.disabled {
+    background: #ccc !important;
+    border-color: #ccc !important;
+}

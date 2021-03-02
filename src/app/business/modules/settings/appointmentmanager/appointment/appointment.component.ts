@@ -228,6 +228,8 @@ export class AppointmentComponent implements OnInit {
     virtualServicenumber;
     emptyFielderror = false;
     provider_label = '';
+    showQuestionnaire = false;
+    questionnaireList: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1124,6 +1126,7 @@ export class AppointmentComponent implements OnInit {
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
+                this.showQuestionnaire = true;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
@@ -1147,7 +1150,7 @@ export class AppointmentComponent implements OnInit {
                 // }
                 this.showCheckin = false;
                 this.searchForm.reset();
-                this.router.navigate(['provider', 'appointments']);
+                // this.router.navigate(['provider', 'appointments']);
             },
                 error => {
                     // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);

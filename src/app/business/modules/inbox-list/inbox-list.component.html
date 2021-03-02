@@ -128,12 +128,12 @@
                                     <!--end::Header-->
 
 
-                                    <div class="top-buttons" *ngIf="getEnquiry().length > 0">
+                                    <!-- <div class="top-buttons" *ngIf="getEnquiry().length > 0">
                                         <button mat-flat-button class="mgn-rt-10" (click)="changeMsgType('all')"
                                             [class.selected-btn]="type=='all'">All</button>
                                         <button mat-flat-button [class.selected-btn]="type=='enquiry'"
                                             (click)="changeMsgType('enquiry')">Enquiry</button>
-                                    </div>
+                                    </div> -->
 
 
                                     <!--begin::Body-->
@@ -221,13 +221,12 @@
                                             </div>
                                             <div>
                                                 <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                                    *ngIf="!small_device_display"
-                                                    class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
+                                                  *ngIf="!small_device_display" [class.disabled]="message==''"
+                                                  class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                                                 </button>
-                                                <i *ngIf="small_device_display"
-                                                    (click)="sendMessageCompleted && sendMessage()"
-                                                    class="fa fa-paper-plane" aria-hidden="true"></i>
-                                            </div>
+                                                <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
+                                                  class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
+                                              </div>
                                         </div>
                                         <div class="img-section mgn-up-20"
                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

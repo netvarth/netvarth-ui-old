@@ -12,7 +12,7 @@
   <div class="content loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding">
       <div class="row">
-        <div class="card p0" *ngIf="!showCheckin">
+        <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
           <div class="copy locd">
             <div class="lbl col-sm-12 col-md-8 col-lg-8">
               <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()">
@@ -615,6 +615,14 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div *ngIf="showQuestionnaire">
+        <div>
+          Please provide us with a little more information complete your booking
+      </div>
+        <app-questionnaire [questionnaireList]="questionnaireList" [source]="'proCheckin'"></app-questionnaire>
+
       </div>
     </div>
     <div class="clearfix"></div>

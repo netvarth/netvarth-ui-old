@@ -2521,7 +2521,7 @@ sup {
 
 body {
   position: static !important;
-  overflow-y: auto !important
+  /* overflow-y: auto !important */
 }
 
 .example-full-width .rupee {
@@ -15735,7 +15735,7 @@ sup {
 
 body {
   position: static !important;
-  overflow-y: auto !important
+  /* overflow-y: auto !important */
 }
 
 .example-full-width .rupee {
@@ -27181,4 +27181,8 @@ width: 40px !important;
   height: 1px;
   background-color: #ddd;
   margin-left: 15px;
+}
+.infotext textarea {
+  width: 100%;
+  resize: none;
 }

@@ -1,0 +1,38 @@
+<div *ngIf="questionnaireList">
+    <div *ngFor="let questionnaire of questionnaireList">
+        <div *ngFor="let question of questionnaire.questions;let i = index">
+            <!-- {{question.fieldDataType}} -->
+            <div class="question-box" *ngIf="question.fieldDataType === 'List'">
+                <mat-checkbox [checked]="isChecked(value, question)" *ngFor="let value of question.labelValues"
+                    (change)="listChange($event, value, question)">
+                    {{value}}</mat-checkbox>
+            </div>
+            <div class="question-box" *ngIf="question.fieldDataType === 'PlainText'">
+                <input type="text" matInput autocomplete="off" placeholder="{{question.label}}"
+                    [(ngModel)]="answers[question.labelName]">
+            </div>
+            <div class="question-box" *ngIf="question.fieldDataType === 'Number'">
+                <input type="number" matInput autocomplete="off" placeholder="{{question.label}}"
+                    [(ngModel)]="answers[question.labelName]">
+            </div>
+            <div class="question-box" *ngIf="question.fieldDataType === 'FileUpload'">
+                <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
+                    (change)="filesSelected($event)">
+                <button (click)="logofile.click()">choose file</button>
+            </div>
+            <div class="question-box" *ngIf="question.fieldDataType === 'Date'">
+                <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
+                    placeholder="{{question.label}}" readonly (click)="picker.open()"
+                    (dateChange)="dateChange($event.value)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+            </div>
+            <div class="question-box" *ngIf="question.fieldDataType === 'boolean'">
+                <span class="ttle mgn-rt-20">{{question.label}}</span>
+                <mat-slide-toggle class="example-margin" [checked]="true">
+                </mat-slide-toggle>
+            </div>
+        </div>
+    </div>
+    <button (click)="onSubmit()">submit</button>
+</div>
