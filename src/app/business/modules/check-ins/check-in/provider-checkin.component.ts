@@ -227,6 +227,7 @@ export class ProviderCheckinComponent implements OnInit {
     provider_label = '';
     showQuestionnaire = false;
     questionnaireList: any = [];
+    channel;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -261,6 +262,7 @@ export class ProviderCheckinComponent implements OnInit {
                 } else {
                     this.chekin_title = 'Walk-ins';
                 }
+                this.channel = (this.checkinType === 'PHONE_CHECKIN') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.calmode) {
                 this.calculationMode = qparams.calmode;

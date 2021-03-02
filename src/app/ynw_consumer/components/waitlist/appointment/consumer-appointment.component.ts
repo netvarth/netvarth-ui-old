@@ -1453,7 +1453,8 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     addApptAdvancePayment(post_Data) {
-        this.shared_services.addApptAdvancePayment(this.account_id, post_Data)
+        const param = { 'account': this.account_id };
+        this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
                 this.paymentLength = Object.keys(this.paymentDetails).length;

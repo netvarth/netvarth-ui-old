@@ -689,8 +689,8 @@
                 <div>
                     Please provide us with a little more information complete your booking
                 </div>
-                <app-questionnaire [questionnaireList]="questionnaireList" [source]="'proAppt'"></app-questionnaire>
-        
+                <app-questionnaire [questionnaireList]="questionnaireList" [source]="'proAppt'"
+                [consumerId]="waitlist_for[0].id" [serviceId]="sel_ser" [channel]="channel"></app-questionnaire>
               </div>
         </div>
         <div class="clearfix"></div>

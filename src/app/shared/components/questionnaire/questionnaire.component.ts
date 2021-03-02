@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SharedServices } from '../../services/shared-services';
 
 @Component({
   selector: 'app-questionnaire',
@@ -8,8 +9,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class QuestionnaireComponent implements OnInit {
   @Input() questionnaireList;
   @Input() source;
+  @Input() consumerId;
+  @Input() serviceId;
+  @Input() accountId;
+  @Input() channel;
   answers = {};
-  constructor() { }
+  constructor(private sharedService: SharedServices) { }
 
   ngOnInit(): void {
     console.log(this.questionnaireList);
@@ -107,13 +112,24 @@ export class QuestionnaireComponent implements OnInit {
         "billable": false
       }]
     }];
-    // this.answers = {
-    //   'blood': 'A+',
-    //   'medical conditions': 'diabetes'
-    // }
+    if (this.source === 'consCheckin' || this.source === 'consAppt') {
+      // this.getConsumerQuestionnaire();
+    } else {
+      // this.getProviderQuestionnaire();
+    }
   }
   filesSelected(ev) {
 
+  }
+  getConsumerQuestionnaire() {
+    this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
+      console.log(data);
+    });
+  }
+  getProviderQuestionnaire() {
+    this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
+      console.log(data);
+    });
   }
   onSubmit() {
     console.log(this.answers);
