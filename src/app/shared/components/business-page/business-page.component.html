@@ -396,7 +396,7 @@
                     (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 <ng-container
                     *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
-                    <div class="bus-item-O" *ngFor="let item of orderItems">
+                    <div class="bus-item-I" *ngFor="let item of orderItems">
                         <app-card [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
