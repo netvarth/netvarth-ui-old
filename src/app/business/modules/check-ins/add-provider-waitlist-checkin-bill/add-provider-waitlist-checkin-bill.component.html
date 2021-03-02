@@ -149,9 +149,11 @@
 										</ng-container>
 									</mat-autocomplete>
 
-								<input type="number" min="0" aria-label="Number" value="1" size="3"
+								<input type="number" min="1" max="{{qty_limit}}"  aria-label="Number" value="1" size="3"
 									class="mat-input-element mat-form-field-autofill-control ml-5 ip_feild"
-									id="mat-input-4" aria-invalid="false" aria-required="false">
+									id="mat-input-4" aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
+									(keyup)="isvalid($event)" 	[(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)" >
+
 								<button class="cs-btn bt1 ml-4 btn_prim"
 									(click)="addService_Item()">{{(actiontype=='adjustService'
 									||
@@ -864,6 +866,7 @@
 										<!-- <textarea class="form-control form-control-solid" rows="3"></textarea> -->
 										<label style="font-weight: 500;">Leave a Payment Note</label>
 										<textarea class="form-control form-control-solid" rows="3" [(ngModel)]="paynot"></textarea>									</div>
+
 									<div class="d-flex flex-column flex-md-row">
 										<div class="d-flex flex-column extra-bill"
 											*ngIf="!showPayWorkBench && !showRefundSection">
@@ -964,31 +967,27 @@
 									</div>
 								</div>
 							</div>
-
-							<!-- <hr>
-							<div class="d-flex  flex-column mb-10 mb-md-0">
-								<div class="d-flex justify-content-between mb-3">
-									<button type="button"
-										onclick="window.print();"
-										class="btn rounded-0 btn-light-primary font-weight-bold">Download Invoice</button>
-									<button type="button" class="btn btn-primary rounded-0 font-weight-bold">Settle Bill</button>
-
-									<button type="button" class="btn btn-primary rounded-0 font-weight-bold">Print Invoice</button>
-								</div>
-
-							</div> -->
-
 						</div>
-						<div class="justify-content-center border-top py-2 px-2 py- px-md-0">
+
+						<div class="justify-content-center border-top py-2 px-2 py- px-md-0" *ngIf="!showPayWorkBench && !showRefundSection">
 							<div class="col-md-12">
 								<div class="d-flex font-size-sm flex-wrap">
-									<button type="button" class="btn btn-light-primary rounded-0 font-weight-bold mb-2 mr-3 mr-sm-14 my-1 lh-p8 fnt-p8">Settle bill</button>
-									<button type="button" class="btn btn-primary rounded-0 font-weight-bold mr-3 my-1 lh-p8 fnt-p8 ">Pay by Jaldee App</button>
-									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 mr-3 fnt-p8 ">SMS/Email link </button>
-									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8">Pay by Cash/Others </button>
+									<button type="button" class="btn btn-light-primary rounded-0 font-weight-bold mb-2 mr-3 mr-sm-14 my-1 lh-p8 fnt-p8"*ngIf="bill_data.billStatus!='Settled'"
+									(click)="confirmSettleBill()">{{settle_bill_cap}}</button>
+									<button type="button" class="btn btn-primary rounded-0 font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer"
+										(click)="makePayment('self_pay',bill_data.amountDue)">{{jaldeepay_cap}}</button>
+									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 mr-3 fnt-p8 " *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline"
+										(click)="paymentlink()">SMS/Email link </button>
+									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8"	*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0"
+										(click)="showPayment()">{{paybycashothers_cap}} </button>
+									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8" 	*ngIf="bill_data.billStatus=='Settled'"
+									(click)="printMe()">Print</button>
+									<button type="button" class="btn btn-primary rounded-0 font-weight-bold ml-sm-auto my-1 lh-p8 fnt-p8" 	*ngIf="bill_data.billStatus=='Settled'"
+									(click)="emailBill()">{{email_bill_cap}}</button>
 								</div>
 							</div>
 						</div>
+
 					</div>
 					<!-- end: Invoice footer-->
 
