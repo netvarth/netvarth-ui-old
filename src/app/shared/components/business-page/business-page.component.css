@@ -1030,6 +1030,45 @@ ul.details.badges li {
   }
 }
 
+.bus-item-I {
+  width: 20%;
+  float: left !important;
+  margin-bottom: 10px !important;
+  padding: 5px;
+  /* margin-top: 10px !important; */
+} 
+
+@media(max-width: 1200px) {
+  .bus-item-I {
+    width: 25%;
+  }
+}
+
+@media(max-width: 991px) {
+  .bus-item-I {
+    width: 33.3%;
+    float: left !important;
+  }
+}
+
+@media(max-width: 767px) {
+  .bus-item-I {
+    width: 33.3%;
+  }
+}
+
+@media(max-width: 650px) {
+  .bus-item-I {
+    width: 50%;
+  }
+}
+
+@media(max-width: 450px) {
+  .bus-item-I {
+    width: 100%;
+  }
+}
+
 .sp-head {
   color: #191d96 !important;
 }

@@ -20,12 +20,27 @@
     margin: auto !important;
     overflow: hidden !important;
 }
+
 @media(min-width: 700px) {
     .booking-card.card.order{
         max-width: 250px !important;
         min-width: 230px !important;
     }
   }
+
+.booking-card.card.order.items {
+    padding: 16px !important;
+    width: 100% !important;
+    font-weight: 400 !important;
+    border: 0 !important;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    margin: auto !important;
+    overflow: hidden !important;
+    height: 320px !important;
+    max-width: 260px !important;
+    min-width: 210px !important;
+}
 
 .booking-card.card p {
     font-size: 13px !important;
@@ -451,13 +466,13 @@ button.fxmenu {
     word-break: break-all;
     hyphens: auto;
 }
-.outstock{
+/* .outstock{
     top: 15px;
     position: absolute;
     color: red;
     padding-left: 15px;
     background: white;
-}
+} */
 .disabled .btn-rt, .disabled.count-o, .disabled .btn-lt{
     pointer-events: none !important;
 }
@@ -597,3 +612,111 @@ button.fxmenu {
     border-color: #073B4C;
 }
  
+.card.booking-card.items .card-item-head .card-img {
+    border-radius: 5px !important;
+}
+
+.booking-card.card.items .card-item-content{
+    margin-top: 8px !important;
+}
+
+.card.booking-card.items .card-item-content .card-title {
+    margin: 0 !important;
+    height: 45px !important;
+    color: #073B4C !important;
+    line-height: 1.25 !important;
+    font-size: 18px !important;
+}
+
+.card.booking-card.items .card-item-content .card-title a {
+    word-break: normal;
+    text-transform: capitalize;
+}
+
+.card.booking-card.items .card-item-content .amount {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    width: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: flex-end !important;
+}
+
+.card.booking-card.items .card-item-content .amount .amount-label {
+    color: gray !important;
+    font-size: 0.875rem !important;
+    font-weight: 700;
+}
+
+.card.booking-card.items .card-item-content .amount .amount-value {
+    color: #073B4C !important;
+    font-size: 1rem !important;
+    font-weight: 700;
+}
+
+.card.booking-card.items .card-item-content .quantity {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    width: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+    align-self: stretch !important;
+}
+
+.card.booking-card.items .card-item-content .add-to-cart {
+    text-align: center !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    background-color: #35008b;
+    color: white;
+    font-size: 0.875rem;
+    border-radius: 5px;
+    border: 0;
+}
+
+.card.booking-card.items .card-item-content .quantity > div {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.booking-card.card.items .card-item-content .quantity .count-o {
+    line-height: 37px !important;
+    padding: 0 !important;
+    height: 37px !important;
+    color: #073B4C !important;
+    font-size: 0.875rem !important;
+    font-weight: 700 !important;
+}
+
+.booking-card.card.items .card-item-content .quantity .btn-rt button {
+    background-color: #35008B !important;
+    color: white !important;
+    font-size: 0.75rem !important;
+    height: 36px !important;
+    border: 0 !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+.booking-card.card.items .card-item-content .quantity .btn-lt button {
+    background-color: #35008B !important;
+    color: white !important;
+    font-size: 0.75rem !important;
+    height: 36px !important;
+    border: 0 !important;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+
+.card.booking-card.items .card-item-content .outstock {
+    text-align: center !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    background-color: darkslategray;
+    color: white;
+    font-size: 0.875rem;
+    border-radius: 5px;
+    border: 0;
+}

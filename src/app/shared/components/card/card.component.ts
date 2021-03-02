@@ -226,15 +226,20 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
     }
     getServiceType(){
-        if(this.service.serviceType == 'physicalService') {
+        if(this.service.serviceType && this.service.serviceType == 'physicalService') {
             return 'Physical Service';
-        } else {
-            if(this.service.virtualServiceType == 'videoService') {
+        } 
+        else if (this.service.serviceType && this.service.serviceType == 'virtualService'){
+            return 'Virtual Service';
+        }        
+        else {
+            /* if(this.service.virtualServiceType == 'videoService') {
                 return this.service.virtualCallingModes[0].callingMode + " " + "Video";
             }
             else if(this.service.virtualServiceType == 'audioService') {
                 return this.service.virtualCallingModes[0].callingMode + " " + "Audio";
-            }
+            } */
+            return ' ';
         }
     }
 }
