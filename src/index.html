@@ -79,9 +79,10 @@
         }
       });
       FCMPlugin.onNotification(function (data) {
+        console.log(data);
         if (data.wasTapped) {
           navigator.notification.alert(
-            data.message,  // message
+            data.body,  // message
             alertDismissed,         // callback
             data.title,            // title
             'Ok'                  // buttonName
@@ -89,7 +90,7 @@
         } else {
           //Notification was received in foreground. Maybe the user needs to be notified.
           navigator.notification.alert(
-            data.message,  // message
+            data.body,  // message
             alertDismissed,         // callback
             data.title,            // title
             'Ok'                  // buttonName
