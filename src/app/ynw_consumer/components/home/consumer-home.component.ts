@@ -2095,7 +2095,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  viewAttachment(booking,type)  {
+  viewAttachment(booking,type) {
    if (type === 'appt') {
     console.log(type);
     this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid , booking.providerAccount.id).subscribe(

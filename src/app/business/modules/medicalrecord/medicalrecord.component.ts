@@ -496,7 +496,7 @@ export class MedicalrecordComponent implements OnInit {
       disableClose: true,
       data: {
         'message': 'Do you really want to remove the prescription?',
-        'type':'prescription' 
+        'type':'prescription'
       }
     });
     this.removemrfileuploaddialogRef.afterClosed().subscribe(result => {
