@@ -295,7 +295,8 @@ export class UploadPrescriptionComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': 'Do you really want to remove the prescription?'
+        'message': 'Do you really want to remove the prescription?',
+        'type':'prescription'
       }
     });
     this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
