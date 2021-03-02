@@ -986,4 +986,28 @@ addApptAdvancePayment(param, body) {
   const url = 'consumer/appointment/advancePayment';
   return this.servicemeta.httpPut(url, body, null, param);
 }
+getConsumerQuestionnaire(serviceId, consumerId, accountId) {
+  const url = 'consumer/questionnaire/service/' + serviceId + '/consumer/' + consumerId + '?account=' + accountId;
+  return this.servicemeta.httpGet(url);
+}
+submitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/waitlist/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
+submitConsumerApptQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPost(url, body);
+}
+resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/waitlist/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPut(url, body);
+}
+resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
+  const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
+  return this.servicemeta.httpPut(url, body);
+}
+getProviderQuestionnaire(serviceId, consumerId, channel) {
+  const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
+  return this.servicemeta.httpGet(url);
+}
 }

@@ -152,3 +152,14 @@ textarea {
 .null-img {
     margin: auto;
 }
+.null-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #1e4079;
+}
+.label.label-sm {
+    height: 20px !important;
+    width: 20px !important;
+}

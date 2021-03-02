@@ -108,8 +108,9 @@
                             </div>
                             <!--end::Aside-->
                             <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
-                                *ngIf="selectedCustomer == ''">
-                                <div class="inbox-img" [ngStyle]="{'height.px': msgHeight + 200}"></div>
+                                *ngIf="selectedCustomer == '' && !small_device_display">
+                                <div class="inbox-img" [ngStyle]="{'height.px': msgHeight - 100}"></div>
+                                <div class="null-text">Select a chat to start messaging</div>
                             </div>
                             <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"

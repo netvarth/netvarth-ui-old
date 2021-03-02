@@ -230,6 +230,7 @@ export class AppointmentComponent implements OnInit {
     provider_label = '';
     showQuestionnaire = false;
     questionnaireList: any = [];
+    channel;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -264,6 +265,7 @@ export class AppointmentComponent implements OnInit {
                 } else {
                     this.appt_title = 'Appointment';
                 }
+                this.channel = (this.apptType === 'PHONE_IN_APPOINTMENT') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.thirdParty) {
                 this.thirdParty = qparams.thirdParty;
