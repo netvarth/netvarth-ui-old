@@ -45,6 +45,7 @@ const routes: Routes = [
       { path: 'auditlog', component: ProviderSystemAuditLogComponent },
       { path: 'alerts', component: ProviderSystemAlertComponent },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
+      { path: 'bookings-dash', loadChildren: () => import('../business/modules/bookings/bookings.module').then(m => m.BookingsModule) },
       { path: 'bwizard', component: ProviderbWizardComponent },
       { path: 'appointments', loadChildren: () => import('./modules/appointments/appointments.module').then(m => m.AppointmentsModule) },
       { path: 'orders', loadChildren: () => import('./modules/order-dashboard/order-dashboard.module').then(m => m.OrderDashboardModule) },

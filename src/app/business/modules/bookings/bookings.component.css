@@ -1,0 +1,28 @@
+.adjust_ht {
+    max-height: 50%;
+}
+.bg_peacok {
+    background: #1e4079;
+}
+.clr_white {
+    color: white !important;
+}
+.mtn_40 {
+    margin-top: -45px !important;
+}
+.btn_action {
+    background: white !important;
+    color: #1e4079 !important;
+    border-radius: 20px !important; 
+}
+.btn_action2 {
+    background: #1e4079 !important;
+    color: white !important;
+    border-radius: 20px !important; 
+}
+.card-spacer2 {
+    padding: 1rem 2.25rem !important;
+}
+.bg-light-yelow {
+    background: #f9e2a794 !important;
+}
