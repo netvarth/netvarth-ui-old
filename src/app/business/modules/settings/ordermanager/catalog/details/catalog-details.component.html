@@ -1173,7 +1173,10 @@
                               <div class="form-group">
                                 <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="storetimewindow_list.length > 0" (click)="showTimewindow('store')" ><i class="fa fa-plus" aria-hidden="true"></i></a>
                                 <div *ngIf="storetimewindow_list.length == 0">
-                                  Currently no timewindows are added&nbsp; <a class="pointlist" (click)="showTimewindow('store')">Add</a>
+                                  Currently no timewindows are added&nbsp;
+                                  <button type="button" (click)="showTimewindow('store')" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
+                                    Add</button> 
+                                    <!-- <a class="pointlist" (click)="showTimewindow('store')">Add</a> -->
                                 </div>
                               <div *ngIf="storetimewindow_list.length > 0">  <ul *ngFor="let window of storetimewindow_list;let i = index">
                                  <li>
@@ -1242,7 +1245,10 @@
                               <div class="form-group">
                                 <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="hometimewindow_list.length > 0" (click)="showTimewindow('home')"><i class="fa fa-plus" aria-hidden="true"></i></a>
                                 <div *ngIf="hometimewindow_list.length == 0">
-                                  Currently no timewindows are added &nbsp; <a class="pointlist" (click)="showTimewindow('home')">Add</a>
+                                  Currently no timewindows are added &nbsp;
+                                  <button type="button" (click)="showTimewindow('home')" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
+                                    Add</button> 
+                                     <!-- <a class="pointlist" (click)="showTimewindow('home')">Add</a> -->
                                 </div>
                                 <div *ngIf="hometimewindow_list.length > 0">
                                <ul *ngFor="let window of hometimewindow_list;let i = index">
