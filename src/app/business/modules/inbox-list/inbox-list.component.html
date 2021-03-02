@@ -32,7 +32,7 @@
                                         <i (click)="goBack()" class="fa fa-arrow-left pointer-cursor mgn-rt-10"></i>
                                         <span>
                                             {{(selectedUser.businessName) ? selectedUser.businessName :
-                                            selectedUser.firstName + ' ' + selectedUser.lastsName}}
+                                            selectedUser.firstName + ' ' + selectedUser.lastName}}
                                         </span>
                                     </div>
                                     <!--begin::Body-->
@@ -51,7 +51,7 @@
                                                         <div class="symbol symbol-circle symbol-50 mr-3">
                                                             <div class="user-name">
                                                                 {{getUser(user.key)}}
-                                                             <!--   <div class="display-none" #userMsg> {{user.key}} </div>-->
+                                                                <!--   <div class="display-none" #userMsg> {{user.key}} </div>-->
                                                             </div>
                                                         </div>
                                                         <div class="d-flex flex-column">
@@ -107,6 +107,10 @@
                                 <!--end::Card-->
                             </div>
                             <!--end::Aside-->
+                            <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
+                                *ngIf="selectedCustomer == ''">
+                                <div class="inbox-img" [ngStyle]="{'height.px': msgHeight + 200}"></div>
+                            </div>
                             <!--begin::Content-->
                             <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                                 *ngIf="(selectedCustomer != '' && !small_device_display) || (small_device_display && showChat)">
@@ -200,8 +204,8 @@
                                             </div>
                                             <!--end::Messages-->
                                             <div class="loading" *ngIf="!scrollDone">
-                                                <app-common-innerloading-spinner  ></app-common-innerloading-spinner>
-                                              </div>
+                                                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                            </div>
                                         </div>
                                         <!--end::Scroll-->
                                     </div>
@@ -221,12 +225,14 @@
                                             </div>
                                             <div>
                                                 <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                                  *ngIf="!small_device_display" [class.disabled]="message==''"
-                                                  class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
+                                                    *ngIf="!small_device_display" [class.disabled]="message==''"
+                                                    class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                                                 </button>
-                                                <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
-                                                  class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
-                                              </div>
+                                                <i *ngIf="small_device_display"
+                                                    (click)="sendMessageCompleted && sendMessage()"
+                                                    class="fa fa-paper-plane" aria-hidden="true"
+                                                    [class.grey]="message==''"></i>
+                                            </div>
                                         </div>
                                         <div class="img-section mgn-up-20"
                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
