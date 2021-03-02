@@ -279,7 +279,7 @@
                       <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
-                                <button mat-raised-button  class="dialogbtn" (click)="openServiceDialog()">Services</button>
+                                <button mat-raised-button  class="dialogbtn" type="button" (click)="openServiceDialog()">Services</button>
 
                             </div>
                             <p *ngIf="services.length>0">
@@ -301,7 +301,7 @@
                         <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isServiceBased').value==false || this.couponForm.get('couponRules').get('policies').get('isDepartment').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
-                                <button mat-raised-button  class="dialogbtn" (click)="openDepartmentDialog()">Departments</button>
+                                <button mat-raised-button  class="dialogbtn"  type="button" (click)="openDepartmentDialog()">Departments</button>
 
                             </div>
                             <p *ngIf="departments.length>0">
@@ -323,7 +323,7 @@
                         <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isUser').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
-                                <button mat-raised-button  class="dialogbtn" (click)="openUserDialog()">Users</button>
+                                <button mat-raised-button  type="button" class="dialogbtn" (click)="openUserDialog()">Users</button>
 
                             </div>
                             <p *ngIf="users.length>0">
@@ -348,7 +348,7 @@
                         <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerLabel').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
-                                <button mat-raised-button  class="dialogbtn" (click)="openCustomerLabelDialog()">Customer Labels</button>
+                                <button mat-raised-button  type="button" class="dialogbtn" (click)="openCustomerLabelDialog()">Customer Labels</button>
 
                             </div>
                             <p *ngIf="customer_labels.length>0">
@@ -375,7 +375,7 @@
                         <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isCustomerGroup').value==false">
                           <div class="col-xl-12">
                             <div class="form-group">
-                                <button mat-raised-button  class="dialogbtn" (click)="openCustomerGroupDialog()">Customer Groups</button>
+                                <button mat-raised-button  type="button"  class="dialogbtn" (click)="openCustomerGroupDialog()">Customer Groups</button>
 
                             </div>
                             <p *ngIf="customer_groups.length>0">
@@ -406,7 +406,7 @@
                               <mat-form-field appearance="fill">
                                 <label>Catalogue</label>
                                 <mat-select placeholder="Catalogue" formControlName="catalogues" [multiple]="true">
-                                  <mat-option *ngFor=" let catalog of catalog_list" [value]="catalog.catalogName">
+                                  <mat-option *ngFor=" let catalog of catalog_list" [value]="catalog.id">
                                     {{catalog.catalogName}}
                                   </mat-option>
 
@@ -433,7 +433,7 @@
                             <div class="row" [hidden]="this.couponForm.get('couponRules').get('policies').get('isItem').value==false">
                               <div class="col-xl-12">
                                 <div class="form-group">
-                                    <button mat-raised-button  class="dialogbtn" (click)="openItemDialog()">Items</button>
+                                    <button mat-raised-button  type="button" class="dialogbtn" (click)="openItemDialog()">Items</button>
 
                                 </div>
                                 <p *ngIf="items.length>0">

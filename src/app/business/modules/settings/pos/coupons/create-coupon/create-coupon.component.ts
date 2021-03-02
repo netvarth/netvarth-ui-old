@@ -14,6 +14,7 @@ import { DepartmentListDialogComponent } from '../../../../../shared/department-
 import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-group-dialog/consumer-group-dialog.component';
 import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
 import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CreateCouponComponent implements OnInit {
   users: any = [];
   customer_groups: any = [];
   customer_labels: any = [];
-  couponBasedOnValue = '';
+  couponBasedOnValue: any = [];
   servicedialogRef: any;
   itemdialogRef: any;
   userdialogRef: any;
@@ -67,6 +68,7 @@ export class CreateCouponComponent implements OnInit {
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private router: Router,
     public dialog: MatDialog, ) {
     this.createForm();
   }
@@ -104,7 +106,7 @@ export class CreateCouponComponent implements OnInit {
         validTimeRange: [''],
         policies: this.formbuilder.group({
           departments: ['', [Validators.required]],
-          services: ['', [Validators.required]],
+          services: [' [Validators.required]],
           users: ['', [Validators.required]],
           catalogues: ['', [Validators.required]],
           consumerGroups: ['', [Validators.required]],
@@ -370,27 +372,29 @@ export class CreateCouponComponent implements OnInit {
   }
 
   onSubmit() {
-    this.couponBasedOnValue='';
+    this.couponBasedOnValue = [];
     const form_data = this.couponForm.value;
     console.log(form_data);
-    const timeRangeObject = {
+    const timeRangeObject = [{
       'recurringType': 'Weekly',
       'repeatIntervals': this.selday_arr,
-      'timeSlots': this.timewindow_list
-    };
+      'timeSlots': this.timewindow_list,
+      'startDate': form_data.couponRules.validFrom,
+      'terminator': {
+        'endDate': form_data.couponRules.validTo,
+        'noOfOccurance': ''
+      },
+    }];
 
     console.log(timeRangeObject);
     form_data.couponRules.validTimeRange = timeRangeObject;
     if (form_data.couponRules.policies.isServiceBased) {
       form_data.couponRules.policies.services = this.services;
-      this.couponBasedOnValue = this.couponBasedOnValue + 'ServiceBased';
+      this.couponBasedOnValue.push('ServiceBased');
     }
     if (form_data.couponRules.policies.isCatalogBased) {
-      if (this.couponBasedOnValue === '') {
-        this.couponBasedOnValue = this.couponBasedOnValue + 'CatalogueBased';
-      } else {
-        this.couponBasedOnValue = this.couponBasedOnValue + ',CatalogueBased';
-      }
+      this.couponBasedOnValue.push('CatalogueBased');
+
     }
     console.log('base' + this.couponBasedOnValue);
     if (form_data.couponRules.policies.isDepartment) {
@@ -426,11 +430,12 @@ export class CreateCouponComponent implements OnInit {
     this.createCoupon(form_data);
   }
 
-  createCoupon(data){
+  createCoupon(data) {
     this.provider_services.createCoupon(data)
-    .subscribe(result=>{
-      console.log('createdSuccessfully');
-    });
+      .subscribe(result => {
+        console.log('createdSuccessfully');
+        this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+      });
   }
 }
 

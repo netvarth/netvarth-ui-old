@@ -42,13 +42,13 @@ export class ItemListDialogComponent implements OnInit {
 
   onConfirm(itemObject) {
   const items = itemObject.selected.map(item => item.value);
-  const result = items.map(a => a.id);
+  const result = items.map(a => a.itemId);
   this.dialogRef.close(result);
 
   }
   isSelected(item) {
 
-    if (this.former_chosen_items.some(e => e=== item.id)) {
+    if (this.former_chosen_items.some(e => e === item.itemId)) {
       /* former_chosen_services contains the service we're looking for */
 
       return true;
