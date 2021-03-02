@@ -170,8 +170,12 @@ export class ConsumerCheckinComponent implements OnInit {
     uuidList: any = [];
     prepayAmount;
     paymentDetails: any = [];
+    paymentLength = 0;
     questionnaireList: any = [];
     @ViewChild('closebutton') closebutton;
+    @ViewChild('modal') modal;
+    apiError = '';
+    apiSuccess = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -838,17 +842,20 @@ export class ConsumerCheckinComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
+                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
             },
                 error => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.apiError = this.wordProcessor.getProjectErrorMesssages(error);
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
                 });
         } else {
+            this.apiError = derror;
             this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
     }
@@ -988,7 +995,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.sel_ser = '';
                 });
     }
-    filesSelected(event) {
+    filesSelected(event, type?) {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
@@ -1004,6 +1011,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if (type) {
+                    this.modal.nativeElement.click();
+                    }
                 }
             }
         }
@@ -1307,7 +1317,9 @@ export class ConsumerCheckinComponent implements OnInit {
         } else if (this.action === 'timeChange') {
             this.action = '';
         }
+        if (this.action === '') {
         this.closebutton.nativeElement.click();
+        }
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1480,13 +1492,14 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     goToStep(type) {
-        if (this.action === '') {
         if (type === 'next') {
+            if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
             if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                 this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
             } else {
                 this.bookStep++;
             }
+        }
         } else if (type === 'prev') {
             this.bookStep--;
         } else {
@@ -1496,12 +1509,12 @@ export class ConsumerCheckinComponent implements OnInit {
             this.saveCheckin();
         }
     }
-    }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                this.paymentLength = Object.keys(this.paymentDetails).length;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1587,7 +1600,7 @@ export class ConsumerCheckinComponent implements OnInit {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
             this.handleSaveMember();
-        } else if (this.action === 'note' || this.action === 'timeChange') {
+        } else if (this.action === 'note' || this.action === 'timeChange' || this.action === 'attachment' || this.action === 'coupons') {
             this.goBack();
         }
     }

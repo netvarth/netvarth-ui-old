@@ -1368,3 +1368,19 @@ ngx-intl-tel-input input {
 .fade {
   opacity: 2 !important;
 }
+body.modal-open {
+  overflow: hidden !important;
+}
+.modal-dialog {
+  margin-top: 100px !important;
+}
+.modal-body {
+  max-height: 70vh;
+  overflow: auto;
+}
+::ng-deep .cdk-overlay-container {
+  z-index: 1050 !important;
+}
+.disp-none {
+  display: none !important;
+}

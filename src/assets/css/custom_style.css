@@ -2521,7 +2521,7 @@ sup {
 
 body {
   position: static !important;
-  overflow-y: auto !important
+  /* overflow-y: auto !important */
 }
 
 .example-full-width .rupee {
@@ -15735,7 +15735,7 @@ sup {
 
 body {
   position: static !important;
-  overflow-y: auto !important
+  /* overflow-y: auto !important */
 }
 
 .example-full-width .rupee {
