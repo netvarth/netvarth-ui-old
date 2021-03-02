@@ -133,6 +133,8 @@ export class AddcatalogimageComponent implements OnInit, OnChanges {
         },
             error => {
                 this.error_msg = this.wordProcessor.getProjectErrorMesssages(error);
+                this.savedisabled = false;
+                this.img_save_caption = 'Save';
             });
     }
     actionCompleted() {
