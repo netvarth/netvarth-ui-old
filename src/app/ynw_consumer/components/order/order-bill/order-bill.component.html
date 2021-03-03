@@ -62,6 +62,8 @@
                                                                             <span
                                                                                 class="dynamic">{{gstnumber | capitalizeFirst}}</span>
                                                                         </span>
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red" *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                            Cancelled</div>
                                                                         <!-- <span class="columns mgn-up-10" *ngIf="checkin.orderNumber"> <span
                                                                             class="dynamic">Order Id </span>
                                                                         <span class="dynamic">{{checkin.orderNumber}}</span>
@@ -313,7 +315,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="section-three other-section">
+                                                        <div class="section-three other-section" *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled'">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf="this.couponList.length > 0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
