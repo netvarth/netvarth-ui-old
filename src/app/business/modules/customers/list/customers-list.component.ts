@@ -555,6 +555,7 @@ export class CustomersListComponent implements OnInit {
     this.groupService.setitemToGroupStorage('group', this.selectedGroup);
     this.resetFilter();
     this.resetList();
+    this.customers = this.groupCustomers = [];
     if (!type) {
       this.showCustomers = false;
       if (this.selectedGroup === 'all') {
@@ -571,8 +572,10 @@ export class CustomersListComponent implements OnInit {
       this.groupLoaded = false;
       if (groupId) {
         if (groupId === 'update') {
+          if (this.selectedGroup !== 'all' && this.selectedGroup.id === this.groupIdEdit) {
           const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
           this.selectedGroup = grp[0];
+          }
         } else {
           const grp = this.groups.filter(group => group.id === groupId);
           this.customerGroupSelection(grp[0], 'show');
