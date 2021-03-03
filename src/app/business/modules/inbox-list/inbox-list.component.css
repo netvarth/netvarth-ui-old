@@ -163,3 +163,39 @@ textarea {
     height: 20px !important;
     width: 20px !important;
 }
+.reply-btn {
+    display: none;
+}
+.rounded:hover .reply-btn {
+    display: inline-block !important;
+}
+.reply-btn {
+    background: transparent !important;
+    border: none !important;
+    position: absolute !important;
+    margin-left: -5px !important;
+    margin-top: -15px !important;
+}
+.view-btn {
+    padding: 5px 20px;
+    border: 2px solid #1e4079;
+    color: #1e4079;
+    font-weight: bold;
+}
+.enquiry-section {
+    padding: 20px;
+}
+.enq-box {
+    display: flex;
+    margin-bottom: 10px;
+}
+.enq-box div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.cont2, .cont3 {
+    width: 40%;
+}
+.cont4 {
+    width: 15%;
+}

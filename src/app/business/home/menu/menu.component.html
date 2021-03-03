@@ -87,6 +87,13 @@
             *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
         </a>
       </li>
+      <!-- <li>
+        <a class="pointer-cursor" routerLink="inbox" (click)="closeMenu()" routerLinkActive="active-lnk" [queryParams]="{enquiry: true}">
+          <i class="fa fa-envelope"></i> <span> Enquiry</span>
+          <small class="label pull-right bg-green"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
+        </a>
+      </li> -->
       <li class="separator"></li>
       <li>
         <a class="pointer-cursor" routerLink="auditlog" (click)="closeMenu()" routerLinkActive="active-lnk">

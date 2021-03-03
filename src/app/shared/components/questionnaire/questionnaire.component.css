@@ -3,3 +3,9 @@
     margin: 20px;
     border: 1px solid #ccc;
 }
+@media (min-width: 768px) {
+    .quest-outer {
+        width: 50%;
+        float: left;
+    }
+}

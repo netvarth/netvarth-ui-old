@@ -14,8 +14,28 @@
                 <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
+
+                         <!--begin::Enquiry-->
+                         <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="showEnquiry">
+                             <div class="enq-box" *ngFor="let enquiry of enquiries">
+                                <div class="user-name cont1">
+                                    {{getUser(enquiry.accountName)}}
+                                </div>
+                                <div class="cont2 mgn-lt-5">
+                                    {{enquiry.accountName}}
+                                </div>
+                                <div class="cont3">
+                                    {{enquiry.providerName}}
+                                </div>
+                                <div class="cont4">
+                                    <span class="view-btn">View</span>
+                                </div>
+                             </div>
+                             </div>
+                               <!--end::Enquiry-->
+
                         <!--begin::Chat-->
-                        <div class="d-flex flex-row">
+                        <div class="d-flex flex-row" *ngIf="!showEnquiry">
                             <!--begin::Aside-->
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                                 <!--begin::Card-->
@@ -153,12 +173,20 @@
                                                     class="d-flex flex-column mb-5 align-items-start">
                                                     <div class="d-flex align-items-center">
                                                         <div>
-                                                            <span
-                                                                class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+                                                            <!-- <span class="text-muted font-size-sm">{{getMsgType(msg)}}</span> -->
+                                                            <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                                         </div>
                                                     </div>
                                                     <div
                                                         class="mt-2 rounded p-5 bg-light-success text-dark-50 font-weight-bold font-size-lg text-left msg-width">
+                                                        <!-- <button class="reply-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                          </button>
+                                                          <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item>
+                                                              <span>Reply</span>
+                                                            </button>
+                                                          </mat-menu> -->
                                                         <div [innerHTML]="msg.msg | nl2br"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">
@@ -186,6 +214,14 @@
                                                     </div>
                                                     <div
                                                         class="mt-2 rounded p-5 bg-light-primary text-dark-50 font-weight-bold font-size-lg text-right msg-width">
+                                                        <!-- <button class="reply-btn" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                          </button>
+                                                          <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item>
+                                                              <span>Reply</span>
+                                                            </button>
+                                                          </mat-menu> -->
                                                         <div [innerHTML]="msg.msg | nl2br"></div>
                                                         <div class="thumbnails mt10 mb10"
                                                             *ngIf="msg.attachements && msg.attachements.length > 0">

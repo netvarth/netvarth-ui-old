@@ -706,7 +706,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                if (this.prepaymentAmount > 0) {
+                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                     this.payuPayment();
                 } else {
                     this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
@@ -837,6 +837,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
             this.disable = false;
         }
+        setTimeout(() => {
+            this.apiError = '';
+            this.apiSuccess = '';
+        }, 2000);
     }
     handleEmail() {
         this.action = 'email';
