@@ -26,7 +26,6 @@
   border: 1px solid #80808042 !important;
 }
 .customersList .grp_label:hover {
-  cursor: pointer;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
 }
 .customersList .selected_customers {

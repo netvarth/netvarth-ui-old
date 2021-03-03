@@ -695,7 +695,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                if (this.prepaymentAmount > 0) {
+                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                     this.payuPayment();
                 } else {
                     let multiple;
@@ -858,6 +858,10 @@ export class ConsumerCheckinComponent implements OnInit {
             this.apiError = derror;
             this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
+        setTimeout(() => {
+            this.apiError = '';
+            this.apiSuccess = '';
+        }, 2000);
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });

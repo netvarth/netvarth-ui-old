@@ -213,8 +213,8 @@
           [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
         <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Group</button>
-        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="customerGroupSelection(group)"
-          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'">
+        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="group.status=='ENABLE' && customerGroupSelection(group)"
+          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'" [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20">
             {{group.groupName}}
             <span class="pull-right mgn-m-up-10">
@@ -222,6 +222,11 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item data-toggle="modal"
+                data-target="#exampleModalCenter" (click)="editGroup()">
+                  <i class="icon-edit chkin-mobic"></i>
+                  Edit
+                </button>
                 <button type="button" mat-menu-item (click)="changeGroupStatus(group)">
                   <i *ngIf="group.status=='DISABLE'" class="icon-enable phone-in-icon"></i>
                   <i *ngIf="group.status=='ENABLE'" class="icon-disable phone-in-icon"></i>
@@ -276,8 +281,7 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
                       #closebutton>Close</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" (click)="customerGroupAction()">Save
-                      changes</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" (click)="customerGroupAction()">{{(groupEdit) ? 'Update' : 'Create'}}</button>
                   </div>
                   <div class="error-section" *ngIf="apiError !== ''">
                     {{apiError}}
