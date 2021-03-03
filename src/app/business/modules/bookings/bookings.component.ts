@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bookings.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css']
 })
 export class BookingsComponent implements OnInit {
-
+  step;
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.step = 1;
+  }
+  openCalendar() {
+    this.step = 2;
   }
 
 }

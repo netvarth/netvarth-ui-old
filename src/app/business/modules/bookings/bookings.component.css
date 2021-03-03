@@ -7,6 +7,9 @@
 .clr_white {
     color: white !important;
 }
+.clr_peacock {
+    color: #1e4079 !important;
+}
 .mtn_40 {
     margin-top: -45px !important;
 }
@@ -25,4 +28,11 @@
 }
 .bg-light-yelow {
     background: #f9e2a794 !important;
+}
+.ht_40 {
+    min-height: 40px !important;
+}
+.bdr_book {
+    border: 1px solid grey;
+    border-radius: 5px;
 }
