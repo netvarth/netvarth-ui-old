@@ -16,6 +16,8 @@ import { FormMessageDisplayService } from '../../../../shared/modules/form-messa
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddressComponent } from './address/address.component';
 import { Messages } from '../../../../shared/constants/project-messages';
+import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
+import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 
 
 
@@ -115,6 +117,42 @@ export class OrderWizardComponent implements OnInit {
   showCoupon = false;
   screenWidth: number;
   no_of_grids: any;
+  selectedImagelist = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  imagelist = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  shoppinglistdialogRef;
+  image_list_popup: Image[];
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'fa fa-trash-o',
+        type: ButtonType.DELETE,
+        ariaLabel: 'custom plus aria label',
+        title: 'Delete',
+        fontSize: '20px'
+      },
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
 
@@ -361,6 +399,7 @@ export class OrderWizardComponent implements OnInit {
   getDeliveryAddress() {
     this.provider_services.getDeliveryAddress(this.customer_data.id)
       .subscribe(data => {
+        console.log(data);
         if (data !== null) {
           this.added_address = data;
           if (this.added_address.length > 0 && this.added_address !== null) {
@@ -383,9 +422,10 @@ export class OrderWizardComponent implements OnInit {
   getCatalog() {
     this.getCatalogDetails().then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
-      this.orderItems = [];
-
+      this.orderType = this.catalog_details.orderType;
+       console.log(this.catalog_details);
+       if (this.orderType !== 'SHOPPINGLIST') {
+        this.orderItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
         const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
@@ -395,6 +435,9 @@ export class OrderWizardComponent implements OnInit {
         this.itemCount++;
         console.log(this.orderItems);
       }
+      }
+      
+      
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
         if (this.catalog_details.pickUp) {
@@ -481,6 +524,9 @@ export class OrderWizardComponent implements OnInit {
     this.datepickerModal.nativeElement.click();
 
   }
+  goBack() {
+        this.router.navigate(['provider', 'orders']);
+}
   updateForm() {
     // this.amForm.setValue({
     //   'phoneNumber': this.edit_address.phoneNumber || null,
@@ -519,7 +565,7 @@ export class OrderWizardComponent implements OnInit {
   }
   gotoNext() {
     if (this.step === 2) {
-      if (this.orders.length === 0) {
+      if (this.orders && this.orders.length === 0) {
         this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
         return false;
       } else {
@@ -857,81 +903,135 @@ export class OrderWizardComponent implements OnInit {
         if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
           this.emailId = this.customer_data.email;
         }
+          if(this.orderType === 'SHOPPINGLIST'){
+            const post_Data = {
+              'homeDelivery': true,
+              'homeDeliveryAddress': this.selectedAddress,
+              'catalog': {
+                'id': this.catalog_details.id
+              },
+              'orderFor': {
+                'id': this.customer_data.id
+              },
+              'consumer': {
+                'id': this.customer_data.id
+    
+              },
+              'timeSlot': {
+                'sTime': timeslot[0],
+                'eTime': timeslot[1]
+                // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+                // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+              },
+              'orderDate': this.sel_checkindate,
+              'countryCode': this.customer_data.countrycode,
+              'phoneNumber': this.customer_data.phoneNumber,
+              'email': this.customer_data.email,
+              'orderMode': 'WALKIN_ORDER',
+              'orderNote': this.orderNote,
+              'coupons': this.selected_coupons
+            };
+            console.log(post_Data);
+            this.confirmOrder(post_Data);
+          }else{
+            const post_Data = {
+              'homeDelivery': true,
+              'homeDeliveryAddress': this.selectedAddress,
+              'catalog': {
+                'id': this.catalog_details.id
+              },
+              'orderFor': {
+                'id': this.customer_data.id
+              },
+              'consumer': {
+                'id': this.customer_data.id
+    
+              },
+              'timeSlot': {
+                'sTime': timeslot[0],
+                'eTime': timeslot[1]
+                // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
+                // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+              },
+              'orderItem': this.getOrderItems(),
+              'orderDate': this.sel_checkindate,
+              'countryCode': this.customer_data.countrycode,
+              'phoneNumber': this.customer_data.phoneNumber,
+              'email': this.customer_data.email,
+              'orderMode': 'WALKIN_ORDER',
+              'orderNote': this.orderNote,
+              'coupons': this.selected_coupons
+            };
+            console.log(post_Data);
+            this.confirmOrder(post_Data);
 
-        const post_Data = {
-          'homeDelivery': true,
-          'homeDeliveryAddress': this.selectedAddress,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': this.customer_data.id
-          },
-          'consumer': {
-            'id': this.customer_data.id
-
-          },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
-          },
-          'orderItem': this.getOrderItems(),
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_data.countrycode,
-          'phoneNumber': this.customer_data.phoneNumber,
-          'email': this.customer_data.email,
-          'orderMode': 'WALKIN_ORDER',
-          'orderNote': this.orderNote,
-          'coupons': this.selected_coupons
-        };
-        console.log(post_Data);
-        this.confirmOrder(post_Data);
+          }
+        
 
       }
     }
     if (this.choose_type === 'store') {
-      // if (!this.storeContact.value.phone || !this.storeContact.value.email) {
-      //   this.placeOrderDisabled = false;
-      //   this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
-      //   return;
-      // } else {
       const contactNumber = this.customer_data.phoneNumber;
       const contact_email = this.customer_data.email;
       if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
         this.emailId = this.customer_data.email;
-        //   }
-
-        const post_Data = {
-          'storePickup': true,
-          'catalog': {
-            'id': this.catalog_details.id
-          },
-          'orderFor': {
-            'id': this.customer_data.id
-          },
-          'consumer': {
-            'id': this.customer_data.id
-
-          },
-          'timeSlot': {
-            'sTime': timeslot[0],
-            'eTime': timeslot[1]
-            // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-            // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
-          },
-          'orderItem': this.getOrderItems(),
-          'orderDate': this.sel_checkindate,
-          'countryCode': this.customer_countrycode,
-          'orderMode': 'WALKIN_ORDER',
-          'phoneNumber': contactNumber,
-          'email': contact_email,
-          // 'orderNote': this.orderNote,
-          // 'coupons': this.selected_coupons
-        };
-        console.log(post_Data);
-        this.confirmOrder(post_Data);
+        if(this.orderType === 'SHOPPINGLIST'){
+          const post_Data = {
+            'storePickup': true,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': this.customer_data.id
+            },
+            'consumer': {
+              'id': this.customer_data.id
+  
+            },
+            'timeSlot': {
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+            },
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'orderMode': 'WALKIN_ORDER',
+            'phoneNumber': contactNumber,
+            'email': contact_email,
+            // 'orderNote': this.orderNote,
+            // 'coupons': this.selected_coupons
+          };
+          console.log(post_Data);
+          this.confirmOrder(post_Data);
+        }else {
+          const post_Data = {
+            'storePickup': true,
+            'catalog': {
+              'id': this.catalog_details.id
+            },
+            'orderFor': {
+              'id': this.customer_data.id
+            },
+            'consumer': {
+              'id': this.customer_data.id
+  
+            },
+            'timeSlot': {
+              'sTime': timeslot[0],
+              'eTime': timeslot[1]
+            },
+            'orderItem': this.getOrderItems(),
+            'orderDate': this.sel_checkindate,
+            'countryCode': this.customer_countrycode,
+            'orderMode': 'WALKIN_ORDER',
+            'phoneNumber': contactNumber,
+            'email': contact_email,
+            // 'orderNote': this.orderNote,
+            // 'coupons': this.selected_coupons
+          };
+          console.log(post_Data);
+          this.confirmOrder(post_Data);
+        }
+        
         //  }
       }
     }
@@ -955,22 +1055,53 @@ export class OrderWizardComponent implements OnInit {
   confirmOrder(post_Data) {
     console.log(post_Data);
     const dataToSend: FormData = new FormData();
-    const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
-    dataToSend.append('order', blobpost_Data);
-    this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
-      .subscribe(data => {
-        console.log(JSON.stringify(data));
-        this.placeOrderDisabled = false;
-        this.snackbarService.openSnackBar('Your Order placed successfully');
-        this.orderList = [];
-        this.router.navigate(['provider', 'orders']);
-      },
-        error => {
-          this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    if (this.orderType === 'SHOPPINGLIST') {
+      const captions = {};
+      let i = 0;
+      if (this.selectedImagelist) {
+        console.log(dataToSend);
+        for (const pic of this.selectedImagelist.files) {
+          dataToSend.append('attachments', pic, pic['name']);
+          captions[i] = this.selectedImagelist.caption[i] || '';
+          i++;
         }
+      }
+      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      dataToSend.append('captions', blobPropdata);
+      const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
+      dataToSend.append('order', blobpost_Data);
+      this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
+        .subscribe(data => {
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Your Order placed successfully');
+          this.router.navigate(['provider', 'orders']);
+         
+        },
+          error => {
+            this.placeOrderDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
 
-      );
+        );
+    }else {
+      const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
+      dataToSend.append('order', blobpost_Data);
+      this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
+        .subscribe(data => {
+          console.log(JSON.stringify(data));
+          this.placeOrderDisabled = false;
+          this.snackbarService.openSnackBar('Your Order placed successfully');
+          this.orderList = [];
+          this.router.navigate(['provider', 'orders']);
+        },
+          error => {
+            this.placeOrderDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+  
+        );
+    }
+    
   }
   addAddress() {
     this.addressDialogRef = this.dialog.open(AddressComponent, {
@@ -1057,139 +1188,138 @@ export class OrderWizardComponent implements OnInit {
       this.api_cp_error = 'Enter a Coupon';
     }
   }
-  //   onSubmit(form_data) {
-  //     this.disableButton = true;
-  //     let datebirth;
-  //     if (form_data.dob) {
-  //         datebirth = this.shared_functions.transformToYMDFormat(form_data.dob);
-  //     }
-  //     if (this.action === 'add') {
-  //         const post_data = {
-  //             //   'userProfile': {
-  //             'firstName': form_data.first_name,
-  //             'lastName': form_data.last_name,
-  //             'dob': datebirth,
-  //             'gender': form_data.gender,
-  //             'phoneNo': form_data.mobile_number,
-  //             'address': form_data.address,
-  //             //   }
-  //         };
-  //         if (form_data.mobile_number) {
-  //             post_data['countryCode'] = '+91';
-  //         }
-  //         if (form_data.email_id && form_data.email_id !== '') {
-  //             post_data['email'] = form_data.email_id;
-  //         }
-  //         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-  //             if (form_data.customer_id) {
-  //                 post_data['jaldeeId'] = form_data.customer_id;
-  //             } else {
-  //                 post_data['jaldeeId'] = this.jld;
-  //             }
-  //         }
-  //         this.provider_services.createProviderCustomer(post_data)
-  //             .subscribe(
-  //                 data => {
-  //                     this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-  //                     this.snackbarService.openSnackBar(Messages.PROVIDER_CUSTOMER_CREATED);
-  //                     const qParams = {};
-  //                     qParams['pid'] = data;
-  //                     if (this.source === 'checkin' || this.source === 'token') {
-  //                         const navigationExtras: NavigationExtras = {
-  //                             queryParams: {
-  //                                 ph: form_data.mobile_number,
-  //                                 checkin_type: this.checkin_type,
-  //                                 haveMobile: this.haveMobile,
-  //                                 id: data,
-  //                                 thirdParty: this.thirdParty
-  //                             }
-  //                         };
-  //                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-  //                     } else if (this.source === 'appointment') {
-  //                         const navigationExtras: NavigationExtras = {
-  //                             queryParams: {
-  //                                 ph: form_data.mobile_number,
-  //                                 checkinType: this.checkin_type,
-  //                                 haveMobile: this.haveMobile,
-  //                                 id: data,
-  //                                 timeslot: this.timeslot,
-  //                                 scheduleId: this.comingSchduleId,
-  //                                 date: this.date,
-  //                                 thirdParty: this.thirdParty,
-  //                                 serviceId: this.serviceIdParam,
-  //                                 userId: this.userId,
-  //                                 deptId: this.deptId,
-  //                                 type: this.type
-  //                             }
-  //                         };
-  //                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-  //                     } else if (this.source === 'appt-block') {
-  //                         this.confirmApptBlock(data);
-  //                     } else if (this.source === 'waitlist-block') {
-  //                         this.confirmWaitlistBlock(data);
-  //                     } else {
-  //                         this.router.navigate(['provider', 'customers']);
-  //                     }
-  //                 },
-  //                 error => {
-  //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //                     this.disableButton = false;
-  //                 });
-  //     } else if (this.action === 'edit') {
-  //         const post_data = {
-  //             //   'userProfile': {
-  //             'id': this.customerId,
-  //             'firstName': form_data.first_name,
-  //             'lastName': form_data.last_name,
-  //             'dob': datebirth,
-  //             'gender': form_data.gender,
-  //             'phoneNo': form_data.mobile_number,
-  //             'email': form_data.email_id,
-  //             'address': form_data.address,
-  //             //   }
-  //         }; if (form_data.mobile_number) {
-  //             post_data['countryCode'] = '+91';
-  //         }
-  //         // if (form_data.email_id && form_data.email_id !== '') {
-  //         //     post_data['email'] = form_data.email_id;
-  //         // }
-  //         if (form_data.customer_id) {
-  //             post_data['jaldeeId'] = form_data.customer_id;
-  //         }
-  //         this.provider_services.updateProviderCustomer(post_data)
-  //             .subscribe(
-  //                 data => {
-  //                     this.wordProcessor.apiSuccessAutoHide(this, Messages.PROVIDER_CUSTOMER_CREATED);
-  //                     this.snackbarService.openSnackBar('Updated Successfully');
-  //                     const qParams = {};
-  //                     qParams['pid'] = data;
-  //                     if (this.source === 'checkin' || this.source === 'token') {
-  //                         const navigationExtras: NavigationExtras = {
-  //                             queryParams: {
-  //                                 ph: form_data.mobile_number,
-  //                                 checkin_type: this.checkin_type
-  //                             }
-  //                         };
-  //                         this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-  //                     } else if (this.source === 'appointment') {
-  //                         const navigationExtras: NavigationExtras = {
-  //                             queryParams: {
-  //                                 ph: form_data.mobile_number,
-  //                                 checkin_type: this.checkin_type
-  //                             }
-  //                         };
-  //                         this.router.navigate(['provider', 'settings', 'appointmentmanager', 'appointments'], navigationExtras);
-  //                     } else {
-  //                         this.router.navigate(['provider', 'customers']);
-  //                     }
-  //                 },
-  //                 error => {
-  //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //                     this.disableButton = false;
-  //                 });
-  //     }
-  // }
+ 
+   
+  imageSelect(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        } else {
+          this.selectedImagelist.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedImagelist.base64.push(e.target['result']);
+            this.image_list_popup = [];
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: ''
+                }, this.selectedImagelist.files[i].name);
+              this.image_list_popup.push(imgobj);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
 
+  deleteTempImage(img, index) {
+    console.log(img);
+    // this.image_list_popup.splice(index, 1);
+    //  const idex = this.selectedImagelist.files.findIndex(i => i.id === img.id);
+    // console.log(idex);
+    this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== img.id);
+    this.selectedImagelist.files.splice(img.id, 1);
+    this.selectedImagelist.base64.splice(img.id, 1);
+    this.selectedImagelist.caption.splice(img.id, 1);
+    console.log(this.image_list_popup);
+    console.log(this.selectedImagelist.files);
+  }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+
+  onButtonBeforeHook(event) {
+    console.log(event);
+    if (!event || !event.button) {
+      return;
+    }
+    if (event.button.type === ButtonType.DELETE) {
+
+      console.log(event.image.plain);
+      console.log(this.selectedImagelist.files);
+      console.log(this.image_list_popup);
+      // this.deletemodelboxImage(event.image.plain);
+      const idex = this.selectedImagelist.files.findIndex(i => i.id === event.image.id);
+      console.log(idex);
+      this.image_list_popup = this.image_list_popup.filter((val: Image) => val.id !== event.image.id);
+      this.selectedImagelist.files.splice(idex, 1);
+      this.selectedImagelist.base64.splice(idex, 1);
+      this.selectedImagelist.caption.splice(idex, 1);
+      // this.image_list_popup.splice(idex, 1);
+
+      console.log(this.selectedImagelist.files);
+      console.log(this.image_list_popup);
+    }
+
+  }
+  deletemodelboxImage(name) {
+    console.log(name);
+    const idex = this.selectedImagelist.files.findIndex(i => i.name === name);
+    console.log(idex);
+    this.selectedImagelist.files.splice(idex, 1);
+    this.selectedImagelist.base64.splice(idex, 1);
+    this.image_list_popup.splice(idex, 1);
+    console.log(this.selectedImagelist.files);
+    // this.image_list_popup = [];
+    //   if (this.selectedImagelist.files.length > 0) {
+    //   for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+    //     const imgobj = new Image(i,
+    //         {
+    //             img: this.selectedImagelist.base64[i],
+    //             description: ''
+    //         });
+    //     this.image_list_popup.push(imgobj);
+    // }
+    // console.log(this.image_list_popup);
+
+    //   }
+    console.log(this.image_list_popup);
+  }
+  onButtonAfterHook() { }
+  uploadShoppingList(){
+      this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          source: this.imagelist
+        }
+      });
+      this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+          this.selectedImagelist = result;
+          console.log(this.selectedImagelist.files);
+          this.image_list_popup = [];
+          if (this.selectedImagelist.files.length > 0) {
+            for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+              const imgobj = new Image(i,
+                {
+                  img: this.selectedImagelist.base64[i],
+                  description: this.selectedImagelist.caption[i] || ''
+                }, this.selectedImagelist.files[i].name);
+              this.image_list_popup.push(imgobj);
+            }
+            console.log(this.image_list_popup);
+
+          }
+        }
+      });
+    }
+
+ 
 }
 
 
