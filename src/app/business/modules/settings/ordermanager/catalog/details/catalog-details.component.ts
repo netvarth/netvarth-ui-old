@@ -2203,13 +2203,17 @@ console.log('hi submit');
         });
     }
     showCreateItemPopup (){
-        this.addtimewindowdialogRef = this.dialog.open(CreateItemPopupComponent, {
+        this.createitemdialogRef = this.dialog.open(CreateItemPopupComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
             }
         });
+        this.createitemdialogRef.afterClosed().subscribe(result => {
+            console.log("Refresh items")
+            this.getItems();
+        })
     }
     deletetimeslot(type, index) {
         if (type === 'store') {
