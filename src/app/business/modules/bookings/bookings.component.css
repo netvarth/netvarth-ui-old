@@ -36,3 +36,28 @@
     border: 1px solid grey;
     border-radius: 5px;
 }
+.card_head {
+    padding: 1rem 1.25rem !important;
+    margin-bottom: 0;
+    border-bottom: 1px solid #7e82a2 !important;
+    min-height: 40px !important;
+}
+.ext-link {
+    font-size: 20px !important;
+    margin-top: 10px;
+}
+.fl_right {
+    float: right;
+}
+.scroll_horiz {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+.bdr_green {
+    border: 1px solid green !important;
+}
+.scroll_horiz::-webkit-scrollbar {
+    width: 5px !important;
+}
