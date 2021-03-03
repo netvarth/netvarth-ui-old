@@ -93,3 +93,32 @@ textarea {
 .loading {
     margin-top: -50px
 }
+.fa-paper-plane {
+    color: #1e4079;
+}
+.grey {
+    color: lightgrey !important;
+}
+.btn.btn-primary.disabled {
+    background: #ccc !important;
+    border-color: #ccc !important;
+}
+.inbox-img {
+    content: url(../../../../../assets/images/inbox.png);
+    margin-left: auto;
+    margin-right: auto;
+}
+.null-img {
+    margin: auto;
+}
+.null-text {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #1e4079;
+}
+.label.label-sm {
+    height: 20px !important;
+    width: 20px !important;
+}

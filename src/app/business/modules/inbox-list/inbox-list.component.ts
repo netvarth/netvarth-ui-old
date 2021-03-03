@@ -11,7 +11,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { KeyValue } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -76,6 +76,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
   msgHeight;
   // @ViewChildren("userMsg") userMsg: QueryList<ElementRef>;
   scrollDone = false;
+  showEnquiry = false;
+  enquiries: any = [];
+  qParams;
   constructor(
     private inbox_services: InboxServices,
     private provider_services: ProviderServices,
@@ -84,7 +87,19 @@ export class InboxListComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private router: Router) { }
+    private router: Router, private activateRoute: ActivatedRoute) {
+      this.activateRoute.queryParams.subscribe(params => {
+this.qParams = params;
+console.log(this.qParams);
+if (this.qParams.enquiry) {
+  this.showEnquiry = true;
+}
+      });
+     }
+     ngOnChanges() {
+
+      console.log(this.qParams);
+     }
   ngOnInit() {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     const cnow = new Date();
@@ -180,7 +195,13 @@ export class InboxListComponent implements OnInit, OnDestroy {
           this.messages = data;
           this.scrollDone = true;
           console.log(this.messages);
+          if (this.showEnquiry) {
+const inbox =  this.generateCustomInbox(this.messages);
+this.enquiries = inbox.filter(msg => !msg.read && msg.messagestatus === 'in');
+console.log(this.enquiries);
+          } else {
           this.setMessages();
+          }
           this.loading = false;
         },
         () => {
@@ -210,7 +231,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
         if (this.selectedUser.businessName) {
           this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.businessName];
         } else {
-          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastsName];
+          this.groupedMsgs = this.groupedMsgsbyUser[this.selectedUser.firstName + ' ' + this.selectedUser.lastName];
         }
         console.log(this.groupedMsgs);
       } else {
@@ -572,5 +593,8 @@ export class InboxListComponent implements OnInit, OnDestroy {
   getEnquiry() {
     const msgs = this.tempSelectedUserMessages.filter(msg => !msg.waitlistId);
     return msgs;
+  }
+  getMsgType(msg) {
+return 'chat';
   }
 }

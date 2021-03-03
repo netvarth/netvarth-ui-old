@@ -201,6 +201,12 @@ export class ConsumerAppointmentComponent implements OnInit {
     uuidList: any = [];
     prepayAmount;
     paymentDetails: any = [];
+    questionnaireList: any = [];
+    paymentLength = 0;
+    @ViewChild('closebutton') closebutton;
+    @ViewChild('modal') modal;
+    apiError = '';
+    apiSuccess = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -700,7 +706,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                if (this.prepaymentAmount > 0) {
+                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                     this.payuPayment();
                 } else {
                     this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
@@ -814,20 +820,27 @@ export class ConsumerAppointmentComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
+                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
             },
                 error => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.apiError = this.wordProcessor.getProjectErrorMesssages(error);
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
                 });
         } else {
+            this.apiError = derror;
             this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
             this.disable = false;
         }
+        setTimeout(() => {
+            this.apiError = '';
+            this.apiSuccess = '';
+        }, 2000);
     }
     handleEmail() {
         this.action = 'email';
@@ -965,7 +978,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.sel_ser = '';
                 });
     }
-    filesSelected(event) {
+    filesSelected(event, type?) {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
@@ -981,6 +994,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if (type) {
+                        this.modal.nativeElement.click();
+                    }
                 }
             }
         }
@@ -1247,6 +1263,9 @@ export class ConsumerAppointmentComponent implements OnInit {
         } else if (this.action === 'slotChange') {
             this.action = '';
         }
+        if (this.action === '') {
+            this.closebutton.nativeElement.click();
+        }
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1374,6 +1393,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.updateEmail(post_data).then(
                         () => {
                             this.action = '';
+                            this.closebutton.nativeElement.click();
                         },
                         error => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1383,11 +1403,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                     )
                 } else {
                     this.action = '';
+                    this.closebutton.nativeElement.click();
                 }
             }
 
         } else {
             this.action = '';
+            this.closebutton.nativeElement.click();
         }
         this.editBookingFields = false;
     }
@@ -1417,12 +1439,13 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     goToStep(type) {
-        if (this.action === '') {
         if (type === 'next') {
-            if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
-            } else {
-                this.bookStep++;
+            if (!this.apptdisable && this.freeSlots.length > 0 && !this.api_loading1) {
+                if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                    this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                } else {
+                    this.bookStep++;
+                }
             }
         } else if (type === 'prev') {
             this.bookStep--;
@@ -1433,11 +1456,12 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.saveCheckin();
         }
     }
-    }
     addApptAdvancePayment(post_Data) {
-        this.shared_services.addApptAdvancePayment(this.account_id, post_Data)
+        const param = { 'account': this.account_id };
+        this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                this.paymentLength = Object.keys(this.paymentDetails).length;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1517,5 +1541,14 @@ export class ConsumerAppointmentComponent implements OnInit {
             length = length + this.appointment.attchment.length;
         }
         return length;
+    }
+    actionCompleted() {
+        if (this.action === 'members') {
+            this.saveMemberDetails();
+        } else if (this.action === 'addmember') {
+            this.handleSaveMember();
+        } else if (this.action === 'note' || this.action === 'timeChange') {
+            this.goBack();
+        }
     }
 }

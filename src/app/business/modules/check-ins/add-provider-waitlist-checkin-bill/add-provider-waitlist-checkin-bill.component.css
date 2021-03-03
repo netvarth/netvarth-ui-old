@@ -107,3 +107,15 @@
 .lh-1 {
     line-height: 1 !important;
 }
+.dashed_bdr {
+    border: 1px dashed grey;
+}
+.text-muted-dark {
+    color:grey  !important;
+}
+.example-full-width .mat-form-field-infix {
+    margin-bottom: 0px !important;
+}
+.lh-p8 {
+    line-height: 0.8rem !important;
+}

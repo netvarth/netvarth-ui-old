@@ -32,6 +32,7 @@ import { MedicalrecordModule } from '../medicalrecord/medicalrecord.module';
 import { VoicecallDetailsModule } from './voicecall-details/voicecall-details.modules';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
         MedicalrecordModule,
         GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        QuestionnaireModule
     ],
     declarations: [
         CheckInsComponent,

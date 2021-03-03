@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -170,99 +170,12 @@ export class ConsumerCheckinComponent implements OnInit {
     uuidList: any = [];
     prepayAmount;
     paymentDetails: any = [];
-    questionnaireList: any = [{
-        "id": 2,
-        "account": 2,
-        "transactionType": "SERVICE",
-        "transactionId": 1,
-        "channel": "ONLINE",
-        "questions": [{
-            "id": 1,
-            "labelName": "blood",
-            "fieldDataType": "List",
-            "fieldScope": "consumer",
-            "label": "Enter  your blood group",
-            "labelValues": ["A+", "B+", "O+"],
-            "listPropertie": {},
-            "billable": false
-        }, {
-            "id": 2,
-            "labelName": "Place Name",
-            "fieldDataType": "PlainText",
-            "fieldScope": "consumer",
-            "label": "Enter your address",
-            "labelValues": "kochi",
-            "plainTextPropertie": {
-                "minNoOfLetter": 5,
-                "maxNoOfLetter": 100
-            },
-            "billable": false
-        }, {
-            "id": 3,
-            "labelName": "weight",
-            "fieldDataType": "Number",
-            "fieldScope": "consumer",
-            "label": "Enter your weight",
-            "labelValues": "50.0",
-            "numberPropertie": {
-                "start": 10,
-                "end": 10
-            },
-            "billable": false
-        }, {
-            "id": 4,
-            "labelName": "aadhaar card",
-            "fieldDataType": "FileUpload",
-            "fieldScope": "consumer",
-            "label": "upload your aadhaar card",
-            "labelValues": null,
-            "filePropertie": {
-                "minSize": 100,
-                "maxSize": 100,
-                "fileTypes": ["jpg", "png", "doc", "pdf"],
-                "minNoOfFile": 1,
-                "maxNoOfFile": 2,
-                "allowedDocuments": ["Adhar Card", " Ration Card"]
-            },
-            "billable": false
-        }, {
-            "id": 5,
-            "labelName": "records",
-            "fieldDataType": "FileUpload",
-            "fieldScope": "consumer",
-            "label": "former medical records, if any ",
-            "labelValues": null,
-            "filePropertie": {
-                "minSize": 10,
-                "maxSize": 10,
-                "fileTypes": ["jpg", "png", "doc", "pdf"],
-                "minNoOfFile": 1,
-                "allowedDocuments": ["recodes"]
-            },
-            "billable": false
-        }, {
-            "id": 6,
-            "labelName": "medical conditions",
-            "fieldDataType": "List",
-            "fieldScope": "service",
-            "label": "known medical conditions including allergies",
-            "labelValues": ["diabetes", "pressure "],
-            "listPropertie": {},
-            "billable": false
-        }, {
-            "id": 7,
-            "labelName": "birthdate",
-            "fieldDataType": "Date",
-            "fieldScope": "consumer",
-            "label": "enter your birth date",
-            "labelValues": null,
-            "dateProperties": {
-                "startDate": "01-01-1980",
-                "endDate": "01-01-2021"
-            },
-            "billable": false
-        }]
-    }];
+    paymentLength = 0;
+    questionnaireList: any = [];
+    @ViewChild('closebutton') closebutton;
+    @ViewChild('modal') modal;
+    apiError = '';
+    apiSuccess = '';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -782,7 +695,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                if (this.prepaymentAmount > 0) {
+                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                     this.payuPayment();
                 } else {
                     let multiple;
@@ -929,19 +842,26 @@ export class ConsumerCheckinComponent implements OnInit {
             post_data['parent'] = this.customer_data.id;
             fn = this.shared_services.addMembers(post_data);
             fn.subscribe(() => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
+                this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
+                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('MEMBER_CREATED'), { 'panelclass': 'snackbarerror' });
                 this.getFamilyMembers();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
             },
                 error => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.apiError = this.wordProcessor.getProjectErrorMesssages(error);
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     this.disable = false;
                 });
         } else {
+            this.apiError = derror;
             this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
+        setTimeout(() => {
+            this.apiError = '';
+            this.apiSuccess = '';
+        }, 2000);
     }
     calculateDate(days) {
         const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1079,7 +999,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     this.sel_ser = '';
                 });
     }
-    filesSelected(event) {
+    filesSelected(event, type?) {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
@@ -1095,6 +1015,9 @@ export class ConsumerCheckinComponent implements OnInit {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if (type) {
+                    this.modal.nativeElement.click();
+                    }
                 }
             }
         }
@@ -1398,6 +1321,9 @@ export class ConsumerCheckinComponent implements OnInit {
         } else if (this.action === 'timeChange') {
             this.action = '';
         }
+        if (this.action === '') {
+        this.closebutton.nativeElement.click();
+        }
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1517,6 +1443,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     };
                     this.updateEmail(post_data).then(
                         () => {
+                            this.closebutton.nativeElement.click();
                             this.action = '';
                         },
                         error => {
@@ -1526,10 +1453,12 @@ export class ConsumerCheckinComponent implements OnInit {
                         }
                     )
                 } else {
+                    this.closebutton.nativeElement.click();
                     this.action = '';
                 }
             }
         } else {
+            this.closebutton.nativeElement.click();
             this.action = '';
         }
         this.editBookingFields = false;
@@ -1567,13 +1496,14 @@ export class ConsumerCheckinComponent implements OnInit {
         }
     }
     goToStep(type) {
-        if (this.action === '') {
         if (type === 'next') {
+            if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
             if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                 this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
             } else {
                 this.bookStep++;
             }
+        }
         } else if (type === 'prev') {
             this.bookStep--;
         } else {
@@ -1583,12 +1513,12 @@ export class ConsumerCheckinComponent implements OnInit {
             this.saveCheckin();
         }
     }
-    }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
         this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                this.paymentLength = Object.keys(this.paymentDetails).length;
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1668,5 +1598,14 @@ export class ConsumerCheckinComponent implements OnInit {
             length = length + this.waitlist.attchment.length;
         }
         return length;
+    }
+    actionCompleted() {
+        if (this.action === 'members') {
+            this.saveMemberDetails();
+        } else if (this.action === 'addmember') {
+            this.handleSaveMember();
+        } else if (this.action === 'note' || this.action === 'timeChange' || this.action === 'attachment' || this.action === 'coupons') {
+            this.goBack();
+        }
     }
 }

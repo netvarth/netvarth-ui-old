@@ -225,9 +225,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   discountClicked = false;
   discountId_servie: any;
   discountid;
-  applydisc = false;
+  applydisc = false; 
   @ViewChild('closebutton') closebutton;
-  @ViewChild('closebutton1') closebutton1;
+  @ViewChild('itemdiscountapply') itemdiscountapply;
+  @ViewChild('itemserviceqtynew') itemserviceqtynew;
+  @ViewChild('closeJcDiscPc') closeJcDiscPc;
+  @ViewChild('closenotesdialog') closenotesdialog;
+  @ViewChild('closeDelivery') closeDelivery;
+  
   constructor(
     private dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -933,7 +938,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * @param uuid Bill Id
    * @param data Data to be sent as request body
    */
-  applyAction(action, uuid, data) {
+  applyAction(action, uuid, data ,closecheck?) {
     return new Promise<void>((resolve, reject) => {
       if (uuid) {
         this.provider_services.setWaitlistBill(action, uuid, data, { 'Content-Type': 'application/json' }).subscribe
@@ -946,8 +951,19 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
             this.curSelItm.qty = 1;
             this.getWaitlistBill();
             resolve();
-            this.closeGroupDialog();
-            this.closeGroupDialogitem();
+            if(closecheck === 'applyitemDisc'){
+              this.closeGroupDialogitem();
+            } else if(closecheck === 'closeJcDiscPc'){
+              this.closeGroupDialogcoupons();
+            } else if(closecheck === 'noteclose'){
+              this.closeGroupnotesdialog();
+            } else if(closecheck === 'delivery'){
+              this.closeGroupdelivery();
+            }
+             else {
+              this.closeGroupDialog();
+            }
+           
           },
             error => {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -974,6 +990,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
    * Add/Adjust Service/Item to the Bill
    */
   addService_Item() {
+    console.log("hi");
     const type = this.curSelItm.typ;
     const itemId = this.curSelItm.indx;
     let action = this.actiontype;
@@ -1006,6 +1023,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       this.provider_services.setWaitlistBill(action, this.bill_data.uuid, data, null).subscribe
         (billInfo => {
           this.bill_data = billInfo;
+          this.itemserviceqtynew.nativeElement.click();
           this.hideAddItem();
           this.getWaitlistBill();
         }, error => {
@@ -1037,7 +1055,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.showPCouponSection = false;
     this.showJCouponSection = false;
     this.showDeliveryChargeSection = false;
-    this.showAddItemsec = true;
+    // this.showAddItemsec = true;
     this.showAddItemMenuSection = true;
     this.itemServiceSelected('Services', name);
     this.itemServiceSearch.setValue(name);
@@ -1139,14 +1157,14 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['itemId'] = item.itemId;
     data['discountIds'] = discountIds;
     this.disableitembtn = true;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data , 'applyitemDisc' );
   }
 
   addDisplaynote() {
     const action = 'addDisplayNotes';
     const data = {};
     data['displayNotes'] = this.billDisplayNote;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data ,'noteclose');
     this.displayNoteedit = true;
   }
 
@@ -1154,7 +1172,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const action = 'addPrivateNotes';
     const data = {};
     data['privateNotes'] = this.billPrivateNote;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data ,'noteclose');
     this.privateNoteedit = true;
   }
 
@@ -1184,7 +1202,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // jaldeeCoupon = '"' + jCoupon.jaldeeCouponCode + '"';    
     jaldeeCoupon = '"' + this.selOrderProviderjCoupon + '"';
     this.disableJCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon);
+    this.applyAction(action, this.bill_data.uuid, jaldeeCoupon ,'closeJcDiscPc');
   }
   /**
    * Remove Jaldee Coupon
@@ -1255,7 +1273,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
 
   applyDeliveryCharge() {
     const data = { 'deliveryCharges': this.deliveryCharge };
-    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data);
+    this.applyAction('updateDeliveryCharges', this.bill_data.uuid, data ,'delivery');
   }
   applyOrderDiscount() {
     const action = 'addBillLevelDiscount';
@@ -1286,7 +1304,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     data['discounts'] = discounts;
     this.disableDiscountbtn = true;
     if ((this.selOrderDiscount.discType === 'OnDemand' && discount['discValue']) || this.selOrderDiscount.discType !== 'OnDemand') {
-      this.applyAction(action, this.bill_data.uuid, data);
+      this.applyAction(action, this.bill_data.uuid, data ,'closeJcDiscPc');
     } else {
       this.disableDiscountbtn = false;
     }
@@ -1300,7 +1318,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     // coupons.push(this.selOrderProviderCoupon.id);
     data['couponIds'] = coupons;
     this.disableCouponbtn = true;
-    this.applyAction(action, this.bill_data.uuid, data);
+    this.applyAction(action, this.bill_data.uuid, data ,'closeJcDiscPc');
   }
 
   initPayment(mode, amount, paynot) {
@@ -1791,7 +1809,17 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.closebutton.nativeElement.click();
   }
   closeGroupDialogitem() {
-    this.closebutton1.nativeElement.click();
+    this.itemdiscountapply.nativeElement.click();
+  }
+  closeGroupDialogcoupons(){
+    this.closeJcDiscPc.nativeElement.click();
+  }
+  closeGroupnotesdialog(){
+    console.log('hi');
+    this.closenotesdialog.nativeElement.click();
+  }
+  closeGroupdelivery(){
+    this.closeDelivery.nativeElement.click();
   }
   applyRefund(payment) {
     this.applydisc = true;

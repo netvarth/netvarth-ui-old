@@ -2100,14 +2100,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   viewAttachment(booking,type) {
-    this.image_list_popup_temp = [];
-    this.image_list_popup = [];
-    console.log(type);
    if (type === 'appt') {
     console.log(type);
     this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid , booking.providerAccount.id).subscribe(
       (communications: any) => {
-        console.log(communications);
+        this.image_list_popup_temp = [];
+        this.image_list_popup = [];
         let count = 0;
         for (let comIndex = 0; comIndex < communications.length; comIndex++) {
           const thumbPath = communications[comIndex].thumbPath;
@@ -2139,7 +2137,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }  else if (type === 'checkin') {
       this.shared_services.getConsumerWaitlistAttachmentsByUuid(booking.ynwUuid, booking.providerAccount.id).subscribe(
         (communications: any) => {
-          console.log(communications);
+          this.image_list_popup_temp = [];
+          this.image_list_popup = [];
           let count = 0;
           for (let comIndex = 0; comIndex < communications.length; comIndex++) {
             const thumbPath = communications[comIndex].thumbPath;

@@ -106,7 +106,7 @@ export class CreateCouponComponent implements OnInit {
         validTimeRange: [''],
         policies: this.formbuilder.group({
           departments: ['', [Validators.required]],
-          services: [' [Validators.required]],
+          services: ['', [Validators.required]],
           users: ['', [Validators.required]],
           catalogues: ['', [Validators.required]],
           consumerGroups: ['', [Validators.required]],

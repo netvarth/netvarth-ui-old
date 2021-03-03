@@ -1917,6 +1917,12 @@ export class CatalogdetailComponent implements OnInit {
             this.snackbarService.openSnackBar('Image uploaded successfully');
         },
             error => {
+                 this.selectedMessage = {
+                            files: [],
+                            base64: [],
+                            caption: []
+                        };
+                        this.image_list_popup = [];
                 this.api_loading = false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });

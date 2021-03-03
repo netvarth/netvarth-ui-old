@@ -225,6 +225,9 @@ export class ProviderCheckinComponent implements OnInit {
     countryCode;
     checkin_label;
     provider_label = '';
+    showQuestionnaire = false;
+    questionnaireList: any = [];
+    channel;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -259,6 +262,7 @@ export class ProviderCheckinComponent implements OnInit {
                 } else {
                     this.chekin_title = 'Walk-ins';
                 }
+                this.channel = (this.checkinType === 'PHONE_CHECKIN') ? 'PHONEIN' : 'WALKIN';
             }
             if (qparams.calmode) {
                 this.calculationMode = qparams.calmode;
@@ -1178,6 +1182,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
+                this.showQuestionnaire = true;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
@@ -1194,7 +1199,7 @@ export class ProviderCheckinComponent implements OnInit {
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
-                this.router.navigate(['provider', 'check-ins']);
+                // this.router.navigate(['provider', 'check-ins']);
 
             },
                 error => {

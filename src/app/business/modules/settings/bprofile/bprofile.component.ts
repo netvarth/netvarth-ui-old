@@ -193,6 +193,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // path = window.location.host + ;
   wndw_path = projectConstants.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
+  @ViewChild('closebutton') closebutton;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
   show_cover_options = false;
@@ -1624,11 +1625,18 @@ uploadLogo(passdata) {
                 this.sharedfunctionobj.sendMessage(pdata);
                 this.api_success = Messages.BPROFILE_LOGOUPLOADED;
                 this.spinner_load = false;
+                setTimeout(() => {
+                  this.closeGroupDialog();
+                }, 2000);
             },
             error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }
         );
+}
+closeGroupDialog() {
+  this.closebutton.nativeElement.click();
+  this.api_success = '';
 }
 
 rotateLeft() {

@@ -177,7 +177,7 @@
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
 
@@ -193,11 +193,14 @@
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer3 .duration .data-value {
-    min-width: 25%;
-    text-align: center;
-    border-radius: 50px;
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
     background-color: #F1B51C;
-    padding: 5px 10px;
+    padding: 5px 12px;
+    display: flex;
+    align-items: center; */
+    margin: 0 8px;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4 {
@@ -209,13 +212,13 @@
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment > span,
@@ -233,11 +236,14 @@
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4 .prepayment > .data-value,
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer4.tax > .data-value {
-    min-width: 25%;
-    text-align: center;
-    border-radius: 50px;
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
     background-color: #F1B51C;
-    padding: 5px 10px;
+    padding: 5px 12px; */
+    margin: 0 8px;
+    /* display: flex;
+    align-items: center; */
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .mgn-bt-5 {
@@ -254,7 +260,7 @@
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration span {
@@ -269,9 +275,12 @@
 }
 
 .service-detail-content.service-popup-content .servicedet_outer .outer .outer5.donation .duration > .data-value {
-    min-width: 25%;
-    text-align: center;
-    border-radius: 50px;
+    /* min-width: 25%;
+    text-align: center; */
+    /* border-radius: 50px;
     background-color: #F1B51C;
-    padding: 5px 10px;
+    padding: 5px 12px; */
+    margin: 0 5px;
+    /* display: flex;
+    align-items: center; */
 }

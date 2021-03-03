@@ -60,6 +60,10 @@
                       <!--end::Card-->
                     </div>
                     <!--end::Aside-->
+                    <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content" *ngIf="selectedProvider == '' && !small_device_display">
+                      <div class="inbox-img" [ngStyle]="{'height.vh': 40}"></div>
+                      <div class="null-text">Select a chat to start messaging</div>
+                    </div>
                     <!--begin::Content-->
                     <div class="flex-row-fluid ml-lg-8" id="kt_chat_content"
                       *ngIf="(selectedProvider != '' && !small_device_display) || (small_device_display && showChat)">
@@ -155,11 +159,11 @@
                             </div>
                             <div>
                               <button type="button" (click)="sendMessageCompleted && sendMessage()"
-                                *ngIf="!small_device_display"
+                                *ngIf="!small_device_display" [class.disabled]="message==''"
                                 class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6 disp-flex">Send
                               </button>
                               <i *ngIf="small_device_display" (click)="sendMessageCompleted && sendMessage()"
-                                class="fa fa-paper-plane" aria-hidden="true"></i>
+                                class="fa fa-paper-plane" aria-hidden="true" [class.grey]="message==''"></i>
                             </div>
                           </div>
                           <div class="img-section mgn-up-20"

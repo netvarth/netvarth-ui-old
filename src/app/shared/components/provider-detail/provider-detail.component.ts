@@ -2222,9 +2222,16 @@ checkout() {
 }
 itemDetails(item) {
   console.log(JSON.stringify(item));
+  let blogoUrl;
+    if (this.businessjson.logo) {
+      blogoUrl = this.businessjson.logo.url;
+    } else {
+      blogoUrl = '';
+    }
   const businessObject = {
     'bname': this.businessjson.businessName,
-    'blocation': this.locationjson[0].place
+    'blocation': this.locationjson[0].place,
+    'logo': blogoUrl
   };
   this.lStorageService.setitemonLocalStorage('order', this.orderList);
   this.lStorageService.setitemonLocalStorage('order_sp', businessObject);

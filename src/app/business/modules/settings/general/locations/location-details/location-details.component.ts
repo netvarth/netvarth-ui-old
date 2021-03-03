@@ -16,6 +16,7 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { SharedServices } from '../../../../../..//shared/services/shared-services';
 
 @Component({
   selector: 'app-location-details',
@@ -91,6 +92,15 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   checked_sel_badges = false;
   params;
   src: any;
+  locationFind = 'GOOGLEMAP';
+  api_error = '';
+  lat_lng = {
+    latitude: 12.9715987,
+    longitude: 77.5945627
+  };
+  mapaddress;
+  locationName;
+
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -104,6 +114,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    public shared_service: SharedServices,
     private dialog: MatDialog) {
     this.activated_route.params.subscribe(params => {
       this.location_id = params.id;
@@ -584,4 +595,40 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   backPage() {
     this._location.back();
   }
+  handlelocationfind(val) {
+    if (val === 'googlemap') {
+        this.locationFind = 'GOOGLEMAP';
+    } else if (val === 'autodetect') {
+        this.locationFind = 'AUTODETECT';
+    } else if(val === 'manual'){
+        this.locationFind = 'MANUAL';
+    }
+}
+getCurrentLocation() {
+  if (navigator) {
+    navigator.geolocation.getCurrentPosition(pos => {
+     console.log(pos)
+     this.amForm.controls.loclattitude.setValue(pos.coords.latitude);
+     this.amForm.controls.loclongitude.setValue(pos.coords.longitude);
+     this.lat_lng.longitude = +pos.coords.longitude;
+     this.lat_lng.latitude = +pos.coords.latitude;
+     this.getAddressfromLatLong();
+    },
+      error => {
+          this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
+      });
+  }
+  
+}
+getAddressfromLatLong() {
+  console.log(this.lat_lng)
+  this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
+    const currentAddress = this.shared_service.getFormattedAddress(data);
+    this.mapaddress = [];
+    this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
+    this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
+    this.locationName = data['area'];
+    this.amForm.controls.locname.setValue(this.locationName);
+  });
+}
 }
