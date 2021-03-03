@@ -208,7 +208,7 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="pl-0 font-weight-bold text-muted  text-uppercase">Description
+											<th class="pl-0 font-weight-bold text-muted  text-uppercase">Service/Item
 											</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Qty</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Rate</th>
@@ -706,7 +706,7 @@
 									</div>
 								</div>
 								<div class="hr_content" *ngIf="bill_data.taxableTotal">
-									<div class="name"><span class="tax-top">Tax {{bill_data.taxPercentage}}% of
+									<div class="flx_1"><span class="tax-top">Tax {{bill_data.taxPercentage}}% of
 											<span class="rupee-font">{{bill_data.taxableTotal |
 												currency:'&#8377;'}}</span></span>
 										<span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
@@ -795,7 +795,7 @@
 													<div class="text-dark-50 font-size-lg font-weight-bold mb-3">
 														DATE</div>
 													<div class="font-size-lg font-weight-bold">
-															<span class="date">{{payment.paymentOn | date: dateFormat}}</span>,
+															<span class="date">{{payment.paymentOn |  date:'mediumDate'}}</span>,
 															<span class="time">{{payment.paymentTime}}</span>
 													</div>
 													<!--end::Invoice Date-->
@@ -951,18 +951,15 @@
 										<div class="font-weight-boldest font-size-h5">TOTAL AMOUNT</div>
 										<div class="text-right d-flex flex-column">
 											<span *ngIf="!showPayWorkBench"
-												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.amountDue
-												| currency:'&#8377;'}}</span>
+												class="font-weight-boldest font-size-h3 line-height-sm rupee-font">{{bill_data.netTotal | currency:'&#8377;'}}</span>
 
 											<span *ngIf="showPayWorkBench"
 												class="font-size-sm line-height-sm rupee-font">&#8377;
-												<!-- <input class="form-control" type="number" value="400"
-													id="example-number-input"> -->
-												<input class="form-control" type="number" id="example-number-input" size="5" max="{{price_limit}}" min="0"
+							 				   <input class="form-control" type="number" id="example-number-input" size="5" max="{{price_limit}}" min="0"
 												[(ngModel)]="amountpay" [ngModelOptions]="{standalone: true}" (keyup)="isvalid($event)"
 												autocomplete="off">
 											</span>
-											<span class="font-size-sm">Taxes included</span>
+											<!-- <span class="font-size-sm">Taxes included</span> -->
 										</div>
 									</div>
 								</div>
@@ -1001,9 +998,9 @@
 	</div>
 </section>
 
+<!-- OLD Bill -->
 
-
-<section class="">
+<!-- <section class="">
 	<div class="content comn-cls">
 		<div class="col-md-12 no-padding-small">
 			<div class="w-dta">
@@ -1060,8 +1057,7 @@
 															<span class="dynamic">{{spname}}</span>
 														</span>
 														<div class="red" *ngIf="bill_data.billStatus === 'Cancel'">
-															<!-- <span class="title">Order Id </span>
-															<span class="dynamic">{{checkin.orderNumber}}</span> -->
+															
 															Cancelled
 														</div>
 													</div>
@@ -1078,7 +1074,6 @@
 														<div class="add-button"
 															*ngIf="!showAddItemsec && showAddItemMenuSection">
 															<span class="bill-more-mat-menu add-item">
-																<!-- <span class="icon-vertical-ellipse"></span> -->
 																<button mat-icon-button [matMenuTriggerFor]="menu">
 																	<mat-icon>more_vert</mat-icon>
 																</button>
@@ -1162,7 +1157,6 @@
 																							{{group.type}}
 																							{{available_cap}}
 																						</mat-option>
-																						<!-- </mat-optgroup> -->
 																					</ng-container>
 																				</ng-container>
 																			</mat-autocomplete>
@@ -1192,7 +1186,6 @@
 																	</div>
 																	<div *ngIf="curSelItm.typ === 'Items' && actiontype !== 'adjustItem'"
 																		class="item qty col-md-3 col-sm-4 col-lg-3 no-padding">
-																		<!-- <span class="label">Price</span> -->
 																		<span class="number">
 																			<mat-form-field class="example-full-width">
 																				<input type="text" min="0" matInput
@@ -1222,7 +1215,6 @@
 																<div class="spl col-md-7 col-sm-7 col-lg-7 no-padding">
 																	<div class="item selectbox">
 																		<mat-form-field class="example-full-width">
-																			<!-- <input type="text" #jcoupon matInput [(ngModel)]="jCoupon"> -->
 																			<mat-select
 																				[(ngModel)]="selOrderProviderjCoupon"
 																				[ngModelOptions]="{standalone: true}">
@@ -1570,7 +1562,6 @@
 																	Cancelled</div>
 															</div>
 															<div class="c-row two section-two">
-																<!--When click MENU this section shows-->
 																<div class="add-serv-item edit-row service edit-row discoup"
 																	*ngIf="bill_data.service[i].showservicedisccoup">
 																	<div
@@ -1631,7 +1622,7 @@
 																		</div>
 																	</div>
 																</div>
-																<!--ENDS-->
+																
 																<div class="discount-row"
 																	*ngFor="let discount of service.discount">
 																	<div class="name">{{discount.name}}</div>
@@ -1719,7 +1710,7 @@
 																	currency:'&#8377;'}}</div>
 															</div>
 															<div class="c-row two section-two">
-																<!--When click MENU this section shows-->
+															
 																<div class="add-serv-item edit-row service edit-row discoup"
 																	*ngIf="bill_data.items[i].showitemdisccoup">
 																	<div
@@ -1745,14 +1736,7 @@
 																			</div>
 																			<div
 																				class="item qty col-md-4 col-sm-4 col-lg-4 no-padding">
-																				<!-- <ng-container *ngIf="bill_data.items[i].itemDiscount.discType=='OnDemand'">
-																<span class="label">Value</span> <span class="number">
-																	<mat-form-field class="example-full-width"> <input type="text" matInput #billdiscvalue
-																			aria-label="Number" max="{{price_limit}}" min="0" matInput value="1" size="3"  (keypress)="isNumeric($event)" (keyup)="isvalid($event)" [(ngModel)]="bill_data.items[i].itemDiscount.discAmount"
-																			(blur)="blurQty($event.target.value, bill_data.items[i].itemDiscount.discAmount)">
-																	</mat-form-field>
-																</span>
-															</ng-container> -->
+																			
 																			</div>
 																		</div>
 																		<div
@@ -1766,7 +1750,7 @@
 																		</div>
 																	</div>
 																</div>
-																<!--ENDS-->
+															
 																<div class="discount-row"
 																	*ngFor="let discount of item.discount">
 																	<div class="name">{{discount.name}}</div>
@@ -1787,7 +1771,6 @@
 														</div>
 														<div class="more"
 															*ngIf="bill_data.billStatus!='Settled' && pos">
-															<!-- <span class="icon-vertical-ellipse"></span> -->
 															<button mat-icon-button [matMenuTriggerFor]="menu">
 																<mat-icon>more_vert</mat-icon>
 															</button>
@@ -1941,38 +1924,6 @@
 														</table>
 													</div>
 												</div>
-
-												<!-- <div class="section-three"
-								*ngIf="bill_data && bill_data.discount || bill_data.jCoupon">
-								<div class *ngFor="let discount of bill_data.discount">
-									<div *ngIf="discount.privateNote">
-										<span>{{discount.name}}</span>
-										<span> * {{discount.privateNote}}</span>
-
-									</div>
-									<div *ngIf="discount.displayNote">
-										<span>{{discount.name}}</span>
-										<span>* {{discount.displayNote}}</div>
-								</div> -->
-												<!-- <div class *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
-									<div class="" *ngFor="let note of jcoupon.value['systemNote']">
-										<span class="red">* {{coupon_notes[note]}}</span>
-									</div>
-								</div> -->
-												<!-- <div class="" *ngFor="let jcMsg of jcMessages">
-										<span class="red">* {{coupon_notes[jcMsg]}}</span>
-									</div> -->
-												<!-- </div> -->
-												<!-- <div class="section-three" *ngIf="bill_data">
-								<div
-									*ngIf="bill_data.displayNotes && bill_data.displayNotes.displayNotes">
-									*
-									{{bill_data.displayNotes.displayNotes}}</div>
-								<div
-									*ngIf="bill_data.privateNotes && bill_data.privateNotes.privateNotes">
-									*
-									{{bill_data.privateNotes.privateNotes}}</div>
-							</div> -->
 												<div class="section-four lg-tbl no-padding-small" *ngIf="showPaidlist">
 													<div class="heading">
 														<span class="back"
@@ -2005,12 +1956,7 @@
 																					[class]="payment.status | lowercase">{{payment.status
 																					| capitalizeFirst}}</span></span>
 																		</span>
-																		<!-- <span class="mode"> <span
-																				class="title">{{mode_cap}}</span>
-																			<span>{{payment.acceptPaymentBy |
-																				capitalizeFirst }}</span>
-																		</span> -->
-																		<span class="mode">
+																	<span class="mode">
 																			<span class="title">Payment Mode</span>
 																			<span>{{payment.acceptPaymentBy |
 																				capitalizeFirst}}<ng-container *ngIf="payment.paymentMode &&
@@ -2223,4 +2169,4 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-</section>
+</section> -->
