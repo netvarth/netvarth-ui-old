@@ -1399,7 +1399,7 @@ body.modal-open {
   font-size: .8rem;
  }
  .success-section {
-   color: #00cc96 !important;
+  background: #00cc96 !important;
  }
  .width-60 {
   width: 60% !important;

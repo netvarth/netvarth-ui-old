@@ -1016,7 +1016,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
                     if (type) {
-                    this.modal.nativeElement.click();
+                        this.modal.nativeElement.click();
                     }
                 }
             }
@@ -1324,7 +1324,7 @@ export class ConsumerCheckinComponent implements OnInit {
             this.action = '';
         }
         if (this.action === '') {
-        this.closebutton.nativeElement.click();
+            this.closebutton.nativeElement.click();
         }
     }
     applyPromocode() {
@@ -1500,12 +1500,12 @@ export class ConsumerCheckinComponent implements OnInit {
     goToStep(type) {
         if (type === 'next') {
             if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
-            if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
-            } else {
-                this.bookStep++;
+                if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+                    this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+                } else {
+                    this.bookStep++;
+                }
             }
-        }
         } else if (type === 'prev') {
             this.bookStep--;
         } else {

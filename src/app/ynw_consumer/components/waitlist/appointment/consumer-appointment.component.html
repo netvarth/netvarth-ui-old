@@ -1127,8 +1127,7 @@
                                                                             <i
                                                                                 class="icon-bell"></i>{{applied_inbilltime}}
                                                                         </div>
-                                                                        <div
-                                                                            class="width-60">
+                                                                        <div class="width-60">
                                                                             <div class="input-group">
                                                                                 <input
                                                                                     [ngClass]="{'invalid':!couponvalid}"
@@ -1211,7 +1210,8 @@
                                                             <div class="modal-body">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                                    <i class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></i>
+                                                                    <i class="fa fa-arrow-left pointer-cursor"
+                                                                        (click)="goBack()"></i>
                                                                     {{add_member_cap}}
                                                                 </div>
                                                                 <div
@@ -1336,7 +1336,8 @@
                                                                                     <span>WhatsApp#:
                                                                                         <b>+{{callingModes}}</b></span>
                                                                                 </p>
-                                                                                <p class="mgn-up-5 mgn-lt-10">Email :
+                                                                                <p class="mgn-up-5 mgn-lt-10"
+                                                                                    *ngIf="payEmail">Email :
                                                                                     <b>{{payEmail}}</b>
                                                                                 </p>
                                                                                 <p class="mgn-up-5 mgn-lt-10"
@@ -1450,7 +1451,8 @@
                                                         </ng-container>
 
                                                         <div class="modal-footer">
-                                                            <button type="button" class="disp-none btn btn-light-primary font-weight-bold"
+                                                            <button type="button"
+                                                                class="disp-none btn btn-light-primary font-weight-bold"
                                                                 data-dismiss="modal" #closebutton>Cancel</button>
                                                             <button type="button"
                                                                 class="btn btn-primary font-weight-bold"
@@ -1460,7 +1462,8 @@
                                                         <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
-                                                        <div class="error-section success-section" *ngIf="apiSuccess !== ''">
+                                                        <div class="error-section success-section"
+                                                            *ngIf="apiSuccess !== ''">
                                                             {{apiSuccess}}
                                                         </div>
                                                     </div>
@@ -1480,9 +1483,9 @@
                                         <div>
                                             Please provide us with a little more information complete your booking
                                         </div>
-                                        <app-questionnaire [questionnaireList]="questionnaireList"
-                                            [source]="'consAppt'" [consumerId]="waitlist_for[0].id" 
-                                            [serviceId]="sel_ser" [accountId]="account_id"></app-questionnaire>
+                                        <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
+                                            [consumerId]="waitlist_for[0].id" [serviceId]="sel_ser"
+                                            [accountId]="account_id"></app-questionnaire>
 
                                     </div>
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"

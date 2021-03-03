@@ -570,11 +570,13 @@ export class CustomersListComponent implements OnInit {
       this.groups = data;
       this.groupLoaded = false;
       if (groupId) {
-        const grp = this.groups.filter(group => group.id === groupId);
-        this.customerGroupSelection(grp[0], 'show');
-      } else {
-        const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
-        this.selectedGroup = grp[0];
+        if (groupId === 'update') {
+          const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
+          this.selectedGroup = grp[0];
+        } else {
+          const grp = this.groups.filter(group => group.id === groupId);
+          this.customerGroupSelection(grp[0], 'show');
+        }
       }
     });
   }
@@ -737,7 +739,7 @@ export class CustomersListComponent implements OnInit {
   }
   updateGroup(data) {
     this.provider_services.updateCustomerGroup(data).subscribe(data => {
-      this.getCustomerGroup();
+      this.getCustomerGroup('update');
       this.resetGroupFields();
       this.closeGroupDialog();
     },
