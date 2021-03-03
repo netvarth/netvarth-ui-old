@@ -706,6 +706,9 @@ ul.bus-actions li a.lnk {
 .service-icon .meet-icon, .service-icon .phon-icon {
   width: 25px !important;
 }
+.service-icon .phon-icon {
+  margin-bottom: 5px;
+}
 .service-icon .zoom-icon {
   width: 30px !important; 
 }
@@ -916,6 +919,7 @@ ul.bus-actions li a.lnk {
   padding-right: 0 !important;
   margin-top: 3px !important;
   margin-right: 5px !important;
+  height: 35px;
 }
 .service-icon .fa-phone{
   color: #7a7a7a !important
@@ -1250,7 +1254,10 @@ ngx-intl-tel-input input {
 }
 .tab-selected h3,
 .tab-selected i {
-  color: #3699FF !important;
+  color: darkblue !important;
+}
+.tab-selected .step-icon {
+  background: darkblue !important;
 }
 .fa {
   font: normal normal normal 14px/1 FontAwesome !important;
@@ -1400,3 +1407,21 @@ body.modal-open {
  .email-border {
   border: 1px solid #cccc;
  }
+ .step-icon {
+  border-radius: 50%;
+  color: white;
+  background-color: #aaaa;
+  max-width: 100px;
+  padding: 10px;
+  width: 40px;
+  margin: auto;
+  max-height: 40px;
+ }
+ .wizard-title {
+   color: #aaaa !important;
+ }
+ @media (max-width: 767.98px) {
+ .step-icon {
+    margin-right: 10px;
+ }
+}

@@ -710,8 +710,8 @@
                                     <!--begin::Wizard Step 1 Nav-->
                                     <div class="wizard-step tab-selected" data-wizard-type="step">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-bus-stop"></i>
-                                            <h3 class="wizard-title">1. Booking Window</h3>
+                                            <div class="step-icon">1</div>
+                                            <h3 class="wizard-title">Booking Window</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -737,8 +737,8 @@
                                     <!--begin::Wizard Step 2 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-list"></i>
-                                            <h3 class="wizard-title">2. More Info</h3>
+                                            <div class="step-icon">2</div>
+                                            <h3 class="wizard-title">More Info</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -764,8 +764,8 @@
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-globe"></i>
-                                            <h3 class="wizard-title">3. Confirm</h3>
+                                            <div class="step-icon">3</div>
+                                            <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -1058,7 +1058,7 @@
                                                                     Choose Date
                                                                 </div>
                                                                 <div
-                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">
+                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-10">
 
                                                                     <div class="pull-left brd-round brd-light">
 
@@ -1091,11 +1091,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <div
-                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">
+                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 mgn-bt-10">
                                                                     Choose Slot
                                                                 </div>
                                                                 <div
-                                                                    class="col-md-10 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 slotdiv">
+                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20 slotdiv">
                                                                     <mat-chip-list class=""
                                                                         *ngIf="freeSlots && freeSlots.length > 0">
                                                                         <mat-chip *ngFor="let slot of freeSlots"
@@ -1203,13 +1203,6 @@
                                                                         (change)="handleConsumerNote(consumernote.value)"
                                                                         maxlength="1000"
                                                                         placeholder="{{note_placeholder}}"></textarea>
-                                                                    <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                                        <button mat-button
-                                                                            class="cs-btn bt1 backtocheckin"
-                                                                            (click)="goBack()">OK
-                                                                        </button>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </ng-container>
@@ -1218,7 +1211,7 @@
                                                             <div class="modal-body">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                                    <i class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></i>
                                                                     {{add_member_cap}}
                                                                 </div>
                                                                 <div
@@ -1227,13 +1220,6 @@
                                                                         [calledFrom]="'checkin'"
                                                                         (returnDetails)="handleReturnDetails($event)">
                                                                     </app-checkin-consumer-add-member>
-                                                                    <div class="actiondiv">
-                                                                        <button type="button" class="cs-btn bt2 backbtn"
-                                                                            (click)="goBack()">{{cancel_btn}}</button>&nbsp;
-                                                                        <button mat-button class="cs-btn bt1 savemember"
-                                                                            [disabled]="disable"
-                                                                            (click)="handleSaveMember()">OK</button>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </ng-container>
@@ -1457,14 +1443,6 @@
                                                                                     </div>
                                                                                 </form>
                                                                             </div>
-
-                                                                        </div>
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
-                                                                            *ngIf="!showCreateMember">
-                                                                            <button mat-button
-                                                                                class="cs-btn bt1 backtocheckin"
-                                                                                (click)="saveMemberDetails()">OK
-                                                                            </button>
                                                                         </div>
                                                                     </ng-container>
                                                                 </div>
@@ -1473,16 +1451,16 @@
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="disp-none btn btn-light-primary font-weight-bold"
-                                                                data-dismiss="modal" #closebutton [class.disp-none]="action!='coupons'">Cancel</button>
+                                                                data-dismiss="modal" #closebutton>Cancel</button>
                                                             <button type="button"
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>
                                                         </div>
 
-                                                        <div class="error-section success-section" *ngIf="apiError !== ''">
+                                                        <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
-                                                        <div class="error-section" *ngIf="apiSuccess !== ''">
+                                                        <div class="error-section success-section" *ngIf="apiSuccess !== ''">
                                                             {{apiSuccess}}
                                                         </div>
                                                     </div>

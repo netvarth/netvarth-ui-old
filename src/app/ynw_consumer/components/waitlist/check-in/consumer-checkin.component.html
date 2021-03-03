@@ -785,8 +785,8 @@
                                     <!--begin::Wizard Step 1 Nav-->
                                     <div class="wizard-step tab-selected" data-wizard-type="step">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-bus-stop"></i>
-                                            <h3 class="wizard-title">1. Booking Window</h3>
+                                            <div class="step-icon">1</div>
+                                            <h3 class="wizard-title">Booking Window</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -812,8 +812,8 @@
                                     <!--begin::Wizard Step 2 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-list"></i>
-                                            <h3 class="wizard-title">2. More Info</h3>
+                                            <div class="step-icon">2</div>
+                                            <h3 class="wizard-title">More Info</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -839,8 +839,8 @@
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-globe"></i>
-                                            <h3 class="wizard-title">3. Confirm</h3>
+                                            <div class="step-icon">3</div>
+                                            <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -1460,7 +1460,7 @@
                                                                         (dateChange)="handleFutureDateChange($event)">
 
                                                                 </div>
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">
                                                                         Choose
@@ -1588,7 +1588,7 @@
                                                             <div class="modal-body">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                                    <i class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></i>
                                                                     {{add_member_cap}}
                                                                 </div>
                                                                 <div
@@ -1602,17 +1602,17 @@
                                                         </ng-container>
 
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                                                  #closebutton [class.disp-none]="action!='coupons'">Cancel</button>
+                                                            <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                                                  #closebutton>Cancel</button>
                                                             <button type="button"
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>
                                                         </div>
 
-                                                        <div class="error-section success-section" *ngIf="apiError !== ''">
+                                                        <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
-                                                        <div class="error-section" *ngIf="apiSuccess !== ''">
+                                                        <div class="error-section success-section" *ngIf="apiSuccess !== ''">
                                                             {{apiSuccess}}
                                                         </div>
                                                     </div>

@@ -834,7 +834,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 });
         } else {
             this.apiError = derror;
-            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
             this.disable = false;
         }
         setTimeout(() => {
@@ -1210,7 +1210,8 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.api_cp_error = 'Coupon invalid';
             }
         } else {
-            this.api_cp_error = 'Enter a Coupon';
+            // this.api_cp_error = 'Enter a Coupon';
+            this.closebutton.nativeElement.click();
         }
     }
     toggleterms(i) {
@@ -1548,7 +1549,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
             this.handleSaveMember();
-        } else if (this.action === 'note' || this.action === 'timeChange' || this.action === 'attachment') {
+        } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
             this.goBack();
         } else if (this.action === 'coupons') {
             this.applyCoupons();

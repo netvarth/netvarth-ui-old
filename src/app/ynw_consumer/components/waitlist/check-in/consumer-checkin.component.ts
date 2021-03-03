@@ -856,7 +856,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 });
         } else {
             this.apiError = derror;
-            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
+            // this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
         }
         setTimeout(() => {
             this.apiError = '';
@@ -1275,7 +1275,8 @@ export class ConsumerCheckinComponent implements OnInit {
                 this.api_cp_error = 'Coupon invalid';
             }
         } else {
-            this.api_cp_error = 'Enter a Coupon';
+            // this.api_cp_error = 'Enter a Coupon';
+            this.closebutton.nativeElement.click();
         }
     }
     toggleterms(i) {
