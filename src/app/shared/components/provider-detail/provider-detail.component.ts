@@ -483,7 +483,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.s3url = res;
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
-          // this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('coupon', true);
           // this.getbusinessprofiledetails_json('jaldeediscount', true);
           if (this.userId) {
             this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
