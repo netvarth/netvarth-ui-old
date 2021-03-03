@@ -118,19 +118,39 @@
             </div>
             <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
+<<<<<<< HEAD
                     <span class="data-label">Min amount: </span>
                     <span class="data-value" *ngIf="data.serdet.minValue" style="font-weight: bold">
+=======
+                    <span>{{service_duration}} : </span><span style="font-weight: bold">
+                        {{HHMM}}
+                    </span>
+                </div>
+            </div>
+            <div class="outer5" *ngIf="data.serdet && is_donation_serv">
+                <div class="duration">
+                    <span>Min amount: </span><span *ngIf="data.serdet.minValue" class="rupee-font" style="font-weight: bold">
+>>>>>>> refs/remotes/origin/1.7-order
                         {{data.serdet.minValue}}
                     </span>
+<<<<<<< HEAD
                     <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font data-value">
                         <i class="fa fa-inr"></i>{{data.serdet.minDonationAmount| currency:'':''}}
+=======
+                    <span *ngIf="data.serdet.minDonationAmount" style="font-weight: bold" class="rupee-font">
+                        {{data.serdet.minDonationAmount | currency:'&#8377;'}}
+>>>>>>> refs/remotes/origin/1.7-order
                     </span>
                 </div>
             </div>
             <div class="outer5 donation" *ngIf="data.serdet && is_donation_serv">
                 <div class="duration">
+<<<<<<< HEAD
                     <span class="data-label">Max amount : </span>
                     <span class="data-value" *ngIf="data.serdet.maxValue" style="font-weight: bold">
+=======
+                    <span>Max amount : </span><span *ngIf="data.serdet.maxValue" class="rupee-font" style="font-weight: bold">
+>>>>>>> refs/remotes/origin/1.7-order
                         {{data.serdet.maxValue}}
                     </span>
                     <span *ngIf="data.serdet.maxDonationAmount" style="font-weight: bold" class="rupee-font data-value">

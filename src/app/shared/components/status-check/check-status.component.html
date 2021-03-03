@@ -111,9 +111,24 @@
                     <td width="48%" align="right">Home Delivery Address </td>
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>
-                      <span [innerHTML]="statusInfo.homeDeliveryAddress | nl2br"></span>
+                      <!-- <span [innerHTML]="statusInfo.homeDeliveryAddress.address | nl2br"></span> -->
+                      <span>
+                        {{statusInfo.homeDeliveryAddress.firstName }} &nbsp;{{statusInfo.homeDeliveryAddress.lastName}}
+                      </span><br>
+                      <span >
+                          {{statusInfo.homeDeliveryAddress.address }}
+                        </span><br>
+                      <span>
+                        {{statusInfo.homeDeliveryAddress.city }} , {{statusInfo.homeDeliveryAddress.postalCode}}
+                      </span><br>
+                      <span>
+                        {{statusInfo.homeDeliveryAddress.landMark }}
+                      </span><br>
+                      <span>
+                          {{statusInfo.homeDeliveryAddress.countryCode }} {{statusInfo.homeDeliveryAddress.phoneNumber}}
+                        </span>
                     </td>
-                  </tr>
+                  </tr> 
                   <tr *ngIf="type !== 'order'">
                     <td width="48%" align="right">Service</td>
                     <td width="2%">&nbsp;:&nbsp;</td>

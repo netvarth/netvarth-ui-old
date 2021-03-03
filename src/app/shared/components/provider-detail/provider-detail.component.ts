@@ -27,6 +27,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery'; 
+import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 
 @Component({
   selector: 'app-provider-detail',
@@ -275,7 +276,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   userEncId: string;
   locId;
   bsModalRef: BsModalRef;
-
+  qrdialogRef: any;
+  wndw_path = projectConstants.PATH;
+  elementType: 'url' | 'canvas' | 'img' = 'url';
   constructor(
     private activaterouterobj: ActivatedRoute,
     // private providerdetailserviceobj: ProviderDetailService,
@@ -2327,6 +2330,25 @@ shoppinglistupload() {
     const passParam = { callback: 'order' };
     this.doLogin('consumer', passParam);
   }
+}
+
+qrCodegeneraterOnlineID(accEncUid) {
+  this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
+    width: '40%',
+    panelClass: ['popup-class', 'commonpopupmainclass'],
+    disableClose: true,
+    data: {
+      accencUid: accEncUid,
+      path: this.wndw_path,
+      businessName: this.businessjson.businessName
+    }
+  });
+
+  this.qrdialogRef.afterClosed().subscribe(result => {
+    if (result === 'reloadlist') {
+     
+    }
+  });
 }
 
 }
