@@ -1394,3 +1394,9 @@ body.modal-open {
  .success-section {
    color: #00cc96 !important;
  }
+ .width-60 {
+  width: 60% !important;
+ }
+ .email-border {
+  border: 1px solid #cccc;
+ }

@@ -1128,7 +1128,7 @@
                                                                                 class="icon-bell"></i>{{applied_inbilltime}}
                                                                         </div>
                                                                         <div
-                                                                            class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
+                                                                            class="width-60">
                                                                             <div class="input-group">
                                                                                 <input
                                                                                     [ngClass]="{'invalid':!couponvalid}"
@@ -1136,12 +1136,6 @@
                                                                                     placeholder="Enter coupon code"
                                                                                     type="text" class="form-control"
                                                                                     [(ngModel)]="selected_coupon">
-                                                                                <span class="input-group-btn">
-                                                                                    <button
-                                                                                        class="btn bt3 btn-default coupon-apply-btn"
-                                                                                        (click)="applyCoupons(selected_coupon)"
-                                                                                        type="button">Add</button>
-                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
@@ -1411,7 +1405,7 @@
                                                                                                 Enter New Email
                                                                                             </mat-label>
                                                                                             <input
-                                                                                                class="width100 height40"
+                                                                                                class="width100 height40 email-border"
                                                                                                 id="newEmail"
                                                                                                 placeholder="Email(user@xyz.com)"
                                                                                                 name="newEmail"
@@ -1479,7 +1473,7 @@
 
                                                         <div class="modal-footer">
                                                             <button type="button" class="disp-none btn btn-light-primary font-weight-bold"
-                                                                data-dismiss="modal" #closebutton>Close</button>
+                                                                data-dismiss="modal" #closebutton [class.disp-none]="action!='coupons'">Cancel</button>
                                                             <button type="button"
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>

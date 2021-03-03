@@ -1174,15 +1174,15 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
         return found;
     }
-    applyCoupons(jCoupon) {
+    applyCoupons() {
         this.api_cp_error = null;
         this.couponvalid = true;
         const couponInfo = {
             'couponCode': '',
             'instructions': ''
         };
-        if (jCoupon) {
-            const jaldeeCoupn = jCoupon.trim();
+        if (this.selected_coupon) {
+            const jaldeeCoupn = this.selected_coupon.trim();
             if (this.checkCouponExists(jaldeeCoupn)) {
                 this.api_cp_error = 'Coupon already applied';
                 this.couponvalid = false;
@@ -1205,6 +1205,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
                 this.action = '';
+                this.closebutton.nativeElement.click();
             } else {
                 this.api_cp_error = 'Coupon invalid';
             }
@@ -1547,8 +1548,10 @@ export class ConsumerAppointmentComponent implements OnInit {
             this.saveMemberDetails();
         } else if (this.action === 'addmember') {
             this.handleSaveMember();
-        } else if (this.action === 'note' || this.action === 'timeChange') {
+        } else if (this.action === 'note' || this.action === 'timeChange' || this.action === 'attachment') {
             this.goBack();
+        } else if (this.action === 'coupons') {
+            this.applyCoupons();
         }
     }
 }
