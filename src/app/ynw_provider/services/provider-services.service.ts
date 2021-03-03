@@ -1672,10 +1672,10 @@ export class ProviderServices {
     const url = 'provider/customers/bookings/history/' + id;
     return this.servicemeta.httpGet(url);
   }
-  getCustomerOrderVisit(id) {
-    const url = 'provider/orders/customer/' + id;
-    return this.servicemeta.httpGet(url);
-  }
+  getCustomerOrderVisit(id){
+      const url = 'provider/orders/customer/' + id;
+      return this.servicemeta.httpGet(url);
+   }
   getMRAudits(id) {
     const url = 'provider/mr/auditLog/' + id;
     return this.servicemeta.httpGet(url);
@@ -1702,9 +1702,9 @@ export class ProviderServices {
     return this.servicemeta.httpPost(url, data);
   }
   deleteLabelFromCustomer(data) {
-    const url = 'provider/customers/masslabel';
-    return this.servicemeta.httpDelete(url, data);
-  }
+      const url = 'provider/customers/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
   uploadCoverFoto(data) {
     return this.servicemeta.httpPost('provider/coverPicture', data);
   }
@@ -1902,7 +1902,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   updateDeliveryaddress(customerId, data) {
-    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress';
+    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
     return this.servicemeta.httpPut(url, data);
   }
   updateOrder(data) {
@@ -1910,70 +1910,24 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   updateOrderItems(uid, data) {
-    const url = 'provider/orders/item/' + uid;
+    const url ='provider/orders/item/' + uid;
     return this.servicemeta.httpPut(url, data);
 
   }
-  deleteLabelFromMultipleCheckin(data) {
-    const url = 'provider/waitlist/masslabel';
-    return this.servicemeta.httpDelete(url, data);
-  }
-  deleteLabelFromMultipleAppt(data) {
-    const url = 'provider/appointment/masslabel';
-    return this.servicemeta.httpDelete(url, data);
-  }
-  getProviderorderlistHistroy(uuid) {
-    const url = 'provider/orders/states/' + uuid;
-    return this.servicemeta.httpGet(url);
-  }
-  uploadMRfiles(mrId, data) {
-    const url = 'provider/mr/uploadMR/' + mrId;
-    return this.servicemeta.httpPost(url, data);
-  }
-
-  //      // Customer Grouping
-  //   createCustomerGroup(data) {
-  //    const url = 'provider/customers/group';
-  //    return this.servicemeta.httpPost(url, data);
-  //  }
-  //  updateCustomerGroup(data) {
-  //    const url = 'provider/customers/group';
-  //    return this.servicemeta.httpPut(url, data);
-  //  }
-  //  getCustomerGroup() {
-  //    const url = 'provider/customers/group';
-  //    return this.servicemeta.httpGet(url);
-  //  }
-  //  getCustomerGroupById(id) {
-  //    const url = 'provider/customers/group/' + id;
-  //    return this.servicemeta.httpGet(url);
-  //  }
-  //  updateCustomerGroupStatus(id, status) {
-  //    const url = 'provider/customers/group/' + id + '/' + status;
-  //    return this.servicemeta.httpPut(url);
-  //  }
-  //  addCustomerToGroup(name, data) {
-  //    const url = 'provider/customers/group/' + name;
-  //    return this.servicemeta.httpPost(url, data);
-  //  }
-  //  removeCustomerFromGroup(name, data) {
-  //    const url = 'provider/customers/group/' + name;
-  //    return this.servicemeta.httpDelete(url, data);
-  //  }
-  //  updateOrder(data) {
-  //    const url = 'provider/orders';
-  //    return this.servicemeta.httpPut(url, data);
-  //  }
-  //  updateOrderItems(uid, data) {
-  //    const url ='provider/orders/item/' + uid;
-  //    return this.servicemeta.httpPut(url, data);
-  //  }
-  //  getDeliveryAddress(customerId) {
-  //    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress';
-  //    return this.servicemeta.httpGet(url);
-  //  }
-  //  updateDeliveryaddress(customerId, data) {
-  //    const url = 'provider/orders/consumer/' + customerId + '/deliveryAddress' ;
-  //    return this.servicemeta.httpPut(url, data);
-  //  }
+   deleteLabelFromMultipleCheckin(data) {
+      const url = 'provider/waitlist/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   deleteLabelFromMultipleAppt(data) {
+      const url = 'provider/appointment/masslabel';
+      return this.servicemeta.httpDelete(url, data);
+   }
+   getProviderorderlistHistroy(uuid) {
+      const url = 'provider/orders/states/' + uuid;
+      return this.servicemeta.httpGet(url);
+   }
+   uploadMRfiles(mrId, data) {
+      const url = 'provider/mr/uploadMR/' + mrId;
+      return this.servicemeta.httpPost(url, data);
+   }
 }

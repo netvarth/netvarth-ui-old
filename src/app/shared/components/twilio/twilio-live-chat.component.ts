@@ -52,7 +52,6 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.activateroute.params.subscribe(
             (params) => {
                 this.uuid = params['id'];
-                alert(this.uuid);
                 this.type = this.uuid.substring((this.uuid.lastIndexOf('_') + 1), this.uuid.length);
             }
         );
