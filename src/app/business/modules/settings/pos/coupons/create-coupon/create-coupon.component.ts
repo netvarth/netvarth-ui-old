@@ -542,6 +542,9 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
         this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
       });
   }
+  redirecToCoupon() {
+    this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+  }
 }
 
 

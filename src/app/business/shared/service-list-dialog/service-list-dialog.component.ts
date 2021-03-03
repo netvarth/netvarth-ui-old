@@ -12,7 +12,7 @@ export class ServiceListDialogComponent implements OnInit {
   former_chosen_services: any = [];
   service_list: any = [];
   selectedServices: any = [];
-
+loading=true;
   constructor(public dialogRef: MatDialogRef<ServiceListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
@@ -32,6 +32,7 @@ export class ServiceListDialogComponent implements OnInit {
       .subscribe(
         data => {
           this.service_list = data;
+          this.loading=false;
 
         },
         () => { }

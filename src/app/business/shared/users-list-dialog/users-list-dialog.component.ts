@@ -13,7 +13,7 @@ export class UsersListDialogComponent implements OnInit {
   former_chosen_users: any = [];
 
   selectedUsers: any = [];
-
+loading=true;
   constructor(public dialogRef: MatDialogRef<UsersListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
@@ -33,6 +33,7 @@ export class UsersListDialogComponent implements OnInit {
     this.provider_services.getUsers().subscribe(
       (data: any) => {
         this.user_list = data;
+        this.loading=false;
       },
 
       (error: any) => {

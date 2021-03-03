@@ -9,7 +9,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 })
 export class ConsumerGroupDialogComponent implements OnInit {
 
-
+  loading=true;
   former_chosen_consumerGrps: any = [];
   consumer_group: any = [];
   selectedGroups: any = [];
@@ -32,6 +32,7 @@ export class ConsumerGroupDialogComponent implements OnInit {
 
     this.provider_services.getCustomerGroup().subscribe((data: any) => {
       this.consumer_group = data;
+      this.loading =false;
 
     });
   }

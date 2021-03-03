@@ -9,7 +9,7 @@ import { ProviderServices } from '../../../ynw_provider/services/provider-servic
 })
 export class ConsumerLabelDialogComponent implements OnInit {
 
-
+loading=true;
   former_chosen_consumerLables: any = [];
   consumer_labels: any = [];
   selectedLabels: any = [];
@@ -34,6 +34,7 @@ export class ConsumerLabelDialogComponent implements OnInit {
     .subscribe(
       (data: any) => {
         this.consumer_labels = data;
+        this.loading=false;
       },
       error => {
 

@@ -12,7 +12,7 @@ export class DepartmentListDialogComponent implements OnInit {
   former_chosen_departments: any = [];
   department_list: any = [];
   selectedDepartments: any = [];
-
+loading=true;
   constructor(
     public dialogRef: MatDialogRef<DepartmentListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,6 +34,7 @@ export class DepartmentListDialogComponent implements OnInit {
         data => {
           this.deptObj = data;
           this.department_list = this.deptObj.departments;
+          this.loading=false;
 
         },
         error => {

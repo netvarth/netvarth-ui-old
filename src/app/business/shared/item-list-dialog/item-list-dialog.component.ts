@@ -12,7 +12,7 @@ export class ItemListDialogComponent implements OnInit {
   former_chosen_items: any = [];
   item_list: any = [];
   selectedItems: any = [];
-
+  loading=true;
   constructor(public dialogRef: MatDialogRef<ItemListDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
@@ -30,6 +30,7 @@ export class ItemListDialogComponent implements OnInit {
     this.provider_services.getProviderItems()
       .subscribe(data => {
         this.item_list = data;
+        this.loading=false;
 
       });
   }
