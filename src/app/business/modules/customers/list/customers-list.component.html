@@ -209,12 +209,14 @@
     <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0">
       <!--begin::Mixed Widget 14-->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
-        <div class="card grp_label mb-2" (click)="customerGroupSelection('all')"
+        <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlight': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
         <button mat-flat-button class="font-size-xs add_btn mgn-bt-10" data-toggle="modal"
           data-target="#exampleModalCenter">Create Group</button>
-        <div class="card grp_label mb-2" *ngFor="let group of groups" (click)="group.status=='ENABLE' && customerGroupSelection(group)"
-          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'" [class.pointer-cursor]="group.status=='ENABLE'">
+        <div class="card grp_label mb-2" *ngFor="let group of groups"
+          (click)="group.status=='ENABLE' && customerGroupSelection(group)"
+          [ngClass]="{'highlight': selectedGroup.id==group.id}" [class.disabled-group]="group.status=='DISABLE'"
+          [class.pointer-cursor]="group.status=='ENABLE'">
           <div class="max-hgt-20">
             {{group.groupName}}
             <span class="pull-right mgn-m-up-10">
@@ -222,8 +224,8 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item data-toggle="modal"
-                data-target="#exampleModalCenter" (click)="editGroup()">
+                <button type="button" mat-menu-item data-toggle="modal" data-target="#exampleModalCenter"
+                  (click)="editGroup(group)">
                   <i class="icon-edit chkin-mobic"></i>
                   Edit
                 </button>
@@ -255,18 +257,20 @@
         <div class="p-2 row">
           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn" (click)="searchCustomer()"
-              *ngIf="!showCustomers">Create {{customer_label | capitalizeFirst}}</button>
+              *ngIf="!showCustomers && selectedcustomersformsg.length == 0">Create {{customer_label |
+              capitalizeFirst}}</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-              *ngIf="selectedGroup !== 'all' && !showCustomers">Add {{customer_label | capitalizeFirst}}</button>
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0">Add
+              {{customer_label | capitalizeFirst}}</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10"
-              *ngIf="selectedGroup == 'all' && groups.length == 0" data-toggle="modal"
-              data-target="#exampleModalCenter">Create Group</button>
+              *ngIf="selectedGroup == 'all' && groups.length == 0 && selectedcustomersformsg.length == 0"
+              data-toggle="modal" data-target="#exampleModalCenter">Create Group</button>
             <!-- Modal-->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
               aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                  <div class="modal-body">
+                  <div class="modal-body" *ngIf="!showAddCustomerHint">
                     <div class="form-group">
                       <label for="exampleInputPassword1">Name <span class="text-danger">*</span></label>
                       <input type="text" class="form-control1" id="exampleInputPassword1" placeholder="Name"
@@ -278,10 +282,22 @@
                         (keypress)="resetError()"></textarea>
                     </div>
                   </div>
-                  <div class="modal-footer">
+                  <div class="modal-footer" *ngIf="!showAddCustomerHint">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                      #closebutton>Close</button>
-                    <button type="button" class="btn btn-primary font-weight-bold" (click)="customerGroupAction()">{{(groupEdit) ? 'Update' : 'Create'}}</button>
+                      #closebutton (click)="resetGroupFields();resetError();">Cancel</button>
+                    <button type="button" class="btn btn-primary font-weight-bold"
+                      (click)="customerGroupAction()">{{(groupEdit) ? 'Update' : 'Create'}}</button>
+                  </div>
+                  <div class="modal-body" *ngIf="showAddCustomerHint">
+                    <div class="pad-10">
+                      Do you want to add the {{customer_label}}s now?
+                    </div>
+                  </div>
+                  <div class="modal-footer" *ngIf="showAddCustomerHint">
+                    <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                      #closebutton (click)="resetGroupFields();resetList();showCustomerHint()">Not Now</button>
+                    <button type="button" class="btn btn-primary font-weight-bold"
+                      (click)="showCustomerstoAdd('close')">Add Now</button>
                   </div>
                   <div class="error-section" *ngIf="apiError !== ''">
                     {{apiError}}
@@ -290,7 +306,8 @@
               </div>
             </div>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" data-toggle="modal"
-              data-target="#exampleModalCenter" *ngIf="selectedGroup !== 'all' && !showCustomers"
+              data-target="#exampleModalCenter"
+              *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0"
               (click)="editGroup()">Edit Group</button>
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10 cancel_btn" (click)="cancelAdd()"
               *ngIf="selectedGroup !== 'all' && showCustomers"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
@@ -308,7 +325,7 @@
               *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="label-icon"></i></button>
           </div>
-          <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter">
+          <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="!showCustomers">
             <input type="search" class="form-control search" placeholder="search by Name" aria-controls="kt_datatable1"
               [(ngModel)]="filter.first_name" (keypress)="search($event)">
             <i class="fa fa-filter" (click)="showFilterSidebar()"></i>

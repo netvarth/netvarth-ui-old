@@ -785,8 +785,8 @@
                                     <!--begin::Wizard Step 1 Nav-->
                                     <div class="wizard-step tab-selected" data-wizard-type="step">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-bus-stop"></i>
-                                            <h3 class="wizard-title">1. Booking Window</h3>
+                                            <div class="step-icon">1</div>
+                                            <h3 class="wizard-title">Booking Window</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -812,8 +812,8 @@
                                     <!--begin::Wizard Step 2 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-list"></i>
-                                            <h3 class="wizard-title">2. More Info</h3>
+                                            <div class="step-icon">2</div>
+                                            <h3 class="wizard-title">More Info</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -839,8 +839,8 @@
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <i class="wizard-icon flaticon-globe"></i>
-                                            <h3 class="wizard-title">3. Confirm</h3>
+                                            <div class="step-icon">3</div>
+                                            <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">
                                             <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
@@ -1266,7 +1266,8 @@
                                                                             <span>WhatsApp#:
                                                                                 <b>+{{callingModes}}</b></span>
                                                                         </p>
-                                                                        <p class="mgn-up-5 mgn-lt-10">Email :
+                                                                        <p class="mgn-up-5 mgn-lt-10" *ngIf="payEmail">
+                                                                            Email :
                                                                             <b>{{payEmail}}</b>
                                                                         </p>
                                                                         <p class="mgn-up-5 mgn-lt-10"
@@ -1315,7 +1316,8 @@
                                                                                     <mat-label for="newselected_phone">
                                                                                         Enter
                                                                                         New Email </mat-label>
-                                                                                    <input class="width100 height40"
+                                                                                    <input
+                                                                                        class="width100 height40 email-border"
                                                                                         id="newEmail"
                                                                                         placeholder="Email(user@xyz.com)"
                                                                                         name="newEmail"
@@ -1460,7 +1462,7 @@
                                                                         (dateChange)="handleFutureDateChange($event)">
 
                                                                 </div>
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">
                                                                         Choose
@@ -1504,8 +1506,7 @@
                                                                             <i
                                                                                 class="icon-bell"></i>{{applied_inbilltime}}
                                                                         </div>
-                                                                        <div
-                                                                            class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
+                                                                        <div class="width-60">
                                                                             <div class="input-group">
                                                                                 <input
                                                                                     [ngClass]="{'invalid':!couponvalid}"
@@ -1513,12 +1514,6 @@
                                                                                     placeholder="Enter coupon code"
                                                                                     type="text" class="form-control"
                                                                                     [(ngModel)]="selected_coupon">
-                                                                                <span class="input-group-btn">
-                                                                                    <button
-                                                                                        class="btn bt3 btn-default coupon-apply-btn"
-                                                                                        (click)="applyCoupons(selected_coupon)"
-                                                                                        type="button">Add</button>
-                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
@@ -1594,7 +1589,8 @@
                                                             <div class="modal-body">
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10s">
-                                                                    <i class="fa fa-arrow-left" (click)="goBack()"></i>
+                                                                    <i class="fa fa-arrow-left pointer-cursor"
+                                                                        (click)="goBack()"></i>
                                                                     {{add_member_cap}}
                                                                 </div>
                                                                 <div
@@ -1608,17 +1604,19 @@
                                                         </ng-container>
 
                                                         <div class="modal-footer">
-                                                            <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
-                                                  #closebutton>Close</button>
+                                                            <button type="button"
+                                                                class="disp-none btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal" #closebutton>Cancel</button>
                                                             <button type="button"
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>
                                                         </div>
 
-                                                        <div class="error-section success-section" *ngIf="apiError !== ''">
+                                                        <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
-                                                        <div class="error-section" *ngIf="apiSuccess !== ''">
+                                                        <div class="error-section success-section"
+                                                            *ngIf="apiSuccess !== ''">
                                                             {{apiSuccess}}
                                                         </div>
                                                     </div>
@@ -1636,7 +1634,7 @@
                                             Please provide us with a little more information complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList"
-                                            [source]="'consCheckin'" [consumerId]="waitlist_for[0].id" 
+                                            [source]="'consCheckin'" [consumerId]="waitlist_for[0].id"
                                             [serviceId]="sel_ser" [accountId]="account_id"></app-questionnaire>
                                     </div>
 

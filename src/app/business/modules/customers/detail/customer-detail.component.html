@@ -513,9 +513,8 @@ onSubmit(amForm.value)" (keyup)="resetApiErrors()" class="ynw-common-form">
                                             <tr class="pointer-cursor cellhover" *ngFor="let visit of todayordervisitDetails"
                                                 (click)="gotoCustomerDetail(visit, 1)">
                                                 <ng-container >
-                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
-                                                        
-                                                    </td>
+                                                    <td *ngIf="visit.storePickup"  class="consumer-dash consumer-appthistory"> <i class ="storepickup-icon"  [matTooltip]="'Store Pickup'" aria-hidden="true"></i> </td>
+                                                    <td  *ngIf="visit.homeDelivery"  class="consumer-dash consumer-appthistory"> <i class="delivery-icon"  [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
                                                     <td> {{visit.orderDate | date: newDateFormat}}
                                                         <div *ngIf="visit.orderNumber">Order#
                                                             {{visit.orderNumber}} </div>

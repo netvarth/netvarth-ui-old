@@ -199,3 +199,6 @@ textarea {
 .cont4 {
     width: 15%;
 }
+.minhgt-80 {
+    min-height: 70vh;
+}

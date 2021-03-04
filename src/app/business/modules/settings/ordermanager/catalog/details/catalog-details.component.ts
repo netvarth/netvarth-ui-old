@@ -627,8 +627,8 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm = this.fb.group({
                 catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                startdate: [''],
-                enddate: [''],
+                startdate: ['', Validators.compose([Validators.required])],
+                enddate: ['', Validators.compose([Validators.required])],
                 // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
                 //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
@@ -1820,6 +1820,13 @@ export class CatalogdetailComponent implements OnInit {
     isNumber(evt) {
         return this.sharedfunctionObj.isNumber(evt);
     }
+    // isNumber(event): boolean {
+    //     const charCode = event.which ? event.which : event.keyCode;
+    //     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    //       return false;
+    //     }
+    //     return true;
+    //   }
 
     isvalid(evt) {
         return this.sharedfunctionObj.isValid(evt);
@@ -2175,13 +2182,17 @@ export class CatalogdetailComponent implements OnInit {
         });
     }
     showCreateItemPopup (){
-        this.addtimewindowdialogRef = this.dialog.open(CreateItemPopupComponent, {
+        this.createitemdialogRef = this.dialog.open(CreateItemPopupComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
             }
         });
+        this.createitemdialogRef.afterClosed().subscribe(result => {
+            console.log("Refresh items")
+            this.getItems();
+        })
     }
     deletetimeslot(type, index) {
         if (type === 'store') {

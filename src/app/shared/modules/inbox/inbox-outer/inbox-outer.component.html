@@ -17,9 +17,12 @@
               <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
               <div class="d-flex flex-column flex-column-fluid" id="kt_content" *ngIf="!loading">
                 <!--begin::Entry-->
-                <div class="d-flex flex-column-fluid">
+                <div class="d-flex flex-column-fluid minhgt-80">
+                  <div class="d-flex flex-row" *ngIf="messages.length==0">
+                    No messages
+                  </div>
                   <!--begin::Chat-->
-                  <div class="d-flex flex-row">
+                  <div class="d-flex flex-row" *ngIf="messages.length>0">
                     <!--begin::Aside-->
                     <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                       <!--begin::Card-->
@@ -60,7 +63,8 @@
                       <!--end::Card-->
                     </div>
                     <!--end::Aside-->
-                    <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content" *ngIf="selectedProvider == '' && !small_device_display">
+                    <div class="flex-row-fluid ml-lg-8 null-img" id="kt_chat_content"
+                      *ngIf="selectedProvider == '' && !small_device_display">
                       <div class="inbox-img" [ngStyle]="{'height.vh': 40}"></div>
                       <div class="null-text">Select a chat to start messaging</div>
                     </div>
