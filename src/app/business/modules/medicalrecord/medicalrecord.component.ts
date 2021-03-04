@@ -189,7 +189,8 @@ export class MedicalrecordComponent implements OnInit {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
         if (response.provider && response.provider.id) {
-          this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
+          // this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
+          this.doctorName = response.provider.businessName;
           this.medicalService.setDoctorId(response.provider.id);
         }
 
@@ -219,7 +220,8 @@ export class MedicalrecordComponent implements OnInit {
           this.display_PatientId = this.customerDetails.jaldeeId;
         }
         if (response.provider && response.provider.id) {
-          this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
+          this.doctorName = response.provider.businessName;
+          // this.doctorName = response.provider.firstName + ' ' + response.provider.lastName;
           this.medicalService.setDoctorId(response.provider.id);
         }
 
@@ -370,7 +372,8 @@ export class MedicalrecordComponent implements OnInit {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
           if (data.provider && data.provider.id) {
-            this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
+            // this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
+            this.doctorName = data.provider.businessName;
             this.medicalService.setDoctorId(data.provider.id);
           }
           if (this.data.consultationMode === 'Out Patient') {
