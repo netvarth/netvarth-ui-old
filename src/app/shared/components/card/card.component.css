@@ -789,10 +789,12 @@ button.fxmenu {
 } */
 
 .card.booking-card.items .ribbon-new {
-    width: 100px;
+    /* width: 100px; */
+    width: fit-content;
     height: 30px;
     line-height: 30px;
     padding-left: 16px;
+    padding-right: 10px;
     position: absolute;
     left: 0px;
     top: 10px;
