@@ -15,9 +15,9 @@
                     <!--begin::Entry-->
                     <div class="d-flex flex-column-fluid">
 
-                         <!--begin::Enquiry-->
-                         <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="showEnquiry">
-                             <div class="enq-box" *ngFor="let enquiry of enquiries">
+                        <!--begin::Enquiry-->
+                        <div class="enquiry-section col-md-12 col-lg-12 col-sm-12 col-xs-12" *ngIf="showEnquiry">
+                            <div class="enq-box" *ngFor="let enquiry of enquiries">
                                 <div class="user-name cont1">
                                     {{getUser(enquiry.accountName)}}
                                 </div>
@@ -30,12 +30,14 @@
                                 <div class="cont4">
                                     <span class="view-btn">View</span>
                                 </div>
-                             </div>
-                             </div>
-                               <!--end::Enquiry-->
-
+                            </div>
+                        </div>
+                        <!--end::Enquiry-->
+                        <div class="d-flex flex-row minhgt-80" *ngIf="!showEnquiry && messages.length==0">
+                            No messages
+                        </div>
                         <!--begin::Chat-->
-                        <div class="d-flex flex-row" *ngIf="!showEnquiry">
+                        <div class="d-flex flex-row" *ngIf="!showEnquiry && messages.length>0">
                             <!--begin::Aside-->
                             <div class="flex-row-auto card-width w-xl-400px" id="kt_chat_aside" *ngIf="!showChat">
                                 <!--begin::Card-->
@@ -174,7 +176,8 @@
                                                     <div class="d-flex align-items-center">
                                                         <div>
                                                             <!-- <span class="text-muted font-size-sm">{{getMsgType(msg)}}</span> -->
-                                                            <span class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
+                                                            <span
+                                                                class="text-muted font-size-sm">{{formatDateDisplay(msg.timeStamp)}}</span>
                                                         </div>
                                                     </div>
                                                     <div

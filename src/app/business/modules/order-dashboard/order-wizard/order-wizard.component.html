@@ -1,7 +1,7 @@
 <section class="">
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New order
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New order
     </h5>
   </div>
 </section>
@@ -255,7 +255,7 @@
                         <!--begin::Products-->
                         <div class="row">
                           <!--begin::Product-->
-                          <div class="card-body p-0">
+                          <div class="card-body p-0" *ngIf="orderType !== 'SHOPPINGLIST'">
                             <ng-container *ngFor="let item of orderItems">
                               <div class="col-md-4 col-xxl-4 col-lg-12">
                                 <!--begin::Card-->
@@ -295,6 +295,75 @@
                             </ng-container>
                             <!--end::Product-->
                           </div>
+                          <div class="card-body p-0" *ngIf="orderType === 'SHOPPINGLIST'">
+                              <span *ngIf="!image_list_popup " (click)="uploadShoppingList()">
+                                  <a class="uploadshoppinglist-btn">Upload Shopping List</a>
+                                </span>
+                              <div *ngIf="image_list_popup ">
+                                  <ul class="shoppinglist-gal">
+                                    <ng-container *ngFor="let file of image_list_popup;let i = index">
+                                        <li *ngIf="i<2" class="shoppinglist-li">
+                                            <div class="shoppinglistbx">
+                                                <span class="shoppinglistmbt">
+                                                    <button type="button" mat-icon-button
+                                                        [matMenuTriggerFor]="menu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button type="button" mat-menu-item
+                                                            (click)="deleteTempImage(file, i)">
+                                                            <i class="icon-delete"></i>
+                                                            <span>delete</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </span>
+                                                <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                                                    <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                                        *ngIf="file.modal.img" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                    <li *ngIf="image_list_popup.length>2" class="shoppinglist-li">
+                                        <div class="shoppinglistbx">
+                                            <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                                                *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                            <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                                                    *ngIf="image_list_popup[2].modal.img"
+                                                    [src]="image_list_popup[2].modal.img" /></div>
+                                            <span class="shoppinglistmbt" *ngIf="(image_list_popup.length-3)==0">
+                                                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menu="matMenu">
+                                                    <button type="button" mat-menu-item
+                                                        (click)="deleteTempImage(image_list_popup[2], 2)">
+                                                        <i class="icon-delete"></i>
+                                                        <span>delete</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </span>
+                                            <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                                                *ngIf="(image_list_popup.length-3)==0">
+                                                <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                                                    *ngIf="image_list_popup[2].modal.img"
+                                                    [src]="image_list_popup[2].modal.img" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a (click)="filed.click()" class="pointerlist">
+                                  <input type="file"  multiple name="image_src" id="image_src" accept="/*;capture=camera"  #filed (change)="imageSelect($event)">Add more
+                                </a>
+                                
+                                    <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+                                    [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                    [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                    (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                    (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+                                   
+                                  </div>
+                          </div>
                           <!--end::Products-->
                         </div>
                         <!--end::Section-->
@@ -323,7 +392,7 @@
 
                       <div class="card-body p-0">
                         <!--begin::Shopping Cart-->
-                        <div  *ngIf="orders.length == 0"  class="card card-shadow card-custom card-shadowless mgn-bt-10">
+                        <div  *ngIf="orders && orders.length == 0 && orderType !== 'SHOPPINGLIST'"  class="card card-shadow card-custom card-shadowless mgn-bt-10">
                           <div class="card-body p-0">
                         <div class="no-dta text-center">
                           <p>No items in the cart</p>
@@ -332,7 +401,7 @@
                       </div>
                           </div>
                         </div>
-                        <div *ngIf="orders.length != 0" class="table-responsive">
+                        <div *ngIf="orders && orders.length != 0 && orderType !== 'SHOPPINGLIST'" class="table-responsive">
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>
@@ -447,22 +516,31 @@
                                 </div>
                               </div>
                             </ng-container> -->
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                                         <!-- Grid View -->
-                                        <mat-grid-list  style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'"
-                                        *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
-                                        [ngClass]="{'highlight': selectedRowIndex == i}">
-                                            <mat-grid-tile>
+                                        <mat-grid-list  style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
+                                            <mat-grid-tile *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                                            [ngClass]="{'highlight': selectedRowIndex == i}">
+                                            <!-- <mat-grid-tile-header>
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                <span class="adrs-head">Address {{i+1}}</span>
+                                              </mat-grid-tile-header> -->
+                                                <div class="item-contnt">
+                                                    <div class="text-center">
+                                                      <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                                      <div>{{address.address}}</div>
+                                                      <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                                      <div> +91 {{address.phoneNumber}}</div>
+                                                      <div> {{address.email}}</div>
+                                                    </div>
+                                                </div>
                                             </mat-grid-tile>
-                                            <div class="item-contnt">
-                                              <div class="text-center">
-                                                <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
-                                                <div>{{address.address}}</div>
-                                                <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
-                                                <div> +91 {{address.phoneNumber}}</div>
-                                                <div> {{address.email}}</div>
-                                              </div>
-                                          </div>
+                                            <mat-grid-tile>
+                                               
+                                                  <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                                      Add Address </button>
+                                              </mat-grid-tile>
+                                            
                                         </mat-grid-list>
                                     </div>
                             <!-- Add Address Modal  -->
@@ -479,7 +557,7 @@
                                             <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
                                               <span class="input-group-text" style="margin-top:auto;">+91</span>
 
-                                              <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                                              <input type="text" class="form-control" placeholder="Phone number*" formControlName="phoneNumber">
 
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
@@ -493,7 +571,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                            <input type="text" class="form-control" placeholder="First name*" formControlName="firstName">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                                                                         {
                                                                                           'required' : 'First name is required',
@@ -505,7 +583,7 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                              <input type="text" class="form-control" placeholder="Last name*" formControlName="lastName">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                                                                             {
                                                                                               'required' : 'Last name is required',
@@ -516,7 +594,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                                                                             {
                                                                                               'required' : 'Email is required',
@@ -528,7 +606,7 @@
                                         </div>
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                            <input type="text" class="form-control" placeholder="Address*" formControlName="address">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                     {
                                                                                       'required' : 'Please enter city name',
@@ -537,7 +615,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                            <input type="text" class="form-control" placeholder="City*" formControlName="city">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                       {
                                                                                         'required' : 'Please enter city name',
@@ -549,7 +627,7 @@
 
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP*" formControlName="postalCode">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                                                                           {
                                                                                             'required' : 'Please enter Postal Code ',
@@ -560,7 +638,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                            <input type="text" class="form-control" placeholder="Landmark*" formControlName="landMark">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                                                                             {
                                                                                               'required' : 'Please enter landmark'
@@ -573,7 +651,7 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                      <button type="submit" [disabled]="!amForm.valid" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
                                     </div>
                                   </div>
                                 </form>
@@ -704,7 +782,7 @@
                         </div> -->
 
                          <!-- Coupon  end-->
-                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderType !== 'SHOPPINGLIST'">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">

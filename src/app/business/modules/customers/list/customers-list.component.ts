@@ -111,6 +111,9 @@ export class CustomersListComponent implements OnInit {
   @ViewChild('closebutton') closebutton;
   apiError = '';
   groupLoaded = false;
+  groupIdEdit = '';
+  showAddCustomerHint = false;
+  newlyCreatedGroupId;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -131,7 +134,6 @@ export class CustomersListComponent implements OnInit {
     ];
     this.breadcrumbs = this.breadcrumbs_init;
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
-    // this.checkedin_label = this.wordProcessor.getTerminologyTerm('waitlisted');
     this.checkedin_label = Messages.CHECKED_IN_LABEL;
   }
   ngOnInit() {
@@ -180,7 +182,6 @@ export class CustomersListComponent implements OnInit {
   }
   getCustomersList(from_oninit = true) {
     this.apiloading = true;
-    // this.resetList();
     this.customers = [];
     let filter = this.setFilterForApi();
     this.getCustomersListCount(filter)
@@ -261,7 +262,6 @@ export class CustomersListComponent implements OnInit {
       this.filterapplied = false;
     }
   }
-
   resetFilter() {
     this.labelFilterData = '';
     this.selectedLabels = [];
@@ -443,9 +443,7 @@ export class CustomersListComponent implements OnInit {
       }
     });
     this.mrdialogRef.afterClosed().subscribe(result => {
-
     });
-
   }
   listMedicalrecords(customer) {
     const customerDetails = customer;
@@ -453,7 +451,6 @@ export class CustomersListComponent implements OnInit {
     const mrId = 0;
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
-
     this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'list'], { queryParams: { 'calledfrom': 'list' } });
   }
   medicalRecord(customerDetail) {
@@ -462,7 +459,6 @@ export class CustomersListComponent implements OnInit {
     const mrId = 0;
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
-
     this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'clinicalnotes'], { queryParams: { 'calledfrom': 'patient' } });
   }
   prescription(customerDetail) {
@@ -471,7 +467,6 @@ export class CustomersListComponent implements OnInit {
     const mrId = 0;
     const bookingType = 'FOLLOWUP';
     const bookingId = 0;
-
     this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'patient' } });
   }
   stopprop(event) {
@@ -520,7 +515,6 @@ export class CustomersListComponent implements OnInit {
       }
     }
   }
-
   setLabelFilter(label, event) {
     const value = event.checked;
     if (this.selectedLabels[label.label]) {
@@ -556,23 +550,37 @@ export class CustomersListComponent implements OnInit {
   seeVisible() {
     this.visibility = true;
   }
-  customerGroupSelection(group) {
-    this.showCustomers = false;
+  customerGroupSelection(group, type?) {
     this.selectedGroup = group;
     this.groupService.setitemToGroupStorage('group', this.selectedGroup);
     this.resetFilter();
     this.resetList();
-    if (this.selectedGroup === 'all') {
-      this.getCustomersList();
-    } else {
-      this.getCustomerListByGroup();
+    this.customers = this.groupCustomers = [];
+    if (!type) {
+      this.showCustomers = false;
+      if (this.selectedGroup === 'all') {
+        this.getCustomersList();
+      } else {
+        this.getCustomerListByGroup();
+      }
     }
   }
-  getCustomerGroup() {
+  getCustomerGroup(groupId?) {
     this.groupLoaded = true;
     this.provider_services.getCustomerGroup().subscribe((data: any) => {
       this.groups = data;
       this.groupLoaded = false;
+      if (groupId) {
+        if (groupId === 'update') {
+          if (this.selectedGroup !== 'all' && this.selectedGroup.id === this.groupIdEdit) {
+          const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
+          this.selectedGroup = grp[0];
+          }
+        } else {
+          const grp = this.groups.filter(group => group.id === groupId);
+          this.customerGroupSelection(grp[0], 'show');
+        }
+      }
     });
   }
   search(event) {
@@ -629,14 +637,18 @@ export class CustomersListComponent implements OnInit {
       }
     });
   }
-  showCustomerstoAdd() {
+  showCustomerstoAdd(type?) {
     this.showCustomers = true;
     this.resetList();
+    this.resetFilter();
     this.getCustomersList();
+    if (type) {
+      this.closeGroupDialog();
+      this.showCustomerHint();
+    }
   }
   getCustomerListByGroup() {
     this.apiloading = true;
-    // this.resetList();
     this.customers = this.groupCustomers = [];
     let api_filter = this.setFilterForApi();
     api_filter['groups-eq'] = this.selectedGroup.id;
@@ -690,10 +702,17 @@ export class CustomersListComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  editGroup() {
+  editGroup(group?) {
     this.groupEdit = true;
-    this.groupName = this.selectedGroup.groupName;
-    this.groupDescription = this.selectedGroup.description;
+    this.groupIdEdit = '';
+    if (group) {
+      this.groupName = group.groupName;
+      this.groupDescription = group.description;
+      this.groupIdEdit = group.id;
+    } else {
+      this.groupName = this.selectedGroup.groupName;
+      this.groupDescription = this.selectedGroup.description;
+    }
   }
   customerGroupAction() {
     if (this.groupName === '') {
@@ -706,17 +725,16 @@ export class CustomersListComponent implements OnInit {
       if (!this.groupEdit) {
         this.createGroup(postData);
       } else {
-        postData['id'] = this.selectedGroup.id;
+        postData['id'] = (this.groupIdEdit !== '') ? this.groupIdEdit : this.selectedGroup.id;
         this.updateGroup(postData);
       }
     }
   }
   createGroup(data) {
+    this.newlyCreatedGroupId = null;
     this.provider_services.createCustomerGroup(data).subscribe(data => {
-      this.getCustomerGroup();
-      this.resetGroupFields();
-      this.closeGroupDialog();
-      this.resetError();
+      this.showAddCustomerHint = true;
+      this.newlyCreatedGroupId = data;
     },
       error => {
         this.apiError = error.error;
@@ -724,10 +742,9 @@ export class CustomersListComponent implements OnInit {
   }
   updateGroup(data) {
     this.provider_services.updateCustomerGroup(data).subscribe(data => {
-      this.getCustomerGroup();
+      this.getCustomerGroup('update');
       this.resetGroupFields();
       this.closeGroupDialog();
-      this.resetError();
     },
       error => {
         this.apiError = error.error;
@@ -755,5 +772,11 @@ export class CustomersListComponent implements OnInit {
     if (custom.length > 0) {
       return true;
     }
+  }
+  showCustomerHint() {
+    this.showAddCustomerHint = false;
+    this.getCustomerGroup(this.newlyCreatedGroupId);
+    this.resetGroupFields();
+    this.resetError();
   }
 }

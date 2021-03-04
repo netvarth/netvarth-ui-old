@@ -29,7 +29,7 @@
   }
 
 .booking-card.card.order.items {
-    padding: 16px !important;
+    padding: 40px 16px 16px !important;
     width: 100% !important;
     font-weight: 400 !important;
     border: 0 !important;
@@ -37,9 +37,15 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     margin: auto !important;
     overflow: hidden !important;
-    height: 320px !important;
+    height: 160px !important;
     max-width: 260px !important;
     min-width: 210px !important;
+    transition: height 1000ms;
+} 
+
+.booking-card.card.order.items.expand {
+    height: 275px !important;
+    padding: 16px !important;
 }
 
 .booking-card.card p {
@@ -616,8 +622,24 @@ button.fxmenu {
     border-radius: 5px !important;
 }
 
+.card.booking-card.items .card-item-head {
+    transform: translateY(-180px);
+    transition: transform 1000ms;
+}
+
+.card.booking-card.items.expand .card-item-head {
+    transform: translateY(0);
+}
+
 .booking-card.card.items .card-item-content{
+    height: auto !important;
     margin-top: 8px !important;
+    transform: translateY(-140px);
+    transition: transform 1000ms;
+}
+
+.booking-card.card.items.expand .card-item-content{
+    transform: translateY(0);
 }
 
 .card.booking-card.items .card-item-content .card-title {
@@ -661,7 +683,7 @@ button.fxmenu {
     padding: 0 !important;
     margin: 0 !important;
     justify-content: flex-end !important;
-    align-items: flex-end !important;
+    align-items: flex-start !important;
     align-self: stretch !important;
 }
 
@@ -720,3 +742,77 @@ button.fxmenu {
     border-radius: 5px;
     border: 0;
 }
+
+.card.booking-card.items .card-item-content .item-expand-flex {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    width: 50% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
+    align-self: stretch !important;
+}
+
+.card.booking-card.items .card-item-content .item-expand-flex .item-expand {
+    /* margin: 10px 0 0; */
+    background: none;
+    font-size: 25px;
+    padding: 0;
+    color: #073B4C;
+    border: 0;
+    font-weight: 600;
+    outline: none;
+    /* transform: translateY(-140px);
+    transition: transform 1000ms; */
+}
+
+/* .card.booking-card.items.expand .card-item-content .item-expand {
+    transform: translateY(0);
+} */
+
+.card.booking-card.items .card-item-content .item-expand-flex .item-expand:hover {
+    color: #073B4C !important;
+}
+
+.card.booking-card.items .card-item-content .item-expand-flex .item-expand .chevron {
+    vertical-align: middle !important;
+    transform: rotate(180deg);
+    transition: transform 1000ms;
+}
+
+.card.booking-card.items.expand .card-item-content .item-expand-flex .item-expand .chevron {
+    transform: rotate(0deg);
+}
+
+.card.booking-card.items .ribbon-new {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 16px;
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    background: darkred;
+    text-transform: uppercase;
+    color: white;
+    transform: translateY(0);
+    transition: transform 1000ms;
+    z-index: 1;
+}
+
+.card.booking-card.items.expand .ribbon-new {
+    transform: translateY(10px);
+}
+
+.card.booking-card.items .ribbon-new:after {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    right: -15px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid darkred;
+}
+  

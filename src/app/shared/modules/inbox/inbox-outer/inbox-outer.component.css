@@ -122,3 +122,6 @@ textarea {
     height: 20px !important;
     width: 20px !important;
 }
+.minhgt-80 {
+    min-height: 70vh;
+}
