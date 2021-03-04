@@ -29,7 +29,6 @@
   }
 
 .booking-card.card.order.items {
-    padding: 40px 16px 16px !important;
     width: 100% !important;
     font-weight: 400 !important;
     border: 0 !important;
@@ -37,15 +36,19 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     margin: auto !important;
     overflow: hidden !important;
-    height: 160px !important;
     max-width: 260px !important;
     min-width: 210px !important;
-    transition: height 1000ms;
+    /* transition: height 1000ms; */
 } 
 
-.booking-card.card.order.items.expand {
+.booking-card.card.order.items.height-275 {
     height: 275px !important;
     padding: 16px !important;
+}
+
+.booking-card.card.order.items.height-160 {
+    height: 160px !important;
+    padding: 40px 16px 16px !important;
 }
 
 .booking-card.card p {
@@ -622,25 +625,25 @@ button.fxmenu {
     border-radius: 5px !important;
 }
 
-.card.booking-card.items .card-item-head {
+/* .card.booking-card.items .card-item-head {
     transform: translateY(-180px);
     transition: transform 1000ms;
 }
 
 .card.booking-card.items.expand .card-item-head {
     transform: translateY(0);
-}
+} */
 
 .booking-card.card.items .card-item-content{
     height: auto !important;
     margin-top: 8px !important;
-    transform: translateY(-140px);
-    transition: transform 1000ms;
+    /* transform: translateY(-140px);
+    transition: transform 1000ms; */
 }
 
-.booking-card.card.items.expand .card-item-content{
+/* .booking-card.card.items.expand .card-item-content{
     transform: translateY(0);
-}
+} */
 
 .card.booking-card.items .card-item-content .card-title {
     margin: 0 !important;
@@ -679,7 +682,7 @@ button.fxmenu {
 .card.booking-card.items .card-item-content .quantity {
     display: inline-flex !important;
     flex-direction: column !important;
-    width: 50% !important;
+    width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     justify-content: flex-end !important;
@@ -743,7 +746,7 @@ button.fxmenu {
     border: 0;
 }
 
-.card.booking-card.items .card-item-content .item-expand-flex {
+/* .card.booking-card.items .card-item-content .item-expand-flex {
     display: inline-flex !important;
     flex-direction: column !important;
     width: 50% !important;
@@ -752,26 +755,26 @@ button.fxmenu {
     justify-content: flex-end !important;
     align-items: flex-end !important;
     align-self: stretch !important;
-}
+} */
 
-.card.booking-card.items .card-item-content .item-expand-flex .item-expand {
+/* .card.booking-card.items .card-item-content .item-expand-flex .item-expand { */
     /* margin: 10px 0 0; */
-    background: none;
+    /* background: none;
     font-size: 25px;
     padding: 0;
     color: #073B4C;
     border: 0;
     font-weight: 600;
-    outline: none;
+    outline: none; */
     /* transform: translateY(-140px);
     transition: transform 1000ms; */
-}
+/* } */
 
 /* .card.booking-card.items.expand .card-item-content .item-expand {
     transform: translateY(0);
 } */
 
-.card.booking-card.items .card-item-content .item-expand-flex .item-expand:hover {
+/* .card.booking-card.items .card-item-content .item-expand-flex .item-expand:hover {
     color: #073B4C !important;
 }
 
@@ -783,7 +786,7 @@ button.fxmenu {
 
 .card.booking-card.items.expand .card-item-content .item-expand-flex .item-expand .chevron {
     transform: rotate(0deg);
-}
+} */
 
 .card.booking-card.items .ribbon-new {
     width: 100px;
@@ -796,13 +799,14 @@ button.fxmenu {
     background: darkred;
     text-transform: uppercase;
     color: white;
-    transform: translateY(0);
-    transition: transform 1000ms;
+    /* transform: translateY(0);
+    transition: transform 1000ms; */
     z-index: 1;
 }
 
-.card.booking-card.items.expand .ribbon-new {
-    transform: translateY(10px);
+.card.booking-card.items.height-275 .ribbon-new {
+    /* transform: translateY(10px); */
+    top: 20px !important;
 }
 
 .card.booking-card.items .ribbon-new:after {
@@ -815,4 +819,3 @@ button.fxmenu {
     border-bottom: 15px solid transparent;
     border-left: 15px solid darkred;
 }
-  

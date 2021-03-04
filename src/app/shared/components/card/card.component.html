@@ -65,6 +65,8 @@
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
+        [class.height-160]="!service.itemImages"
+        [class.height-275]="service.itemImages"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
         <!-- <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div> -->
@@ -81,8 +83,8 @@
             </mat-menu>
             <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
         </div>
-        <div class="card-item-head" *ngIf="!service.itemImages"
-            style="height: 0 !important; padding-top: 140px;"></div>
+        <!-- <div class="card-item-head" *ngIf="!service.itemImages"
+            style="height: 0 !important; padding-top: 140px;"></div> -->
         <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
             Out of stock
         </div> -->
@@ -147,12 +149,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item-expand-flex" *ngIf="service.itemImages">
+                    <!-- <div class="item-expand-flex" *ngIf="service.itemImages">
                         <button type="button" class="btn pointer-cursor item-expand" 
                             (click)="openCard('item-'+service.itemId, $event)">
                             <i class='fa fa-chevron-up chevron'></i>
                         </button>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
