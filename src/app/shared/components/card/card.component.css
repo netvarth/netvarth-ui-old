@@ -29,7 +29,7 @@
   }
 
 .booking-card.card.order.items {
-    padding: 16px !important;
+    padding: 40px 16px 16px !important;
     width: 100% !important;
     font-weight: 400 !important;
     border: 0 !important;
@@ -37,7 +37,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     margin: auto !important;
     overflow: hidden !important;
-    height: 135px !important;
+    height: 160px !important;
     max-width: 260px !important;
     min-width: 210px !important;
     transition: height 1000ms;
@@ -45,6 +45,7 @@
 
 .booking-card.card.order.items.expand {
     height: 275px !important;
+    padding: 16px !important;
 }
 
 .booking-card.card p {
@@ -622,7 +623,7 @@ button.fxmenu {
 }
 
 .card.booking-card.items .card-item-head {
-    transform: translateY(-156px);
+    transform: translateY(-180px);
     transition: transform 1000ms;
 }
 
@@ -783,3 +784,35 @@ button.fxmenu {
 .card.booking-card.items.expand .card-item-content .item-expand-flex .item-expand .chevron {
     transform: rotate(0deg);
 }
+
+.card.booking-card.items .ribbon-new {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 16px;
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    background: darkred;
+    text-transform: uppercase;
+    color: white;
+    transform: translateY(0);
+    transition: transform 1000ms;
+    z-index: 1;
+}
+
+.card.booking-card.items.expand .ribbon-new {
+    transform: translateY(10px);
+}
+
+.card.booking-card.items .ribbon-new:after {
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 0;
+    right: -15px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid darkred;
+}
+  
