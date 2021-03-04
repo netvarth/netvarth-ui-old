@@ -63,7 +63,7 @@
     </div>
 </div>
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
-    <div class="card booking-card pointer-cursor order items"
+    <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
@@ -80,6 +80,8 @@
             </mat-menu>
             <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
         </div>
+        <div class="card-item-head" *ngIf="!service.itemImages"
+            style="height: 0 !important; padding-top: 140px;"></div>
         <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
             Out of stock
         </div> -->
@@ -102,7 +104,7 @@
 
             </div> -->
                 <div class="col-md-12 d-flex mgn-up-10 no-padding">
-                    <div class="amount" *ngIf="item.showpric">
+                    <!-- <div class="amount" *ngIf="item.showpric">
                         <div *ngIf="service.showPromotionalPrice">
                             <div class="amount-label">RETAIL PRICE</div>
                             <div class="amount-value strikeMe">
@@ -118,7 +120,7 @@
                                 {{(service.showPromotionalPrice ? service.promotionalPrice : service.price) | currency:'':''}}
                             </div>
                         </div> 
-                    </div>
+                    </div> -->
                     <div class="quantity">
                         <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
                             Sold Out
@@ -143,6 +145,12 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div class="item-expand-flex" *ngIf="service.itemImages">
+                        <button type="button" class="btn pointer-cursor item-expand" 
+                            (click)="openCard('item-'+service.itemId, $event)">
+                            <i class='fa fa-chevron-up chevron'></i>
+                        </button>
                     </div>
                 </div>
 
