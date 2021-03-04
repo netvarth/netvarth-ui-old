@@ -10,12 +10,14 @@ import { GalleryModule } from '../../../../../shared/modules/gallery/gallery.mod
 import { LoadingSpinnerModule } from '../../../../../ynw_provider/components/loading-spinner/loading-spinner.module';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
 import { CreateCouponComponent } from './create-coupon/create-coupon.component';
+import { PublishCouponComponent } from './publish-coupon/publish-coupon.component';
 
 @NgModule({
     declarations: [
         PosCouponsComponent,
         PosCouponDetailComponent,
-        CreateCouponComponent
+        CreateCouponComponent,
+        PublishCouponComponent
     ],
     imports: [
         CouponsRoutingModule,

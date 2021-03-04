@@ -15,6 +15,7 @@ import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-gro
 import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
 import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -71,6 +72,7 @@ export class CreateCouponComponent implements OnInit {
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private snackbarService: SnackbarService,
     private router: Router,
     private activated_route:ActivatedRoute,
     public dialog: MatDialog, ) {
@@ -148,7 +150,7 @@ export class CreateCouponComponent implements OnInit {
 
   }
   updateForm(coupon){
-    console.log('couponDeatils'+coupon);
+   this.couponDetails=coupon;
     this.couponForm.patchValue({
       name: coupon.name,
       couponCode: coupon.couponCode,
@@ -532,6 +534,9 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
     delete form_data.couponRules.policies.isServiceBased;
     delete form_data.couponRules.policies.isCatalogBased;
     console.log(form_data);
+    if(this.action==='edit'){
+     this.updateCoupon(form_data);
+    }
     this.createCoupon(form_data);
   }
 
@@ -539,7 +544,17 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
     this.provider_services.createCoupon(data)
       .subscribe(result => {
         console.log('createdSuccessfully');
-        this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_CREATED'));
+        this.redirecToCoupon();
+      });
+  }
+  updateCoupon(data) {
+    data.id=this.couponDetails.id;
+    this.provider_services.updateCoupon(data)
+      .subscribe(result => {
+        console.log('updated Successfully');
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_UPDATED'));
+        this.redirecToCoupon();
       });
   }
   redirecToCoupon() {

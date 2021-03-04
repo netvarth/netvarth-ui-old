@@ -137,6 +137,15 @@ export class ProviderServices {
     const url = 'provider/bill/coupons';
     return this.servicemeta.httpPost(url, data);
   }
+  updateCoupon(data) {
+    const url = 'provider/bill/coupons';
+    return this.servicemeta.httpPut(url, data);
+  }
+  publishCoupon(data,id){
+    const url = '/rest/provider/bill/coupons/'+id+'/publish';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   editCoupon(data) {
     return this.servicemeta.httpPut('provider/bill/coupons', data);
@@ -1909,6 +1918,7 @@ export class ProviderServices {
     const url = 'provider/orders';
     return this.servicemeta.httpPut(url, data);
   }
+
   updateOrderItems(uid, data) {
     const url ='provider/orders/item/' + uid;
     return this.servicemeta.httpPut(url, data);

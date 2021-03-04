@@ -39,6 +39,7 @@ export const Messages = {
 
   // Bill Coupons
   'COUPON_CREATED': 'Coupon created successfully',
+  'COUPON_PUBLISHED': 'Coupon published successfully',
   'COUPON_UPDATED': 'Coupon updated successfully',
   'COUPON_DELETE': 'Do you really want to remove the coupon "[name]"?',
   'COUPON_DELETED': 'Coupon deleted successfully',
@@ -295,6 +296,7 @@ export const Messages = {
   'CANCEL_BTN': 'Cancel',
   'UPDATE_BTN': 'Update',
   'EDIT_BTN': 'Edit',
+  'PUBLISH_BTN':'Publish',
   'DELETE_BTN': 'Delete',
   'SEND_BTN': 'Send',
   'OK_BTN': 'Ok',

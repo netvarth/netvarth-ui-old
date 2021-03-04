@@ -127,20 +127,36 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
+                                                        <th>{{couponCode_cap}}</th>
                                                         <th>{{name_cap}}</th>
-                                                        <th>{{value_cap}}</th>
-                                                        <th>{{desc_cap}}</th>
+                                                        <th>{{valid_from_cap}}</th>
+                                                        <th>{{valid_to_cap}}</th>
+                                                        <th>{{status_cap}}</th>
+                                                        <th></th>
                                                         <th> <span class="addbt" (click)="addCoupons()"></span></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let coupon of coupon_list">
+                                                        <td data-title="Coupon Code" class="pointer-cursor filtr_space">
+                                                            <span (click)="couponView(coupon.couponCode)"
+                                                               >
+                                                                {{coupon.couponCode}}</span> <span
+                                                                class="td-i-info">
+                                                                <!-- <i class="" data-icon="B" id="customer-help"
+                [matTooltipClass]="tooltipcls" [matTooltip]="coupon_info[i]"></i> -->
+                                                            </span>
+                                                        </td>
                                                         <td data-title="Name" class="pointer-cursor" class="td1">
                                                             {{coupon.name}}</td>
-                                                        <td data-title="Value" class="pointer-cursor" clas="td2">{{(coupon.calculationType=='Percentage')?
-        coupon.amount+'%': formatPrice(coupon.amount)}}</td>
-                                                        <td data-title="Description" class="td1">{{coupon.description}}
-                                                        </td>
+                                                            <td data-title="Valid From">
+                                                                {{coupon.couponRules.startDate | date: newDateFormat}}</td>
+                                                            <td data-title="Valid To">
+                                                                {{coupon.couponRules.endDate | date: newDateFormat}}</td>
+                                                            <td data-title="Status" class="status"
+                                                                [ngClass]="{'green-text' :coupon.status=='ACTIVE','red-text' :coupon.status=='EXPIRED','blue-text' :coupon.status=='NEW'}">
+                                                                {{coupon.status}}
+                                                            </td>
                                                         <td class="action">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button
@@ -153,6 +169,11 @@
                                                                         <i class="icon-edit"></i>
                                                                         {{edit_btn}}
                                                                     </button>
+                                                                    <button type="button" (click)="publish(coupon)"
+                                                                    mat-menu-item>
+                                                                    <i class="icon-edit"></i>
+                                                                    {{publish_btn}}
+                                                                </button>
                                                                     <button type="button"
                                                                         (click)="doRemoveCoupons(coupon)" mat-menu-item>
                                                                         <i class="icon-delete"></i>
@@ -163,6 +184,8 @@
                                                             <span class="mbt-mobile-show">
                                                                 <button class="editcls" type="button"
                                                                     (click)="editCoupons(coupon)">{{edit_btn}}</button>
+                                                                    <button class="publishcls" type="button"
+                                                                    (click)="publish(coupon)">{{publish_btn}}</button>
                                                                 <button class="deletecls" type="button"
                                                                     (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>
                                                             </span>

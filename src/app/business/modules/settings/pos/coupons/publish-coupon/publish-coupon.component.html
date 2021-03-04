@@ -1,0 +1,49 @@
+<p>publish-coupon works!</p>
+<section class="">
+    <div class="card title-gb rounded-0">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Publish Coupon
+        </h5>
+    </div>
+</section>
+<section>
+
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <div class="card card-custom">
+                <div class="card-body p-0">
+                    <form [formGroup]="publishForm" novalidate (ngSubmit)="onSubmit()" 
+                    class="form">
+                    <div class="row" formGroupName="couponRules">
+                        <div class="col-xl-6">
+                          <!--begin::Input-->
+                          <div class="form-group">
+                            <div class="input-group date">
+                              <label>Publish From</label>
+                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)" placeholder="Publish From" formControlName="publishedFrom"
+                              />
+                            </div>
+                          </div>
+                          <!--end::Input-->
+                        </div>
+                        <div class="col-xl-6">
+                          <!--begin::Input-->
+                          <div class="form-group">
+                            <div class="input-group date">
+                              <label>Publish To</label>
+                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)" placeholder="Publish To" formControlName="publishedTo"
+                              />
+                            </div>
+                          </div>
+                          <!--end::Input-->
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

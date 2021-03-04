@@ -21,7 +21,9 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   desc_cap = Messages.DESCRIPTION_CAP;
   name_cap = Messages.CUPN_NAME_CAP;
   jCouponCode_Cap = Messages.JCOUPON_CODE;
+  couponCode_cap=Messages.COUPON_CODE_CAP;
   edit_btn = Messages.EDIT_BTN;
+  publish_btn=Messages.PUBLISH_BTN;
   delete_btn = Messages.DELETE_BTN;
   reports_cap = Messages.REIMBUSE_REPORT_CAP;
   valid_from_cap = Messages.VALID_FROM_CAP;
@@ -145,6 +147,12 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['provider', 'settings', 'pos', 'coupon', coupon.id], navigationExtras);
   }
+
+  publish(coupon){
+
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon','publish', coupon.id]);
+  }  
+
   doRemoveCoupons(coupon) {
     const id = coupon.id;
     if (!id) {
