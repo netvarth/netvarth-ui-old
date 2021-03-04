@@ -9,7 +9,7 @@ const routes: Routes = [
     { path: '', component: PosCouponsComponent },
     // { path: ':id', component: PosCouponDetailComponent },
     { path: ':id', component: CreateCouponComponent },
-    { path: 'publish:id', component: PublishCouponComponent }
+    { path: ':id/publish', component: PublishCouponComponent }
 
 
 ];

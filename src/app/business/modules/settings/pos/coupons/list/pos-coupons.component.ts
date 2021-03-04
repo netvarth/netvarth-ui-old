@@ -150,7 +150,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
 
   publish(coupon){
 
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon','publish', coupon.id]);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon', coupon.id,'publish']);
   }  
 
   doRemoveCoupons(coupon) {

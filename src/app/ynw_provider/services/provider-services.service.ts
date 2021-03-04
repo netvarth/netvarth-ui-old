@@ -142,7 +142,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   publishCoupon(data,id){
-    const url = '/rest/provider/bill/coupons/'+id+'/publish';
+    const url = 'provider/bill/coupons/'+id+'/publish';
     return this.servicemeta.httpPut(url, data);
   }
 
