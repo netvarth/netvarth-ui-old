@@ -123,6 +123,8 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
         promotionallabel: [],
         customlabel: []
     });
+        this.amItemForm.get('promotionalPriceType').setValue('FIXED');
+        this.amItemForm.get('promotionallabel').setValue('ONSALE');
 }
 onSubmit(form_data) {
     if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
