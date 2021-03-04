@@ -58,6 +58,7 @@ catalog;
 uploadcatalogImages: any = [];
 action = 'add';
 disableButton = false;
+item;
 
 removeimgdialogRef;
 imageList: any = [];
@@ -323,55 +324,102 @@ itemimageSelect(event, type?) {
       }
   }
 }
-saveImages(id) {
-  this.api_loading = true;
-  const submit_data: FormData = new FormData();
-  const propertiesDetob = {};
-  let i = 0;
-  for (const pic of this.selectedMessage.files) {
-      submit_data.append('files', pic, pic['name']);
-      const properties = {
-          'caption': this.selectedMessage.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
-  }
-  const propertiesDet = {
-      'propertiesMap': propertiesDetob
-  };
-  const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
-  submit_data.append('properties', blobPropdata);
-  this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
-      this.getCatalog(id).then(
-          (catalog) => {
-              this.catalog = catalog;
-              if (this.catalog.catalogImages) {
-                  this.uploadcatalogImages = this.catalog.catalogImages;
-                  this.selectedMessage = {
-                      files: [],
-                      base64: [],
-                      caption: []
-                  };
-                  this.image_list_popup = [];
-                  for (const pic of this.uploadcatalogImages) {
-                      this.selectedMessage.files.push(pic);
-                      const imgobj = new Image(0,
-                          { // modal
-                              img: pic.url,
-                              description: ''
-                          });
-                      this.image_list_popup.push(imgobj);
-                  }
-              }
-          }
-      );
-      this.api_loading = false;
-      this.snackbarService.openSnackBar('Image uploaded successfully');
-  },
-      error => {
-          this.api_loading = false;
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+saveImages(id, routeTo?) {
+    const submit_data: FormData = new FormData();
+    const propertiesDetob = {};
+    let i = 0;
+    for (const pic of this.selectedMessageMain.files) {
+        submit_data.append('files', pic, pic['name']);
+        let properties = {};
+        properties = {
+            'caption': this.selectedMessageMain.caption[i] || '',
+            'displayImage': true
+        };
+        propertiesDetob[i] = properties;
+        i++;
+    }
+    for (const pic of this.selectedMessage.files) {
+        submit_data.append('files', pic, pic['name']);
+        let properties = {};
+        properties = {
+            'caption': this.selectedMessage.caption[i] || '',
+            'displayImage': false
+        };
+        propertiesDetob[i] = properties;
+        i++;
+    }
+    const propertiesDet = {
+        'propertiesMap': propertiesDetob
+    };
+    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    submit_data.append('properties', blobPropdata);
+    this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+        this.selectedMessage = {
+            files: [],
+            base64: [],
+            caption: []
+        };
+        this.selectedMessageMain = {
+            files: [],
+            base64: [],
+            caption: []
+        };
+        this.image_list_popup = [];
+        this.mainimage_list_popup = [];
+        this.api_loading = false;
+    },
+        error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.getItem(id).then(
+                (item) => {
+                    this.item = item;
+                    if (this.item.itemImages) {
+                        this.imageList = this.item.itemImages;
+                        this.loadImages(this.item.itemImages);
+                    }
+                    this.api_loading = false;
+                });
+        });
+}
+getItem(itemId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+        _this.provider_services.getProviderItems(itemId)
+            .subscribe(
+                (data) => {
+                    resolve(data);
+                },
+                () => {
+                    reject();
+                }
+            );
+    });
+}
+loadImages(imagelist) {
+    this.image_list_popup = [];
+    this.mainimage_list_popup = [];
+    if (imagelist.length > 0) {
+        for (let i = 0; i < imagelist.length; i++) {
+            if (imagelist[i].displayImage) {
+                this.haveMainImg = true;
+                const imgobj = new Image(
+                    i,
+                    { // modal
+                        img: imagelist[i].url,
+                        description: imagelist[i].caption || ''
+                    });
+                this.mainimage_list_popup.push(imgobj);
+            } else {
+                const imgobj = new Image(
+                    i,
+                    { // modal
+                        img: imagelist[i].url,
+                        description: imagelist[i].caption || ''
+                    });
+                this.image_list_popup.push(imgobj);
+            }
+        }
+    }
 }
 getCatalog(cataId?) {
   const _this = this;
