@@ -100,6 +100,7 @@ import { CommonDataStorageService } from './shared/services/common-datastorage.s
 import { CommunicationComponent } from './shared/components/communication/communication.component';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
+import { S3UrlProcessor } from './shared/services/s3-url-processor.service';
 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
@@ -233,6 +234,7 @@ export function init_app(globalService: GlobalService) {
     GroupStorageService,
     Title,
     CommonDataStorageService,
+    S3UrlProcessor,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
