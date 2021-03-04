@@ -58,6 +58,37 @@
 .bdr_green {
     border: 1px solid green !important;
 }
+.bdr_gray {
+    border: 1px solid #808080b8 !important;
+}
 .scroll_horiz::-webkit-scrollbar {
     width: 5px !important;
+}
+.fill_screen {
+    height: 100vh !important;
+}
+.mat-grid-tile {
+    /* background: #1e40792e; */
+    box-shadow: 10px 10px 15px 0px #cccccc9c;
+}
+.new_svg .symbol-label {
+    height: 70px !important;
+    width: 70px !important;
+    cursor: pointer !important;
+}
+.new_svg svg {
+    height: 3rem !important;
+    width: 5rem !important;
+}
+.mat-grid-tile .mat-grid-tile-footer {
+    height: 30px !important;
+    color: #1e4079 !important;
+    background: none !important;
+}
+.wrap_it {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: auto !important;
+    margin-left: auto !important;
 }
