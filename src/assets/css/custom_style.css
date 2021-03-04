@@ -27186,3 +27186,10 @@ width: 40px !important;
   width: 100%;
   resize: none;
 }
+.addressedit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: blue;
+  float: right;
+  text-decoration: underline;
+}

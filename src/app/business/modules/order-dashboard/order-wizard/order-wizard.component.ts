@@ -565,10 +565,13 @@ export class OrderWizardComponent implements OnInit {
   }
   gotoNext() {
     if (this.step === 2) {
-      if (this.orders && this.orders.length === 0) {
+      if (this.orders && this.orders.length === 0 && this.orderType !== 'SHOPPINGLIST') {
         this.snackbarService.openSnackBar('Please add items to proceed', { 'panelClass': 'snackbarerror' });
         return false;
-      } else {
+       }else if (this.selectedImagelist && this.selectedImagelist.files.length === 0 && this.orderType === 'SHOPPINGLIST') {
+        this.snackbarService.openSnackBar('Please upload shoppinglist to proceed', { 'panelClass': 'snackbarerror' });
+        return false;
+       } else {
         this.step = this.step + 1;
       }
     } else {
