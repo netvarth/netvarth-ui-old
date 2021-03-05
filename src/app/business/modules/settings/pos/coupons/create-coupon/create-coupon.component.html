@@ -233,7 +233,7 @@
                         </div>
                       </div>
                       <div class="row"[hidden]="this.couponForm.get('couponRules').get('isproviderAcceptCoupon').value==false">
-                        <div class="col-xl-3 col-md-4">
+                        <div class="col-xl-6 col-lg-6 col-md-6">
                           <label>Max Number of Coupons</label>
                           <input type="text" class="form-control1 form-control-solid form-control-lg" id="amount" placeholder="Max coupon apply limit"
                             formControlName="maxProviderUseLimit" />
@@ -243,12 +243,12 @@
                         <div class="col-xl-6 col-md-6">
                           <div class="form-group">
                             <label>Minimum Bill Amount</label>
-                            <input type="text" class="form-control1 form-control-solid form-control-lg" id="couponCode" placeholder="
+                            <input type="text" class="form-control1 form-control-solid form-control-lg" id="minBillAmount" placeholder="
                             Enter minimum bill amount" formControlName="minBillAmount"
                               maxlength="50" />
                           </div>
                         </div>
-                        <div class="col-xl-6 col-md-6">
+                        <div class="col-xl-6 col-md-6"[hidden]="this.couponForm.get('calculationType').value=='Fixed'">
                           <div class="form-group">
                             <label>Maximum Discount value</label>
                             <input type="text" class="form-control1 form-control-solid form-control-lg" id="maxDiscountValue" placeholder="Enter discount value"

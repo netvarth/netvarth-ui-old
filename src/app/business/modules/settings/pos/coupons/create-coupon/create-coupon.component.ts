@@ -157,9 +157,6 @@ export class CreateCouponComponent implements OnInit {
       description: coupon.description,
       calculationType: coupon.calculationType,
       amount: coupon.amount,
-      discountType: coupon.discountType,
-      discountValue: coupon.discountValue,
-      maxDiscountValue: coupon.maxDiscountValue,
       bookingChannel: coupon.bookingChannel
     });
     this.couponForm.get('couponRules').patchValue({
