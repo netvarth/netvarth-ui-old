@@ -74,15 +74,15 @@ export class CreateCouponComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private router: Router,
-    private activated_route:ActivatedRoute,
+    private activated_route: ActivatedRoute,
     public dialog: MatDialog, ) {
-      this.activated_route.params.subscribe(params => {
-        this.couponId = params.id;
-      });
-      this.activated_route.queryParams.subscribe(qparams => {
-        this.action = qparams.action;
-      });
-       this.timewindow_list=[];
+    this.activated_route.params.subscribe(params => {
+      this.couponId = params.id;
+    });
+    this.activated_route.queryParams.subscribe(qparams => {
+      this.action = qparams.action;
+    });
+    this.timewindow_list = [];
     this.createForm();
   }
 
@@ -139,8 +139,8 @@ export class CreateCouponComponent implements OnInit {
       bookingChannel: [''],
       couponBasedOn: ['']
     });
-    if(this.action ==='edit'){
-     
+    if (this.action === 'edit') {
+
       this.getCouponById(this.couponId).then(
         (result) => {
           this.updateForm(result);
@@ -149,8 +149,8 @@ export class CreateCouponComponent implements OnInit {
     }
 
   }
-  updateForm(coupon){
-   this.couponDetails=coupon;
+  updateForm(coupon) {
+    this.couponDetails = coupon;
     this.couponForm.patchValue({
       name: coupon.name,
       couponCode: coupon.couponCode,
@@ -160,7 +160,7 @@ export class CreateCouponComponent implements OnInit {
       discountType: coupon.discountType,
       discountValue: coupon.discountValue,
       maxDiscountValue: coupon.maxDiscountValue,
-      bookingChannel:coupon.bookingChannel
+      bookingChannel: coupon.bookingChannel
     });
     this.couponForm.get('couponRules').patchValue({
       startDate: new Date(coupon.couponRules.startDate).toISOString().slice(0, 10),
@@ -169,56 +169,56 @@ export class CreateCouponComponent implements OnInit {
       maxDiscountValue: coupon.couponRules.maxDiscountValue,
       maxConsumerUseLimitPerProvider: coupon.couponRules.maxConsumerUseLimitPerProvider,
       maxProviderUseLimit: coupon.couponRules.maxProviderUseLimit,
-      firstCheckinOnly:coupon.couponRules.firstCheckinOnly,
-      isproviderAcceptCoupon: (coupon.couponRules.maxProviderUseLimit ?true:false),
+      firstCheckinOnly: coupon.couponRules.firstCheckinOnly,
+      isproviderAcceptCoupon: (coupon.couponRules.maxProviderUseLimit ? true : false),
 
-     
+
     });
-this.couponForm.get('couponRules').get('policies').patchValue({
-  isDepartment:(coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length>0)?true:false,
-  isServiceBased:(coupon.couponRules.policies.services && coupon.couponRules.policies.services.length>0)?true:false,
-  isUser:(coupon.couponRules.policies.users && coupon.couponRules.policies.users.length>0)? true:false,
-  catalogues:(coupon.couponRules.policies.catalogues && coupon.couponRules.policies.catalogues.length>0 )? coupon.couponRules.policies.catalogues:[],
-  isCatalogBased:(coupon.couponRules.policies.catalogues && coupon.couponRules.policies.catalogues.length>0 )?true:false,
-   isItem: (coupon.couponRules.policies.items &&coupon.couponRules.policies.items.length>0)?true:false,
-  isCustomerGroup: (coupon.couponRules.policies.consumerGroups&& coupon.couponRules.policies.consumerGroups.length>0)?true:false,
-  isCustomerLabel: (coupon.couponRules.policies.consumerLabels && coupon.couponRules.policies.consumerLabels.length>0)?true:false
+    this.couponForm.get('couponRules').get('policies').patchValue({
+      isDepartment: (coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length > 0) ? true : false,
+      isServiceBased: (coupon.couponRules.policies.services && coupon.couponRules.policies.services.length > 0) ? true : false,
+      isUser: (coupon.couponRules.policies.users && coupon.couponRules.policies.users.length > 0) ? true : false,
+      catalogues: (coupon.couponRules.policies.catalogues && coupon.couponRules.policies.catalogues.length > 0) ? coupon.couponRules.policies.catalogues : [],
+      isCatalogBased: (coupon.couponRules.policies.catalogues && coupon.couponRules.policies.catalogues.length > 0) ? true : false,
+      isItem: (coupon.couponRules.policies.items && coupon.couponRules.policies.items.length > 0) ? true : false,
+      isCustomerGroup: (coupon.couponRules.policies.consumerGroups && coupon.couponRules.policies.consumerGroups.length > 0) ? true : false,
+      isCustomerLabel: (coupon.couponRules.policies.consumerLabels && coupon.couponRules.policies.consumerLabels.length > 0) ? true : false
 
 
-});
-if(coupon.couponRules.policies.items &&coupon.couponRules.policies.items.length>0){
-  this.items=coupon.couponRules.policies.items ;
-}
-if(coupon.couponRules.policies.users &&coupon.couponRules.policies.users.length>0){
-  this.users=coupon.couponRules.policies.users ;
-}
-if(coupon.couponRules.policies.services &&coupon.couponRules.policies.services.length>0){
-  this.services=coupon.couponRules.policies.services ;
-}
-if(coupon.couponRules.policies.departments &&coupon.couponRules.policies.departments.length>0){
-  this.departments=coupon.couponRules.policies.departments ;
-}
-if(coupon.couponRules.policies.customerGroup &&coupon.couponRules.policies.customerGroup.length>0){
-  this.customer_groups=coupon.couponRules.policies.customerGroup ;
-}
-if(coupon.couponRules.policies.customerLabel &&coupon.couponRules.policies.customerLabel.length>0){
-  this.customer_labels=coupon.couponRules.policies.customerLabel ;
-}
+    });
+    if (coupon.couponRules.policies.items && coupon.couponRules.policies.items.length > 0) {
+      this.items = coupon.couponRules.policies.items;
+    }
+    if (coupon.couponRules.policies.users && coupon.couponRules.policies.users.length > 0) {
+      this.users = coupon.couponRules.policies.users;
+    }
+    if (coupon.couponRules.policies.services && coupon.couponRules.policies.services.length > 0) {
+      this.services = coupon.couponRules.policies.services;
+    }
+    if (coupon.couponRules.policies.departments && coupon.couponRules.policies.departments.length > 0) {
+      this.departments = coupon.couponRules.policies.departments;
+    }
+    if (coupon.couponRules.policies.customerGroup && coupon.couponRules.policies.customerGroup.length > 0) {
+      this.customer_groups = coupon.couponRules.policies.customerGroup;
+    }
+    if (coupon.couponRules.policies.customerLabel && coupon.couponRules.policies.customerLabel.length > 0) {
+      this.customer_labels = coupon.couponRules.policies.customerLabel;
+    }
 
-this.timewindow_list=coupon.couponRules.validTimeRange[0].timeSlots;
+    this.timewindow_list = coupon.couponRules.validTimeRange[0].timeSlots;
 
-if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.length>0 ){
+    if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.length > 0) {
 
-  for (let j = 0; j < coupon.couponRules.validTimeRange[0].repeatIntervals.length; j++) {
-      // pushing the day details to the respective array to show it in the page
-      this.selday_arr.push(Number(coupon.couponRules.validTimeRange[0].repeatIntervals[j]));
-  }
-  if (this.selday_arr.length === 7) {
-      this.selallweekdays= true;
-  } else {
-      this.selallweekdays = false;
-  }
-}
+      for (let j = 0; j < coupon.couponRules.validTimeRange[0].repeatIntervals.length; j++) {
+        // pushing the day details to the respective array to show it in the page
+        this.selday_arr.push(Number(coupon.couponRules.validTimeRange[0].repeatIntervals[j]));
+      }
+      if (this.selday_arr.length === 7) {
+        this.selallweekdays = true;
+      } else {
+        this.selallweekdays = false;
+      }
+    }
 
 
   }
@@ -226,24 +226,24 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
   check_existsinweek_array(arr, val) {
     let ret = -1;
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === val) {
-            ret = i;
-        }
+      if (arr[i] === val) {
+        ret = i;
+      }
     }
     return ret;
-}
+  }
   handleCalculationType(event) {
 
   }
   handleBaseChange(event) {
-  
+
   }
-  getCouponById( couponId){
-    const _this=this;
+  getCouponById(couponId) {
+    const _this = this;
     return new Promise((resolve) => {
       _this.provider_services.getProviderCoupons(couponId).subscribe(
         (result: any) => {
-     
+
           resolve(result);
         });
     });
@@ -534,10 +534,11 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
     delete form_data.couponRules.policies.isServiceBased;
     delete form_data.couponRules.policies.isCatalogBased;
     console.log(form_data);
-    if(this.action==='edit'){
-     this.updateCoupon(form_data);
+    if (this.action === 'edit') {
+      this.updateCoupon(form_data);
+    } else {
+      this.createCoupon(form_data);
     }
-    this.createCoupon(form_data);
   }
 
   createCoupon(data) {
@@ -549,7 +550,7 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
       });
   }
   updateCoupon(data) {
-    data.id=this.couponDetails.id;
+    data.id = this.couponDetails.id;
     this.provider_services.updateCoupon(data)
       .subscribe(result => {
         console.log('updated Successfully');
@@ -558,7 +559,7 @@ if (coupon.couponRules.validTimeRange && coupon.couponRules.validTimeRange.lengt
       });
   }
   redirecToCoupon() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
 }
 

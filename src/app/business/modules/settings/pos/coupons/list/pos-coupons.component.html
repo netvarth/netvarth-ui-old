@@ -150,9 +150,11 @@
                                                         <td data-title="Name" class="pointer-cursor" class="td1">
                                                             {{coupon.name}}</td>
                                                             <td data-title="Valid From">
-                                                                {{coupon.couponRules.startDate | date: newDateFormat}}</td>
+                                                                {{coupon.couponRules.startDate | date: newDateFormat}}
+                                                                </td>
                                                             <td data-title="Valid To">
-                                                                {{coupon.couponRules.endDate | date: newDateFormat}}</td>
+                                                                {{coupon.couponRules.endDate | date: newDateFormat}}
+                                                            </td>
                                                             <td data-title="Status" class="status"
                                                                 [ngClass]="{'green-text' :coupon.status=='ACTIVE','red-text' :coupon.status=='EXPIRED','blue-text' :coupon.status=='NEW'}">
                                                                 {{coupon.status}}
@@ -171,7 +173,7 @@
                                                                     </button>
                                                                     <button type="button" (click)="publish(coupon)"
                                                                     mat-menu-item>
-                                                                    <i class="icon-edit"></i>
+                                                                    <i class="icon-sent"></i>
                                                                     {{publish_btn}}
                                                                 </button>
                                                                     <button type="button"
@@ -184,7 +186,7 @@
                                                             <span class="mbt-mobile-show">
                                                                 <button class="editcls" type="button"
                                                                     (click)="editCoupons(coupon)">{{edit_btn}}</button>
-                                                                    <button class="publishcls" type="button"
+                                                                    <button class="editcls" type="button"
                                                                     (click)="publish(coupon)">{{publish_btn}}</button>
                                                                 <button class="deletecls" type="button"
                                                                     (click)="doRemoveCoupons(coupon)">{{delete_btn}}</button>

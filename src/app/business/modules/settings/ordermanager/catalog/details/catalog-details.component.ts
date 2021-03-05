@@ -222,6 +222,7 @@ export class CatalogdetailComponent implements OnInit {
     addCatalogItems: any = [];
     editcataItemdialogRef: any;
     removeitemdialogRef: any;
+    createitemdialogRef: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,

@@ -85,7 +85,7 @@ export class PublishCouponComponent implements OnInit {
 
   }
   redirecToCoupon() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupons']);
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
   }
 
 }
