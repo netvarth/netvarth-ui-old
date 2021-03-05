@@ -67,3 +67,6 @@
 .personal {
     line-height: 1.6;
 }
+.tab-selected .wizard-icon {
+    background: blue !important;
+  }

@@ -17,7 +17,7 @@
             <div class="wizard-nav border-bottom">
               <div class="wizard-steps p-8 p-lg-10">
                 <!--begin::Wizard Step 1 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step"  [class.tab-selected]="step>=1">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon-user-add"></i>
                     <h3 class="wizard-title">1. Find Patient</h3>
@@ -41,7 +41,7 @@
                 <!--end::Wizard Step 1 Nav-->
 
                 <!--begin::Wizard Step 2 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step" [class.tab-selected]="step>=2">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon-business"></i>
                     <h3 class="wizard-title">2. Add items</h3>
@@ -64,7 +64,7 @@
                 </div>
                 <!--end::Wizard Step 2 Nav-->
                 <!--begin::Wizard Step 3 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step"  [class.tab-selected]="step==3">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon2-shopping-cart-1"></i>
                     <h3 class="wizard-title">3. Place order</h3>
