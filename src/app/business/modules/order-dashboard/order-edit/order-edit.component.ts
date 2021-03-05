@@ -409,7 +409,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       }
       if (this.orderDetails.orderFor) {
         this.customerId = this.orderDetails.orderFor.id;
-       // this.getDeliveryAddress();
+        this.getDeliveryAddress();
       }
       
 
@@ -691,6 +691,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         if (data !== null) {
           this.added_address = data;
+          console.log(this.added_address);
           if (this.added_address.length > 0 && this.added_address !== null) {
             this.highlight(0, this.added_address[0]);
             if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {

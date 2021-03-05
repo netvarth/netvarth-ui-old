@@ -385,8 +385,8 @@
                                       </div>
                                 </div>
 
-                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngIf="!orderDetails.homeDeliveryAddress ||orderDetails.homeDeliveryAddress==null">
-                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress ||orderDetails.homeDeliveryAddress==null">
+                                  <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
                                         Add New </button>
@@ -409,7 +409,7 @@
                                             <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
                                               <span class="input-group-text" style="margin-top:auto;">+91</span>
 
-                                              <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                                              <input type="text" class="form-control" placeholder="Phone number*" formControlName="phoneNumber">
 
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
@@ -423,7 +423,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                            <input type="text" class="form-control" placeholder="First name*" formControlName="firstName">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                                                                         {
                                                                                           'required' : 'First name is required',
@@ -435,7 +435,7 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                              <input type="text" class="form-control" placeholder="Last name*" formControlName="lastName">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                                                                             {
                                                                                               'required' : 'Last name is required',
@@ -446,7 +446,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                                                                             {
                                                                                               'required' : 'Email is required',
@@ -458,7 +458,7 @@
                                         </div>
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                            <input type="text" class="form-control" placeholder="Address*" formControlName="address">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                     {
                                                                                       'required' : 'Please enter city name',
@@ -467,7 +467,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                            <input type="text" class="form-control" placeholder="City*" formControlName="city">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                       {
                                                                                         'required' : 'Please enter city name',
@@ -479,7 +479,7 @@
 
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP*" formControlName="postalCode">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                                                                           {
                                                                                             'required' : 'Please enter Postal Code ',
@@ -490,7 +490,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                            <input type="text" class="form-control" placeholder="Landmark*" formControlName="landMark">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                                                                             {
                                                                                               'required' : 'Please enter landmark'
@@ -503,7 +503,7 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                      <button type="submit" [disabled]="!amForm.valid" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
                                     </div>
                                   </div>
                                 </form>
@@ -517,7 +517,7 @@
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
-                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                           Choose Date
                                         </div>
@@ -535,7 +535,7 @@
                                           <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                                         </div>
-                                      </div>
+                                      </div> -->
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
                                                                           Timings  </div>
