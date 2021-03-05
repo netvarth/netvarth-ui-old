@@ -121,6 +121,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   nextAvailableTimeQueue: any;
   image_list_popup: Image[];
   imagelist: any = [];
+  orderNumber:any;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -185,8 +186,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.placeOrderDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.choose_type === 'home') {
-      console.log(this.added_address);
-      if (this.added_address === null || this.added_address.length === 0) {
+      console.log(this.selectedAddress);
+      if (this.selectedAddress === '' ) {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
         return;
@@ -360,8 +361,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
   // fetch orderdetails using order id
   getOrderDetails(uid) {
+    this.orderList = [];
     this.providerservice.getProviderOrderById(uid).subscribe(data => {
       this.orderDetails = data;
+      this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
       if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
         console.log(this.orderDetails.orderItem);
@@ -415,6 +418,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
       this.sel_checkindate = this.orderDetails.orderDate;
+      this.getAvailabilityByDate(this.sel_checkindate);
       this.nextAvailableTime = this.orderDetails.timeSlot.sTime + ' - ' + this.orderDetails.timeSlot.eTime;
       this.loading = false;
     });
@@ -687,24 +691,27 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     return subtotal.toFixed(2);
   }
   getDeliveryAddress() {
-    this.providerservice.getDeliveryAddress(this.customerId)
-      .subscribe(data => {
-        if (data !== null) {
-          this.added_address = data;
-          console.log(this.added_address);
-          if (this.added_address.length > 0 && this.added_address !== null) {
-            this.highlight(0, this.added_address[0]);
-            if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
-              this.orderAddress();
-            }
-          }
+    if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
+      this.orderAddress();
+    }
+    // this.providerservice.getDeliveryAddress(this.customerId)
+    //   .subscribe(data => {
+    //     if (data !== null) {
+    //       this.added_address = data;
+    //       console.log(this.added_address);
+    //       if (this.added_address.length > 0 && this.added_address !== null) {
+    //         this.highlight(0, this.added_address[0]);
+    //         if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
+    //           this.orderAddress();
+    //         }
+    //       }
 
-        }
-      },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
+    //     }
+    //   },
+    //     error => {
+    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }
+    //   );
   }
   highlight(index, address) {
     console.log('user_address');

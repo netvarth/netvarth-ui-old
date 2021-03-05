@@ -1,7 +1,7 @@
 <section class="">
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{uid}}</i>
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
     </h5>
   </div>
 </section>
@@ -359,7 +359,7 @@
                                 <div  class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card " *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
                                     <div class="card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
                                         <div class="card-body text-left pl-5 p-0 font-addrss">
-                                          <div class="adrs-data">
+                                          <div class="adrs-data mgn-up-minus-20">
                                             <div *ngIf="orderDetails.homeDeliveryAddress">
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
@@ -377,7 +377,7 @@
                                                 {{orderDetails.homeDeliveryAddress.landMark }}
                                               </span><br>
                                             </div>
-                                            <a href="javascript:;" class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                            <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
                                               Edit</a>
                                           </div>
                                           
@@ -385,7 +385,7 @@
                                       </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress ||orderDetails.homeDeliveryAddress==null">
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress || orderDetails.homeDeliveryAddress==null">
                                   <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
@@ -663,9 +663,9 @@
                             <span class="mr-15 font-weight-bold">Price </span>
                             <span class="text-right"> &#8377;{{orderDetails.cartAmount}}</span>
                           </div>
-                          <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.taxableTotal">
+                          <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.netTaxAmount">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">&#8377; {{orderDetails.bill.taxableTotal}}</span>
+                            <span class="text-right">&#8377; {{orderDetails.bill.netTaxAmount}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3"  *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>

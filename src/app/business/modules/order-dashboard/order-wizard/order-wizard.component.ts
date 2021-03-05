@@ -100,7 +100,6 @@ export class OrderWizardComponent implements OnInit {
   amForm: FormGroup;
   form_data: any;
   step = 1;
-  
   show_customer = false;
   create_customer = false;
   storeAvailableDates: any = [];
@@ -464,6 +463,7 @@ export class OrderWizardComponent implements OnInit {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
+      this.getAvailabilityByDate(this.sel_checkindate);
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.showfuturediv = false;
@@ -753,8 +753,7 @@ export class OrderWizardComponent implements OnInit {
     const currentday = (cday.getDay() + 1);
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
-      console.log(storeIntervals);
-      console.log(currentday);
+
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
