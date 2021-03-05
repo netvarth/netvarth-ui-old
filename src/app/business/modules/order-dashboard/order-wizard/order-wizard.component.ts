@@ -100,6 +100,7 @@ export class OrderWizardComponent implements OnInit {
   amForm: FormGroup;
   form_data: any;
   step = 1;
+  
   show_customer = false;
   create_customer = false;
   storeAvailableDates: any = [];
