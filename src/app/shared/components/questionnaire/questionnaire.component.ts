@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
 
@@ -14,105 +14,156 @@ export class QuestionnaireComponent implements OnInit {
   @Input() serviceId;
   @Input() accountId;
   @Input() channel;
-  answers = {};
+  @Input() questionAnswers;
+  @Output() returnAnswers = new EventEmitter<any>();
+  answers;
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
+  apiError = [];
   constructor(private sharedService: SharedServices,
     private datepipe: DateFormatPipe) { }
 
   ngOnInit(): void {
-    this.questionnaireList = [{
-      "id": 2,
-      "labels": [{
-        "question": {
-          "id": 5,
-          "labelName": "records",
-          "fieldDataType": "FileUpload",
-          "fieldScope": "consumer",
-          "label": "former medical records, if any ",
-          "labelValues": null,
-          "filePropertie": {
-            "minSize": 10,
-            "maxSize": 10,
-            "fileTypes": ["jpg", "doc", "png", "pdf"],
-            "minNoOfFile": 1,
-            "allowedDocuments": ["recodes"]
-          },
-          "billable": false
-        }
-      }, {
-        "question": {
-          "id": 6,
-          "labelName": "medical conditions",
-          "fieldDataType": "List",
-          "fieldScope": "service",
-          "label": "known medical conditions including allergies",
-          "labelValues": ["diabetes", "pressure "],
-          "listPropertie": {},
-          "billable": false
-        }
-      }, {
-        "question": {
-          "id": 7,
-          "labelName": "birthdate",
-          "fieldDataType": "Date",
-          "fieldScope": "consumer",
-          "label": "enter your birth date",
-          "labelValues": null,
-          "dateProperties": {
-            "startDate": "01-01-1980",
-            "endDate": "01-01-2021"
-          },
-          "billable": false
-        }
-      }]
-    }];
-    console.log(this.questionnaireList);
+    console.log(this.questionAnswers);
+    if (this.questionAnswers) {
+      if (this.questionAnswers.answers) {
+this.answers = this.getAnswers(this.questionAnswers.answers, 'init');
+      }
+      if (this.questionAnswers.files) {
+        this.selectedMessage = this.questionAnswers.files;
+              }
+    }
     console.log(this.source);
+    console.log(this.answers);
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
-      // this.getConsumerQuestionnaire();
+      this.getConsumerQuestionnaire();
     } else {
-      // this.getProviderQuestionnaire();
+      this.getProviderQuestionnaire();
     }
   }
-  filesSelected(ev) {
-
+  getAnswers(answerData, type) {
+    if (type === 'init') {
+for (let answer of answerData) {
+  this.answers[answer.questionId] = answer.answer;
+}
+    } else {
+      for (let answer of answerData) {
+        this.answers[answer.questionId] = answer.answer;
+      }
+    }
+  }
+  filesSelected(event, index, question) {
+    const input = event.target.files;
+    this.apiError[index] = null;
+    this.answers[question.labelName] = {};
+    if (input) {
+      for (const file of input) {
+        console.log(file);
+        console.log(question.filePropertie.fileTypes);
+        console.log(question.filePropertie.fileTypes.indexOf(file.type));
+        // if (question.filePropertie.fileTypes.indexOf(file.type) === -1) {
+        //   this.apiError[index] = 'Selected image type not supported';
+        // } else if (file.size > question.filePropertie.minSize) {
+        //   this.apiError[index] = 'Please upload images with size > ' + question.filePropertie.minSize + 'mb';
+        // } else if (file.size > question.filePropertie.maxSize) {
+        //   this.apiError[index] = 'Please upload images with size < ' + question.filePropertie.maxSize + 'mb';
+        // } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          console.log(file.name);
+          let imgname = file.name.split('.');
+          imgname = imgname[0];
+          const indx = this.selectedMessage.files.indexOf(file);
+          console.log(indx);
+          this.answers[question.labelName][indx] = imgname;
+          reader.readAsDataURL(file);
+        // }
+      }
+      console.log(this.selectedMessage);
+      console.log(this.apiError);
+      console.log(this.answers);
+    }
   }
   getConsumerQuestionnaire() {
+    this.consumerId = 0;
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
       console.log(data);
+      this.questionnaireList = data;
+      if (!this.questionAnswers) {
+
+      }
     });
   }
   getProviderQuestionnaire() {
+    // this.consumerId = 0;
     this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
+      this.questionnaireList = data;
     });
   }
   onSubmit() {
     console.log(this.answers);
+    let data = [];
+    Object.keys(this.answers).forEach(key => {
+      console.log(key);
+      console.log(this.answers[key]);;
+      data.push({
+        'questionId': key,
+        'answer': this.answers[key]
+      });
+    });
+
+    const postData = {
+      'questionnaireId': this.questionnaireList.id,
+      'answer': data
+    }
+    console.log(this.selectedMessage);
+    console.log(postData);
+    const passData = {'answers': postData, 'files': this.selectedMessage};
+this.returnAnswers.emit(passData);
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));
   }
   listChange(ev, value, question) {
-    if (this.answers[question.labelName]) {
-
-    } else {
-
-    }
+    console.log(this.answers);
     if (ev.checked) {
-      this.answers[question.labelName] = value;
+      if (!this.answers[question.labelName]) {
+        this.answers[question.labelName] = [];
+      }
+      this.answers[question.labelName].push(value);
     } else {
-
+      const indx = this.answers[question.labelName].indexOf(value);
+      console.log(indx);
+      this.answers[question.labelName].splice(indx, 1);
     }
     console.log(this.answers);
   }
+  booleanChange(ev, question) {
+    this.answers[question.labelName] = ev.checked;
+  }
   isChecked(value, question) {
-    if (this.answers[question.labelName] === value) {
+    if (this.answers[question.labelName] && this.answers[question.labelName] === value) {
       return true;
     } else {
       return false;
     }
   }
-  dateChange(ev) {
+  isBooleanChecked(question) {
+    if (this.answers[question.labelName]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  dateChange(ev, question) {
     console.log(ev);
+    this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
   }
 }

@@ -1485,7 +1485,7 @@
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
                                             [consumerId]="waitlist_for[0].id" [serviceId]="sel_ser"
-                                            [accountId]="account_id"></app-questionnaire>
+                                            [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
 
                                     </div>
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"

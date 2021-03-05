@@ -1,7 +1,8 @@
-<!-- <div *ngIf="questionnaireList">
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngFor="let questionnaire of questionnaireList">
-        <div class="quest-outer" *ngFor="let question of questionnaire.labels;let i = index">
-            {{question.question.labelName}}
+<div *ngIf="questionnaireList">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div class="quest-outer" *ngFor="let question of questionnaireList.labels;let i = index">
+            <h4 class="no-margin">{{question.question.labelName}}</h4>
+            <span class="form-level-settings" *ngIf="question.question.fieldDataType != 'Number' && question.question.fieldDataType != 'PlainText' && question.question.fieldDataType != 'Date'">{{question.question.label}}</span>
             <div class="question-box" *ngIf="question.question.fieldDataType === 'List'">
                 <mat-checkbox [checked]="isChecked(value, question.question)" *ngFor="let value of question.question.labelValues"
                     (change)="listChange($event, value, question.question)">
@@ -17,22 +18,26 @@
             </div>
             <div class="question-box" *ngIf="question.question.fieldDataType === 'FileUpload'">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                    (change)="filesSelected($event)">
-                <button (click)="logofile.click()">choose file</button>
+                    (change)="filesSelected($event, i, question.question)">
+                    <input #logofile1 type="file" accept="/*;capture=camera" style="display:none;"
+                    (change)="filesSelected($event, i, question.question)" multiple>
+                <button (click)="logofile.click()" *ngIf="question.question.filePropertie.minNoOfFile == 1">choose file</button>
+                <button (click)="logofile1.click()" *ngIf="question.question.filePropertie.minNoOfFile > 1">choose file</button>
+                <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div>
             </div>
             <div class="question-box" *ngIf="question.question.fieldDataType === 'Date'">
                 <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
                     placeholder="{{question.question.label}}" readonly (click)="picker.open()"
-                    (dateChange)="dateChange($event.value)" [min]="getDate(question.question.startDate)" [max]="getDate(question.question.endDate)">
+                    (dateChange)="dateChange($event.value, question.question)" [min]="getDate(question.question.dateProperties.startDate)" [max]="getDate(question.question.dateProperties.endDate)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
             </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'boolean'">
+            <div class="question-box" *ngIf="question.question.fieldDataType === 'Boolean'">
                 <span class="ttle mgn-rt-20">{{question.question.label}}</span>
-                <mat-slide-toggle class="example-margin" [checked]="true">
+                <mat-slide-toggle class="example-margin" [checked]="isBooleanChecked(question.question)" (change)="booleanChange($event, question.question)">
                 </mat-slide-toggle>
             </div>
         </div>
     </div>
     <button (click)="onSubmit()">submit</button>
-</div> -->
+</div>

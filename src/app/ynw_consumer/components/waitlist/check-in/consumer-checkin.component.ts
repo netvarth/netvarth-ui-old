@@ -171,11 +171,12 @@ export class ConsumerCheckinComponent implements OnInit {
     prepayAmount;
     paymentDetails: any = [];
     paymentLength = 0;
-    questionnaireList: any = [];
     @ViewChild('closebutton') closebutton;
     @ViewChild('modal') modal;
     apiError = '';
     apiSuccess = '';
+    questionnaireList: any = [];
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -227,7 +228,6 @@ export class ConsumerCheckinComponent implements OnInit {
             });
     }
     ngOnInit() {
-        console.log(this.questionnaireList);
         this.bookingForm = this.fb.group({
             newEmail: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
             newWhatsapp: new FormControl(undefined),
@@ -695,6 +695,7 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
+                this.submitQuestionnaire(this.uuidList[0]);
                 if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
                     this.payuPayment();
                 } else {
@@ -717,6 +718,22 @@ export class ConsumerCheckinComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
+    }
+    submitQuestionnaire(uuid) {
+        
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+      for (const pic of this.questionAnswers.files.files) {
+        dataToSend.append('files', pic, pic['name']);
+      }
+    }
+    console.log(this.questionAnswers.answers);
+    console.log(JSON.stringify(this.questionAnswers.answers));
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+
+})
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1514,6 +1531,7 @@ export class ConsumerCheckinComponent implements OnInit {
         if (this.bookStep === 3) {
             this.saveCheckin();
         }
+        console.log(this.questionAnswers);
     }
     addWaitlistAdvancePayment(post_Data) {
         const param = { 'account': this.account_id };
@@ -1611,5 +1629,9 @@ export class ConsumerCheckinComponent implements OnInit {
         } else if (this.action === 'coupons') {
             this.applyCoupons();
         }
+    }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
     }
 }
