@@ -2202,7 +2202,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         serviceId: booking.service.id,
         consumerId: consumerId,
         source: source,
-        type: type
+        type: type,
+        questionnaireAnswers: booking.questionnaire
       }
     };
     this.router.navigate(['consumer', 'questionnaire'], navigationExtras);

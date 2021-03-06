@@ -767,11 +767,6 @@
                     </div>
                 </div>
             </div> -->
-
-
-
-
-
             <!--begin::Entry-->
             <div class="pad-10 d-flex flex-column-fluid">
                 <div class="card card-custom">
@@ -808,9 +803,9 @@
                                         </span>
                                     </div>
                                     <!--end::Wizard Step 1 Nav-->
-
                                     <!--begin::Wizard Step 2 Nav-->
-                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2" *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2"
+                                        *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                         <div class="wizard-label">
                                             <div class="step-icon">2</div>
                                             <h3 class="wizard-title">More Info</h3>
@@ -835,11 +830,11 @@
                                         </span>
                                     </div>
                                     <!--end::Wizard Step 2 Nav-->
-
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <div class="step-icon">{{(questionnaireList.labels && questionnaireList.labels.length > 0) ? 3 : 2}}</div>
+                                            <div class="step-icon">{{(questionnaireList.labels &&
+                                                questionnaireList.labels.length > 0) ? 3 : 2}}</div>
                                             <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">
@@ -865,18 +860,13 @@
                                 </div>
                             </div>
                             <!--end::Wizard Nav-->
-
                             <!--begin::Wizard Body-->
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
-
                                     <!--begin::Wizard Step 1-->
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
-
-
                                         <div class="panel-body no-padding">
-
                                             <div
                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
                                                 <div
@@ -963,9 +953,6 @@
                                                 </div>
                                                 <div
                                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
-
-
-
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                         *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                                         <div
@@ -996,12 +983,10 @@
                                                                 </span>
                                                             </h6>
                                                         </div>
-
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             Waiting in Line
                                                         </div>
-
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                             <h6 class="card-title serv-time">
                                                                 <span *ngIf="sel_queue_personaahead <= 0">0
@@ -1015,17 +1000,13 @@
                                                                     <span *ngIf="!isFuturedate">
                                                                     </span>
                                                                 </span>
-
-
                                                                 <span
                                                                     *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
                                                                     <span class="color-grey">\</span>
                                                                     <span>{{sel_queue_waitingmins}}</span>
-
                                                                 </span>
                                                                 <span
                                                                     *ngIf="sel_queue_servicetime!='' && calc_mode!='NoCalc'">
-
                                                                     <ng-container *ngIf="isFuturedate">
                                                                     </ng-container>
                                                                     <ng-container *ngIf="!isFuturedate">
@@ -1074,7 +1055,6 @@
                                                                             {{member.lastName | capitalizeFirst}}
                                                                         </h6>
                                                                     </div>
-
                                                                     <h6 class="card-title service"
                                                                         *ngIf="type === 'waitlistreschedule'">
                                                                         {{wtlst_for_fname | capitalizeFirst}}
@@ -1121,14 +1101,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div
                                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
-
-
-
-
-
                                                             <a #modal data-toggle="modal"
                                                                 data-target="#exampleModalCenter">
                                                             </a>
@@ -1188,18 +1162,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-
+                                                        <div class="close-btn">
+                                                            <button type="button" class="close" aria-label="Close"
+                                                                data-dismiss="modal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
                                                         <ng-container *ngIf="action=='members'">
                                                             <div class="modal-body">
-
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
                                                                     <div class="pull-left"> Booking for
@@ -1277,7 +1251,6 @@
                                                                                 Here</a>
                                                                         </p>
                                                                     </div>
-
                                                                     <div class="mgn-up-20 mgn-bt-20"
                                                                         *ngIf="editBookingFields">
                                                                         <form [formGroup]="bookingForm" class=""
@@ -1370,7 +1343,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <ng-container *ngIf="action=='attachment'">
                                                             <div class="modal-body">
                                                                 <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
@@ -1393,19 +1365,18 @@
                                                                 <div class="img-section mgn-up-20"
                                                                     *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
                                                                     <ul class="galul">
-
                                                                         <ng-container
                                                                             *ngIf="type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0">
                                                                             <li
                                                                                 *ngFor="let file of waitlist.attchment;let i = index ">
-                                                                                <div class="galimg_outer">
+                                                                                <div class="galimg_outer"
+                                                                                    *ngIf="getThumbUrl(file)">
                                                                                     <div class="gal_img">
                                                                                         <img [src]="getThumbUrl(file)">
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
                                                                         </ng-container>
-
                                                                         <ng-container
                                                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
                                                                             <li
@@ -1427,7 +1398,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <ng-container *ngIf="action=='timeChange'">
                                                             <div class="modal-body">
                                                                 <div
@@ -1460,7 +1430,6 @@
                                                                         type="text" [matDatepicker]="picker"
                                                                         [min]="minDate" [max]="maxDate" [value]="ddate"
                                                                         (dateChange)="handleFutureDateChange($event)">
-
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                     <div
@@ -1489,7 +1458,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <ng-container *ngIf="action=='coupons'">
                                                             <div class="modal-body">
                                                                 <div
@@ -1554,7 +1522,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer"
                                                                     *ngIf="coupon_status">
                                                                     <div class="form-group">
@@ -1602,7 +1569,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <div class="modal-footer">
                                                             <button type="button"
                                                                 class="disp-none btn btn-light-primary font-weight-bold"
@@ -1611,7 +1577,6 @@
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>
                                                         </div>
-
                                                         <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
@@ -1623,27 +1588,22 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <!--end::Wizard Step 1-->
-
-
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="mgn-bt-20 quest-head mgn-up-10">
                                             Please provide us with a little more information complete your booking
                                         </div>
-                                        <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
-                                            [source]="'consCheckin'" [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
-                                            [serviceId]="sel_ser" [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                                        <app-questionnaire [questionnaireList]="questionnaireList"
+                                            [questionAnswers]="questionAnswers" [source]="'consCheckin'"
+                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
+                                            [serviceId]="sel_ser" [accountId]="account_id"
+                                            (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                     </div>
-
-
-
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your token details</div>
-
                                         <table class="bookdetails">
                                             <tbody>
                                                 <tr *ngIf="!sel_ser_det.provider">
@@ -1693,7 +1653,6 @@
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td width="48%" align="right">Contact #</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -1712,7 +1671,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-
                                         <div class="containerAppt textcenter">
                                             <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div>
                                             <div class="mgn-bt-5">
@@ -1736,7 +1694,6 @@
                                                     *ngIf="sel_queue_personaahead > 1">{{sel_queue_personaahead}}<span>
                                                         People</span>
                                                 </span>
-
                                                 <span *ngIf="sel_queue_servicetime=='' && calc_mode!='NoCalc'">
                                                     <span class="color-grey">\</span>
                                                     <span>{{sel_queue_waitingmins}}</span>
@@ -1772,7 +1729,6 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                     <!--begin::Wizard Actions-->
                                     <div class="d-flex justify-content-between border-top pt-10 width-100"
@@ -1803,7 +1759,6 @@
                                         </div>
                                     </div>
                                     <!--end::Wizard Actions-->
-
                                 </div>
                             </div>
                             <!--end::Wizard Body-->
@@ -1814,13 +1769,6 @@
                 </div>
             </div>
             <!--end::Entry-->
-
-
-
-
-
-
-
         </div>
         <div class="clearfix"></div>
     </div>

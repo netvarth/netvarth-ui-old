@@ -608,8 +608,9 @@
 											<i class="flaticon2-layers-1 mr-3"></i> Notes
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
-									  <mat-form-field>
-				      				<!-- <div class="section-three" *ngIf="bill_data && billNotesExists">
+									  
+									  
+				      				<div class="section-three" *ngIf="bill_data && billNotesExists">
 										<a class="learnmore-pointer" id="customer-help"
 											(click)="billNotesClicked()">Bill notes</a>
 										<div class="bill-notes"
@@ -640,14 +641,10 @@
 												</div>
 											</ul>
 										</div>
-									</div> -->
+									</div>
 								
+						
 									
-
-										<mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
-									  </mat-form-field>									
-									  <mat-datepicker #picker></mat-datepicker>
 									</mat-expansion-panel>
 								  </mat-accordion>
 							</div>

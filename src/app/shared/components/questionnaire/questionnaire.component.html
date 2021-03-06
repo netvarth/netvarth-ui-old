@@ -45,7 +45,7 @@
                     <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div>
                     <div *ngFor="let img of selectedMessage.files;let i = index">
                         {{img.name}}
-                        <i class="fa fa-times-circle" aria-hidden="true" (click)="deleteTempImage(i)"></i>
+                        <i class="fa fa-times-circle" aria-hidden="true" (click)="deleteTempImage(i, question.question.labelName)"></i>
                     </div>
                 </div>
                 <div class="question-box" *ngIf="question.question.fieldDataType === 'Date'">

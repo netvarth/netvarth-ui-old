@@ -874,7 +874,8 @@ export class CheckinActionsComponent implements OnInit {
                 consumerId: booking.waitlistingFor[0].id,
                 source: 'providerWaitlistResubmit',
                 type: 'proCheckin',
-                channel: channel
+                channel: channel,
+                questionnaireAnswers: booking.questionnaire
             }
         };
         this.router.navigate(['provider', 'check-ins', 'questionnaire'], navigationExtras);

@@ -1191,16 +1191,18 @@ export class ProviderCheckinComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
                 this.submitQuestionnaire(retUuid);
+                } else {
+                    this.router.navigate(['provider', 'check-ins']);
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
                 }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
-                }
-                if (this.settingsjson.showTokenId) {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-                } else {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
@@ -1215,6 +1217,8 @@ export class ProviderCheckinComponent implements OnInit {
     }
     submitQuestionnaire(uuid) {
         
+console.log(this.questionAnswers);
+console.log(Object.keys(this.questionAnswers).length);
         const dataToSend: FormData = new FormData();
         if (this.questionAnswers.files) {
           for (const pic of this.questionAnswers.files.files) {
@@ -1226,6 +1230,11 @@ export class ProviderCheckinComponent implements OnInit {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
     this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+        if (this.settingsjson.showTokenId) {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+        } else {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+        }
         this.router.navigate(['provider', 'check-ins']);
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1979,6 +1988,7 @@ export class ProviderCheckinComponent implements OnInit {
     getQuestionAnswers(event) {
 console.log(event);
 this.questionAnswers = event;
+console.log(Object.keys(this.questionAnswers).length);
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;

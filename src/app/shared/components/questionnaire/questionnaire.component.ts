@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
@@ -32,7 +33,8 @@ export class QuestionnaireComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private router: Router) {
+    private router: Router,
+    private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
       console.log(this.params);
@@ -64,6 +66,10 @@ export class QuestionnaireComponent implements OnInit {
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
       }
+    } else {
+  if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+    this.getAnswers(this.questionnaireList.labels);
+      }
     }
     console.log(this.source);
     console.log(this.params.uuid);
@@ -75,20 +81,20 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   }
-  getAnswers(answerData, type) {
+  getAnswers(answerData, type?) {
     console.log(answerData);
     console.log(type);
-    if (type === 'init') {
-      for (let answ of answerData) {
-        console.log(answ);
-        this.answers[answ.questionId] = answ.answer;
-      }
-    } else {
+    if (!type || type === 'get') {
       for (let answ of answerData) {
         console.log(answ);
         if (answ.answer && answ.question.fieldDataType !== 'FileUpload') {
           this.answers[answ.answer.questionId] = answ.answer.answer;
         }
+      }
+    } else {
+      for (let answ of answerData) {
+        console.log(answ);
+        this.answers[answ.questionId] = answ.answer;
       }
     }
     console.log(this.answers);
@@ -129,20 +135,24 @@ export class QuestionnaireComponent implements OnInit {
     }
     this.onSubmit();
   }
-  deleteTempImage(i) {
+  deleteTempImage(i, label) {
+    let imgname = this.selectedMessage.files[i].name.split('.');
+        imgname = imgname[0];
+    console.log(this.selectedMessage.files[i].name);
+    console.log(this.answers[label]);
+    delete this.answers[label][i];
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
-    console.log(this.selectedMessage.files[i].name);
-    console.log(this.answers[this.selectedMessage.files[i].name]);
-    delete this.answers[this.selectedMessage.files[i].name][i];
+    console.log(this.answers);
+    this.onSubmit();
   }
   getConsumerQuestionnaire() {
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
-      if (!this.questionAnswers) {
-        this.getAnswers(this.questionnaireList.labels, 'get');
+      if (this.params.questionnaireAnswers && this.params.questionnaireAnswers.length > 0) {
+        this.getAnswers(this.params.questionnaireAnswers, 'get');
       }
     });
   }
@@ -150,8 +160,8 @@ export class QuestionnaireComponent implements OnInit {
     this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
-      if (!this.questionAnswers) {
-        this.getAnswers(this.questionnaireList.labels, 'get');
+      if (this.params.questionnaireAnswers && this.params.questionnaireAnswers.length > 0) {
+        this.getAnswers(this.params.questionnaireAnswers, 'get');
       }
     });
   }
@@ -160,13 +170,18 @@ export class QuestionnaireComponent implements OnInit {
     let data = [];
     Object.keys(this.answers).forEach(key => {
       console.log(key);
-      console.log(this.answers[key]);;
+      console.log(this.answers[key]);
+      console.log(this.answers[key].length);
+      console.log(Object.keys(this.answers[key]).length);
+      if (this.answers[key] && Object.keys(this.answers[key]).length > 0) {
       data.push({
         'questionId': key,
         'answer': this.answers[key]
       });
+    }
     });
-
+    console.log(data);
+if (data.length > 0) {
     const postData = {
       'questionnaireId': this.questionnaireList.id,
       'answer': data
@@ -179,6 +194,7 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       this.returnAnswers.emit(passData);
     }
+  }
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));
@@ -258,6 +274,6 @@ export class QuestionnaireComponent implements OnInit {
     });
   }
   goBack() {
-    this.router.navigate(['/consumer']);
+    this.location.back();
   }
 }

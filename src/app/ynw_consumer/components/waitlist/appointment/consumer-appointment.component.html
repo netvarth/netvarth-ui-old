@@ -693,10 +693,6 @@
                         </div>
                     </div>
                 </div> -->
-
-
-
-
             <!--begin::Entry-->
             <div class="pad-10 d-flex flex-column-fluid">
                 <div class="card card-custom">
@@ -733,9 +729,9 @@
                                         </span>
                                     </div>
                                     <!--end::Wizard Step 1 Nav-->
-
                                     <!--begin::Wizard Step 2 Nav-->
-                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2" *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2"
+                                        *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                         <div class="wizard-label">
                                             <div class="step-icon">2</div>
                                             <h3 class="wizard-title">More Info</h3>
@@ -760,11 +756,11 @@
                                         </span>
                                     </div>
                                     <!--end::Wizard Step 2 Nav-->
-
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <div class="step-icon">{{(questionnaireList.labels && questionnaireList.labels.length > 0) ? 3 : 2}}</div>
+                                            <div class="step-icon">{{(questionnaireList.labels &&
+                                                questionnaireList.labels.length > 0) ? 3 : 2}}</div>
                                             <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">
@@ -790,16 +786,12 @@
                                 </div>
                             </div>
                             <!--end::Wizard Nav-->
-
                             <!--begin::Wizard Body-->
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
-
                                     <!--begin::Wizard Step 1-->
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
-
-
                                         <div class="panel-body no-padding">
                                             <div
                                                 class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
@@ -856,7 +848,6 @@
                                                                     <p *ngIf="showmoreSpec" (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
-
                                                                 <div class="">
                                                                     <div class="clearfix"></div>
                                                                     <div class="callingmode mgn-lt-10 mgn-up-10"
@@ -874,7 +865,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
                                                                     <div class="prenotes mgn-bt-10"
                                                                         *ngIf="sel_ser_det.preInfoEnabled">
                                                                         <div class="preinfo-title">
@@ -890,7 +880,6 @@
                                                 </div>
                                                 <div
                                                     class="col-md-4 col-lg-4 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
-
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
@@ -961,7 +950,6 @@
                                                                             you in this number
                                                                         </div>
                                                                     </div>
-
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                                         <i class="fa wtsapaud-icon wtsap-cal"></i>
@@ -1044,13 +1032,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-
+                                                        <div class="close-btn">
+                                                            <button type="button" class="close" aria-label="Close"
+                                                                data-dismiss="modal">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
                                                         <ng-container *ngIf="action=='slotChange'">
                                                             <div class="modal-body">
                                                                 <div
@@ -1059,9 +1050,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-10">
-
                                                                     <div class="pull-left brd-round brd-light">
-
                                                                         <div class="icon-minus pull-left"
                                                                             [class.disable]="disableMinus()"
                                                                             *ngIf="appointmentSettings.futureAppt"
@@ -1075,7 +1064,6 @@
                                                                     </div>
                                                                     <div class="pickerouter caldiv pull-left "
                                                                         *ngIf="appointmentSettings.futureAppt">
-
                                                                         <mat-datepicker-toggle matSuffix [for]="picker">
                                                                         </mat-datepicker-toggle>
                                                                         <mat-datepicker #picker
@@ -1087,7 +1075,6 @@
                                                                             [min]="minDate" [max]="maxDate"
                                                                             [value]="ddate"
                                                                             (dateChange)="handleFutureDateChange($event)">
-
                                                                     </div>
                                                                 </div>
                                                                 <div
@@ -1104,7 +1091,6 @@
                                                                             {{slot.displayTime}}
                                                                         </mat-chip>
                                                                     </mat-chip-list>
-
                                                                 </div>
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-lt-10"
                                                                     *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
@@ -1112,7 +1098,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <ng-container *ngIf="action=='coupons'">
                                                             <div class="modal-body">
                                                                 <div
@@ -1143,7 +1128,6 @@
                                                                             {{api_cp_error}}</div>
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
@@ -1175,7 +1159,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer"
                                                                     *ngIf="coupon_status">
                                                                     <div class="form-group">
@@ -1205,7 +1188,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <ng-container *ngIf="action=='addmember'">
                                                             <div class="modal-body">
                                                                 <div
@@ -1245,19 +1227,18 @@
                                                                 <div class="img-section mgn-up-20"
                                                                     *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='reschedule' && appointment.attchment && appointment.attchment.length > 0)">
                                                                     <ul class="galul">
-
                                                                         <ng-container
                                                                             *ngIf="type=='reschedule' && appointment.attchment && appointment.attchment.length > 0">
                                                                             <li
                                                                                 *ngFor="let file of appointment.attchment;let i = index ">
-                                                                                <div class="galimg_outer">
+                                                                                <div class="galimg_outer"
+                                                                                    *ngIf="getThumbUrl(file)">
                                                                                     <div class="gal_img">
                                                                                         <img [src]="getThumbUrl(file)">
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
                                                                         </ng-container>
-
                                                                         <ng-container
                                                                             *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
                                                                             <li
@@ -1348,7 +1329,6 @@
                                                                                         Here</a>
                                                                                 </p>
                                                                             </div>
-
                                                                             <div class="mgn-up-20 mgn-bt-20"
                                                                                 *ngIf="editBookingFields">
                                                                                 <form [formGroup]="bookingForm" class=""
@@ -1449,7 +1429,6 @@
                                                                 </div>
                                                             </div>
                                                         </ng-container>
-
                                                         <div class="modal-footer">
                                                             <button type="button"
                                                                 class="disp-none btn btn-light-primary font-weight-bold"
@@ -1458,7 +1437,6 @@
                                                                 class="btn btn-primary font-weight-bold"
                                                                 (click)="actionCompleted()">Ok</button>
                                                         </div>
-
                                                         <div class="error-section" *ngIf="apiError !== ''">
                                                             {{apiError}}
                                                         </div>
@@ -1469,29 +1447,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
                                         </div>
-
                                     </div>
                                     <!--end::Wizard Step 1-->
-
-
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="mgn-bt-20 quest-head mgn-up-10">
                                             Please provide us with a little more information complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
-                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id" [serviceId]="sel_ser"
-                                            [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-
+                                            [questionAnswers]="questionAnswers"
+                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id"
+                                            [serviceId]="sel_ser" [accountId]="account_id"
+                                            (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                     </div>
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
                                         <div class="confirm-head">Confirm your appointment details</div>
-
                                         <table class="bookdetails">
                                             <tbody>
                                                 <tr *ngIf="!sel_ser_det.provider">
@@ -1534,7 +1506,6 @@
                                                         <span>{{sel_ser_det.name}}</span>
                                                     </td>
                                                 </tr>
-
                                                 <tr>
                                                     <td width="48%" align="right">Contact #</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
@@ -1553,7 +1524,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-
                                         <div class="containerAppt textcenter">
                                             <div class="mgn-up-10 no-mgn-bt bold">Appointment Time</div>
                                             <div class="mgn-bt-10 pad-bt-10" *ngIf="apptTime">
@@ -1564,7 +1534,6 @@
                                                     newDateFormat}}</span>
                                                 <span>{{getSingleTime(apptTime['time'])}}</span>
                                             </div>
-
                                         </div>
                                         <div class="pay-section"
                                             *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1588,7 +1557,6 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                     <!--begin::Wizard Actions-->
                                     <div class="d-flex justify-content-between border-top pt-10"
@@ -1619,7 +1587,6 @@
                                         </div>
                                     </div>
                                     <!--end::Wizard Actions-->
-
                                 </div>
                             </div>
                             <!--end::Wizard Body-->
@@ -1630,9 +1597,6 @@
                 </div>
             </div>
             <!--end::Entry-->
-
-
-
         </div>
         <div class="clearfix"></div>
     </div>

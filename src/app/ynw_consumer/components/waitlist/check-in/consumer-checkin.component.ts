@@ -695,17 +695,21 @@ export class ConsumerCheckinComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                this.submitQuestionnaire(this.uuidList[0]);
-                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                    this.payuPayment();
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                    this.submitQuestionnaire(this.uuidList[0]);
                 } else {
-                    let multiple;
-                    if (this.uuidList.length > 1) {
-                        multiple = true;
+
+                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                        this.payuPayment();
                     } else {
-                        multiple = false;
+                        let multiple;
+                        if (this.uuidList.length > 1) {
+                            multiple = true;
+                        } else {
+                            multiple = false;
+                        }
+                        this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
                     }
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
                 }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
@@ -720,20 +724,34 @@ export class ConsumerCheckinComponent implements OnInit {
                 });
     }
     submitQuestionnaire(uuid) {
-        
-    const dataToSend: FormData = new FormData();
-    if (this.questionAnswers.files) {
-      for (const pic of this.questionAnswers.files.files) {
-        dataToSend.append('files', pic, pic['name']);
-      }
-    }
-    console.log(this.questionAnswers.answers);
-    console.log(JSON.stringify(this.questionAnswers.answers));
-    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-    dataToSend.append('question', blobpost_Data);
-this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
 
-})
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+            for (const pic of this.questionAnswers.files.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+        this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
+
+            if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                this.payuPayment();
+            } else {
+                let multiple;
+                if (this.uuidList.length > 1) {
+                    multiple = true;
+                } else {
+                    multiple = false;
+                }
+                this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
+            }
+        },
+            error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1288,7 +1306,9 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
-                this.action = '';
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
                 this.closebutton.nativeElement.click();
             } else {
                 this.api_cp_error = 'Coupon invalid';
@@ -1327,24 +1347,27 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
         }
     }
     goBack(type?) {
-        if (type) {
-            this.location.back();
-        } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
-            || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-            this.action === 'phone' || this.action === 'email') {
-            this.action = '';
-        } else if (this.action === 'addmember') {
-            this.action = 'members';
-        } else if (this.action === 'service' && this.filterDepart) {
-            this.action = '';
-        } else if (this.action === 'preInfo') {
-            this.action = '';
-        } else if (this.action === 'timeChange') {
-            this.action = '';
-        }
-        if (this.action === '') {
+        if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }
+        setTimeout(() => {
+
+            if (type) {
+                this.location.back();
+            } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
+                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                this.action === 'phone' || this.action === 'email') {
+                this.action = '';
+            } else if (this.action === 'addmember') {
+                this.action = 'members';
+            } else if (this.action === 'service' && this.filterDepart) {
+                this.action = '';
+            } else if (this.action === 'preInfo') {
+                this.action = '';
+            } else if (this.action === 'timeChange') {
+                this.action = '';
+            }
+        }, 500);
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1465,7 +1488,9 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
                     this.updateEmail(post_data).then(
                         () => {
                             this.closebutton.nativeElement.click();
-                            this.action = '';
+                            setTimeout(() => {
+                                this.action = '';
+                            }, 500);
                         },
                         error => {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1475,12 +1500,16 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
                     )
                 } else {
                     this.closebutton.nativeElement.click();
-                    this.action = '';
+                    setTimeout(() => {
+                        this.action = '';
+                    }, 500);
                 }
             }
         } else {
             this.closebutton.nativeElement.click();
-            this.action = '';
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
         }
         this.editBookingFields = false;
     }
@@ -1523,9 +1552,9 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
                     if (this.questionnaireList.length > 0) {
-                    this.bookStep++;
-                } else {
-                    this.bookStep = 3;
+                        this.bookStep++;
+                    } else {
+                        this.bookStep = 3;
                     }
                 }
             }
@@ -1612,10 +1641,12 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
         }
     }
     getThumbUrl(attachment) {
-        if (attachment.s3path.indexOf('.pdf') !== -1) {
-            return attachment.thumbPath;
-        } else {
-            return attachment.s3path;
+        if (attachment && attachment.s3path) {
+            if (attachment.s3path.indexOf('.pdf') !== -1) {
+                return attachment.thumbPath;
+            } else {
+                return attachment.s3path;
+            }
         }
     }
     getAttachLength() {
@@ -1637,14 +1668,14 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
         }
     }
     getQuestionAnswers(event) {
-console.log(event);
-this.questionAnswers = event;
+        console.log(event);
+        this.questionAnswers = event;
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
+            console.log(data);
+            this.questionnaireList = data;
         });
-      }
+    }
 }

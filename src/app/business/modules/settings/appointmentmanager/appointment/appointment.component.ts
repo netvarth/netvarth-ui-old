@@ -1144,12 +1144,17 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
-                this.submitQuestionnaire(retUuid);
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                    this.submitQuestionnaire(retUuid);
+                    } else {                
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+
+                        this.router.navigate(['provider', 'appointments']);
+                    }
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
                 // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                 // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
                 //    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
                 // }
@@ -1176,6 +1181,7 @@ export class AppointmentComponent implements OnInit {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
     this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
         this.router.navigate(['provider', 'appointments']);
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

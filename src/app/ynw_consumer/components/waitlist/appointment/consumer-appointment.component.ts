@@ -707,11 +707,14 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.uuidList.push(retData[key]);
                     }
                 });
-                this.submitQuestionnaire(this.uuidList[0]);
-                if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                    this.payuPayment();
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                    this.submitQuestionnaire(this.uuidList[0]);
                 } else {
-                    this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                    if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                        this.payuPayment();
+                    } else {
+                        this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+                    }
                 }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(this.uuidList);
@@ -975,7 +978,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.setServiceDetails(this.sel_ser);
                     this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id);
                     if (this.type != 'reschedule') {
-                    this.getConsumerQuestionnaire();
+                        this.getConsumerQuestionnaire();
                     }
                 }
                 this.api_loading1 = false;
@@ -1211,7 +1214,9 @@ export class ConsumerAppointmentComponent implements OnInit {
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
-                this.action = '';
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
                 this.closebutton.nativeElement.click();
             } else {
                 this.api_cp_error = 'Coupon invalid';
@@ -1257,24 +1262,26 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     goBack(type?) {
-        if (type) {
-            this.location.back();
-        } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
-            || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-            this.action === 'phone' || this.action === 'email') {
-            this.action = '';
-        } else if (this.action === 'addmember') {
-            this.action = 'members';
-        } else if (this.action === 'service' && this.filterDepart) {
-            this.action = '';
-        } else if (this.action === 'preInfo') {
-            this.action = '';
-        } else if (this.action === 'slotChange') {
-            this.action = '';
-        }
-        if (this.action === '') {
+        if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }
+        setTimeout(() => {
+            if (type) {
+                this.location.back();
+            } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
+                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                this.action === 'phone' || this.action === 'email') {
+                this.action = '';
+            } else if (this.action === 'addmember') {
+                this.action = 'members';
+            } else if (this.action === 'service' && this.filterDepart) {
+                this.action = '';
+            } else if (this.action === 'preInfo') {
+                this.action = '';
+            } else if (this.action === 'slotChange') {
+                this.action = '';
+            }
+        }, 500);
     }
     applyPromocode() {
         this.action = 'coupons';
@@ -1401,7 +1408,9 @@ export class ConsumerAppointmentComponent implements OnInit {
                     };
                     this.updateEmail(post_data).then(
                         () => {
-                            this.action = '';
+                            setTimeout(() => {
+                                this.action = '';
+                            }, 500);
                             this.closebutton.nativeElement.click();
                         },
                         error => {
@@ -1411,13 +1420,17 @@ export class ConsumerAppointmentComponent implements OnInit {
                         }
                     )
                 } else {
-                    this.action = '';
+                    setTimeout(() => {
+                        this.action = '';
+                    }, 500);
                     this.closebutton.nativeElement.click();
                 }
             }
 
         } else {
-            this.action = '';
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
             this.closebutton.nativeElement.click();
         }
         this.editBookingFields = false;
@@ -1457,7 +1470,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.bookStep++;
                     } else {
                         this.bookStep = 3;
-                        }
+                    }
                 }
             }
         } else if (type === 'prev') {
@@ -1542,10 +1555,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     getThumbUrl(attachment) {
-        if (attachment.s3path.indexOf('.pdf') !== -1) {
-            return attachment.thumbPath;
-        } else {
-            return attachment.s3path;
+        if (attachment && attachment.s3path) {
+            if (attachment.s3path.indexOf('.pdf') !== -1) {
+                return attachment.thumbPath;
+            } else {
+                return attachment.s3path;
+            }
         }
     }
     getAttachLength() {
@@ -1584,14 +1599,21 @@ export class ConsumerAppointmentComponent implements OnInit {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
-
-        })
-    }  
-      getConsumerQuestionnaire() {
+            if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+                this.payuPayment();
+            } else {
+                this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.trackUuid } });
+            }
+        },
+            error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+    }
+    getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
         this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
+            console.log(data);
+            this.questionnaireList = data;
         });
-      }
+    }
 }
