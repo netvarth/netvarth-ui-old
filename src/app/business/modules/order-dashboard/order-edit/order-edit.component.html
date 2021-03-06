@@ -638,21 +638,21 @@
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
-                            <span class="mr-15 font-weight-bold">Price ( {{orders.length }}items)</span>
-                            <span class="text-right"> &#8377;{{getTotalItemPrice()}}</span>
+                            <span class="mr-15 font-weight-bold">Price ( {{orders.length }} items)</span>
+                            <span class="text-right price rupee-font">{{getTotalItemPrice() | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">&#8377; {{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                            <span class="text-right price rupee-font"> {{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">&#8377;{{getDeliveryCharge()}}</span>
+                            <span class="text-right price rupee-font">{{ getDeliveryCharge() | currency:'&#8377;'}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">&#8377; {{getSubTotal()}}</span>
+                            <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
 
@@ -661,20 +661,20 @@
 
                           <div class="d-flex justify-content-between mb-3">
                             <span class="mr-15 font-weight-bold">Price </span>
-                            <span class="text-right"> &#8377;{{orderDetails.cartAmount}}</span>
+                            <span class="text-right price rupee-font"> {{orderDetails.cartAmount | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.netTaxAmount">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">&#8377; {{orderDetails.bill.netTaxAmount}}</span>
+                            <span class="text-right price rupee-font"> {{orderDetails.bill.netTaxAmount | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3"  *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">&#8377;{{orderDetails.deliveryCharge}}</span>
+                            <span class="text-right price rupee-font">{{orderDetails.deliveryCharge | currency:'&#8377;'}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between" *ngIf="orderDetails.bill">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">&#8377; {{getSuborderTotal()}}</span>
+                            <span class="text-right price rupee-font"> {{getSuborderTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
 

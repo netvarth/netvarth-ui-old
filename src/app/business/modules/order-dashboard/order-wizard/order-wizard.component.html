@@ -266,6 +266,9 @@
                                   <div class="card-body p-0">
                                     <!--begin::Image-->
                                     <div class="overlay">
+                                        <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
+                                        [ngStyle]="{ 'background-image': 'url(' + getItemImg(item.item) + ')'}">
+                                      </div>
                                       <div class="add_qty">
                                         <td class="text-center align-middle">
                                           <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
@@ -277,9 +280,14 @@
                                           </a>
                                         </td>
                                       </div>
-                                      <div class="overlay-wrapper rounded bg-light text-center">
+                                      
+                                      <!-- <div class="overlay-wrapper rounded bg-light text-center">
                                         <img [src]="getItemImg(item.item)" alt="" class="mw-100 w-200px" />
-                                      </div>
+                                      </div> -->
+                                      
+
+                                          
+                                       
                                     </div>
                                     <!--end::Image-->
 
@@ -289,7 +297,7 @@
                                       </a>
                                       <span class="font-size-lg">{{ item.item.shortDesc }}</span>
                                     </div>
-                                    <div class="font-size-h6 text-muted font-weight-bolder">{{ item.item.price }}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{ item.item.price }}</div>
                                     <!--end::Details-->
                                   </div>
                                 </div>
