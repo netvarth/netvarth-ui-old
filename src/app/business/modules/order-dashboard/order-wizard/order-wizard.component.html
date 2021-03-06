@@ -234,7 +234,8 @@
                 <div class="pb-5" *ngIf="step == 2">
                   <!--begin::Layout-->
                   <div class="flex-row-fluid">
-                    <div *ngIf="show_customer && step == 2" class="orderdetails col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                    <div class="row" *ngIf="show_customer && step == 2">
+                    <div  class="orderdetails col-md-12 col-xs-12 col-sm-12 col-lg-12">
                       <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
                           <div class="bold font11" *ngIf="customer_data.firstName || customer_data.lastName">
                             {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
@@ -245,8 +246,9 @@
                                       aria-hidden="true"></i> {{customer_email}}</div>
                       </div>
                   </div>
+                </div>
                     <!--begin::Card-->
-                    <div class="">
+                    <div class="row">
 
                       
 
@@ -788,20 +790,20 @@
 
                           <div class="d-flex justify-content-between mb-3">
                             <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
-                            <span class="text-right">&#8377; {{getTotalItemPrice()}}</span>
+                            <span class="text-right price rupee-font"> {{getTotalItemPrice() | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">
                             <span class="mr-15 font-weight-bold">Tax</span>
-                            <span class="text-right">&#8377; {{getTotalItemTax(catalog_details.taxPercentage)}}</span>
+                            <span class="text-right price rupee-font">{{getTotalItemTax(catalog_details.taxPercentage) | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
                             <span class="mr-15 font-weight-bold">Delivery Charge</span>
-                            <span class="text-right">&#8377; {{getDeliveryCharge()}}</span>
+                            <span class="text-right price rupee-font"> {{getDeliveryCharge() | currency:'&#8377;'}}</span>
                           </div>
 
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
-                            <span class="text-right">&#8377; {{getSubTotal()}}</span>
+                            <span class="text-right price rupee-font"> {{getSubTotal() | currency:'&#8377;'}}</span>
                           </div>
                         </div>
 
