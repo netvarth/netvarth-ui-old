@@ -18,6 +18,7 @@ import { AddressComponent } from './address/address.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+// import { AddAddressComponent } from '../../../../shared/components/checkout/add-address/add-address.component';
 
 
 
@@ -665,8 +666,23 @@ export class OrderWizardComponent implements OnInit {
     }
 
   }
+  // addAddress() {
+ 
+  //     this.addressDialogRef = this.dialog.open(AddAddressComponent, {
+  //         width: '50%',
+  //         panelClass: ['popup-class', 'commonpopupmainclass'],
+  //         disableClose: true,
+  //         data: {
+  //         }
+  //     });
+  //     this.addressDialogRef.afterClosed().subscribe(result => {
+  //         console.log("Refresh items")
+          
+  //     })
+  
+  // }
   getTotalItemPrice() {
-    this.price = 0;
+    this.price = 0.0;
     for (const itemObj of this.orderList) {
       let item_price = itemObj.item.price;
       if (itemObj.item.showPromotionalPrice) {
@@ -677,15 +693,15 @@ export class OrderWizardComponent implements OnInit {
     return this.price.toFixed(2);
   }
   getDeliveryCharge() {
-    this.deliveryCharge = 0;
+    this.deliveryCharge = 0.0;
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
     return this.deliveryCharge.toFixed(2);
   }
   getSubTotal() {
-    let subtotal = 0;
-    let deliveryCharge = 0;
+    let subtotal = 0.0;
+    let deliveryCharge = 0.0;
     if (this.orders.length !== 0) {
       if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
         deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;

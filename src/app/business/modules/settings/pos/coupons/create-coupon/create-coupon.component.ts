@@ -146,8 +146,8 @@ isNumeric(evt) {
 
       }),
 
-      bookingChannel: [''],
-      couponBasedOn: ['']
+      bookingChannel: [[]],
+      couponBasedOn: [[]]
     });
     if (this.action === 'edit') {
         this.coupon_title='Edit Coupon';
@@ -555,7 +555,11 @@ isNumeric(evt) {
         console.log('createdSuccessfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_CREATED'));
         this.redirecToCoupon();
-      });
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+      );
   }
   updateCoupon(data) {
     data.id = this.couponDetails.id;
@@ -564,7 +568,10 @@ isNumeric(evt) {
         console.log('updated Successfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_UPDATED'));
         this.redirecToCoupon();
-      });
+      },error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+  );
   }
   redirecToCoupon() {
     this.router.navigate(['provider', 'settings', 'pos', 'coupon']);

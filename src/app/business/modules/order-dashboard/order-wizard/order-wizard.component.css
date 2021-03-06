@@ -74,5 +74,5 @@
     line-height: 1.6;
 }
 .tab-selected .wizard-icon {
-    background: #00dbff !important;
+    color: #00dbff !important;
   }

@@ -112,119 +112,8 @@
                   <!--end::Input-->
                 </div>
 
-                <!-- Show customer details -->
-                <!-- <div class="pb-5 row" *ngIf="show_customer && step == 1 ">
-                  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-custom gutter-b card-stretch">
-                      <div class="card-body text-center pt-4">
-                        <div class="my-2">
-                          <a class="text-dark font-weight-bold text-hover-primary font-size-h4">{{ customer_data.firstName }} {{ customer_data.lastName }}
-                          </a>
-                        </div>
-                        <a class="label label-inline label-lg label-light-primary font-weight-bold">Id - {{ jaldeeId }}</a>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
-
-                <!-- New customer creation
-                  <div class="pb-5" *ngIf="create_customer">
-                    <form id="customer_creation" class="form" [formGroup]="createCustomer">
-                      <div class="card-body p-0">
-                        <div class="form-group row">
-                          <div class="col-lg-6">
-                            <label>Mobile</label>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text1">
-                                  <i style="font-style: normal; font-size: small;">+91</i>
-                                </span>
-                              </div>
-                              <input type="text" id="mobile_number" formcontrolname="mobile_number" autocomplete="off" maxlength="10"
-                                class="form-control" ng-reflect-name="mobile_number" ng-reflect-maxlength="10" placeholder="Mobile # ">
-                            </div>
-                            <app-field-error-display ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                          <div class="col-lg-6 ng-star-inserted">
-                            <label>Patient id *</label>
-                            <div class="input-group">
-                              <input type="text" id="customer_id" formcontrolname="customer_id" autocomplete="off" class="form-control ng-untouched ng-pristine ng-valid"
-                                ng-reflect-name="customer_id" placeholder="Patient id *">
-                              <div class="input-group-append"></div>
-                            </div>
-                            <app-field-error-display ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-lg-6">
-                            <label>First Name</label>
-                            <input type="email" name="first_name" id="first_name" formcontrolname="first_name"
-                              autocomplete="off" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="first_name"
-                              placeholder="First Name">
-                            <app-field-error-display ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                          <div class="col-lg-6">
-                            <label>Last Name</label>
-                            <input type="email" id="last_name" formcontrolname="last_name" autocomplete="off"
-                              class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="last_name" placeholder="Last Name">
-                            <app-field-error-display ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-lg-6">
-                            <label>Email</label>
-                            <div class="input-group">
-                              <div class="input-group-prepend"></div>
-                              <input type="text" id="email_id" placeholder="Email(user@xyz.com)" formcontrolname="email_id"
-                                autocomplete="off" class="form-control ng-untouched ng-pristine ng-valid" ng-reflect-name="email_id">
-                            </div>
-                            <app-field-error-display errormsg="Please enter valid email." ng-reflect-error-msg="Please enter valid email." ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                          <div class="col-lg-6">
-                            <label>Date of birth</label>
-                            <div class="input-group">
-                              <input type="date" value="2011-08-19" id="example-date-input" formcontrolname="dob" class="form-control pad-19 ng-untouched ng-pristine ng-valid"
-                                ng-reflect-name="dob" max="Thu Feb 04 2021 14:52:04 GMT+0530 (India Standard Time)" min="Mon Jan 01 1900 00:00:00 GMT+0519 (India Standard Time)">
-                            </div>
-                            <app-field-error-display errormsg="Please select the date of birth." ng-reflect-error-msg="Please select the date of birt"
-                              ng-reflect-display-error="false">
-                            </app-field-error-display>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-lg-6">
-                            <label>Adress</label>
-                            <div class="input-group">
-                              <div class="input-group-prepend"></div>
-                              <textarea type="text" id="address" placeholder="Address" formcontrolname="address" class="form-control ng-untouched ng-pristine ng-valid"
-                                ng-reflect-name="address"></textarea>
-                            </div>
-                          </div>
-                          <div class="col-lg-6">
-                            <label>Gender</label>
-                            <div class="radio-inline mt-5">
-                              <label class="radio radio-solid">
-                                <input type="radio" name="example_2" checked="checked" value="2">
-                                <span></span> Male </label>
-                              <label class="radio radio-solid">
-                                <input type="radio" name="example_2" value="2">
-                                <span></span> Female
-                              </label>
-                              <label class="radio radio-solid">
-                                <input type="radio" name="example_2" value="2">
-                                <span></span> Others
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div> -->
+        
+                  
 
 
 
@@ -260,7 +149,7 @@
                           <!--begin::Product-->
                           <div class="card-body p-0" *ngIf="orderType !== 'SHOPPINGLIST'">
                             <ng-container *ngFor="let item of orderItems">
-                              <div class="col-md-4 col-xxl-4 col-lg-12">
+                              <div class="col-xs-12 col-md-6 col-xl-4 col-lg-12">
                                 <!--begin::Card-->
                                 <div class="card card-custom card-shadowless">
                                   <div class="card-body p-0">
@@ -419,7 +308,7 @@
                               <tr>
                                 <th>Product</th>
                                 <th class="text-center">Qty</th>
-                                <th class="text-right">Price</th>
+                                <th class="text-right rupee-font">Price (₹)</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -447,8 +336,8 @@
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>
-                                <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                  {{ getItemPrice(item) }}
+                                <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                    ₹ {{ getItemPrice(item) }}
                                 </td>
                                 <td class="text-right align-middle" (click)="removeItemFromCart(item)">
                                   <a class="btn btn-danger font-weight-bolder font-size-sm">
@@ -548,14 +437,14 @@
                                             </mat-grid-tile>
                                             <mat-grid-tile>
                                                
-                                                  <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                                  <button type="button" class="btn btn-success px-2 py-1"(click)="addAddress();">
                                                       Add Address </button>
                                               </mat-grid-tile>
                                             
                                         </mat-grid-list>
                                     </div>
                             <!-- Add Address Modal  -->
-                            <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
+                            <!-- <div class="modal fade" id="exampleModalSizeDefault" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault"
                               aria-hidden="true">
                               <div class="modal-dialog modal-dialog-centered" role="document">
                                 <form class="form" [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)">
@@ -667,7 +556,7 @@
                                   </div>
                                 </form>
                               </div>
-                            </div>
+                            </div> -->
 
                             <!--Change Date picker  -->
                             <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog" aria-labelledby="datePickerModal" aria-hidden="true">

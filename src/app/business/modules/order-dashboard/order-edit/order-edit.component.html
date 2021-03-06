@@ -200,7 +200,7 @@
                             <tr>
                               <th>Product</th>
                               <th class="text-center">Qty</th>
-                              <th class="text-right">Price</th>
+                              <th class="text-right rupee-font">Price (₹)</th>
                             </tr>
                           </thead>
                           <!--end::Cart Header-->
@@ -223,8 +223,8 @@
                                 <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
                                 
                               </td>
-                              <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                {{item.totalPrice}}
+                              <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{item.totalPrice}}
                               </td>
                               
                             </tr>

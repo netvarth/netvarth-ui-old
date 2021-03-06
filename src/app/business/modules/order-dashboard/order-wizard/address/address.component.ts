@@ -21,6 +21,8 @@ export class AddressComponent implements OnInit {
   address_title;
   index: any;
   source: any;
+  api_error = null;
+  api_success = null;
   constructor(
     public dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,6 +50,9 @@ export class AddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+  }
+  close(){
+    this.dialogRef.close();
   }
   createForm() {
 
