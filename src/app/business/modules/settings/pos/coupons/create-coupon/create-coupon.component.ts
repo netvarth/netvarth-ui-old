@@ -16,6 +16,7 @@ import { UsersListDialogComponent } from '../../../../../shared/users-list-dialo
 import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 
 
 @Component({
@@ -52,8 +53,8 @@ export class CreateCouponComponent implements OnInit {
   startdateError: boolean;
   timewindow_list: any = [];
   timewindowdialogRef: any;
-  max_char_count: any;
-  char_count: number;
+  char_count = 0;
+  max_char_count = 500;
   isfocused: boolean;
   coupon_timeslots: any = [];
   public couponForm: FormGroup;
@@ -62,11 +63,14 @@ export class CreateCouponComponent implements OnInit {
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
   weekdays = projectConstantsLocal.myweekdaysSchedule;
   bookingMode = projectConstantsLocal.BOOKING_MODE;
+  maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
   selday_arr: any = [];
   selallweekdays = false;
   couponId: any;
   action: any;
   couponDetails: any;
+  coupon_title='Create Coupon'
+  calculationType: any;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -74,6 +78,7 @@ export class CreateCouponComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private router: Router,
+    private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     public dialog: MatDialog, ) {
     this.activated_route.params.subscribe(params => {
@@ -100,7 +105,12 @@ export class CreateCouponComponent implements OnInit {
     }
 
   }
-
+  isvalid(evt) {
+    return this.sharedfunctionObj.isValid(evt);
+}
+isNumeric(evt) {
+  return this.sharedfunctionObj.isNumeric(evt);
+}
   createForm() {
     this.couponForm = this.formbuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
@@ -140,7 +150,7 @@ export class CreateCouponComponent implements OnInit {
       couponBasedOn: ['']
     });
     if (this.action === 'edit') {
-
+        this.coupon_title='Edit Coupon';
       this.getCouponById(this.couponId).then(
         (result) => {
           this.updateForm(result);
@@ -230,6 +240,7 @@ export class CreateCouponComponent implements OnInit {
     return ret;
   }
   handleCalculationType(event) {
+    this.calculationType=event;
 
   }
   handleBaseChange(event) {
