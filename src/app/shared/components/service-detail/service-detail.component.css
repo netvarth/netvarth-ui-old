@@ -33,6 +33,22 @@
     width: 35px;
 }
 
+.modal-title.service-detail-title .name .dispvalue span .wtsapvid-icon {
+    width: 40px;
+    margin-right: 8px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .donation-service {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.modal-title.service-detail-title .name .dispvalue span .physical-service {
+    width: 50px;
+    margin-right: 8px;
+    margin-top: -12px;
+}
+
 .modal-title.service-detail-title .name .dispvalue span .zoom-icon {
     width: 38px;
 }

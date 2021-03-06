@@ -108,20 +108,20 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
   createForm(){
     this.amItemForm = this.fb.group({
         itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-        note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-        displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-        showOnLandingpage: [true],
-        stockAvailable: [true],
-        taxable: [false],
-        price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-        promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-        promotionalPriceType: [],
-        promotionallabel: [],
-        customlabel: []
+                itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
+                itemName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                displayName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                shortDec: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
+                note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
+                showOnLandingpage: [true],
+                stockAvailable: [true],
+                taxable: [false],
+                price: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
+                promotionalPriceType: [],
+                promotionallabel: [],
+                customlabel: []
     });
         this.amItemForm.get('promotionalPriceType').setValue('FIXED');
         this.amItemForm.get('promotionallabel').setValue('ONSALE');

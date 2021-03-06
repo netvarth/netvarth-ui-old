@@ -30,7 +30,7 @@
   display: grid;
 }
 .font-addrss {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: monospace;
 }
 .gutter-b {
@@ -49,4 +49,7 @@
    /* background: #42A948 !important; green */
   box-shadow: 0 3px 5px 0 rgba(40,44,63,.4) !important;
   border: 2px dashed #0707eca1 !important;
+}
+.addressedit:hover{
+color: #0707eca1 !important;
 }

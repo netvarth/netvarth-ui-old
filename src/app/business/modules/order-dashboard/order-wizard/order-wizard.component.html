@@ -17,7 +17,7 @@
             <div class="wizard-nav border-bottom">
               <div class="wizard-steps p-8 p-lg-10">
                 <!--begin::Wizard Step 1 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step"  [class.tab-selected]="step>=1">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon-user-add"></i>
                     <h3 class="wizard-title">1. Find Patient</h3>
@@ -41,11 +41,12 @@
                 <!--end::Wizard Step 1 Nav-->
 
                 <!--begin::Wizard Step 2 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step" [class.tab-selected]="step>=2">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon-business"></i>
                     <h3 class="wizard-title">2. Add items</h3>
                   </div>
+                  
                   <span class="svg-icon svg-icon-xl wizard-arrow">
                     <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24"
@@ -64,7 +65,7 @@
                 </div>
                 <!--end::Wizard Step 2 Nav-->
                 <!--begin::Wizard Step 3 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step"  [class.tab-selected]="step==3">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon2-shopping-cart-1"></i>
                     <h3 class="wizard-title">3. Place order</h3>

@@ -242,7 +242,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return ' ';
         }
     }
-    openCard(id, event){
+    /* openCard(id, event){
         event.stopPropagation();
         var cardElement = document.getElementById(id);
         if(cardElement.classList.contains('expand')){
@@ -252,5 +252,5 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             cardElement.classList.add("expand");
         }
         return;
-    }
+    } */
 }

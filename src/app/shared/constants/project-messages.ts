@@ -1449,7 +1449,7 @@ export const Messages = {
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_TWO': 'if not found, enter the [customer] details ',
   'FRM_LEVEL_CREATE_CUSTOMER_MSG_THREE': 'for creating a [customer] base.',
   'FRM_LEVEL_ADJ_DELAY_MSG': 'Manage the delay for the below shown working hour selected from the dashboard and notify the checked in [customer]s about the delay.',
-  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE': 'Are you running late? Inform your upcoming patients about any delay.',
+  'FRM_LEVEL_ADJ_DELAY_MSG_CNGE': 'Are you running late? Inform your upcoming [customer]s about any delay.',
 
   'CHECKED_IN_LABEL': 'Checked in',
   'VERIFIED_LEVEL': 'Your verified level',

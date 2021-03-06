@@ -504,5 +504,8 @@
 .hide_qty {
   visibility: hidden !important;
 }
-
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  padding: 0rem !important;
+  background-color: none !important;
+}
 

@@ -1,7 +1,7 @@
 <section class="">
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{uid}}</i>
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
     </h5>
   </div>
 </section>
@@ -71,7 +71,7 @@
                         <!--begin::Products-->
                         <div class="row">
                           <!--begin::Product-->
-                          <div class="card-body p-0">
+                          <div class="card-body p-0"  >
                             <ng-container *ngFor="let item of catalogItems">
                               <div class="col-md-4 col-xxl-4 col-lg-12">
                                 <!--begin::Card-->
@@ -79,7 +79,7 @@
                                   <div class="card-body p-0">
                                     <!--begin::Image-->
                                     <div class="overlay">
-                                      <div class="add_qty">
+                                      <div class="add_qty" >
                                         <td class="text-center align-middle">
                                           <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
                                             <i class="ki ki-minus icon-xs"></i>
@@ -111,6 +111,8 @@
                             </ng-container>
                             <!--end::Product-->
                           </div>
+
+                          
                           <!--end::Products-->
                         </div>
                         <!--end::Section-->
@@ -140,7 +142,7 @@
                       <div class="card-body p-0">
                         <!--begin::Shopping Cart-->
                         <!-- <ng-container *ngIf="orderDetails.catalog.orderType ==='SHOPPINGCART'"> -->
-                        <div class="table-responsive">
+                        <div class="table-responsive" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>
@@ -178,7 +180,7 @@
                                 <td class="text-right align-middle font-weight-bolder font-size-h5">
                                   {{ getItemPrice(item) }}
                                 </td>
-                                <td class="text-right align-middle" (click)="removeItemFromCart(item)">
+                                <td class="text-right align-middle"  (click)="removeItemFromCart(item)">
                                   <a class="btn btn-danger font-weight-bolder font-size-sm">
                                     Remove
                                   </a>
@@ -188,9 +190,129 @@
                             </tbody>
                           </table>
                         </div>
-                        <div>
+                        <div *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
                        <a href="javascript:;" style="color:blueviolet"  (click)="gotoPrev()">Add More Items</a>
                       </div>
+                      <div class="table-responsive" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'" >
+                        <table class="table">
+                          <!--begin::Cart Header-->
+                          <thead>
+                            <tr>
+                              <th>Product</th>
+                              <th class="text-center">Qty</th>
+                              <th class="text-right">Price</th>
+                            </tr>
+                          </thead>
+                          <!--end::Cart Header-->
+
+                          <tbody>
+                            <!--begin::Cart Content-->
+                            <tr *ngFor="let item of orderDetails.orderItem">
+                              <td class="d-flex align-items-center font-weight-bolder">
+                                <!--begin::Symbol-->
+                                <!-- <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                  <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
+                                  </div>
+                                </div> -->
+                                <!--end::Symbol-->
+                                <a class="text-dark text-hover-primary">{{item.name}}
+                                </a>
+                              </td>
+                              <td class="text-center align-middle">
+                               
+                                <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
+                                
+                              </td>
+                              <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                {{item.totalPrice}}
+                              </td>
+                              
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div   *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+        (buttonBeforeHook)="onButtonBeforeHook()"
+        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+
+
+    </div>
+                        
+                    </div> 
+
+                    <div  *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
+                        <div  >
+        <ul class="shoppinglist-gal">
+            <ng-container *ngFor="let file of image_list_popup;let i = index">
+                <li *ngIf="i<2" class="shoppinglist-li">
+                    <div class="shoppinglistbx">
+                        <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                            <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                                *ngIf="file.modal.img" />
+                        </div>
+                    </div>
+                </li>
+            </ng-container>
+            <li *ngIf="image_list_popup.length>2"class="shoppinglist-li">
+                <div class="shoppinglistbx">
+                    <span class="shoppinglistmre" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                    <div class="shoppinglistimg-h" *ngIf="(image_list_popup.length-3)>0"><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" /></div>
+
+                    <div class="shoppinglistimg-h" (click)="openImageModalRow(image_list_popup[2])"
+                        *ngIf="(image_list_popup.length-3)==0">
+                        <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
+                            *ngIf="image_list_popup[2].modal.img"
+                            [src]="image_list_popup[2].modal.img" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
+        [plainGalleryConfig]="customPlainGalleryRowConfig"
+        [buttonsConfig]="customButtonsFontAwesomeConfig"
+        (buttonBeforeHook)="onButtonBeforeHook()"
+        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+
+
+    </div>
+                        
+                    </div> 
                     <!-- </ng-container> -->
                         <!-- begin: Invoice footer-->
                         <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
@@ -234,13 +356,16 @@
                             <!-- Home Address -->
                             <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
                               <div>
-                                <div  class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
-                                    <div class="card card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
+                                <div  class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card " *ngIf="orderDetails.homeDeliveryAddress" (click)="orderAddress()"  [ngClass]="{'highlight': selectedRowIndex == 'i'}">
+                                    <div class="card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
                                         <div class="card-body text-left pl-5 p-0 font-addrss">
-                                          <div class="adrs-data">
+                                          <div class="adrs-data mgn-up-minus-20">
                                             <div *ngIf="orderDetails.homeDeliveryAddress">
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.firstName }} &nbsp;{{orderDetails.homeDeliveryAddress.lastName}}
+                                              </span><br>
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.address}}
                                               </span><br>
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
@@ -252,15 +377,16 @@
                                                 {{orderDetails.homeDeliveryAddress.landMark }}
                                               </span><br>
                                             </div>
+                                            <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                              Edit</a>
                                           </div>
-                                          <button type="button" class="btn btn-success px-2 py-1"  (click)="editAddress();"data-toggle="modal" data-target="#exampleModalSizeDefault">
-                                            Edit</button>
+                                          
                                         </div>
                                       </div>
                                 </div>
 
-                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngIf="!orderDetails.homeDeliveryAddress ||orderDetails.homeDeliveryAddress==null">
-                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4 card" *ngIf="!orderDetails.homeDeliveryAddress || orderDetails.homeDeliveryAddress==null">
+                                  <div class=" card-custom gutter-b rounded-0 card-stretch p-2">
                                     <div class="card-body text-center p-0">
                                       <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
                                         Add New </button>
@@ -283,7 +409,7 @@
                                             <div class="input-group-prepend mob-prefix" #mobPrefix style="display: flex;">
                                               <span class="input-group-text" style="margin-top:auto;">+91</span>
 
-                                              <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+                                              <input type="text" class="form-control" placeholder="Phone number*" formControlName="phoneNumber">
 
                                             </div>
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'phoneNumber')" [errorMsgs]="fed_service.getErrorMessage(amForm,'phoneNumber',
@@ -297,7 +423,7 @@
 
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="First name" formControlName="firstName">
+                                            <input type="text" class="form-control" placeholder="First name*" formControlName="firstName">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'firstName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'firstName',
                                                                                         {
                                                                                           'required' : 'First name is required',
@@ -309,7 +435,7 @@
                                         <div class="form-group row">
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+                                              <input type="text" class="form-control" placeholder="Last name*" formControlName="lastName">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'lastName')" [errorMsgs]="fed_service.getErrorMessage(amForm,'lastName',
                                                                                             {
                                                                                               'required' : 'Last name is required',
@@ -320,7 +446,7 @@
                                           </div>
                                           <div class="col-lg-6">
                                             <div class="input-group">
-                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)" formControlName="email">
+                                              <input type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
                                               <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'email')" [errorMsgs]="fed_service.getErrorMessage(amForm,'email',
                                                                                             {
                                                                                               'required' : 'Email is required',
@@ -332,7 +458,7 @@
                                         </div>
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Address" formControlName="address">
+                                            <input type="text" class="form-control" placeholder="Address*" formControlName="address">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                     {
                                                                                       'required' : 'Please enter city name',
@@ -341,7 +467,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                            <input type="text" class="form-control" placeholder="City*" formControlName="city">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'city')" [errorMsgs]="fed_service.getErrorMessage(amForm,'city',
                                                                                       {
                                                                                         'required' : 'Please enter city name',
@@ -353,7 +479,7 @@
 
                                         <div class="form-group row">
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP" formControlName="postalCode">
+                                            <input type="text" class="form-control" placeholder="Postal Code /ZIP*" formControlName="postalCode">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'postalCode')" [errorMsgs]="fed_service.getErrorMessage(amForm,'postalCode',
                                                                                           {
                                                                                             'required' : 'Please enter Postal Code ',
@@ -364,7 +490,7 @@
                                             </app-field-error-display>
                                           </div>
                                           <div class="col-lg-6">
-                                            <input type="text" class="form-control" placeholder="Landmark" formControlName="landMark">
+                                            <input type="text" class="form-control" placeholder="Landmark*" formControlName="landMark">
                                             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'landMark')" [errorMsgs]="fed_service.getErrorMessage(amForm,'landMark',
                                                                                             {
                                                                                               'required' : 'Please enter landmark'
@@ -377,7 +503,7 @@
                                     </div>
                                     <div class="modal-footer">
                                       <button #closeModal type="button" class="btn ln-ht-1 btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-                                      <button type="submit" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
+                                      <button type="submit" [disabled]="!amForm.valid" class="btn ln-ht-1 btn-primary font-weight-bold">Save</button>
                                     </div>
                                   </div>
                                 </form>
@@ -391,7 +517,7 @@
                                 <div class="modal-content">
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
-                                      <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
+                                      <!-- <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                           Choose Date
                                         </div>
@@ -409,7 +535,7 @@
                                           <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                                         </div>
-                                      </div>
+                                      </div> -->
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
                                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">Delivery
                                                                           Timings  </div>
@@ -508,7 +634,7 @@
                         </div> -->
                          <!-- Coupon end -->
  <!-- Total summary -->
-                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5">
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
@@ -527,6 +653,28 @@
                           <div class="d-flex justify-content-between">
                             <span class="mr-15 font-weight-bold">Total Price</span>
                             <span class="text-right">&#8377; {{getSubTotal()}}</span>
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-column mb-10 mb-md-0 mt-5" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
+                          <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
+
+                          <div class="d-flex justify-content-between mb-3">
+                            <span class="mr-15 font-weight-bold">Price </span>
+                            <span class="text-right"> &#8377;{{orderDetails.cartAmount}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3" *ngIf="orderDetails.bill && orderDetails.bill.netTaxAmount">
+                            <span class="mr-15 font-weight-bold">Tax</span>
+                            <span class="text-right">&#8377; {{orderDetails.bill.netTaxAmount}}</span>
+                          </div>
+                          <div class="d-flex justify-content-between mb-3"  *ngIf="choose_type === 'home' && catalog_details.homeDelivery.deliveryCharge">
+                            <span class="mr-15 font-weight-bold">Delivery Charge</span>
+                            <span class="text-right">&#8377;{{orderDetails.deliveryCharge}}</span>
+                          </div>
+
+                          <div class="d-flex justify-content-between" *ngIf="orderDetails.bill">
+                            <span class="mr-15 font-weight-bold">Total Price</span>
+                            <span class="text-right">&#8377; {{getSuborderTotal()}}</span>
                           </div>
                         </div>
 

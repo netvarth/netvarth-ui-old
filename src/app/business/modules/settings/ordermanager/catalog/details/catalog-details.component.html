@@ -705,7 +705,7 @@
                         <!--begin::Input-->
                         <mat-form-field appearance="fill">
                           <label>Order Status</label>
-                          <mat-select placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
+                          <mat-select style="border: 1px solid #E4E6EF !important; border-radius: 0.42rem !important;" placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
                             <mat-option *ngFor=" let stat of status" [value]="stat.value"
                               [disabled]="stat.value === 'Order Received'||stat.value === 'Cancelled' || stat.value === 'Order Confirmed'">
                               {{stat.value}}
