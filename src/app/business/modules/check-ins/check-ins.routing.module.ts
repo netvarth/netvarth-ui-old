@@ -12,6 +12,7 @@ const routes: Routes = [
         children: [
             { path: 'add', component: ProviderCheckinComponent },
             { path: 'adjustdelay', component: AdjustqueueDelayComponent },
+            { path: 'questionnaire', loadChildren: () => import('../../../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
             { path: ':id', component: ProviderWaitlistCheckInDetailComponent },
             { path: ':id/add-label', component: ApplyLabelComponent }
         ]

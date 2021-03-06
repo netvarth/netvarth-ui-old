@@ -716,7 +716,7 @@ export class CustomersListComponent implements OnInit {
   }
   customerGroupAction() {
     if (this.groupName === '') {
-      this.apiError = 'Please enter the name';
+      this.apiError = 'Please enter the group name';
     } else {
       const postData = {
         'groupName': this.groupName,

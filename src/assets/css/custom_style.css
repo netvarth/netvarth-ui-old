@@ -27193,3 +27193,14 @@ width: 40px !important;
   float: right;
   text-decoration: underline;
 }
+.quest-head {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+.question {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+.quest-answ-box {
+  margin-bottom: 20px;
+}

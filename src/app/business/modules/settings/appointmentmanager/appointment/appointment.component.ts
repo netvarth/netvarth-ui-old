@@ -231,6 +231,7 @@ export class AppointmentComponent implements OnInit {
     showQuestionnaire = false;
     questionnaireList: any = [];
     channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -780,6 +781,8 @@ export class AppointmentComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(this.sel_ser);
+        this.getProviderQuestionnaire();
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -1128,7 +1131,6 @@ export class AppointmentComponent implements OnInit {
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
-                this.showQuestionnaire = true;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
@@ -1142,11 +1144,17 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                    this.submitQuestionnaire(retUuid);
+                    } else {                
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+
+                        this.router.navigate(['provider', 'appointments']);
+                    }
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
                 // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
                 // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
                 //    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
                 // }
@@ -1160,6 +1168,25 @@ export class AppointmentComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+        this.router.navigate(['provider', 'appointments']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1217,6 +1244,7 @@ export class AppointmentComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
+        this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1889,4 +1917,17 @@ export class AppointmentComponent implements OnInit {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
+    }  
+     getProviderQuestionnaire() {
+        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
+      }
 }

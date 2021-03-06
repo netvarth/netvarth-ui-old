@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card p0" *ngIf="showCheckin">
+            <div class="card p0" *ngIf="showCheckin && !showQuestionnaire">
                 <div class="copy locd">
                     <div class="lbl col-sm-12 col-md-7 col-lg-7">
                         <div class="mainouter checkin-page ">
@@ -493,10 +493,13 @@
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
 
                         <ng-container *ngIf="checkinLabel && queuejson.length > 0  && servicesjson.length > 0">
-                            <div class="waitlist-action mgn-bt-20 mgn-up-10"> <button mat-button class="cs-btn bt1"
-                                    [class.confirmbtn]="step == 1" (click)="handleCheckinClicked()"
+                            <div class="waitlist-action mgn-bt-20 mgn-up-10"> 
+                                <button mat-button class="cs-btn bt1"
+                                    [class.confirmbtn]="step == 1" (click)="showQnr()" *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0"
+                                    [disabled]="api_loading || !showApptTime">Next</button>
+                                    <button mat-button class="cs-btn bt1"
+                                    [class.confirmbtn]="step == 1" (click)="saveCheckin()" *ngIf="!questionnaireList.labels"
                                     [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>
-                                <div class="disable-msg">{{checkindisablemsg}}</div>
                             </div>
                         </ng-container>
                     </div>
@@ -685,12 +688,17 @@
                 </div>
             </div>
 
-            <div *ngIf="showQuestionnaire">
-                <div>
+            <div class="card" *ngIf="showQuestionnaire">
+                <div class="mgn-bt-10 quest-head pad-10">
                     Please provide us with a little more information complete your booking
                 </div>
-                <app-questionnaire [questionnaireList]="questionnaireList" [source]="'proAppt'"
-                [consumerId]="waitlist_for[0].id" [serviceId]="sel_ser" [channel]="channel"></app-questionnaire>
+                <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
+                [source]="'proAppt'" [consumerId]="waitlist_for[0].id"
+                [serviceId]="sel_ser" [channel]="channel" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                <div class="waitlist-action mgn-bt-20 mgn-up-30"> <button mat-button class="cs-btn bt1"
+                    [class.confirmbtn]="step == 1" (click)="saveCheckin()"
+                    [disabled]="api_loading || !showApptTime">{{showCheckinButtonCaption()}}</button>
+            </div>
               </div>
         </div>
         <div class="clearfix"></div>
