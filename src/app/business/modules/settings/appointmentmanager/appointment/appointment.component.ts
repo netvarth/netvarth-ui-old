@@ -231,6 +231,7 @@ export class AppointmentComponent implements OnInit {
     showQuestionnaire = false;
     questionnaireList: any = [];
     channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1128,7 +1129,6 @@ export class AppointmentComponent implements OnInit {
         this.shared_services.addProviderAppointment(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
-                this.showQuestionnaire = true;
                 if (this.waitlist_for.length !== 0) {
                     for (const list of this.waitlist_for) {
                         if (list.id === 0) {
@@ -1142,6 +1142,7 @@ export class AppointmentComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                this.submitQuestionnaire(retUuid);
                 if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                     this.consumerNoteAndFileSave(retUuid);
                 }
@@ -1160,6 +1161,24 @@ export class AppointmentComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderApptQuestionnaire(dataToSend, uuid).subscribe(data => {
+        this.router.navigate(['provider', 'appointments']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1888,5 +1907,12 @@ export class AppointmentComponent implements OnInit {
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+    }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
     }
 }

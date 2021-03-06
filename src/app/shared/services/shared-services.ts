@@ -1006,6 +1006,22 @@ resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
   const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
   return this.servicemeta.httpPut(url, body);
 }
+submitProviderApptQuestionnaire(body, uuid) {
+  const url = 'provider/appointment/questionnaire/' + uuid;
+  return this.servicemeta.httpPost(url, body);
+}
+resubmitProviderApptQuestionnaire(body, uuid) {
+  const url = 'provider/appointment/questionnaire/' + uuid;
+  return this.servicemeta.httpPut(url, body);
+}
+resubmitProviderWaitlistQuestionnaire(body, uuid) {
+  const url = 'provider/waitlist/questionnaire/' + uuid;
+  return this.servicemeta.httpPut(url, body);
+} 
+submitProviderWaitlistQuestionnaire(body, uuid) {
+  const url = 'provider/waitlist/questionnaire/' + uuid;
+  return this.servicemeta.httpPost(url, body);
+}
 getProviderQuestionnaire(serviceId, consumerId, channel) {
   const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
   return this.servicemeta.httpGet(url);

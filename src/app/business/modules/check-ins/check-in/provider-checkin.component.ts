@@ -228,6 +228,7 @@ export class ProviderCheckinComponent implements OnInit {
     showQuestionnaire = false;
     questionnaireList: any = [];
     channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1182,13 +1183,13 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
-                this.showQuestionnaire = true;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                this.submitQuestionnaire(retUuid);
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
                 }
@@ -1208,6 +1209,24 @@ export class ProviderCheckinComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+        this.router.navigate(['provider', 'check-ins']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1951,5 +1970,12 @@ export class ProviderCheckinComponent implements OnInit {
         } else {
             return this.customer_data.jaldeeId;
         }
+    }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
     }
 }

@@ -1480,11 +1480,11 @@
 
                                     <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
-                                        <div>
+                                        <div class="mgn-bt-20 quest-head mgn-up-10">
                                             Please provide us with a little more information complete your booking
                                         </div>
                                         <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
-                                            [consumerId]="waitlist_for[0].id" [serviceId]="sel_ser"
+                                            [consumerId]="(waitlist_for[0].id === customer_data.id) ? 0 : waitlist_for[0].id" [serviceId]="sel_ser"
                                             [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
 
                                     </div>

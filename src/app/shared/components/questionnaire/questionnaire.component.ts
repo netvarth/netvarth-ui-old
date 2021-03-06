@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { SharedServices } from '../../services/shared-services';
+import { SnackbarService } from '../../services/snackbar.service';
+import { WordProcessor } from '../../services/word-processor.service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -16,28 +19,53 @@ export class QuestionnaireComponent implements OnInit {
   @Input() channel;
   @Input() questionAnswers;
   @Output() returnAnswers = new EventEmitter<any>();
-  answers;
+  answers: any = {};
   selectedMessage = {
     files: [],
     base64: [],
     caption: []
   };
   apiError = [];
+  params;
   constructor(private sharedService: SharedServices,
-    private datepipe: DateFormatPipe) { }
+    private datepipe: DateFormatPipe,
+    private activated_route: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private wordProcessor: WordProcessor,
+    private router: Router) {
+    this.activated_route.queryParams.subscribe(qparams => {
+      this.params = qparams;
+      console.log(this.params);
+      if (this.params.providerId) {
+        this.accountId = this.params.providerId;
+      }
+      if (this.params.serviceId) {
+        this.serviceId = this.params.serviceId;
+      }
+      if (this.params.consumerId) {
+        this.consumerId = this.params.consumerId;
+      }
+      if (this.params.type) {
+        this.source = this.params.type;
+      }
+      if (this.params.channel) {
+        this.channel = this.params.channel;
+      }
+    });
+  }
 
   ngOnInit(): void {
     console.log(this.questionAnswers);
     if (this.questionAnswers) {
       if (this.questionAnswers.answers) {
-this.answers = this.getAnswers(this.questionAnswers.answers, 'init');
+        this.getAnswers(this.questionAnswers.answers.answer, 'init');
+        console.log(this.answers);
       }
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
-              }
+      }
     }
     console.log(this.source);
-    console.log(this.answers);
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
       this.getConsumerQuestionnaire();
     } else {
@@ -45,15 +73,22 @@ this.answers = this.getAnswers(this.questionAnswers.answers, 'init');
     }
   }
   getAnswers(answerData, type) {
+    console.log(answerData);
+    console.log(type);
     if (type === 'init') {
-for (let answer of answerData) {
-  this.answers[answer.questionId] = answer.answer;
-}
+      for (let answ of answerData) {
+        console.log(answ);
+        this.answers[answ.questionId] = answ.answer;
+      }
     } else {
-      for (let answer of answerData) {
-        this.answers[answer.questionId] = answer.answer;
+      for (let answ of answerData) {
+        console.log(answ);
+        if (answ.answer && answ.question.fieldDataType !== 'FileUpload') {
+          this.answers[answ.answer.questionId] = answ.answer.answer;
+        }
       }
     }
+    console.log(this.answers);
   }
   filesSelected(event, index, question) {
     const input = event.target.files;
@@ -71,43 +106,50 @@ for (let answer of answerData) {
         // } else if (file.size > question.filePropertie.maxSize) {
         //   this.apiError[index] = 'Please upload images with size < ' + question.filePropertie.maxSize + 'mb';
         // } else {
-          this.selectedMessage.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-          };
-          console.log(file.name);
-          let imgname = file.name.split('.');
-          imgname = imgname[0];
-          const indx = this.selectedMessage.files.indexOf(file);
-          console.log(indx);
-          this.answers[question.labelName][indx] = imgname;
-          reader.readAsDataURL(file);
+        this.selectedMessage.files.push(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.selectedMessage.base64.push(e.target['result']);
+        };
+        console.log(file.name);
+        let imgname = file.name.split('.');
+        imgname = imgname[0];
+        const indx = this.selectedMessage.files.indexOf(file);
+        console.log(indx);
+        this.answers[question.labelName][indx] = imgname;
+        reader.readAsDataURL(file);
         // }
       }
       console.log(this.selectedMessage);
       console.log(this.apiError);
       console.log(this.answers);
     }
+    this.onSubmit();
+  }
+  deleteTempImage(i) {
+    this.selectedMessage.files.splice(i, 1);
+    this.selectedMessage.base64.splice(i, 1);
+    this.selectedMessage.caption.splice(i, 1);
   }
   getConsumerQuestionnaire() {
-    this.consumerId = 0;
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
       if (!this.questionAnswers) {
-
+        this.getAnswers(this.questionnaireList.labels, 'get');
       }
     });
   }
   getProviderQuestionnaire() {
-    // this.consumerId = 0;
     this.sharedService.getProviderQuestionnaire(this.serviceId, this.consumerId, this.channel).subscribe(data => {
       console.log(data);
       this.questionnaireList = data;
+      if (!this.questionAnswers) {
+        this.getAnswers(this.questionnaireList.labels, 'get');
+      }
     });
   }
-  onSubmit() {
+  onSubmit(type?) {
     console.log(this.answers);
     let data = [];
     Object.keys(this.answers).forEach(key => {
@@ -125,8 +167,12 @@ for (let answer of answerData) {
     }
     console.log(this.selectedMessage);
     console.log(postData);
-    const passData = {'answers': postData, 'files': this.selectedMessage};
-this.returnAnswers.emit(passData);
+    const passData = { 'answers': postData, 'files': this.selectedMessage };
+    if (type) {
+      this.submitQuestionnaire(passData);
+    } else {
+      this.returnAnswers.emit(passData);
+    }
   }
   getDate(date) {
     return new Date(this.datepipe.transformTofilterDate(date));
@@ -144,13 +190,20 @@ this.returnAnswers.emit(passData);
       this.answers[question.labelName].splice(indx, 1);
     }
     console.log(this.answers);
+    this.onSubmit();
   }
   booleanChange(ev, question) {
     this.answers[question.labelName] = ev.checked;
+    this.onSubmit();
   }
   isChecked(value, question) {
-    if (this.answers[question.labelName] && this.answers[question.labelName] === value) {
-      return true;
+    if (this.answers[question.labelName]) {
+      const indx = this.answers[question.labelName].indexOf(value);
+      if (indx !== -1) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -165,5 +218,58 @@ this.returnAnswers.emit(passData);
   dateChange(ev, question) {
     console.log(ev);
     this.answers[question.labelName] = this.datepipe.transformTofilterDate(ev);
+    this.onSubmit();
+  }
+  submitQuestionnaire(passData) {
+    const dataToSend: FormData = new FormData();
+    if (passData.files) {
+      for (const pic of passData.files.files) {
+        dataToSend.append('files', pic, pic['name']);
+      }
+    }
+    console.log(passData.answers);
+    console.log(JSON.stringify(passData.answers));
+    const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    if (this.params.source === 'consumerWaitlistResubmit') {
+      this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
+    } else if (this.params.source === 'consumerApptResubmit') {
+      this.resubmitConsumerApptQuestionnaire(dataToSend);
+    } else if (this.params.source === 'providerWaitlistResubmit') {
+      this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+    } else {
+      this.resubmitProviderApptQuestionnaire(dataToSend);
+    }
+  }
+  resubmitConsumerWaitlistQuestionnaire(body) {
+    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+      this.router.navigate(['/consumer']);
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitConsumerApptQuestionnaire(body) {
+    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+      this.router.navigate(['/consumer']);
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitProviderWaitlistQuestionnaire(body) {
+    this.sharedService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
+      this.router.navigate(['/provider/check-ins']);
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitProviderApptQuestionnaire(body) {
+    this.sharedService.resubmitProviderApptQuestionnaire(body, this.params.uuid).subscribe(data => {
+      this.router.navigate(['/provider/appointments']);
+    }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  goBack() {
+    this.router.navigate(['/consumer']);
   }
 }

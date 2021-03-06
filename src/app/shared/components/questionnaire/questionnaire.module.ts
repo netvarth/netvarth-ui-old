@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HeaderModule } from '../../modules/header/header.module';
 import { QuestionnaireComponent } from './questionnaire.component';
+import { QuestionnaireRoutingModule } from './questionnaire.routing.module';
 
 @NgModule({
     declarations: [
@@ -15,7 +17,9 @@ import { QuestionnaireComponent } from './questionnaire.component';
         FormsModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        QuestionnaireRoutingModule,
+        HeaderModule
     ],
     exports: [QuestionnaireComponent]
 })
