@@ -804,6 +804,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(this.sel_ser);
+        this.getProviderQuestionnaire();
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -1189,7 +1191,9 @@ export class ProviderCheckinComponent implements OnInit {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 this.submitQuestionnaire(retUuid);
+                }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
                 }
@@ -1285,6 +1289,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
+        this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1978,4 +1983,10 @@ this.questionAnswers = event;
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
     }
+    getProviderQuestionnaire() {
+        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
+      }
 }

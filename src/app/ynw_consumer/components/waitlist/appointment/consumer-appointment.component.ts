@@ -732,6 +732,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
+        this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.waitlist_for.length === 0) {
@@ -969,9 +970,13 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                     }
                 }
+                console.log(this.sel_ser);
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
                     this.getAvailableSlotByLocationandService(locid, this.sel_ser, pdate, this.account_id);
+                    if (this.type != 'reschedule') {
+                    this.getConsumerQuestionnaire();
+                    }
                 }
                 this.api_loading1 = false;
             },
@@ -1448,7 +1453,11 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
-                    this.bookStep++;
+                    if (this.questionnaireList.length > 0) {
+                        this.bookStep++;
+                    } else {
+                        this.bookStep = 3;
+                        }
                 }
             }
         } else if (type === 'prev') {
@@ -1577,5 +1586,12 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.shared_services.submitConsumerApptQuestionnaire(dataToSend, uuid, this.account_id).subscribe(data => {
 
         })
-    }
+    }  
+      getConsumerQuestionnaire() {
+        const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
+        this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
+      }
 }

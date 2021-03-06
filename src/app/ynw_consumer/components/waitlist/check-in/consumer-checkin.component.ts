@@ -750,6 +750,7 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
         if (this.userData.userProfile.email) {
             this.waitlist_for[0]['email'] = this.userData.userProfile.email;
         }
+        this.getConsumerQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         if (this.userData.userProfile.email && this.waitlist_for[0]) {
@@ -1008,6 +1009,7 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
                 if (this.sel_ser) {
                     this.setServiceDetails(this.sel_ser);
                     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                    this.getConsumerQuestionnaire();
                 }
                 this.api_loading1 = false;
             },
@@ -1520,7 +1522,11 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
                 if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
+                    if (this.questionnaireList.length > 0) {
                     this.bookStep++;
+                } else {
+                    this.bookStep = 3;
+                    }
                 }
             }
         } else if (type === 'prev') {
@@ -1634,4 +1640,11 @@ this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.
 console.log(event);
 this.questionAnswers = event;
     }
+    getConsumerQuestionnaire() {
+        const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
+        this.shared_services.getConsumerQuestionnaire(this.sel_ser, consumerid, this.account_id).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
+      }
 }

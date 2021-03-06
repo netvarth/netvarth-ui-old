@@ -66,11 +66,14 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     console.log(this.source);
+    console.log(this.params.uuid);
+    if (this.params.uuid) {
     if (this.source === 'consCheckin' || this.source === 'consAppt') {
       this.getConsumerQuestionnaire();
     } else {
       this.getProviderQuestionnaire();
     }
+  }
   }
   getAnswers(answerData, type) {
     console.log(answerData);
@@ -130,6 +133,9 @@ export class QuestionnaireComponent implements OnInit {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
+    console.log(this.selectedMessage.files[i].name);
+    console.log(this.answers[this.selectedMessage.files[i].name]);
+    delete this.answers[this.selectedMessage.files[i].name][i];
   }
   getConsumerQuestionnaire() {
     this.sharedService.getConsumerQuestionnaire(this.serviceId, this.consumerId, this.accountId).subscribe(data => {
@@ -231,39 +237,21 @@ export class QuestionnaireComponent implements OnInit {
     console.log(JSON.stringify(passData.answers));
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.params.source === 'consumerWaitlistResubmit') {
-      this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
-    } else if (this.params.source === 'consumerApptResubmit') {
-      this.resubmitConsumerApptQuestionnaire(dataToSend);
-    } else if (this.params.source === 'providerWaitlistResubmit') {
-      this.resubmitProviderWaitlistQuestionnaire(dataToSend);
+   if (this.params.source === 'consumerApptResubmit' || this.params.source === 'consumerWaitlistResubmit') {
+      this.resubmitConsumerQuestionnaire(dataToSend);
     } else {
-      this.resubmitProviderApptQuestionnaire(dataToSend);
+      this.resubmitProviderQuestionnaire(dataToSend);
     }
   }
-  resubmitConsumerWaitlistQuestionnaire(body) {
-    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
+  resubmitConsumerQuestionnaire(body) {
+    this.sharedService.resubmitConsumerQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
       this.router.navigate(['/consumer']);
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  resubmitConsumerApptQuestionnaire(body) {
-    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.params.uuid, this.accountId).subscribe(data => {
-      this.router.navigate(['/consumer']);
-    }, error => {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderWaitlistQuestionnaire(body) {
-    this.sharedService.resubmitProviderWaitlistQuestionnaire(body, this.params.uuid).subscribe(data => {
-      this.router.navigate(['/provider/check-ins']);
-    }, error => {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderApptQuestionnaire(body) {
-    this.sharedService.resubmitProviderApptQuestionnaire(body, this.params.uuid).subscribe(data => {
+  resubmitProviderQuestionnaire(body) {
+    this.sharedService.resubmitProviderQuestionnaire(body, this.params.uuid).subscribe(data => {
       this.router.navigate(['/provider/appointments']);
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

@@ -810,7 +810,7 @@
                                     <!--end::Wizard Step 1 Nav-->
 
                                     <!--begin::Wizard Step 2 Nav-->
-                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2">
+                                    <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep>=2" *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                         <div class="wizard-label">
                                             <div class="step-icon">2</div>
                                             <h3 class="wizard-title">More Info</h3>
@@ -839,7 +839,7 @@
                                     <!--begin::Wizard Step 5 Nav-->
                                     <div class="wizard-step" data-wizard-type="step" [class.tab-selected]="bookStep==3">
                                         <div class="wizard-label">
-                                            <div class="step-icon">3</div>
+                                            <div class="step-icon">{{(questionnaireList.labels && questionnaireList.labels.length > 0) ? 3 : 2}}</div>
                                             <h3 class="wizard-title">Confirm</h3>
                                         </div>
                                         <span class="svg-icon svg-icon-xl wizard-arrow last">

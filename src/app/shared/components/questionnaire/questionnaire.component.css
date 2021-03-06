@@ -19,6 +19,6 @@
     border: 1px solid;
     font-size: small;
 }
-label {
+::ng-deep .mat-checkbox-layout {
     font-weight: normal !important;
 }
