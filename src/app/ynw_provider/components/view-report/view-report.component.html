@@ -33,9 +33,9 @@
                       </span>
                     </span>
                   </div>
-                  <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
+                  <!-- <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
                     <span class="ttle">Jaldee Bank receivable amount</span>
-                    <span>{{viewreport.subTotalJaldeeBank}}</span>
+                    <span class="price rupee-font"> {{viewreport.subTotalJaldeeBank| currency:'&#8377;'}}</span>
                   </div>
                   <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
                     <span class="ttle">Jaldee coupon receivable Amount</span>
@@ -43,8 +43,8 @@
                   </div>
                   <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
                     <span class="ttle">Total receivable Amount from Jaldee</span>
-                    <span>{{viewreport.grantTotal}}</span>
-                  </div>
+                    <span  class="price rupee-font"> {{viewreport.grantTotal| currency:'&#8377;'}}</span>
+                  </div> -->
                   <!-- <div class="item col-md-4 col-xs-12 col-lg-4 col-sm-6">
                     <span class="ttle">{{grant_total_cap}}</span>
                     <span>{{viewreport.grantTotal}}</span>
@@ -69,10 +69,14 @@
                     <th>Customer</th>
                     <th>{{service_cap}}</th>
                     <th>{{bill_cap}} {{amt_cap}}</th>
-                    <th>Gateway Commission</th>
+                    <th>Gateway</th>
+                    <th>Gateway Service Charge</th>
+                    <th>Gateway Service Tax</th>
+                    <th>Gateway Service(Charge+Tax)</th>
                     <th>Jaldee Commission</th>
                     <th>Settlement Amount</th>
-                    <th>Gateway</th>
+                    <th>Refund Amount</th>
+                   
                     <!-- <th>{{check_in_cap}} {{id_cap}}</th> -->
                   </tr>
                 </thead>
@@ -83,11 +87,14 @@
                     <!-- <td data-title="Consumer Id">{{jbank.consumerId}}</td> -->
                     <td data-title="Consumer Name">{{jbank.consumerName}}</td>
                     <td data-title="Service">{{jbank.service}}</td>
-                    <td data-title="Bill Amount">{{jbank.billAmount}}</td>
-                    <td data-title="Gateway Commission">{{jbank.gatewayCommission}}</td>
-                    <td data-title="Jaldee Commission">{{jbank.jaldeeCommission}}</td>
-                    <td data-title="Settlement Amount">{{jbank.settlementAmount}}</td>
+                    <td data-title="Bill Amount"> <span class="price rupee-font">{{jbank.billAmount| currency:'&#8377;'}}</span></td>
                     <td data-title="Gateway">{{jbank.gateway}}</td>
+                    <td data-title="Gateway Service Charge"> <span class="price rupee-font">{{jbank.gateway_service_charge | currency:'&#8377;'}}</span></td>
+                    <td data-title="Gateway Service Tax"> <span class="price rupee-font">{{jbank.gateway_service_charge_tax| currency:'&#8377;'}}</span></td>
+                    <td data-title="Gateway Service(Charge+Tax)"> <span class="price rupee-font">{{jbank.gatewayCommission| currency:'&#8377;'}}</span></td>
+                    <td data-title="Jaldee Commission"> <span class="price rupee-font">{{jbank.jaldeeCommission| currency:'&#8377;'}}</span></td>
+                    <td data-title="Settlement Amount"><span class="price rupee-font">{{jbank.settlementAmount| currency:'&#8377;'}}</span></td>
+                    <td data-title="Refund Amount"><span class="price rupee-font">{{jbank.refund| currency:'&#8377;'}}</span></td>
                     <!-- <td data-title="Check-in Id">{{jbank.checkinId}}</td> -->
                   </tr>
                 </tbody>
@@ -116,18 +123,31 @@
                     <tr *ngFor="let coupon of couponList.billDetails">
                       <td data-title="Date">{{coupon.date | date: newDateFormat}}</td>
                       <td data-title="Bill Id">{{coupon.billNo}}</td>
-                      <td data-title="Bill Amount">{{coupon.billAmount}}</td>
+                      <td data-title="Bill Amount"> &#8377;{{coupon.billAmount}}</td>
                       <!-- <td data-title="Consumer Id">{{coupon.consumerId}}</td> -->
                       <td data-title="Consumer Name">{{coupon.consumerName}}</td>
                       <td data-title="Service">{{coupon.service}}</td>
                       <!-- <td data-title="Check-in Id">{{coupon.checkinId}}</td> -->
-                      <td data-title="Coupon Discount">{{coupon.discount}}</td>
+                      <td data-title="Coupon Discount"> &#8377;{{coupon.discount}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+          <!--Summary div-->
+          <div class="col-x1-12 col-lg-12 col-md-12">
+              <div class="col-x1-6 col-lg-6 col-md-6">&nbsp;</div>
+              <div class="col-x1-6 col-lg-6 col-md-6 pull-right">
+                <label *ngIf="viewreport.subTotalJaldeeBank!=null">Jaldee Bank Receivable amount :  <span class="price rupee-font"> {{viewreport.subTotalJaldeeBank| currency:'&#8377;'}}</span></label><br>
+                <label *ngIf="viewreport.subTotalJaldeeCoupons!=null">Jaldee Coupon receivable Amount: <span  class="price rupee-font"> {{viewreport.subTotalJaldeeCoupons| currency:'&#8377;'}}</span></label><br>
+                <label *ngIf="viewreport.grantTotal!=null">Total Receivable Amount :  <span  class="price rupee-font"> {{viewreport.grantTotal| currency:'&#8377;'}}</span></label><br>
+                <label *ngIf="viewreport.jBankBalanceDue!=null">Jaldee Bank Balance Due : <span  class="price rupee-font"> {{viewreport.jBankBalanceDue| currency:'&#8377;'}}</span></label><br>
+                <label *ngIf="viewreport.jcBalanceDue!=null">Jaldee Coupon Balance Due: <span  class="price rupee-font"> {{viewreport.jcBalanceDue| currency:'&#8377;'}}</span></label><br>
+                <label *ngIf="viewreport.totalBalanceDue!=null">Total Balance Due : <span  class="price rupee-font"> {{viewreport.totalBalanceDue| currency:'&#8377;'}}</span></label><br>
+              </div>
+          </div>
+          <!---End Summary-->
         </div>
       </div>
     </div>

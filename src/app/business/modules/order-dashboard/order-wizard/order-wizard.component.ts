@@ -463,6 +463,7 @@ export class OrderWizardComponent implements OnInit {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
+      this.getAvailabilityByDate(this.sel_checkindate);
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.showfuturediv = false;
@@ -756,7 +757,6 @@ export class OrderWizardComponent implements OnInit {
       if (storeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
-        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailablePickUpDetails.timeSlots;
         console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
@@ -769,7 +769,6 @@ export class OrderWizardComponent implements OnInit {
       if (homeIntervals.includes(currentday)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
-        // this.nextAvailableTimeQueue = this.catalog_details.nextAvailableDeliveryDetails.timeSlots;
         console.log(this.nextAvailableTimeQueue);
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];

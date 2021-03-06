@@ -162,7 +162,7 @@
 								<button class="cs-btn bt2 ml-4" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 
 							</div>
-							<div class="add_item">
+							<div class="add_item"  *ngIf="bill_data.billStatus!='Settled'">
 								<a *ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 									(click)="showAddItem()"
 									class="btn btn-sm btn-success font-weight-bold py-2 px-3 flat_item px-xxl-5 my-1">Add
@@ -198,9 +198,6 @@
 									</button>
 								</mat-menu>
 							</div>
-
-
-
 						</div>
 						<div class="col-md-11">
 							<!-- revamp table -->
@@ -381,8 +378,6 @@
 												<br> 
 												<span *ngIf="item.discount &&item.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
 												<span *ngIf="item.discount &&item.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{item.netRate | currency:'&#8377;'}}</span>
-												
-
 											</td>
 											<!-- Modal for Item level apply discount -->
 											<div class="modal fade" id="exampleModaItemDiscount" tabindex="-1"
@@ -502,9 +497,7 @@
 													</select>
 													<select *ngIf="jCouponsList.length>0 && showJCouponSection" class="form-control" [(ngModel)]="selOrderProviderjCoupon">
 														<option *ngFor="let jcoupon of jCouponsList; let i = index" [value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}</option>
-													</select>
-										
-											
+													</select>						
 
 											<div *ngIf="showDiscountSection"> 
 											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
@@ -526,11 +519,7 @@
 										  </div>
 										</div>
 										<div class="modal-footer p-2">
-
-											<!-- <button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button> -->
-											<!-- <button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add </button> -->
-
-											<button *ngIf="discounts.length >0 && showDiscountSection" type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
+										<button *ngIf="discounts.length >0 && showDiscountSection" type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold"
 											[class.grey-bg]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
 											[disabled]="selOrderDiscount==='' || disableDiscountbtn || (selOrderDiscount.discType === 'OnDemand' && discAmount === '')"
 											(click)="applyOrderDiscount()">{{apply_cap}}</button>
@@ -543,11 +532,8 @@
 											*ngIf="jCouponsList.length >0 && showJCouponSection"
 											[disabled]="selOrderProviderjCoupon==='' || disableJCouponbtn"
 											(click)="applyJCoupon(selOrderProviderjCoupon)">{{apply_cap}}</button>
-									
-
 										<button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal" #closeJcDiscPc
 								 			(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
-
 										</div>
 									</div>
 								</div>
@@ -580,7 +566,6 @@
 									</div>
 								</div>
 							</div>
-
 							<!-- Modal for Add Notes -->							
 							<div class="modal fade" id="exampleModalSizeDefault3" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeDefault" aria-hidden="true"
 							*ngIf="showDisplaynoteSection || showPrivatenoteSection">
@@ -597,9 +582,6 @@
 											</div>
 										</div>
 										<div class="modal-footer p-2">
-											<!-- <button type="button" class="btn btn-light-primary font-weight-bold lh-p6 rounded-0" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary lh-p6 rounded-0 font-weight-bold">Add Note</button> -->
-
 											<button type="button"  class="btn btn-primary lh-p6 rounded-0 font-weight-bold" [disabled]="displaybuttondisabled"
 												*ngIf="showDisplaynoteSection" (click)="addDisplaynote()">
 												<span style="display:grid" *ngIf="!displayNoteedit">{{add_note_btn}}</span>
@@ -616,9 +598,8 @@
 									</div>
 								</div>
 							</div>
-
-
 							<hr>
+							<!-- displaying notes section -->
 							<div class="col-lg-6" style="display: inline-grid;" *ngIf="bill_data && billNotesExists">
 								<mat-accordion class="example-headers-align" multi>
 									<mat-expansion-panel>
@@ -660,11 +641,12 @@
 											</ul>
 										</div>
 									</div> -->
+								
 									
 
 										<mat-label>Date</mat-label>
 										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
-									  </mat-form-field>
+									  </mat-form-field>									
 									  <mat-datepicker #picker></mat-datepicker>
 									</mat-expansion-panel>
 								  </mat-accordion>
@@ -725,14 +707,14 @@
 								</div>
 
 								<div class="hr_content" *ngIf="bill_data.totalAmountPaid > 0">
-									<div class="flx_1"> <span class="link" (click)="showpaidSection()"
+									<div class="flx_1"> <span class="link"
 											data-toggle="modal" data-target="#exampleModalSizeDefaultrefund">Amount
 											Paid</span></div>
 									<div class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
 								</div>
 								<!--begin::Modal For Refund-->
 								<div class="modal fade" id="exampleModalSizeDefaultrefund" tabindex="-1" role="dialog"
-								aria-labelledby="exampleModalSizeDefault" aria-hidden="true" *ngIf="showPaidlist">
+								aria-labelledby="exampleModalSizeDefault" aria-hidden="true" >
 								<div class="modal-dialog modal-dialog-centered" role="document">
 									<div class="modal-content">
 										<div class="modal-body pb-3">

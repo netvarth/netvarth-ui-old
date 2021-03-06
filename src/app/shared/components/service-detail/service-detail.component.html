@@ -11,7 +11,13 @@
                         <i class="fa zoom-icon"
                             *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'Zoom' || data.serdet.virtualCallingModes[0].callingMode == 1)"></i>
                         <i class="fa wtsapaud-icon"
-                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0)"></i>
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0) && data.serdet.virtualServiceType == 'audioService'"></i>
+                        <i class="fa wtsapvid-icon"
+                            *ngIf="data.serdet.virtualCallingModes && (data.serdet.virtualCallingModes[0].callingMode == 'WhatsApp' || data.serdet.virtualCallingModes[0].callingMode == 0) && data.serdet.virtualServiceType == 'videoService'"></i>
+                        <img class="card-img img-responsive donation-service" src="assets/images/donation.png" alt="Donation Image"
+                            *ngIf="data.serdet.serviceType && data.serdet.serviceType == 'donationService'">
+                        <img class="card-img img-responsive physical-service" src="assets/images/meeting_Artboard 1.png" alt="Physical Service Image"
+                            *ngIf="data.serdet.serviceType && data.serdet.serviceType == 'physicalService'">
                     </span>
                     {{data.serdet.name | capitalizeFirst}}
     

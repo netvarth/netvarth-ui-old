@@ -1748,6 +1748,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     }
   }
   refundPayment(mode) {
+    
     if (this.amounttoRefund) {
       const postData = {
         'refundAmount': this.amounttoRefund,
@@ -1770,6 +1771,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
         }
       });
       canceldialogRef.afterClosed().subscribe(result => {
+        this.applydisc = false;
         status = result;
         if (status === 1) {
           this.provider_services.paymentRefund(postData)
@@ -1826,10 +1828,10 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     if (payment) {
       this.selectedPayment = payment;
       this.amounttoRefund = payment.refundableAmount;
-      this.showRefundSection = true;
+      // this.showRefundSection = true;
     } else {
       this.selectedPayment = [];
-      this.showRefundSection = false;
+      // this.showRefundSection = false;
     }
   }
   revokeRefund() {

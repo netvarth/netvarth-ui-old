@@ -227,6 +227,7 @@ export class ProPicPopupComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     // this.api_error = error.error;
+                    this.dialogRef.close();
                 }
             );
     }
