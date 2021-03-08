@@ -517,8 +517,8 @@
                       </button>
                     </div>
                     <div>
-                      <button type="submit" *ngIf="step == 3" 
-                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" [disabled]="!couponForm.valid ||published">
+                      <button type="button" *ngIf="step == 3" 
+                        class="btn btn-success font-weight-bold text-uppercase px-9 py-4" (click)="onSubmit()" [disabled]="!couponForm.valid ||published">
                         Submit
                       </button>
                       <button type="button" *ngIf="step == 1 || step == 2"

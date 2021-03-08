@@ -162,6 +162,11 @@ isNumeric(evt) {
   }
   updateForm(coupon) {
     this.couponDetails = coupon;
+    if(coupon.calculationType==='Fixed'){
+      this.calculationType='Fixed';
+    }else{
+      this.calculationType='Percentage';
+    }
     this.couponForm.patchValue({
       name: coupon.name,
       couponCode: coupon.couponCode,
@@ -493,8 +498,7 @@ isNumeric(evt) {
   }
 
   onSubmit() {
-    console.log('insidee');
-    this.couponBasedOnValue = [];
+
     const form_data = this.couponForm.value;
     const timeRangeObject = [{
       'recurringType': 'Weekly',
@@ -507,13 +511,16 @@ isNumeric(evt) {
       },
     }];
 
-    console.log(timeRangeObject);
+    console.log(form_data);
     form_data.couponRules.validTimeRange = timeRangeObject;
     if (form_data.couponRules.policies.isServiceBased) {
+      console.log('service base clciked');
+      
       form_data.couponRules.policies.services = this.services;
       this.couponBasedOnValue.push('ServiceBased');
     }
     if (form_data.couponRules.policies.isCatalogBased) {
+      console.log('catalog base clciked');
       this.couponBasedOnValue.push('CatalogueBased');
 
     }
