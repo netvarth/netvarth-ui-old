@@ -4,6 +4,7 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
       </button>
     </h1>
+    <div *ngIf="consumer_labels.length>0">
     <mat-dialog-content>
       <!-- <div *ngIf="consumer_labels.length>0"> -->
       <mat-selection-list #labels [(ngModel)]="selectedLabels" (ngModelChange)="onLabelChange($event)" >
@@ -20,6 +21,7 @@
       <p>No labels Found</p>
     </div> -->
     </mat-dialog-content>
+    
 
     <mat-dialog-actions>
         <div class="col-md-10 no-padding mgn-up-10 glbl-seting-heder">
@@ -27,3 +29,7 @@
       <button  mat-button class="cs-btn bt1 style-button" type="button" (click)="onConfirm(labels.selectedOptions)" >Confirm</button>
     </div>
     </mat-dialog-actions>
+  </div>
+    <div *ngIf="consumer_labels.length==0">
+      <p class="ml-5">No Labels Found</p>
+    </div>

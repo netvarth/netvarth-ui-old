@@ -32,6 +32,7 @@ export class ConsumerGroupDialogComponent implements OnInit {
 
     this.provider_services.getCustomerGroup().subscribe((data: any) => {
       this.consumer_group = data;
+      console.log(this.consumer_group.length);
       this.loading =false;
 
     });

@@ -105,7 +105,7 @@
                       <div class="col-xl-12">
                         <!--begin::Input-->
                         <div class="form-group">
-                          <label>Calulation Type&nbsp;&nbsp;</label>
+                          <label>Calculation Type&nbsp;&nbsp;</label>
                           <mat-radio-group formControlName="calculationType" (change)="handleCalculationType($event)">
                             <mat-radio-button value="Fixed">Fixed</mat-radio-button>&nbsp;&nbsp;
                             <mat-radio-button value="Percentage">Percentage</mat-radio-button>
@@ -231,7 +231,7 @@
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
-                          <mat-checkbox class="example-margin" formControlName="firstCheckinOnly">Limit No of Coupons
+                          <mat-checkbox class="example-margin" formControlName="firstCheckinOnly">Limit coupon
                             for first booking only
                           </mat-checkbox>
                         </div>
@@ -288,7 +288,7 @@
                           <div class="col-xl-12">
                             <div class="form-group">
                               <mat-checkbox class="example-margin" formControlName="isServiceBased">Limit coupon to
-                                Services
+                                services
                               </mat-checkbox>
                             </div>
                           </div>
@@ -317,7 +317,7 @@
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <mat-checkbox class="example-margin" formControlName="isDepartment">Limit coupon to
-                                  Department Specific
+                                  department specific
                                 </mat-checkbox>
                               </div>
                             </div>
@@ -344,7 +344,7 @@
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <mat-checkbox class="example-margin" formControlName="isUser">Limit coupon to user
-                                  Specific
+                                  specific
                                 </mat-checkbox>
                               </div>
                             </div>
@@ -371,7 +371,7 @@
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <mat-checkbox class="example-margin" formControlName="isCustomerLabel">Limit coupon to
-                                  consumer Labels
+                                  consumer labels
                                 </mat-checkbox>
                               </div>
                             </div>
@@ -381,7 +381,7 @@
                               <div class="col-xl-12">
                                 <div class="form-group">
                                   <button mat-raised-button type="button" class="dialogbtn"
-                                    (click)="openCustomerLabelDialog()">Customer Labels</button>
+                                    (click)="openCustomerLabelDialog()">Consumer Labels</button>
 
                                 </div>
                                 <p *ngIf="customer_labels.length>0">
@@ -398,7 +398,7 @@
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <mat-checkbox class="example-margin" formControlName="isCustomerGroup">Limit coupon to
-                                  consumer Groups
+                                  consumer groups
                                 </mat-checkbox>
                               </div>
                             </div>
@@ -411,7 +411,7 @@
                             <div class="col-xl-12">
                               <div class="form-group">
                                 <button mat-raised-button type="button" class="dialogbtn"
-                                  (click)="openCustomerGroupDialog()">Customer Groups</button>
+                                  (click)="openCustomerGroupDialog()">Consumer Groups</button>
 
                               </div>
                               <p *ngIf="customer_groups.length>0">
@@ -427,7 +427,7 @@
                           <div class="col-xl-12">
                             <div class="form-group">
                               <mat-checkbox class="example-margin" formControlName="isCatalogBased">Limit coupon to
-                                Catalog
+                                catalogue
                               </mat-checkbox>
                             </div>
                           </div>
@@ -458,7 +458,7 @@
                           <div class="col-xl-12">
                             <div class="form-group">
                               <mat-checkbox class="example-margin" formControlName="isItem">Limit coupon to
-                                Items
+                                items
                               </mat-checkbox>
                             </div>
 
@@ -490,7 +490,7 @@
                       <div class="col-xl-6">
                         <div class="form-group">
                           <mat-form-field appearance="fill">
-                            <label>Booking Channel</label>
+                            <label>Booking Mode</label>
                             <mat-select placeholder="bookingChannel" formControlName="bookingChannel" [multiple]="true">
                               <mat-option *ngFor=" let mode of bookingMode" [value]="mode.value">
                                 {{mode.displayName}}
