@@ -192,6 +192,8 @@
                                                         [ngStyle]="{ 'background-image': 'url(' + item.itemImages[0].url + ')'}">
 
                                                     </div>
+                                                    <div class="lst-img default_img" *ngIf="!item.itemImages">
+                                                    </div>
                                                 </div>
                                                 <div *ngIf="noteIndex === i && showNteSection" class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                                     <div class="snd_msg_outer">

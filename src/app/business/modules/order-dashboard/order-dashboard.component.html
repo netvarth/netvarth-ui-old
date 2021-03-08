@@ -550,7 +550,7 @@
                     (click)="stopprop($event);gotoBill(order)"
                     [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
                     currency:'INR'}}</span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order)"> Actions</span>
+                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order,'history')"> Actions</span>
                 </div>
               </div>
             </div>

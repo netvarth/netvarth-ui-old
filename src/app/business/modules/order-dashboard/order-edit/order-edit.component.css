@@ -53,3 +53,8 @@
 .addressedit:hover{
 color: #0707eca1 !important;
 }
+.disableall {
+  cursor: default;
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}

@@ -35,6 +35,7 @@ export class OrderActionsComponent implements OnInit {
   action = '';
   providerLabels: any = [];
   labelMap;
+  timeType = '';
   status: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,6 +51,10 @@ export class OrderActionsComponent implements OnInit {
     this.loading = true;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
+    if(this.data.type){
+      this.timeType = this.data.type;
+    }
+    console.log(this.timeType);
     console.log(this.orderDetails);
     console.log(this.orderDetails.orderStatus);
     if (this.orderDetails.length > 1) {

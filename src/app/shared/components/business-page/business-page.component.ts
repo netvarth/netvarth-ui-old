@@ -27,6 +27,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery'; 
+import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 
 @Component({
   selector: 'app-business-page',
@@ -161,6 +162,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   orderItems: any = [];
   itemQty: number;
   activeCatalog: any;
+  qrdialogRef;
+  wndw_path = projectConstants.PATH;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)
@@ -2424,5 +2427,24 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);
     }
+  }
+
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        path: this.wndw_path,
+        businessName: this.businessjson.businessName
+      }
+    });
+  
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+       
+      }
+    });
   }
 }
