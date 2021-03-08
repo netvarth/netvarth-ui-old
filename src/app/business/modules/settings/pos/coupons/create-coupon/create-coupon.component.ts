@@ -71,6 +71,7 @@ export class CreateCouponComponent implements OnInit {
   couponDetails: any;
   coupon_title='Create Coupon'
   calculationType: any;
+  published=false;
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -116,25 +117,25 @@ isNumeric(evt) {
       name: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       couponCode: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
       description: [''],
-      calculationType: [''],
-      amount: [''],
+      calculationType: ['',[Validators.required]],
+      amount: ['',[Validators.required]],
       couponRules: this.formbuilder.group({
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
         firstCheckinOnly: [''],
-        minBillAmount: [''],
+        minBillAmount: ['',[Validators.required]],
         maxDiscountValue: [''],
         isproviderAcceptCoupon: [''],
         maxProviderUseLimit: [''],
         validTimeRange: [''],
         policies: this.formbuilder.group({
-          departments: [[], [Validators.required]],
+          departments: [[]],
           services: [[]],
-          users: [[], [Validators.required]],
-          catalogues: [[], [Validators.required]],
-          consumerGroups: [[], [Validators.required]],
-          consumerLabels: [[], [Validators.required]],
-          items: [[], [Validators.required]],
+          users: [[]],
+          catalogues: [[]],
+          consumerGroups: [[]],
+          consumerLabels: [[]],
+          items: [[]],
           isDepartment: [''],
           isUser: [''],
           isItem: [''],
@@ -226,7 +227,10 @@ isNumeric(evt) {
         this.selallweekdays = false;
       }
     }
-
+  if(coupon.couponRules.published){
+    this.published=true;
+   this.couponForm.disable();
+  }
 
   }
 
@@ -240,7 +244,8 @@ isNumeric(evt) {
     return ret;
   }
   handleCalculationType(event) {
-    this.calculationType=event;
+    this.calculationType=event.value;
+    console.log(this.calculationType);
 
   }
   handleBaseChange(event) {
@@ -488,6 +493,7 @@ isNumeric(evt) {
   }
 
   onSubmit() {
+    console.log('insidee');
     this.couponBasedOnValue = [];
     const form_data = this.couponForm.value;
     const timeRangeObject = [{

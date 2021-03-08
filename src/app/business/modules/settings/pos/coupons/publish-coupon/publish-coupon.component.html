@@ -3,48 +3,134 @@
     <div class="card title-gb rounded-0">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Publish Coupon
+                (click)="redirecToCoupon()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Publish Coupon {{coupon.couponCode}}
         </h5>
     </div>
 </section>
 <section>
 
-    <!--begin::Entry-->
-    <div class="d-flex flex-column-fluid mt-2">
-        <!--begin::Container-->
-        <div class=" container ">
+
+
+        <div class="content loc-list">
+            <div class="col-md-12 no-padding-small">
+                <div class="row">
             <div class="card card-custom">
                 <div class="card-body p-0">
-                    <form [formGroup]="publishForm" novalidate (ngSubmit)="onSubmit()" 
-                    class="form">
-                    <div class="row" formGroupName="couponRules">
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                          <!--begin::Input-->
-                          <div class="form-group">
-                            <div class="input-group date">
-                              <label>Publish From</label>
-                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)" placeholder="Publish From" formControlName="publishedFrom"
-                              />
+                    <div class="copy locd">
+                    <div class="lbl col-sm-12 col-md-8 col-lg-8">
+                        <div class="cl1">
+                            <div class="ot-it jcoupondetail" *ngIf="coupon">
+                                <h4>{{coupon.name | capitalizeFirst}}</h4>
+                                <div class="it-des">
+                                    {{coupon.description | capitalizeFirst}}
+                                </div>
+                                <div class="c-ot">
+                                    <div class="item">
+                                        <span class="ttle">Valid Through</span>
+                                        <span>{{coupon.couponRules.startDate | date: newDateFormat}} -
+                                            {{coupon.couponRules.endDate | date: newDateFormat}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="c-ot">
+                                    <div class="item">
+                                        <span class="ttle">{{disc_value}}</span>
+                                        <span class="rupee-font"> {{(coupon.calculationType=='Percentage')?
+                                            coupon.amount+'%':
+                                            (coupon.amount | currency:'&#8377;')}} <span *ngIf="coupon.maxDiscountValue">
+                                                (upto
+                                                {{(coupon.maxDiscountValue | currency:'&#8377;')}} Max)</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="c-ot">
+                                    <div class="item">
+                                        <span class="ttle">Status</span>
+                                        <span>{{coupon.status}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="c-ot rules-cap">
+                                    <h6>{{rules_cap}}</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6">
+                                      
+                                        <div class="c-ot">
+                                            <span class="ttle">
+                                                <i *ngIf="coupon.couponRules.firstCheckinOnly" class="fa fa-check"
+                                                    style="color: green"></i>
+                                                <i *ngIf="!coupon.couponRules.firstCheckinOnly" class="fa fa-times"
+                                                    style="color: red"></i>
+                                                First {{checkin_label| capitalizeFirst}} Only </span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 no-padding">
+                                  
+                                        <div class="c-ot"
+                                            *ngIf="coupon.couponRules.maxProviderUseLimit">
+                                            <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
+                                                *ngIf="coupon.couponRules.maxProviderUseLimit">
+                                                <!-- {{usage_limit}} -->
+                                                <span class="ttle">{{pro_use_limit}}</span>
+                                                <span> {{coupon.couponRules.maxProviderUseLimit}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="c-ot"
+                                            *ngIf="coupon.couponRules.minBillAmount ">
+                                            <div class="item col-md-12 col-xs-12 col-lg-12 col-sm-12"
+                                                *ngIf="coupon.couponRules.minBillAmount">
+                                                <span class="ttle">Minimum Bill Amount</span>
+                                                <span class="rupee-font"> {{(coupon.couponRules.minBillAmount  | currency:'&#8377;')}}</span>
+                                            </div>
+
+                                        </div>
+                                  
+                                      
+                                    </div>
+                                </div>
+
+                              
+                              
+                                <!-- <div class="btm-ctrl">
+                                    <div class="ctrl enable-disable">
+                                        <span class="ttle">Coupon Status :</span>
+                                        <span
+                                            *ngIf="coupon.couponRules.alwaysEnabled!=true && coupon.couponState!='EXPIRED' && coupon.couponState!='DISABLED_BY_JALDEE' && coupon.couponState!='DISABLED_PROVIDER_LIMIT_REACHED'">
+                                            <mat-slide-toggle [checked]="coupon.couponState=='ENABLED'"
+                                                (change)="changecouponStatus(coupon)"></mat-slide-toggle>
+                                        </span>
+                                        <span class='blue-text' *ngIf="coupon.couponState=='NEW'"
+                                            style="padding-left: 5px">New - Available
+                                            for Use</span>
+                                        <span class='enabled'
+                                            *ngIf="coupon.couponState=='ENABLED'">{{enable_cap}}</span>
+                                        <span class='disabled'
+                                            *ngIf="coupon.couponState=='DISABLED'">{{disbale_cap}}</span>
+                                        <span class='red-text' *ngIf="coupon.couponState=='EXPIRED'">Expired</span>
+                                        <span class='disabled'
+                                            *ngIf="coupon.couponState=='DISABLED_BY_JALDEE'">Disabled
+                                            By Jaldee</span>
+                                        <span class='disabled'
+                                            *ngIf="coupon.couponState=='DISABLED_PROVIDER_LIMIT_REACHED'">Disabled
+                                            (Limit Reached)</span>
+                                    </div>
+                                </div> -->
+                                <div class="row" *ngIf="!coupon.couponRules.published">
+                                  <button  class="btn btn-primary" (click)="publish();"> Publish</button>
+                                </div>
+                                <div class="row" *ngIf="coupon.couponRules.published">
+                                  <p><b style="color:green">Coupon  published From <span style="color:blue">{{coupon.couponRules.publishedFrom}}</span> to <span style="color:blue">{{coupon.couponRules.publishedTo}}</span></b></p>
+                                  </div>
                             </div>
-                          </div>
-                          <!--end::Input-->
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6">
-                          <!--begin::Input-->
-                          <div class="form-group">
-                            <div class="input-group date">
-                              <label>Publish To</label>
-                              <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)" placeholder="Publish To" formControlName="publishedTo"
-                              />
-                            </div>
-                          </div>
-                          <!--end::Input-->
-                        </div>
-                      </div>
-                      <button type="submit" mat-button class="cs-btn bt1 style-button">publish</button>
-                    </form>
+                    </div>
+                    </div>
+      
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
