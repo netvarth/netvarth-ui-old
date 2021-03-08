@@ -627,7 +627,7 @@
                 <form [formGroup]="amForm" novalidate 
                   (keyup)="resetApiErrors()" *ngIf="!showInfo" class="form">
                   <!--begin::Wizard Step 1-->
-                  <div class="pb-5" *ngIf="step == 1">
+                  <div class="pb-5" *ngIf="step == 1 && !api_loading">
                     <h3 class="mb-10 font-weight-bold text-dark">Catalog Information</h3>
                     <div class="row">
                       <div class="col-xl-6">

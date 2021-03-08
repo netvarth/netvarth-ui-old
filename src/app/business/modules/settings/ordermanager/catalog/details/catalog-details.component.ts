@@ -256,7 +256,6 @@ export class CatalogdetailComponent implements OnInit {
                     if (this.catalog_id === 'add') {
                         this.action = 'add';
                         this.createForm();
-                        this.api_loading = false;
                     } else {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
@@ -735,6 +734,7 @@ export class CatalogdetailComponent implements OnInit {
             });
             this.createItemform();
         }
+        this.api_loading = false;
         setTimeout(() => {
             if (this.action === 'edit') {
                 this.updateForm();
