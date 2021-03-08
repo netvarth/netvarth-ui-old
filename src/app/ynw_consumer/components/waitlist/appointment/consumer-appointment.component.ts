@@ -1466,7 +1466,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 if (this.bookStep === 1 && this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
                     this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                 } else {
-                    if (this.questionnaireList.length > 0) {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.bookStep++;
                     } else {
                         this.bookStep = 3;
@@ -1474,7 +1474,11 @@ export class ConsumerAppointmentComponent implements OnInit {
                 }
             }
         } else if (type === 'prev') {
-            this.bookStep--;
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                this.bookStep--;
+            } else {
+                this.bookStep = 1;
+            }
         } else {
             this.bookStep = type;
         }

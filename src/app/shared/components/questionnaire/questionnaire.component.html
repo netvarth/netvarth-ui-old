@@ -1,6 +1,6 @@
-<section class="cons-inbox no-padding-small" [class.container]="params && params.source && (params.source === 'consumerWaitlistResubmit' || params.source === 'consumerApptResubmit')">
+<section class="cons-inbox no-padding-small" [class.container]="params.uuid">
     <div class="panel-heading top-row "
-        *ngIf="params.source && (params.source === 'consumerWaitlistResubmit' || params.source === 'consumerApptResubmit')">
+        *ngIf="params.uuid">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
             <app-header></app-header>
         </div>
@@ -25,13 +25,13 @@
                 <div class="question-box" *ngIf="question.question.fieldDataType === 'PlainText'">
                     <input type="text" matInput autocomplete="off" placeholder="{{question.question.label}}"
                         [(ngModel)]="answers[question.question.labelName]" (keyup)="onSubmit();"
-                        [min]="question.question.plainTextPropertie.minNoOfLetter"
-                        [max]="question.question.plainTextPropertie.maxNoOfLetter">
+                        [minlength]="question.question.plainTextPropertie.minNoOfLetter"
+                        [maxlength]="question.question.plainTextPropertie.maxNoOfLetter">
                 </div>
                 <div class="question-box" *ngIf="question.question.fieldDataType === 'Number'">
                     <input type="number" matInput autocomplete="off" placeholder="{{question.question.label}}"
                         [(ngModel)]="answers[question.question.labelName]" (keyup)="onSubmit();"
-                        min="question.question.numberPropertie.start" max="question.question.numberPropertie.end">
+                        [min]="question.question.numberPropertie.start" [max]="question.question.numberPropertie.end">
                 </div>
                 <div class="question-box" *ngIf="question.question.fieldDataType === 'FileUpload'">
                     <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
@@ -47,6 +47,14 @@
                         {{img.name}}
                         <i class="fa fa-times-circle" aria-hidden="true" (click)="deleteTempImage(i, question.question.labelName)"></i>
                     </div>
+                    <ng-container *ngIf="fileuploadpreAnswers[question.question.labelName]">
+                    <div *ngFor="let img of fileuploadpreAnswers[question.question.labelName];let i = index">
+                        <ng-container *ngIf="img"> 
+                        {{img.caption}}
+                        <i class="fa fa-times-circle" aria-hidden="true" (click)="deletePreImage(i, question.question.labelName)"></i>
+                    </ng-container>
+                    </div>
+                </ng-container>
                 </div>
                 <div class="question-box" *ngIf="question.question.fieldDataType === 'Date'">
                     <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
