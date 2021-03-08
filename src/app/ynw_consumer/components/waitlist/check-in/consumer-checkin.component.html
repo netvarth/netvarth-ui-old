@@ -1062,13 +1062,14 @@
                                                                     </h6>
                                                                     <div class="contact-section">
                                                                         <i class="fa fa-mobile "></i>
-                                                                            <ng-container *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
+                                                                        <ng-container
+                                                                            *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
                                                                             <i class="fa wtsapaud-icon wtsap-cal"
-                                                                            *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
-                                                                        <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
-                                                                            *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         </ng-container>
-                                                                            <span class="mgn-lt-10 phonevallabel"
+                                                                        <span class="mgn-lt-10 phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
                                                                         <span class="mgn-lt-10 phonevallabel"
@@ -1084,7 +1085,7 @@
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                            <i class="fa wtsapaud-icon wtsap-cal"
+                                                                        <i class="fa wtsapaud-icon wtsap-cal"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                         <i class="fa wtsapvid-icon wtsap-cal"
                                                                             *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
@@ -1243,7 +1244,7 @@
                                                                         </p>
                                                                         <p class="m0 mgn-up-10-m"
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                                <i class="fa wtsapaud-icon wtsap-cal"
+                                                                            <i class="fa wtsapaud-icon wtsap-cal"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
                                                                             <i class="fa wtsapvid-icon wtsap-cal mgn-rt-5 mgn-lt-10"
                                                                                 *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
@@ -1644,7 +1645,8 @@
                                                         <div *ngFor="let customer of waitlist_for">
                                                             {{customer.firstName}}
                                                             {{customer.lastName}}
-                                                        </div></td>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="48%" align="right">Service</td>

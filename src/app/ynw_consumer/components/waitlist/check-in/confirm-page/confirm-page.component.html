@@ -98,7 +98,15 @@
                                             <td> {{wtlst.checkinEncId}}</td>
                                         </tr>
                                         <tr
-                                            *ngIf="wtlst.amountPaid > 0">
+                                            *ngIf="!wtlst.parentUuid && wtlst.service?.minPrePaymentAmount && infoParams.type != 'waitlistreschedule' && infoParams.prepayment">
+                                            <td width="48%" align="right">Amount paid</td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td><span class="rupee-font">{{infoParams.prepayment | currency:'&#8377;'}}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr
+                                            *ngIf="wtlst.service?.minPrePaymentAmount && infoParams.type === 'waitlistreschedule' && wtlst.amountPaid > 0">
                                             <td width="48%" align="right">Amount paid</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td><span class="rupee-font">

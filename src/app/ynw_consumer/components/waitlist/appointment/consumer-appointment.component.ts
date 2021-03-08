@@ -1262,13 +1262,14 @@ export class ConsumerAppointmentComponent implements OnInit {
         }
     }
     goBack(type?) {
+        if (type) {
+            this.location.back();
+        }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }
         setTimeout(() => {
-            if (type) {
-                this.location.back();
-            } else if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
+            if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.filterDepart)
                 || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
                 this.action === 'phone' || this.action === 'email') {
                 this.action = '';
@@ -1494,7 +1495,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                 this.paymentLength = Object.keys(this.paymentDetails).length;
             },
                 error => {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 });
     }
     payuPayment() {
@@ -1504,7 +1505,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
-            'amount': this.prepaymentAmount,
+            'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
             'uuid': this.trackUuid,
             'accountId': this.account_id,
@@ -1549,7 +1550,7 @@ export class ConsumerAppointmentComponent implements OnInit {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.prepayAmount, this.uuidList);
+        this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'appt_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList);
     }
     getImage(url, file) {
         if (file.type == 'application/pdf') {
