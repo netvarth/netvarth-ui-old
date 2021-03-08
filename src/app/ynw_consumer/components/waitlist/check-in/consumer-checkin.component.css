@@ -1433,3 +1433,9 @@ body.modal-open {
   padding-right: 15px;
   padding-top: 15px;
 }
+.col-xs-3 {
+  width: 25% !important;
+}
+.col-xs-9 {
+  width: 75% !important;
+}
