@@ -248,7 +248,7 @@
         <!--begin::Header-->
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all'">All
+            <span class="card-label font-1 font-weight-bolder text-dark" *ngIf="selectedGroup == 'all' && groups.length > 0">All
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
@@ -406,7 +406,7 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead *ngIf="customers.length > 0">
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 150px" class="pl-7" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
+                    <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
                       <span class="text-dark-75">
                         <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()">

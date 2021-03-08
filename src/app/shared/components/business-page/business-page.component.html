@@ -304,14 +304,14 @@
         </div>
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0"
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount > 0 || (businessjson.serviceSector.name !== 'healthCare' && serviceCount==0 && userCount > 0)"
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> {{service_cap}}
                     </h5>
                     <h6 class="question-header">Book online now and save your time
                     </h6>
                 </div>
-                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0"
+                <div class="serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
                     [class.mgn-bt-10]="!showDepartments">
                     <h5 class="mgn-bt-5 primary-color"> Doctors and Specializations
                     </h5>

@@ -1049,7 +1049,7 @@
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="">
                                                                     <div *ngIf="type !== 'waitlistreschedule'">
-                                                                        <h6 class="card-title service"
+                                                                        <h6 class="card-title service mgn-bt-10"
                                                                             *ngFor="let member of waitlist_for">
                                                                             {{member.firstName | capitalizeFirst}}
                                                                             {{member.lastName | capitalizeFirst}}
@@ -1062,8 +1062,13 @@
                                                                     </h6>
                                                                     <div class="contact-section">
                                                                         <i class="fa fa-mobile "></i>
-                                                                        <i *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)"
-                                                                            class="fa wtsapaud-icon wtsap-cal"></i>
+                                                                        <ng-container
+                                                                            *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && (!changePhno || currentPhone == callingModes)">
+                                                                            <i class="fa wtsapaud-icon wtsap-cal"
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-lt-5"
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
+                                                                        </ng-container>
                                                                         <span class="mgn-lt-10 phonevallabel"
                                                                             *ngIf="userPhone && !changePhno">{{countryCode}}
                                                                             {{userPhone}}</span>
@@ -1080,7 +1085,10 @@
                                                                     </div>
                                                                     <div class="contact-section"
                                                                         *ngIf="changePhno && currentPhone != callingModes && sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                        <i class="fa wtsapaud-icon wtsap-cal"></i>
+                                                                        <i class="fa wtsapaud-icon wtsap-cal"
+                                                                            *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                                        <i class="fa wtsapvid-icon wtsap-cal"
+                                                                            *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                         <span
                                                                             class="mgn-lt-10 phonevallabel">+{{callingModes}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
@@ -1236,7 +1244,10 @@
                                                                         </p>
                                                                         <p class="m0 mgn-up-10-m"
                                                                             *ngIf="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                            <i class="fa wtsapaud-icon wtsap-cal"></i>
+                                                                            <i class="fa wtsapaud-icon wtsap-cal"
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                                            <i class="fa wtsapvid-icon wtsap-cal mgn-rt-5 mgn-lt-10"
+                                                                                *ngIf="sel_ser_det.virtualServiceType === 'videoService'"></i>
                                                                             <span>WhatsApp#:
                                                                                 <b>+{{callingModes}}</b></span>
                                                                         </p>
@@ -1630,8 +1641,12 @@
                                                     <td width="48%" align="right" *ngIf="!settingsjson.showTokenId">
                                                         Check-in for</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td>{{waitlist_for[0].firstName}}
-                                                        {{waitlist_for[0].lastName}}</td>
+                                                    <td>
+                                                        <div *ngFor="let customer of waitlist_for">
+                                                            {{customer.firstName}}
+                                                            {{customer.lastName}}
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="48%" align="right">Service</td>

@@ -508,4 +508,14 @@
   padding: 0rem !important;
   background-color: none !important;
 }
+.tab-selected h3,
+.tab-selected i {
+  color: #3699FF !important;
+}
+.tab-selected .step-icon {
+  background: #3699FF !important;
+}
+.padding-lg-10 {
+  padding: 1rem !important;
 
+}

@@ -2181,17 +2181,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoQuestionnaire(booking) {
     console.log(booking);
     let consumerId;
-    let source;
     let uuid;
     let type;
     if (booking.waitlistingFor) {
       consumerId = (booking.waitlistingFor[0].id === booking.consumer.id) ? 0 : booking.waitlistingFor[0].id;
-      source = 'consumerWaitlistResubmit';
       uuid = booking.ynwUuid;
       type = 'consCheckin';
     } else {
       consumerId = (booking.appmtFor[0].id === booking.consumer.id) ? 0 : booking.appmtFor[0].id;
-      source = 'consumerApptResubmit';
       uuid = booking.uid;
       type = 'consAppt';
     }
@@ -2201,9 +2198,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         providerId: booking.providerAccount.id,
         serviceId: booking.service.id,
         consumerId: consumerId,
-        source: source,
-        type: type,
-        questionnaireAnswers: booking.questionnaire
+        type: type
       }
     };
     this.router.navigate(['consumer', 'questionnaire'], navigationExtras);

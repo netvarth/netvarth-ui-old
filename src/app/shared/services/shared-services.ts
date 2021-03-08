@@ -1000,7 +1000,7 @@ submitConsumerApptQuestionnaire(body, uuid, accountId) {
 }
 resubmitConsumerQuestionnaire(body, uuid, accountId) {
   const url = 'consumer/questionnaire/resubmit/' + uuid + '?account=' + accountId;
-  return this.servicemeta.httpPut(url, body);
+  return this.servicemeta.httpPost(url, body);
 }
 submitProviderApptQuestionnaire(body, uuid) {
   const url = 'provider/appointment/questionnaire/' + uuid;
@@ -1008,7 +1008,7 @@ submitProviderApptQuestionnaire(body, uuid) {
 }
 resubmitProviderQuestionnaire(body, uuid) {
   const url = 'provider/questionnaire/resubmit/' + uuid;
-  return this.servicemeta.httpPut(url, body);
+  return this.servicemeta.httpPost(url, body);
 }
 submitProviderWaitlistQuestionnaire(body, uuid) {
   const url = 'provider/waitlist/questionnaire/' + uuid;

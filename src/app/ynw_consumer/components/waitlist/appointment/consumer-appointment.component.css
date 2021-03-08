@@ -1295,6 +1295,7 @@ ngx-intl-tel-input input {
 }
 .bookdetails tbody {
   vertical-align: baseline !important;
+  word-break: break-all !important;
 }
 .containerAppt {
   font-size: 1.7rem;
@@ -1432,4 +1433,10 @@ body.modal-open {
   font-size: 2rem !important;
   padding-right: 15px;
   padding-top: 15px;
+}
+.col-xs-3 {
+  width: 25% !important;
+}
+.col-xs-9 {
+  width: 75% !important;
 }
