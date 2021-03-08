@@ -126,7 +126,7 @@ export const Messages = {
   'SERVICE_ADDED2': 'Please add this service to the relevant Queues by editing it.',
   'SERVICE_IMAGE_DELETED': 'Service image deleted successfully',
   'SERVICE_IMAGE_UPLOADED': 'Service image(s) uploaded successfully',
-  'SERVICE_PRE_PAY_ERROR': 'Enable [customer] self pay button under payment settings to collect prepayment for this service.',
+  'SERVICE_PRE_PAY_ERROR': 'Payments cannot be collected as your payment setting is disabled now. To accept payments, go to Settings —> Jaldee Pay and enable the Jaldee Pay mode.',
   'SERVICE_TAX_ZERO_ERROR': 'Tax settings need to be completed for tax to be applicable',
   'WAITLIST_LOCATION_CREATED': 'Location created successfully',
   'WAITLIST_LOCATION_UPDATED': 'Location updated successfully',
