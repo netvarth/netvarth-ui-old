@@ -2212,7 +2212,11 @@ console.log('hi submit');
         });
         this.createitemdialogRef.afterClosed().subscribe(result => {
             console.log("Refresh items")
-            this.getItems();
+            if (this.catalog_id === 'add') {
+                this.getItems();
+            } else {
+                this.getUpdatedItems();
+            }
         })
     }
     deletetimeslot(type, index) {
