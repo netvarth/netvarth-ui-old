@@ -162,7 +162,11 @@
 								<button class="cs-btn bt2 ml-4" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 
 							</div>
-							<div class="add_item"  *ngIf="bill_data.billStatus!='Settled'">
+							<div class="add_item"
+							*ngIf="pos && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
+												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
+												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))"
+												>
 								<a *ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 									(click)="showAddItem()"
 									class="btn btn-sm btn-success font-weight-bold py-2 px-3 flat_item px-xxl-5 my-1">Add
@@ -233,7 +237,18 @@
 											<td class="text-right pt-7"
 												*ngIf="source && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
 														 ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-												{{service.quantity}}</td>
+												{{service.quantity}}<br><br>
+                                                <div *ngFor="let discount of service.discount">
+													<span class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span> <br>
+													<span class="text-right font-size-xs font-weight-boldest">
+														<span class="rupee-font">(-){{discount.discountValue
+															|
+															currency:'&#8377;'}}</span> <i
+															(click)="removeServiceDiscount(service.serviceId, discount.id)"
+															class="fa fa-window-close" aria-hidden="true"></i>
+													</span>	
+												</div>
+											</td>
 
 											<td class="text-right pt-7" style="color: red;font-size: smaller;"
 												*ngIf="!source && bill_data.checkinStatus === 'cancelled' && bill_data.checkinedService === service.serviceId && service.quantity === 0">
@@ -246,6 +261,35 @@
 											                     ((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
 												<span class="rupee-font">{{(service.quantity * service.price) |
 													currency:'&#8377;'}}</span>
+
+													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu" 
+													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
+														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
+														<mat-icon>more_horiz</mat-icon>
+													</button>
+													<mat-menu #tdmenu="matMenu">
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault"
+															(click)="serviceDiscCoupSec(i)"
+															*ngIf="itemdiscounts.length > 0">
+															Apply Discount
+														</button>
+
+														<button mat-menu-item data-toggle="modal"
+															data-target="#exampleModalSizeDefault1"
+															*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
+															(click)="adjustService(service.serviceName, service.quantity)">
+															Change Qty
+														</button>
+														<button mat-menu-item
+															(click)="removeService(service.serviceId, service.quantity)">
+															Remove Service
+														</button>
+													</mat-menu>
+												<br> 
+												<span *ngIf="service.discount && service.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
+												<span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
+                                            </td>
 											<td class="text-right pt-7"
 												*ngIf="!source && bill_data.checkinStatus !== 'cancelled' ||
 														(bill_data.checkinStatus === 'cancelled' && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0))">
@@ -276,34 +320,11 @@
 															Remove Service
 														</button>
 													</mat-menu>
-													<button class="mb-1" mat-icon-button [matMenuTriggerFor]="tdmenu" 
-													*ngIf="pos && source && bill_data.billStatus!='Settled' && (bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected' ||
-														((bill_data.apptStatus === 'Cancelled' || bill_data.apptStatus === 'Rejected') && (bill_data.checkinedService !== service.serviceId || service.quantity !== 0)))">
-														<mat-icon>more_horiz</mat-icon>
-													</button>
-													<mat-menu #tdmenu="matMenu">
-														<button mat-menu-item data-toggle="modal"
-															data-target="#exampleModalSizeDefault"
-															(click)="serviceDiscCoupSec(i)"
-															*ngIf="itemdiscounts.length > 0">
-															Apply Discount
-														</button>
-
-														<button mat-menu-item data-toggle="modal"
-															data-target="#exampleModalSizeDefault1"
-															*ngIf="bill_data.apptStatus !== 'Cancelled' && bill_data.apptStatus !== 'Rejected'"
-															(click)="adjustService(service.serviceName, service.quantity)">
-															Change Qty
-														</button>
-														<button mat-menu-item
-															(click)="removeService(service.serviceId, service.quantity)">
-															Remove Service
-														</button>
-													</mat-menu>
 												<br> 
 												<span *ngIf="service.discount && service.discount.length > 0"  class="text-right rupee-font font-size-xs text-muted-dark">{{sub_tot_cap}}</span> <br>
-												<span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span>
+												<span *ngIf="service.discount && service.discount.length > 0" class="text-right rupee-font font-size-xs font-weight-boldest">{{service.netRate | currency:'&#8377;'}}</span> 
 											</td>
+										    
 										    <!-- Modal for Service level apply discount -->
 											<div class="modal fade" id="exampleModalSizeDefault" tabindex="-1"
 												role="dialog" aria-labelledby="exampleModalSizeDefault"
@@ -605,13 +626,13 @@
 									<mat-expansion-panel>
 									  <mat-expansion-panel-header>
 										<mat-panel-title>
-											<i class="flaticon2-layers-1 mr-3"></i> Notes
+											<i class="flaticon2-layers-1 mr-3"></i>Bill Notes
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
-									  <mat-form-field>
-				      				<!-- <div class="section-three" *ngIf="bill_data && billNotesExists">
-										<a class="learnmore-pointer" id="customer-help"
-											(click)="billNotesClicked()">Bill notes</a>
+									  <!-- <mat-form-field> -->
+				      				<div class="section-three" *ngIf="bill_data && billNotesExists">
+										<!-- <a class="learnmore-pointer" id="customer-help"
+											(click)="billNotesClicked()">Bill notes</a> -->
 										<div class="bill-notes"
 											*ngIf="(discountDisplayNotes || bill_data.displayNotes)">
 											<div>Notes for {{customer_label}}:</div>
@@ -640,14 +661,14 @@
 												</div>
 											</ul>
 										</div>
-									</div> -->
+									</div>
 								
 									
 
-										<mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
-									  </mat-form-field>									
-									  <mat-datepicker #picker></mat-datepicker>
+										<!-- <mat-label>Date</mat-label> -->
+										<!-- <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly> -->
+									  <!-- </mat-form-field>									 -->
+									  <!-- <mat-datepicker #picker></mat-datepicker> -->
 									</mat-expansion-panel>
 								  </mat-accordion>
 							</div>
