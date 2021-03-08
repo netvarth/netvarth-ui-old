@@ -406,7 +406,7 @@
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead *ngIf="customers.length > 0">
                   <tr class="text-left text-uppercase">
-                    <th style="min-width: 150px" class="pl-7 pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
+                    <th style="min-width: 150px" class="pad-lt-0" [class.pad-bt-0]="selectedcustomersformsg.length > 0">
                       <span class="text-dark-75">
                         <input type="checkbox" (change)="selectAllcustomers($event)"
                           [checked]="isAllCustomerSelected()">
