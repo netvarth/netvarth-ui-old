@@ -14012,3 +14012,25 @@ width: 40px !important;
   background-color: #ddd;
   margin-left: 15px;
 }
+.infotext textarea {
+  width: 100%;
+  resize: none;
+}
+.addressedit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: blue;
+  float: right;
+  text-decoration: underline;
+}
+.quest-head {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+.question {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+.quest-answ-box {
+  margin-bottom: 20px;
+}

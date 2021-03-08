@@ -1,38 +1,74 @@
-<!-- <div *ngIf="questionnaireList">
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" *ngFor="let questionnaire of questionnaireList">
-        <div class="quest-outer" *ngFor="let question of questionnaire.labels;let i = index">
-            {{question.question.labelName}}
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'List'">
-                <mat-checkbox [checked]="isChecked(value, question.question)" *ngFor="let value of question.question.labelValues"
-                    (change)="listChange($event, value, question.question)">
-                    {{value}}</mat-checkbox>
-            </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'PlainText'">
-                <input type="text" matInput autocomplete="off" placeholder="{{question.question.label}}"
-                    [(ngModel)]="answers[question.question.labelName]">
-            </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'Number'">
-                <input type="number" matInput autocomplete="off" placeholder="{{question.question.label}}"
-                    [(ngModel)]="answers[question.question.labelName]">
-            </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'FileUpload'">
-                <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
-                    (change)="filesSelected($event)">
-                <button (click)="logofile.click()">choose file</button>
-            </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'Date'">
-                <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
-                    placeholder="{{question.question.label}}" readonly (click)="picker.open()"
-                    (dateChange)="dateChange($event.value)" [min]="getDate(question.question.startDate)" [max]="getDate(question.question.endDate)">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker [disabled]="false"></mat-datepicker>
-            </div>
-            <div class="question-box" *ngIf="question.question.fieldDataType === 'boolean'">
-                <span class="ttle mgn-rt-20">{{question.question.label}}</span>
-                <mat-slide-toggle class="example-margin" [checked]="true">
-                </mat-slide-toggle>
-            </div>
+<section class="cons-inbox no-padding-small" [class.container]="params && params.source && (params.source === 'consumerWaitlistResubmit' || params.source === 'consumerApptResubmit')">
+    <div class="panel-heading top-row "
+        *ngIf="params.source && (params.source === 'consumerWaitlistResubmit' || params.source === 'consumerApptResubmit')">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+            <app-header></app-header>
         </div>
     </div>
-    <button (click)="onSubmit()">submit</button>
-</div> -->
+    <div class="card title-gb"
+    *ngIf="params.uuid">
+        <h5 class="mgn-up-10 bold">Questionnaire <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
+                    class="fa fa-arrow-left"></i></a></h5>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="questionnaireList" [class.card]="params.uuid">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+            <div class="quest-outer" *ngFor="let question of questionnaireList.labels;let i = index">
+                <div class="">{{question.question.labelName}}</div>
+                <span class="form-level-settings"
+                    *ngIf="question.question.fieldDataType != 'Number' && question.question.fieldDataType != 'PlainText' && question.question.fieldDataType != 'Date'">{{question.question.label}}</span>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'List'">
+                    <mat-checkbox class="mgn-rt-10" [checked]="isChecked(value, question.question)"
+                        *ngFor="let value of question.question.labelValues"
+                        (change)="listChange($event, value, question.question)">
+                        {{value}}</mat-checkbox>
+                </div>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'PlainText'">
+                    <input type="text" matInput autocomplete="off" placeholder="{{question.question.label}}"
+                        [(ngModel)]="answers[question.question.labelName]" (keyup)="onSubmit();"
+                        [min]="question.question.plainTextPropertie.minNoOfLetter"
+                        [max]="question.question.plainTextPropertie.maxNoOfLetter">
+                </div>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'Number'">
+                    <input type="number" matInput autocomplete="off" placeholder="{{question.question.label}}"
+                        [(ngModel)]="answers[question.question.labelName]" (keyup)="onSubmit();"
+                        min="question.question.numberPropertie.start" max="question.question.numberPropertie.end">
+                </div>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'FileUpload'">
+                    <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
+                        (change)="filesSelected($event, i, question.question)">
+                    <input #logofile1 type="file" accept="/*;capture=camera" style="display:none;"
+                        (change)="filesSelected($event, i, question.question)" multiple>
+                    <button class="upload-btn" (click)="logofile.click()"
+                        *ngIf="question.question.filePropertie.minNoOfFile == 1">Upload File</button>
+                    <button class="upload-btn" (click)="logofile1.click()"
+                        *ngIf="question.question.filePropertie.minNoOfFile > 1">Upload File</button>
+                    <div class="error-msg" *ngIf="apiError[i]">{{apiError[i]}} </div>
+                    <div *ngFor="let img of selectedMessage.files;let i = index">
+                        {{img.name}}
+                        <i class="fa fa-times-circle" aria-hidden="true" (click)="deleteTempImage(i, question.question.labelName)"></i>
+                    </div>
+                </div>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'Date'">
+                    <input type="text" #date matInput [matDatepicker]="picker" autocomplete="off" tabindex="-1"
+                        placeholder="{{question.question.label}}" readonly (click)="picker.open()"
+                        [(ngModel)]="answers[question.question.labelName]"
+                        (dateChange)="dateChange($event.value, question.question)"
+                        [min]="getDate(question.question.dateProperties.startDate)"
+                        [max]="getDate(question.question.dateProperties.endDate)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+                </div>
+                <div class="question-box" *ngIf="question.question.fieldDataType === 'Boolean'">
+                    <span class="ttle mgn-rt-20">{{question.question.label}}</span>
+                    <mat-slide-toggle class="example-margin" [checked]="isBooleanChecked(question.question)"
+                        (change)="booleanChange($event, question.question)">
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" 
+        *ngIf="params.uuid">
+            <button mat-button class="cs-btn bt1" (click)="onSubmit('submit')">Submit</button>
+        </div>
+    </div>
+</section>

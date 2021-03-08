@@ -228,6 +228,7 @@ export class ProviderCheckinComponent implements OnInit {
     showQuestionnaire = false;
     questionnaireList: any = [];
     channel;
+    questionAnswers;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -803,6 +804,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(this.sel_ser);
+        this.getProviderQuestionnaire();
         let serv;
         for (let i = 0; i < this.servicesjson.length; i++) {
             if (this.servicesjson[i].id === curservid) {
@@ -1182,20 +1185,24 @@ export class ProviderCheckinComponent implements OnInit {
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 this.api_loading = false;
-                this.showQuestionnaire = true;
                 const retData = data;
                 let retUuid;
                 Object.keys(retData).forEach(key => {
                     retUuid = retData[key];
                     this.trackUuid = retData[key];
                 });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0 && this.questionAnswers) {
+                this.submitQuestionnaire(retUuid);
+                } else {
+                    this.router.navigate(['provider', 'check-ins']);
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
+                }
                 if (this.selectedMessage.files.length > 0) {
                     this.consumerNoteAndFileSave(retUuid);
-                }
-                if (this.settingsjson.showTokenId) {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-                } else {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
                 }
                 this.showCheckin = false;
                 this.searchForm.reset();
@@ -1208,6 +1215,31 @@ export class ProviderCheckinComponent implements OnInit {
                     this.api_loading = false;
                 });
     }
+    submitQuestionnaire(uuid) {
+        
+console.log(this.questionAnswers);
+console.log(Object.keys(this.questionAnswers).length);
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+          for (const pic of this.questionAnswers.files.files) {
+            dataToSend.append('files', pic, pic['name']);
+          }
+        }
+        console.log(this.questionAnswers.answers);
+        console.log(JSON.stringify(this.questionAnswers.answers));
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+    this.shared_services.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe(data => {
+        if (this.settingsjson.showTokenId) {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+        } else {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+        }
+        this.router.navigate(['provider', 'check-ins']);
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+        }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1266,6 +1298,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.waitlist_for = [];
         this.jaldeeId = jaldeeid;
         this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
+        this.getProviderQuestionnaire();
     }
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
@@ -1952,4 +1985,18 @@ export class ProviderCheckinComponent implements OnInit {
             return this.customer_data.jaldeeId;
         }
     }
+    getQuestionAnswers(event) {
+console.log(event);
+this.questionAnswers = event;
+console.log(Object.keys(this.questionAnswers).length);
+    }
+    showQnr() {
+        this.showQuestionnaire = !this.showQuestionnaire;
+    }
+    getProviderQuestionnaire() {
+        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+          console.log(data);
+          this.questionnaireList = data;
+        });
+      }
 }

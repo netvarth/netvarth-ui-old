@@ -19,6 +19,19 @@
         <p *ngIf="checkin.token">Token: {{checkin.token}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro">
+
+
+
+        <!-- <div class="action-box pointer-cursor"
+            (click)="gotoQuestionnaire(checkin)">
+            <div class="action-box-sub">
+                <span class="add-appt-icon"></span>
+                <div class="icon-text">Questionnaire</div>
+            </div>
+        </div> -->
+
+
+
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingWaitlist()">
             <div class="action-box-sub" *ngIf="checkin.callingStatus">
                 <span class="callstop-icon"></span>
