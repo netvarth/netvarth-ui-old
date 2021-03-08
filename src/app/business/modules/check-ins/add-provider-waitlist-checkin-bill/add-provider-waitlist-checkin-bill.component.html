@@ -162,7 +162,11 @@
 								<button class="cs-btn bt2 ml-4" (click)="hideWorkBench()">{{cancel_btn_cap}}</button>
 
 							</div>
-							<div class="add_item"  *ngIf="bill_data.billStatus!='Settled'">
+							<div class="add_item"
+							*ngIf="pos && (bill_data.billStatus!='Settled') && ((!source && checkin.waitlistStatus != 'cancelled') ||
+												(source === 'appt' && checkin.apptStatus != 'Rejected' && checkin.apptStatus != 'Cancelled')
+												|| (source === 'order' && bill_data.billStatus !== 'Cancel'))"
+												>
 								<a *ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 									(click)="showAddItem()"
 									class="btn btn-sm btn-success font-weight-bold py-2 px-3 flat_item px-xxl-5 my-1">Add
@@ -605,13 +609,13 @@
 									<mat-expansion-panel>
 									  <mat-expansion-panel-header>
 										<mat-panel-title>
-											<i class="flaticon2-layers-1 mr-3"></i> Notes
+											<i class="flaticon2-layers-1 mr-3"></i>Bill Notes
 										</mat-panel-title>
 									  </mat-expansion-panel-header>
-									  <mat-form-field>
-				      				<!-- <div class="section-three" *ngIf="bill_data && billNotesExists">
-										<a class="learnmore-pointer" id="customer-help"
-											(click)="billNotesClicked()">Bill notes</a>
+									  <!-- <mat-form-field> -->
+				      				<div class="section-three" *ngIf="bill_data && billNotesExists">
+										<!-- <a class="learnmore-pointer" id="customer-help"
+											(click)="billNotesClicked()">Bill notes</a> -->
 										<div class="bill-notes"
 											*ngIf="(discountDisplayNotes || bill_data.displayNotes)">
 											<div>Notes for {{customer_label}}:</div>
@@ -640,14 +644,14 @@
 												</div>
 											</ul>
 										</div>
-									</div> -->
+									</div>
 								
 									
 
-										<mat-label>Date</mat-label>
-										<input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
-									  </mat-form-field>									
-									  <mat-datepicker #picker></mat-datepicker>
+										<!-- <mat-label>Date</mat-label> -->
+										<!-- <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly> -->
+									  <!-- </mat-form-field>									 -->
+									  <!-- <mat-datepicker #picker></mat-datepicker> -->
 									</mat-expansion-panel>
 								  </mat-accordion>
 							</div>
