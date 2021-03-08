@@ -667,7 +667,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'home' && this.catalog_details.homeDelivery.deliveryCharge) {
       deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
     }
-    return deliveryCharge;
+    return deliveryCharge.toFixed(2);
   }
   getSubTotal() {
     let subtotal = 0;

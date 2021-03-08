@@ -70,3 +70,12 @@
 .tab-selected .wizard-icon {
     background: blue !important;
   }
+  .disableall {
+    cursor: default;
+    pointer-events: none !important;
+    opacity: 0.5 !important;
+  }
+  /* .incr:hover{
+    color: #1e4079;
+    background-color: #f9e2a7;
+  } */

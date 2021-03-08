@@ -416,7 +416,7 @@ export class OrderWizardComponent implements OnInit {
   highlight(index, address) {
     this.selectedRowIndex = index;
     this.customer_phoneNumber = address.phoneNumber;
-    this.customer_email = address.email;
+  //  this.customer_email = address.email;
     this.selectedAddress = address;
   }
   getCatalog() {
