@@ -828,6 +828,7 @@ button.fxmenu {
     font-weight: 700 !important;
     line-height: normal !important;
     margin-bottom: 0 !important;
+    display: block !important;
 
     white-space: nowrap;
     overflow: hidden !important;
