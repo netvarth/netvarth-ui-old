@@ -1630,11 +1630,13 @@
                                                     <td class="name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
                                                         {{businessjson.businessName}}</td>
                                                 </tr>
-                                                <!-- <tr>
-                                                        <td width="48%" align="right">Location </td>
-                                                        <td width="2%">&nbsp;:&nbsp;</td>
-                                                        <td> {{locationName}}</td>
-                                                    </tr> -->
+                                                <tr>
+                                                    <td width="48%" align="right">Location </td>
+                                                    <td width="2%">&nbsp;:&nbsp;</td>
+                                                    <td> {{locationName}}<a [href]="googleMapUrl" target="_blank"
+                                                            class="icon-location" matTooltip="Click to navigate">
+                                                        </a></td>
+                                                </tr>
                                                 <tr>
                                                     <td width="48%" align="right" *ngIf="settingsjson.showTokenId">
                                                         Token for</td>
@@ -1722,8 +1724,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="pay-section"
-                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment">
+                                        <div class="pay-section" *ngIf="sel_ser_det && sel_ser_det.isPrePayment">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
@@ -1735,7 +1736,8 @@
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class="" *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            <div class=""
+                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
                                                     <span class="razorpay-icon selected-payment"></span>

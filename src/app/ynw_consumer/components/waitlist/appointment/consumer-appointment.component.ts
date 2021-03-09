@@ -208,6 +208,7 @@ export class ConsumerAppointmentComponent implements OnInit {
     apiError = '';
     apiSuccess = '';
     questionAnswers;
+    googleMapUrl;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -230,6 +231,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             params => {
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
+                this.googleMapUrl = params.googleMapUrl;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }

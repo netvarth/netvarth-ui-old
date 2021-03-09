@@ -1504,7 +1504,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showCheckin(location.id, location.place, service.serviceAvailability.availableDate, service, 'consumer');
+      this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: '', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1547,7 +1547,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
-      this.showAppointment(location.id, location.place, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+      this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider };
       this.doLogin('consumer', passParam);
@@ -1590,7 +1590,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1599,7 +1599,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           this.getFavProviders();
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1631,7 +1631,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1639,12 +1639,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['cdate'], 'consumer');
+          this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'consumer');
         }
       }
     });
   }
-  showCheckin(locid, locname, curdate, service: any, origin?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?) {
 
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -1652,6 +1652,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const queryParam = {
       loc_id: locid,
       locname: locname,
+      googleMapUrl: gMapUrl,
       sel_date: curdate,
       cur: this.changedate_req,
       unique_id: this.provider_id,
@@ -1668,7 +1669,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, curdate, service: any, origin?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?) {
     // let deptId;
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
@@ -1676,6 +1677,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const queryParam = {
       loc_id: locid,
       locname: locname,
+      googleMapUrl: gMapUrl,
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,

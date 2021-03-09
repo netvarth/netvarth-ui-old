@@ -177,6 +177,7 @@ export class ConsumerCheckinComponent implements OnInit {
     apiSuccess = '';
     questionnaireList: any = [];
     questionAnswers;
+    googleMapUrl;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -199,8 +200,10 @@ export class ConsumerCheckinComponent implements OnInit {
     ) {
         this.route.queryParams.subscribe(
             params => {
+                console.log(params);
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
+                this.googleMapUrl = params.googleMapUrl;
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }
@@ -348,7 +351,7 @@ export class ConsumerCheckinComponent implements OnInit {
                     if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
                     }
-                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule'} });
+                    this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.rescheduleUserId, type: 'waitlistreschedule' } });
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
