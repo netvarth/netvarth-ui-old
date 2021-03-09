@@ -67,9 +67,13 @@
 .personal {
     line-height: 1.6;
 }
-.tab-selected .wizard-icon {
-    background: blue !important;
-  }
+.tab-selected h3,
+.tab-selected i {
+  color: #3699FF !important;
+}
+.tab-selected .step-icon {
+  background: #3699FF !important;
+}
   .disableall {
     cursor: default;
     pointer-events: none !important;
