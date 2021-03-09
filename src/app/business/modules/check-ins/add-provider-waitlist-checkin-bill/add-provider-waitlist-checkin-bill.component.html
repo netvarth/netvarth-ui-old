@@ -745,7 +745,7 @@
 								</div>
 
 								<div class="hr_content" *ngIf="bill_data.totalAmountPaid > 0">
-									<div class="flx_1"> <span class="link"
+									<div class="flx_1 custId-cursor"> <span class="link"
 											data-toggle="modal" data-target="#exampleModalSizeDefaultrefund">Amount
 											Paid</span></div>
 									<div class="rupee-font">{{bill_data.totalAmountPaid | currency:'&#8377;'}}</div>
@@ -920,13 +920,13 @@
 									<div class="rupee-font">{{bill_data.refundedAmount | currency:'&#8377;'}}</div>
 								</div>
 
-								<div class="hr_content"
+								<div class="hr_content amount_Saved"
 									*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
 									<div class="flx_1">{{customer_label | capitalizeFirst}} will save
 										{{bill_data.totalAmountSaved | currency:'&#8377;'}}</div>
 								</div>
 
-								<div class="hr_content"
+								<div class="hr_content amount_Saved"
 									*ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
 									<div class="flx_1">{{customer_label | capitalizeFirst}} have saved
 										{{bill_data.totalAmountSaved | currency:'&#8377;'}}</div>
