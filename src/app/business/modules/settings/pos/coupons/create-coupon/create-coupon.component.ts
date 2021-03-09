@@ -14,7 +14,7 @@ import { DepartmentListDialogComponent } from '../../../../../shared/department-
 import { ConsumerGroupDialogComponent } from '../../../../../shared/consumer-group-dialog/consumer-group-dialog.component';
 import { UsersListDialogComponent } from '../../../../../shared/users-list-dialog/users-list-dialog.component';
 import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-label-dialog/consumer-label-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 
@@ -587,7 +587,13 @@ isNumeric(evt) {
   );
   }
   redirecToCoupon() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+         coupon_list:'own_coupon'
+         
+      }
+  };
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon'],navigationExtras);
   }
 }
 

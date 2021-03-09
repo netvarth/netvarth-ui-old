@@ -453,7 +453,7 @@
                                                       </a>
                                                   </span>
                                                   <span class="pull-right hidden-xs"
-                                                      *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer">
+                                                      *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer ||search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_provider_coupon_count))!=0 && isfirstCheckinOffer">
                                                       <a class="search-action"
                                                           (click)="!btn_clicked && openCoupons(search_result,true)">
                                                           <img class="img" src="./assets/images/first_coupon.png"
@@ -463,7 +463,7 @@
                                                       </a>
                                                   </span>
                                                   <span class="pull-right hidden-xs"
-                                                      *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0">
+                                                      *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0 ||search_result.fields.claimable!=1 && (stringToInt(search_result.fields.provider_coupon_enabled))!=0 ">
                                                       <a class="search-action"
                                                           (click)="!btn_clicked && openCoupons(search_result)">
                                                           <img class="img" src="./assets/images/jcoupon.png"

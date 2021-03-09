@@ -5,7 +5,7 @@ import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../../../app.component';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
@@ -72,15 +72,25 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   couponError = '';
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
+
+
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
     private routerobj: Router,
     public shared_functions: SharedFunctions,
     private sharedfunctionObj: SharedFunctions,
     private snackbarService: SnackbarService,
+    private activatedRoute:ActivatedRoute,
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
+    this.activatedRoute.queryParams.subscribe(params=>{
+      if(params.coupon_list==='own_coupon'){
+        this.tabid=1;
+      }else{
+        this.tabid=0;
+      }
+    })
   }
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');

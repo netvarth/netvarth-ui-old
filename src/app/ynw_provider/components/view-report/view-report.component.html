@@ -72,7 +72,6 @@
                     <th>Gateway</th>
                     <th>Gateway Service Charge</th>
                     <th>Gateway Service Tax</th>
-                    <th>Gateway Service(Charge+Tax)</th>
                     <th>Jaldee Commission</th>
                     <th>Settlement Amount</th>
                     <th>Refund Amount</th>
@@ -91,7 +90,6 @@
                     <td data-title="Gateway">{{jbank.gateway}}</td>
                     <td data-title="Gateway Service Charge"> <span class="price rupee-font">{{jbank.gateway_service_charge | currency:'&#8377;'}}</span></td>
                     <td data-title="Gateway Service Tax"> <span class="price rupee-font">{{jbank.gateway_service_charge_tax| currency:'&#8377;'}}</span></td>
-                    <td data-title="Gateway Service(Charge+Tax)"> <span class="price rupee-font">{{jbank.gatewayCommission| currency:'&#8377;'}}</span></td>
                     <td data-title="Jaldee Commission"> <span class="price rupee-font">{{jbank.jaldeeCommission| currency:'&#8377;'}}</span></td>
                     <td data-title="Settlement Amount"><span class="price rupee-font">{{jbank.settlementAmount| currency:'&#8377;'}}</span></td>
                     <td data-title="Refund Amount"><span class="price rupee-font">{{jbank.refund| currency:'&#8377;'}}</span></td>
@@ -100,6 +98,16 @@
                 </tbody>
               </table>
             </div>
+                     <!--Summary div-->
+          <div class="col-x1-12 col-lg-12 col-md-12">
+              <div class="col-x1-6 col-lg-6 col-md-6">&nbsp;</div>
+              <div class="col-x1-6 col-lg-6 col-md-6 pull-right">
+               
+                  <label *ngIf="viewreport.subTotalJaldeeBank!=null">Jaldee Bank Receivable Amount :  <span class="price rupee-font"> {{viewreport.subTotalJaldeeBank| currency:'&#8377;'}}</span></label><br>
+                  <label *ngIf="viewreport.grantTotal!=null">Total Receivable Amount :  <span  class="price rupee-font"> {{viewreport.grantTotal| currency:'&#8377;'}}</span></label><br>
+                  <label *ngIf="viewreport.jBankBalanceDue!=null">Jaldee Bank Balance Due : <span  class="price rupee-font"> {{viewreport.jBankBalanceDue| currency:'&#8377;'}}</span></label><br>
+              </div>
+          </div>
           </div>
           <div class="n-loc table"
             *ngIf="invoiceFromS3 && invoiceFromS3.jaldeeCouponReimbursableExpense && invoiceFromS3.jaldeeCouponReimbursableExpense.couponList.length>0">
@@ -134,20 +142,16 @@
                 </table>
               </div>
             </div>
-          </div>
-          <!--Summary div-->
+                 <!--Summary div-->
           <div class="col-x1-12 col-lg-12 col-md-12">
               <div class="col-x1-6 col-lg-6 col-md-6">&nbsp;</div>
               <div class="col-x1-6 col-lg-6 col-md-6 pull-right">
-                <label *ngIf="viewreport.subTotalJaldeeBank!=null">Jaldee Bank Receivable amount :  <span class="price rupee-font"> {{viewreport.subTotalJaldeeBank| currency:'&#8377;'}}</span></label><br>
                 <label *ngIf="viewreport.subTotalJaldeeCoupons!=null">Jaldee Coupon receivable Amount: <span  class="price rupee-font"> {{viewreport.subTotalJaldeeCoupons| currency:'&#8377;'}}</span></label><br>
-                <label *ngIf="viewreport.grantTotal!=null">Total Receivable Amount :  <span  class="price rupee-font"> {{viewreport.grantTotal| currency:'&#8377;'}}</span></label><br>
-                <label *ngIf="viewreport.jBankBalanceDue!=null">Jaldee Bank Balance Due : <span  class="price rupee-font"> {{viewreport.jBankBalanceDue| currency:'&#8377;'}}</span></label><br>
                 <label *ngIf="viewreport.jcBalanceDue!=null">Jaldee Coupon Balance Due: <span  class="price rupee-font"> {{viewreport.jcBalanceDue| currency:'&#8377;'}}</span></label><br>
-                <label *ngIf="viewreport.totalBalanceDue!=null">Total Balance Due : <span  class="price rupee-font"> {{viewreport.totalBalanceDue| currency:'&#8377;'}}</span></label><br>
               </div>
           </div>
-          <!---End Summary-->
+          </div>
+    
         </div>
       </div>
     </div>

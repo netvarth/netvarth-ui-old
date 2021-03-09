@@ -2151,6 +2151,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   openCoupons(obj, type?) {
+    const couponArray=[];
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
     // const busname = obj.fields.title;
@@ -2159,25 +2160,74 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       .then(
         res => {
           const s3url = res;
-          this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
-            .subscribe(couponsList => {
-              this.coupondialogRef = this.dialog.open(CouponsComponent, {
-                width: '60%',
-                panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-                disableClose: true,
-                data: {
-                  couponsList: couponsList,
-                  type: type
-                }
-              });
-              this.coupondialogRef.afterClosed().subscribe(result => {
-                this.btn_clicked = false;
-              });
-            }, error => {
-              this.btn_clicked = false;
-            });
-        });
-  }
+          const arr = [
+            new Promise((resolve, reject) => {
+              if(obj.fields.coupon_enabled!==0){
+                this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+                .subscribe(couponsList => {
+                  console.log(couponsList);
+                  couponArray.push({'JC':couponsList});
+                  resolve(couponsList);
+                },error=>{
+                  reject();
+                });
+              }else{
+               return;
+              }
+            }),
+            new Promise((resolve, reject) => {
+              if(obj.fields.provider_coupon_enabled!==0){
+                this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
+                .subscribe(couponsList => {
+                  console.log(couponsList);
+                  couponArray.push({'OWN':couponsList});
+                  resolve(couponsList);
+                },
+                error=>{
+                  reject();
+                });
+              }else{
+               return;
+              }
+            })
+         ];
+         Promise.all([arr[0], arr[1]]).then((resp) => {
+          console.log(resp[0]);
+          console.log(resp[1]);
+          this.coupondialogRef = this.dialog.open(CouponsComponent, {
+            width: '60%',
+            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+            disableClose: true,
+            data: {
+              couponsList: couponArray,
+              type: type
+            }
+          });
+          this.coupondialogRef.afterClosed().subscribe(result => {
+            this.btn_clicked = false;
+          });
+       });
+
+        //   this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
+        //     .subscribe(couponsList => {
+        //       this.coupondialogRef = this.dialog.open(CouponsComponent, {
+        //         width: '60%',
+        //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+        //         disableClose: true,
+        //         data: {
+        //           couponsList: couponsList,
+        //           type: type
+        //         }
+        //       });
+        //       this.coupondialogRef.afterClosed().subscribe(result => {
+        //         this.btn_clicked = false;
+        //       });
+        //     }, error => {
+        //       this.btn_clicked = false;
+        //     });
+        // });
+  });
+}
   openJdn(obj) {
     const s3id = obj.fields.unique_id;
     const UTCstring = this.shared_functions.getCurrentUTCdatetimestring();

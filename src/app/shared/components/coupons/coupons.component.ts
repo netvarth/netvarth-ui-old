@@ -11,12 +11,15 @@ export class CouponsComponent implements OnInit {
   couponsList: any = [];
   type;
   tempCouponList: any = [];
+  providerCouponList: any[];
+  ownCoupons: any;
   constructor(private shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   ngOnInit() {
     console.log(this.data);
-    this.tempCouponList = this.data.couponsList;
+    this.tempCouponList = this.data.couponsList[0].JC;
+    this.ownCoupons=this.data.couponsList[1].OWN;
     if (this.data.type) {
       this.type = this.data.type;
     }
@@ -24,6 +27,7 @@ export class CouponsComponent implements OnInit {
   }
   showCoupons() {
     this.couponsList = [];
+    this.providerCouponList=[];
     for (let index = 0; index < this.tempCouponList.length; index++) {
       if (this.type) {
         if (this.tempCouponList[index].firstCheckinOnly === true) {
@@ -35,7 +39,19 @@ export class CouponsComponent implements OnInit {
         }
       }
     }
+    for (let index = 0; index < this.ownCoupons.length; index++) {
+      if (this.type) {
+        if (this.ownCoupons[index].firstCheckinOnly === true) {
+          this.providerCouponList.push(this.ownCoupons[index]);
+        }
+      } else {
+        if (this.ownCoupons[index].firstCheckinOnly === false) {
+          this.providerCouponList.push(this.ownCoupons[index]);
+        }
+      }
+    }
     console.log(this.couponsList);
+    console.log(this.providerCouponList);
   }
 
   formatDateDisplay(dateStr) {
