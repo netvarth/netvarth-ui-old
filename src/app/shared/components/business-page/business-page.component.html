@@ -80,7 +80,7 @@
                                     Specializations
                                 </div>
                                 <div class="question-value1">
-                                    <ul class="comma-list">
+                                    <ul class="comma-list"> 
                                         <li class="item" *ngFor="let spec of specializationslist">{{spec}}</li>
                                         <ng-container *ngIf="showmoreSpec  && specializationslist_more.length>0">
                                             <li class="item" *ngFor="let spec of specializationslist_more">{{spec}}</li>
@@ -124,6 +124,13 @@
                                     <a class="like-btn" (click)="communicateHandler()">
                                         <span *ngIf="provider_bussiness_id">
                                             {{send_msgs_cap}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="like-btn" (click)="qrCodegeneraterOnlineID(businessjson.accEncUid)">
+                                        <span *ngIf="provider_bussiness_id">
+                                            share
                                         </span>
                                     </a>
                                 </li>

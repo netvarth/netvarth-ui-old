@@ -85,7 +85,7 @@
                                             <i class="ki ki-minus icon-xs"></i>
                                           </a>
                                           <span class="mr-2 font-weight-bolder">{{getItemQty(item)}}</span>
-                                          <a class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                          <a class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
                                             <i class="ki ki-plus icon-xs"></i>
                                           </a>
                                         </td>
@@ -173,7 +173,7 @@
                                     <i class="ki ki-minus icon-xs"></i>
                                   </a>
                                   <span class="mr-2 font-weight-bolder">{{ getItemQty(item) }}</span>
-                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" (click)="increment(item);">
+                                  <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon" [class.disableall]="getItemQty(item) === item.maxqty"  (click)="increment(item);">
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>

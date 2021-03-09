@@ -273,6 +273,7 @@ export const Messages = {
   'SCHEDULENAME_TOOLTIP': 'Click here to edit the Schedule',
 
   'ADD_BUTTON': 'Click to create an instant queue',
+  'ADD_DEPT': 'Click to create an Department',
   'ADJUSTDELAY_PLACEHOLDER': 'Default message will be send with the delay time or you can type your own message here',
   'EST_WAIT_TIME_CAPTION': 'Est Wait Time',
   'NXT_AVAILABLE_TIME_CAPTION': 'Next Available Time',

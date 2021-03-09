@@ -144,7 +144,7 @@ export class OrderDashboardComponent implements OnInit {
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
   }
-  showActionPopup(order?) {
+  showActionPopup(order?,timetype?) {
     if (order) {
       this.selectedOrders = order;
     }
@@ -153,7 +153,8 @@ export class OrderDashboardComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
       disableClose: true,
       data: {
-        selectedOrder: this.selectedOrders
+        selectedOrder: this.selectedOrders,
+        type:timetype
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {

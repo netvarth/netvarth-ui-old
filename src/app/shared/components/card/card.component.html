@@ -65,8 +65,8 @@
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
-        [class.height-160]="!service.itemImages"
-        [class.height-275]="service.itemImages"
+        [class.height-182]="!service.itemImages"
+        [class.height-302]="service.itemImages"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
         <!-- <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div> -->
@@ -102,28 +102,30 @@
                 <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
+            <p class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</p>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
 
             </div> -->
                 <div class="col-md-12 d-flex mgn-up-10 no-padding">
-                    <!-- <div class="amount" *ngIf="item.showpric">
+                    <div class="amount" *ngIf="item.showpric">
                         <div *ngIf="service.showPromotionalPrice">
-                            <div class="amount-label">RETAIL PRICE</div>
+                            <!-- <div class="amount-label">RETAIL PRICE</div> -->
                             <div class="amount-value strikeMe">
                                 <i class="fa fa-inr"></i>{{service.price | currency:'':''}}
                             </div>
                         </div>
                         <div>
-                            <div class="amount-label">
+                            <!-- <div class="amount-label">
                                 {{ service.showPromotionalPrice ? 'OFFER PRICE' : 'RETAIL PRICE'}}
-                            </div>
+                            </div> -->
                             <div class="amount-value">
                                 <i class="fa fa-inr"></i>
                                 {{(service.showPromotionalPrice ? service.promotionalPrice : service.price) | currency:'':''}}
                             </div>
                         </div> 
-                    </div> -->
+                    </div>
+                    <div class="amount" *ngIf="!item.showpric">&nbsp;</div>
                     <div class="quantity">
                         <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
                             Sold Out

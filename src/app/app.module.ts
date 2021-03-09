@@ -105,7 +105,7 @@ import { CommunicationComponent } from './shared/components/communication/commun
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
 import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -202,7 +202,8 @@ export function init_app(globalService: GlobalService) {
     CardModule,
     MatStepperModule,
     NgxIntlTelInputModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ShareIconsModule
   ],
   providers: [
     BsModalService,

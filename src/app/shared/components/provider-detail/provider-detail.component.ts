@@ -26,7 +26,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery'; 
+import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 
 @Component({
@@ -704,8 +704,28 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               console.log(location);
               this.changeLocation(location[0]);
             } else {
-            this.changeLocation(this.locationjson[0]);
+              this.changeLocation(this.locationjson[0]);
             }
+            let apptTimearr = [];
+            let waitTimearr = [];
+            console.log(this.showDepartments);
+            if (this.deptUsers && this.deptUsers.length > 0) {
+            for (let dept of this.deptUsers) {
+              if (!this.showDepartments) {
+                apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+              } else {
+                if (dept.users && dept.users.length > 0) {
+                  for (let user of dept.users) {
+                    apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                    waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                  }
+                }
+              }
+            }
+          }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
             this.api_loading = false;
             break;
           }
@@ -776,6 +796,36 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+  getUserApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+        });
+    }
+  }
+  getUserWaitingTime(provids) {
+    if (provids.length > 0) {
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+        post_provids.push(provids[i].locid);
+      }
+      if (post_provids.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
+        .subscribe(data => {
+          this.waitlisttime_arr = data;
+        });
+    }
   }
   getTimeToDisplay(min) {
     return this.sharedFunctionobj.convertMinutesToHourMinute(min);
@@ -1628,15 +1678,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     $('modal-container:has(.serv-detail-modal)').addClass('serv-detail-modal-container');
 
-/*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    }); */
-    
+    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+          disableClose: true,
+          data: servData
+        });
+        this.servicedialogRef.afterClosed().subscribe(() => {
+        }); */
+
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -1925,6 +1975,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                   }
                   if (!this.userId) {
                     for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+                      const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+                      this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
                       this.userCount++;
                     }
@@ -1963,12 +2017,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
                     this.serviceCount++;
                   }
                 }
+                console.log(this.deptUsers);
+                console.log(this.appttime_arr);
+                console.log(this.waitlisttime_arr);
                 for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+                  this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+                  this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
                   servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
                   this.userCount++;
                 }
               }
               this.servicesAndProviders = servicesAndProviders;
+              console.log(this.servicesAndProviders);
             }
           },
             error => {
@@ -2093,27 +2153,33 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             this.orderItems = orderItems;
           }
         });
+    }
   }
-}
 
 
 
-// OrderItem add to cart
-addToCart(itemObj) {
-  const item = itemObj.item;
-  const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
-  if (spId === null) {
-    this.orderList = [];
-    this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
-    this.orderList.push(itemObj);
-    this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.getTotalItemAndPrice();
-    this.getItemQty(item);
-  } else {
-    if (this.orderList !== null && this.orderList.length !== 0) {
-      if (spId !== this.provider_bussiness_id) {
-        if (this.getConfirmation()) {
-          this.lStorageService.removeitemfromLocalStorage('order');
+  // OrderItem add to cart
+  addToCart(itemObj) {
+    const item = itemObj.item;
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.orderList = [];
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.orderList.push(itemObj);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.getTotalItemAndPrice();
+      this.getItemQty(item);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+          if (this.getConfirmation()) {
+            this.lStorageService.removeitemfromLocalStorage('order');
+          }
+        } else {
+          this.orderList.push(itemObj);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          this.getTotalItemAndPrice();
+          this.getItemQty(item);
         }
       } else {
         this.orderList.push(itemObj);
@@ -2121,80 +2187,104 @@ addToCart(itemObj) {
         this.getTotalItemAndPrice();
         this.getItemQty(item);
       }
-    } else {
-      this.orderList.push(itemObj);
-      this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      this.getTotalItemAndPrice();
-      this.getItemQty(item);
     }
+
   }
 
-}
 
-
-getConfirmation() {
-  let can_remove = false;
-  const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-    disableClose: true,
-    data: {
-      'message': '  All added items in your cart for different Provider will be removed ! '
-    }
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      can_remove = true;
-      this.orderList = [];
-      this.lStorageService.removeitemfromLocalStorage('order_sp');
-      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-      this.lStorageService.removeitemfromLocalStorage('order_spId');
-      this.lStorageService.removeitemfromLocalStorage('order');
-      return true;
-    } else {
-      can_remove = false;
-
-    }
-  });
-  return can_remove;
-}
-removeFromCart(itemObj) {
-  const item = itemObj.item;
-
-  for (const i in this.orderList) {
-    if (this.orderList[i].item.itemId === item.itemId) {
-      this.orderList.splice(i, 1);
-      if (this.orderList.length > 0 && this.orderList !== null) {
-        this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      } else {
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+        this.orderList = [];
         this.lStorageService.removeitemfromLocalStorage('order_sp');
         this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
         this.lStorageService.removeitemfromLocalStorage('order_spId');
         this.lStorageService.removeitemfromLocalStorage('order');
-      }
+        return true;
+      } else {
+        can_remove = false;
 
-      break;
+      }
+    });
+    return can_remove;
+  }
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
+
+    for (const i in this.orderList) {
+      if (this.orderList[i].item.itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        if (this.orderList.length > 0 && this.orderList !== null) {
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        } else {
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
+        }
+
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+  }
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      const totalPrice = this.price + item_price;
+      this.price = totalPrice;
+      this.order_count = this.order_count + 1;
     }
   }
-  this.getTotalItemAndPrice();
-}
-getTotalItemAndPrice() {
-  this.price = 0;
-  this.order_count = 0;
-  for (const itemObj of this.orderList) {
-    let item_price = itemObj.item.price;
-    if (itemObj.item.showPromotionalPrice) {
-      item_price = itemObj.item.promotionalPrice;
+  checkout() {
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          account_id: this.provider_bussiness_id,
+          unique_id: this.provider_id,
+        }
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
+
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
     }
-    const totalPrice = this.price + item_price;
-    this.price = totalPrice;
-    this.order_count = this.order_count + 1;
+
+
   }
-}
-checkout() {
-  this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-  console.log(this.userType);
-  if (this.userType === 'consumer') {
+  itemDetails(item) {
+    console.log(JSON.stringify(item));
     let blogoUrl;
     if (this.businessjson.logo) {
       blogoUrl = this.businessjson.logo.url;
@@ -2210,146 +2300,116 @@ checkout() {
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        account_id: this.provider_bussiness_id,
-        unique_id: this.provider_id,
-      }
-    };
-    this.router.navigate(['order/shoppingcart'], navigationExtras);
-
-  } else if (this.userType === '') {
-    const passParam = { callback: 'order' };
-    this.doLogin('consumer', passParam);
-  }
-
-
-}
-itemDetails(item) {
-  console.log(JSON.stringify(item));
-  let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
-      blogoUrl = '';
-    }
-  const businessObject = {
-    'bname': this.businessjson.businessName,
-    'blocation': this.locationjson[0].place,
-    'logo': blogoUrl
-  };
-  this.lStorageService.setitemonLocalStorage('order', this.orderList);
-  this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-  const navigationExtras: NavigationExtras = {
-    queryParams: {
-      item: JSON.stringify(item),
-      providerId: this.provider_bussiness_id,
-      showpric: this.activeCatalog.showPrice,
-      businessDetails: businessObject
-
-    }
-
-  };
-  this.router.navigate(['order', 'item-details'], navigationExtras);
-  // this.router.navigate(['consumer', 'order', 'item-details']);
-}
-increment(item) {
-  this.addToCart(item);
-}
-
-decrement(item) {
-  this.removeFromCart(item);
-}
-getItemQty(itemObj) {
-  let qty = 0;
-  if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
-    qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
-  }
-  return qty;
-}
-catlogArry() {
-  if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
-    this.orderList = this.lStorageService.getitemfromLocalStorage('order');
-  }
-  this.getTotalItemAndPrice();
-}
-
-reset() {
-
-}
-showOrderFooter() {
-  let showFooter = false;
-  this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
-  if (this.spId_local_id !== null) {
-    if (this.orderList !== null && this.orderList.length !== 0) {
-      if (this.spId_local_id !== this.provider_bussiness_id) {
-        showFooter = false;
-      } else {
-        showFooter = true;
-      }
-    }
-
-  }
-  return showFooter;
-}
-
-shoppinglistupload() {
-  const chosenDateTime = {
-    delivery_type: this.choose_type,
-    catlog_id: this.activeCatalog.id,
-    nextAvailableTime: this.nextAvailableTime,
-    order_date: this.sel_checkindate,
-    advance_amount: this.advance_amount,
-    account_id: this.provider_bussiness_id
-
-  };
-  this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-  this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-  console.log(this.userType);
-  if (this.userType === 'consumer') {
-    let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
-      blogoUrl = '';
-    }
-    const businessObject = {
-      'bname': this.businessjson.businessName,
-      'blocation': this.locationjson[0].place,
-      'logo': blogoUrl
-    };
-    // this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-
+        item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
+        showpric: this.activeCatalog.showPrice,
+        businessDetails: businessObject
+
       }
 
     };
-    this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
-  } else if (this.userType === '') {
-    const passParam = { callback: 'order' };
-    this.doLogin('consumer', passParam);
+    this.router.navigate(['order', 'item-details'], navigationExtras);
+    // this.router.navigate(['consumer', 'order', 'item-details']);
   }
-}
+  increment(item) {
+    this.addToCart(item);
+  }
 
-qrCodegeneraterOnlineID(accEncUid) {
-  this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
-    width: '40%',
-    panelClass: ['popup-class', 'commonpopupmainclass'],
-    disableClose: true,
-    data: {
-      accencUid: accEncUid,
-      path: this.wndw_path,
-      businessName: this.businessjson.businessName
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+  getItemQty(itemObj) {
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.itemId)) {
+      qty = this.orderList.filter(i => i.item.itemId === itemObj.itemId).length;
     }
-  });
+    return qty;
+  }
+  catlogArry() {
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
+    }
+    this.getTotalItemAndPrice();
+  }
 
-  this.qrdialogRef.afterClosed().subscribe(result => {
-    if (result === 'reloadlist') {
-     
+  reset() {
+
+  }
+  showOrderFooter() {
+    let showFooter = false;
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (this.spId_local_id !== null) {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (this.spId_local_id !== this.provider_bussiness_id) {
+          showFooter = false;
+        } else {
+          showFooter = true;
+        }
+      }
+
     }
-  });
-}
+    return showFooter;
+  }
+
+  shoppinglistupload() {
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.activeCatalog.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.advance_amount,
+      account_id: this.provider_bussiness_id
+
+    };
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    console.log(this.userType);
+    if (this.userType === 'consumer') {
+      let blogoUrl;
+      if (this.businessjson.logo) {
+        blogoUrl = this.businessjson.logo.url;
+      } else {
+        blogoUrl = '';
+      }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+        'blocation': this.locationjson[0].place,
+        'logo': blogoUrl
+      };
+      // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
+  }
+
+  qrCodegeneraterOnlineID(accEncUid) {
+    this.qrdialogRef = this.dialog.open(QRCodeGeneratordetailComponent, {
+      width: '40%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        accencUid: accEncUid,
+        path: this.wndw_path,
+        businessName: this.businessjson.businessName
+      }
+    });
+
+    this.qrdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+
+      }
+    });
+  }
 
 }
 
