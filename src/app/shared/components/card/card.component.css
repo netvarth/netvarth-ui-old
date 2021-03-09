@@ -41,13 +41,13 @@
     /* transition: height 1000ms; */
 } 
 
-.booking-card.card.order.items.height-275 {
-    height: 275px !important;
+.booking-card.card.order.items.height-302 {
+    height: 302px !important;
     padding: 16px !important;
 }
 
-.booking-card.card.order.items.height-160 {
-    height: 160px !important;
+.booking-card.card.order.items.height-182 {
+    height: 182px !important;
     padding: 40px 16px 16px !important;
 }
 
@@ -682,11 +682,11 @@ button.fxmenu {
 .card.booking-card.items .card-item-content .quantity {
     display: inline-flex !important;
     flex-direction: column !important;
-    width: 100% !important;
+    width: 50% !important;
     padding: 0 !important;
     margin: 0 !important;
     justify-content: flex-end !important;
-    align-items: flex-start !important;
+    align-items: flex-end !important;
     align-self: stretch !important;
 }
 
@@ -806,7 +806,7 @@ button.fxmenu {
     z-index: 1;
 }
 
-.card.booking-card.items.height-275 .ribbon-new {
+.card.booking-card.items.height-302 .ribbon-new {
     /* transform: translateY(10px); */
     top: 20px !important;
 }
@@ -820,4 +820,17 @@ button.fxmenu {
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
     border-left: 15px solid darkred;
+}
+
+.card.booking-card.items .card-item-content .short-description {
+    color: darkslategray !important;
+    font-size: 0.925rem !important;
+    font-weight: 700 !important;
+    line-height: normal !important;
+    margin-bottom: 0 !important;
+
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    width: 175px;
 }
