@@ -379,7 +379,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
-        alert(this.accountEncId);
+        // alert(this.accountEncId);
 
         if (params.get('userEncId')) {
           this.userEncId = params.get('userEncId');
@@ -669,20 +669,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
-            this.location_exists = true;
-            for (let i = 0; i < this.locationjson.length; i++) {
-              const addres = this.locationjson[i].address;
-              const place = this.locationjson[i].place;
-              if (addres && addres.includes(place)) {
-                this.locationjson['isPlaceisSame'] = true;
-              } else {
-                this.locationjson['isPlaceisSame'] = false;
-              }
-              if (this.locationjson[i].parkingType) {
-                this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
-              }
-            }
-            this.changeLocation(this.locationjson[0]);
             if (!this.userId) {
               let apptTimearr = [];
               let waitTimearr = [];
@@ -704,6 +690,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.getUserWaitingTime(waitTimearr);
               this.getUserApptTime(apptTimearr);
             }
+            this.location_exists = true;
+            for (let i = 0; i < this.locationjson.length; i++) {
+              const addres = this.locationjson[i].address;
+              const place = this.locationjson[i].place;
+              if (addres && addres.includes(place)) {
+                this.locationjson['isPlaceisSame'] = true;
+              } else {
+                this.locationjson['isPlaceisSame'] = false;
+              }
+              if (this.locationjson[i].parkingType) {
+                this.locationjson[i].parkingType = this.locationjson[i].parkingType.charAt(0).toUpperCase() + this.locationjson[i].parkingType.substring(1);
+              }
+            }
+            this.changeLocation(this.locationjson[0]);
             this.api_loading = false;
             break;
           }
@@ -831,6 +831,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
         .subscribe(data => {
           this.waitlisttime_arr = data;
+          console.log(this.waitlisttime_arr);
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
@@ -880,6 +881,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
+          console.log(this.waitlisttime_arr);
         });
     }
   }
@@ -2252,6 +2254,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }
                 for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+                  this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+                  this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
                   servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
                   this.userCount++;
                 }

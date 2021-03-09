@@ -683,6 +683,25 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'location': {
             this.locationjson = res;
+            let apptTimearr = [];
+            let waitTimearr = [];
+            if (this.deptUsers && this.deptUsers.length > 0) {
+              for (let dept of this.deptUsers) {
+                if (!this.showDepartments) {
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                } else {
+                  if (dept.users && dept.users.length > 0) {
+                    for (let user of dept.users) {
+                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                    }
+                  }
+                }
+              }
+            }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
             this.location_exists = true;
             for (let i = 0; i < this.locationjson.length; i++) {
               const addres = this.locationjson[i].address;
@@ -706,25 +725,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             } else {
               this.changeLocation(this.locationjson[0]);
             }
-            let apptTimearr = [];
-            let waitTimearr = [];
-            if (this.deptUsers && this.deptUsers.length > 0) {
-              for (let dept of this.deptUsers) {
-                if (!this.showDepartments) {
-                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
-                  waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
-                } else {
-                  if (dept.users && dept.users.length > 0) {
-                    for (let user of dept.users) {
-                      apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                      waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
-                    }
-                  }
-                }
-              }
-            }
-            this.getUserWaitingTime(waitTimearr);
-            this.getUserApptTime(apptTimearr);
             this.api_loading = false;
             break;
           }
