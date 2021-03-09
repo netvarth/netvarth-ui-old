@@ -58,3 +58,11 @@ color: #0707eca1 !important;
   pointer-events: none !important;
   opacity: 0.5 !important;
 }
+.width100{
+  width: 100%;
+}
+.addmoreitem{
+  color: blueviolet;
+    float: right;
+    margin-right: 10px;
+}

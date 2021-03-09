@@ -83,6 +83,9 @@
     padding: 1rem !important;
   
   }
+  .width100{
+    width: 100%;
+  }
   /* .incr:hover{
     color: #1e4079;
     background-color: #f9e2a7;
