@@ -41,13 +41,13 @@
     /* transition: height 1000ms; */
 } 
 
-.booking-card.card.order.items.height-302 {
-    height: 302px !important;
+.booking-card.card.order.items.height-301 {
+    height: 301px !important;
     padding: 16px !important;
 }
 
-.booking-card.card.order.items.height-182 {
-    height: 182px !important;
+.booking-card.card.order.items.height-185 {
+    height: 185px !important;
     padding: 40px 16px 16px !important;
 }
 
@@ -806,7 +806,7 @@ button.fxmenu {
     z-index: 1;
 }
 
-.card.booking-card.items.height-302 .ribbon-new {
+.card.booking-card.items.height-301 .ribbon-new {
     /* transform: translateY(10px); */
     top: 20px !important;
 }
