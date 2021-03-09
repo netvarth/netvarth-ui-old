@@ -38,7 +38,8 @@
                 </div>
         <!-- </div>
         <div class="card-content"> -->
-                <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6>
+                <!-- <h6 class="service-type" *ngIf="item.type!='donation'">{{getServiceType()}}</h6> -->
+                <h6 class="service-type" *ngIf="item.type!='donation'">&nbsp;</h6>
                 <h6 class="service-type" *ngIf="item.type=='donation'">&nbsp;</h6>
                 <p class="card-text donationAmount" *ngIf="item.type=='donation'">
                     <span class="rupee-font bold"><i class="fa fa-inr"></i>{{service.minDonationAmount| currency:'':''}}</span>
@@ -65,8 +66,8 @@
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
-        [class.height-182]="!service.itemImages"
-        [class.height-302]="service.itemImages"
+        [class.height-185]="!service.itemImages"
+        [class.height-301]="service.itemImages"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
         <!-- <div class="ribbon ribbon-top-right" *ngIf="service.promotionLabel && item.type=='item'"><span>{{service.promotionLabel}}</span></div> -->
@@ -102,7 +103,9 @@
                 <a class="d-block name module1 twoline-break">{{service.displayName}}</a>
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
-            <p class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</p>
+            <div>
+                <div class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
+            </div>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
 
@@ -125,7 +128,7 @@
                             </div>
                         </div> 
                     </div>
-                    <div class="amount" *ngIf="!item.showpric">&nbsp;</div>
+                    <div class="amount" style="height: 44px !important;" *ngIf="!item.showpric">&nbsp;</div>
                     <div class="quantity">
                         <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
                             Sold Out
