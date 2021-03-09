@@ -86,6 +86,10 @@
     padding: 1rem !important;
   
   }
+  .address{
+    margin-left: 45%;
+    margin-top: 5%;
+  }
   /* .incr:hover{
     color: #1e4079;
     background-color: #f9e2a7;

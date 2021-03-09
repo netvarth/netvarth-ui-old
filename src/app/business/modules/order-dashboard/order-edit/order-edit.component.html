@@ -1,7 +1,7 @@
 <section class="">
   <div class="card title-gb rounded-0">
     <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Edit Order &nbsp;&nbsp;<i style="color:blue">{{orderNumber}}</i>
     </h5>
   </div>
 </section>
@@ -102,7 +102,7 @@
                                       </a>
                                       <span class="font-size-lg">{{ item.item.shortDesc }}</span>
                                     </div>
-                                    <div class="font-size-h6 text-muted font-weight-bolder">{{ item.item.price }}</div>
+                                    <div class="font-size-h6 text-muted font-weight-bolder rupee-font "> ₹ {{ item.item.price }}</div>
                                     <!--end::Details-->
                                   </div>
                                 </div>
@@ -149,7 +149,7 @@
                               <tr>
                                 <th>Product</th>
                                 <th class="text-center">Qty</th>
-                                <th class="text-right">Price</th>
+                                <th class="text-right rupee-font">Price (₹)</th>
                                 <th></th>
                               </tr>
                             </thead>
@@ -177,8 +177,8 @@
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>
-                                <td class="text-right align-middle font-weight-bolder font-size-h5">
-                                  {{ getItemPrice(item) }}
+                                <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                  ₹ {{ getItemPrice(item) }}
                                 </td>
                                 <td class="text-right align-middle"  (click)="removeItemFromCart(item)">
                                   <a class="btn btn-danger font-weight-bolder font-size-sm">
