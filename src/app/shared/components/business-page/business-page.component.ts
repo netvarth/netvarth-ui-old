@@ -26,7 +26,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import * as $ from 'jquery'; 
+import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 
 @Component({
@@ -684,19 +684,26 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             this.changeLocation(this.locationjson[0]);
             if (!this.userId) {
-            let apptTimearr = [];
-            let waitTimearr = [];
-            for (let dept of this.deptUsers) {
-              if (dept.users && dept.users.length > 0) {
-                for (let user of dept.users) {
-                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
-                  waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+              let apptTimearr = [];
+              let waitTimearr = [];
+              if (this.deptUsers && this.deptUsers.length > 0) {
+                for (let dept of this.deptUsers) {
+                  if (!this.showDepartments) {
+                    apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + dept.id });
+                    waitTimearr.push({ 'locid': dept.id + '-' + this.locationjson[0].id });
+                  } else {
+                    if (dept.users && dept.users.length > 0) {
+                      for (let user of dept.users) {
+                        apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                        waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                      }
+                    }
+                  }
                 }
               }
+              this.getUserWaitingTime(waitTimearr);
+              this.getUserApptTime(apptTimearr);
             }
-            this.getUserWaitingTime(waitTimearr);
-            this.getUserApptTime(apptTimearr);
-          }
             this.api_loading = false;
             break;
           }
@@ -768,7 +775,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
   }
-  
   getUserApptTime(provids_locid) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];
@@ -781,6 +787,35 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          for (let i = 0; i < this.appttime_arr.length; i++) {
+            if (this.appttime_arr[i]['availableSlots']) {
+              this.appttime_arr[i]['caption'] = 'Next Available Time';
+              if (dtoday === this.appttime_arr[i]['availableSlots']['date']) {
+                this.appttime_arr[i]['date'] = 'Today' + ', ' + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+              } else {
+                this.appttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.appttime_arr[i]['availableSlots']['date'], { 'rettype': 'monthname' }) + ', '
+                  + this.getAvailableSlot(this.appttime_arr[i]['availableSlots'].availableSlots);
+              }
+            }
+          }
         });
     }
   }
@@ -796,6 +831,55 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
         .subscribe(data => {
           this.waitlisttime_arr = data;
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const today = new Date(todaydt);
+          const dd = today.getDate();
+          const mm = today.getMonth() + 1; // January is 0!
+          const yyyy = today.getFullYear();
+          let cday = '';
+          if (dd < 10) {
+            cday = '0' + dd;
+          } else {
+            cday = '' + dd;
+          }
+          let cmon;
+          if (mm < 10) {
+            cmon = '0' + mm;
+          } else {
+            cmon = '' + mm;
+          }
+          const dtoday = yyyy + '-' + cmon + '-' + cday;
+          for (let i = 0; i < this.waitlisttime_arr.length; i++) {
+            if (this.waitlisttime_arr[i].hasOwnProperty('nextAvailableQueue')) {
+              if (!this.waitlisttime_arr[i]['nextAvailableQueue']['openNow']) {
+                this.waitlisttime_arr[i]['caption'] = 'Next Available Time ';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('serviceTime')) {
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  } else {
+                    this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                      + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  }
+                } else {
+                  this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                    + ', ' + this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                }
+              } else {
+                this.waitlisttime_arr[i]['caption'] = 'Est Wait Time'; // 'Estimated Waiting Time';
+                if (this.waitlisttime_arr[i]['nextAvailableQueue'].hasOwnProperty('queueWaitingTime')) {
+                  this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.convertMinutesToHourMinute(this.waitlisttime_arr[i]['nextAvailableQueue']['queueWaitingTime']);
+                } else {
+                  this.waitlisttime_arr[i]['caption'] = this.nextavailableCaption + ' '; // 'Next Available Time ';
+                  if (dtoday === this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate']) {
+                    this.waitlisttime_arr[i]['date'] = 'Today' + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  } else {
+                    this.waitlisttime_arr[i]['date'] = this.sharedFunctionobj.formatDate(this.waitlisttime_arr[i]['nextAvailableQueue']['availableDate'], { 'rettype': 'monthname' })
+                      + ', ' + this.waitlisttime_arr[i]['nextAvailableQueue']['serviceTime'];
+                  }
+                }
+              }
+            }
+          }
         });
     }
   }
@@ -1741,14 +1825,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     $('modal-container:has(.service-detail-modal)').addClass('service-detail-modal-container');
 
-/*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '40%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    }); */
+    /*     this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
+          width: '40%',
+          panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+          disableClose: true,
+          data: servData
+        });
+        this.servicedialogRef.afterClosed().subscribe(() => {
+        }); */
   }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
@@ -2490,10 +2574,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         businessName: this.businessjson.businessName
       }
     });
-  
+
     this.qrdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
-       
+
       }
     });
   }
