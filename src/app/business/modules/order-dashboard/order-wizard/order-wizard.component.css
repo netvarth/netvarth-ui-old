@@ -74,6 +74,9 @@
 .tab-selected .step-icon {
   background: #3699FF !important;
 }
+.tab-selected .wizard-icon {
+    color: #3699FF !important;
+  }
   .disableall {
     cursor: default;
     pointer-events: none !important;
