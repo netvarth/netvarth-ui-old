@@ -682,6 +682,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
             this.changeLocation(this.locationjson[0]);
+            if (!this.userId) {
+            let apptTimearr = [];
+            let waitTimearr = [];
+            for (let dept of this.deptUsers) {
+              if (dept.users && dept.users.length > 0) {
+                for (let user of dept.users) {
+                  apptTimearr.push({ 'locid': this.businessjson.id + '-' + this.locationjson[0].id + '-' + user.id });
+                  waitTimearr.push({ 'locid': user.id + '-' + this.locationjson[0].id });
+                }
+              }
+            }
+            this.getUserWaitingTime(waitTimearr);
+            this.getUserApptTime(apptTimearr);
+          }
             this.api_loading = false;
             break;
           }
@@ -752,6 +766,37 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       );
+  }
+  
+  getUserApptTime(provids_locid) {
+    if (provids_locid.length > 0) {
+      const post_provids_locid: any = [];
+      for (let i = 0; i < provids_locid.length; i++) {
+        post_provids_locid.push(provids_locid[i].locid);
+      }
+      if (post_provids_locid.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
+        .subscribe(data => {
+          this.appttime_arr = data;
+        });
+    }
+  }
+  getUserWaitingTime(provids) {
+    if (provids.length > 0) {
+      const post_provids: any = [];
+      for (let i = 0; i < provids.length; i++) {
+        post_provids.push(provids[i].locid);
+      }
+      if (post_provids.length === 0) {
+        return;
+      }
+      this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
+        .subscribe(data => {
+          this.waitlisttime_arr = data;
+        });
+    }
   }
   changeLocation(loc) {
     console.log(loc);
@@ -2079,6 +2124,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                   if (!this.userId) {
                     for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+                      const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                      this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+                      this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
                       deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
                       this.userCount++;
                     }
