@@ -18,9 +18,7 @@
 <!--begin::Content-->
 <div class="px-10 px-md-30 py-10 py-md-0 d-flex flex-column justify-content-md-center" style="font-family: serif;">
 	<h1 class="error-title text-stroke text-transparent" style="font-size: 8rem !important;">404</h1>
-	<p class="display-4 font-weight-boldest text-white mb-12">
-		How did you get here
-	</p>
+	
 	<p class="font-size-h1 font-weight-boldest text-dark-75" style="line-height: 1.4;
     font-family: serif;">
 		Sorry we can't seem to find the page you're looking for.
@@ -28,6 +26,8 @@
 	<p class="font-size-h4 line-height-md" style="font-size: 1.2rem !important;">
 		There may be a misspelling in the URL entered,<br>or the page you are looking for may no longer exist.
 	</p>
+	<button style="width: 6rem !important; color: black !important; border-color: black !important;" type="button" [routerLink]="['/']" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
+		Restart</button>
 </div>
 <!--end::Content-->
 </div>
