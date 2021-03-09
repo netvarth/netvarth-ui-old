@@ -1,14 +1,9 @@
 <header class="main-header jaldee-header">
-  <!-- Logo -->
   <a (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
-    <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
-    <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"></span>
   </a>
-  <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
-    <!-- Sidebar toggle button-->
     <a (click)="gotoActiveHome()" class="visible-xs logo-mini-app pointer-cursor pull-left">
       <img src="./assets/images/home/logo-business.png" alt="Jaldee" />
     </a>
@@ -18,7 +13,6 @@
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <!-- Messages: style can be found in dropdown.less-->
         <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP' && sessionStorage">
           <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-arrow-left"></i>
@@ -39,48 +33,12 @@
             </ng-template>
           </a>
         </li>
-        
-        <!-- <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
-          <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa take-tour-icon"></i>
-            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
-            <ng-template #text4>
-              <div>
-                We offer free support and we are always ready to help.<br>
-                <br>
-                Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
-                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
-
-              </div>
-            </ng-template>
-          </a>
-        </li> -->
-
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
             <span class="label label-success"
               *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
           </a>
-          <!-- <ul class="dropdown-menu" *ngIf="">
-            <li class="header" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">You have no new messages</li>
-
-            <li>
-              <ul class="menu">
-                <li>
-                  <a href="#">
-                    <div class="pull-left">
-                      <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <h4>
-                      Support Team
-                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                    </h4>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul> -->
         </li>
         <li [matTooltip]="'Alerts'" class="dropdown notifications-menu" *ngIf="!iswiz">
           <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
@@ -140,76 +98,6 @@
             </li>
           </ul>
         </li>
-        <!-- <li [matTooltip]="enable_disable" class="dropdown tasks-menu" *ngIf="!iswiz && waitlistmgr">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-checkin"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <ul class="menu">
-                <li>
-
-                  <a>
-                    <h3>
-                      Same Day Online Check-Ins
-                      <small class="pull-right">
-                        <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns"
-                          (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle>
-                      </small>
-                    </h3>
-                  </a>
-                </li>
-                <li>
-
-                  <a>
-                    <h3>
-                      Future Check-ins
-                      <small class="pull-right">
-                        <mat-slide-toggle [checked]="waitlistmgr.futureDateWaitlist"
-                          (change)="changefutureOnlinestatus(waitlistmgr.futureDateWaitlist)"></mat-slide-toggle>
-                      </small>
-                    </h3>
-                    <div>
-
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer">
-              <a class="pointer-cursor" (click)="gotoCheckinSettings()">View other settings</a>
-            </li>
-          </ul>
-        </li> -->
-        <!-- <div class="image centeralign" *ngIf="blogo!=''">
-          <img [src]="blogo" class="img-circle" alt="Business Image" *ngIf="blogo!='' && blogo!=null" alt="" />
-        </div>
-        <div class="centeralign ">
-          <p class="bus-name">{{bname}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div> -->
-        <!--
-        <li class="dropdown notifications-menu" *ngIf="!iswiz">
-          <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-circle text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
-            <i class="fa fa-circle text-failure"
-              *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
-          </a>
-         <ul class="dropdown-menu">
-            <li class="available">
-              <a routerLink="settings/q-manager/queues" class="greenc"
-                *ngIf="qAvailability && qAvailability.availableNow">
-                <span class="greenc">I am available online
-                  until {{qAvailability.timeRange.eTime}}</span>
-              </a>
-              <a routerLink="settings/q-manager/queues" class="red"
-                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-                <span class="red"> I am not available now </span>
-              </a>
-            </li>
-          </ul>
-        </li> -->
-
         <li class="dropdown user user-menu">
           <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
             <span class="fa-stack">
@@ -219,13 +107,11 @@
                 *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
               <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
-            <!-- <img [src]="blogo" class="user-image" alt=""> -->
             <span class="hidden-xs mgn-lt-3" *ngIf="bname">
               {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }}
             </span>
           </a>
           <ul class="dropdown-menu">
-            <!-- User image -->
             <li class="user-header " style="height: 179px !important;">
               <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
 
@@ -236,8 +122,6 @@
               <p><small>
                   <a routerLink="settings/q-manager/queues" class="white"
                     *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)">
-                    <!-- <span class="white bold">I am available online
-                      until {{qAvailability.timeRange.eTime}}</span> -->
                     <span class="white bold">I am available now</span>
                   </a>
                   <a routerLink="settings/q-manager/queues" class="white"
@@ -247,20 +131,6 @@
                 </small>
               </p>
             </li>
-            <!-- <li class="user-body">
-              <div class="row">
-                <div class="col-xs-4 text-center">
-                  <a href="#">Followers</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Sales</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Friends</a>
-                </div>
-              </div>
-            </li> -->
-            <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left" *ngIf="!iswiz">
                 <a (click)="redirectto('bprofile')" class="btn btn-default btn-flat pointer-cursor btst">My Account</a>
@@ -271,10 +141,6 @@
             </li>
           </ul>
         </li>
-        <!-- Control Sidebar Toggle Button -->
-        <!-- <li>
-          <a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-        </li> -->
       </ul>
     </div>
   </nav>

@@ -831,7 +831,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
         .subscribe(data => {
           this.waitlisttime_arr = data;
-          console.log(this.waitlisttime_arr);
           const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
@@ -881,7 +880,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
           }
-          console.log(this.waitlisttime_arr);
         });
     }
   }

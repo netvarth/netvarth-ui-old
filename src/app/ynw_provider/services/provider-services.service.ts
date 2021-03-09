@@ -1940,4 +1940,8 @@ export class ProviderServices {
       const url = 'provider/mr/uploadMR/' + mrId;
       return this.servicemeta.httpPost(url, data);
    }
+   getProviderUnreadCount(msgType, providerId) {
+     const url = 'provider/message/count/' + msgType + '/' + providerId;
+     return this.servicemeta.httpGet(url);
+   }
 }

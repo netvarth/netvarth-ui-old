@@ -1,51 +1,5 @@
-<!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar" *ngIf="!iswiz">
-  <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
-    <!-- Sidebar user panel -->
-    <!-- <div class="user-panel">
-        <div class="image centeralign" *ngIf="blogo!=''"> -->
-    <!-- <div class="pro-pic"> -->
-    <!-- <img [src]="blogo" class="img-circle" *ngIf="blogo!='' && blogo!=null" alt="" /> -->
-    <!-- </div> -->
-    <!-- <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="Business Image"> -->
-    <!-- </div>
-        <div class="centeralign col-md-12">
-          <p class="bus-name">{{bname}}</p> -->
-
-    <!-- <div (click)="holidaybtnClicked()">
-                  <span class="red" *ngIf="qAvailability && qAvailability.holiday">
-                      Holiday
-                  </span>
-              </div> -->
-
-    <!-- <div (click)="closeMenu();btnAvailableClicked()" class="pointer-cursor available">
-            <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
-              <i class="fa fa-circle text-success"></i> <span class="avail">I am available online</span> <br />
-              <span class="avail">until {{qAvailability.timeRange.eTime}}</span>
-            </div>
-            <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-              <i class="fa fa-circle text-failure"></i><span class="avail"> I am not available now </span>
-            </div> -->
-    <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
-                Today I'm available <br/>
-                after {{qAvailability.timeRange.eTime}}
-            </div>  -->
-    <!-- </div> -->
-    <!-- </div>
-      </div> -->
-    <!-- search form -->
-    <!-- <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form> -->
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="">&nbsp;</li>
       <li class="treeview">
@@ -87,13 +41,6 @@
             *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
         </a>
       </li>
-      <!-- <li>
-        <a class="pointer-cursor" routerLink="inbox" (click)="closeMenu()" routerLinkActive="active-lnk" [queryParams]="{enquiry: true}">
-          <i class="fa fa-envelope"></i> <span> Enquiry</span>
-          <small class="label pull-right bg-green"
-            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
-        </a>
-      </li> -->
       <li class="separator"></li>
       <li>
         <a class="pointer-cursor" routerLink="auditlog" (click)="closeMenu()" routerLinkActive="active-lnk">
@@ -130,11 +77,6 @@
         </a>
       </li>
       <li class="separator"></li>
-      <!-- <li>
-          <a class="pointer-cursor" target="_blank" routerLink="/kiosk" routerLinkActive="active-lnk">
-            <i class="fa fa-tablet"></i><span>Kiosk</span>
-          </a>
-        </li> -->
       <li><a class="pointer-cursor" (click)="closeMenu();gotoHelp()" routerLinkActive="active-lnk"><i
             class="fa fa-book"></i> <span>Help</span></a></li>
       <li><a routerLink="faq" (click)="closeMenu()" routerLinkActive="active-lnk"><i
@@ -142,5 +84,4 @@
           <span>FAQ</span></a></li>>
     </ul>
   </section>
-  <!-- /.sidebar -->
 </aside>

@@ -1627,7 +1627,7 @@
                                                     <td width="48%" align="right">
                                                         Provider</td>
                                                     <td width="2%">&nbsp;:&nbsp;</td>
-                                                    <td class="name-line-ht">{{sel_ser_det.provider}},
+                                                    <td class="name-line-ht">{{getUserName(sel_ser_det.provider.id)}},
                                                         {{businessjson.businessName}}</td>
                                                 </tr>
                                                 <!-- <tr>
@@ -1723,7 +1723,7 @@
                                             </div>
                                         </div>
                                         <div class="pay-section"
-                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
                                                     currency:'&#8377;'}}
@@ -1735,11 +1735,11 @@
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class="">
-                                                <div class="select-pay"> Select payment options</div>
+                                            <div class="" *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div class="select-pay"> Payment option</div>
                                                 <div class="">
-                                                    <span class="razorpay-icon mgn-rt-20 selected-payment"></span>
-                                                    <span class="paytm-icon"></span>
+                                                    <span class="razorpay-icon selected-payment"></span>
+                                                    <!-- <span class="paytm-icon"></span> -->
                                                 </div>
 
                                             </div>

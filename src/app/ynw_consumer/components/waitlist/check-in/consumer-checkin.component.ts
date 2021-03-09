@@ -473,9 +473,10 @@ export class ConsumerCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        if (serv.provider && serv.provider.businessName) {
-            this.sel_ser_det.provider = serv.provider.businessName;
+        if (serv.provider) {
+            this.sel_ser_det.provider = serv.provider;
         }
+        console.log(this.sel_ser_det);
         this.prepaymentAmount = this.waitlist_for.length * this.sel_ser_det.minPrePaymentAmount || 0;
         this.serviceCost = this.sel_ser_det.price;
     }
@@ -1389,6 +1390,8 @@ export class ConsumerCheckinComponent implements OnInit {
         this.action = 'service';
     }
     getUserName(id) {
+        console.log(id);
+        console.log(this.users);
         let selectedUser = '';
         for (let i = 0; i < this.users.length; i++) {
             if (this.users[i].id === id) {
@@ -1396,6 +1399,7 @@ export class ConsumerCheckinComponent implements OnInit {
                 break;
             }
         }
+        console.log(selectedUser);
         if (selectedUser['businessName']) {
             return selectedUser['businessName'];
         } else {
@@ -1590,7 +1594,7 @@ export class ConsumerCheckinComponent implements OnInit {
     }
     makeFailedPayment(paymentMode) {
         this.waitlistDetails = {
-            'amount': this.prepaymentAmount,
+            'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
             'uuid': this.trackUuid,
             'accountId': this.account_id,

@@ -490,8 +490,8 @@ export class ConsumerAppointmentComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
-        if (serv.provider && serv.provider.businessName) {
-            this.sel_ser_det.provider = serv.provider.businessName;
+        if (serv.provider) {
+            this.sel_ser_det.provider = serv.provider;
         }
         if (serv.provider) {
             this.sel_ser_det['providerId'] = serv.provider.id;
