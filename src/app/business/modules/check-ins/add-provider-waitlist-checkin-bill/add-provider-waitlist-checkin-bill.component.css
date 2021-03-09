@@ -68,6 +68,7 @@
 .hr_content {
     float: right;
     display: flex;
+    font-size: 0.9rem;
 }
 .flx_1 {
     flex: 1;
@@ -118,4 +119,13 @@
 }
 .lh-p8 {
     line-height: 0.8rem !important;
+}
+.item_centre {
+    text-align: center;
+    padding: 5px;
+    font-weight: 100;
+    color: #000000ab;
+}
+.lh-p4 {
+    line-height: 0.4 !important
 }

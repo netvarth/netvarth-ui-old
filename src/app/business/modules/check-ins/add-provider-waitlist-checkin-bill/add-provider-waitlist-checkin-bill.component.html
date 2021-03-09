@@ -740,7 +740,7 @@
 									<div class="modal-content">
 										<div class="modal-body pb-3">
 											<div class="row">
-												<div class="col-md-8 py-md-10 pr-md-5">
+												<div class="col-md-12 py-md-10 pr-md-5">
 													<div class="table-responsive">
 														<table class="table">
 															<thead>
@@ -754,65 +754,124 @@
 																	<th
 																		class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
 																		Gateway</th>
+																	<th
+																		colspan="2" class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
+																		Amount & Date</th>	
 																		<!-- <th
 																		class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" *ngIf="bill_data.billStatus!='Settled'">
 																		Amount</th>	 -->
 																</tr>
 															</thead>
-															<tbody *ngFor="let payment of pre_payment_log; let i = index">
-																<tr class="font-weight-bolder font-size-sm">
-																	<td class="fnt-p7 text-center pt-7">{{payment.status | capitalizeFirst}}</td>
-																	<td class=" fnt-p7 text-center pt-7">
+															<tbody>
+																<tr class="font-weight-bolder font-size-sm" *ngFor="let payment of pre_payment_log; let i = index">
+																	<td class="fnt-p7 text-center pt-4">{{payment.status | capitalizeFirst}}</td>
+																	<td class=" fnt-p7 text-center pt-4">
 																		<span>{{payment.acceptPaymentBy |
 																			capitalizeFirst}}<ng-container *ngIf="payment.paymentMode &&
 																			payment.acceptPaymentBy != payment.paymentMode.toLowerCase()">/{{payment.paymentMode}}
 																			</ng-container>
 																		</span>
 																	</td>
-																	<td class="fnt-p7 pr-0 pt-7  text-center">{{payment.paymentGateway}}</td>
+																	<td class="fnt-p7 pr-0 pt-4  text-center">{{payment.paymentGateway}}</td>
+																	<td class="fnt-p7 pr-0 pt-4  text-center">$400</td>
+																	<td class="fnt-p7 pr-0 pt-4  text-center">
+																		<button  type="button" class="btn btn-primary btn-square lh-p4  font-weight-bold font-size-xs"
+												                       *ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'"
+												                         (click)="applyRefund(payment)">Refund</button>
+																	</td>
 																	<!-- <td class="fnt-p7 text-center pt-7">300</td> -->
+																</tr>
+																<tr>
+																	<td>
+																		<button type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
+																	 data-dismiss="modal">Pay by Cash</button>
+																	</td>
+																	<td><button  type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
+																		(click)="refundPayment('other')"  data-dismiss="modal">Pay by Others</button></td>
+																	<td><button  type="button" class="btn btn-success btn-square lh-p4 font-size-xs font-weight-bold"
+																		
+																		(click)="refundPayment('online')"  data-dismiss="modal">Pay Online</button></td>
+																	<td colspan="2">
+
+											<button  type="button" class="btn btn-light-primary btn-square lh-p4 font-size-xs font-weight-bold"
+											(click)="revokeRefund()">Cancel</button>
+																	</td>
 																</tr>
 															</tbody>
 														</table>
 													</div>
-
 												</div>
-												<div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right" *ngFor="let payment of pre_payment_log; let i = index">
-													<!--begin::Total Amount-->
+												
+												<!-- <div class="col-md-4 border-left-md pl-md-5 py-md-5 text-right" *ngFor="let payment of pre_payment_log; let i = index">
 													<div class="font-size-h5 font-weight-bolder text-muted mb-3">
 														  AMOUNT </div>
 													<div *ngIf="!applydisc"
 														class="font-size-h2 font-weight-boldest" >{{payment.refundableAmount | currency:'&#8377; '}}</div>
 													<div *ngIf="applydisc">
-														<!-- <input class="form-control" type="number" value="400"
-															id="example-number-input"> -->
 														<input type="number" class="form-control" type="number"   
 															 aria-label="Number" matInput value="1" size="5"
 															  max="{{price_limit}}" min="0"  id="example-number-input"
 															 [(ngModel)]="amounttoRefund">
 													</div>
-													<!--end::Total Amount-->
-
 													<div class="border-bottom w-100 mb-10"></div>
-													<!--begin::Invoice Date-->
 													<div class="text-dark-50 font-size-lg font-weight-bold mb-3">
 														DATE</div>
 													<div class="font-size-lg font-weight-bold">
 															<span class="date">{{payment.paymentOn |  date:'mediumDate'}}</span>,
 															<span class="time">{{payment.paymentTime}}</span>
 													</div>
-													<!--end::Invoice Date-->
+												</div> -->
+
+											</div>
+											<div class="row">
+												<div class="table-responsive" style="width: 100%">
+													<table class="table mb-0">
+														<thead>
+															<tr><th colspan="3" class="item_centre">Refunds</th></tr>
+															<tr>
+																<th
+																	class="fnt-p7 text-center font-weight-bolder text-muted  text-uppercase">
+																	Status</th>
+																<th
+																	class="fnt-p7 text-center font-weight-bolder text-muted  text-uppercase">
+																	Mode</th>
+																<th
+																	class="fnt-p7 text-center pr-0 font-weight-bolder text-muted text-uppercase" >
+																	Amount</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr class="font-weight-bolder font-size-sm">
+																<td class="fnt-p7 text-center pt-7">Processed</td>
+																<td class=" fnt-p7 text-center pt-7">
+																	<span>Cash
+																	</span>
+																</td>
+																<td class="fnt-p7 pr-0 pt-7  text-center">$45</td>
+															</tr>
+															<tr class="font-weight-bolder font-size-sm">
+																<td class="fnt-p7 text-center pt-7">Processed</td>
+																<td class=" fnt-p7 text-center pt-7">
+																	<span>Cash
+																	</span>
+																</td>
+																<td class="fnt-p7 pr-0 pt-7  text-center">$45</td>
+															</tr>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
 										<div class="modal-footer p-1"  *ngFor="let payment of pre_payment_log; let i = index">
+
 											<button *ngIf="!applydisc" type="button"
 												class="btn btn-light-primary btn-square lh-1 font-weight-bold"
 												data-dismiss="modal">Close</button>
-											<button  type="button" class="btn btn-primary btn-square lh-1 font-weight-bold"
+											<!-- <button  type="button" class="btn btn-primary btn-square lh-1 font-weight-bold"
 												*ngIf="!applydisc && payment.refundableAmount > 0 && payment.status === 'SUCCESS' && payment.paymentPurpose == 'prePayment'"
-												(click)="applyRefund(payment)">Refund</button>
-											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
+												(click)="applyRefund(payment)">Refund</button> -->
+
+											<!-- <button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
 												(click)="refundPayment('cash')" data-dismiss="modal">Pay by Cash</button>
 
 											<button *ngIf="applydisc" type="button" class="btn btn-success btn-square lh-p6 font-weight-bold"
@@ -822,7 +881,7 @@
 												(click)="refundPayment('online')"  data-dismiss="modal">Pay Online</button>
 		
 											<button *ngIf="applydisc" type="button" class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
-												(click)="revokeRefund()">Cancel</button>
+												(click)="revokeRefund()">Cancel</button> -->
 																					
 										</div>
 									</div>
@@ -862,7 +921,7 @@
 
 					<!-- begin: Invoice footer-->
 					<div class="row justify-content-center bg-gray-100 ">
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
 								<div class="col-md-5  pt-5 pb-10 pb-md-8">
 									<div class="form-group" *ngIf="showPayWorkBench">
@@ -917,7 +976,7 @@
 									</div>
 								</div>
 								<div class="col-md-7 pt-md-10 pb-md-4">
-									<div style="background-image: linear-gradient(#9e9e9e, #1e4079);"
+									<div style="background-image: linear-gradient(#1e4079, #1e4079);"
 										class="bg-primary rounded d-flex align-items-center justify-content-between text-white max-w-350px position-relative ml-auto p-7">
 										<!--begin::Shape-->
 										<div class="position-absolute opacity-30 top-0 right-0"><span
@@ -1003,7 +1062,8 @@
 
 <!-- OLD Bill -->
 
-<!-- <section class="">
+
+	<section class="">
 	<div class="content comn-cls">
 		<div class="col-md-12 no-padding-small">
 			<div class="w-dta">
@@ -2172,4 +2232,4 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-</section> -->
+</section>
