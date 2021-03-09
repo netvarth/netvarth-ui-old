@@ -232,6 +232,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   @ViewChild('closeJcDiscPc') closeJcDiscPc;
   @ViewChild('closenotesdialog') closenotesdialog;
   @ViewChild('closeDelivery') closeDelivery;
+  discount_type: any = '';
+
   
   constructor(
     private dialog: MatDialog,
@@ -1283,7 +1285,9 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     const discount = {};
     discount['id'] = this.selOrderDiscount;
     // discount['id'] = this.selOrderDiscount.id;
-    if (this.selOrderDiscount.discType === 'OnDemand') {
+    // applyOrderDiscount
+    console.log(this.discount_type);  
+    if (this.discount_type.discType === 'OnDemand') {
       // const len = this.discAmount.split('.').length;
       // if (len > 2) {
       //   this.snackbarService.openSnackBar('Please enter valid discount amount', { 'panelClass': 'snackbarerror' });
@@ -1303,7 +1307,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     discounts.push(discount);
     data['discounts'] = discounts;
     this.disableDiscountbtn = true;
-    if ((this.selOrderDiscount.discType === 'OnDemand' && discount['discValue']) || this.selOrderDiscount.discType !== 'OnDemand') {
+    if ((this.discount_type.discType === 'OnDemand' && discount['discValue']) || this.discount_type.discType !== 'OnDemand') {
       this.applyAction(action, this.bill_data.uuid, data ,'closeJcDiscPc');
     } else {
       this.disableDiscountbtn = false;
@@ -1837,4 +1841,8 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   revokeRefund() {
     this.applydisc = false;
   }
+  onChange() {
+   const dsic_type  = this.discounts.filter(obj => obj.id ===  JSON.parse(this.selOrderDiscount));    
+   this.discount_type = dsic_type[0];
+}
 }

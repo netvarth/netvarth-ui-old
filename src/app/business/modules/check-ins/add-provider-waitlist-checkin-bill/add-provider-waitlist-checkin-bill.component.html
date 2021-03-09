@@ -510,7 +510,7 @@
 									<div class="modal-content">
 										<div class="modal-body">
 												   <select *ngIf="discounts.length >0 && showDiscountSection" class="form-control" 	[(ngModel)]="selOrderDiscount"
-													  >
+													       (click)="onChange()" >
 														<option *ngFor="let discount of discounts; let i = index"  [value]="discount.id">{{discount.name}}</option>
 													</select>	
 													<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control" [(ngModel)]="selOrderProviderCoupon">
@@ -518,7 +518,24 @@
 													</select>
 													<select *ngIf="jCouponsList.length>0 && showJCouponSection" class="form-control" [(ngModel)]="selOrderProviderjCoupon">
 														<option *ngFor="let jcoupon of jCouponsList; let i = index" [value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}</option>
-													</select>						
+													</select>	
+													<br>
+													<br>
+													<div *ngIf="showDiscountSection && discount_type.discType=='OnDemand'">
+														<input type="number"
+																	matInput
+																	#billdiscvalue
+																	aria-label="Number"
+																	max="{{price_limit}}"
+																	min="0" matInput
+																	value="1"
+																	autocomplete="off"
+																	size="3"
+																	(keypress)="isNumeric($event)"
+																	(keyup)="isvalid($event)"
+																	[(ngModel)]="discAmount"
+																	[ngModelOptions]="{standalone: true}">
+													</div>		
 
 											<div *ngIf="showDiscountSection"> 
 											<label class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">

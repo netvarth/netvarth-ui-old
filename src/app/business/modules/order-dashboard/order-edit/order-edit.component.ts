@@ -156,7 +156,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService) {
     this.route.params.subscribe(
       params => {
-        console.log(params);
         this.account_id = this.groupService.getitemFromGroupStorage('accountId');
         this.uid = params.id;
         // this.getOrderDetails(this.uid);
@@ -186,7 +185,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.placeOrderDisabled = true;
     const timeslot = this.nextAvailableTime.split(' - ');
     if (this.choose_type === 'home') {
-      console.log(this.selectedAddress);
       if (this.selectedAddress === '' ) {
         this.placeOrderDisabled = false;
         this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
@@ -323,10 +321,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       );
   }
   updateOrderItems() {
-    console.log('inside');
     const items = this.getOrderItems();
     const orderId = this.orderDetails.uid;
-    console.log(orderId);
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.providerservice.updateOrderItems(orderId, items)
@@ -367,13 +363,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
       if (this.orderDetails && this.orderDetails.orderItem && this.orderDetails.catalog.orderType !== 'SHOPPINGLIST') {
-        console.log(this.orderDetails.orderItem);
-        console.log(this.catalogItems);
         for (const item of this.orderDetails.orderItem) {
           const itemqty: number = item.quantity;
           const itemId = item.id;
           const orderItem = this.catalogItems.find(i => i.item.itemId === itemId);
-          console.log(orderItem);
           const itemObject = orderItem.item;
           for (let i = 0; i < itemqty; i++) {
             this.orderList.push({ 'item': itemObject });
@@ -381,11 +374,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
         }
         this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
-      console.log(JSON.stringify(this.orders));
       this.orderCount = this.orders.length;
       }  
       if (this.orderDetails && this.orderDetails.shoppingList) {
-        console.log(this.orderDetails.shoppingList);
         this.image_list_popup = [];
         this.imagelist = this.orderDetails.shoppingList;
         for (let i = 0; i < this.imagelist.length; i++) {
@@ -397,10 +388,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
             });
           this.image_list_popup.push(imgobj);
         }
-        console.log(this.image_list_popup);
       }
 
-      console.log(JSON.stringify(this.orderList));
       if (this.orderDetails.storePickup) {
         this.choose_type = 'store';
         this.store_pickup = true;
@@ -426,22 +415,18 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
 
   goBackToSummary(selectesTimeslot, queue) {
-    console.log(queue);
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
-    console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
     this.datepickerModal.nativeElement.click();
 
   }
   handleQueueSelection(queue, index) {
-    console.log(index);
     this.queue = queue;
   }
   // Fetch catalog of this account using accountId
   fetchCatalog() {
     this.getCatalogDetails(this.account_id).then(data => {
       this.catalog_details = data;
-      console.log(this.catalog_details);
       this.catalogItems = [];
       for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
         const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
@@ -450,7 +435,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         const showpric = this.catalog_details.showPrice;
         this.catalogItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.catalog_details.catalogItem[itemIndex].item, 'showpric': showpric });
         this.itemCount++;
-        console.log(this.catalogItems);
       }
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
@@ -531,7 +515,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   }
   getItemQty(item) {
-    console.log(this.orderList);
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     console.log(qty);
     if (qty === 0) {
@@ -556,11 +539,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.removeFromCart(item);
   }
   addToCart(Item) {
-    console.log(JSON.stringify(Item));
-    console.log(JSON.stringify(this.orderList));
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
+    this.orders = [...new Map(this.orderList.map(orderItem => [orderItem.item['itemId'], orderItem])).values()];
 
   }
   checkCouponExists(couponCode) {
@@ -694,24 +676,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
       this.orderAddress();
     }
-    // this.providerservice.getDeliveryAddress(this.customerId)
-    //   .subscribe(data => {
-    //     if (data !== null) {
-    //       this.added_address = data;
-    //       console.log(this.added_address);
-    //       if (this.added_address.length > 0 && this.added_address !== null) {
-    //         this.highlight(0, this.added_address[0]);
-    //         if (this.orderDetails.homeDelivery && this.orderDetails.homeDeliveryAddress !== '') {
-    //           this.orderAddress();
-    //         }
-    //       }
-
-    //     }
-    //   },
-    //     error => {
-    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }
-    //   );
+    
   }
   highlight(index, address) {
     console.log('user_address');
@@ -736,7 +701,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   getItemImg(item) {
     if (item.itemImages) {
       const img = item.itemImages.filter(image => image.displayImage);
-      console.log(img);
       if (img[0]) {
         return img[0].url;
       } else {
@@ -981,7 +945,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     });
   }
   deleteNotes(item, index) {
-    console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -992,20 +955,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     });
     this.canceldialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(this.orderList);
         this.orderList.map((Item, i) => {
           if (Item.item.itemId === item.item.itemId) {
-            console.log(Item.consumerNote);
             Item['consumerNote'] = Item.consumerNote.splice;
           }
         });
-        // this.orders.map((Item, i) => {
-        //   if (Item.item.itemId === item.item.itemId) {
-        //     Item['consumerNote'] = Item.consumerNote.splice;
-        //   }
-        // });
-        console.log(this.orderList);
-
+       
       }
     });
   }
@@ -1069,16 +1024,12 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       }
     });
     this.addressDialogRef.afterClosed().subscribe(result => {
-      // this.getaddress();
-      console.log(result);
       this.storeaddress = result;
       this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
-      console.log(this.selectedAddress);
+      
     });
   }
   openImageModalRow(image: Image) {
-    console.log(image);
-    console.log(this.image_list_popup);
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
