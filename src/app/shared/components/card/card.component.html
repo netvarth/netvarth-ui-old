@@ -107,7 +107,7 @@
                 <!-- <p class="module1 line-clamp1">{{service.shortDesc}}</p> -->
             </h4>
             <div>
-                <div class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
+                <div *ngIf="!service.shortDesc" class="short-description module1 line-clamp1">{{service.shortDesc.trim() | uppercase}}</div>
             </div>
             <div class="col-md-12 no-padding">
                 <!-- <div class="col-md-5 no-padding">
