@@ -301,7 +301,10 @@
                       </div>
                           </div>
                         </div>
-                        <div *ngIf="orders && orders.length != 0 && orderType !== 'SHOPPINGLIST'" class="table-responsive">
+                        <div class="w-dta" >
+                            <div class="row">
+                                <div class="copy width100">
+                        <div *ngIf="orders && orders.length != 0 && orderType !== 'SHOPPINGLIST'" class="table-outer q-itm">
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>
@@ -317,7 +320,7 @@
                             <tbody>
                               <!--begin::Cart Content-->
                               <tr *ngFor="let item of orders">
-                                <td class="d-flex align-items-center font-weight-bolder">
+                                <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                   <!--begin::Symbol-->
                                   <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                     <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
@@ -327,7 +330,7 @@
                                   <a class="text-dark text-hover-primary">{{ item.item.displayName }}
                                   </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td data-title="Qty" class="text-center align-middle">
                                   <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
                                     <i class="ki ki-minus icon-xs"></i>
                                   </a>
@@ -336,19 +339,18 @@
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>
-                                <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
                                     ₹ {{ getItemPrice(item) }}
                                 </td>
-                                <td class="text-right align-middle" (click)="removeItemFromCart(item)">
-                                  <a class="btn btn-danger font-weight-bolder font-size-sm">
-                                    Remove
-                                  </a>
+                                <td data-title="" class="text-right align-middle" (click)="removeItemFromCart(item)">
+                                    <i class="font-weight-bolder font-size-sm red icon-delete">
+                                      </i>
                                 </td>
                               </tr>
 
                             </tbody>
                           </table>
-                        </div>
+                        </div></div></div></div>
                         <!-- begin: Invoice footer-->
                         <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0">
                           <div class="col-md-10 ln-ht-2" >

@@ -139,10 +139,16 @@
                       </div>
                       <!--end::Header-->
 
-                      <div class="card-body p-0">
+                      <div class="card-body p-0 ">
+                         
+                          <div class="w-dta" >
+                              <div class="row">
+                                  <div class="copy width100">
                         <!--begin::Shopping Cart-->
-                        <!-- <ng-container *ngIf="orderDetails.catalog.orderType ==='SHOPPINGCART'"> -->
-                        <div class="table-responsive" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
+                        
+                            <a href="javascript:;" class="addmoreitem"  (click)="gotoPrev()">Add More Items</a>
+                         
+                        <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'" >
                           <table class="table">
                             <!--begin::Cart Header-->
                             <thead>
@@ -158,7 +164,7 @@
                             <tbody>
                               <!--begin::Cart Content-->
                               <tr *ngFor="let item of orders">
-                                <td class="d-flex align-items-center font-weight-bolder">
+                                <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                   <!--begin::Symbol-->
                                   <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                     <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
@@ -168,7 +174,7 @@
                                   <a class="text-dark text-hover-primary">{{ item.item.displayName }}
                                   </a>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td  data-title="Qty" class="text-center align-middle">
                                   <a href="javascript:;" class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">
                                     <i class="ki ki-minus icon-xs"></i>
                                   </a>
@@ -177,23 +183,20 @@
                                     <i class="ki ki-plus icon-xs"></i>
                                   </a>
                                 </td>
-                                <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                                <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
                                   ₹ {{ getItemPrice(item) }}
                                 </td>
-                                <td class="text-right align-middle"  (click)="removeItemFromCart(item)">
-                                  <a class="btn btn-danger font-weight-bolder font-size-sm">
-                                    Remove
-                                  </a>
+                                <td data-title="" class="text-right align-middle"  (click)="removeItemFromCart(item)">
+                                  <i class="font-weight-bolder font-size-sm red icon-delete">
+                                  </i>
                                 </td>
                               </tr>
 
                             </tbody>
                           </table>
                         </div>
-                        <div *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType !== 'SHOPPINGLIST'">
-                       <a href="javascript:;" style="color:blueviolet"  (click)="gotoPrev()">Add More Items</a>
-                      </div>
-                      <div class="table-responsive" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'" >
+                        
+                      <div class="table-outer q-itm" *ngIf="orderDetails && orderDetails.orderItem && orderDetails.catalog.orderType === 'SHOPPINGLIST'" >
                         <table class="table">
                           <!--begin::Cart Header-->
                           <thead>
@@ -208,7 +211,7 @@
                           <tbody>
                             <!--begin::Cart Content-->
                             <tr *ngFor="let item of orderDetails.orderItem">
-                              <td class="d-flex align-items-center font-weight-bolder">
+                              <td data-title="Product" class="d-flex align-items-center font-weight-bolder">
                                 <!--begin::Symbol-->
                                 <!-- <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                   <div class="symbol-label" [style.background-image]="'url('+getItemImg(item.item)+')'">
@@ -218,12 +221,12 @@
                                 <a class="text-dark text-hover-primary">{{item.name}}
                                 </a>
                               </td>
-                              <td class="text-center align-middle">
+                              <td data-title="Qty" class="text-center align-middle">
                                
                                 <span class="mr-2 font-weight-bolder">{{item.quantity}}</span>
                                 
                               </td>
-                              <td class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
+                              <td data-title="Price" class="text-right align-middle font-weight-bolder font-size-h5 rupee-font">
                                   ₹ {{item.totalPrice}}
                               </td>
                               
@@ -232,6 +235,8 @@
                           </tbody>
                         </table>
                       </div>
+                      </div>
+                              </div></div>
                       <div   *ngIf="orderDetails.shoppingList && orderDetails.catalog.orderType === 'SHOPPINGLIST'">
                         <div  >
         <ul class="shoppinglist-gal">
@@ -638,7 +643,7 @@
                           <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>
 
                           <div class="d-flex justify-content-between mb-3">
-                            <span class="mr-15 font-weight-bold">Price ( {{orders.length }} items)</span>
+                            <span class="mr-15 font-weight-bold">Price ({{orders.length}} items)</span>
                             <span class="text-right price rupee-font">{{getTotalItemPrice() | currency:'&#8377;'}}</span>
                           </div>
                           <div class="d-flex justify-content-between mb-3" *ngIf="catalog_details.taxPercentage && totaltax !=0 ">

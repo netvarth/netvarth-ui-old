@@ -86,6 +86,9 @@
     padding: 1rem !important;
   
   }
+    .width100{
+    width: 100%;
+  }
   .address{
     margin-left: 45%;
     margin-top: 5%;
