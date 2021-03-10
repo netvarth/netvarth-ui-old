@@ -16,7 +16,8 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
-import { SharedServices } from '../../../../../..//shared/services/shared-services';
+import { SharedServices } from '../../../../../../shared/services/shared-services';
+import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-location-details',
@@ -597,12 +598,69 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
   handlelocationfind(val) {
     if (val === 'googlemap') {
-        this.locationFind = 'GOOGLEMAP';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to detect location using google map?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          this.locationFind = 'GOOGLEMAP';
+        });
+        this.clearFormFields();
+
     } else if (val === 'autodetect') {
-        this.locationFind = 'AUTODETECT';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to detect location automatically?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'AUTODETECT';
+          }         });
+        this.clearFormFields();
     } else if(val === 'manual'){
-        this.locationFind = 'MANUAL';
+        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            'message': 'Do you want to add location manually?'
+          }
+        });
+        dialogrefd.afterClosed().subscribe(result => {
+          if (result==0) {
+            this.locationFind = 'GOOGLEMAP';
+          }
+          else {
+            this.locationFind = 'MANUAL';
+          }
+         });
+        this.clearFormFields();
+
     }
+}
+clearFormFields(){
+  this.amForm.setValue({
+    locname: '',
+    locaddress: '',
+    loclattitude: '',
+    loclongitude: '',
+    locmapurl: ''
+  });
+  // this.locamForm.setValue({
+  //   open24hours: '',
+  //   parkingType: ''
+  // });
 }
 getCurrentLocation() {
   if (navigator) {
@@ -624,10 +682,11 @@ getAddressfromLatLong() {
   console.log(this.lat_lng)
   this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
     const currentAddress = this.shared_service.getFormattedAddress(data);
+    console.log(data)
     this.mapaddress = [];
     this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
     this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
-    this.locationName = data['area'];
+    this.locationName = data['district'];
     this.amForm.controls.locname.setValue(this.locationName);
   });
 }
