@@ -17,7 +17,6 @@ import { TimewindowPopupComponent } from '../timewindowpopup/timewindowpopup.com
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
-import {FormControl} from '@angular/forms';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 
@@ -28,8 +27,7 @@ import { CreateItemPopupComponent } from '../createItem/createitempopup.componen
 
 })
 export class CatalogdetailComponent implements OnInit {
-    toppings = new FormControl();
-    toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
     catalog_id;
     rupee_symbol = 'Ã¢â€šÂ¹';
     item_hi_cap = Messages.ITEM_HI_CAP;
@@ -70,21 +68,7 @@ export class CatalogdetailComponent implements OnInit {
     disableButton = false;
     customer_label;
     action;
-    breadcrumbs_init = [
-        {
-            title: 'Settings',
-            url: '/provider/settings'
-        },
-        {
-            title: 'Jaldee Billing',
-            url: '/provider/settings/pos'
-        },
-        {
-            title: 'Items',
-            url: '/provider/settings/pos/items'
-        }
-    ];
-    breadcrumbs = this.breadcrumbs_init;
+
     image_list: any = [];
     catalog;
     taxDetails: any = [];
@@ -241,50 +225,28 @@ export class CatalogdetailComponent implements OnInit {
         this.dend_timehome = { hour: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('HH'), 10), minute: parseInt(moment(projectConstants.DEFAULT_ENDTIME, ['h:mm A']).format('mm'), 10) };
         this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         this.onResize();
-        
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.activated_route.params.subscribe(
             (params) => {
                 this.catalog_id = params.id;
-                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-                if (this.catalog_id) {
                     if (this.catalog_id === 'add') {
                         this.action = 'add';
-                        this.createForm();
+                        this.api_loading=false;
+                        
                     } else {
                         this.activated_route.queryParams.subscribe(
                             (qParams) => {
                                 this.action = qParams.action;
                                 this.cataId = this.catalog_id;
-                                this.getItems().then(
-                                    (data) => {
-                                        this.getCatalog(this.catalog_id).then(
-                                            (catalog) => {
-                                                this.catalog = catalog;
-                                                this.catalogcaption = this.catalog.catalogName;
-                                                if (this.action === 'edit') {
-                                                    this.createForm();
-                                                    this.api_loading = false;
-                                                } 
-                                                if (this.catalog.catalogItem) {
-                                                    this.catalogItems = this.catalog.catalogItem;
-                                                    console.log(this.catalogItems);
-                                                    this.setItemFromCataDetails();
-                                                }
-                                                // else if (this.action === 'view') {
-                                                //     this.catalogcaption = 'Catalog Details';
-                                                //     this.api_loading = false;
-                                                // }
-                                               
-                                            }
-                                        );
-                                    });
-                            }
-                        );
-                    }
+                            
+                       
+                    });
+                    this.getItems();
                     this.getProviderLocations();
                 }
-            }
-        );
+            
+            });
+        this.createForm();
     }
     @HostListener('window:resize', ['$event'])
     onResize() {
@@ -304,34 +266,7 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.action === 'add') {
-            this.getItems().then(
-                (data) => {
-                    this.addCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
-                    if (this.action === 'edit' || this.action === 'add' && this.catalog_id !== 'add') {
-                        this.getCatalog(this.catalog_id).then(
-                            (catalog) => {
 
-                            }
-                        );
-                    } else {
-                        if (this.addCatalogItems && this.addCatalogItems.length > 0) {
-                            this.selectedCount = this.addCatalogItems.length;
-                            for (const itm of this.catalogItem) {
-                                for (const selitem of this.addCatalogItems) {
-                                    if (itm.itemId === selitem.item.itemId) {
-                                        itm.selected = true;
-                                        itm.id = selitem.id;
-                                        itm.minQuantity = selitem.minQuantity;
-                                        itm.maxQuantity = selitem.maxQuantity;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            );
-        }
     }
     gotoNext() {
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
@@ -450,14 +385,11 @@ export class CatalogdetailComponent implements OnInit {
         this.api_loading = false;
     }
     createForm() {
-        if (this.action === 'add') {
             this.amForm = this.fb.group({
                 catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
                 catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
                 startdate: ['', Validators.compose([Validators.required])],
                 enddate: ['', Validators.compose([Validators.required])],
-                // qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-                //  qendtime: [this.dend_time, Validators.compose([Validators.required])],
                 orderType: [],
                 orderStatuses: [''],
                 itemPriceInfo: [true],
@@ -469,15 +401,9 @@ export class CatalogdetailComponent implements OnInit {
                 storepickup: [false],
                 startdatestore: [''],
                 enddatestore: [''],
-                // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-                //  qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-                //  storeotpverify: [false],
                 homedelivery: [false],
                 startdatehome: [''],
                 enddatehome: [''],
-                // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-                // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-                // homeotpverify: [false],
                 deliverykms: [''],
                 deliverycharge: ['']
                
@@ -492,75 +418,26 @@ export class CatalogdetailComponent implements OnInit {
             this.amForm.get('orderStatuses').setValue(['Order Received', 'Order Confirmed', 'Cancelled']);
             this.amForm.get('advancePaymentStatus').setValue('NONE');
             this.amForm.get('cancelationPolicy').setValue('If cancellation is necessary, we require that you call at least 2 hour in advance.');
-           this.createItemform();
-            // if (this.action === 'add' && this.isFromadd) {
-            //     this.updateprefillForm();
-            // }
-        } else {
-            console.log(this.action);
-            this.amForm = this.fb.group({
-                catalogName: ['', Validators.compose([Validators.required, Validators.maxLength(this.maxChars)])],
-                catalogDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-                startdate: [''],
-                enddate: [''],
-                //qstarttime: [this.dstart_time, Validators.compose([Validators.required])],
-                // qendtime: [this.dend_time, Validators.compose([Validators.required])],
-                orderType: [],
-                orderStatuses: [''],
-                itemPriceInfo: [true],
-               autoconfirm: [true],
-                advancePaymentStatus: [],
-                advancePayment: ['', Validators.compose([Validators.maxLength(this.maxNumbers)])],
-                cancelationPolicyStatus: [true],
-                cancelationPolicy: [''],
-                storepickup: [false],
-                startdatestore: [''],
-                enddatestore: [''],
-                // qstarttimestore: [this.dstart_timestore, Validators.compose([Validators.required])],
-                // qendtimestore: [this.dend_timestore, Validators.compose([Validators.required])],
-                // storeotpverify: [false],
-                homedelivery: [false],
-                startdatehome: [''],
-                enddatehome: [''],
-                // qstarttimehome: [this.dstart_timehome, Validators.compose([Validators.required])],
-                // qendtimehome: [this.dend_timehome, Validators.compose([Validators.required])],
-                // homeotpverify: [false],
-                deliverykms: [''],
-                deliverycharge: ['']
-                
-            });
-            this.createItemform();
-        }
-        this.api_loading = false;
-        setTimeout(() => {
-            if (this.action === 'edit') {
-                this.updateForm();
-            } 
-            // else if (this.action === 'edit' && this.isFromadd) {
-            //     this.updateprefillForm();
-            // }
-        }, 200);
 
+            if (this.action === 'edit') {
+                this.getCatalog(this.catalog_id).then(
+                    (catalog) => {
+                        this.catalog = catalog;
+                        this.catalogcaption = this.catalog.catalogName;
+                        if (this.catalog.catalogItem) {
+                            this.catalogItems = this.catalog.catalogItem;
+                            console.log(this.catalogItems);
+                            this.updateForm();
+                            this.setItemFromCataDetails();
+                        }
+                            
+            });
+         
+    
     }
-    createItemform(){
-        this.amItemForm = this.fb.group({
-            itemCode: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            itemNameInLocal: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            itemName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            displayName: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            shortDec: ['', Validators.compose([Validators.maxLength(this.maxChars)])],
-            note: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-            displayDesc: ['', Validators.compose([Validators.maxLength(this.maxCharslong)])],
-            showOnLandingpage: [true],
-            stockAvailable: [true],
-            taxable: [false],
-            price: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-            promotionalPrice: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_FLOAT), Validators.maxLength(this.maxNumbers)])],
-            promotionalPriceType: [],
-            promotionallabel: [],
-            customlabel: []
-        });
-    }
+  
+}
+
     setDescFocus() {
         this.isfocused = true;
         this.char_count = this.max_char_count - this.amForm.get('catalogDesc').value.length;
@@ -666,8 +543,7 @@ export class CatalogdetailComponent implements OnInit {
     }
 
     updateForm() {
-        console.log(this.catalog);
-      
+      this.api_loading=false;
 
         if (this.catalog.pickUp && this.catalog.pickUp.pickUpSchedule) {
             this.storetimewindow_list = this.catalog.pickUp.pickUpSchedule.timeSlots;
@@ -758,14 +634,13 @@ export class CatalogdetailComponent implements OnInit {
         if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
-console.log(this.catalog.catalogName);
+
         this.amForm.setValue({
             'catalogName': this.catalog.catalogName,
             'catalogDesc': this.catalog.catalogDesc || '',
             'startdate': this.catalog.catalogSchedule.startDate || '',
             'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
-            //'qstarttime': sttime,
-            //'qendtime': edtime,
+
             'orderType': this.catalog.orderType,
             'orderStatuses': this.catalog.orderStatuses,
             'itemPriceInfo': this.catalog.showPrice,
@@ -777,15 +652,9 @@ console.log(this.catalog.catalogName);
             'storepickup': orderpickUpstat,
             'startdatestore': orderpickUpstartdate,
             'enddatestore': orderpickUpenddate,
-            //  'qstarttimestore': sttimestore || this.dstart_timestore,
-            //  'qendtimestore': edtimestore || this.dend_timestore,
-            // 'storeotpverify': orderpickUpotp,
             'homedelivery': homeDeliverystat,
             'startdatehome': homeDeliverystartdate || '',
             'enddatehome': homeDeliveryenddate,
-            // 'qstarttimehome': sttimehome || this.dstart_timehome,
-            //'qendtimehome': edtimehome || this.dend_timehome,
-            // 'homeotpverify': homeDeliveryotp,
             'deliverykms': homeDeliveryradius,
             'deliverycharge': homeDeliverycharge
         });
