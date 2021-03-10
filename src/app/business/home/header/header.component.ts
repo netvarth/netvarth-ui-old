@@ -23,7 +23,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class BusinessHeaderComponent implements OnInit, OnDestroy {
   accountType;
@@ -51,6 +51,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   myData: any;
   scheduleAvailability;
   licenseDetails;
+  showUserSection = false;
+  showMenuSection = false;
+  showTop = false;
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -420,5 +423,19 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class']
     });
     dialogRef.afterClosed().subscribe(result => {});
+  }
+  userPopup() {
+    this.showUserSection = !this.showUserSection;
+  }
+  getUserFirstLetter() {
+    const name = this.bname.split(' ');
+    return name[0].charAt(0);
+  }
+  showMenu() {
+    this.showMenuSection = !this.showMenuSection;
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenuSection });
+  }
+  showTopMenu() {
+    this.showTop = !this.showTop;
   }
 }
