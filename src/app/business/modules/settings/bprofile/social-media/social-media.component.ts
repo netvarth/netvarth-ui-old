@@ -19,6 +19,7 @@ export class SocialMediaComponent implements OnInit {
     showSave: any = [];
     screenWidth: number;
     no_of_grids: number;
+    hide_save_btn = false;
     constructor(public routerobj: Router,
         public provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
@@ -56,6 +57,7 @@ export class SocialMediaComponent implements OnInit {
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_URL);
         const result = pattern.test(curlabel);
         if (!result) {
+            this.hide_save_btn = true;
             this.snackbarService.openSnackBar(Messages.BPROFILE_SOCIAL_URL_VALID, { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -115,6 +117,7 @@ export class SocialMediaComponent implements OnInit {
     }
     keyPressed(index) {
         this.showSave[index] = true;
+        this.hide_save_btn = false;
     }
     deleteSocialmedia(sockey) {
         console.log(this.social_arr);
