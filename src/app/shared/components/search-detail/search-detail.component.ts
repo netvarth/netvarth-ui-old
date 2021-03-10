@@ -2343,4 +2343,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   stopprop(event) {
     event.stopPropagation();
   }
+
+  getClass(search_result) {
+    const verifiedLevel = (search_result.fields.ynw_verified_level > 1) ? 1 : 0;
+    const jDN = (search_result.fields.jdn == 1) ? 1 : 0;
+    const stars = (search_result.fields.rating > 0) ? 1 : 0;
+    return (verifiedLevel + jDN + stars);
+  }
 }
