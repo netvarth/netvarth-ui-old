@@ -564,12 +564,12 @@ ul.bus-actions-horiz li {
 }
 
 .bus-title-content {
-  padding: 0px 10px !important;
+  padding: 0px 10px 0px 15px !important;
 }
 
 @media (max-width: 550px) {
   .bus-title-content {
-    padding: 0px 5px !important;
+    padding: 0px 5px 0px 10px !important;
   }
 }
 
@@ -865,5 +865,183 @@ ul.bus-actions-horiz li {
   font-size: 0.825rem !important;
 }
 
+.rating-star {
+  display: inline-flex !important;
+  flex-direction: column !important;
+}
+
+.rating-star img {
+  height: 35px !important;
+  width: 35px !important;
+}
+
+.rating-star span {
+  text-align: center !important;
+  font-weight: 700 !important;
+  color: darkslategrey !important;
+}
+
+@media (max-width: 575px) {
+  .rating-star img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  
+  .rating-star span {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .rating-star img {
+    width: 15px !important;
+    height: 15px !important;
+  }
+  
+  .rating-star span {
+    font-size: 9px !important;
+  }
+}
+
+.bottom-box {
+  display: flex !important;
+  justify-content: space-between !important;
+  background: #f9f9f9 !important;
+  /* height: 55px !important; */
+  font-weight: 700 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  font-size: 0.8rem !important;
+}
+
+.enquiry-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  color: #073B4C !important;
+  font-weight: 700 !important;
+}
+
+.enquiry-button i {
+  font-size: 35px !important;
+}
+
+.enquiry-button span {
+  font-size: 1rem !important;
+  margin-left: 8px !important;
+}
+
+.jaldee-coupon {
+  display: inline-flex !important;
+  align-items: center !important;
+  color: #073B4C !important;
+  font-weight: 700 !important;
+  margin-left: 20px !important;
+}
+
+.jaldee-coupon i {
+  font-size: 35px !important;
+}
+
+.jaldee-coupon span {
+  font-size: 1rem !important;
+  margin-left: 8px !important;
+}
+
+.first-time-coupon {
+  display: inline-flex !important;
+  align-items: center !important;
+  color: #073B4C !important;
+  font-weight: 700 !important;
+  margin-left: 20px !important;
+}
+
+.first-time-coupon i {
+  font-size: 35px !important;
+}
+
+.first-time-coupon span {
+  font-size: 1rem !important;
+  margin-left: 8px !important;
+}
+
+@media (max-width: 575px) {
+  .enquiry-button i {
+    font-size: 20px !important;
+  }
+  
+  .enquiry-button span {
+    font-size: 0.825rem !important;
+    margin-left: 5px !important;
+  }
+  
+  .jaldee-coupon {
+    margin-left: 10px !important;
+  }
+  
+  .jaldee-coupon i {
+    font-size: 20px !important;
+  }
+  
+  .jaldee-coupon span {
+    font-size: 0.825rem !important;
+    margin-left: 5px !important;
+  }
+  
+  .first-time-coupon {
+    margin-left: 10px !important;
+  }
+  
+  .first-time-coupon i {
+    font-size: 20px !important;
+  }
+  
+  .first-time-coupon span {
+    font-size: 0.825rem !important;
+    margin-left: 5px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .enquiry-button {
+    flex-direction: column !important;
+  }
+  
+  .enquiry-button i {
+    font-size: 15px !important;
+  }
+  
+  .enquiry-button span {
+    font-size: 0.775rem !important;
+    margin-left: 0px !important;
+  }
+  
+  .jaldee-coupon {
+    flex-direction: column !important;
+    margin-left: 5px !important;
+  }
+  
+  .jaldee-coupon i {
+    font-size: 15px !important;
+  }
+  
+  .jaldee-coupon span {
+    font-size: 0.775rem !important;
+    margin-left: 0px !important;
+  }
+  
+  .first-time-coupon {
+    flex-direction: column !important;
+    margin-left: 5px !important;
+  }
+  
+  .first-time-coupon i {
+    font-size: 15px !important;
+  }
+  
+  .first-time-coupon span {
+    font-size: 0.775rem !important;
+    margin-left: 0px !important;
+  }
+}
 
 /* (min-width: 576px) and */
