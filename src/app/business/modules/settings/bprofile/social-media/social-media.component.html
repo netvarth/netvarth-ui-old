@@ -31,7 +31,7 @@
                 <mat-grid-tile-footer class="bdr_top">
                     <div class="wdth_50" *ngIf="showDelete(social.key)"><button (click)="deleteSocialmedia(social.key)" type="button" class="btn btn-light-danger btn-square px-3 py-1"> Delete </button></div>
                     <div class="wdth_50">
-                        <button style="float: right;"  type="button" class="btn btn-light-success px-3 py-1 btn-square" *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"> Save </button>
+                        <button style="float: right;"  type="button" class="btn btn-light-success px-3 py-1 btn-square" *ngIf="showSave[i] && socialLink[i] && !hide_save_btn" (click)="saveSocial(social.key, socialLink[i])"> Save </button>
                     </div>
                 </mat-grid-tile-footer>
             </mat-grid-tile>
