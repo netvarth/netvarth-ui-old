@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../services/word-processor.service';
 
 export class ForgotPasswordModel {
@@ -53,7 +53,6 @@ export class ForgotPasswordComponent {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];

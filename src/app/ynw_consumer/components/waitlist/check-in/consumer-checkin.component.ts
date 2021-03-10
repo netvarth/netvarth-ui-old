@@ -15,7 +15,7 @@ import { DOCUMENT, Location } from '@angular/common';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -152,7 +152,6 @@ export class ConsumerCheckinComponent implements OnInit {
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
-    TooltipLabel = TooltipLabel;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];

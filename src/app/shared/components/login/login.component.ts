@@ -10,7 +10,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { Messages } from '../../constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { SessionStorageService } from '../../services/session-storage.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-	TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
 	preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];

@@ -18,7 +18,7 @@ import { RazorpayprefillModel } from '../../../../shared/components/razorpay/raz
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -209,7 +209,6 @@ export class ConsumerDonationComponent implements OnInit {
     phoneNumber;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
-    TooltipLabel = TooltipLabel;
     selectedCountry = CountryISO.India;
     PhoneNumberFormat = PhoneNumberFormat;
     preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];

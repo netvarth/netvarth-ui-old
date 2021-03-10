@@ -9,7 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { Messages } from '../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { CountryISO, PhoneNumberFormat, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
@@ -59,7 +59,6 @@ export class ConsumerJoinComponent implements OnInit {
   phoneNumber;
   separateDialCode = true;
   SearchCountryField = SearchCountryField;
-  TooltipLabel = TooltipLabel;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
