@@ -686,7 +686,14 @@ getAddressfromLatLong() {
     this.mapaddress = [];
     this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
     this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
-    this.locationName = data['district'];
+    if(data['area'] == undefined){
+      this.locationName = data['district'];
+      console.log(data['district'])
+    } else {
+      this.locationName = data['area'];
+      console.log(data['area'])
+
+    }
     this.amForm.controls.locname.setValue(this.locationName);
   });
 }
