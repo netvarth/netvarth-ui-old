@@ -154,6 +154,11 @@
 									id="mat-input-4" aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
 									(keyup)="isvalid($event)" 	[(ngModel)]="curSelItm.qty" (blur)="blurQty($event.target.value, curSelItm)" >
 
+								<input *ngIf="curSelItm.typ === 'Items' && actiontype !== 'adjustItem'" type="number" min="0" max="100000" aria-label="Number" value="1" size="3"
+									class="mat-input-element mat-form-field-autofill-control ml-5 ip_feild"
+									id="mat-input-4" aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
+									(keyup)="isvalid($event)" 	[(ngModel)]="curSelItm.price" >
+								
 								<button class="cs-btn bt1 ml-4 btn_prim"
 									(click)="addService_Item()">{{(actiontype=='adjustService'
 									||
