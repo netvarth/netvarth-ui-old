@@ -679,7 +679,7 @@
                             <div class="col-xl-6">
                               <!--begin::Input-->
                               <div class="form-group">
-                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="storetimewindow_list.length > 0" (click)="showTimewindow('store')" ><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="storetimewindow_list.length > 0" (click)="showTimewindow('store')" ><i class="fa fa-plus" style="color: blue;" aria-hidden="true"></i></a>
                                 <div *ngIf="storetimewindow_list.length == 0">
                                   Currently no timewindows are added&nbsp;
                                   <button type="button" (click)="showTimewindow('store')" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
@@ -688,7 +688,7 @@
                                 </div>
                               <div *ngIf="storetimewindow_list.length > 0">  <ul *ngFor="let window of storetimewindow_list;let i = index">
                                  <li>
-                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('store',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('store',i)"><i class="fa fa-trash" style="color: red;" aria-hidden="true"></i></a>
                                  </li>
                                </ul>
                               </div>
@@ -751,7 +751,7 @@
                             <div class="col-xl-6">
 
                               <div class="form-group">
-                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="hometimewindow_list.length > 0" (click)="showTimewindow('home')"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                                <label>Available timewindow(s)</label>&nbsp; <a class="pointlist" *ngIf="hometimewindow_list.length > 0" (click)="showTimewindow('home')"><i class="fa fa-plus" style="color: blue;" aria-hidden="true"></i></a>
                                 <div *ngIf="hometimewindow_list.length == 0">
                                   Currently no timewindows are added &nbsp;
                                   <button type="button" (click)="showTimewindow('home')" class="cs-btn bt3" style="padding: 2px 15px" tabindex="-1">
@@ -761,7 +761,7 @@
                                 <div *ngIf="hometimewindow_list.length > 0">
                                <ul *ngFor="let window of hometimewindow_list;let i = index">
                                  <li>
-                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('home',i)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                  {{window.sTime}} - {{window.eTime}}&nbsp; <a class="pointlist" (click)="deletetimeslot('home',i)"><i class="fa fa-trash" style="color: red;" aria-hidden="true"></i></a>
                                  </li>
                                </ul>
                                </div>
@@ -810,7 +810,7 @@
                       </button>
                       <button *ngIf="step == 1" type="button"
                         class="btn btn-light-primary font-weight-bold text-uppercase px-9 py-1"
-                        (click)="backToCatalog()">
+                        (click)="redirecToJaldeeOrdrmnagrCatalog()">
                         Cancel
                       </button>
                     </div>
