@@ -578,7 +578,8 @@
                                           </span>
                                           <span>
                                             <span class="first-time-coupon centeralign"
-                                              *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer"
+                                              *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer
+                                               ||search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_provider_coupon_count))!=0 && isfirstCheckinOffer"
                                               (click)="!btn_clicked && openCoupons(search_result,true)">
                                               <!-- <img class="img2" src="./assets/images/first_coupon.png"
                                                 alt="First Time Coupons" /> -->
@@ -586,7 +587,8 @@
                                               <span style="display:block">{{first_time_coupon}}</span>
                                             </span>
                                             <span class="jaldee-coupon centeralign"
-                                              *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0"
+                                              *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.coupon_enabled))!=0 
+                                               ||search_result.fields.claimable!=1 && (stringToInt(search_result.fields.provider_coupon_enabled))!=0 "
                                               (click)="!btn_clicked && openCoupons(search_result)"
                                               [matTooltipClass]="tooltipcls" [matTooltip]="couponTooltip">
                                               <!-- <img class="img1" src="./assets/images/jcoupon.png"

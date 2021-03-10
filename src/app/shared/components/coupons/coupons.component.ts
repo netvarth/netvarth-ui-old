@@ -11,15 +11,19 @@ export class CouponsComponent implements OnInit {
   couponsList: any = [];
   type;
   tempCouponList: any = [];
-  providerCouponList: any[];
-  ownCoupons: any;
+  providerCouponList: any=[];
+  ownCoupons: any = [] ;
   constructor(private shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   ngOnInit() {
     console.log(this.data);
-    this.tempCouponList = this.data.couponsList[0].JC;
-    this.ownCoupons=this.data.couponsList[1].OWN;
+    if (this.data.couponsList[0]) {
+      this.tempCouponList = this.data.couponsList[0].JC;
+    }
+    if (this.data.couponsList[1]) {
+      this.ownCoupons = this.data.couponsList[1].OWN;
+    }
     if (this.data.type) {
       this.type = this.data.type;
     }
@@ -27,18 +31,21 @@ export class CouponsComponent implements OnInit {
   }
   showCoupons() {
     this.couponsList = [];
-    this.providerCouponList=[];
-    for (let index = 0; index < this.tempCouponList.length; index++) {
-      if (this.type) {
-        if (this.tempCouponList[index].firstCheckinOnly === true) {
-          this.couponsList.push(this.tempCouponList[index]);
-        }
-      } else {
-        if (this.tempCouponList[index].firstCheckinOnly === false) {
-          this.couponsList.push(this.tempCouponList[index]);
+    this.providerCouponList = [];
+    if (this.data.couponsList[0]) {
+      for (let index = 0; index < this.tempCouponList.length; index++) {
+        if (this.type) {
+          if (this.tempCouponList[index].firstCheckinOnly === true) {
+            this.couponsList.push(this.tempCouponList[index]);
+          }
+        } else {
+          if (this.tempCouponList[index].firstCheckinOnly === false) {
+            this.couponsList.push(this.tempCouponList[index]);
+          }
         }
       }
     }
+    if (this.data.couponsList[1]) {
     for (let index = 0; index < this.ownCoupons.length; index++) {
       if (this.type) {
         if (this.ownCoupons[index].firstCheckinOnly === true) {
@@ -50,6 +57,7 @@ export class CouponsComponent implements OnInit {
         }
       }
     }
+  }
     console.log(this.couponsList);
     console.log(this.providerCouponList);
   }

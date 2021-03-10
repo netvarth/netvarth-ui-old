@@ -6,7 +6,7 @@
 
 <mat-dialog-content>
   <ng-container *ngIf="couponsList.length>0" >
-    <h4> Jaldee Coupons</h4>
+    <h6> Jaldee Coupons</h6>
     <div *ngFor="let coupon of couponsList let i=index">
     <div class="coupon">
       <div class="coupon-container">
@@ -50,7 +50,7 @@
   </ng-container>
   
   <ng-container *ngIf="providerCouponList.length>0">
-      <h4> Special Coupons for this Provider</h4>
+      <h6> Special Coupons </h6>
     <div  *ngFor="let coupon of providerCouponList let i=index">
     <div class="coupon">
       <div class="coupon-container">

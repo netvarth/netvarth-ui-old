@@ -2162,38 +2162,43 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const s3url = res;
           const arr = [
             new Promise((resolve, reject) => {
+              let jc_coupons:any=[];
               if(obj.fields.coupon_enabled!==0){
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
                 .subscribe(couponsList => {
-                  console.log(couponsList);
-                  couponArray.push({'JC':couponsList});
-                  resolve(couponsList);
+                  jc_coupons=couponsList;
+                //  couponArray.splice(0,0, {'JC':jc_coupons});
+                  resolve(jc_coupons);
                 },error=>{
                   reject();
                 });
               }else{
+               // couponArray.splice(0,0, {'JC':jc_coupons});
                return;
               }
             }),
             new Promise((resolve, reject) => {
+              let own_coupons:any=[];
               if(obj.fields.provider_coupon_enabled!==0){
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
                 .subscribe(couponsList => {
-                  console.log(couponsList);
-                  couponArray.push({'OWN':couponsList});
-                  resolve(couponsList);
+                  own_coupons=couponsList;
+                  //couponArray.splice(0,1,{'OWN':own_coupons});
+                  resolve(own_coupons);
                 },
                 error=>{
                   reject();
                 });
               }else{
+               // couponArray.splice(0,1,{'OWN':own_coupons});
                return;
               }
             })
          ];
          Promise.all([arr[0], arr[1]]).then((resp) => {
-          console.log(resp[0]);
-          console.log(resp[1]);
+           couponArray.push({'JC':resp[0]});
+           couponArray.push({'OWN':resp[1]});
+     
           this.coupondialogRef = this.dialog.open(CouponsComponent, {
             width: '60%',
             panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
