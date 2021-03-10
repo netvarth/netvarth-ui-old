@@ -70,6 +70,7 @@ buttons: [
   s3url;
   terminologiesjson: ArrayBuffer;
   provider_id;
+  delivery_address: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -117,6 +118,9 @@ buttons: [
       (data) => {
         this.waitlist = data;
         console.log(this.waitlist);
+        if (this.waitlist.homeDeliveryAddress) {
+          this.delivery_address = this.waitlist.homeDeliveryAddress;
+        }
         this.provider_id = this.waitlist.providerAccount.uniqueId;
         this.gets3curl();
         this.image_list_popup = [];
