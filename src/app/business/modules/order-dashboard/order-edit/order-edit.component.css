@@ -66,3 +66,8 @@ color: #0707eca1 !important;
     float: right;
     margin-right: 10px;
 }
+.btn.btn-light-primary:hover{
+  background-color: #f9e2a7!important;
+  border-color: transparent!important;
+  color:blue;
+}

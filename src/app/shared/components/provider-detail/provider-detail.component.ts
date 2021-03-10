@@ -2173,7 +2173,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     console.log(account_Id);
     this.shared_services.setaccountId(account_Id);
     this.orderItems = [];
-    const orderItems = [];
+    //const orderItems = [];
     if (this.orderstatus && this.userId == null) {
       this.shared_services.getConsumerCatalogs(account_Id).subscribe(
         (catalogs: any) => {
@@ -2221,11 +2221,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
               const showpric = this.activeCatalog.showPrice;
               if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
-                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                this.orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
                 this.itemCount++;
               }
             }
-            this.orderItems = orderItems;
+            // this.orderItems = orderItems;
           }
         });
     }

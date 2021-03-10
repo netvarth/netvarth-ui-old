@@ -172,7 +172,7 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>Start Date <span>(Valid From)</span></label>
-                            <input class="form-control1" type="date" (dateChange)="compareDate($event.value,0)"
+                            <input class="form-control1 picker" type="date" (dateChange)="compareDate($event.value,0)"
                               placeholder="Valid From" formControlName="startDate" />
                           </div>
                         </div>
@@ -183,7 +183,7 @@
                         <div class="form-group">
                           <div class="input-group date">
                             <label>End Date <span>(Valid To)</span></label>
-                            <input class="form-control1" type="date" (dateChange)="compareDate($event.value,1)"
+                            <input class="form-control1 picker" type="date" (dateChange)="compareDate($event.value,1)"
                               placeholder="Valid To" formControlName="endDate" />
                           </div>
                         </div>

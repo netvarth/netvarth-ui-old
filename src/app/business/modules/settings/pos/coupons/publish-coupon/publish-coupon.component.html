@@ -117,11 +117,11 @@
                                             (Limit Reached)</span>
                                     </div>
                                 </div> -->
-                                <div class="row" *ngIf="!coupon.couponRules.published">
+                                <div class="row" *ngIf="coupon.couponRules.published==false">
                                   <button  class="btn btn-primary" (click)="publish();"> Publish</button>
                                 </div>
-                                <div class="row" *ngIf="coupon.couponRules.published">
-                                  <p><b style="color:green">Coupon  published From <span style="color:blue">{{coupon.couponRules.publishedFrom}}</span> to <span style="color:blue">{{coupon.couponRules.publishedTo}}</span></b></p>
+                                <div class="row" *ngIf="coupon.couponRules.published ==true">
+                                  <p><b style="color:green">Coupon  published From <span style="color:blue">{{coupon.couponRules.publishedFrom | date: newDateFormat}}</span> to <span style="color:blue">{{coupon.couponRules.publishedTo | date: newDateFormat}}</span></b></p>
                                   </div>
                             </div>
                         </div>

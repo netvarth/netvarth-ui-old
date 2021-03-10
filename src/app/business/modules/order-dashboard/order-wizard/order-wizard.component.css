@@ -93,6 +93,12 @@
     margin-left: 45%;
     margin-top: 5%;
   }
+  .btn.btn-light-primary:hover{
+    background-color: #f9e2a7!important;
+    border-color: transparent!important;
+    color:blue;
+}
+
   /* .incr:hover{
     color: #1e4079;
     background-color: #f9e2a7;

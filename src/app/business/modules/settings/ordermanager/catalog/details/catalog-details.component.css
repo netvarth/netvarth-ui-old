@@ -519,3 +519,17 @@
   padding: 1rem !important;
 
 }
+input.picker[type="date"] {
+  position: relative !important;
+}
+
+input.picker[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100%!important;
+  height: 100%!important;
+  padding: 0!important;
+  color: transparent!important;
+  background: transparent!important;
+}

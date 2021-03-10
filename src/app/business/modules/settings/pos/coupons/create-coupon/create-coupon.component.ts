@@ -310,7 +310,7 @@ isNumeric(evt) {
     this.enddateError = false;
     const ToDate = new Date().toString();
     const l = ToDate.split(' ').splice(0, 4).join(' ');
-    const sDate = this.couponForm.get('validFrom').value;
+    const sDate = this.couponForm.get('startDate').value;
     const sDate1 = new Date(sDate).toString();
     const l2 = sDate1.split(' ').splice(0, 4).join(' ');
     if (startOrend === 0) {
