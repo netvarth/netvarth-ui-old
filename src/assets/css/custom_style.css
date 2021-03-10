@@ -13994,3 +13994,27 @@ width: 40px !important;
 .quest-answ-box {
   margin-bottom: 20px;
 }
+.header-fixed {
+  padding-left: 265px;
+  display: block;    
+  height: 65px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 97;
+}
+@media (max-width: 991px) {
+  .header-fixed {
+    padding-left: 0px !important;
+  }
+  /* .body-section {
+    margin-top: 50px;
+  } */
+}
+.body-section {
+  overflow-y: auto;
+  height: 85vh;
+  background: #f0efef;
+  overflow-x: hidden;
+}

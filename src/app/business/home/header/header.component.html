@@ -1,14 +1,9 @@
-<header class="main-header jaldee-header">
-  <!-- Logo -->
+<!-- <header class="main-header jaldee-header">
   <a (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
-    <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
-    <!-- logo for regular state and mobile devices -->
     <span class="logo-lg"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"></span>
   </a>
-  <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top" role="navigation">
-    <!-- Sidebar toggle button-->
     <a (click)="gotoActiveHome()" class="visible-xs logo-mini-app pointer-cursor pull-left">
       <img src="./assets/images/home/logo-business.png" alt="Jaldee" />
     </a>
@@ -18,7 +13,6 @@
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <!-- Messages: style can be found in dropdown.less-->
         <li [matTooltip]="'Go back to branch'" *ngIf="!iswiz && accountType === 'BRANCH_SP' && sessionStorage">
           <a (click)="gotoBranch()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-arrow-left"></i>
@@ -39,48 +33,12 @@
             </ng-template>
           </a>
         </li>
-        
-        <!-- <li [matTooltip]="'Take a tour'" *ngIf="!iswiz">
-          <a (click)="tourIconClicked()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa take-tour-icon"></i>
-            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
-            <ng-template #text4>
-              <div>
-                We offer free support and we are always ready to help.<br>
-                <br>
-                Call us at- <span style="color: white;"><b>888-012-5000</b></span><br>
-                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
-
-              </div>
-            </ng-template>
-          </a>
-        </li> -->
-
         <li [matTooltip]="'Messages'" class="dropdown messages-menu" *ngIf="!iswiz">
           <a (click)="gotoInbox()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
             <i class="fa fa-envelope-o"></i>
             <span class="label label-success"
               *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
           </a>
-          <!-- <ul class="dropdown-menu" *ngIf="">
-            <li class="header" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">You have no new messages</li>
-
-            <li>
-              <ul class="menu">
-                <li>
-                  <a href="#">
-                    <div class="pull-left">
-                      <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
-                    </div>
-                    <h4>
-                      Support Team
-                      <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                    </h4>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul> -->
         </li>
         <li [matTooltip]="'Alerts'" class="dropdown notifications-menu" *ngIf="!iswiz">
           <a (click)="gotoAlerts()" class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
@@ -140,76 +98,6 @@
             </li>
           </ul>
         </li>
-        <!-- <li [matTooltip]="enable_disable" class="dropdown tasks-menu" *ngIf="!iswiz && waitlistmgr">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="icon-checkin"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <ul class="menu">
-                <li>
-
-                  <a>
-                    <h3>
-                      Same Day Online Check-Ins
-                      <small class="pull-right">
-                        <mat-slide-toggle [checked]="waitlistmgr.onlineCheckIns"
-                          (change)="changeOnlinestatus(waitlistmgr.onlineCheckIns)"></mat-slide-toggle>
-                      </small>
-                    </h3>
-                  </a>
-                </li>
-                <li>
-
-                  <a>
-                    <h3>
-                      Future Check-ins
-                      <small class="pull-right">
-                        <mat-slide-toggle [checked]="waitlistmgr.futureDateWaitlist"
-                          (change)="changefutureOnlinestatus(waitlistmgr.futureDateWaitlist)"></mat-slide-toggle>
-                      </small>
-                    </h3>
-                    <div>
-
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="footer">
-              <a class="pointer-cursor" (click)="gotoCheckinSettings()">View other settings</a>
-            </li>
-          </ul>
-        </li> -->
-        <!-- <div class="image centeralign" *ngIf="blogo!=''">
-          <img [src]="blogo" class="img-circle" alt="Business Image" *ngIf="blogo!='' && blogo!=null" alt="" />
-        </div>
-        <div class="centeralign ">
-          <p class="bus-name">{{bname}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div> -->
-        <!--
-        <li class="dropdown notifications-menu" *ngIf="!iswiz">
-          <a class="dropdown-toggle pointer-cursor" data-toggle="dropdown">
-            <i class="fa fa-circle text-success" *ngIf="qAvailability && qAvailability.availableNow"></i>
-            <i class="fa fa-circle text-failure"
-              *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange"></i>
-          </a>
-         <ul class="dropdown-menu">
-            <li class="available">
-              <a routerLink="settings/q-manager/queues" class="greenc"
-                *ngIf="qAvailability && qAvailability.availableNow">
-                <span class="greenc">I am available online
-                  until {{qAvailability.timeRange.eTime}}</span>
-              </a>
-              <a routerLink="settings/q-manager/queues" class="red"
-                *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
-                <span class="red"> I am not available now </span>
-              </a>
-            </li>
-          </ul>
-        </li> -->
-
         <li class="dropdown user user-menu">
           <a class="dropdown-toggle pointer-cursor user-active-icon" data-toggle="dropdown">
             <span class="fa-stack">
@@ -219,13 +107,11 @@
                 *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
               <i class="fa fa-user fa-stack-1x fa-inverse"></i>
             </span>
-            <!-- <img [src]="blogo" class="user-image" alt=""> -->
             <span class="hidden-xs mgn-lt-3" *ngIf="bname">
               {{ (bname.length>15)? (bname | slice:0:15)+'...':bname }}
             </span>
           </a>
           <ul class="dropdown-menu">
-            <!-- User image -->
             <li class="user-header " style="height: 179px !important;">
               <img [src]="blogo" class="img-circle pointer-cursor" alt="" (click)="gotoProfile()">
 
@@ -236,8 +122,6 @@
               <p><small>
                   <a routerLink="settings/q-manager/queues" class="white"
                     *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)">
-                    <!-- <span class="white bold">I am available online
-                      until {{qAvailability.timeRange.eTime}}</span> -->
                     <span class="white bold">I am available now</span>
                   </a>
                   <a routerLink="settings/q-manager/queues" class="white"
@@ -247,20 +131,6 @@
                 </small>
               </p>
             </li>
-            <!-- <li class="user-body">
-              <div class="row">
-                <div class="col-xs-4 text-center">
-                  <a href="#">Followers</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Sales</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Friends</a>
-                </div>
-              </div>
-            </li> -->
-            <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left" *ngIf="!iswiz">
                 <a (click)="redirectto('bprofile')" class="btn btn-default btn-flat pointer-cursor btst">My Account</a>
@@ -271,11 +141,194 @@
             </li>
           </ul>
         </li>
-        <!-- Control Sidebar Toggle Button -->
-        <!-- <li>
-          <a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-        </li> -->
       </ul>
     </div>
   </nav>
-</header>
+</header> -->
+
+
+
+
+
+<!--begin::Header Mobile-->
+<div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-black" *ngIf="!iswiz">
+  <!--begin::Logo-->
+  <a href="provider">
+    <img alt="Logo" src="assets/images/home/logo-white.png" style="    width: 120px;" />
+  </a>
+  <!--end::Logo-->
+
+  <!--begin::Toolbar-->
+  <div class="d-flex align-items-center">
+    <!--begin::Header Menu Mobile Toggle-->
+    <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle" (click)="showMenu()">
+      <span></span>
+    </button>
+    <!--end::Header Menu Mobile Toggle-->
+
+    <!--begin::Topbar Mobile Toggle-->
+    <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle" (click)="showTopMenu()">
+      <span class="svg-icon svg-icon-xl">
+        <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg--><svg xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <polygon points="0 0 24 0 24 24 0 24" />
+            <path
+              d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+              fill="#000000" fill-rule="nonzero" opacity="0.3" />
+            <path
+              d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+              fill="#000000" fill-rule="nonzero" />
+          </g>
+        </svg>
+        <!--end::Svg Icon-->
+      </span> </button>
+    <!--end::Topbar Mobile Toggle-->
+  </div>
+  <!--end::Toolbar-->
+</div>
+<!--end::Header Mobile-->
+
+
+<div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
+
+  <div class="topbar" [class.topbar-mobile-on]="showTop">
+    <!-- <div id="kt_quick_search_toggle" class="dropdown d-lg-none" (click)="showMenu()">
+      <div data-toggle="dropdown" data-offset="10px,0px"
+        class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+                 </div>
+      </div>
+    </div> -->
+
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+            <i class="fa contact-help-icon"></i>
+            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
+            <ng-template #text4>
+              <div>
+                We offer free support and we are always ready to help.<br>
+                <br>
+                Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
+                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
+
+              </div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+            <i class="fa fa-envelope"></i>
+            <span class="label label-success"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+            <i class="fa fa-bell"></i>
+            <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+
+            <i class="icon-license"></i>
+
+        </div>
+      </div>
+    </div>
+
+
+  
+
+    <div class="dropdown pointer-cursor" (click)="userPopup()">
+      <div id="kt_quick_user_toggle" class="topbar-item">
+        <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2">
+          <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+          <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ (bname.length>15)?
+            (bname | slice:0:15)+'...':bname }}</span><span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
+            <span class="symbol-label font-size-h5 font-weight-bold">{{getUserFirstLetter()}}</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- offcanvas-on -->
+<!-- begin::User Panel-->
+<div id="kt_quick_user" class="offcanvas offcanvas-right p-10" [class.offcanvas-on]="showUserSection">
+  <!--begin::Header-->
+  <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
+    <h3 class="font-weight-bold m-0">
+      User Profile
+      <!-- <small class="text-muted font-size-sm ml-2">12 messages</small> -->
+    </h3>
+    <a (click)="userPopup()" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+      <i class="ki ki-close icon-xs text-muted"></i>
+    </a>
+  </div>
+  <!--end::Header-->
+
+  <!--begin::Content-->
+  <div class="offcanvas-content pr-5 mr-n5">
+    <!--begin::Header-->
+    <div class="d-flex align-items-center mt-5">
+      <div class="symbol symbol-100 mr-5">
+        <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
+           <!-- <img [src]="blogo" class="img-circle pointer-cursor" alt=""> -->
+          </div>
+        <i class="symbol-badge bg-success"
+          *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
+        <i class="symbol-badge bg-danger"
+          *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary" (click)="userPopup();gotoProfile()">
+          {{bname}}
+        </a>
+        <div class="text-muted mt-1">
+          {{bsector}} 
+        </div>
+        <div class="text-muted sub-sec">
+         {{bsubsector}}
+        </div>
+        <div class="navi mt-2">
+          <!-- <a class="navi-item">
+            <span class="navi-link p-0 pb-2">
+              <span class="navi-icon mr-1">
+                <span class="svg-icon svg-icon-lg svg-icon-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                    height="24px" viewBox="0 0 24 24" version="1.1">
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <rect x="0" y="0" width="24" height="24" />
+                      <path
+                        d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z"
+                        fill="#000000" />
+                      <circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5" />
+                    </g>
+                  </svg>
+                </span> </span>
+              <span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+            </span>
+          </a> -->
+          <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" (click)="doLogout()">Sign Out</a>
+        </div>
+      </div>
+    </div>
+    <!--end::Header-->
+  </div>
+  <!--end::Content-->
+</div>
+<div class="offcanvas-overlay" *ngIf="showUserSection"></div>
+<!-- end::User Panel-->
