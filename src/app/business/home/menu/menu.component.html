@@ -1,5 +1,51 @@
-<!-- <aside class="main-sidebar" *ngIf="!iswiz">
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar" *ngIf="!iswiz">
+  <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <!-- <div class="user-panel">
+        <div class="image centeralign" *ngIf="blogo!=''"> -->
+    <!-- <div class="pro-pic"> -->
+    <!-- <img [src]="blogo" class="img-circle" *ngIf="blogo!='' && blogo!=null" alt="" /> -->
+    <!-- </div> -->
+    <!-- <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="Business Image"> -->
+    <!-- </div>
+        <div class="centeralign col-md-12">
+          <p class="bus-name">{{bname}}</p> -->
+
+    <!-- <div (click)="holidaybtnClicked()">
+                  <span class="red" *ngIf="qAvailability && qAvailability.holiday">
+                      Holiday
+                  </span>
+              </div> -->
+
+    <!-- <div (click)="closeMenu();btnAvailableClicked()" class="pointer-cursor available">
+            <div class="greenc" *ngIf="qAvailability && qAvailability.availableNow">
+              <i class="fa fa-circle text-success"></i> <span class="avail">I am available online</span> <br />
+              <span class="avail">until {{qAvailability.timeRange.eTime}}</span>
+            </div>
+            <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange">
+              <i class="fa fa-circle text-failure"></i><span class="avail"> I am not available now </span>
+            </div> -->
+    <!-- <div class="red" *ngIf="qAvailability && !qAvailability.availableNow && qAvailability.timeRange">
+                Today I'm available <br/>
+                after {{qAvailability.timeRange.eTime}}
+            </div>  -->
+    <!-- </div> -->
+    <!-- </div>
+      </div> -->
+    <!-- search form -->
+    <!-- <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form> -->
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="">&nbsp;</li>
       <li class="treeview">
@@ -41,6 +87,13 @@
             *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
         </a>
       </li>
+      <!-- <li>
+        <a class="pointer-cursor" routerLink="inbox" (click)="closeMenu()" routerLinkActive="active-lnk" [queryParams]="{enquiry: true}">
+          <i class="fa fa-envelope"></i> <span> Enquiry</span>
+          <small class="label pull-right bg-green"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</small>
+        </a>
+      </li> -->
       <li class="separator"></li>
       <li>
         <a class="pointer-cursor" routerLink="auditlog" (click)="closeMenu()" routerLinkActive="active-lnk">
@@ -77,6 +130,11 @@
         </a>
       </li>
       <li class="separator"></li>
+      <!-- <li>
+          <a class="pointer-cursor" target="_blank" routerLink="/kiosk" routerLinkActive="active-lnk">
+            <i class="fa fa-tablet"></i><span>Kiosk</span>
+          </a>
+        </li> -->
       <li><a class="pointer-cursor" (click)="closeMenu();gotoHelp()" routerLinkActive="active-lnk"><i
             class="fa fa-book"></i> <span>Help</span></a></li>
       <li><a routerLink="faq" (click)="closeMenu()" routerLinkActive="active-lnk"><i
@@ -84,229 +142,5 @@
           <span>FAQ</span></a></li>>
     </ul>
   </section>
-</aside> -->
-
-
-
-
-
-<div *ngIf="!iswiz"
-  class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" [class.aside-on]="showMenu">
-  <div class="brand flex-column-auto">
-    <a href="/provider" class="brand-logo"><img
-        src="assets/images/home/logo-white.png" alt="Jaldee" style="    width: 120px;"></a>
-    <button class="brand-toggle btn btn-sm px-0 pointer-cursor" (click)="minimizeSideBar()">
-      <span class="svg-icon svg-icon svg-icon-xl" (click)="minimizeSideBar()">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-          viewBox="0 0 24 24" version="1.1">
-          <g stroke="none" stroke-width="1" fill="none"
-            fill-rule="evenodd">
-            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-            <path 
-              d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z"
-              fill="#000000" fill-rule="nonzero"
-              transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999) "></path>
-            <path 
-              d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z"
-              fill="#000000" fill-rule="nonzero" opacity="0.3"
-              transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999) ">
-            </path>
-          </g>
-        </svg>
-      </span>
-      </button>
-  </div>
-  <div id="kt_aside_menu_wrapper"
-    class="aside-menu-wrapper flex-column-fluid" [class.aside-minimize]="minimizeMenu">
-    <div id="kt_aside_menu" data-menu-vertical="1" data-menu-scroll="1"
-      data-menu-dropdown-timeout="500" class="aside-menu my-4">
-      <ul class="menu-nav">
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="appointments" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-             class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-calendar"></i>
-            </span><span class="menu-text">Appointments</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="check-ins" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-check-circle"></i>
-            </span><span class="menu-text">
-              <ng-container *ngIf="showToken"> Tokens</ng-container>
-              <ng-container *ngIf="!showToken"> Check-ins</ng-container>
-            </span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="orders" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </span><span class="menu-text">Orders</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="donations" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-             class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-stack fa-inr"></i>
-            </span><span class="menu-text">Donations</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="customers" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-users"></i>
-            </span><span class="menu-text">{{customer_label |
-              capitalizeFirst}}s</span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="inbox" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-             class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-envelope"></i>
-            </span><span class="menu-text">Inbox</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="auditlog" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-list"></i> 
-            </span><span class="menu-text">Activity Log</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="reports" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-file"></i> 
-            </span><span class="menu-text">Reports</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="alerts" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-bell"></i>
-            </span><span class="menu-text">Alerts</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="settings/general/users" routerLinkActive="active-menu"
-            _ngcontent-vet-c459="" class="menu-link menu-toggle"><span _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="svg-icon menu-icon">
-              <i class="fa fa-users"></i> 
-            </span><span class="menu-text">Users</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="settings" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle" (click)="showMenuSection()"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-gears"></i>
-            </span><span class="menu-text">Settings</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="license" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle" (click)="showMenuSection()"><span 
-              class="svg-icon menu-icon">
-              <i class="icon-license"></i>
-            </span><span class="menu-text">Subscription Plan</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" (click)="gotoHelp()" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle" (click)="showMenuSection()"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-book"></i>
-            </span><span class="menu-text">Help</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-        <li aria-haspopup="true" data-menu-toggle="hover"
-          class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="faq" routerLinkActive="active-menu" _ngcontent-vet-c459=""
-            class="menu-link menu-toggle" (click)="showMenuSection()"><span 
-              class="svg-icon menu-icon">
-              <i class="fa fa-question-circle"></i>
-            </span><span class="menu-text">Faq</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
-          </div>
-        </li>
-
-      </ul>
-    </div>
-  </div>
-</div>
+  <!-- /.sidebar -->
+</aside>

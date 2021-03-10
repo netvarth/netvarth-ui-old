@@ -1,11 +1,9 @@
-<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;background: white;"> 
+<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;">
+    <app-header></app-header>
     <app-menu></app-menu>
-    <div _ngcontent-ctp-c459="" _ngcontent-vet-c459="" id="kt_header" class="header header-fixed" [class.no-padding]="iswiz">
-        <app-header></app-header>
-        <div class="body-section" [class.loading-style]="apiloading" (click)="showMenu()">
-            <router-outlet *ngIf="!apiloading"></router-outlet>
-            <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-        </div>
-        <app-footernew></app-footernew>
+    <div class="content-wrapper cont-outer" [class.loading-style]="apiloading">
+        <router-outlet *ngIf="!apiloading"></router-outlet>
+        <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
     </div>
+    <app-footernew></app-footernew>
 </div>

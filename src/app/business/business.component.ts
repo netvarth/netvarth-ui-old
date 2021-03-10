@@ -29,7 +29,6 @@ export class BusinessComponent implements OnInit {
   subscription: Subscription;
   contactInfo: any = [];
   profile: any = [];
-  iswiz = false;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -90,9 +89,6 @@ export class BusinessComponent implements OnInit {
           this.activeSkin = message.selectedSkin;
           this.lStorageService.setitemonLocalStorage('activeSkin', this.activeSkin);
           break;
-          case 'hidemenus':
-            this.iswiz = message.value;
-            break;
       }
     });
   }
@@ -246,8 +242,5 @@ export class BusinessComponent implements OnInit {
     this.provider_services.getLicenseMetadata().subscribe(data => {
       this.lStorageService.setitemonLocalStorage('license-metadata', data);
     });
-  }
-  showMenu() {
-    this.shared_functions.sendMessage({ ttype: 'showmenu', value: false });
   }
 }
