@@ -289,156 +289,92 @@
                                   {{no_ynw_results_found}}</div>
                               <div class="srlst" *ngFor="let search_result of search_data.hits.hit">
                                   <div class="panel-body pad-lt-0 pad-rt-0 pad-bt-5 pad-up-5">
-                                      <div class="col-md-3 col-xs-3 col-sm-3 col-lg-2 no-padding centeralign ">
-                                          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 pro-img1 no-padding">
-                                              <!-- (click)="openImageModalRow(image_list_popup[0])" -->
-                                              <img [src]="search_result.fields.logo" id="profile-image1"
-                                                  *ngIf="search_result.fields.logo"
-                                                  class=" img-circle img-responsive pointer-cursor" />
-                                              <img src="assets/images/img-null.svg" id="profile-image1"
-                                                  *ngIf="!search_result.fields.logo"
-                                                  class=" img-circle img-responsive pointer-cursor">
-                                          </div>
-                                          <div class="rating-stars col-md-12 col-xs-12 col-sm-12 centeralign">
-                                              <ng-container *ngIf="search_result.fields.rating>0zz">
-                                                  <ng-container *ngIf="search_result.fields.rating==.5">
-                                                      <img class="ratingstar" src="./assets/images/star-half.svg"
-                                                          alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-
-                                                  <ng-container *ngIf="search_result.fields.rating==1">
-                                                      <img class="ratingstar" src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-
-                                                  <ng-container *ngIf="search_result.fields.rating==1.5">
-                                                      <img class="ratingstar" src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-half.svg"
-                                                          alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-                                                  <ng-container *ngIf="search_result.fields.rating==2">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-
-                                                  <ng-container *ngIf="search_result.fields.rating==2.5">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-half.svg"
-                                                          alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-
-                                                  <ng-container *ngIf="search_result.fields.rating==3">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" *ngFor="let number of [1,2]"
-                                                          src="./assets/images/star-disabled.svg" alt="" />
-                                                  </ng-container>
-
-                                                  <ng-container *ngIf="search_result.fields.rating==3.5">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-half.svg"
-                                                          alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-disabled.svg"
-                                                          alt="" />
-                                                  </ng-container>
-                                                  <ng-container *ngIf="search_result.fields.rating==4">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-disabled.svg"
-                                                          alt="" />
-                                                  </ng-container>
-                                                  <ng-container *ngIf="search_result.fields.rating==4.5">
-                                                      <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
-                                                          src="./assets/images/star.svg" alt="" />
-                                                      <img class="ratingstar" src="./assets/images/star-half.svg"
-                                                          alt="" />
-                                                  </ng-container>
-                                                  <ng-container *ngIf="search_result.fields.rating==5">
-                                                      <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                          <img class="ratingstar" src="./assets/images/star.svg"
-                                                              alt="" />
-                                                      </ng-container>
-                                                  </ng-container>
-                                              </ng-container>
-                                              <!-- <ng-container *ngIf="search_result.fields.rating==0">
-                                                  <ng-container *ngFor="let number of [1,2,3,4,5]">
-                                                      <img class="ratingstar" src="./assets/images/star-disabled.svg"
-                                                          alt="" />
-                                                  </ng-container>
-                                              </ng-container> -->
-                                          </div>
-                                      </div>
                                       <div
                                           class="col-md-9 col-xs-9 col-sm-9 col-lg-10 bus-title-content no-padding-small">
-                                          <div class="col-md-8 col-sm-8 col-lg-8 no-padding"
-                                              [ngClass]="{'col-xs-10':(search_result.fields.ynw_verified_level > 1)?true:false}">
+                                          <div class="col-md-9 col-sm-8 col-lg-10 pt-2 no-padding"
+                                              [ngClass]="{'col-xs-8': (getClass(search_result) == 3) ? true : false,
+                                                          'col-xs-9': (getClass(search_result) == 2) ? true : false,
+                                                          'col-xs-10': (getClass(search_result) == 1) ? true : false}">
+                                              <!-- [ngClass]="{'col-xs-10':(search_result.fields.ynw_verified_level > 1)?true:false}"> -->
                                               <div class="pointer-cursor" (click)="providerDetClicked(search_result)">
-                                                  <h3>{{search_result.fields.title | capitalizeFirst}} <span
+                                                  <h3 class="service-provide-name">{{search_result.fields.title | capitalizeFirst}} <!-- <span
                                                           class="mgn-lt-10" *ngIf="search_result.fields.jdn == 1"
                                                           (click)="stopprop($event);openJdn(search_result)"
                                                           [matTooltip]="jdnTooltip"><img height="30" width="30"
-                                                              src="./assets/images/JDN.png"></span></h3>
+                                                              src="./assets/images/JDN.png"></span> --></h3>
+                                                  <div class="branch"
+                                                      *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
+                                                      <b>{{search_result.fields.branch_name}}</b>
+                                                  </div>            
                                                   <div
-                                                      class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-3 no-padding">
+                                                      class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding address">
                                                       <h6><a [href]="'https://www.google.com/maps/place/'+search_result.fields.location1+'/@'+search_result.fields.location1+',15z'"
                                                               target="_blank"
                                                               *ngIf="search_result.fields.location1"><i
                                                                   class="fa fa-map-marker"></i>&nbsp;{{search_result.fields.place1 | capitalizeFirst }}</a>
                                                       </h6>
                                                   </div>
-                                                  <div
-                                                      *ngIf="search_result.fields.account_type && search_result.fields.account_type == 1">
-                                                      <b>{{search_result.fields.branch_name}}</b>
-                                                  </div>
-                                                  <div *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length == 1"
+                                                  
+                                                  <!-- <div *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length == 1"
                                                       class="question-header mgn-up-3">
                                                       Specialization
                                                   </div>
                                                   <div *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length > 1"
                                                       class="question-header mgn-up-3">
                                                       Specializations
-                                                  </div>
+                                                  </div> -->
                                                   <div class="question-value1"
-                                                      *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length > 0">
-                                                      <span
+                                                      *ngIf="search_result && search_result.fields.specialization_displayname && search_result.fields.specialization_displayname.length > 0">
+                                                      <!-- *ngIf="search_result && search_result.fields.specializationFiltered && search_result.fields.specializationFiltered.length > 0"> -->
+                                                      <!-- <span
                                                           *ngFor="let spec of (search_result.fields.specializationFiltered)"
                                                           style="margin-right:10px">
                                                           {{spec}}
-                                                      </span>
-                                                      <span *ngIf="search_result.fields.specializationMore"
+                                                      </span> -->
+                                                      <div class="specialization">
+                                                          <span>{{search_result.fields.specialization_displayname.join(", ")}}</span>
+                                                      </div>
+                                                      <!-- <span *ngIf="search_result.fields.specializationMore"
                                                           class="link pointer-cursor"
-                                                          (click)="providerDetClicked(search_result)">...</span>
+                                                          (click)="providerDetClicked(search_result)">...</span> -->
                                                   </div>
-                                                  <div *ngIf="search_result.fields.userCount" class="mgn-up-5">
-                                                      <h6 class="prov-name"><a>{{search_result.fields.userCount}}
-                                                              {{search_result.fields.provider_label}} </a></h6>
+                                                  <div *ngIf="search_result.fields.userCount" class="user-count">
+                                                      <div>
+                                                          {{search_result.fields.userCount}} {{search_result.fields.provider_label}} 
+                                                      </div>
+                                                  </div>
+                                                  <div class="services-departments">
+                                                      <div *ngIf="showButton(search_result) === 'bookservice' && !search_result.fields.departments && search_result.fields.allServices && search_result.fields.allServices.length > 0">
+                                                        <div class="search-services">
+                                                            <span class="service-count-value">{{search_result.fields.allServices.length}}</span>
+                                                            <span class="services-count">&nbsp;Services</span>
+                                                        </div>
+                                                        <div class="search-services"
+                                                            *ngIf="search_result.fields.departments">
+                                                            <span class="departments-count-value">{{search_result.fields.departments.length}}</span>
+                                                            <span class="departments-count">&nbsp;Departments</span>    
+                                                        </div>
+                                                      </div>
                                                   </div>
                                               </div>
                                           </div>
-                                          <div class="col-md-4 col-xs-2 col-sm-4 col-lg-4 no-padding ">
+                                          <!-- <div class="col-md-4 col-xs-2 col-sm-4 col-lg-4 pt-2 no-padding " -->
+                                          <div class="col-md-3 col-sm-4 col-lg-2 pt-2 no-padding "
+                                              [ngClass]="{'col-xs-4': (getClass(search_result) == 3) ? true : false,
+                                                          'col-xs-3': (getClass(search_result) == 2) ? true : false,
+                                                          'col-xs-2': (getClass(search_result) == 1) ? true : false}">
                                               <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                  <span class="img pic_align pull-right"
+                                                  <span class="img pic_align pull-right verification-level"
                                                       *ngIf="search_result.fields.ynw_verified_level==2"
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="'Jaldee verified-basic'">
                                                       <img src="./assets/images/basic.png" alt="Basic"></span>
-                                                  <span class="img pic_align pull-right"
+                                                  <span class="img pic_align pull-right verification-level"
                                                       *ngIf="search_result.fields.ynw_verified_level==3"
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="'Jaldee verified-basic plus'"><img
                                                           src="./assets/images/basicpls.png" alt="Basic Plus"></span>
-                                                  <span class="img pic_align pull-right"
+                                                  <span class="img pic_align pull-right verification-level"
                                                       *ngIf="search_result.fields.ynw_verified_level==4"
                                                       [matTooltipClass]="tooltipcls"
                                                       [matTooltip]="'Jaldee verified-advanced'"><img
@@ -452,6 +388,10 @@
                                                           <!-- <span style="display:block">{{send_messages}}</span> -->
                                                       </a>
                                                   </span>
+                                                  <span class="pull-right jdn-image" *ngIf="search_result.fields.jdn == 1"
+                                                      (click)="stopprop($event);openJdn(search_result)"
+                                                      [matTooltip]="jdnTooltip">
+                                                      <img src="./assets/images/JDN.png"></span>
                                                   <span class="pull-right hidden-xs"
                                                       *ngIf="search_result.fields.claimable!=1 && (stringToInt(search_result.fields.first_checkin_coupon_count))!=0 && isfirstCheckinOffer">
                                                       <a class="search-action"
@@ -478,20 +418,120 @@
                                                   </ul>
                                               </div> -->
 
-                                              <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs pull-right"
-                                                  *ngIf="search_result.fields.claimable==1">
+                                              <!-- <div class="col-sm-12 col-xs-6 col-md-12 hidden-xs pull-right"
+                                                  *ngIf="search_result.fields.claimable==1"> -->
                                                   <!-- <ul class="bus-actions no-padding">
                                                       <li>-->
-                                                  <a class="like-btn claimme pull-right"
-                                                      (click)="claimBusiness(search_result)">
+                                                  <!-- <a class="like-btn claimme pull-right"
+                                                      (click)="claimBusiness(search_result)"> -->
                                                       <!-- <img class="img" src="./assets/images/claim.png"
                                                           alt="Claim your Business" />  -->
-                                                      <span style="display:block">{{claim_my_business_cap}}</span>
-                                                  </a>
+                                                      <!-- <span style="display:block">{{claim_my_business_cap}}</span>
+                                                  </a> -->
                                                   <!-- </li>
                                                   </ul> -->
-                                              </div>
+                                              <!-- </div> -->
                                           </div>
+                                      </div>
+                                      <div class="col-md-3 col-xs-3 col-sm-3 col-lg-2 no-padding centeralign ">
+                                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 py-2 pro-img1 no-padding">
+                                            <!-- (click)="openImageModalRow(image_list_popup[0])" -->
+                                            <img [src]="search_result.fields.logo" id="profile-image1"
+                                                *ngIf="search_result.fields.logo"
+                                                class=" img-circle img-responsive pointer-cursor" />
+                                            <img src="assets/images/img-null.svg" id="profile-image1"
+                                                *ngIf="!search_result.fields.logo"
+                                                class=" img-circle img-responsive pointer-cursor">
+                                        </div>
+                                        <div class="rating-stars col-md-12 col-xs-12 col-sm-12 centeralign">
+                                            <ng-container *ngIf="search_result.fields.rating>0zz">
+                                                <ng-container *ngIf="search_result.fields.rating==.5">
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"
+                                                        alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1">
+                                                    <img class="ratingstar" src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==1.5">
+                                                    <img class="ratingstar" src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"
+                                                        alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==2">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==2.5">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"
+                                                        alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" *ngFor="let number of [1,2]"
+                                                        src="./assets/images/star-disabled.svg" alt="" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="search_result.fields.rating==3.5">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"
+                                                        alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                        alt="" />
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==4">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                        alt="" />
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==4.5">
+                                                    <img class="ratingstar" *ngFor="let number of [1,2,3,4]"
+                                                        src="./assets/images/star.svg" alt="" />
+                                                    <img class="ratingstar" src="./assets/images/star-half.svg"
+                                                        alt="" />
+                                                </ng-container>
+                                                <ng-container *ngIf="search_result.fields.rating==5">
+                                                    <ng-container *ngFor="let number of [1,2,3,4,5]">
+                                                        <img class="ratingstar" src="./assets/images/star.svg"
+                                                            alt="" />
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                            <!-- <ng-container *ngIf="search_result.fields.rating==0">
+                                                <ng-container *ngFor="let number of [1,2,3,4,5]">
+                                                    <img class="ratingstar" src="./assets/images/star-disabled.svg"
+                                                        alt="" />
+                                                </ng-container>
+                                            </ng-container> -->
+                                        </div>
+                                        <div class="claim-business pull-left centeralign"
+                                            (click)="claimBusiness(search_result)"
+                                            *ngIf="search_result.fields.claimable==1">
+                                            <!-- <img class="img1 claim-image" src="./assets/images/claim.png"
+                                                alt="Claim your Business" /> -->
+                                            <div style="display:inline-block">{{claim_my_business_cap}}</div>
+                                        </div>
+                                        <!-- <div class="claim-business-empty pull-left" *ngIf="search_result.fields.claimable!=1">
+                                            &nbsp;
+                                        </div> -->
                                       </div>
                                       <div class="col-xs-12 smalldevicebx mgn-up-10 link visible-xs">
                                           <span (click)="communicateHandler(search_result)"
@@ -516,13 +556,13 @@
                                               <span style="display:block">{{jaldee_coupon}}</span>
                                           </span>
 
-                                          <span class=" pic_align pull-left centeralign mgn-lt-20"
+                                          <!-- <span class=" pic_align pull-left centeralign mgn-lt-20"
                                               (click)="claimBusiness(search_result)"
                                               *ngIf="search_result.fields.claimable==1">
                                               <img class="img1" src="./assets/images/claim.png"
                                                   alt="Claim your Business" />
                                               <span style="display:block">{{claim_my_business_cap}}</span>
-                                          </span>
+                                          </span> -->
                                       </div>
                                       <!-- <ks-modal-gallery *ngIf="image_list_popup && image_list_popup.length>0"
                                           [modalImages]="image_list_popup"
@@ -563,11 +603,11 @@
                                               </div>
                                               <div class="checkin-est"
                                                   *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                       the first in line</span>
                                               </div>
@@ -590,11 +630,11 @@
 
                                       <div class="bottom-sect pdetail"
                                       *ngIf="showButton(search_result) === 'bookservice'">
-                                      <div class="bt-l">
+                                      <!-- <div class="bt-l"> -->
                                           <!-- <div class="wt-tme notallowed" *ngIf="search_result.fields['apptMessage'] && search_result.fields['estimatedtime_det']['message']">
                                               {{search_result.fields['estimatedtime_det']['message']}}
                                            </div> -->
-                                          <div class="wt-tme"
+                                          <!-- <div class="wt-tme"
                                               *ngIf="!search_result.fields.departments && search_result.fields.allServices && search_result.fields.allServices.length > 0">
                                               <div class="search-services">
                                                   <span class="question-header">Services Count: </span>
@@ -608,7 +648,7 @@
                                                       class="question-value1">{{search_result.fields.departments.length}}</span>
                                               </div>
                                           </div>
-                                      </div>
+                                      </div> -->
                                       <div style="flex-grow:1"></div>
                                       <div class="bottom-actions-root">
                                           <div class="checkin-est nrm"
@@ -621,11 +661,11 @@
                                           </div>
                                           <div class="checkin-est"
                                               *ngIf="!search_result.fields.apptAllowed && search_result.fields.waitlist && search_result.fields['estimatedtime_det']['calculationMode']=='NoCalc' && search_result.fields['estimatedtime_det']['showToken']">
-                                              <span class=""
+                                              <span class="persons-ahead"
                                                   *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
-                                              <span class=""
+                                              <span class="persons-ahead"
                                                   *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
-                                              <span class=""
+                                              <span class="persons-ahead"
                                                   *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                   the first in line</span>
                                           </div>
@@ -641,7 +681,7 @@
                                               class="checkin-btn srch_detail_btn bookserv_{{search_result.fields.title}}">Book service</span>
 
                                       </div>
-                                  </div>
+                                      </div>
                                       <!-- book service button end -->
 
 
@@ -709,11 +749,11 @@
                                               </div>
                                               <div class="checkin-est"
                                                   *ngIf="search_result.fields['estimatedtime_det']['onlineCheckIn'] && search_result.fields['estimatedtime_det']['showToken']">
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] > 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{people_ahead}}</span>
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 1"><b>{{search_result.fields['estimatedtime_det']['personAhead']}}</b>&nbsp;{{one_person_ahead}}</span>
-                                                  <span class=""
+                                                  <span class="persons-ahead"
                                                       *ngIf="search_result.fields['estimatedtime_det']['personAhead'] == 0">Be
                                                       the first in line</span>
                                               </div>
@@ -772,7 +812,7 @@
                                               *ngIf="showButton(search_result) === 'appt' && search_result.fields['apptMessage']">
                                               {{search_result.fields['apptMessage']}}
                                           </div> -->
-                                      <div class="bottom-sect pdetail"
+                                      <div class="bottom-sect donation pdetail"
                                           *ngIf="showButton(search_result) === 'donation'">
                                           <div class="bt-l">
                                               <div class="wt-tme">
