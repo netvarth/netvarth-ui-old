@@ -5737,7 +5737,7 @@ li.separator.setsplit {
 
 .alert-ack {
   float: right;
-  margin-top: 5px;
+  /* margin-top: 5px; */
   color: #41c389;
   cursor: pointer;
 }
@@ -6480,7 +6480,7 @@ li.separator.setsplit {
 }
 
 .bg-blue {
-  background-color: #3c8dbc !important;
+  background-color: #1e4079 !important
 }
 
 .direct-chat-info {
@@ -14008,9 +14008,9 @@ width: 40px !important;
   .header-fixed {
     margin-left: 0px !important;
   }
-  /* .body-section {
+  .body-section {
     margin-top: 50px;
-  } */
+  }
 }
 .body-section {
   overflow-y: auto;

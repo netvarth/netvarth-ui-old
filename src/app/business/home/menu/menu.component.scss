@@ -1,8 +1,8 @@
 li.right{
     float: right;
 }
-a {
-    color: #a2a3b7 !important;
+a, .aside-menu i {
+    color: #a2a3b7cc !important;
 }
 .flex-row-auto {
     background-color: #1e1e2d !important;
@@ -36,4 +36,7 @@ a {
     .aside-menu {
         height: 100vh;
     }
+}
+.bg-green, .bg-orange {
+    border-radius: unset !important;
 }

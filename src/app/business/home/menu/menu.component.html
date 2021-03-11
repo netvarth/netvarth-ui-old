@@ -93,8 +93,8 @@
 <div *ngIf="!iswiz"
   class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" [class.aside-on]="showMenu" [class.aside-minimize]="minimizeMenu">
   <div class="brand flex-column-auto">
-    <a href="/provider" class="brand-logo"><img
-        src="assets/images/home/logo-white.png" alt="Jaldee" style="    width: 120px;"></a>
+    <a (click)="gotoActiveHome()" class="brand-logo"><img
+        src="assets/images/jaldee-businesslogo.png" alt="Jaldee" style="    width: 120px;"></a>
     <button class="brand-toggle btn btn-sm px-0 pointer-cursor" (click)="minimizeSideBar()">
       <span class="svg-icon svg-icon svg-icon-xl">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -124,20 +124,20 @@
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="appointments" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="appointments" routerLinkActive="active-menu"
              class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-calendar"></i>
             </span><span class="menu-text">Appointments</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="check-ins" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="check-ins" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>
@@ -145,164 +145,167 @@
               <ng-container *ngIf="showToken"> Tokens</ng-container>
               <ng-container *ngIf="!showToken"> Check-ins</ng-container>
             </span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="orders" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="orders" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </span><span class="menu-text">Orders</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="donations" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="donations" routerLinkActive="active-menu"
              class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-stack fa-inr"></i>
             </span><span class="menu-text">Donations</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="customers" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="customers" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-users"></i>
             </span><span class="menu-text">{{customer_label |
               capitalizeFirst}}s</span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="inbox" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="inbox" routerLinkActive="active-menu"
              class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-envelope"></i>
-            </span><span class="menu-text">Inbox</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+            </span><span class="menu-text">Inbox</span>
+            <small class="label pull-right bg-green"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0 && !minimizeMenu">{{inboxUnreadCnt}}</small>
+            <i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="auditlog" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="auditlog" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-list"></i> 
             </span><span class="menu-text">Activity Log</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="reports" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="reports" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-file"></i> 
             </span><span class="menu-text">Reports</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="alerts" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="alerts" routerLinkActive="active-menu"
             class="menu-link menu-toggle"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-bell"></i>
-            </span><span class="menu-text">Alerts</span><i
-              class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+            </span><span class="menu-text">Alerts</span>
+            <small class="label pull-right bg-orange" *ngIf="alertCnt>0 && !minimizeMenu">{{alertCnt}}</small>
+            <i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu" (click)="showMenuSection()">
-          <a _ngcontent-ctp-c459="" routerLink="settings/general/users" routerLinkActive="active-menu"
-            _ngcontent-vet-c459="" class="menu-link menu-toggle"><span _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="svg-icon menu-icon">
+          <a routerLink="settings/general/users" routerLinkActive="active-menu"
+            class="menu-link menu-toggle"><span
+              class="svg-icon menu-icon">
               <i class="fa fa-users"></i> 
             </span><span class="menu-text">Users</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="settings" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="settings" routerLinkActive="active-menu"
             class="menu-link menu-toggle" (click)="showMenuSection()"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-gears"></i>
             </span><span class="menu-text">Settings</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="license" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="license" routerLinkActive="active-menu"
             class="menu-link menu-toggle" (click)="showMenuSection()"><span 
               class="svg-icon menu-icon">
               <i class="icon-license"></i>
             </span><span class="menu-text">Subscription Plan</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" (click)="gotoHelp()" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a (click)="gotoHelp()" routerLinkActive="active-menu"
             class="menu-link menu-toggle" (click)="showMenuSection()"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-book"></i>
             </span><span class="menu-text">Help</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 
         <li aria-haspopup="true" data-menu-toggle="hover"
           class="menu-item menu-item-submenu">
-          <a _ngcontent-ctp-c459="" routerLink="faq" routerLinkActive="active-menu" _ngcontent-vet-c459=""
+          <a routerLink="faq" routerLinkActive="active-menu"
             class="menu-link menu-toggle" (click)="showMenuSection()"><span 
               class="svg-icon menu-icon">
               <i class="fa fa-question-circle"></i>
             </span><span class="menu-text">Faq</span><i
               class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i _ngcontent-ctp-c459=""
-              _ngcontent-vet-c459="" class="menu-arrow"></i>
+          <div class="menu-submenu"><i
+              class="menu-arrow"></i>
           </div>
         </li>
 

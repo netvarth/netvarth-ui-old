@@ -53,7 +53,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   licenseDetails;
   showUserSection = false;
   showMenuSection = false;
-  showTop = false;
   action = '';
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
@@ -441,14 +440,14 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     this.showMenuSection = !this.showMenuSection;
     this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenuSection });
   }
-  showTopMenu() {
-    this.showTop = !this.showTop;
-  }
   actionPerformed(action) {
     if (this.action === action) {
       this.action = '';
     } else {
       this.action = action;
     }
+  }
+  gotoSettings() {
+    this.router.navigate(['provider', 'settings']);
   }
 }
