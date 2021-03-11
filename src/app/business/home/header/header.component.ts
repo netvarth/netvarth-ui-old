@@ -54,6 +54,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   showUserSection = false;
   showMenuSection = false;
   showTop = false;
+  action = '';
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -97,6 +98,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'unreadCount':
           this.inboxUnreadCnt = message.unreadCount;
           break;
+          case 'showmenu':
+            this.showMenuSection = message.value;
+            break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
@@ -160,7 +164,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       }
 
     });
-   // this.router.navigate(['provider', 'settings']);
+    // this.router.navigate(['provider', 'settings']);
 
   }
   gotoActiveHome() {
@@ -204,7 +208,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       .then(
         () => {
           this.provider_dataStorage.setWeightageArray([]);
-            this.titleService.setTitle('Jaldee');
+          this.titleService.setTitle('Jaldee');
           this.router.navigate(['/home']);
         },
         () => {
@@ -422,14 +426,16 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       width: '25%',
       panelClass: ['commonpopupmainclass', 'popup-class']
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
   userPopup() {
     this.showUserSection = !this.showUserSection;
   }
   getUserFirstLetter() {
-    const name = this.bname.split(' ');
-    return name[0].charAt(0);
+    if (this.bname) {
+      const name = this.bname.split(' ');
+      return name[0].charAt(0);
+    }
   }
   showMenu() {
     this.showMenuSection = !this.showMenuSection;
@@ -437,5 +443,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   showTopMenu() {
     this.showTop = !this.showTop;
+  }
+  actionPerformed(action) {
+    if (this.action === action) {
+      this.action = '';
+    } else {
+      this.action = action;
+    }
   }
 }

@@ -13995,7 +13995,7 @@ width: 40px !important;
   margin-bottom: 20px;
 }
 .header-fixed {
-  padding-left: 265px;
+  margin-left: 265px;
   display: block;    
   height: 65px;
   position: fixed;
@@ -14006,7 +14006,7 @@ width: 40px !important;
 }
 @media (max-width: 991px) {
   .header-fixed {
-    padding-left: 0px !important;
+    margin-left: 0px !important;
   }
   /* .body-section {
     margin-top: 50px;
@@ -14017,4 +14017,7 @@ width: 40px !important;
   height: 85vh;
   background: #f0efef;
   overflow-x: hidden;
+}
+.mgn-lt-70 {
+  margin-left: 70px !important;
 }

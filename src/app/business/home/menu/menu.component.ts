@@ -246,13 +246,14 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
   minimizeSideBar() {
-    console.log('mini');
     this.minimizeMenu = !this.minimizeMenu;
+    this.shared_functions.sendMessage({ ttype: 'smallMenu', value: this.minimizeMenu });
   }
   gotoActiveHome() {
     this.router.navigate(['provider', 'check-ins']);
   }
   showMenuSection() {
     this.showMenu = false;
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenu });
   }
 }

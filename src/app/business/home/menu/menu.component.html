@@ -91,12 +91,12 @@
 
 
 <div *ngIf="!iswiz"
-  class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" [class.aside-on]="showMenu">
+  class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" [class.aside-on]="showMenu" [class.aside-minimize]="minimizeMenu">
   <div class="brand flex-column-auto">
     <a href="/provider" class="brand-logo"><img
         src="assets/images/home/logo-white.png" alt="Jaldee" style="    width: 120px;"></a>
     <button class="brand-toggle btn btn-sm px-0 pointer-cursor" (click)="minimizeSideBar()">
-      <span class="svg-icon svg-icon svg-icon-xl" (click)="minimizeSideBar()">
+      <span class="svg-icon svg-icon svg-icon-xl">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
           viewBox="0 0 24 24" version="1.1">
           <g stroke="none" stroke-width="1" fill="none"
@@ -117,9 +117,9 @@
       </button>
   </div>
   <div id="kt_aside_menu_wrapper"
-    class="aside-menu-wrapper flex-column-fluid" [class.aside-minimize]="minimizeMenu">
+    class="aside-menu-wrapper flex-column-fluid">
     <div id="kt_aside_menu" data-menu-vertical="1" data-menu-scroll="1"
-      data-menu-dropdown-timeout="500" class="aside-menu my-4">
+      data-menu-dropdown-timeout="500" class="aside-menu">
       <ul class="menu-nav">
 
         <li aria-haspopup="true" data-menu-toggle="hover"

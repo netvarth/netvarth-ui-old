@@ -205,17 +205,17 @@
     <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
-            <i class="fa contact-help-icon"></i>
-            <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
-            <ng-template #text4>
-              <div>
-                We offer free support and we are always ready to help.<br>
-                <br>
-                Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
-                Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
+          <i class="fa contact-help-icon"></i>
+          <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
+          <ng-template #text4>
+            <div>
+              We offer free support and we are always ready to help.<br>
+              <br>
+              Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
+              Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
 
-              </div>
-            </ng-template>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -223,40 +223,101 @@
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
-            <i class="fa fa-envelope"></i>
-            <span class="label label-success"
-            *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
+          <i class="fa fa-envelope"></i>
+          <span class="label label-success" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
         </div>
       </div>
     </div>
 
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()">
-      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+      <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
+        (click)="actionPerformed('alert')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
-            <i class="fa fa-bell"></i>
-            <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
+          <i class="fa fa-bell"></i>
+          <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
         </div>
       </div>
+
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
+        [class.show]="action=='alert'">
+        <!--begin::Nav-->
+        <ul class="navi navi-hover">
+
+          <li class="navi-item" *ngFor="let alert of alerts">
+            <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
+              [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
+              class="justify-alert">
+              {{alert.text}} <i class="fa fa-thumbs-o-up alert-ack" [matTooltip]="'Acknowledge'"
+                *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
+            </p>
+          </li>
+          <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
+        </ul>
+        <!--end::Nav-->
+      </div>
+      <!--end::Dropdown-->
+
     </div>
-    
+
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()">
-      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+      <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
+        (click)="actionPerformed('license')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
 
-            <i class="icon-license"></i>
+          <i class="icon-license"></i>
 
         </div>
       </div>
+
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
+        [class.show]="action=='license'">
+        <!--begin::Nav-->
+        <ul class="navi navi-hover"
+          *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
+          <li class="header navi-item">
+            <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
+              style="color: red; width: 100%; text-align: left;">
+              Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
+              <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
+                  </b></span><span style="color: red"> to Upgrade License.</span></span>
+            </p>
+            <p style="width: 100%; text-align: left;"
+              *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+              Your current license is
+              <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span>
+              for more features.
+            </p>
+          </li>
+          <li class="navi-item"
+            *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+            <ul class="menu pointer-cursor">
+              <li>
+                <a (click)="upgradeMembership()">
+                  <h3 style="align-content: center">
+                    <span class="link"> <b> Upgrade license </b></span>
+                  </h3>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="footer">
+            <a class="pointer-cursor" routerLink="license">Go to license section</a>
+          </li>
+        </ul>
+      </div>
+
     </div>
 
 
-  
+
 
     <div class="dropdown pointer-cursor" (click)="userPopup()">
       <div id="kt_quick_user_toggle" class="topbar-item">
         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2">
           <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-          <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ (bname.length>15)?
+          <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ (bname?.length>15)?
             (bname | slice:0:15)+'...':bname }}</span><span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
             <span class="symbol-label font-size-h5 font-weight-bold">{{getUserFirstLetter()}}</span></span>
         </div>
@@ -286,8 +347,8 @@
     <div class="d-flex align-items-center mt-5">
       <div class="symbol symbol-100 mr-5">
         <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
-           <!-- <img [src]="blogo" class="img-circle pointer-cursor" alt=""> -->
-          </div>
+          <!-- <img [src]="blogo" class="img-circle pointer-cursor" alt=""> -->
+        </div>
         <i class="symbol-badge bg-success"
           *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
         <i class="symbol-badge bg-danger"
@@ -298,10 +359,10 @@
           {{bname}}
         </a>
         <div class="text-muted mt-1">
-          {{bsector}} 
+          {{bsector}}
         </div>
         <div class="text-muted sub-sec">
-         {{bsubsector}}
+          {{bsubsector}}
         </div>
         <div class="navi mt-2">
           <!-- <a class="navi-item">

@@ -30,6 +30,7 @@ export class BusinessComponent implements OnInit {
   contactInfo: any = [];
   profile: any = [];
   iswiz = false;
+  smallMenuSection = false;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -93,6 +94,9 @@ export class BusinessComponent implements OnInit {
           case 'hidemenus':
             this.iswiz = message.value;
             break;
+            case 'smallMenu':
+              this.smallMenuSection = message.value;
+              break;
       }
     });
   }
