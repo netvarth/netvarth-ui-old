@@ -142,7 +142,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="order-label mt-2" *ngIf="(s3CouponsList.length > 0)"><a (click)="applyPromocode()"
+                  <div class="order-label mt-2" *ngIf="(s3CouponsList.JC.length > 0||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
                     *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                   <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                       Promo code {{selected_coupons.toString()}} added, will be applicable in the final bill.</a>

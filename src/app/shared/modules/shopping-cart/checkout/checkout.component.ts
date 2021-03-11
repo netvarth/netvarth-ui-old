@@ -148,7 +148,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   queue;
   couponvalid = true;
   api_cp_error = null;
-  s3CouponsList: any = [];
+  s3CouponsList: any = {
+    JC:[],OWN:[]
+  };
   selected_coupons: any = [];
   couponsList: any = [];
   selected_coupon;
@@ -394,6 +396,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         res => {
           this.s3url = res;
           this.getbusinessprofiledetails_json('coupon', true);
+          this.getprovidercoupondetails_json('providerCoupon', true);
           this.api_loading1 = false;
         },
         () => {
@@ -408,9 +411,26 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
       .subscribe(res => {
-        this.s3CouponsList = res;
-        console.log(this.s3CouponsList);
-        if (this.s3CouponsList.length > 0) {
+        this.s3CouponsList.JC = res;
+        console.log(this.s3CouponsList.JC);
+        if (this.s3CouponsList.jaldeeCoupn.length > 0) {
+          this.showCouponWB = true;
+        }
+      },
+        () => {
+        }
+      );
+  }
+  getprovidercoupondetails_json(section, modDateReq: boolean) {
+    let UTCstring = null;
+    if (modDateReq) {
+      UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    }
+    this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+      .subscribe(res => {
+        this.s3CouponsList.OWN = res;
+        console.log(this.s3CouponsList.OWN);
+        if (this.s3CouponsList.OWN.length > 0) {
           this.showCouponWB = true;
         }
       },
@@ -452,17 +472,30 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.couponvalid = false;
       let found = false;
-      for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-        if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-          this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-          couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
-          couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
-          this.couponsList.push(couponInfo);
-          found = true;
-          this.selected_coupon = '';
-          break;
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
+        if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+            this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+            couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+            couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
+            this.couponsList.push(couponInfo);
+            found = true;
+            this.selected_coupon = '';
+            break;
         }
-      }
+    }
+    for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+        if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
+            this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+            couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+            if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+                couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+            }
+            this.couponsList.push(couponInfo);
+            found = true;
+            this.selected_coupon = '';
+            break;
+        }
+    }
       if (found) {
         this.couponvalid = true;
         this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
