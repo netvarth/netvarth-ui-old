@@ -207,7 +207,8 @@ export class ProviderLoginComponent implements OnInit {
     };
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-    this.shared_functions.clearSessionStorage();
+    // this.shared_functions.clearSessionStorage();
+    this.sessionStorageService.clearSessionStorage();
     this.shared_functions.businessLogin(post_data)
       .then(
         () => {

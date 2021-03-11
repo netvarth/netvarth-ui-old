@@ -197,7 +197,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
             if (this._checkSessionExpiryErr(error)) {
-              // const isprovider = localStorage.getItem('isBusinessOwner') === 'true';
+              // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
               //  this.shared_functions.doLogout().then (
               //    () => {
               //      this.router.navigate(['/']);

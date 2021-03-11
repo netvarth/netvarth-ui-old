@@ -153,7 +153,7 @@ export class HomeAppComponent implements OnInit, OnDestroy {
     const cVersion = version.desktop;
     this.api_loading = true;
     // if (this.data.type === 'provider') {
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.shared_functions.doLogout().then(
       ()=> {
         this.shared_functions.businessLogin(post_data)

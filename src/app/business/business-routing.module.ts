@@ -28,7 +28,6 @@ const routes: Routes = [
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuardLogin] },
       { path: 'change-mobile', component: ChangeMobileComponent, canActivate: [AuthGuardLogin] },
       { path: 'members', component: ProviderMembersComponent },
-      // { path: 'inbox', loadChildren: () => import('./modules/mailbox/mailbox.module').then(m => m.MailboxModule) },
       { path: 'inbox', component: InboxListComponent },
       { path: 'finance', loadChildren: () => import('./modules/learnmore/finance/finance.module').then(m => m.FinanceModule) },
       { path: 'foodJoints', loadChildren: () => import('./modules/learnmore/foodjoints/foodjoints.module').then(m => m.FoodjointsModule) },

@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 
 @Injectable({
     providedIn: 'root'
@@ -7,7 +8,7 @@ import { Injectable } from "@angular/core";
  * Handle Session Storage related actions
  */
 export class SessionStorageService {
-    constructor() {
+    constructor(@Inject(PLATFORM_ID) private platformId: Object) {
 
     }
     /**
@@ -16,15 +17,19 @@ export class SessionStorageService {
      * @param itemvalue 
      */
     public setitemOnSessionStorage(itemname, itemvalue) {
-        sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
+        if (isPlatformBrowser(this.platformId)) {
+            sessionStorage.setItem(itemname, JSON.stringify(itemvalue));
+        }
     }
     /**
      * Method to get an item from session storage
      * @param itemname 
      */
     public getitemfromSessionStorage(itemname) { // function to get local storage item value
-        if (sessionStorage.getItem(itemname) !== 'undefined') {
-            return JSON.parse(sessionStorage.getItem(itemname));
+        if (isPlatformBrowser(this.platformId)) {
+            if (sessionStorage.getItem(itemname) !== 'undefined') {
+                return JSON.parse(sessionStorage.getItem(itemname));
+            }
         }
     }
     /**

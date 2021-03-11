@@ -8,6 +8,7 @@ import { ProviderServices } from '../../../../ynw_provider/services/provider-ser
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -133,7 +134,8 @@ export class NewReportComponent implements OnInit {
     private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private lStorageService: LocalStorageService
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.report_type) {
@@ -915,7 +917,7 @@ export class NewReportComponent implements OnInit {
   }
   generatedReport(report) {
     this.setSelectedData().then(res => {
-      localStorage.setItem('report', JSON.stringify(report));
+      this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
       this.router.navigate(['provider', 'reports', 'generated-report']);
     },
     );

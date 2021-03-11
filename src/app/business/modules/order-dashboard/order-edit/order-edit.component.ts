@@ -176,7 +176,7 @@ export class OrderEditComponent implements OnInit, OnDestroy  {
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
-      this.orderList = JSON.parse(localStorage.getItem('order'));
+      this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
       console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.orderCount = this.orders.length;

@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProviderSettingsRoutingModule } from './provider-settings-routing.module';
 import { ProviderSettingsComponent } from './provider-settings.component';
-import { ProviderBprofileSearchComponent } from '../provider-bprofile-search/provider-bprofile-search.component';
 import { ProviderWaitlistComponent } from '../provider-waitlist/provider-waitlist.component';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 // import { CheckInModule } from '../../../shared/modules/check-in/check-in.module';
@@ -56,9 +55,7 @@ import { JoyrideModule } from 'ngx-joyride';
     ],
     declarations: [
         ProviderSettingsComponent,
-        ProviderBprofileSearchComponent,
         ProviderWaitlistComponent,
-
         AddProviderWaitlistLocationsComponent,
         // ProviderLicenseUsageComponent,
         AddProviderBprofilePrivacysettingsComponent,
