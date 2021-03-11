@@ -75,6 +75,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
   one_person_ahead = Messages.ONE_PERSON_AHEAD;
   jaldee_coupon = Messages.JALDEE_COUPON;
+  coupon=Messages.COUPONS_CAP;
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   get_token_cap = Messages.GET_FIRST_TOKEN;
   nextAvailDate;
@@ -2163,7 +2164,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           const arr = [
             new Promise((resolve, reject) => {
               let jc_coupons:any=[];
-              if(obj.fields.coupon_enabled!==0){
+              if(obj.fields.coupon_enabled && obj.fields.coupon_enabled!==0){
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'coupon', UTCstring)
                 .subscribe(couponsList => {
                   jc_coupons=couponsList;
@@ -2173,13 +2174,12 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   reject();
                 });
               }else{
-               // couponArray.splice(0,0, {'JC':jc_coupons});
-               return;
+                resolve(jc_coupons);
               }
             }),
             new Promise((resolve, reject) => {
               let own_coupons:any=[];
-              if(obj.fields.provider_coupon_enabled!==0){
+              if(obj.fields.provider_coupon_enabled &&obj.fields.provider_coupon_enabled!==0){
                 this.shared_service.getbusinessprofiledetails_json(s3id, s3url, 'providerCoupon', UTCstring)
                 .subscribe(couponsList => {
                   own_coupons=couponsList;
@@ -2190,8 +2190,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
                   reject();
                 });
               }else{
-               // couponArray.splice(0,1,{'OWN':own_coupons});
-               return;
+               resolve(own_coupons);
               }
             })
          ];
