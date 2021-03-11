@@ -20,7 +20,7 @@
                 <div class="wizard-step"  [class.tab-selected]="step>=1">
                   <div class="wizard-label">
                     <i class="wizard-icon text-dark-50 flaticon-user-add"></i>
-                    <h3 class="wizard-title">1. Find Patient</h3>
+                    <h3 class="wizard-title">1. Find {{customer_label |capitalizeFirst}}</h3>
                   </div>
                   <span class="svg-icon svg-icon-xl wizard-arrow">
                     <!--begin::Svg Icon | path:../../../../../../../../../../assets/media/svg/icons/Navigation/Arrow-right.svg-->
@@ -99,7 +99,7 @@
                 <!--begin::Wizard Step 1-->
                 <div class="pb-5" *ngIf="step == 1">
                   <form class="form" [formGroup]="searchForm">
-                    <h3 class="mb-10 font-weight-bold text-dark"> Find Customer </h3>
+                    <h3 class="mb-10 font-weight-bold text-dark"> Find {{customer_label |capitalizeFirst }} </h3>
                     <!--begin::Input-->
                     <div class="form-group disp-flex">
                       <input type="text" formControlName="search_input" class=" form-control1 form-control1-solid form-control1-lg" name="search"

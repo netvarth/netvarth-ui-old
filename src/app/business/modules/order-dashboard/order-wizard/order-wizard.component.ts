@@ -157,6 +157,7 @@ export class OrderWizardComponent implements OnInit {
   };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+  customer_label: any;
 
 
   constructor(private fb: FormBuilder,
@@ -221,6 +222,7 @@ export class OrderWizardComponent implements OnInit {
   }
   ngOnInit() {
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.createForm();
     this.getCatalog();
     this.gets3curl();
