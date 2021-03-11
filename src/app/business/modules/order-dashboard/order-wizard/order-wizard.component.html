@@ -567,31 +567,31 @@
                                   <div class="modal-body">
                                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes">
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
+                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                           Choose Date
-                                        </div>
-                                        <div class="pull-left brd-round brd-light mgn-up-20">
-                                          <div class="icon-minus pull-left" (click)="calculateDate(-1)">
-                                          </div>
-
-                                          <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                                          <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
-                                        </div>
-                                        <div class="pickerouter caldiv pull-left mgn-up-20">
-                                          <mat-datepicker-toggle matSuffix [for]="picker">
-                                          </mat-datepicker-toggle>
+                                        </div> -->
+                                        <div class="col-md-8 col-xs-12 col-sm-10 " >
+                                            <div class="lnk ">Choose Date</div>
+                                        <div class="pull-left brd-round brd-light mgn-up-10">
+                                          <span class="icon-minus pull-left mgn-up-10" (click)="calculateDate(-1)"></span>
+                                          <span class="pull-left  mgn-up-8 chkindt">&nbsp;{{sel_checkindate | date: dateFormat}}&nbsp;</span>
+                                          <span class="icon-add pull-left mgn-up-10" (click)="calculateDate(1)"></span>
+                                        <!-- </div>-->
+                                        <span class="datepicker"> 
+                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                           <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
                                           <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                                            </span>
                                         </div>
                                       </div>
+                                      </div>
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div>
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                                                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
+                                                                        <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
 
-
-                                                                          <div class="col-md-6 col-xs-12 col-sm-8 form-group" *ngIf="isfutureAvailableTime">
-
+                                                                          <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
+                                                                            <div class="lnk ">{{timings_title}} </div>
                                                                             <mat-chip-list class="">
                                                                               <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
                                                                               (click)="handleQueueSelection(queue, i)">
@@ -602,9 +602,10 @@
                                                                           </mat-chip-list>
                                                                           </div>
                                                                           <div  *ngIf="!isfutureAvailableTime">
+                                                                              <div class="lnk ">{{timings_title}} </div>
                                                                               <p>No timings are available</p>
                                                                             </div>
-                                                                        </div>
+                                                                        <!-- </div> -->
                                                                       </div>
 
                                     </div>

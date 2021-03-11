@@ -542,27 +542,27 @@
                                         </div>
                                       </div> -->
                                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}}
-                                                                           </div>
-                                                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20">{{timings_title}} </div> -->
+                                          <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20"> -->
 
-
-                                                                          <div class="col-md-6 col-xs-12 col-sm-8 form-group" *ngIf="isfutureAvailableTime">
-
-                                                                            <mat-chip-list class="">
-                                                                              <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                                                                              (click)="handleQueueSelection(queue, i)">
-                                                                              <!-- [selected]="queue(i) === nextAvailableTime"> -->
-                                                                                  {{queue['sTime'] + ' - ' +
-                                                                                  queue['eTime']}}
-                                                                              </mat-chip>
-                                                                          </mat-chip-list>
-                                                                          </div>
-                                                                          <div  *ngIf="!isfutureAvailableTime">
-                                                                              <p>No timings are available</p>
-                                                                            </div>
-                                                                        </div>
-                                                                      </div>
+                                            <div class="col-md-8 col-xs-12 col-sm-10 " *ngIf="isfutureAvailableTime">
+                                              <div class="lnk ">{{timings_title}} </div>
+                                              <mat-chip-list class="">
+                                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
+                                                (click)="handleQueueSelection(queue, i)">
+                                                <!-- [selected]="queue(i) === nextAvailableTime"> -->
+                                                    {{queue['sTime'] + ' - ' +
+                                                    queue['eTime']}}
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                            </div>
+                                            <div  *ngIf="!isfutureAvailableTime">
+                                                <div class="lnk ">{{timings_title}} </div>
+                                                <p>No timings are available</p>
+                                              </div>
+                                          <!-- </div> -->
+                                        </div>
+                                                                      
 
                                     </div>
 

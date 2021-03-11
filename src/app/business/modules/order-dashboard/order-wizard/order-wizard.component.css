@@ -98,8 +98,7 @@
     border-color: transparent!important;
     color:blue;
 }
-
-  /* .incr:hover{
-    color: #1e4079;
-    background-color: #f9e2a7;
-  } */
+.mat-icon-button .mat-button-wrapper>* {
+  vertical-align: unset!important;
+}
+  
