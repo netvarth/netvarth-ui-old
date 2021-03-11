@@ -146,10 +146,6 @@
   </nav>
 </header> -->
 
-
-
-
-
 <!--begin::Header Mobile-->
 <div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-black" *ngIf="!iswiz">
   <!--begin::Logo-->
@@ -157,42 +153,18 @@
     <img alt="Logo" src="assets/images/jaldee-businesslogo.png" style="    width: 120px;" />
   </a>
   <!--end::Logo-->
-
   <!--begin::Toolbar-->
   <div class="d-flex align-items-center">
     <!--begin::Header Menu Mobile Toggle-->
     <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle" (click)="showMenu()">
       <span></span>
     </button>
-    <!--end::Header Menu Mobile Toggle-->
-
-    <!--begin::Topbar Mobile Toggle-->
-    <!-- <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle" (click)="showTopMenu()">
-      <span class="svg-icon svg-icon-xl">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <polygon points="0 0 24 0 24 24 0 24" />
-            <path
-              d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-              fill="#000000" fill-rule="nonzero" opacity="0.3" />
-            <path
-              d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-              fill="#000000" fill-rule="nonzero" />
-          </g>
-        </svg>
-      </span> </button> -->
-    <!--end::Topbar Mobile Toggle-->
   </div>
   <!--end::Toolbar-->
 </div>
 <!--end::Header Mobile-->
-
-
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
-
   <div class="topbar topbar-mobile-on">
-
     <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
@@ -204,13 +176,11 @@
               <br>
               Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
               Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
-
             </div>
           </ng-template>
         </div>
       </div>
     </div>
-
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
@@ -219,7 +189,6 @@
         </div>
       </div>
     </div>
-
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('alert')">
@@ -228,13 +197,11 @@
           <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
         </div>
       </div>
-
       <!--begin::Dropdown-->
       <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
         [class.show]="action=='alert'">
         <!--begin::Nav-->
         <ul class="navi navi-hover">
-
           <li class="navi-item" *ngFor="let alert of alerts">
             <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
               [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
@@ -248,19 +215,14 @@
         <!--end::Nav-->
       </div>
       <!--end::Dropdown-->
-
     </div>
-
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('license')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
-
           <i class="icon-license"></i>
-
         </div>
       </div>
-
       <!--begin::Dropdown-->
       <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
         [class.show]="action=='license'">
@@ -283,21 +245,16 @@
           </li>
           <li class="upgrade-license"
             *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
-                <a (click)="upgradeMembership()">
-                    <span class="link"> <b> Upgrade license </b></span>
-                </a>
+            <a (click)="upgradeMembership()">
+              <span class="link"> <b> Upgrade license </b></span>
+            </a>
           </li>
           <li class="footer">
             <a class="pointer-cursor" routerLink="license">Go to license section</a>
           </li>
         </ul>
       </div>
-
     </div>
-
-
-
-
     <div class="dropdown pointer-cursor" (click)="userPopup()">
       <div id="kt_quick_user_toggle" class="topbar-item">
         <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2">
@@ -310,7 +267,6 @@
     </div>
   </div>
 </div>
-
 <!-- offcanvas-on -->
 <!-- begin::User Panel-->
 <div id="kt_quick_user" class="offcanvas offcanvas-right p-10" [class.offcanvas-on]="showUserSection">
@@ -325,7 +281,6 @@
     </a>
   </div>
   <!--end::Header-->
-
   <!--begin::Content-->
   <div class="offcanvas-content pr-5 mr-n5">
     <!--begin::Header-->
@@ -350,24 +305,15 @@
           {{bsubsector}}
         </div>
         <div class="navi mt-2">
-          <!-- <a class="navi-item">
+          <span class="navi-item">
             <span class="navi-link p-0 pb-2">
               <span class="navi-icon mr-1">
                 <span class="svg-icon svg-icon-lg svg-icon-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                    height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <rect x="0" y="0" width="24" height="24" />
-                      <path
-                        d="M21,12.0829584 C20.6747915,12.0283988 20.3407122,12 20,12 C16.6862915,12 14,14.6862915 14,18 C14,18.3407122 14.0283988,18.6747915 14.0829584,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,8 C3,6.8954305 3.8954305,6 5,6 L19,6 C20.1045695,6 21,6.8954305 21,8 L21,12.0829584 Z M18.1444251,7.83964668 L12,11.1481833 L5.85557487,7.83964668 C5.4908718,7.6432681 5.03602525,7.77972206 4.83964668,8.14442513 C4.6432681,8.5091282 4.77972206,8.96397475 5.14442513,9.16035332 L11.6444251,12.6603533 C11.8664074,12.7798822 12.1335926,12.7798822 12.3555749,12.6603533 L18.8555749,9.16035332 C19.2202779,8.96397475 19.3567319,8.5091282 19.1603533,8.14442513 C18.9639747,7.77972206 18.5091282,7.6432681 18.1444251,7.83964668 Z"
-                        fill="#000000" />
-                      <circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5" />
-                    </g>
-                  </svg>
+                  <i class="fa fa-mobile" aria-hidden="true"></i>
                 </span> </span>
-              <span class="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+              <span class="navi-text text-muted"> {{phoneNumber}}</span>
             </span>
-          </a> -->
+          </span>
           <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" (click)="doLogout()">Sign Out</a>
         </div>
       </div>
@@ -405,7 +351,6 @@
           </div>
         </div>
       </a>
-
       <a (click)="userPopup();gotoSettings()" class="navi-item">
         <div class="navi-link">
           <div class="symbol symbol-40 bg-light mr-3">
@@ -426,7 +371,6 @@
         </div>
       </a>
     </div>
-
   </div>
   <!--end::Content-->
 </div>

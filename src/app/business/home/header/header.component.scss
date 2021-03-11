@@ -10,7 +10,6 @@
 @media (max-width: 991px) {
     .topbar-mobile-on {
         margin-top: 55px;
-        // box-shadow: 0px 5px 5px 0px #d3d3d3 !important;
         z-index: 1001 !important;
     }
 }
@@ -65,7 +64,7 @@
 .p-10 {
     padding: 2.5rem !important;
 }
-.fa-gears {
+.fa-gears, .fa-mobile {
     color: #1e4079 !important;
 }
 .fa-thumbs-up {
@@ -82,6 +81,3 @@
     text-align: center !important;
     padding: 10px !important;
 }
-// .mgn-rt-auto {
-//     margin-right: auto
-// }

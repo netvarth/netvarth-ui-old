@@ -54,6 +54,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   showUserSection = false;
   showMenuSection = false;
   action = '';
+  phoneNumber = '';
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -97,9 +98,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'unreadCount':
           this.inboxUnreadCnt = message.unreadCount;
           break;
-          case 'showmenu':
-            this.showMenuSection = message.value;
-            break;
+        case 'showmenu':
+          this.showMenuSection = message.value;
+          break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
@@ -289,6 +290,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   setLicense() {
     const cuser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.phoneNumber = cuser.primaryPhoneNumber;
     this.accountType = cuser.accountType;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {

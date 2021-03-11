@@ -113,9 +113,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
           break;
-          case 'showmenu':
-            this.showMenu = message.value;
-            break;
+        case 'showmenu':
+          this.showMenu = message.value;
+          break;
       }
       this.getBusinessdetFromLocalstorage();
     });
