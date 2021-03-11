@@ -7,7 +7,7 @@
 </section>
 
 <section>
-    <div class="content settings">
+    <div class="content settings pro-settings-list">
         <div class="row">
             <div class="col-md-12 no-padding">
 
@@ -37,6 +37,8 @@
 
                                     </ng-template>
                                 </div>
+
+                                <div class="head-hint">{{frm_profile_cap}}</div>
                                 <!-- <div joyrideStep="step1" title="Jaldee Online"
                                   text="Use Jaldee Online to set up your basic account and list your services in Jaldee.com">
                               </div> -->
@@ -46,9 +48,9 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a>{{frm_profile_cap}}</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('bprofile')">
                                     <a class="pointer-cursor">
 
@@ -228,6 +230,9 @@
 
                                     </ng-template>
                                 </div>
+                                <div class="head-hint">Virtual queue system . Provide
+                                    tokens. {{custs_name | capitalizeFirst}} will receive
+                                    real-time alerts.</div>
                                 <!-- <div joyrideStep="step2" title="Do you issue tokens to your customers?" text="
 
                               Use Jaldee QManager to add your services."></div> -->
@@ -236,11 +241,11 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-2">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Virtual queue</strong> system . Provide
                                         <strong>tokens</strong>. {{custs_name | capitalizeFirst}} will receive
                                         <strong>real-time alerts</strong>.</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('waitlistmanager')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">QManager
@@ -350,6 +355,8 @@
                                         </div>
                                     </ng-template>
                                 </div>
+                                <div class="head-hint">Appointment booking system .Take appointments .
+                                Set time slots for your consultations .</div>
                                 <!-- <div joyrideStep="step3"
                                   title="Do you fix appointments or take bookings with your customers?" text="
 
@@ -360,10 +367,10 @@
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Appointment booking </strong>system . <strong>Take appointments .
                                         </strong><strong>Set time slots</strong> for your consultations .</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('appointmentmanager')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Appointment Manager
@@ -457,13 +464,14 @@
                                 [matTooltipClass]="tooltipcls" [matTooltip]="ordermanagertooltip">
                                 Jaldee Order Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Order management system , receive and manage orders</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-3">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a>Order management system , receive and manage orders </a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('ordermanager')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Order Manager
@@ -520,14 +528,15 @@
                             <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="general">Features and Customization
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Customize your Jaldee account with these additional features.</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-1">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Customize</strong> your Jaldee account with these additional features.
                                     </a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('locations')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{locName}}
@@ -584,12 +593,12 @@
                                         <p class="settings_info">The days you are <strong>closed</strong>.</p>
                                     </a>
                                 </li>
-                                <li (click)="redirecTo('skins')">
+                                <!-- <li (click)="redirecTo('skins')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Themes</span>
                                         <p class="settings_info">Set a theme for your dashboard.</p>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('labels')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{customfields_cap}}</span>
@@ -683,13 +692,14 @@
                             <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="billposTooltip">Jaldee Billing
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Give bills for your service.</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Give</strong> bills for your service.</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('pos')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Billing
@@ -745,13 +755,14 @@
                                 [matTooltip]="payments">
                                 Jaldee Pay
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Accept {{frm_msg_jaldeepay}}</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Accept</strong> {{frm_msg_jaldeepay}}</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('payments')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Jaldee Pay
@@ -800,13 +811,14 @@
                             <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Collect Donations.</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked  set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Collect</strong> Donations.</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('donationmanager')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Accept Donations
@@ -846,13 +858,14 @@
                                 [matTooltip]="comm">
                                 Communications And Notifications
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Configure your notifications.</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Configure</strong> your notifications.</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('comm')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">Teleservice
@@ -895,13 +908,14 @@
                             <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">Offer {{frm_mis_cap}}</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a><strong>Offer</strong> {{frm_mis_cap}}</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('saleschannel')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{saleschannel_cap}}</span>
@@ -972,13 +986,14 @@
                                 [matTooltip]="customers">
                                 {{cust_domain_name |capitalizeFirst}}s
                                 <i class="fa fa-gears fl-right lnk"></i>
+                                <div class="head-hint">{{cust_domain_name |capitalizeFirst}} ID customization.</div>
                             </h4>
                         </div>
                         <div class="box-footer no-padding">
                             <ul class="nav nav-stacked set-block-4">
-                                <li class="form-level-settings">
+                                <!-- <li class="form-level-settings">
                                     <a>{{cust_domain_name |capitalizeFirst}} ID customization.</a>
-                                </li>
+                                </li> -->
                                 <li (click)="redirecTo('custid')">
                                     <a class="pointer-cursor">
                                         <span class="lnk setings">{{cust_domain_name |capitalizeFirst}} Id Format
