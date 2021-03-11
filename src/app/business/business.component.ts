@@ -201,7 +201,7 @@ export class BusinessComponent implements OnInit {
       .then(
         data => {
           bProfile = data;
-          if (!localStorage.getItem('newProvider')) {
+          if (!this.lStorageService.getitemfromLocalStorage('newProvider')) {
             this.getAccountContactInfo();
           }
           this.groupService.setitemToGroupStorage('accountId', bProfile.id);

@@ -325,8 +325,9 @@ export class PhomeComponent implements OnInit {
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     // this.api_loading = true;
 
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
-    this.shared_functions.clearSessionStorage();
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+    // this.shared_functions.clearSessionStorage();
+    this.sessionStorageService.clearSessionStorage();
     this.shared_functions.providerLogin(post_data)
       .then(
         () => {

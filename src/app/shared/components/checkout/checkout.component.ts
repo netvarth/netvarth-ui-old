@@ -138,7 +138,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.linear = false;
-    this.orderList = JSON.parse(localStorage.getItem('order'));
+    this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
     this.catlogArry();
@@ -396,7 +396,7 @@ export class CheckoutSharedComponent implements OnInit, OnDestroy {
   confirmOrder(post_Data) {
     this.shared_services.CreateConsumerOrder(this.account_id, post_Data)
       .subscribe(data => {
-        localStorage.removeItem('order');
+        this.lStorageService.removeitemfromLocalStorage('order');
         const retData = data;
         let prepayAmount;
         const uuidList = [];

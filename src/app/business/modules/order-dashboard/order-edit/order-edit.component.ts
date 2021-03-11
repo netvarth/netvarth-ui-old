@@ -149,7 +149,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     private location: Location,
     private shared_services: SharedServices,
     private dialog: MatDialog,
-    public providerservice: ProviderServices,
+        public providerservice: ProviderServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService,
     public fed_service: FormMessageDisplayService,

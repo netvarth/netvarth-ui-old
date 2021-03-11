@@ -241,7 +241,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
 
     this.linear = false;
-    this.orderList = JSON.parse(localStorage.getItem('order'));
+    this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     if (this.orderList) {
       console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];

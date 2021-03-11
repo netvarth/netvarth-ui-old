@@ -12,6 +12,7 @@ import { ProviderDataStorageService } from '../../ynw_provider/services/provider
 import { ProviderServices } from '../../ynw_provider/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { SessionStorageService } from '../services/session-storage.service';
 @Injectable()
 
 export class SharedFunctions {
@@ -25,7 +26,8 @@ export class SharedFunctions {
     public dateformat: DateFormatPipe,
     private providerDataStorage: ProviderDataStorageService,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private sessionStorageService: SessionStorageService
   ) { }
 
   logout() {
@@ -58,7 +60,7 @@ export class SharedFunctions {
 
   doLogout() {
     const promise = new Promise<void>((resolve, reject) => {
-      if (localStorage.getItem('isBusinessOwner') === 'true') {
+      if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
         this.providerLogout()
           .then(
             data => {
@@ -80,8 +82,9 @@ export class SharedFunctions {
     const promise = new Promise<void>((resolve, reject) => {
       this.shared_service.ConsumerLogout()
         .subscribe(data => {
-          this.clearLocalstorage();
-          this.clearSessionStorage();
+          this.lStorageService.clearLocalstorage();
+          this.sessionStorageService.clearSessionStorage();
+          // this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -97,8 +100,9 @@ export class SharedFunctions {
       this.shared_service.ProviderLogout()
         .subscribe(data => {
           this.providerDataStorage.setWeightageArray([]);
-          this.clearLocalstorage();
-          this.clearSessionStorage();
+          this.lStorageService.clearLocalstorage();
+          this.sessionStorageService.clearSessionStorage();
+          // this.clearSessionStorage();
           resolve();
         },
           error => {
@@ -109,7 +113,7 @@ export class SharedFunctions {
     return promise;
   }
   consumerLogin(post_data, moreParams?) {
-    post_data.mUniqueId = localStorage.getItem('mUniqueId');
+    post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
       this.shared_service.ConsumerLogin(post_data)
@@ -151,7 +155,7 @@ export class SharedFunctions {
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);
-            localStorage.setItem('popupShown', 'false');
+            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
           },
@@ -177,7 +181,7 @@ export class SharedFunctions {
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);
-            localStorage.setItem('popupShown', 'false');
+            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
             this.setLoginData(data, post_data, 'provider');
             resolve(data);
             this.router.navigate(['/provider']);
@@ -225,42 +229,32 @@ export class SharedFunctions {
   }
 
   public setLoginData(data, post_data, mod) {
-    // localStorage.setItem('ynw-user', JSON.stringify(data));
+    // this.lStorageService.setitemonLocalStorage('ynw-user', JSON.stringify(data));
     this.groupService.setitemToGroupStorage('ynw-user', data);
-    localStorage.setItem('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+    this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
     if (mod === 'provider') {
     }
     delete post_data['password'];
-    localStorage.setItem('ynw-credentials', JSON.stringify(post_data));
+    this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
   }
-
-  public clearLocalstorage() {
-    this.lStorageService.removeitemfromLocalStorage('ynw-credentials');
-    for (let index = 0; index < localStorage.length; index++) {
-      if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-        localStorage.removeItem(localStorage.key(index));
-        index = index - 1; // manage index after remove
-      }
-    }
-  }
-  public clearSessionStorage() {
-    for (let index = 0; index < sessionStorage.length; index++) {
-      sessionStorage.removeItem(sessionStorage.key(index));
-      index = index - 1; // manage index after remove
-    }
-  }
+  // public clearSessionStorage() {
+  //   for (let index = 0; index < sessionStorage.length; index++) {
+  //     sessionStorage.removeItem(sessionStorage.key(index));
+  //     index = index - 1; // manage index after remove
+  //   }
+  // }
   public checkLogin() {
-    const login = (localStorage.getItem('ynw-credentials')) ? true : false;
+    const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
   }
 
   public isBusinessOwner(passtyp?) {
     let is_business_owner;
-    if (localStorage.getItem('isBusinessOwner')) {
+    if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
       if (passtyp === 'returntyp') {
-        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
       } else {
-        is_business_owner = (localStorage.getItem('isBusinessOwner') === 'true') ? true : false;
+        is_business_owner = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? true : false;
       }
     } else {
       if (passtyp === 'returntyp') {
@@ -362,13 +356,13 @@ export class SharedFunctions {
 
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('s3Url')) {
-        resolve(localStorage.getItem('s3Url'));
+      if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+        resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
       } else {
         this.shared_service.gets3url(src)
           .subscribe(
             data => {
-              localStorage.setItem('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data.toString());
               resolve(data);
             },
             error => {
@@ -381,13 +375,13 @@ export class SharedFunctions {
 
   getCloudUrl() {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('cloudUrl')) {
-        resolve(localStorage.getItem('cloudUrl'));
+      if (this.lStorageService.getitemfromLocalStorage('cloudUrl')) {
+        resolve(this.lStorageService.getitemfromLocalStorage('cloudUrl'));
       } else {
         this.shared_service.getCloudUrl()
           .subscribe(
             data => {
-              localStorage.setItem('cloudUrl', data.toString());
+              this.lStorageService.setitemonLocalStorage('cloudUrl', data.toString());
               resolve(data);
             },
             error => {

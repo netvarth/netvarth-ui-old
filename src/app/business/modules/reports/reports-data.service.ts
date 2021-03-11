@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
 
@@ -16,7 +17,7 @@ export class ReportDataService {
   private reportData = new BehaviorSubject<any>({});
   _reports = this.reportData.asObservable();
   criteriaInput: any = {};
-  constructor() { }
+  constructor(private lStorageService: LocalStorageService) { }
 
   updatedServiceDataSelection(data) {
     this.serviceDataSource.next(data);
@@ -37,7 +38,7 @@ export class ReportDataService {
   }
 
   getReport() {
-    return JSON.parse(localStorage.getItem('report'));
+    return JSON.parse(this.lStorageService.getitemfromLocalStorage('report'));
   }
 
   setReportCriteriaInput(data) {

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { LocalStorageService } from "./local-storage.service";
 import { SessionStorageService } from "./session-storage.service";
 
 @Injectable({
@@ -6,7 +7,7 @@ import { SessionStorageService } from "./session-storage.service";
 })
 
 export class GroupStorageService {
-    constructor(private sessionStorageService: SessionStorageService) {}
+    constructor(private sessionStorageService: SessionStorageService, private lStorageService: LocalStorageService) {}
 
     public getGroup() {
         if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
@@ -19,15 +20,15 @@ export class GroupStorageService {
       public setitemToGroupStorage(itemname, itemvalue) {
         const group = this.getGroup();
         let groupObj = {};
-        if (localStorage.getItem(group)) {
-          groupObj = JSON.parse(localStorage.getItem(group));
+        if (this.lStorageService.getitemfromLocalStorage(group)) {
+          groupObj = JSON.parse(this.lStorageService.getitemfromLocalStorage(group));
           if (groupObj) {
             groupObj[itemname] = itemvalue;
           }
         } else {
           groupObj[itemname] = itemvalue;
         }
-        localStorage.setItem(group, JSON.stringify(groupObj));
+        this.lStorageService.setitemonLocalStorage(group, JSON.stringify(groupObj));
       }
       public getitemFromGroupStorage(itemname, type?) {
         let group;
@@ -36,8 +37,8 @@ export class GroupStorageService {
         } else {
           group = this.getGroup();
         }
-        if (localStorage.getItem(group)) {
-          const groupObj = JSON.parse(localStorage.getItem(group));
+        if (this.lStorageService.getitemfromLocalStorage(group)) {
+          const groupObj = JSON.parse(this.lStorageService.getitemfromLocalStorage(group));
           if (groupObj[itemname] || (itemname === 'isCheckin' && groupObj[itemname] !== undefined)) {
             return groupObj[itemname];
           }
@@ -45,10 +46,10 @@ export class GroupStorageService {
       }
       public removeitemFromGroupStorage(itemname) {
         const group = this.getGroup();
-        const groupObj = JSON.parse(localStorage.getItem(group));
+        const groupObj = JSON.parse(this.lStorageService.getitemfromLocalStorage(group));
         if (groupObj[itemname]) {
           delete groupObj[itemname];
-          localStorage.setItem(group, JSON.stringify(groupObj));
+          this.lStorageService.setitemonLocalStorage(group, JSON.stringify(groupObj));
         }
       }
 }

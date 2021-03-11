@@ -194,8 +194,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
     if (this.data.type === 'provider') {
-      post_data.mUniqueId = localStorage.getItem('mUniqueId');
-      this.shared_functions.clearSessionStorage();
+      post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+      // this.shared_functions.clearSessionStorage();
+      this.sessionStorageService.clearSessionStorage();
       this.shared_functions.providerLogin(post_data)
         .then(
           () => {
@@ -218,7 +219,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-        post_data.mUniqueId = localStorage.getItem('mUniqueId');
+        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         this.shared_functions.consumerLogin(post_data, this.moreParams)
           .then(
             () => {

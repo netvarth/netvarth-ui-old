@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { LocalStorageService } from './local-storage.service';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
 @Injectable()
@@ -8,7 +9,7 @@ export class SharedServices {
   accountId: any;
   orderdata: any;
   licenseMetrics: any = [];
-  constructor(private servicemeta: ServiceMeta) {
+  constructor(private servicemeta: ServiceMeta, private lStorageService: LocalStorageService) {
   }
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
@@ -841,13 +842,13 @@ export class SharedServices {
   }
   getS3Url(src?) {
     const promise = new Promise((resolve, reject) => {
-      if (localStorage.getItem('s3Url')) {
-        resolve(localStorage.getItem('s3Url'));
+      if (this.lStorageService.getitemfromLocalStorage('s3Url')) {
+        resolve(this.lStorageService.getitemfromLocalStorage('s3Url'));
       } else {
         this.gets3url(src)
           .subscribe(
             data => {
-              localStorage.setItem('s3Url', data.toString());
+              this.lStorageService.setitemonLocalStorage('s3Url', data.toString());
               resolve(data);
             },
             error => {

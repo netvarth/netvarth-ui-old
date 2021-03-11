@@ -127,7 +127,7 @@ export class ItemDetailsComponent implements OnInit {
     private router: Router ) { }
 
   ngOnInit() {
-    const orderList = JSON.parse(localStorage.getItem('order'));
+    const orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     if (orderList) {
       this.orderList = orderList;
     }

@@ -25,13 +25,13 @@ export class OrderItemsComponent implements OnInit {
     private shared_services: SharedServices,
     public sharedFunctionobj: SharedFunctions,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService,
+    private lStorageService: LocalStorageService
   ) { }
 
   ngOnInit() {
     const cuser = this.groupService.getitemFromGroupStorage('accountId');
     this.account_id = cuser;
-    this.orderList = JSON.parse(localStorage.getItem('order'));
+    this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
     console.log(this.orderList);
     this.fetchCatalog();
   }

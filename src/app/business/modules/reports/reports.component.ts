@@ -7,6 +7,7 @@ import { CriteriaDialogComponent } from './generated-report/criteria-dialog/crit
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-reports',
@@ -33,7 +34,8 @@ export class ReportsComponent implements OnInit {
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private lStorageService: LocalStorageService) {
     this.report_dataService.updateCustomers('All');
     this.report_dataService.updatedQueueDataSelection('All');
     this.report_dataService.updatedScheduleDataSelection('All');
@@ -162,7 +164,7 @@ export class ReportsComponent implements OnInit {
 
   }
   generatedReport(report) {
-      localStorage.setItem('report', JSON.stringify(report));
+      this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
       this.router.navigate(['provider', 'reports', 'generated-report'], { queryParams: { reportRecreate: 'recreateReport' } });
   }
 }

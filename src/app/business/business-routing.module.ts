@@ -60,5 +60,4 @@ const routes: Routes = [
 })
 
 export class BusinessRoutingModule {
-
 }
