@@ -473,7 +473,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.s3url = res;
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
-          // this.getbusinessprofiledetails_json('coupon', true);
+           this.getbusinessprofiledetails_json('coupon', true);
+           this.getbusinessprofiledetails_json('providerCoupon', true);
           // this.getbusinessprofiledetails_json('jaldeediscount', true);
           this.getbusinessprofiledetails_json('businessProfile', true);
           if (this.userId) {
@@ -711,8 +712,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.terminologiesjson = res;
             break;
           }
+       
           case 'coupon': {
-            this.s3CouponList = res;
+            this.s3CouponList.push({'JC':res});
+           // this.s3CouponList = res;
+            this.firstChckinCuponCunt(this.s3CouponList);
+            break;
+          }
+          case 'providerCoupon': {
+            this.s3CouponList.push({'OWN':res});
+           // this.s3CouponList = res;
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
@@ -1862,7 +1871,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   handlepanelOpen() {
     this.virtualsectionHeader = 'Click here to hide details';
   }
-  openCoupons(type) {
+  openCoupons(type?) {
     this.coupondialogRef = this.dialog.open(CouponsComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],

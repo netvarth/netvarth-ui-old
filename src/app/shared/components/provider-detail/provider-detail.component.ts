@@ -484,6 +484,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
           this.getbusinessprofiledetails_json('coupon', true);
+          this.getbusinessprofiledetails_json('providerCoupon', true);
           // this.getbusinessprofiledetails_json('jaldeediscount', true);
           if (this.userId) {
             this.getUserbusinessprofiledetails_json('providerBusinessProfile', this.userId, true);
@@ -733,7 +734,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'coupon': {
-            this.s3CouponList = res;
+            this.s3CouponList.push({'JC':res});
+           // this.s3CouponList = res;
+            this.firstChckinCuponCunt(this.s3CouponList);
+            break;
+          }
+          case 'providerCoupon': {
+            this.s3CouponList.push({'OWN':res});
+           // this.s3CouponList = res;
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }

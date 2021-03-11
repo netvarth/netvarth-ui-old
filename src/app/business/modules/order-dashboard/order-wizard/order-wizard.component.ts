@@ -82,6 +82,7 @@ export class OrderWizardComponent implements OnInit {
   server_date;
   minDate;
   choose_type: string;
+  timings_title:string;
   disabledConfirmbtn: boolean;
   orders: any;
   order_count = 0;
@@ -445,6 +446,7 @@ export class OrderWizardComponent implements OnInit {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
+            this.timings_title="Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -455,6 +457,7 @@ export class OrderWizardComponent implements OnInit {
 
             if (!this.store_pickup) {
               this.choose_type = 'home';
+              this.timings_title="Delivery Timings";
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -885,12 +888,14 @@ export class OrderWizardComponent implements OnInit {
       this.store_pickup = true;
       this.choose_type = 'store';
       this.storeChecked = true;
+      this.timings_title="Pickup Timings";
       this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
+      this.timings_title="Delivery timings";
       this.storeChecked = false;
       this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
