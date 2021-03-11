@@ -193,7 +193,7 @@
                     <div class="row">
                       <div class="col-xl-12">
                         <div class="form-group">
-                          <label>Applicable Timings</label>
+                          <label>Applicable Days</label>
                           <div *ngFor="let wday of weekdays; index as i">
                             <mat-checkbox class="example-margin" *ngIf="i>0" (change)="handleDaychange(i)"
                               [checked]="check_existsinweek_array(selday_arr,i) >= 0">{{wday}}
