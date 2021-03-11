@@ -14074,6 +14074,9 @@ width: 40px !important;
   color: black !important;
   height: 120px !important;
 }
+.pro-settings-list .widget-user-header h4 {
+  text-decoration: none !important;
+ }
 .pro-settings-list .box-footer {
   padding: 0 1.5rem !important;
 }
