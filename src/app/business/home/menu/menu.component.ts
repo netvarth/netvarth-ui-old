@@ -13,7 +13,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class MenuComponent implements OnInit, OnDestroy {
   accountType;
@@ -35,6 +35,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   donationstatus: any;
   count = 0;
   orderstatus;
+  minimizeMenu = false;
+  showMenu = false;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -110,6 +112,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
+          break;
+        case 'showmenu':
+          this.showMenu = message.value;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -239,5 +244,17 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
       this.orderstatus = data.enableOrder;
     });
+  }
+
+  minimizeSideBar() {
+    this.minimizeMenu = !this.minimizeMenu;
+    this.shared_functions.sendMessage({ ttype: 'smallMenu', value: this.minimizeMenu });
+  }
+  gotoActiveHome() {
+    this.router.navigate(['provider', 'check-ins']);
+  }
+  showMenuSection() {
+    this.showMenu = false;
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenu });
   }
 }

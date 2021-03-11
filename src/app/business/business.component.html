@@ -1,9 +1,11 @@
-<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;">
-    <app-header></app-header>
+<div class="wrapper b-home {{activeSkin}}" style="height: auto; min-height: 100%;background: white;">
     <app-menu></app-menu>
-    <div class="content-wrapper cont-outer" [class.loading-style]="apiloading">
-        <router-outlet *ngIf="!apiloading"></router-outlet>
-        <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+    <div id="kt_header" class="header header-fixed" [class.no-padding]="iswiz" [class.mgn-lt-70]="smallMenuSection">
+        <app-header></app-header>
+        <div class="body-section" [class.loading-style]="apiloading" (click)="showMenu()">
+            <router-outlet *ngIf="!apiloading"></router-outlet>
+            <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
+        </div>
+        <app-footernew></app-footernew>
     </div>
-    <app-footernew></app-footernew>
 </div>

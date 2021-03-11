@@ -1,4 +1,4 @@
-<header class="main-header jaldee-header">
+<!-- <header class="main-header jaldee-header">
   <a (click)="gotoActiveHome()" class="logo hidden-xs pointer-cursor">
     <span class="logo-mini"><img src="assets/images/home/logo-business.png" alt="Jaldee"></span>
     <span class="logo-lg"><img src="assets/images/jaldee-businesslogo.png" alt="Jaldee"></span>
@@ -144,4 +144,235 @@
       </ul>
     </div>
   </nav>
-</header>
+</header> -->
+
+<!--begin::Header Mobile-->
+<div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed bg-black" *ngIf="!iswiz">
+  <!--begin::Logo-->
+  <a (click)="gotoActiveHome()">
+    <img alt="Logo" src="assets/images/jaldee-businesslogo.png" style="    width: 120px;" />
+  </a>
+  <!--end::Logo-->
+  <!--begin::Toolbar-->
+  <div class="d-flex align-items-center">
+    <!--begin::Header Menu Mobile Toggle-->
+    <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle" (click)="showMenu()">
+      <span></span>
+    </button>
+  </div>
+  <!--end::Toolbar-->
+</div>
+<!--end::Header Mobile-->
+<div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
+  <div class="topbar topbar-mobile-on">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+          <i class="fa contact-help-icon"></i>
+          <div joyrideStep="step4" title="Reach Out To Us" [stepContent]="text4"></div>
+          <ng-template #text4>
+            <div>
+              We offer free support and we are always ready to help.<br>
+              <br>
+              Call us at- <span style="color: white;"><b>+91 888-012-5000</b></span><br>
+              Email us at- <span style="color: white;"><b>support@jaldee.com</b></span>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()">
+      <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+          <i class="fa fa-envelope"></i>
+          <span class="label label-success" *ngIf="inboxCntFetched==true && inboxUnreadCnt>0">{{inboxUnreadCnt}}</span>
+        </div>
+      </div>
+    </div>
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()">
+      <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
+        (click)="actionPerformed('alert')">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+          <i class="fa fa-bell"></i>
+          <span class="label label-warning" *ngIf="alertCnt > 0">{{alertCnt}}</span>
+        </div>
+      </div>
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
+        [class.show]="action=='alert'">
+        <!--begin::Nav-->
+        <ul class="navi navi-hover">
+          <li class="navi-item" *ngFor="let alert of alerts">
+            <p [class.info]="alert.severity.name=='Info'" [class.warning]="alert.severity.name=='Warning'"
+              [class.high]="alert.severity.name=='High'" [class.error]="alert.severity.name=='Critical'"
+              class="justify-alert">
+              {{alert.text}} <i class="fa fa-thumbs-up alert-ack" [matTooltip]="'Acknowledge'"
+                *ngIf="alert.ackStatus==false && alert.ackRequired==true" (click)="alertAcknowlege(alert)"></i>
+            </p>
+          </li>
+          <li class="footer"><a href="#" routerLink="alerts">Go to Alerts</a></li>
+        </ul>
+        <!--end::Nav-->
+      </div>
+      <!--end::Dropdown-->
+    </div>
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()">
+      <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
+        (click)="actionPerformed('license')">
+        <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
+          <i class="icon-license"></i>
+        </div>
+      </div>
+      <!--begin::Dropdown-->
+      <div class="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right"
+        [class.show]="action=='license'">
+        <!--begin::Nav-->
+        <ul class="navi navi-hover"
+          *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=6">
+          <li class="header navi-item">
+            <p *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId==9 && license_message != ''"
+              style="color: red; width: 100%; text-align: left;">
+              Your {{licenseDetails.accountLicense.displayName}} license package will expire {{license_message}}.
+              <span style="color: #00aef2"> <span (click)="upgradeMembership()" class="pointer-cursor"><b>Click here
+                  </b></span><span style="color: red"> to Upgrade License.</span></span>
+            </p>
+            <p style="width: 100%; text-align: left;"
+              *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+              Your current license is
+              <i style="color:red">{{licenseDetails.accountLicense.displayName}}.</i><span> Upgrade license </span>
+              for more features.
+            </p>
+          </li>
+          <li class="upgrade-license"
+            *ngIf="licenseDetails && licenseDetails.accountLicense && licenseDetails.accountLicense.licPkgOrAddonId!=9">
+            <a (click)="upgradeMembership()">
+              <span class="link"> <b> Upgrade license </b></span>
+            </a>
+          </li>
+          <li class="footer">
+            <a class="pointer-cursor" routerLink="license">Go to license section</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="dropdown pointer-cursor" (click)="userPopup()">
+      <div id="kt_quick_user_toggle" class="topbar-item">
+        <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2">
+          <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
+          <span class="bname font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ (bname?.length>15)?
+            (bname | slice:0:15)+'...':bname }}</span><span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
+            <span class="symbol-label font-size-h5 font-weight-bold">{{getUserFirstLetter()}}</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- offcanvas-on -->
+<!-- begin::User Panel-->
+<div id="kt_quick_user" class="offcanvas offcanvas-right p-10" [class.offcanvas-on]="showUserSection">
+  <!--begin::Header-->
+  <div class="offcanvas-header d-flex align-items-center justify-content-between pb-5">
+    <h3 class="font-weight-bold m-0">
+      User Profile
+      <!-- <small class="text-muted font-size-sm ml-2">12 messages</small> -->
+    </h3>
+    <a (click)="userPopup()" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_user_close">
+      <i class="ki ki-close icon-xs text-muted"></i>
+    </a>
+  </div>
+  <!--end::Header-->
+  <!--begin::Content-->
+  <div class="offcanvas-content pr-5 mr-n5">
+    <!--begin::Header-->
+    <div class="d-flex align-items-center mt-5">
+      <div class="symbol symbol-100 mr-5">
+        <div class="symbol-label" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}">
+          <!-- <img [src]="blogo" class="img-circle pointer-cursor" alt=""> -->
+        </div>
+        <i class="symbol-badge bg-success"
+          *ngIf="(qAvailability && qAvailability.availableNow) || (scheduleAvailability && scheduleAvailability.availableNow)"></i>
+        <i class="symbol-badge bg-danger"
+          *ngIf="qAvailability && !qAvailability.availableNow && !qAvailability.timeRange && scheduleAvailability && !scheduleAvailability.availableNow && !scheduleAvailability.timeRange"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <a class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary" (click)="userPopup();gotoProfile()">
+          {{bname}}
+        </a>
+        <div class="text-muted mt-1">
+          {{bsector}}
+        </div>
+        <div class="text-muted sub-sec">
+          {{bsubsector}}
+        </div>
+        <div class="navi mt-2">
+          <!-- <span class="navi-item">
+            <span class="navi-link p-0 pb-2">
+              <span class="navi-icon mr-1">
+                <span class="svg-icon svg-icon-lg svg-icon-primary">
+                  <i class="fa fa-mobile" aria-hidden="true"></i>
+                </span> </span>
+              <span class="navi-text text-muted"> {{phoneNumber}}</span>
+            </span>
+          </span> -->
+          <a class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5" (click)="doLogout()">Sign Out</a>
+        </div>
+      </div>
+    </div>
+    <!--end::Header-->
+    <div class="separator separator-dashed mt-8 mb-5"></div>
+    <div class="navi navi-spacer-x-0 p-0">
+      <a (click)="userPopup();gotoProfile()" class="navi-item">
+        <div class="navi-link">
+          <div class="symbol symbol-40 bg-light mr-3">
+            <div class="symbol-label">
+              <span class="svg-icon svg-icon-md svg-icon-success">
+                <!--begin::Svg Icon | path:assets/media/svg/icons/General/Notification2.svg--><svg
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                  height="24px" viewBox="0 0 24 24" version="1.1">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect x="0" y="0" width="24" height="24"></rect>
+                    <path
+                      d="M13.2070325,4 C13.0721672,4.47683179 13,4.97998812 13,5.5 C13,8.53756612 15.4624339,11 18.5,11 C19.0200119,11 19.5231682,10.9278328 20,10.7929675 L20,17 C20,18.6568542 18.6568542,20 17,20 L7,20 C5.34314575,20 4,18.6568542 4,17 L4,7 C4,5.34314575 5.34314575,4 7,4 L13.2070325,4 Z"
+                      fill="#000000"></path>
+                    <circle fill="#000000" opacity="0.3" cx="18.5" cy="5.5" r="2.5"></circle>
+                  </g>
+                </svg>
+                <!--end::Svg Icon-->
+              </span>
+            </div>
+          </div>
+          <div class="navi-text">
+            <div class="font-weight-bold">
+              My Account
+            </div>
+            <div class="text-muted">
+              Account settings and more
+            </div>
+          </div>
+        </div>
+      </a>
+      <a (click)="userPopup();gotoSettings()" class="navi-item">
+        <div class="navi-link">
+          <div class="symbol symbol-40 bg-light mr-3">
+            <div class="symbol-label">
+              <span class="svg-icon svg-icon-md svg-icon-success">
+                <i class="fa fa-gears"></i>
+              </span>
+            </div>
+          </div>
+          <div class="navi-text">
+            <div class="font-weight-bold">
+              Settings
+            </div>
+            <div class="text-muted">
+              Account settings and more
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <!--end::Content-->
+</div>
+<div class="offcanvas-overlay" *ngIf="showUserSection"></div>
+<!-- end::User Panel-->

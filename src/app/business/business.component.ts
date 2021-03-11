@@ -29,6 +29,8 @@ export class BusinessComponent implements OnInit {
   subscription: Subscription;
   contactInfo: any = [];
   profile: any = [];
+  iswiz = false;
+  smallMenuSection = false;
   constructor(router: Router,
     public route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -41,8 +43,8 @@ export class BusinessComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private titleService: Title ) {
-      this.titleService.setTitle('Jaldee Business');
+    private titleService: Title) {
+    this.titleService.setTitle('Jaldee Business');
     router.events.subscribe(
       (event: RouterEvent): void => {
         this._navigationInterceptor(event);
@@ -88,6 +90,12 @@ export class BusinessComponent implements OnInit {
         case 'skin':
           this.activeSkin = message.selectedSkin;
           this.lStorageService.setitemonLocalStorage('activeSkin', this.activeSkin);
+          break;
+        case 'hidemenus':
+          this.iswiz = message.value;
+          break;
+        case 'smallMenu':
+          this.smallMenuSection = message.value;
           break;
       }
     });
@@ -242,5 +250,8 @@ export class BusinessComponent implements OnInit {
     this.provider_services.getLicenseMetadata().subscribe(data => {
       this.lStorageService.setitemonLocalStorage('license-metadata', data);
     });
+  }
+  showMenu() {
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: false });
   }
 }

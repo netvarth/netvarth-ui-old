@@ -23,7 +23,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class BusinessHeaderComponent implements OnInit, OnDestroy {
   accountType;
@@ -51,6 +51,10 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   myData: any;
   scheduleAvailability;
   licenseDetails;
+  showUserSection = false;
+  showMenuSection = false;
+  action = '';
+  phoneNumber = '';
   constructor(public shared_functions: SharedFunctions,
     public router: Router,
     private sessionStorageService: SessionStorageService,
@@ -93,6 +97,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           break;
         case 'unreadCount':
           this.inboxUnreadCnt = message.unreadCount;
+          break;
+        case 'showmenu':
+          this.showMenuSection = message.value;
           break;
       }
       this.getBusinessdetFromLocalstorage();
@@ -157,7 +164,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       }
 
     });
-   // this.router.navigate(['provider', 'settings']);
+    // this.router.navigate(['provider', 'settings']);
 
   }
   gotoActiveHome() {
@@ -201,7 +208,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       .then(
         () => {
           this.provider_dataStorage.setWeightageArray([]);
-            this.titleService.setTitle('Jaldee');
+          this.titleService.setTitle('Jaldee');
           this.router.navigate(['/home']);
         },
         () => {
@@ -283,6 +290,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   setLicense() {
     const cuser = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.phoneNumber = cuser.primaryPhoneNumber;
     this.accountType = cuser.accountType;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
     if (cuser && usertype === 'provider') {
@@ -419,6 +427,29 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
       width: '25%',
       panelClass: ['commonpopupmainclass', 'popup-class']
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
+  }
+  userPopup() {
+    this.showUserSection = !this.showUserSection;
+  }
+  getUserFirstLetter() {
+    if (this.bname) {
+      const name = this.bname.split(' ');
+      return name[0].charAt(0);
+    }
+  }
+  showMenu() {
+    this.showMenuSection = !this.showMenuSection;
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenuSection });
+  }
+  actionPerformed(action) {
+    if (this.action === action) {
+      this.action = '';
+    } else {
+      this.action = action;
+    }
+  }
+  gotoSettings() {
+    this.router.navigate(['provider', 'settings']);
   }
 }

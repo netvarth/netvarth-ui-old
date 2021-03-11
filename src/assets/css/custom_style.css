@@ -5737,7 +5737,7 @@ li.separator.setsplit {
 
 .alert-ack {
   float: right;
-  margin-top: 5px;
+  /* margin-top: 5px; */
   color: #41c389;
   cursor: pointer;
 }
@@ -6480,7 +6480,7 @@ li.separator.setsplit {
 }
 
 .bg-blue {
-  background-color: #3c8dbc !important;
+  background-color: #1e4079 !important
 }
 
 .direct-chat-info {
@@ -9234,7 +9234,7 @@ owl-carousel .bt3.active {
 }
 
 .widget-user-2 .widget-user-header, .widget-user-2 .widget-user-header {
-  padding: 10px !important;
+  /* padding: 10px !important; */
 }
 
 .settings_info {
@@ -14037,4 +14037,55 @@ width: 40px !important;
 }
 .quest-answ-box {
   margin-bottom: 20px;
+}
+.header-fixed {
+  margin-left: 265px;
+  display: block;    
+  height: 65px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 97;
+}
+@media (max-width: 991px) {
+  .header-fixed {
+    margin-left: 0px !important;
+  }
+  .body-section {
+    margin-top: 50px;
+  }
+}
+.body-section {
+  overflow-y: auto;
+  height: 85vh;
+  background: #f0efef;
+  overflow-x: hidden;
+}
+.mgn-lt-70 {
+  margin-left: 70px !important;
+}
+.progress-bar {
+  background: #1e4079 !important;
+}
+.pro-settings-list .widget-user-header {
+  padding: 2rem 2.25rem !important;
+  background: white !important;
+  color: black !important;
+  height: 120px !important;
+}
+.pro-settings-list .box-footer {
+  padding: 0 1.5rem !important;
+}
+.pro-settings-list .widget-user-header .head-hint {
+  font-size: 0.9rem !important;
+  color: #B5B5C3 !important;
+  font-weight: 500 !important;
+  margin-top: 10px !important;
+}
+.pro-settings-list .widget-user-header h4{
+  font-size: 20px !important;
+}
+.pro-settings-list .box {
+  box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 5%) !important;
 }
