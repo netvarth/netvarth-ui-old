@@ -78,6 +78,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   totaltax = 0;
   // choose_type = 'store';
   choose_type;
+  timings_title:string;
   advance_amount: any;
   account_id: any;
   storeChecked = true;
@@ -442,6 +443,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
             this.choose_type = 'store';
+            this.timings_title="Pickup Timings";
             this.sel_checkindate = this.catalog_details.nextAvailablePickUpDetails.availableDate;
             this.nextAvailableTime = this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
           }
@@ -452,6 +454,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
             if (!this.store_pickup) {
               this.choose_type = 'home';
+              this.timings_title="Delivery Timings";
               this.deliveryCharge = this.catalog_details.homeDelivery.deliveryCharge;
               this.sel_checkindate = this.catalog_details.nextAvailableDeliveryDetails.availableDate;
               this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
@@ -691,12 +694,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.selectedAddress = this.orderDetails.homeDeliveryAddress;
 
   }
-  addAddress() {
-
-  }
-  updateAddress(address, index) {
-
-  }
+  
 
   getItemImg(item) {
     if (item.itemImages) {
@@ -821,6 +819,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     if (event.value === 'store') {
       this.store_pickup = true;
       this.choose_type = 'store';
+      this.timings_title="Pickup Timings";
       this.storeChecked = true;
       if (this.orderDetails.storePickup) {
         this.sel_checkindate = this.orderDetails.orderDate;
@@ -833,6 +832,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     } else {
       this.home_delivery = true;
       this.choose_type = 'home';
+      this.timings_title="Delivery Timings";
       this.storeChecked = false;
       if (this.orderDetails.homeDelivery) {
         this.sel_checkindate = this.orderDetails.orderDate;

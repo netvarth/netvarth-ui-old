@@ -48,7 +48,7 @@ export class PublishCouponComponent implements OnInit {
     return new Promise((resolve) => {
       _this.provider_services.getProviderCoupons(couponId).subscribe(
         (result: any) => {
-     
+         this.coupon = result;
           resolve(result);
         });
     });
