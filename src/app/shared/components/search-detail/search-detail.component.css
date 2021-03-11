@@ -211,6 +211,18 @@
   padding-top: 10px;
 }
 
+.rating-stars-padding {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+@media (max-width: 375px){
+  .rating-stars-padding {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
 .bus-page .gal {
   font-weight: 500 !important;
 }
@@ -575,7 +587,8 @@ ul.bus-actions-horiz li {
 
 .bus-title-content .address h6 {
   line-height: normal !important;
-  margin-bottom: 15px !important;
+  /* margin-bottom: 15px !important; */
+  margin-bottom: 0px !important;
 }
 
 .bus-title-content .address h6 a {
@@ -589,7 +602,8 @@ ul.bus-actions-horiz li {
 
 @media (max-width: 575px) {
   .bus-title-content .address h6 {
-    margin-bottom: 10px !important;
+    /* margin-bottom: 10px !important; */
+    margin-bottom: 0px !important;
   }
 
   .bus-title-content .address h6 a {
@@ -599,7 +613,8 @@ ul.bus-actions-horiz li {
 
 @media (max-width: 375px) {
   .bus-title-content .address h6 {
-    margin-bottom: 6px !important;
+    /* margin-bottom: 6px !important; */
+    margin-bottom: 0px !important;
   }
   .bus-title-content .address h6 a {
     font-size: 0.775rem !important;
@@ -733,7 +748,7 @@ ul.bus-actions-horiz li {
   }
 }
 
-.bus-title-content .jdn-image {
+.jdn-image {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -741,45 +756,45 @@ ul.bus-actions-horiz li {
   height: 50px !important;
 }
 
-.bus-title-content .jdn-image img {
+.jdn-image img {
   width: 45px !important;
   height: 45px !important;
 }
 
-.bus-title-content .verification-level img {
+.verification-level img {
   width: 50px !important;
   height: 50px !important;
 }
 
 @media (max-width: 575px) {
-  .bus-title-content .jdn-image {
+  .jdn-image {
     width: 29px !important;
     height: 29px !important;
   }
 
-  .bus-title-content .jdn-image img {
+  .jdn-image img {
     width: 25px !important;
     height: 25px !important;
   }
 
-  .bus-title-content .verification-level img {
+  .verification-level img {
     width: 30px !important;
     height: 30px !important;
   }
 }
 
 @media (max-width: 375px) {
-  .bus-title-content .jdn-image {
+  .jdn-image {
     width: 25px !important;
     height: 25px !important;
   }
 
-  .bus-title-content .jdn-image img {
+  .jdn-image img {
     width: 20px !important;
     height: 20px !important;
   }
 
-  .bus-title-content .verification-level img {
+  .verification-level img {
     width: 25px !important;
     height: 25px !important;
   }
@@ -1042,6 +1057,27 @@ ul.bus-actions-horiz li {
     font-size: 0.775rem !important;
     margin-left: 0px !important;
   }
+}
+
+.no-image {
+  height: 146px;
+}
+
+@media (max-width: 575px) {
+  .no-image {
+    height: 94px;
+  }
+}
+
+@media (max-width: 375px) {
+  .no-image {
+    height: 84px;
+  }
+}
+
+.no-logo {
+  width: 0;
+  overflow: hidden;
 }
 
 /* (min-width: 576px) and */
