@@ -8,7 +8,7 @@
     </div>
 </section>
 
-<section>
+<!-- <section>
     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
     <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12" *ngIf="!loading">
         <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12 no-padding">
@@ -35,6 +35,132 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
+</section> -->
+
+<section>
+    <div class="mt-5 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20">
+        <mat-grid-list cols="{{no_of_grids}}" rowHeight="350px" [gutterSize]="'30px'">
+            <mat-grid-tile class="grid_tile" *ngFor="let social of orgsocial_list;let i=index">
+                <mat-grid-tile-header style="height: 95px;" class="mt-3">
+                    <div class="ico_bdr" [class]="social.iconClass">
+                    </div>
+                </mat-grid-tile-header>
+                <div class="mt-9 p-2">
+                    <div class="txt_center">
+                        {{social.displayName}}</div>
+                    <div class="form-group mb-3"><input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" type="text"
+                        class="form-control mgn-up-10" placeholder="Insert link"></div>
+                    <div style="font-size: 0.7rem;text-align: center;">
+                        Get more bookings with {{social.displayName}}.<br>
+                        Link your {{social.displayName}} Business Page with Jaldee.
+                    </div>
+                </div>
+                <mat-grid-tile-footer class="bdr_top">
+                    <div class="wdth_50" *ngIf="showDelete(social.key)"><button (click)="deleteSocialmedia(social.key)" type="button" class="btn btn-light-danger btn-square px-3 py-1"> Delete </button></div>
+                    <div class="wdth_50">
+                        <button style="float: right;"  type="button" class="btn btn-light-success px-3 py-1 btn-square" *ngIf="showSave[i] && socialLink[i] && !hide_save_btn" (click)="saveSocial(social.key, socialLink[i])"> Save </button>
+                    </div>
+                </mat-grid-tile-footer>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
+
+
+    <!-- <div>
+        <div class=" container ">
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10">
+                <div class="row">
+                    <div class="card card-custom gutter-b mr-1 card-stretch col-lg-3 col-md-4 col-sm-4 col-xs-12"
+                        *ngFor="let social of orgsocial_list;let i=index">
+                        <div class="card-body text-center  p-0">
+                            <div class="d-flex justify-content-end" *ngIf="showDelete(social.key)">
+                                <div class="dropdown dropdown-inline" data-placement="left">
+                                    <a class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="ki ki-bold-more-hor"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                        <ul class="navi navi-hover py-5">
+                                            <li class="navi-item">
+                                                <a class="navi-link">
+                                                    <span class="navi-icon"><i class="flaticon2-drop"></i></span>
+                                                    <span class="navi-text"
+                                                        (click)="deleteSocialmedia(social.key)">Delete</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-7">
+                                <div class="symbol symbol-circle symbol-lg-75">
+                                    <span [class]="social.iconClass"></span>
+                                </div>
+                            </div>
+                            <div class="my-2">
+                                <div style="font-size: 10px;">Add your {{social.displayName}} page URL to your Jaldee
+                                    page.</div>
+                            </div>
+                            <div class="form-group">
+                                <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" type="text"
+                                    class="form-control1 mgn-up-10" placeholder="Insert link">
+                                <span> <button *ngIf="showSave[i] && socialLink[i]"
+                                        (click)="saveSocial(social.key, socialLink[i])"
+                                        class="cs-btn bt3 mgn-up-10">Save</button>
+                                </span>
+                            </div>
+
+                            <div class="mgn-up-10" style="font-size: 10px;">
+                                <span>Get more bookings with {{social.displayName}}.</span><br>
+                                <span>Link your {{social.displayName}} Business Page with Jaldee.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!--end::Col-->
+
+
+    <!-- <div class="card socialmedia col-lg-12 col-md-9 col-xs-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+            <div class="social-box" *ngFor="let social of orgsocial_list;let i=index">
+                <div class="col-lg-3 col-md-3 no-padding col-xs-2 col-sm-3">
+                    <span [class]="social.iconClass"></span>
+                </div>
+                <div class="col-lg-9 col-md-9 col-xs-10 col-sm-9 input-sec">
+                    <div style="font-size: 10px;">Add your {{social.displayName}} page URL to your Jaldee page.</div>
+                    <div class="disp-flex ynw-common-form-nm no-padding form-group">
+                        <mat-form-field>
+                            <input [(ngModel)]="socialLink[i]" (input)="keyPressed(i)" matInput type="text" class="form-control mgn-up-10"
+                              placeholder="Insert link">
+                          </mat-form-field>
+                    <button class="fxmenu" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="showDelete(social.key)">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #appMenu="matMenu">
+                        <button mat-menu-item
+                            (click)="deleteSocialmedia(social.key)">
+                            <i class="fa fa-trash"></i>Delete</button>
+                    </mat-menu>
+                </div>
+                <div class="mgn-up-10" style="font-size: 10px;">
+                    <span>Get more bookings with {{social.displayName}}.</span><br>
+                    <span>Link your {{social.displayName}} Business Page with Jaldee.</span>
+                </div>
+                
+                    <button *ngIf="showSave[i] && socialLink[i]" (click)="saveSocial(social.key, socialLink[i])"
+                        class="cs-btn bt3 pull-right mgn-up-10">Save</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
     <div class="clearfix"></div>
 </section>
 
