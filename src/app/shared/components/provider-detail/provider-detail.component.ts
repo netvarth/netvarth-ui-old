@@ -191,7 +191,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   extChecindialogRef;
   servicedialogRef;
   s3CouponList :any= {
-  
+  JC:[],OWN:[]
   };
  //  s3CouponList: any[] =[{'JC':[]}],[{'OWN':[]}];
   isfirstCheckinOffer;
@@ -1829,12 +1829,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   firstChckinCuponCunt(CouponList) {
     for (let index = 0; index < CouponList.JC.length; index++) {
-      if (CouponList[index].firstCheckinOnly === true) {
+      if (CouponList.JC[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }
     for (let index = 0; index < CouponList.OWN.length; index++) {
-      if (CouponList[index].firstCheckinOnly === true) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }

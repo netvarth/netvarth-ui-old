@@ -199,7 +199,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList :any;
+  s3CouponList :any={
+    JC:[],OWN:[]
+  };
   isfirstCheckinOffer;
   server_date;
   isCheckinEnabled = true;

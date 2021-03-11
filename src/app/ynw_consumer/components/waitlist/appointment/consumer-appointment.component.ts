@@ -137,7 +137,9 @@ export class ConsumerAppointmentComponent implements OnInit {
     data;
     provider_id: any;
     isfirstCheckinOffer: any;
-    s3CouponsList: any = [];
+    s3CouponsList: any = {
+        JC: [], OWN: []
+    };
     appointmentSettings: any = [];
     subscription: Subscription;
     showCouponWB: boolean;
@@ -1081,6 +1083,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                     this.getbusinessprofiledetails_json('settings', true);
                     this.getbusinessprofiledetails_json('departmentProviders', true);
                     this.getbusinessprofiledetails_json('coupon', true);
+                    this.getbusinessprofiledetails_json('providerCoupon', true);
                     this.getbusinessprofiledetails_json('appointmentsettings', true);
                     if (!this.terminologiesjson) {
                         this.getbusinessprofiledetails_json('terminologies', true);
@@ -1132,8 +1135,14 @@ export class ConsumerAppointmentComponent implements OnInit {
                         this.getPartysizeDetails(this.businessjson.serviceSector.domain, this.businessjson.serviceSubSector.subDomain);
                         break;
                     case 'coupon':
-                        this.s3CouponsList = res;
-                        if (this.s3CouponsList.length > 0) {
+                        this.s3CouponsList.JC = res;
+                        if (this.s3CouponsList.JC.length > 0) {
+                            this.showCouponWB = true;
+                        }
+                        break;
+                    case 'providerCoupon':
+                        this.s3CouponsList.OWN = res;
+                        if (this.s3CouponsList.OWN.length > 0) {
                             this.showCouponWB = true;
                         }
                         break;
@@ -1201,17 +1210,31 @@ export class ConsumerAppointmentComponent implements OnInit {
             }
             this.couponvalid = false;
             let found = false;
-            for (let couponIndex = 0; couponIndex < this.s3CouponsList.length; couponIndex++) {
-                if (this.s3CouponsList[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-                    this.selected_coupons.push(this.s3CouponsList[couponIndex].jaldeeCouponCode);
-                    couponInfo.couponCode = this.s3CouponsList[couponIndex].jaldeeCouponCode;
-                    couponInfo.instructions = this.s3CouponsList[couponIndex].consumerTermsAndconditions;
+            for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
+                if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
+                    this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+                    couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+                    couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
                     this.couponsList.push(couponInfo);
                     found = true;
                     this.selected_coupon = '';
                     break;
                 }
             }
+            for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+                if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
+                    this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+                    couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+                    if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+                        couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+                    }
+                    this.couponsList.push(couponInfo);
+                    found = true;
+                    this.selected_coupon = '';
+                    break;
+                }
+            }
+
             if (found) {
                 this.couponvalid = true;
                 this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
