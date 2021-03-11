@@ -29,6 +29,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import * as $ from 'jquery';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 
+
 @Component({
   selector: 'app-provider-detail',
   templateUrl: './provider-detail.component.html',
@@ -78,6 +79,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   get_token_btn = Messages.GET_TOKEN;
   people_ahead = Messages.PEOPLE_AHEAD_CAP;
   jaldee_coupon = Messages.JALDEE_COUPON;
+  coupon=Messages.COUPONS_CAP;
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   history_cap = Messages.HISTORY_CAP;
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
@@ -188,7 +190,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList: any = [];
+  s3CouponList = [
+    { JC: [] },
+    { OWN: [] }
+  ];
+ //  s3CouponList: any[] =[{'JC':[]}],[{'OWN':[]}];
   isfirstCheckinOffer;
   server_date;
   isCheckinEnabled = true;
@@ -300,6 +306,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
+    // this.s3CouponList=new Array[2];
   }
   ngOnInit() {
     this.api_loading = true;
@@ -479,7 +486,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   gets3curl() {
     this.retval = this.sharedFunctionobj.getS3Url('provider')
       .then(
-        res => {
+        (res:any) => {
           this.s3url = res;
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -510,7 +517,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
+      .subscribe((res :any)=> {
         switch (section) {
           case 'businessProfile': {
             this.onlinePresence = res['onlinePresence'];
@@ -734,14 +741,16 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
             break;
           }
           case 'coupon': {
-            this.s3CouponList.push({'JC':res});
-           // this.s3CouponList = res;
+            if(res!==undefined){
+              this.s3CouponList[0].JC=res;
+            }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
-            this.s3CouponList.push({'OWN':res});
-           // this.s3CouponList = res;
+            if(res!==undefined){
+              this.s3CouponList[1].OWN=res;
+            }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
@@ -1816,7 +1825,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList.length; index++) {
+    for (let index = 0; index < CouponList[0].JC.length; index++) {
+      if (CouponList[index].firstCheckinOnly === true) {
+        this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+      }
+    }
+    for (let index = 0; index < CouponList[1].OWN.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }

@@ -76,6 +76,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   get_token_btn = Messages.GET_TOKEN;
   people_ahead = Messages.PEOPLE_AHEAD_CAP;
   jaldee_coupon = Messages.JALDEE_COUPON;
+  coupon=Messages.COUPONS_CAP;
   first_time_coupon = Messages.FIRST_TIME_COUPON;
   history_cap = Messages.HISTORY_CAP;
   no_people_ahead = Messages.NO_PEOPLE_AHEAD;
@@ -198,7 +199,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList: any = [];
+  s3CouponList = [
+    { JC: [] },
+    { OWN: [] }
+  ];
   isfirstCheckinOffer;
   server_date;
   isCheckinEnabled = true;
@@ -469,7 +473,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   gets3curl() {
     this.retval = this.sharedFunctionobj.getS3Url('provider')
       .then(
-        res => {
+        (res:any)=> {
           this.s3url = res;
           this.getbusinessprofiledetails_json('settings', true);
           this.getbusinessprofiledetails_json('terminologies', true);
@@ -506,7 +510,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-      .subscribe(res => {
+      .subscribe((res:any) => {
         switch (section) {
           case 'businessProfile': {
             this.onlinePresence = res['onlinePresence'];
@@ -714,14 +718,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
        
           case 'coupon': {
-            this.s3CouponList.push({'JC':res});
-           // this.s3CouponList = res;
+            if(res!==undefined){
+              this.s3CouponList[0].JC=res;
+            }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
-            this.s3CouponList.push({'OWN':res});
-           // this.s3CouponList = res;
+            if(res!==undefined){
+              this.s3CouponList[1].OWN=res;
+            }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
@@ -1886,7 +1892,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList.length; index++) {
+    for (let index = 0; index < CouponList[0].JC.length; index++) {
+      if (CouponList[index].firstCheckinOnly === true) {
+        this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
+      }
+    }
+    for (let index = 0; index < CouponList[1].OWN.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }

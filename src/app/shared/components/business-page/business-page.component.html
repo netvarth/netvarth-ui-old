@@ -141,15 +141,15 @@
                             </ul>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-                            <ul class="bus-actions bus-actions-horiz no-padding">
-                                <li *ngIf="s3CouponList.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
-                                        class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
-                                        (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
-                                <li *ngIf="s3CouponList.length>0"><i class="fa fa-tag blue"></i><span
-                                        class="more_less icon-jal-coupon pointer-cursor"
-                                        (click)="openCoupons()">{{jaldee_coupon}}</span></li>
-                            </ul>
-                        </div>
+                                <ul class="bus-actions bus-actions-horiz no-padding">
+                                    <li *ngIf=" s3CouponList[0].JC.length>0||s3CouponList[1].OWN.length>0 && isfirstCheckinOffer && frstChckinCupnCunt>0"><i
+                                            class="more_less fa fa-tag red"></i><span class="icon-first-coup pointer-cursor"
+                                            (click)="openCoupons('first')">{{first_time_coupon}}</span></li>
+                                    <li *ngIf="s3CouponList[0].JC.length>0||s3CouponList[1].OWN.length>0 "><i class="fa fa-tag blue"></i><span
+                                            class="more_less icon-jal-coupon pointer-cursor"
+                                            (click)="openCoupons()">{{coupon}}</span></li>
+                                </ul>
+                            </div>
                         <div class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm">
                             <ul class="bus-actions no-padding mgn-up-10" *ngIf="settings_exists && business_exists">
                                 <!-- <li *ngIf="!isInFav && !userId">
