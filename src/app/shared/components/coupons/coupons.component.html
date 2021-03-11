@@ -71,8 +71,8 @@
             </div>
             <div class="outer4">
               <div class="coupon_validity">
-                <span class="expire">Valid Through: {{formatDateDisplay(coupon.startDate)}} -
-                  {{formatDateDisplay(coupon.endDate)}}</span>
+                <span class="expire">Valid Through: {{formatDateDisplay(coupon.couponRules.startDate)}} -
+                  {{formatDateDisplay(coupon.couponRules.endDate)}}</span>
               </div>
               <!-- <div class="tnc" *ngIf="coupon.consumerTermsAndconditions">
                 <ng-container>
