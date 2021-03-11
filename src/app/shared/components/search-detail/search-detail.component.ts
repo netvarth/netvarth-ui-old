@@ -2152,7 +2152,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     });
   }
   openCoupons(obj, type?) {
-    const couponArray=[];
+    const couponObject:any={};
     this.btn_clicked = true;
     const s3id = obj.fields.unique_id;
     // const busname = obj.fields.title;
@@ -2195,15 +2195,16 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
             })
          ];
          Promise.all([arr[0], arr[1]]).then((resp) => {
-           couponArray.push({'JC':resp[0]});
-           couponArray.push({'OWN':resp[1]});
+          couponObject.JC=resp[0];
+          couponObject.OWN=resp[1];
+           
      
           this.coupondialogRef = this.dialog.open(CouponsComponent, {
             width: '60%',
             panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
             disableClose: true,
             data: {
-              couponsList: couponArray,
+              couponsList: couponObject,
               type: type
             }
           });

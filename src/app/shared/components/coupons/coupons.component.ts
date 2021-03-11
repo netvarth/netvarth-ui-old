@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CouponsComponent implements OnInit {
   couponsList: any = [];
-  type;
+  type=false;
   tempCouponList: any = [];
   providerCouponList: any=[];
   ownCoupons: any = [] ;
@@ -18,11 +18,14 @@ export class CouponsComponent implements OnInit {
   }
   ngOnInit() {
     console.log(this.data);
-    if (this.data.couponsList[0]) {
-      this.tempCouponList = this.data.couponsList[0].JC;
+    console.log(JSON.stringify(this.data.couponsList));
+    if (this.data.couponsList.JC) {
+      this.tempCouponList = this.data.couponsList.JC;
+      console.log(JSON.stringify( this.tempCouponList));
     }
-    if (this.data.couponsList[1]) {
-      this.ownCoupons = this.data.couponsList[1].OWN;
+    if (this.data.couponsList.OWN) {
+      this.ownCoupons = this.data.couponsList.OWN;
+      console.log(JSON.stringify(this.ownCoupons));
     }
     if (this.data.type) {
       this.type = this.data.type;
@@ -32,7 +35,7 @@ export class CouponsComponent implements OnInit {
   showCoupons() {
     this.couponsList = [];
     this.providerCouponList = [];
-    if (this.data.couponsList[0]) {
+
       for (let index = 0; index < this.tempCouponList.length; index++) {
         if (this.type) {
           if (this.tempCouponList[index].firstCheckinOnly === true) {
@@ -44,19 +47,20 @@ export class CouponsComponent implements OnInit {
           }
         }
       }
-    }
-    if (this.data.couponsList[1]) {
+    
+
     for (let index = 0; index < this.ownCoupons.length; index++) {
       if (this.type) {
-        if (this.ownCoupons[index].firstCheckinOnly === true) {
+        if (this.ownCoupons[index].couponRules.firstCheckinOnly === true) {
           this.providerCouponList.push(this.ownCoupons[index]);
         }
       } else {
-        if (this.ownCoupons[index].firstCheckinOnly === false) {
+        if (this.ownCoupons[index].couponRules.firstCheckinOnly === false) {
           this.providerCouponList.push(this.ownCoupons[index]);
+          console.log(this.providerCouponList);
         }
       }
-    }
+    
   }
     console.log(this.couponsList);
     console.log(this.providerCouponList);

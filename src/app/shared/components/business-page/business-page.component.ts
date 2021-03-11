@@ -199,10 +199,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList = [
-    { JC: [] },
-    { OWN: [] }
-  ];
+  s3CouponList :any;
   isfirstCheckinOffer;
   server_date;
   isCheckinEnabled = true;
@@ -719,14 +716,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
        
           case 'coupon': {
             if(res!==undefined){
-              this.s3CouponList[0].JC=res;
+              this.s3CouponList.JC=res;
+            }
+            else{
+              this.s3CouponList.JC=[];
+
             }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
             if(res!==undefined){
-              this.s3CouponList[1].OWN=res;
+              this.s3CouponList.OWN=res;
+            }else{
+              this.s3CouponList.OWN=[];
+
             }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
@@ -1892,13 +1896,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList[0].JC.length; index++) {
-      if (CouponList[index].firstCheckinOnly === true) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
+      if (CouponList.JC[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }
-    for (let index = 0; index < CouponList[1].OWN.length; index++) {
-      if (CouponList[index].firstCheckinOnly === true) {
+    for (let index = 0; index < CouponList.OWN.length; index++) {
+      if (CouponList.OWN[index].couponRules.firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }

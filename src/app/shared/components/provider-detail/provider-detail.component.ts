@@ -190,10 +190,9 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   checkindialogRef;
   extChecindialogRef;
   servicedialogRef;
-  s3CouponList = [
-    { JC: [] },
-    { OWN: [] }
-  ];
+  s3CouponList :any= {
+  
+  };
  //  s3CouponList: any[] =[{'JC':[]}],[{'OWN':[]}];
   isfirstCheckinOffer;
   server_date;
@@ -742,14 +741,18 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
           case 'coupon': {
             if(res!==undefined){
-              this.s3CouponList[0].JC=res;
+              this.s3CouponList.JC=res;
+            }else{
+              this.s3CouponList.JC=[];
             }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
           }
           case 'providerCoupon': {
             if(res!==undefined){
-              this.s3CouponList[1].OWN=res;
+              this.s3CouponList.OWN=res;
+            }else{
+              this.s3CouponList.OWN=[];
             }
             this.firstChckinCuponCunt(this.s3CouponList);
             break;
@@ -1825,12 +1828,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
 
   firstChckinCuponCunt(CouponList) {
-    for (let index = 0; index < CouponList[0].JC.length; index++) {
+    for (let index = 0; index < CouponList.JC.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
     }
-    for (let index = 0; index < CouponList[1].OWN.length; index++) {
+    for (let index = 0; index < CouponList.OWN.length; index++) {
       if (CouponList[index].firstCheckinOnly === true) {
         this.frstChckinCupnCunt = this.frstChckinCupnCunt + 1;
       }
