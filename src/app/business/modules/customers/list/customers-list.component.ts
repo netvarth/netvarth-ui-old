@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../../../ynw_provider/shared/functions/provider-shared-functions';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LastVisitComponent } from '../../medicalrecord/last-visit/last-visit.component';
 import { VoicecallDetailsSendComponent } from '../../appointments/voicecall-details-send/voicecall-details-send.component';
@@ -123,7 +123,13 @@ export class CustomersListComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,) {
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams.selectedGroup && qparams.selectedGroup !== 'all') {
+        // this.addNewCustomertoGroup(qparams.customerId);
+      }
+    });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.no_customer_cap = Messages.NO_CUSTOMER_CAP.replace('[customer]', this.customer_label);
     this.customer_labels = this.customer_label.charAt(0).toUpperCase() + this.customer_label.slice(1).toLowerCase() + 's';
@@ -426,7 +432,8 @@ export class CustomersListComponent implements OnInit {
   searchCustomer() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        source: 'clist'
+        source: 'clist',
+        selectedGroup: (this.selectedGroup !== 'all') ? this.selectedGroup.id : 'all'
       }
     };
     this.router.navigate(['provider', 'customers', 'find'], navigationExtras);
@@ -573,8 +580,8 @@ export class CustomersListComponent implements OnInit {
       if (groupId) {
         if (groupId === 'update') {
           if (this.selectedGroup !== 'all' && this.selectedGroup.id === this.groupIdEdit) {
-          const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
-          this.selectedGroup = grp[0];
+            const grp = this.groups.filter(group => group.id === this.selectedGroup.id);
+            this.selectedGroup = grp[0];
           }
         } else {
           const grp = this.groups.filter(group => group.id === groupId);
@@ -588,10 +595,14 @@ export class CustomersListComponent implements OnInit {
       this.doSearch();
     }
   }
-  addCustomerToGroup() {
+  addCustomerToGroup(customerId?) {
     const ids = [];
-    for (let customer of this.selectedcustomersformsg) {
-      ids.push(customer.id);
+    if (customerId) {
+      ids.push(customerId);
+    } else {
+      for (let customer of this.selectedcustomersformsg) {
+        ids.push(customer.id);
+      }
     }
     this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, ids).subscribe(
       (data: any) => {
@@ -778,5 +789,22 @@ export class CustomersListComponent implements OnInit {
     this.getCustomerGroup(this.newlyCreatedGroupId);
     this.resetGroupFields();
     this.resetError();
+  }
+  addNewCustomertoGroup(customerId) {
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to add this customer to ' + this.selectedGroup.groupName + '?',
+        'type': 'yes/no'
+      }
+    });
+    removeitemdialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.addCustomerToGroup(customerId);
+      }
+    });
   }
 }

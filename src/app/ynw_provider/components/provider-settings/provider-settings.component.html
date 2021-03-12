@@ -18,8 +18,10 @@
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('bprofile')" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="bprofileTooltip">My Account
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltip]="bprofileTooltip">
+                                <div class="disp-flex">
+                                My Account
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div>
                                     <div joyrideStep="step1" [stepContent]="text1" title="My Account">
                                     </div>
@@ -209,8 +211,10 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('waitlistmanager')"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">Jaldee QManager
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltipClass]="tooltipcls" [matTooltip]="waitlistTooltip">
+                                <div class="disp-flex">
+                                Jaldee QManager
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div>
                                     <div joyrideStep="step2" [stepContent]="text2" title="Jaldee QManager">
                                     </div>
@@ -331,8 +335,9 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('appointmentmanager')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
+                                <div class="disp-flex">
                                 Jaldee Appointment Manager
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div>
                                     <div joyrideStep="step3" [stepContent]="text3" title="Jaldee Appointment Manager">
                                     </div>
@@ -462,8 +467,9 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('ordermanager')" class="pointer-cursor"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="ordermanagertooltip">
+                                <div class="disp-flex">
                                 Jaldee Order Manager
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Order management system , receive and manage orders</div>
                             </h4>
                         </div>
@@ -526,8 +532,10 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('general')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="general">Features and Customization
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltip]="general">
+                                <div class="disp-flex">
+                                Features and Customization
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Customize your Jaldee account with these additional features.</div>
                             </h4>
                         </div>
@@ -690,8 +698,10 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 class="pointer-cursor" (click)="redirecTo('pos')" [matTooltipClass]="tooltipcls"
-                                [matTooltip]="billposTooltip">Jaldee Billing
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltip]="billposTooltip">
+                                <div class="disp-flex">
+                                Jaldee Billing
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Give bills for your service.</div>
                             </h4>
                         </div>
@@ -753,8 +763,9 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('payments')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="payments">
+                                <div class="disp-flex">
                                 Jaldee Pay
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Accept {{frm_msg_jaldeepay}}</div>
                             </h4>
                         </div>
@@ -809,8 +820,10 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('donationmanager')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">Donation Manager
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltipClass]="tooltipcls" [matTooltip]="appointmentmanager">
+                                <div class="disp-flex">
+                                Donation Manager
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Collect Donations.</div>
                             </h4>
                         </div>
@@ -856,8 +869,9 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('comm')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="comm">
+                                <div class="disp-flex">
                                 Communications And Notifications
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Configure your notifications.</div>
                             </h4>
                         </div>
@@ -906,8 +920,10 @@
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('miscellaneous')" class="pointer-cursor"
-                                [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">{{miscellaneous_cap}}
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                [matTooltipClass]="tooltipcls" [matTooltip]="miscellaneous">
+                                <div class="disp-flex">
+                                {{miscellaneous_cap}}
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">Offer {{frm_mis_cap}}</div>
                             </h4>
                         </div>
@@ -984,8 +1000,9 @@
                         <div class="widget-user-header bg-blue">
                             <h4 (click)="redirecTo('customers')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="customers">
+                                <div class="disp-flex">
                                 {{cust_domain_name |capitalizeFirst}}s
-                                <i class="fa fa-gears fl-right lnk"></i>
+                                <i class="fa fa-gears fl-right lnk"></i></div>
                                 <div class="head-hint">{{cust_domain_name |capitalizeFirst}} ID customization.</div>
                             </h4>
                         </div>

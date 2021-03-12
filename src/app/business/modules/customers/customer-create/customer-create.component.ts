@@ -123,6 +123,7 @@ export class CustomerCreateComponent implements OnInit {
   showToken;
   virtualServicemode;
   virtualServicenumber;
+  group;
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
@@ -147,6 +148,9 @@ export class CustomerCreateComponent implements OnInit {
       this.source = qparams.source;
       this.showToken = qparams.showtoken;
       console.log(JSON.stringify(qparams));
+      if (qparams.selectedGroup) {
+        this.group = qparams.selectedGroup;
+      }
       if (qparams.uid) {
         this.uid = qparams.uid;
       }
@@ -534,7 +538,7 @@ export class CustomerCreateComponent implements OnInit {
               };
               this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
             } else {
-              this.router.navigate(['provider', 'customers']);
+              this.router.navigate(['provider', 'customers'], { queryParams: { selectedGroup: this.group } });
             }
           },
           error => {

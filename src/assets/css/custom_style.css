@@ -13980,7 +13980,7 @@ width: 40px !important;
 }
 .body-section {
   overflow-y: auto;
-  height: 85vh;
+  height: 83vh;
   background: #f0efef;
   overflow-x: hidden;
 }
@@ -14003,10 +14003,10 @@ width: 40px !important;
   padding: 0 1.5rem !important;
 }
 .pro-settings-list .widget-user-header .head-hint {
-  font-size: 0.9rem !important;
+  font-size: 0.8rem !important;
   color: #B5B5C3 !important;
   font-weight: 500 !important;
-  margin-top: 10px !important;
+  margin-top: 5px !important;
 }
 .pro-settings-list .widget-user-header h4{
   font-size: 20px !important;
@@ -14045,4 +14045,8 @@ width: 40px !important;
 } */
 .previewContainer video {
   border-radius: 25px !important;
+}
+.modal-backdrop {
+  z-index: 0 !important;
+  opacity: 0 !important;
 }
