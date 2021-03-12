@@ -148,12 +148,28 @@
                         <label for="youridhere" class="static-value">+91</label>
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Contact number</label>
                         </div>
+                        <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'phone')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'phone',
+                        {
+                          'required' : 'Mobile number is required',
+                          'minlength' : 'Enter a 10 digit mobile number',
+                          'maxlength' : 'Enter a 10 digit mobile number',
+                          'pattern' : 'Only numbers are allowed'
+                        })">
+</app-field-error-display>
                       </div>
+                
+                   
 
                       <div class="ph-outline">
                         <input class="ph-ip" formControlName="email">
                         <label class="ph-label"><sup><i class="fa fa-asterisk"></i></sup>Email</label>
                       </div>
+                      <app-field-error-display [displayError]="fed_service.isFieldValid(storeContact,'email')" [errorMsgs]="fed_service.getErrorMessage(storeContact,'email',
+                      {
+                        'required' : 'Email is required',
+                        'pattern' : 'Please enter valid email'
+                      })">
+</app-field-error-display>
                       <!-- <mat-form-field class="example-full-width">
                        <mat-label>Contact Email</mat-label>
                         <input matInput placeholder="Enter your email" value=""formControlName="email">

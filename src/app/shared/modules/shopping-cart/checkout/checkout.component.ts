@@ -21,6 +21,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { Messages } from '../../../constants/project-messages';
+import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
 
 
 @Component({
@@ -170,7 +171,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private _formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    public fed_service: FormMessageDisplayService,
 
   ) {
 
@@ -243,7 +245,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
 
     this.linear = false;
-    this.orderList = JSON.parse(this.lStorageService.getitemfromLocalStorage('order'));
+    this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     if (this.orderList) {
       console.log(this.orderList);
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
@@ -307,7 +309,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           
         }
       }
-      this.getAvailabilityByDate(this.sel_checkindate);
+     
     });
     this.getStoreContact();
 
@@ -349,7 +351,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.getProfile();
-      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
@@ -441,10 +443,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
   }
-  // getItemPrice(item) {
-  //   const qty = this.orderList.filter(i => i.itemId === item.itemId).length;
-  //   return item.price * qty;
-  // }
+
   applyPromocode() {
     this.action = 'coupons';
   }
@@ -556,10 +555,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     });
-    // this.shared_services.getConsumerCatalogs(accountId).subscribe(
-    //   (catalogs: any) => {
-    //     this.catalog_details = catalogs[0];
-    //   });
+
 
   }
 
@@ -580,36 +576,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return deliveryCharge.toFixed(2);
   }
-  // getOrderFinalAmountToPay() {
-  //   const amount = this.price + this.totaltax + parseInt(this.getDeliveryCharges(), 0);
-  //   return amount.toFixed(2);
-  // }
-  // getTotalItemTax(taxValue) {
-  //   this.totaltax = 0;
-  //   for (const itemObj of this.orderList) {
-  //     let taxprice = 0;
-  //     if (itemObj.item.taxable) {
-  //       if (itemObj.item.showPromotionalPrice) {
-  //         taxprice = itemObj.item.promotionalPrice * (taxValue / 100);
-  //       } else {
-  //         taxprice = itemObj.item.price * (taxValue / 100);
-  //       }
-  //     } else {
-  //       taxprice = 0;
-  //     }
-  //     this.totaltax = this.totaltax + taxprice;
-  //   }
-  //   return this.totaltax.toFixed(2);
-  // }
 
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
     return qty;
   }
-  // catlogArry() {
-  //   this.catlog = itemjson;
-  //   this.catalogItem = this.catlog.default.catalogItem;
-  // }
+ 
   getaddress() {
     console.log('hi');
     this.shared_services.getConsumeraddress()
@@ -681,7 +653,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               if (data) {
-                //  this.added_address.splice(index, 1);
+             
                 this.getaddress();
               }
               this.snackbarService.openSnackBar('Address deleted successfully');
@@ -713,18 +685,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // getTotalItemPrice() {
-  //   this.price = 0;
 
-  //   for (const itemObj of this.orderList) {
-  //     let item_price = itemObj.item.price;
-  //     if (itemObj.item.showPromotionalPrice) {
-  //       item_price = itemObj.item.promotionalPrice;
-  //     }
-  //     this.price = this.price + item_price;
-  //   }
-  //   return this.price.toFixed(2);
-  // }
 
   confirm() {
     this.checkoutDisabled = true;
@@ -765,8 +726,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-              // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-              // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -789,8 +749,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-              // 'sTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'],
-              // 'eTime': this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime']
+     
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
@@ -827,8 +786,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-              // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-              // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+      
             },
             'orderDate': this.sel_checkindate,
             'countryCode': this.customer_countrycode,
@@ -850,8 +808,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             'timeSlot': {
               'sTime': timeslot[0],
               'eTime': timeslot[1]
-              // 'sTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'],
-              // 'eTime': this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime']
+
             },
             'orderItem': this.getOrderItems(),
             'orderDate': this.sel_checkindate,
@@ -868,16 +825,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   doLogin(origin?, passParam?) {
-    // this.snackbarService.openSnackBar('You need to login to check in');
-    // const current_provider = passParam['current_provider'];
-    // let is_test_account = null;
-    // if (current_provider) {
-    //   if (current_provider.test_account === '1') {
+ 
     const is_test_account = true;
-    //   } else {
-    //     is_test_account = false;
-    //   }
-    // }
+  
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
       panelClass: ['loginmainclass', 'popup-class'],
@@ -897,29 +847,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.isLoggedIn()) {
           this.nextbtn.nativeElement.click();
         }
-        // if (passParam['callback'] === 'communicate') {
-        //   // this.getFavProviders();
-        //   // this.showCommunicate(passParam['providerId']);
-        // } else if (passParam['callback'] === 'history') {
-        //   // this.redirectToHistory();
-        // } else if (passParam['callback'] === 'fav') {
-        //   // this.getFavProviders(passParam['mod']);
-        // } else if (passParam['callback'] === 'donation') {
-        //   // this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        // } else if (passParam['callback'] === 'appointment') {
-        //   // this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // } else {
-        //   // this.getFavProviders();
-        //   // this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // }
+   
       } else if (result === 'showsignup') {
-        // this.doSignup(passParam);
+       
       }
     });
   }
   confirmOrder(post_Data) {
-    console.log(post_Data);
-    console.log(this.selectedImagelist.files);
+console.log(post_Data.email);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -961,7 +896,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           };
 
           if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
               .subscribe(res => {
                 console.log(res);
                 this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
@@ -1010,7 +945,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           };
           console.log('prepaymentAmount' + prepayAmount);
           if (this.catalog_details.paymentType !== 'NONE' && prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.emailId)
+            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id,  post_Data.email)
               .subscribe(res => {
                 console.log(res);
                 this.router.navigate(['consumer', 'order', 'payment'], navigationExtras);
@@ -1115,6 +1050,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
         this.store_availables = data.filter(obj => obj.isAvailable);
+        this.getAvailabilityByDate(this.sel_checkindate);
         const availDates = this.store_availables.map(function (a) { return a.date; });
         console.log(availDates);
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
@@ -1129,12 +1065,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
          this.home_availables = data.filter(obj => obj.isAvailable);
+         this.getAvailabilityByDate(this.sel_checkindate);
         console.log(this.home_availables);
         const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
       });
+
   }
 
   dateClass(date: Date): MatCalendarCellCssClasses {

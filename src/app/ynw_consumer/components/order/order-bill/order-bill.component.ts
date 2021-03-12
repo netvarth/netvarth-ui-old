@@ -112,6 +112,7 @@ export class OrderBillComponent implements OnInit {
   razorpay_payment_id: any;
   razorpayDetails: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  billTitle='Bill';
 
   constructor(
     //   private consumer_services: ConsumerServices,
@@ -169,6 +170,7 @@ export class OrderBillComponent implements OnInit {
       this.location.back();
   }
   ngOnInit() {
+    
   }
   getWaitlist() {
     //   const params = {
@@ -178,6 +180,9 @@ export class OrderBillComponent implements OnInit {
           .subscribe(
               data => {
                   this.checkin = data;
+                  if(this.checkIn_type==='order' && this.checkin.amountDue ==0 &&  this.checkin.orderStatus != 'Cancelled'){
+                      this.billTitle="Receipt";
+                  }
                   console.log(this.checkin);
                   this.getCouponList();
                   this.getWaitlistBill();

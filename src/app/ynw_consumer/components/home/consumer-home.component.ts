@@ -1390,7 +1390,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
     } else {
-      console.log('oder');
+     
       const navigationExtras: NavigationExtras = {
         queryParams: {
           uuid: checkin.uid,
