@@ -20,6 +20,8 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 
 @Component({
@@ -142,6 +144,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   };
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     private fb: FormBuilder,
     public router: Router,
@@ -155,7 +158,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     public fed_service: FormMessageDisplayService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService) {
-    this.route.params.subscribe(
+    this.route.params.pipe(takeUntil(this.onDestroy$))
+    .subscribe(
       params => {
         this.account_id = this.groupService.getitemFromGroupStorage('accountId');
         this.uid = params.id;
@@ -180,7 +184,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     });
 
   }
-
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
   confirm() {
     this.placeOrderDisabled = true;
@@ -251,6 +258,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.closeModal.nativeElement.click();
 
     this.providerservice.updateProviderOrders(post_data)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           this.disableSave = false;
@@ -300,6 +308,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   confirmOrder(post_data) {
     console.log(post_data);
     this.providerservice.updateOrder(post_data)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         if(this.orderDetails && this.orderDetails.orderItem){
         this.updateOrderItems().then(res => {
@@ -353,13 +362,13 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.step = this.step - 1;
   }
 
-  ngOnDestroy() {
 
-  }
   // fetch orderdetails using order id
   getOrderDetails(uid) {
     this.orderList = [];
-    this.providerservice.getProviderOrderById(uid).subscribe(data => {
+    this.providerservice.getProviderOrderById(uid)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
       this.orderDetails = data;
       this.orderNumber = this.orderDetails.orderNumber;
       this.customerId = this.orderDetails.orderFor.id;
@@ -567,6 +576,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(res => {
         this.s3CouponsList = res;
         if (this.s3CouponsList.length > 0) {
@@ -854,6 +864,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -866,6 +877,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -928,7 +940,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       data: item
 
     });
-    this.addItemNotesdialogRef.afterClosed().subscribe(result => {
+    this.addItemNotesdialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result) {
         this.orderList.map((Item, i) => {
           if (Item.item.itemId === item.item.itemId) {
@@ -953,7 +967,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         'message': 'Do you want to Delete this Note?',
       }
     });
-    this.canceldialogRef.afterClosed().subscribe(result => {
+    this.canceldialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result) {
         this.orderList.map((Item, i) => {
           if (Item.item.itemId === item.item.itemId) {
@@ -968,10 +984,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     this.showSide = !this.showSide;
   }
 
-  // resetDateTime() {
-  //   this.action = '';
-  //   this.fetchCatalog();
-  // }
+
 
   closeNav() {
     this.showSide = false;
@@ -985,29 +998,13 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
       }
     });
-    additemsdialogRef.afterClosed().subscribe(data => {
+    additemsdialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(data => {
 
     });
   }
 
-  // addAddress() {
-  //   this.addressDialogRef = this.dialog.open(AddAddressComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       source: 'provider',
-  //       type: 'Add'
-
-  //     }
-  //   });
-  //   this.addressDialogRef.afterClosed().subscribe(result => {
-  //     console.log(result);
-  //     this.storeaddress = result;
-  //     this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
-  //     console.log(this.selectedAddress);
-  //   });
-  // }
 
 
   EditAddress(selectedAddress) {
@@ -1023,7 +1020,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         update_address: this.storeaddress
       }
     });
-    this.addressDialogRef.afterClosed().subscribe(result => {
+    this.addressDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       this.storeaddress = result;
       this.selectedAddress = result.firstName + ' ' + result.lastName + '</br>' + result.address + '</br>' + result.landMark + ',' + result.city + ',' + result.countryCode + ' ' + result.phoneNumber + '</br>' + result.email;
       
@@ -1036,8 +1035,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  onButtonBeforeHook() { }
-  onButtonAfterHook() { }
+
 
 }
 

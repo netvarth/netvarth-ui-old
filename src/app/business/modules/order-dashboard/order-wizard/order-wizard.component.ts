@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../ynw_provider/services/provider-services.service';
@@ -18,6 +18,8 @@ import { AddressComponent } from './address/address.component';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ShoppinglistuploadComponent } from '../../../../shared/components/shoppinglistupload/shoppinglistupload.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 // import { AddAddressComponent } from '../../../../shared/components/checkout/add-address/add-address.component';
 
 
@@ -28,7 +30,7 @@ import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig
   templateUrl: './order-wizard.component.html',
   styleUrls: ['./order-wizard.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css']
 })
-export class OrderWizardComponent implements OnInit {
+export class OrderWizardComponent implements OnInit ,OnDestroy{
   coupon_status: any;
   s3url: {};
   retval: Promise<void>;
@@ -158,6 +160,7 @@ export class OrderWizardComponent implements OnInit {
   @ViewChild('closeModal') private closeModal: ElementRef;
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
   customer_label: any;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
 
   constructor(private fb: FormBuilder,
@@ -174,7 +177,9 @@ export class OrderWizardComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices) {
 
-    this.activated_route.queryParams.subscribe(qparams => {
+    this.activated_route.queryParams
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(qparams => {
 
 
       if (qparams.ph || qparams.id) {
@@ -185,7 +190,9 @@ export class OrderWizardComponent implements OnInit {
         if (qparams.id) {
           filter['id-eq'] = qparams.id;
         }
-        this.provider_services.getProviderCustomers(filter).subscribe(
+        this.provider_services.getProviderCustomers(filter)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
           (data: any) => {
             if (data.length > 1) {
               const customer = data.filter(member => !member.parent);
@@ -229,6 +236,10 @@ export class OrderWizardComponent implements OnInit {
 
 
   }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
   gets3curl() {
     this.api_loading1 = true;
     this.retval = this.sharedFunctionobj.getS3Url()
@@ -268,6 +279,7 @@ export class OrderWizardComponent implements OnInit {
       UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
     }
     this.shared_services.getbusinessprofiledetails_json('59222', this.s3url, section, UTCstring)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(res => {
         this.s3CouponsList = res;
         console.log(this.s3CouponsList);
@@ -346,6 +358,7 @@ export class OrderWizardComponent implements OnInit {
     }
 
     this.provider_services.getCustomer(post_data)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         (data: any) => {
           this.customer_data = [];
@@ -402,6 +415,7 @@ export class OrderWizardComponent implements OnInit {
   }
   getDeliveryAddress() {
     this.provider_services.getDeliveryAddress(this.customer_data.id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         console.log(data);
         if (data !== null) {
@@ -558,6 +572,7 @@ export class OrderWizardComponent implements OnInit {
     this.added_address.push(form_data);
     console.log('addres' + JSON.stringify(this.added_address));
     this.provider_services.updateDeliveryaddress(this.customer_data.id, this.added_address)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           this.disableSave = false;
@@ -740,6 +755,7 @@ export class OrderWizardComponent implements OnInit {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.accountId)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -752,6 +768,7 @@ export class OrderWizardComponent implements OnInit {
     const _this = this;
 
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.accountId)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any) => {
         const availables = data.filter(obj => obj.isAvailable);
         const availDates = availables.map(function (a) { return a.date; });
@@ -1096,6 +1113,7 @@ export class OrderWizardComponent implements OnInit {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
+      .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order placed successfully');
@@ -1112,6 +1130,7 @@ export class OrderWizardComponent implements OnInit {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
+      .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
           console.log(JSON.stringify(data));
           this.placeOrderDisabled = false;
@@ -1140,7 +1159,9 @@ export class OrderWizardComponent implements OnInit {
 
       }
     });
-    this.addressDialogRef.afterClosed().subscribe(result => {
+    this.addressDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       this.getDeliveryAddress();
     });
   }
@@ -1158,7 +1179,9 @@ export class OrderWizardComponent implements OnInit {
 
       }
     });
-    this.addressDialogRef.afterClosed().subscribe(result => {
+    this.addressDialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       this.getDeliveryAddress();
     });
   }
@@ -1322,7 +1345,9 @@ export class OrderWizardComponent implements OnInit {
           source: this.imagelist
         }
       });
-      this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+      this.shoppinglistdialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
         if (result) {
           console.log(result);
           this.selectedImagelist = result;
