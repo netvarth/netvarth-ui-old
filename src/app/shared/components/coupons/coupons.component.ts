@@ -2,36 +2,36 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-coupons',
   templateUrl: './coupons.component.html',
   styleUrls: ['./coupons.component.css']
 })
-export class CouponsComponent implements OnInit {
+export class CouponsComponent implements OnInit{
   couponsList: any = [];
   type=false;
   tempCouponList: any = [];
   providerCouponList: any=[];
   ownCoupons: any = [] ;
+
   constructor(private shared_functions: SharedFunctions,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   ngOnInit() {
-    console.log(this.data);
-    console.log(JSON.stringify(this.data.couponsList));
     if (this.data.couponsList.JC) {
       this.tempCouponList = this.data.couponsList.JC;
-      console.log(JSON.stringify( this.tempCouponList));
     }
     if (this.data.couponsList.OWN) {
       this.ownCoupons = this.data.couponsList.OWN;
-      console.log(JSON.stringify(this.ownCoupons));
     }
     if (this.data.type) {
       this.type = this.data.type;
     }
     this.showCoupons();
   }
+
+
   showCoupons() {
     this.couponsList = [];
     this.providerCouponList = [];
@@ -62,8 +62,7 @@ export class CouponsComponent implements OnInit {
       }
     
   }
-    console.log(this.couponsList);
-    console.log(this.providerCouponList);
+  
   }
 
   formatDateDisplay(dateStr) {
