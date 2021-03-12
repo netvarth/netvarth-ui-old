@@ -64,7 +64,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     'date': false
   };
   ackStatus;
-  notAckStatus;
+  notAckStatus = true;;
   constructor(private provider_servicesobj: ProviderServices,
     private sharedfunctionObj: SharedFunctions,
     private locationobj: Location,
@@ -220,7 +220,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     // } else {
     this.getAlertList(this.holdalertSelAck || '', startseldate, endseldate);
     // }
-    if (endseldate !== '' || startseldate !== '') {
+    if (endseldate !== '' || startseldate !== '' || this.notAckStatus || this.ackStatus) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
