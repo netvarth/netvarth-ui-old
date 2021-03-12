@@ -420,7 +420,7 @@
                             </ng-container> -->
                             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 orderedItems mgn-bt-20" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
                                         <!-- Grid View -->
-                                        <mat-grid-list  style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
+                                        <mat-grid-list [hidden]="added_address.length==0" style="background: white; display: flex;" cols="{{no_of_grids}}" rowHeight="200px" [gutterSize]="'10px'">
                                             <mat-grid-tile *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
                                             [ngClass]="{'highlight': selectedRowIndex == i}">
                                             <!-- <mat-grid-tile-header>
