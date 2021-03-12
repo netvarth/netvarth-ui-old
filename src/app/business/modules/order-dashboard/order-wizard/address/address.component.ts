@@ -5,6 +5,8 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-address',
@@ -23,6 +25,7 @@ export class AddressComponent implements OnInit {
   source: any;
   api_error = null;
   api_success = null;
+  private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
     public dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,6 +54,10 @@ export class AddressComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
   }
+  public ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
   close(){
     this.dialogRef.close();
   }
@@ -61,7 +68,6 @@ export class AddressComponent implements OnInit {
       firstName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       lastName: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_EMAIL)])],
-
       address: ['', Validators.compose([Validators.required])],
       city: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
@@ -86,24 +92,13 @@ export class AddressComponent implements OnInit {
     });
   }
   onSubmit(form_data) {
-
-    console.log(JSON.stringify(form_data));
     this.disableSave = true;
-    // if (this.formMode === 'edit') {
-    //   this.exist_add.splice(this.index, 1);
-    // }
     this.exist_add.push(form_data);
-
     this.provider_services.updateDeliveryaddress(this.customer.id, this.exist_add)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         data => {
           this.disableSave = false;
-          // if (this.formMode === 'edit') {
-          //   this.snackbarService.openSnackBar('Address Updated successfully');
-          // } else {
-          //   this.snackbarService.openSnackBar('Address Added successfully');
-          // }
-
           this.dialogRef.close();
         },
         error => {
