@@ -1046,6 +1046,9 @@ export class AppointmentComponent implements OnInit {
         }
         // }
         this.showEditView = false;
+        if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+            this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+        }
         const post_Data = {
             'schedule': {
                 'id': this.sel_queue_id
@@ -1249,7 +1252,7 @@ export class AppointmentComponent implements OnInit {
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName, apptTime: this.apptTime });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
         } else {
             let exists = false;
             let existindx = -1;
@@ -1508,7 +1511,7 @@ export class AppointmentComponent implements OnInit {
     handleDeptSelction(obj) {
         this.users = [];
         this.queuejson = [];
-        this.api_error = '';
+        this.api_error = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
@@ -1925,9 +1928,9 @@ this.questionAnswers = event;
         this.showQuestionnaire = !this.showQuestionnaire;
     }  
      getProviderQuestionnaire() {
-        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
-        });
+        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        //   console.log(data);
+        //   this.questionnaireList = data;
+        // });
       }
 }

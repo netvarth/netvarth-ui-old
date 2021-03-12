@@ -137,7 +137,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()" *ngIf="orderstatus">
           <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -146,7 +146,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()" *ngIf="donationstatus">
           <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-stack fa-inr"></i>
@@ -206,7 +206,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
+          (click)="showMenuSection()" *ngIf="accountType=='BRANCH'">
           <a routerLink="settings/general/users" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-users"></i>
@@ -231,7 +231,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
-          <a (click)="gotoHelp()" routerLinkActive="active-menu" class="menu-link menu-toggle"
+          <a routerLink="{{domain}} + /help" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-book"></i>
             </span><span class="menu-text">Help</span><i class="menu-arrow"></i></a>

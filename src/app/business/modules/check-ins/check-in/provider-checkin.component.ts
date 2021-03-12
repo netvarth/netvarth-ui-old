@@ -1071,6 +1071,7 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     saveCheckin() {
+        console.log(this.waitlist_for);
         // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
@@ -1102,6 +1103,9 @@ export class ProviderCheckinComponent implements OnInit {
             }
         }
         // }
+        if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+            this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+        }
         const post_Data = {
             'queue': {
                 'id': this.sel_queue_id
@@ -1160,7 +1164,11 @@ export class ProviderCheckinComponent implements OnInit {
             post_Data['ignorePrePayment'] = true;
             if (!this.is_wtsap_empty) {
                 if (this.thirdParty === '') {
+                    if (this.waitlist_for.length === 0) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
+                    } else {
                     this.addCheckInProvider(post_Data);
+                    }
                 } else {
                     this.addWaitlistBlock(post_Data);
                 }
@@ -1303,7 +1311,7 @@ console.log(Object.keys(this.questionAnswers).length);
     handleMemberSelect(id, firstName, lastName, obj) {
         this.resetApi();
         if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: name, lastName: lastName });
+            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName });
         } else {
             let exists = false;
             let existindx = -1;
@@ -1582,7 +1590,7 @@ console.log(Object.keys(this.questionAnswers).length);
     handleDeptSelction(obj) {
         this.users = [];
         this.queuejson = [];
-        this.api_error = '';
+        this.api_error = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
         if (this.filterDepart) {
@@ -1994,9 +2002,9 @@ console.log(Object.keys(this.questionAnswers).length);
         this.showQuestionnaire = !this.showQuestionnaire;
     }
     getProviderQuestionnaire() {
-        this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
-          console.log(data);
-          this.questionnaireList = data;
-        });
+        // this.shared_services.getProviderQuestionnaire(this.sel_ser, this.waitlist_for[0].id, this.channel).subscribe(data => {
+        //   console.log(data);
+        //   this.questionnaireList = data;
+        // });
       }
 }
