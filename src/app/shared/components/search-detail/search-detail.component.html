@@ -1,4 +1,4 @@
-<section class="content search-details-list p0">
+<section class="search-detail-component content search-details-list p0">
     <div class="container ">
         <div class="row">
             <div class="panel panel-default">
@@ -25,7 +25,7 @@
   
                                         <span class="ttle" *ngIf="showrefinedsection">{{refine_search_cap}}</span>
                                         <span class="pull-right mgn-rt-10 hide-refine pointer-cursor"
-                                            (click)="showrefinedsection = false"><i class="fa fa-angle-left"></i>
+                                            (click)="showrefinedsection = false"><i class="fa fa-chevron-left"></i>
                                         </span>
                                     </div>
                                     <div *ngIf="searchrefine_arr.length>0 && arraycreatedfromquerystring">
@@ -39,7 +39,7 @@
                                                             <span class="refine-head">{{select_domain_cap}} </span>
                                                         </mat-panel-title>
                                                     </mat-expansion-panel-header>
-                                                    <mat-form-field>
+                                                    <mat-form-field class="w-100">
                                                         <div>
                                                             <mat-select placeholder="" [(ngModel)]="refined_domain"
                                                                 #refineddomain
@@ -65,7 +65,7 @@
                                                             <span class="refine-head">{{select_subdomain_cap}}</span>
                                                         </mat-panel-title>
                                                     </mat-expansion-panel-header>
-                                                    <mat-form-field>
+                                                    <mat-form-field class="w-100">
                                                         <div>
                                                             <mat-select placeholder="" [(ngModel)]="refined_subdomain"
                                                                 #refinedsubdomain
@@ -98,7 +98,7 @@
   
                                                             <div
                                                                 *ngIf="refine_data.dataType=='TEXT' || refine_data.dataType=='TEXT_MED'">
-                                                                <mat-form-field class="example-full-width">
+                                                                <mat-form-field class="example-full-width w-100">
                                                                     <span class="glyphicon glyphicon-search"
                                                                         style="float:right;"></span>
                                                                     <input matInput autocomplete="off"
