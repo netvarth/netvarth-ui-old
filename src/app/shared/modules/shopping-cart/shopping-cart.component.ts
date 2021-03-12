@@ -382,7 +382,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.s3CouponsList.JC = res;
         console.log(this.s3CouponsList.JC);
-        if (this.s3CouponsList.jaldeeCoupn.length > 0) {
+        if (this.s3CouponsList.JC.length > 0) {
           this.showCouponWB = true;
         }
       },

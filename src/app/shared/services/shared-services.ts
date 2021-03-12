@@ -536,7 +536,7 @@ export class SharedServices {
     } else if (type === 'appointment') {
       path = 'consumer/appointment/rating';
     } else if (type === 'order') {
-      path = 'consumer/order/rating';
+      path = 'consumer/orders/rating';
     }
     return this.servicemeta.httpPost(path, data, null, params);
   }
