@@ -165,7 +165,7 @@
 <!--end::Header Mobile-->
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
   <div class="topbar topbar-mobile-on">
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <i class="fa contact-help-icon"></i>
@@ -181,7 +181,7 @@
         </div>
       </div>
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()" [matTooltip]="'Inbox'">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <i class="fa fa-envelope"></i>
@@ -189,7 +189,7 @@
         </div>
       </div>
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()" [matTooltip]="'Alerts'">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('alert')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
@@ -216,7 +216,7 @@
       </div>
       <!--end::Dropdown-->
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()">
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('license')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">

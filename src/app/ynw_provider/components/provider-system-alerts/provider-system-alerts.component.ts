@@ -39,7 +39,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   holdalertSelAck = null;
   holdalertStartdate = null;
   holdalertEnddate = null;
-  filterapplied;
+  filterapplied = true;
   filter_sidebar = false;
   open_filter = false;
   api_loading = true;
@@ -220,7 +220,7 @@ export class ProviderSystemAlertComponent implements OnInit {
     // } else {
     this.getAlertList(this.holdalertSelAck || '', startseldate, endseldate);
     // }
-    if (endseldate !== '' || startseldate !== '' || this.holdalertSelAck !== 'false') {
+    if (endseldate !== '' || startseldate !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
