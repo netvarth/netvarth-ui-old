@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -56,8 +56,15 @@ export class PublishCouponComponent implements OnInit {
 
 
   redirecToCoupon() {
-    this.router.navigate(['provider', 'settings', 'pos', 'coupon']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+         coupon_list:'own_coupon'
+         
+      }
+  };
+    this.router.navigate(['provider', 'settings', 'pos', 'coupon'],navigationExtras);
   }
+  
   publish() {
     const dialogrefd = this.dialog.open(PublishDialogComponent, {
       width: '50%',
@@ -72,6 +79,7 @@ export class PublishCouponComponent implements OnInit {
        this.getcouponDetails(this.coupon.id);
     });
    
+    
   }
 
 }
