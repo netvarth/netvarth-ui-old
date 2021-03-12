@@ -10,6 +10,8 @@ import { projectConstantsLocal } from '../../../../../../shared/constants/projec
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 
 @Component({
   selector: 'app-pos-coupon',
@@ -46,20 +48,6 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   couponStatus: boolean;
   tabid = 0;
   isCheckin;
-  breadcrumb_moreoptions: any = [];
-  breadcrumbs = [
-    {
-      title: 'Settings',
-      url: '/provider/settings'
-    },
-    {
-      title: 'Jaldee Billing',
-      url: '/provider/settings/pos'
-    },
-    {
-      title: 'Coupons'
-    }
-  ];
   coupon_info: any = [];
   jaldee_reimburse;
   always_enable;
@@ -72,7 +60,8 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   couponError = '';
   frm_jaldee_coupons_cap = Messages.FRM_LEVEL_JALDEE_COUPONS_MSG;
   frm_mycoupons_cap = Messages.FRM_LEVEL_MY_COUPONS_MSG;
-
+  published_cap=Messages.PUBLISHED_CAP;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(private provider_servicesobj: ProviderServices,
     private router: Router, private dialog: MatDialog,
@@ -84,7 +73,9 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('COUPON_LISTEMPTY');
-    this.activatedRoute.queryParams.subscribe(params=>{
+    this.activatedRoute.queryParams
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(params=>{
       if(params.coupon_list==='own_coupon'){
         this.tabid=1;
       }else{
@@ -98,7 +89,6 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getCoupons(); // Call function to get the list of discount lists
     this.getJaldeeCoupons();
-    this.breadcrumb_moreoptions = { 'actions': [{ 'title': 'Help', 'type': 'learnmore' }] };
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   ngOnDestroy() {
@@ -111,9 +101,13 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     if (this.confirmremdialogRef) {
       this.confirmremdialogRef.close();
     }
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+
   }
   getCoupons() {
     this.provider_servicesobj.getProviderCoupons()
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         this.coupon_list = data;
         this.query_executed = true;
@@ -131,6 +125,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   }
   getJaldeeCoupons() {
     this.jaldeeCoupons = this.provider_servicesobj.getJaldeeCoupons()
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(data => {
         this.jaldeeCoupons = data;
         for (let index = 0; index < this.jaldeeCoupons.length; index++) {
@@ -177,7 +172,9 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
         'heading': 'Delete Confirmation'
       }
     });
-    this.confirmremdialogRef.afterClosed().subscribe(result => {
+    this.confirmremdialogRef.afterClosed()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(result => {
       if (result) {
         this.deleteCoupons(id);
       }
@@ -185,6 +182,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   }
   deleteCoupons(id) {
     this.provider_servicesobj.deleteCoupon(id)
+    .pipe(takeUntil(this.onDestroy$))
       .subscribe(
         () => {
           this.snackbarService.openSnackBar(Messages.COUPON_DELETED);
@@ -207,7 +205,9 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
 
   changecouponStatus(jcCoupon) {
     const jc_coupon_status = (jcCoupon.couponState === 'ENABLED') ? 'disable' : 'enable';
-    this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status).subscribe(
+    this.provider_servicesobj.applyStatusJaldeeCoupon(jcCoupon.jaldeeCouponCode, jc_coupon_status)
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe(
       () => {
         this.getJaldeeCoupons();
       },
@@ -223,11 +223,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
     e.stopPropagation();
     this.routerobj.navigate(['/provider/' + this.domain + '/billing->' + mod]);
   }
-  // getMode(mod) {
-  //   let moreOptions = {};
-  //   moreOptions = { 'show_learnmore': true, 'scrollKey': 'billing', 'subKey': mod };
-  //   return moreOptions;
-  // }
+ 
   redirecToJaldeeBilling() {
     this.routerobj.navigate(['provider', 'settings' , 'pos']);
   }

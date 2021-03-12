@@ -132,6 +132,7 @@
                                                         <th>{{valid_from_cap}}</th>
                                                         <th>{{valid_to_cap}}</th>
                                                         <th>{{status_cap}}</th>
+                                                        <th>{{published_cap}}</th>
                                                         <th></th>
                                                         <th> <span class="addbt" (click)="addCoupons()"></span></th>
                                                     </tr>
@@ -158,6 +159,15 @@
                                                                 [ngClass]="{'green-text' :coupon.status=='ACTIVE','red-text' :coupon.status=='EXPIRED','blue-text' :coupon.status=='NEW'}">
                                                                 {{coupon.status}}
                                                             </td>
+                                                            <td data-title="Published" class="status">
+                                                                    <span class="ttle">
+                                                                            <i *ngIf="coupon.couponRules.published" class="fa fa-check"
+                                                                                style="color: green"></i>
+                                                                            <i *ngIf="!coupon.couponRules.published" class="fa fa-times"
+                                                                                style="color: red"></i>
+                                                                                {{coupon.couponRules.published}} </span>
+                                                           
+                                                        </td>
                                                         <td class="action">
                                                             <span class="mbt">
                                                                 <button type="button" mat-icon-button

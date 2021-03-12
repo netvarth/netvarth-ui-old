@@ -46,6 +46,7 @@ export const Messages = {
   'COUPON_LISTEMPTY': 'No Coupons found',
   'APPLIED_INBILLTIME': ' Coupon will be applied on the final bill',
 
+
   // non working days
   'HOLIDAY_CREATED': 'Non Working Day created successfully',
   'HOLIDAY_UPDATED': 'Non Working Day updated successfully',
@@ -667,6 +668,7 @@ export const Messages = {
   'QTY_CAP': 'Qty',
   'DISCOUNT_CAP': 'Discount',
   'COUPON_CAP': 'Coupon',
+  'PUBLISHED_CAP': 'Published',
   'SUB_TOT_CAP': 'Sub Total',
   'GROSS_AMNT_CAP': 'Gross Amount',
   'TAX_CAP': 'Tax',
