@@ -28,7 +28,7 @@ export class LocalStorageService {
                 return JSON.parse(localStorage.getItem(itemname));
             }
         // }
-        return null;
+        // return null;
     }
     /**
      * // function to set local storage item value
