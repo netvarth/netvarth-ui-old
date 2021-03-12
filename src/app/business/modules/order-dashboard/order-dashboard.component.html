@@ -52,7 +52,7 @@
   </div>
   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
-      <mat-tab label="Active Orders ({{todayOrdersCount}})">
+      <mat-tab label="Today ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
@@ -171,7 +171,7 @@
             </div>
           </div>
           <div *ngIf="orders.length == 0">
-            No active orders
+            No orders for today
           </div>
           <ng-container *ngIf="orders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
