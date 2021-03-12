@@ -5,7 +5,8 @@
                 <div class="panel-heading top-row ">
                     <app-header *ngIf="showsearchsection && obtainedRefined" [headerTitle]="'Header'"
                         [includedfrom]="'details'"></app-header>
-                    <div class="mgn-up-20 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="search-form mgn-up-20 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div>Search Service Provider</div>
                         <app-search-form *ngIf="showsearchsection && obtainedRefined"
                             (searchclick)="handlesearchClick($event)" [passedDomain]="domain" [passedkwdet]="kwdet"
                             [passedRefine]="searchcommononlyrefine_arr"></app-search-form>

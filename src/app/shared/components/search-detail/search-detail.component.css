@@ -1165,4 +1165,19 @@ ul.bus-actions-horiz li {
   color: darkslategrey;
 }
 
+.search-detail-component.content.search-details-list .search-form {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  padding: 0 !important;
+}
+
+.search-detail-component.content.search-details-list .search-form div {
+  background-color: #1E4079 !important;
+  padding: 15px !important;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  color: white !important;
+  font-size: 1.4rem !important;
+}
+
 /* (min-width: 576px) and */
