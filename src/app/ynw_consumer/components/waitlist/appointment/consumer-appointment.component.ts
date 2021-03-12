@@ -523,6 +523,7 @@ export class ConsumerAppointmentComponent implements OnInit {
             .subscribe(data => {
                 this.slots = data;
                 this.freeSlots = [];
+                console.log(this.slots);
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
@@ -533,6 +534,7 @@ export class ConsumerAppointmentComponent implements OnInit {
                         }
                     }
                 }
+                console.log(this.freeSlots);
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
                     if (this.appointment && this.appointment.appmtTime) {
