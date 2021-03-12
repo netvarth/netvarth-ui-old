@@ -65,7 +65,6 @@ import { JdnComponent } from './shared/components/jdn-detail/jdn-detail-componen
 import { CheckYourStatusComponent } from './shared/components/status-check/check-status.component';
 import { BreadCrumbModule } from './shared/modules/breadcrumb/breadcrumb.module';
 import { GlobalService } from './shared/services/global-service';
-import { GlobalFunctions } from './shared/functions/global-functions';
 import { Razorpaymodel } from './shared/components/razorpay/razorpay.model';
 import { RazorpayprefillModel } from './shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from './shared/services/windowRef.service';
@@ -223,7 +222,6 @@ export function init_app(globalService: GlobalService) {
     },
     AuthService,
     SharedServices,
-    GlobalFunctions,
     GlobalService,
     SharedFunctions,
     TwilioService,
