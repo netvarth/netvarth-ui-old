@@ -12754,63 +12754,6 @@ input[type=number]::-webkit-outer-spin-button {
   overflow: hidden;
   position: relative;
 }
-.full-height {
-  width: 100% !important;
-  background: black;
-  /* display: table-cell;
-  vertical-align: middle; */
-  height:100vh;
-}
-/* @media (min-width:768px) {
-  .full-height {
-
-  }
-} */
-.videocontainer .hide{
-  display: none;
-}
-.previewContainer {
-  padding: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 2px solid #000 !important;
-  border-radius: 20px;
-  background: #000;
-}
-
-@media (min-width: 575px) {
-  .videohgt {
-    min-height: 400px;
-  }
-  }
-@media (max-width: 575px) {
-  .previewContainer, .videohgt {
-    min-height: 400px;
-  }
-  .previewContainer video {
-    height: 380px;
-  }
-  }
-@media (max-width: 320px) {
-  .previewContainer, .videohgt {
-  min-height: 310px;
-}
-.previewContainer video {
-  height: 290px;
-}
-}
-.previewContainer video {
-  width:100%;
-}
-.local video, .local-zeroPs video, .previewContainer video {
-  transform: scaleX(-1);
-}
-.videocontainer .join-vid-btn button {
-  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
-  padding: 5px 20px;
-  border-radius: 20px;
-  color: #fff;
-}
 .customer-note {
   font-weight: bold !important;
   font-style: italic !important;
@@ -13921,27 +13864,6 @@ width: 40px !important;
     color: green;
   }
 }
-
-@media only screen and (max-width: 575px) {
-  .video_small {
-    display: none !important;
-  }
-}
-#previewContainer video {
-  width: 100% !important;
-  max-width: fit-content !important;
-  max-height:400px !important;
-}
-.local-zeroPs video{
-  height: 99vh !important;
-} 
-.remote video {
-  height: 100% !important;
-}
-.local video {
-  width: 100px;
-  height: auto;
-}
 .customersList .pagination>li>span {
   background: #1e4079 !important;
   color: white !important;
@@ -14091,4 +14013,36 @@ width: 40px !important;
 }
 .pro-settings-list .box {
   box-shadow: 0px 0px 30px 0px rgb(82 63 105 / 5%) !important;
+}
+/* 
+.videocontainer .hide{
+  display: none;
+}
+.local video, .local-zeroPs video, .previewContainer video {
+  transform: scaleX(-1);
+}
+.videocontainer .join-vid-btn button {
+  background: linear-gradient(to right, #3c8dbc 0%, #1873f2 100%);
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+}
+
+@media only screen and (max-width: 575px) {
+  .video_small {
+    display: none !important;
+  }
+}
+.local-zeroPs video{
+  height: 99vh !important;
+} 
+.remote video {
+  height: 100% !important;
+}
+.local video {
+  width: 100px;
+  height: auto;
+} */
+.previewContainer video {
+  border-radius: 25px !important;
 }

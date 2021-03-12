@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';;
+import { Component, OnInit } from '@angular/core';;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -70,7 +70,7 @@ export class ProviderLoginComponent implements OnInit {
   phOrem_error = '';
   qParams;
 
-  @ViewChild('mobPrefix') mobPrefix: ElementRef;
+  // @ViewChild('mobPrefix') mobPrefix: ElementRef;
   carouselTwo;
   evnt;
   constructor(
@@ -265,19 +265,19 @@ export class ProviderLoginComponent implements OnInit {
   resetApiErrors() {
     this.api_error = null;
   }
-  handlekeyup(ev) {
-    console.log(ev.target.value);
-    if (/^\d+$/.test(ev.target.value)) {
-      console.log('Contain numbers only');
-      this.mobPrefix.nativeElement.style.display = 'flex';
-      this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
-    } else {
-      this.mobPrefix.nativeElement.style.display = 'none';
-    }
-    if (ev.keyCode !== 13) {
-      this.resetApiErrors();
-    }
-  }
+  // handlekeyup(ev) {
+  //   console.log(ev.target.value);
+  //   if (/^\d+$/.test(ev.target.value)) {
+  //     console.log('Contain numbers only');
+  //     this.mobPrefix.nativeElement.style.display = 'flex';
+  //     this.mobPrefix.nativeElement.class = 'input-group-prepend mob-prefix';
+  //   } else {
+  //     this.mobPrefix.nativeElement.style.display = 'none';
+  //   }
+  //   if (ev.keyCode !== 13) {
+  //     this.resetApiErrors();
+  //   }
+  // }
   onChangePassword() {
     this.step = 1;
   }

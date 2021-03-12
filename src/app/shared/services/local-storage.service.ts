@@ -11,8 +11,8 @@ import { Injectable } from "@angular/core";
 export class LocalStorageService {
 
     // holds the variables which not removed by clearLocalstorage() method
-    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp', 'qB', 'bpwd', 'isBusinessOwner'];
-
+    // dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'qB'];
+    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'jld', 'qrp', 'qB'];
     constructor(
         // @Inject(PLATFORM_ID) private platformId: object
         ) {
