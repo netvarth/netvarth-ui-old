@@ -70,7 +70,7 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.provider_services.setLivetrack(is_livetrack)
             .subscribe(
                 () => {
-                    this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Locate your' + ' [customer] ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
                     this.getLiveTrackStatus();
                 },
                 error => {
