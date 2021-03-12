@@ -254,7 +254,7 @@
                           <div class="ph-gal-bx" *ngIf="image_list_popup && image_list_popup.length > 0">
                             <ul class="ph-gal">
                               <ng-container *ngFor="let file of image_list_popup;let i = index">
-                                <li *ngIf="i<2" [class.gallery-li]="image_list_popup.length === 2">
+                                <li *ngIf="i<2" class="cataimglist" [class.gallery-li]="image_list_popup.length === 2">
                                   <div class="galbx">
                                     <span class="mbt">
                                       <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -268,7 +268,7 @@
                                       </mat-menu>
                                     </span>
                                     <div class="img-h" (click)="openImageModalRow(file)">
-                                      <div class="overlay-y"></div><img [src]="file.modal.img" *ngIf="file.modal.img" />
+                                      <div class="overlay-y"></div><img [src]="file.modal.img" class="cataimg" *ngIf="file.modal.img" />
                                     </div>
                                   </div>
                                 </li>
