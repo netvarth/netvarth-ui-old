@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../ynw_provider/services/provider-services.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -19,14 +19,14 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
-
+import { SubSink } from 'subsink';
 @Component({
     selector: 'app-catalogdetail',
     templateUrl: './catalog-details.component.html',
     styleUrls: ['./catalog-details.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
 
 })
-export class CatalogdetailComponent implements OnInit {
+export class CatalogdetailComponent implements OnInit, OnDestroy {
 
     catalog_id;
     rupee_symbol = 'Ã¢â€šÂ¹';
@@ -207,6 +207,7 @@ export class CatalogdetailComponent implements OnInit {
     addCatalogItems: any = [];
     editcataItemdialogRef: any;
     removeitemdialogRef: any;
+    private subscriptions = new SubSink();
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -226,7 +227,7 @@ export class CatalogdetailComponent implements OnInit {
         this.seletedCatalogItems = this.lStorageService.getitemfromLocalStorage('selecteditems');
         this.onResize();
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-        this.activated_route.params.subscribe(
+        this.subscriptions.sink = this.activated_route.params.subscribe(
             (params) => {
                 this.catalog_id = params.id;
                     if (this.catalog_id === 'add') {
@@ -234,7 +235,7 @@ export class CatalogdetailComponent implements OnInit {
                         this.api_loading=false;
                         
                     } else {
-                        this.activated_route.queryParams.subscribe(
+                        this.subscriptions.sink = this.activated_route.queryParams.subscribe(
                             (qParams) => {
                                 this.action = qParams.action;
                                 this.cataId = this.catalog_id;
@@ -267,6 +268,9 @@ export class CatalogdetailComponent implements OnInit {
 
     ngOnInit() {
 
+    }
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
     gotoNext() {
         if (this.step === 1 && this.amForm.get('orderType').value === 'SHOPPINGLIST') {
@@ -331,7 +335,7 @@ export class CatalogdetailComponent implements OnInit {
         const apiFilter = {};
         apiFilter['itemStatus-eq'] = 'ACTIVE';
         return new Promise((resolve, reject) => {
-            this.provider_services.getProviderfilterItems(apiFilter)
+            this.subscriptions.sink = this.provider_services.getProviderfilterItems(apiFilter)
                 .subscribe(
                     data => {
                         this.item_list = data;
@@ -368,7 +372,7 @@ export class CatalogdetailComponent implements OnInit {
     getCatalog(cataId?) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.provider_services.getProviderCatalogs(cataId)
+            _this.subscriptions.sink =  _this.provider_services.getProviderCatalogs(cataId)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -1054,7 +1058,7 @@ console.log('hi submit');
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
-        this.provider_services.addCatalog(post_data)
+        this.subscriptions.sink = this.provider_services.addCatalog(post_data)
             .subscribe(
                 (data) => {
                     // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_CREATED'));
@@ -1068,7 +1072,7 @@ console.log('hi submit');
                             source_id: data
                         }
                     });
-                    this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
+                    this.subscriptions.sink = this.addcatalogimagedialogRef.afterClosed().subscribe(result => {
                         if (result === 1) {
                             this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
                         }
@@ -1086,7 +1090,7 @@ console.log('hi submit');
         this.resetApiErrors();
         this.api_loading = true;
         post_itemdata.id = this.catalog.id;
-        this.provider_services.editCatalog(post_itemdata)
+        this.subscriptions.sink = this.provider_services.editCatalog(post_itemdata)
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CATALOG_UPDATED'));
@@ -1117,7 +1121,7 @@ console.log('hi submit');
         return (cdate.getFullYear() + '-' + mon + '-' + ('0' + cdate.getDate()).slice(-2));
     }
     getProviderLocations() {
-        this.provider_services.getProviderLocations()
+        this.subscriptions.sink = this.provider_services.getProviderLocations()
             .subscribe(data => {
                 this.holdloc_list = data;
                 this.loc_list = [];
@@ -1225,7 +1229,7 @@ console.log('hi submit');
         };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
-        this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
+        this.subscriptions.sink = this.provider_services.uploadCatalogImages(id, submit_data).subscribe((data) => {
             this.getCatalog(id).then(
                 (catalog) => {
                     this.catalog = catalog;
@@ -1319,11 +1323,11 @@ console.log('hi submit');
                 'message': 'Do you really want to remove the catalog image?'
             }
         });
-        this.removeimgdialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.sink = this.removeimgdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (this.action === 'edit') {
                     const imgDetails = this.uploadcatalogImages.filter(image => image.url === img.modal.img);
-                    this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
+                    this.subscriptions.sink = this.provider_services.deleteUplodedCatalogImage(imgDetails[0].keyName, this.catalog_id)
                         .subscribe((data) => {
                             this.selectedMessage.files.splice(index, 1);
                             this.selectedMessage.base64.splice(index, 1);
@@ -1411,10 +1415,10 @@ console.log('hi submit');
                     'message': 'Do you really want to remove the item image?'
                 }
             });
-            this.removeimgdialogRef.afterClosed().subscribe(result => {
+            this.subscriptions.sink = this.removeimgdialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
-                    this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
+                    this.subscriptions.sink = this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                         .subscribe((data) => {
                             if (type) {
                                 this.mainimage_list_popup = [];
@@ -1461,7 +1465,7 @@ console.log('hi submit');
                 windowlist: list
             }
         });
-        this.addtimewindowdialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.sink = this.addtimewindowdialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (type === 'store') {
                     this.storetimewindow_list.push(result);
@@ -1479,7 +1483,7 @@ console.log('hi submit');
             data: {
             }
         });
-        this.createitemdialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.sink = this.createitemdialogRef.afterClosed().subscribe(result => {
             console.log("Refresh items")
             if (this.catalog_id === 'add') {
                 this.getItems();
@@ -1663,7 +1667,7 @@ console.log('hi submit');
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
-        this.provider_services.addItem(post_data)
+        this.subscriptions.sink = this.provider_services.addItem(post_data)
             .subscribe(
                 (data) => {
                     if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
@@ -1756,7 +1760,7 @@ console.log('hi submit');
             minquantity: item.minQuantity
           }
         });
-        this.editcataItemdialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.sink = this.editcataItemdialogRef.afterClosed().subscribe(result => {
           if (result) {
            this.api_loading = true;
            this.updateItems(result, item.id);
@@ -1769,7 +1773,7 @@ console.log('hi submit');
           passlist.id = id;
           passlist.maxQuantity = updatelist.maxquantity;
           passlist.minQuantity = updatelist.minquantity;
-         this.provider_services.updateCatalogItem(passlist).subscribe(
+          this.subscriptions.sink = this.provider_services.updateCatalogItem(passlist).subscribe(
           (data) => {
             // this.getCatalog();
            // this.getItems();
@@ -1792,11 +1796,11 @@ console.log('hi submit');
             'message': 'Do you really want to remove this item from catalog?'
           }
         });
-        this.removeitemdialogRef.afterClosed().subscribe(result => {
+        this.subscriptions.sink = this.removeitemdialogRef.afterClosed().subscribe(result => {
             console.log(result);
           if (result) {
             this.api_loading = true;
-            this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+            this.subscriptions.sink = this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
               (data) => {
                // this.getCatalog();
                this.getUpdatedItems();

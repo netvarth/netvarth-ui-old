@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject,OnDestroy } from '@angular/core';
 import { Validators, FormBuilder, FormGroup} from '@angular/forms';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -11,13 +11,14 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { projectConstants } from '../../../../../..//app.component';
 import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
+import { SubSink } from 'subsink';
 
 
 @Component({
   selector: 'app-createitempopup',
   templateUrl: './createitempopup.component.html'
 })
-export class CreateItemPopupComponent implements OnInit {
+export class CreateItemPopupComponent implements OnInit,OnDestroy {
     amItemForm: FormGroup;
     api_error = null;
     api_success = null;
@@ -85,6 +86,7 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
       }
   ]
 };
+private subscriptions = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<CreateItemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -104,6 +106,9 @@ customButtonsFontAwesomeConfig: ButtonsConfig = {
     this.api_loading = false;
     this.createForm();
   }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+}
 
   createForm(){
     this.amItemForm = this.fb.group({
@@ -192,7 +197,7 @@ addItem(post_data) {
     this.disableButton = true;
     this.resetApiErrors();
     this.api_loading = true;
-    this.provider_services.addItem(post_data)
+    this.subscriptions.sink = this.provider_services.addItem(post_data)
         .subscribe(
             (data) => {
                 if (this.selectedMessage.files.length > 0 || this.selectedMessageMain.files.length > 0) {
@@ -355,7 +360,7 @@ saveImages(id, routeTo?) {
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-    this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+    this.subscriptions.sink = this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
         this.selectedMessage = {
             files: [],
             base64: [],
@@ -386,7 +391,7 @@ saveImages(id, routeTo?) {
 getItem(itemId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-        _this.provider_services.getProviderItems(itemId)
+        _this.subscriptions.sink = _this.provider_services.getProviderItems(itemId)
             .subscribe(
                 (data) => {
                     resolve(data);
@@ -426,7 +431,7 @@ loadImages(imagelist) {
 getCatalog(cataId?) {
   const _this = this;
   return new Promise(function (resolve, reject) {
-      _this.provider_services.getProviderCatalogs(cataId)
+    _this.subscriptions.sink =  _this.provider_services.getProviderCatalogs(cataId)
           .subscribe(
               data => {
                   resolve(data);
@@ -447,10 +452,10 @@ deleteTempItemImage(img, index, type?) {
               'message': 'Do you really want to remove the item image?'
           }
       });
-      this.removeimgdialogRef.afterClosed().subscribe(result => {
+      this.subscriptions.sink =  this.removeimgdialogRef.afterClosed().subscribe(result => {
           if (result) {
               const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
-              this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
+              this.subscriptions.sink =  this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                   .subscribe((data) => {
                       if (type) {
                           this.mainimage_list_popup = [];

@@ -11,7 +11,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
-
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-additems',
@@ -84,6 +84,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   catalogSelectedItemsadd: any = [];
   seletedCatalogItemsadd: any = {};
   heading = 'Add items to catalog';
+  private subscriptions = new SubSink();
 
   constructor(private router: Router,
     public shared_functions: SharedFunctions,
@@ -95,7 +96,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService) {
     this.emptyMsg = this.wordProcessor.getProjectMesssages('ITEM_LISTEMPTY');
-    this.activated_route.queryParams.subscribe(
+    this.subscriptions.sink = this.activated_route.queryParams.subscribe(
       (qParams) => {
       this.action = qParams.action;
       this.cataId = qParams.id;
@@ -157,11 +158,12 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     );
   }
   ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 
   getCatalog() {
-    this.provider_servicesobj.getProviderCatalogs(this.cataId)
+    this.subscriptions.sink = this.provider_servicesobj.getProviderCatalogs(this.cataId)
       .subscribe((data) => {
         this.catalog = data;
         if (this.catalog.catalogItem) {
@@ -196,7 +198,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
     const apiFilter = {};
     apiFilter['itemStatus-eq'] = 'ACTIVE';
     return new Promise((resolve, reject) => {
-      this.provider_servicesobj.getProviderfilterItems(apiFilter)
+      this.subscriptions.sink = this.provider_servicesobj.getProviderfilterItems(apiFilter)
         .subscribe(
           data => {
                  this.catalogItem = data;
@@ -304,10 +306,10 @@ export class AddItemsComponent implements OnInit, OnDestroy {
         'message': 'Do you really want to remove this item from catalog?'
       }
     });
-    this.removeitemdialogRef.afterClosed().subscribe(result => {
+    this.subscriptions.sink = this.removeitemdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.api_loading = true;
-        this.provider_servicesobj.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+        this.subscriptions.sink = this.provider_servicesobj.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
           (data) => {
             this.getCatalog();
             this.api_loading = false;
@@ -332,7 +334,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
 
       }
     });
-    this.editcataItemdialogRef.afterClosed().subscribe(result => {
+    this.subscriptions.sink = this.editcataItemdialogRef.afterClosed().subscribe(result => {
       if (result) {
        console.log(result);
        this.api_loading = true;
@@ -362,7 +364,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   }
   addItems(addlist) {
     console.log(addlist);
-    this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
+    this.subscriptions.sink = this.provider_servicesobj.addCatalogItems(this.cataId, addlist).subscribe(
       (data) => {
         this.api_loading = false;
         this.snackbarService.openSnackBar('Items added');
@@ -385,7 +387,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
       passlist.maxQuantity = updatelist.maxquantity;
       passlist.minQuantity = updatelist.minquantity;
       console.log(passlist);
-     this.provider_servicesobj.updateCatalogItem(passlist).subscribe(
+      this.subscriptions.sink = this.provider_servicesobj.updateCatalogItem(passlist).subscribe(
       (data) => {
         this.getCatalog();
         this.api_loading = false;
