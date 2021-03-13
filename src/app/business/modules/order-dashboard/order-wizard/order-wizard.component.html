@@ -154,10 +154,10 @@
                                 <div class="card card-custom card-shadowless">
                                   <div class="card-body p-0">
                                     <!--begin::Image-->
-                                    <div class="overlay">
-                                        <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
-                                        [style.background-image]="'url('+getItemImg(item.item)+')'">
-                                      </div>
+                                    <div class="overlay" >
+                                         <div  class="bgItemimg"
+                                       [style.background-image]="'url('+getItemImg(item.item)+''" >
+                                      </div> 
                                       <div class="add_qty noHover">
                                         <td class="text-center align-middle">
                                           <a class="btn btn-xs btn-light-primary btn-icon mr-2" (click)="decrement(item);">

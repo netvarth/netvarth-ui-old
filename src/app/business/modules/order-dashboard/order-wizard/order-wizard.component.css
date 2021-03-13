@@ -1,7 +1,11 @@
 .overlay {
-    background: none !important;
     opacity: 5 !important;
     visibility: visible !important;
+}
+.orderItems .card{
+  min-width:300px!important;
+  max-height:250px!important;
+  min-height:250px!important;
 }
 .add_qty {
     bottom: 0;
@@ -98,5 +102,12 @@
     border-color: transparent!important;
     color:blue;
 }
+.bgItemimg{
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  height:100px!important;
 
+}
   
