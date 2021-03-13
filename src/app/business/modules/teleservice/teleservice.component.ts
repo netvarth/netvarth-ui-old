@@ -115,6 +115,7 @@ export class TeleServiceComponent implements OnInit {
             .subscribe(
                 data => {
                     this.data = data;
+                    this.uuid = this.data.ynwUuid;
                     console.log(this.data);
                     if (this.data.waitlistStatus === 'started') {
                         this.servStarted = true;

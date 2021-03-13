@@ -14,9 +14,9 @@ import { SnackbarService } from '../../services/snackbar.service';
  * Class for Meeting Room for a consumer
  */
 export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
-    @ViewChild('localVideo') localVideo: ElementRef;
-    @ViewChild('previewContainer') previewContainer: ElementRef;
-    @ViewChild('remoteVideo') remoteVideo: ElementRef;
+    @ViewChild('localVideo') localVideo: ElementRef;  // To show the local participant video
+    @ViewChild('previewContainer') previewContainer: ElementRef; 
+    @ViewChild('remoteVideo') remoteVideo: ElementRef; // To show the remote participant video
     room_name;
     access_token;
     app_id;
@@ -129,18 +129,13 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
      * Method to exit from the video call
      */
     disconnect() {
-        if (this.twilioService.previewTracks) {
-            this.twilioService.previewTracks.forEach(localTrack => {
-                localTrack.stop();
-            });
-        }
-        if (this.twilioService.roomObj && this.twilioService.roomObj !== null) {
-            this.twilioService.roomObj.disconnect();
-            this.twilioService.roomObj = null;
-            this.location.back();
-        } else {
-            this.location.back();
-        }
+        // if (this.twilioService.previewTracks) {
+        //     this.twilioService.previewTracks.forEach(localTrack => {
+        //         localTrack.stop();
+        //     });
+        // }
+        this.twilioService.disconnect();
+        this.location.back();
     }
     /**
      * Method to start the video
