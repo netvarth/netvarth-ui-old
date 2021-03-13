@@ -66,7 +66,7 @@
                                         *ngIf="historyvisitDetails.length > 0" (click)="showHistory()">History</span>
                                 </div>
                                 <div class="mgn-bt-10 mgn-lt-10"
-                                    *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && !loading">
+                                    *ngIf="todayvisitDetails.length === 0 && futurevisitDetails.length === 0 && todayordervisitDetails.length === 0 && futureordervisitDetails.length === 0 && !loading">
                                     No recent activity
                                 </div>
                                 <div class="type-head" *ngIf="todayvisitDetails.length > 0 && !loading">Today</div>
@@ -318,6 +318,124 @@
                                         <a *ngIf="showMoreFuture" (click)="showLess('future')">Show less</a>
                                     </div>
                                 </div>
+                                <div class="type-head mgn-up-10" *ngIf="todayordervisitDetails && todayordervisitDetails.length > 0  && !loading">Todays order</div>
+                                <div class="recentactivity"
+                                    *ngIf="todayordervisitDetails && todayordervisitDetails.length > 0 && !loading">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="pointer-cursor cellhover" *ngFor="let visit of todayordervisitDetails"
+                                                (click)="gotoCustomerDetail(visit, 1)">
+                                                <ng-container >
+                                                    <td *ngIf="visit.storePickup"  class="consumer-dash consumer-appthistory"> <i class ="storepickup-icon"  [matTooltip]="'Store Pickup'" aria-hidden="true"></i> </td>
+                                                    <td  *ngIf="visit.homeDelivery"  class="consumer-dash consumer-appthistory"> <i class="delivery-icon"  [matTooltip]="'Home Delivery'" aria-hidden="true"></i> </td>
+                                                    <td> {{visit.orderDate | date: newDateFormat}}
+                                                        <div *ngIf="visit.orderNumber">Order#
+                                                            {{visit.orderNumber}} </div>
+                                                    </td>
+                                                    <td>
+                                                        {{visit.orderStatus}}
+                                                    </td>
+                                                    <td>
+                                                        <span *ngIf="visit.storePickup">Store Pickup</span>
+                                                        <span *ngIf="visit.homeDelivery">Home Delivery</span>
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        <ng-container *ngIf="visit.orderMode === 'WALKIN_ORDER'">
+                                                            Walk in Order
+                                                        </ng-container>
+                                                        <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
+                                                            Online Order</ng-container>
+                                                    </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
+                                                            {{visit.totalAmountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                               Note
+                                                            </button> -->
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="todayorderVisitDetailsArray.length > 5">
+                                            <a *ngIf="!showMoreorderFuture" (click)="showorderMore('future')">Show more</a>
+                                            <a *ngIf="showMoreorderFuture" (click)="showorderLess('future')">Show less</a>
+                                        </div>
+                                </div>
+                                <div class="type-head mgn-up-10" *ngIf="futureordervisitDetails && futureordervisitDetails.length > 0  && !loading">Future order</div>
+                                <div class="recentactivity"
+                                    *ngIf="futureordervisitDetails && futureordervisitDetails.length > 0  && !loading">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr class="pointer-cursor cellhover" *ngFor="let visit of futureordervisitDetails"
+                                                (click)="gotoCustomerDetail(visit, 2)">
+                                                <ng-container >
+                                                    <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
+                                                        
+                                                    </td>
+                                                    <td> {{visit.orderDate | date: newDateFormat}}
+                                                        <div *ngIf="visit.orderNumber">Order#
+                                                            {{visit.orderNumber}} </div>
+                                                    </td>
+                                                    <td>
+                                                        {{visit.orderStatus}}
+                                                    </td>
+                                                    <td>
+                                                        <span *ngIf="visit.storePickup">Store Pickup</span>
+                                                        <span *ngIf="visit.homeDelivery">Home Delivery</span>
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        <ng-container *ngIf="visit.orderMode === 'WALKIN_ORDER'">
+                                                            Walk in Order
+                                                        </ng-container>
+                                                        <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
+                                                            Online Order</ng-container>
+                                                    </td>
+                                                    <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
+                                                            {{visit.totalAmountPaid |
+                                                            currency:'&#8377;' }} Paid</span> </td>
+                                                    <td>
+                                                        <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                            (click)="stopprop($event)">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #visitMenu="matMenu">
+                                                            
+                                                            <button mat-menu-item (click)="showCommHistory(visit)">
+                                                                <i class="comm-history-icon"></i>
+                                                                Communication history
+                                                            </button>
+                                                            <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
+                                                                (click)="showConsumerNote(visit)">
+                                                                <i class="customernote-icon"></i>
+                                                               Note
+                                                            </button> -->
+                                                        </mat-menu>
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="futureorderVisitDetailsArray.length > 5">
+                                            <a *ngIf="!showMoreorderFuture" (click)="showorderMore('future')">Show more</a>
+                                            <a *ngIf="showMoreorderFuture" (click)="showorderLess('future')">Show less</a>
+                                        </div>
+                                </div>
+
                             </div>
                             <div class="recentactivity"
                                 *ngIf="historyvisitDetails.length > 0 && showMoreHistory && !loading">
@@ -444,6 +562,61 @@
                                                             visit.appointmnet.service.consumerNoteTitle :
                                                             customernotes}}
                                                         </button>
+                                                    </mat-menu>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="type-head mgn-up-10" *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0 && showMoreHistory && !loading">Order History</div>
+                            <div class="recentactivity"
+                                *ngIf="ordervisitDetails.historyOrders && ordervisitDetails.historyOrders.length > 0 && showMoreHistory && !loading">
+                                <table class="table">
+                                    <tbody>
+                                        <tr class="pointer-cursor cellhover" *ngFor="let visit of ordervisitDetails.historyOrders"
+                                            (click)="gotoCustomerDetail(visit, 3)">
+                                            <ng-container >
+                                                <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
+                                                    
+                                                </td>
+                                                <td> {{visit.orderDate | date: newDateFormat}}
+                                                    <div *ngIf="visit.orderNumber">Order#
+                                                        {{visit.orderNumber}} </div> 
+                                                </td>
+                                                <td>
+                                                    {{visit.orderStatus}}
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="visit.storePickup">Store Pickup</span>
+                                                    <span *ngIf="visit.homeDelivery">Home Delivery</span>
+                                                </td>
+                                                <td class="hidden-xs">
+                                                    <ng-container *ngIf="visit.orderMode === 'WALKIN_ORDER'">
+                                                        Walk in Order
+                                                    </ng-container>
+                                                    <ng-container *ngIf="visit.orderMode === 'ONLINE_ORDER'">
+                                                        Online Order</ng-container>
+                                                </td>
+                                                <td><span class="rupee-font" *ngIf="visit.totalAmountPaid > 0">
+                                                        {{visit.totalAmountPaid |
+                                                        currency:'&#8377;' }} Paid</span> </td>
+                                                <td>
+                                                    <button mat-icon-button [matMenuTriggerFor]="visitMenu"
+                                                        (click)="stopprop($event)">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #visitMenu="matMenu">
+                                                        
+                                                        <button mat-menu-item (click)="showCommHistory(visit)">
+                                                            <i class="comm-history-icon"></i>
+                                                            Communication history
+                                                        </button>
+                                                        <!-- <button *ngIf="visit.historyOrders.note" mat-menu-item
+                                                            (click)="showConsumerNote(visit)">
+                                                            <i class="customernote-icon"></i>
+                                                           Note
+                                                        </button> -->
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
