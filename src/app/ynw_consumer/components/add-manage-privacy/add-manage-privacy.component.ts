@@ -1,17 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ConsumerServices } from '../../services/consumer-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-add-manage-privacy',
   templateUrl: './add-manage-privacy.component.html'
 })
 
-export class AddManagePrivacyComponent implements OnInit {
+export class AddManagePrivacyComponent implements OnInit, OnDestroy {
 
   api_error = null;
   api_success = null;
@@ -19,13 +20,12 @@ export class AddManagePrivacyComponent implements OnInit {
   revealph_caption = Messages.REVEAL_PHNO;
   save_btn_caption = Messages.SAVE_BTN;
   cancel_btn_caption = Messages.CANCEL_BTN;
-
   provider = null;
 
   manage_privacy_values = {
     revealPhoneNumber: false
   };
-
+  private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<AddManagePrivacyComponent>,
     private consumer_services: ConsumerServices,
@@ -41,11 +41,13 @@ export class AddManagePrivacyComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
   providerManagePrivacy() {
 
     const status = this.manage_privacy_values.revealPhoneNumber || false;
-    this.consumer_services.managePrivacy(this.provider.id, status)
+    this.subs.sink = this.consumer_services.managePrivacy(this.provider.id, status)
       .subscribe(
         () => {
           this.snackbarService.openSnackBar(Messages.Manage_Privacy);

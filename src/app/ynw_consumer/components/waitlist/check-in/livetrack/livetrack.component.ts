@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
@@ -6,12 +6,13 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-consumer-livetrack',
     templateUrl: './livetrack.component.html'
 })
-export class ConsumerLiveTrackComponent implements OnInit {
+export class ConsumerLiveTrackComponent implements OnInit ,OnDestroy{
 
     uuid: any;
     accountId: any;
@@ -37,6 +38,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
     payment_popup: any;
     firstTimeClick = true;
     state;
+     private subs=new SubSink();
     constructor(public router: Router,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private dialog: MatDialog,
@@ -45,11 +47,11 @@ export class ConsumerLiveTrackComponent implements OnInit {
         private shared_services: SharedServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor) {
-        this.route.params.subscribe(
+        this.subs.sink=this.route.params.subscribe(
             params => {
                 this.uuid = params.id;
             });
-        this.route.queryParams.subscribe(
+        this.subs.sink=this.route.queryParams.subscribe(
             params => {
                 this.accountId = params.account_id;
                 this.state = params.status;
@@ -88,7 +90,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 this.track_loading = false;
             }
         );
-        this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
+       this.subs.sink= this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
                 if (this.shareLoc) {
@@ -114,7 +116,9 @@ export class ConsumerLiveTrackComponent implements OnInit {
             }
         );
     }
-
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+     }
     getTravelMod(event) {
         this.trackMode = false;
         this.travelMode = event;
@@ -152,7 +156,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
             const passdata = {
                 'travelMode': _this.travelMode
             };
-            _this.shared_services.updateTravelMode(_this.uuid, _this.accountId, passdata)
+            _this.subs.sink=_this.shared_services.updateTravelMode(_this.uuid, _this.accountId, passdata)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -177,7 +181,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.addLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
+           _this.subs.sink= _this.shared_services.addLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);
@@ -224,7 +228,7 @@ export class ConsumerLiveTrackComponent implements OnInit {
                 'jaldeeStartTimeMod': _this.notifyTime,
                 'shareLocStatus': _this.shareLoc
             };
-            _this.shared_services.updateLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
+            _this.subs.sink=_this.shared_services.updateLiveTrackDetails(_this.uuid, _this.accountId, post_Data)
                 .subscribe(
                     data => {
                         resolve(data);

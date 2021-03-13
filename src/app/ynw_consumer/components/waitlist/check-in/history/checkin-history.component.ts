@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, Output, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, HostListener, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
@@ -16,6 +16,7 @@ import { ViewRxComponent } from '../../../home/view-rx/view-rx.component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 // import * as moment from 'moment';
 
 
@@ -25,7 +26,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
   templateUrl: './checkin-history.component.html'
 })
 
-export class ConsumerCheckinHistoryComponent implements OnInit {
+export class ConsumerCheckinHistoryComponent implements OnInit,OnDestroy {
 
 
   @Input() reloadapi;
@@ -65,6 +66,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   viewrxdialogRef;
   accountId;
   showOrderHist = false;
+  private subs=new SubSink();
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -74,7 +76,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.activateroute.queryParams.subscribe(params => {
+      this.subs.sink= this.activateroute.queryParams.subscribe(params => {
       if (params.is_orderShow === 'false') {
         this.getHistroy();
         } else {
@@ -96,13 +98,12 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     }
   }
   ngOnInit() {
-    // if (this.params.is_orderShow === false) {
-    // this.getHistroy();
-    // console.log('f');
-    // } else {
-    //   console.log('f');
-    // }
+  
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+  }
+
 
   // Getting Checking History
   getHistroy() {
@@ -112,7 +113,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
       api_filter['account-eq'] = this.accountId;
     }
     // const params = this.setPaginationFilter();
-    this.consumer_services.getWaitlistHistory(api_filter)
+   this.subs.sink= this.consumer_services.getWaitlistHistory(api_filter)
       .subscribe(
         data => {
           this.history = data;
@@ -130,7 +131,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   // Getting Appointment History
   getAppointmentHistory(api_filter) {
     //  const params = this.setPaginationFilter();
-    this.consumer_services.getAppointmentHistory(api_filter)
+    this.subs.sink=  this.consumer_services.getAppointmentHistory(api_filter)
       .subscribe(
         data => {
           console.log(data);
@@ -162,7 +163,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
   // Get checkin history count
   getHistoryCount() {
-    this.consumer_services.getHistoryWaitlistCount()
+    this.subs.sink= this.consumer_services.getHistoryWaitlistCount()
       .subscribe(
         data => {
           console.log(data);
@@ -173,7 +174,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
   }
   // Get Appointment history count
   getAppointmentHistoryCount() {
-    this.consumer_services.getAppointmentHistoryCount()
+    this.subs.sink= this.consumer_services.getAppointmentHistoryCount()
       .subscribe(
         data => {
           this.appt_count = data;
@@ -224,7 +225,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     const params = {
       account: waitlist.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.ynwUuid)
+    this.subs.sink=  this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.ynwUuid)
       .subscribe(
         data => {
           console.log(data);
@@ -241,7 +242,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     const params = {
       account: orders.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, orders.uid)
+    this.subs.sink=  this.consumer_checkin_history_service.getWaitlistBill(params, orders.uid)
       .subscribe(
         data => {
           console.log(data);
@@ -359,7 +360,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     const params = {
       account: waitlist.providerAccount.id
     };
-    this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
+    this.subs.sink=   this.consumer_checkin_history_service.getWaitlistBill(params, waitlist.uid)
       .subscribe(
         data => {
           const bill_data = data;
@@ -437,7 +438,7 @@ export class ConsumerCheckinHistoryComponent implements OnInit {
     // if (this.accountId) {
     //   api_filter['account-eq'] = this.accountId;
     // }
-    this.consumer_services.getOrderHistory()
+    this.subs.sink=  this.consumer_services.getOrderHistory()
       .subscribe(
         data => {
           console.log(data);

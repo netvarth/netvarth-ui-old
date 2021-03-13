@@ -369,13 +369,17 @@
                                                 {{orderDetails.homeDeliveryAddress.address}}
                                               </span><br>
                                               <span>
-                                                {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
+                                                {{orderDetails.homeDeliveryAddress.landMark }}
                                               </span><br>
                                               <span>
                                                 {{orderDetails.homeDeliveryAddress.city }} , {{orderDetails.homeDeliveryAddress.postalCode}}
                                               </span><br>
+                                            
                                               <span>
-                                                {{orderDetails.homeDeliveryAddress.landMark }}
+                                                {{orderDetails.homeDeliveryAddress.email}}
+                                              </span><br>
+                                              <span>
+                                                {{orderDetails.homeDeliveryAddress.countryCode }} {{orderDetails.homeDeliveryAddress.phoneNumber}}
                                               </span><br>
                                             </div>
                                             <a  class="addressedit"  (click)="editAddress();" data-toggle="modal" data-target="#exampleModalSizeDefault">

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
@@ -13,13 +13,14 @@ import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SessionStorageService } from '../../../shared/services/session-storage.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html'
 })
-export class ConsumerJoinComponent implements OnInit {
+export class ConsumerJoinComponent implements OnInit, OnDestroy {
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -64,6 +65,7 @@ export class ConsumerJoinComponent implements OnInit {
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   phoneError: string;
   phoneDialCode;
+  private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -78,9 +80,7 @@ export class ConsumerJoinComponent implements OnInit {
     private router: Router,
     @Inject(DOCUMENT) public document
   ) {
-    // if (this.shared_functions.checkLogin()) {
-    //   this.shared_functions.logout();
-    // }
+
     this.test_provider = data.test_account;
   }
   ngOnInit() {
@@ -93,6 +93,9 @@ export class ConsumerJoinComponent implements OnInit {
       this.heading = 'Please enter your phone number';
       this.phOrem_error = 'Invalid mobile number';
     }
+  }
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
   createForm() {
     this.loginForm = this.fb.group({
@@ -219,12 +222,7 @@ export class ConsumerJoinComponent implements OnInit {
     this.actionstarted = true;
     this.resetApiErrors();
     this.user_details = {};
-    // let userProfile = {
-    //   countryCode: '+91',
-    //   primaryMobileNo: null, // this.signupForm.get('phonenumber').value || null,
-    //   firstName: null,
-    //   lastName: null
-    // };
+
     const dialCode = this.loginForm.get('phone').value.dialCode;
     const pN = this.loginForm.get('phone').value.e164Number;
     let loginId = pN.split(dialCode)[1];
@@ -275,7 +273,7 @@ export class ConsumerJoinComponent implements OnInit {
   }
   signUpApiConsumer(user_details) {
     this.resendemailotpsuccess = false;
-    this.shared_services.signUpConsumer(user_details)
+    this.subs.sink = this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
           this.actionstarted = false;
@@ -310,7 +308,7 @@ export class ConsumerJoinComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-    this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
+    this.subs.sink = this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
       .subscribe(
         () => {
           this.actionstarted = false;
@@ -338,7 +336,7 @@ export class ConsumerJoinComponent implements OnInit {
       countryCode: dialCode,
       password: submit_data.new_password
     };
-    this.shared_services.ConsumerSetPassword(this.otp, post_data)
+    this.subs.sink = this.shared_services.ConsumerSetPassword(this.otp, post_data)
       .subscribe(
         () => {
           this.actionstarted = false;
@@ -457,7 +455,7 @@ export class ConsumerJoinComponent implements OnInit {
     this.phoneError = null;
     if (this.mobile_num) {
       this.phoneDialCode = this.loginForm.get('phone').value.dialCode;
-      this.shared_services.consumerMobilenumCheck(this.mobile_num, this.phoneDialCode).subscribe((accountExists) => {
+      this.subs.sink = this.shared_services.consumerMobilenumCheck(this.mobile_num, this.phoneDialCode).subscribe((accountExists) => {
         if (accountExists) {
           this.phoneExists = true;
           this.isPhoneValid = true;

@@ -149,7 +149,7 @@
                           <!--begin::Product-->
                           <div class="card-body p-0" *ngIf="orderType !== 'SHOPPINGLIST'">
                             <ng-container *ngFor="let item of orderItems">
-                              <div class="col-xs-12 col-md-6 col-xl-4 col-lg-12">
+                              <div class="col-xs-12 col-md-6 col-xl-4 col-lg-12 orderItems">
                                 <!--begin::Card-->
                                 <div class="card card-custom card-shadowless">
                                   <div class="card-body p-0">
@@ -390,7 +390,34 @@
                               </span>
                             </div>
 
-                   
+                                       <!-- Home Address -->
+                          <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type =='home' ">
+                              <div>
+                                <div [hidden]="added_address.length==0" class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4" *ngFor="let address of added_address; let i = index" (click)="highlight(i,address)"
+                                  [ngClass]="{'highlight': selectedRowIndex == i}">
+                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2" style="line-height:none">
+                                    <div class="card-body text-left pl-5 p-0 font-addrss">
+                                      <div class="adrs-data">
+                                        <div>{{address.firstName }}&nbsp;{{address.lastName}}</div>
+                                        <div>{{address.address}}</div>
+                                        <div>{{address.city}} ,{{address.landMark}}, {{address.postalCode}}</div>
+                                        <div> +91 {{address.phoneNumber}}</div>
+                                        <div> {{address.email}}</div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mt-5 mb-4">
+                                  <div class="card card-custom gutter-b rounded-0 card-stretch p-2">
+                                    <div class="card-body text-center p-0">
+                                      <button type="button" class="btn btn-success px-2 py-1" data-toggle="modal" data-target="#exampleModalSizeDefault">
+                                        Add Address </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container> 
 
                             <!--Change Date picker  -->
                             <div class="modal fade" id="datePickerModal" tabindex="-1" role="dialog" aria-labelledby="datePickerModal" aria-hidden="true">

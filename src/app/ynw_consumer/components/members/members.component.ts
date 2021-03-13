@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -11,13 +11,15 @@ import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
   selector: 'app-consumer-members',
   templateUrl: './members.component.html'
 })
-export class MembersComponent implements OnInit {
+export class MembersComponent implements OnInit,OnDestroy {
+  
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   dashboard_cap = Messages.DASHBOARD_TITLE;
@@ -45,7 +47,7 @@ curtype;
   ];
   breadcrumbs = this.breadcrumbs_init;
   emptyMsg = 'No Family members added yet';
-
+ private subs=new SubSink();
   constructor(private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -57,10 +59,13 @@ curtype;
     this.curtype = this.shared_functions.isBusinessOwner('returntyp');
     this.getMembers();
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+  }
 
   getMembers() {
 
-    this.consumer_services.getMembers()
+    this.subs.sink=this.consumer_services.getMembers()
       .subscribe(
         data => {
           this.member_list = data;
@@ -101,7 +106,7 @@ goBack() {
   }
 
   removeMember(id) {
-    this.consumer_services.deleteMember(id)
+    this.subs.sink=this.consumer_services.deleteMember(id)
       .subscribe(
         () => {
           this.getMembers();

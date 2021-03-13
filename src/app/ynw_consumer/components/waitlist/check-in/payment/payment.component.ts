@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
@@ -12,26 +12,19 @@ import { WindowRefService } from '../../../../../shared/services/windowRef.servi
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 
 @Component({
     selector: 'app-consumer-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.css'],
 })
-export class ConsumerPaymentComponent implements OnInit {
+export class ConsumerPaymentComponent implements OnInit,OnDestroy {
+   private subs=new SubSink();
     uuid: any;
     accountId: any;
     prepayment_amnt_cap = Messages.PREPAYMENT_AMOUNT_CAP;
-    // breadcrumbs = [
-    //     {
-    //         title: 'My Jaldee',
-    //         url: '/consumer'
-    //     },
-    //     {
-    //         title: 'Payment'
-    //     }
-    // ];
-    // breadcrumb_moreoptions: any = [];
+  
     activeWt: any;
     livetrack: any;
     prepaymentAmount: number;
@@ -61,11 +54,11 @@ export class ConsumerPaymentComponent implements OnInit {
         public winRef: WindowRefService,
         // private cdRef: ChangeDetectorRef,
     ) {
-        this.route.params.subscribe(
+       this.subs.sink= this.route.params.subscribe(
             params => {
                 this.uuid = params.id;
             });
-        this.route.queryParams.subscribe(
+            this.subs.sink= this.route.queryParams.subscribe(
             params => {
                 this.checkIn_type = params.type_check;
                 this.accountId = params.account_id;
@@ -77,7 +70,7 @@ export class ConsumerPaymentComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
+        this.subs.sink=this.shared_services.getCheckinByConsumerUUID(this.uuid, this.accountId).subscribe(
             (wailist: any) => {
                 this.activeWt = wailist;
                 if (this.activeWt.service.serviceType === 'virtualService') {
@@ -123,10 +116,13 @@ export class ConsumerPaymentComponent implements OnInit {
             }
         );
     }
+    ngOnDestroy(): void {
+       this.subs.unsubscribe();
+    }
     getPaymentStatus(pid) {
         this.lStorageService.removeitemfromLocalStorage('acid');
         this.lStorageService.removeitemfromLocalStorage('uuid');
-        this.shared_services.getPaymentStatus('consumer', pid)
+        this.subs.sink= this.shared_services.getPaymentStatus('consumer', pid)
             .subscribe(
                 data => {
                     this.status = data;
@@ -170,7 +166,7 @@ export class ConsumerPaymentComponent implements OnInit {
         this.lStorageService.setitemonLocalStorage('uuid', this.uuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-        this.shared_services.consumerPayment(this.waitlistDetails)
+        this.subs.sink=this.shared_services.consumerPayment(this.waitlistDetails)
             .subscribe((pData: any) => {
                 this.origin = 'consumer';
                 this.pGateway = pData.paymentGateway;

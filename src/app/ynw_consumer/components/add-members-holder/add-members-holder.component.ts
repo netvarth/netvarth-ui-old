@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -6,13 +6,14 @@ import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-add-members-holder',
   templateUrl: './add-members-holder.component.html'
 })
 
-export class AddMembersHolderComponent implements OnInit {
+export class AddMembersHolderComponent implements OnInit,OnDestroy {
   family_member_cap = Messages.FAMILY_MEMBERS;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
@@ -34,7 +35,7 @@ export class AddMembersHolderComponent implements OnInit {
     }
   ];
   breadcrumbs = this.breadcrumbs_init;
-
+  private subs = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<AddMembersHolderComponent>,
     public shared_services: SharedServices,
@@ -52,7 +53,9 @@ export class AddMembersHolderComponent implements OnInit {
 
   ngOnInit() {
   }
-
+ngOnDestroy(){
+  this.subs.unsubscribe();
+}
   handleReturnDetails(obj) {
     this.resetApi();
     this.addmemberobj.fname = obj.fname || '';
@@ -116,7 +119,7 @@ export class AddMembersHolderComponent implements OnInit {
         post_data.userProfile['dob'] = this.addmemberobj.dob;
       }
       if (this.data.type === 'add') {
-        this.shared_services.addMembers(post_data)
+        this.subs.sink=this.shared_services.addMembers(post_data)
           .subscribe(() => {
             this.api_success = Messages.MEMBER_CREATED;
             // this.getFamilyMembers();
@@ -130,7 +133,7 @@ export class AddMembersHolderComponent implements OnInit {
             });
       } else if (this.data.type === 'edit') {
         post_data.userProfile['id'] = this.data.member.user;
-        this.shared_services.editMember(post_data)
+        this.subs.sink=this.shared_services.editMember(post_data)
           .subscribe(
             () => {
               this.api_success = Messages.MEMBER_UPDATED;
