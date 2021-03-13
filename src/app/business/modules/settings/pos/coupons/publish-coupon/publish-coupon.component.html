@@ -1,5 +1,12 @@
 
+<div *ngIf="api_loading">
+        <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+
+</div>
+<div *ngIf="!api_loading">
 <section class="">
+    
+       
     <div class="card title-gb rounded-0">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
@@ -134,3 +141,4 @@
     </div>
     </div>
 </section>
+</div>

@@ -7,7 +7,8 @@ import { WordProcessor } from '../../../../../../../shared/services/word-process
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ConfirmBoxComponent } from '../../../../../../../shared/components/confirm-box/confirm-box.component';
-import { Subscription } from 'rxjs/internal/Subscription';
+import { SubSink } from 'subsink';
+
 
 @Component({
   selector: 'app-publish-dialog',
@@ -23,6 +24,7 @@ export class PublishDialogComponent implements OnInit {
   api_error='';
   api_success='';
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  private subscriptions = new SubSink();
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,7 +32,6 @@ export class PublishDialogComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private dialog: MatDialog,
-    private subscription: Subscription,
     private provider_services: ProviderServices) {
       this.couponId=data.coupon.id;
      }
@@ -87,7 +88,7 @@ export class PublishDialogComponent implements OnInit {
       if (result) {
         const form_data=this.publishForm.value;
         form_data.id=this.couponId;
-        this.subscription=this.provider_services.publishCoupon(form_data,this.couponId)
+        this.subscriptions.sink=this.provider_services.publishCoupon(form_data,this.couponId)
         .subscribe(result=>{
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_PUBLISHED'));
           this.dialogRef.close();
@@ -102,7 +103,7 @@ export class PublishDialogComponent implements OnInit {
 
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
 }
 
 }

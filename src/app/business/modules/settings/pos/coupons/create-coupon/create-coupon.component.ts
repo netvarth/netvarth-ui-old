@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -17,6 +17,7 @@ import { ConsumerLabelDialogComponent } from '../../../../../shared/consumer-lab
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
   styleUrls: ['./create-coupon.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-3.css']
 
 })
-export class CreateCouponComponent implements OnInit {
+export class CreateCouponComponent implements OnInit,OnDestroy {
   consumerLabeldialogRef: any;
   services: any = [];
   items: any = [];
@@ -72,6 +73,7 @@ export class CreateCouponComponent implements OnInit {
   coupon_title='Create Coupon'
   calculationType: any;
   published=false;
+  private subscriptions = new SubSink();
   constructor(private formbuilder: FormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
@@ -82,10 +84,10 @@ export class CreateCouponComponent implements OnInit {
     private sharedfunctionObj: SharedFunctions,
     private activated_route: ActivatedRoute,
     public dialog: MatDialog, ) {
-    this.activated_route.params.subscribe(params => {
+    this.subscriptions.sink=this.activated_route.params.subscribe(params => {
       this.couponId = params.id;
     });
-    this.activated_route.queryParams.subscribe(qparams => {
+    this.subscriptions.sink=this.activated_route.queryParams.subscribe(qparams => {
       this.action = qparams.action;
     });
     this.timewindow_list = [];
@@ -105,6 +107,9 @@ export class CreateCouponComponent implements OnInit {
       this.getDepartments();
     }
 
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
   isvalid(evt) {
     return this.sharedfunctionObj.isValid(evt);
@@ -259,7 +264,7 @@ isNumeric(evt) {
   getCouponById(couponId) {
     const _this = this;
     return new Promise((resolve) => {
-      _this.provider_services.getProviderCoupons(couponId).subscribe(
+     _this. subscriptions.sink=_this.provider_services.getProviderCoupons(couponId).subscribe(
         (result: any) => {
 
           resolve(result);
@@ -341,7 +346,7 @@ isNumeric(evt) {
   }
   getDepartments() {
 
-    this.provider_services.getDepartments()
+    this.subscriptions.sink=this.provider_services.getDepartments()
       .subscribe(
         data => {
           this.deptObj = data;
@@ -363,7 +368,7 @@ isNumeric(evt) {
   }
   getCustomerLabels() {
 
-    this.provider_services.getLabelList()
+    this.subscriptions.sink=this.provider_services.getLabelList()
       .subscribe(
         (data: any) => {
           this.customer_label_list = data;
@@ -381,14 +386,14 @@ isNumeric(evt) {
     });
   }
   getCatalogs() {
-    this.provider_services.getProviderCatalogs()
+   this.subscriptions.sink= this.provider_services.getProviderCatalogs()
       .subscribe(data => {
         this.catalog_list = data;
 
       });
   }
   getUsers() {
-    this.provider_services.getUsers().subscribe(
+    this.subscriptions.sink=this.provider_services.getUsers().subscribe(
       (data: any) => {
         this.user_list = data;
       },
@@ -563,7 +568,7 @@ isNumeric(evt) {
   }
 
   createCoupon(data) {
-    this.provider_services.createCoupon(data)
+   this.subscriptions.sink= this.provider_services.createCoupon(data)
       .subscribe(result => {
         console.log('createdSuccessfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_CREATED'));
@@ -576,7 +581,7 @@ isNumeric(evt) {
   }
   updateCoupon(data) {
     data.id = this.couponDetails.id;
-    this.provider_services.updateCoupon(data)
+   this.subscriptions.sink= this.provider_services.updateCoupon(data)
       .subscribe(result => {
         console.log('updated Successfully');
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('COUPON_UPDATED'));
