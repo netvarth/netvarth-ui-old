@@ -21,7 +21,7 @@
             <div class="wizard-nav">
               <div class="wizard-steps px-8 py-8 px-lg-15 py-lg-3">
                 <!--begin::Wizard Step 1 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step" [class.tab-selected]="step>=1">
                   <div class="wizard-label">
                     <h3 class="wizard-title">
                       <span>1.</span> Basic Info
@@ -32,7 +32,7 @@
                 <!--end::Wizard Step 1 Nav-->
 
                 <!--begin::Wizard Step 2 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step" [class.tab-selected]="step>=2">
                   <div class="wizard-label">
                     <h3 class="wizard-title">
                       <span>2.</span> Rules & Validity
@@ -43,7 +43,7 @@
                 <!--end::Wizard Step 2 Nav-->
 
                 <!--begin::Wizard Step 3 Nav-->
-                <div class="wizard-step">
+                <div class="wizard-step" [class.tab-selected]="step==3">
                   <div class="wizard-label">
                     <h3 class="wizard-title">
                       <span>3.</span> Applicable For
@@ -495,8 +495,8 @@
                       <div class="col-xl-6">
                         <div class="form-group">
                           <mat-form-field appearance="fill">
-                            <label>Booking Mode</label>
-                            <mat-select placeholder="Booking mode" formControlName="bookingChannel" [multiple]="true">
+                            <label>Booking Channel</label>
+                            <mat-select placeholder="Booking channels" formControlName="bookingChannel" [multiple]="true">
                               <mat-option *ngFor=" let mode of bookingMode" [value]="mode.value">
                                 {{mode.displayName}}
                               </mat-option>
